@@ -117,6 +117,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\x64\Release\TRR-SaveMaster.exe" />
     <Content Include="Images\About_Background.png" />
     <Content Include="TR_Remastered_Icon.ico" />
   </ItemGroup>
