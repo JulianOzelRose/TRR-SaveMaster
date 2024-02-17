@@ -24,3 +24,42 @@ Once the savegames are populated in the editor, you can select them using the co
 data when switching tabs or selecting savegames -- but if another savegame is added and not displaying, you can click "Refresh" to re-populate the savegames. If you would
 like to create a backup of your savegame file before writing to it, you can click "File" then "Create backup", and a file `savegame.dat.bak` will be created in the same
 directory as your savegame file. Once you are done making changes, click "Save" to apply changes.
+
+## Reverse engineering Tomb Raider I-III Remastered
+This section details the technical aspects of reverse engineering Tomb Raider I-III Remastered. All savegames are stored in a single file; `savegame.dat`.
+Savegames for expansions are stored in the same slots as the original game. Each savegame slot for each game begins at a specific offset in the file.
+See the table below.
+
+| Game                               | Offset  |
+|------------------------------------|---------|
+| Tomb Raider I                      | 0x02000 |
+| Tomb Raider II                     | 0x72000 |
+| Tomb Raider III                    | 0xE2000 |
+
+There is a consistent difference of 0x3800 between each savegame, so that value can be used as an iterator when cycling between savegames. When a savegame slot
+is empty, the space will be occupied by null padding. There are a number of ways to check if a savegame is present in the slot. One way is to check if the
+level index falls within a valid range, and if the save number is not equal to 0. See the example below.
+
+```
+for (int i = 0; i < 32; i++)
+{
+    currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR1 + (i * SAVEGAME_ITERATOR);
+    SetSavegameOffset(currentSavegameOffset);
+
+    UInt16 saveNumber = GetSaveNumber();
+    byte levelIndex = GetLevelIndex();
+
+    if (saveNumber != 0 && levelIndex >= 1 && levelIndex <= 19)
+    {
+        string levelName = levelNames[levelIndex];
+
+        Savegame savegame = new Savegame(currentSavegameOffset, saveNumber, levelName);
+        cmbSavegames.Items.Add(savegame);
+
+        numSaves++;
+    }
+}
+```
+
+Because you are dealing with multiple savegames stored in a single file, it is best to use relative offsets and calculate them accordingly. You can find more
+details on this for each game in the sections below.
