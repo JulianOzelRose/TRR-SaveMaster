@@ -580,6 +580,16 @@ namespace TRR_SaveMaster
             this.TopMost = tsmiAlwaysOnTop.Checked;
         }
 
+        private void tsmiViewReadme_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/JulianOzelRose/TRR-SaveMaster/blob/master/README.md");
+        }
+
+        private void tsmiSendFeedback_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/JulianOzelRose/TRR-SaveMaster/issues");
+        }
+
         private void tsmiStatusBar_Click(object sender, EventArgs e)
         {
             if (tsmiStatusBar.Checked)

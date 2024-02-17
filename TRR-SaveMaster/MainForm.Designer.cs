@@ -1442,22 +1442,22 @@ namespace TRR_SaveMaster
             // 
             // tsmiViewReadme
             // 
-            this.tsmiViewReadme.Enabled = false;
             this.tsmiViewReadme.Name = "tsmiViewReadme";
-            this.tsmiViewReadme.Size = new System.Drawing.Size(153, 22);
+            this.tsmiViewReadme.Size = new System.Drawing.Size(180, 22);
             this.tsmiViewReadme.Text = "View README";
+            this.tsmiViewReadme.Click += new System.EventHandler(this.tsmiViewReadme_Click);
             // 
             // tsmiSendFeedback
             // 
-            this.tsmiSendFeedback.Enabled = false;
             this.tsmiSendFeedback.Name = "tsmiSendFeedback";
-            this.tsmiSendFeedback.Size = new System.Drawing.Size(153, 22);
+            this.tsmiSendFeedback.Size = new System.Drawing.Size(180, 22);
             this.tsmiSendFeedback.Text = "Send Feedback";
+            this.tsmiSendFeedback.Click += new System.EventHandler(this.tsmiSendFeedback_Click);
             // 
             // tsmiAbout
             // 
             this.tsmiAbout.Name = "tsmiAbout";
-            this.tsmiAbout.Size = new System.Drawing.Size(153, 22);
+            this.tsmiAbout.Size = new System.Drawing.Size(180, 22);
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
             // 
