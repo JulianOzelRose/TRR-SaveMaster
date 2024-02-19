@@ -23,7 +23,8 @@ Unfinished Business savegames, the "Tomb Raider II" tab will display The Golden 
 Once the savegames are populated in the editor, you can select them using the combo box labeled "Savegame" in the corner. The editor will automatically refresh savegame
 data when switching tabs or selecting savegames -- but if another savegame is added and not displaying, you can click "Refresh" to re-populate the savegames. If you would
 like to create a backup of your savegame file before writing to it, you can click "File" then "Create backup", and a file `savegame.dat.bak` will be created in the same
-directory as your savegame file. Once you are done making changes, click "Save" to apply changes.
+directory as your savegame file. Once you are done making changes, click "Save" to apply changes. Because the game caches savegames into memory, you must restart your game
+for the changes to take effect.
 
 ## Reverse engineering Tomb Raider I-III Remastered
 This section details the technical aspects of reverse engineering Tomb Raider I-III Remastered. All savegames are stored in a single file; `savegame.dat`.
