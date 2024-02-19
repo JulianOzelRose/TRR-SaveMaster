@@ -9,7 +9,7 @@ namespace TRR_SaveMaster
     class TR3Utilities
     {
         // Static offsets
-        private const int saveNumberOffset = 0xC;
+        private const int saveNumberOffset = 0x00C;
         private const int levelIndexOffset = 0x8D6;
 
         // Dynamic offsets
@@ -34,8 +34,8 @@ namespace TRR_SaveMaster
         private int shotgunAmmoOffset2;
 
         // Constants
-        const int BASE_SAVEGAME_OFFSET_TR3 = 0xE2000;
-        const int SAVEGAME_ITERATOR = 0x3800;
+        private const int BASE_SAVEGAME_OFFSET_TR3 = 0xE2000;
+        private const int SAVEGAME_ITERATOR = 0x3800;
 
         // Health
         private const UInt16 MAX_HEALTH_VALUE = 1000;
@@ -749,6 +749,8 @@ namespace TRR_SaveMaster
             NumericUpDown nudRocketLauncherAmmo, NumericUpDown nudHarpoonGunAmmo, NumericUpDown nudMP5Ammo,
             NumericUpDown nudUziAmmo, TrackBar trbHealth)
         {
+            DetermineOffsets();
+
             WriteNumFlares((byte)nudFlares.Value);
             WriteNumSmallMedipacks((byte)nudSmallMedipacks.Value);
             WriteNumLargeMedipacks((byte)nudLargeMedipacks.Value);
