@@ -9,7 +9,7 @@ namespace TRR_SaveMaster
     class TR2Utilities
     {
         // Static offsets
-        private const int saveNumberOffset = 0xC;
+        private const int saveNumberOffset = 0x00C;
         private const int levelIndexOffset = 0x628;
 
         // Dynamic offsets
@@ -31,8 +31,8 @@ namespace TRR_SaveMaster
         private int automaticPistolsAmmoOffset2;
 
         // Constants
-        const int BASE_SAVEGAME_OFFSET_TR2 = 0x72000;
-        const int SAVEGAME_ITERATOR = 0x3800;
+        private const int BASE_SAVEGAME_OFFSET_TR2 = 0x72000;
+        private const int SAVEGAME_ITERATOR = 0x3800;
 
         // Health
         private const UInt16 MAX_HEALTH_VALUE = 1000;
@@ -431,7 +431,7 @@ namespace TRR_SaveMaster
 
             if (levelIndex == 1)        // The Great Wall
             {
-                SetHealthOffsets(0xB64, 0xB70);
+                SetHealthOffsets(0xB64, 0xB70, 0xB7C);
             }
             else if (levelIndex == 2)   // Venice
             {
@@ -439,19 +439,19 @@ namespace TRR_SaveMaster
             }
             else if (levelIndex == 3)   // Bartoli's Hideout
             {
-                SetHealthOffsets(0x1734);
+                SetHealthOffsets(0x1734, 0x1740, 0x174C, 0x1758);
             }
             else if (levelIndex == 4)   // Opera House
             {
-                SetHealthOffsets(0x1E2C);
+                SetHealthOffsets(0x1E20, 0x1E2C, 0x1E38);
             }
             else if (levelIndex == 5)   // Offshore Rig
             {
-                SetHealthOffsets(0xAC4);
+                SetHealthOffsets(0xAC4, 0xAD0, 0xADC);
             }
             else if (levelIndex == 6)   // Diving Area
             {
-                SetHealthOffsets(0x12DE);
+                SetHealthOffsets(0x12DE, 0x12EA, 0x12F6, 0x1302, 0x130E, 0x131A);
             }
             else if (levelIndex == 7)   // 40 Fathoms
             {
@@ -459,7 +459,7 @@ namespace TRR_SaveMaster
             }
             else if (levelIndex == 8)   // Wreck of the Maria Doria
             {
-                SetHealthOffsets(0x239A);
+                SetHealthOffsets(0x238E, 0x239A, 0x23A6, 0x23B2, 0x23BE, 0x23CA, 0x23D6, 0x23E2, 0x23EE);
             }
             else if (levelIndex == 9)   // Living Quarters
             {
@@ -467,15 +467,15 @@ namespace TRR_SaveMaster
             }
             else if (levelIndex == 10)  // The Deck
             {
-                SetHealthOffsets(0xBAC, 0xBB8);
+                SetHealthOffsets(0xBAC, 0xBB8, 0xBC4, 0xBD0, 0xBDC, 0xBE8, 0xBF4);
             }
             else if (levelIndex == 11)  // Tibetan Foothills
             {
-                SetHealthOffsets(0x12E4);
+                SetHealthOffsets(0x12E4, 0x12F0, 0x12FC, 0x1308, 0x1314);
             }
             else if (levelIndex == 12)  // Barkhang Monastery
             {
-                SetHealthOffsets(0x2522);
+                SetHealthOffsets(0x2522, 0x252E, 0x253A, 0x2546, 0x2552);
             }
             else if (levelIndex == 13)  // Catacombs of the Talion
             {
@@ -483,19 +483,19 @@ namespace TRR_SaveMaster
             }
             else if (levelIndex == 14)  // Ice Palace
             {
-                SetHealthOffsets(0xE4E);
+                SetHealthOffsets(0xE2A, 0xE36, 0xE42, 0xE4E);
             }
             else if (levelIndex == 15)  // Temple of Xian
             {
-                SetHealthOffsets(0x2A7A, 0x2A86, 0x2A92);
+                SetHealthOffsets(0x2A7A, 0x2A86, 0x2A92, 0x2A9E);
             }
             else if (levelIndex == 16)  // Floating Islands
             {
-                SetHealthOffsets(0x9CC);
+                SetHealthOffsets(0x9CC, 0x9D8);
             }
             else if (levelIndex == 17)  // The Dragon's Lair
             {
-                SetHealthOffsets(0xF78);
+                SetHealthOffsets(0xF78, 0xF84, 0xF90);
             }
             else if (levelIndex == 18)  // Home Sweet Home
             {
@@ -647,7 +647,6 @@ namespace TRR_SaveMaster
             NumericUpDown nudUziAmmo, NumericUpDown nudM16Ammo, NumericUpDown nudGrenadeLauncherAmmo, NumericUpDown nudHarpoonGunAmmo,
             NumericUpDown nudShotgunAmmo, TrackBar trbHealth)
         {
-            //WriteSaveNumber((UInt16)nudSaveNumber.Value);     // do we still need this one?
             WriteNumSmallMedipacks((byte)nudSmallMedipacks.Value);
             WriteNumLargeMedipacks((byte)nudLargeMedipacks.Value);
             WriteNumFlares((byte)nudFlares.Value);
