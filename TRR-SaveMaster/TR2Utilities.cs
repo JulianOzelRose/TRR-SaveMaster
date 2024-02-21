@@ -411,6 +411,12 @@ namespace TRR_SaveMaster
             }
         }
 
+        private bool IsPS4Savegame()
+        {
+            FileInfo fileInfo = new FileInfo(savegamePath);
+            return fileInfo.Length == 0x400000;
+        }
+
         private void DetermineOffsets()
         {
             byte levelIndex = GetLevelIndex();
@@ -520,6 +526,17 @@ namespace TRR_SaveMaster
             else if (levelIndex == 23)  // Nightmare in Vegas
             {
                 // Need to find health offsets for this level...
+            }
+
+            if (IsPS4Savegame())
+            {
+                for (int i = 0; i < healthOffsets.Count; i++)
+                {
+                    if (healthOffsets[i] >= 0x690)
+                    {
+                        healthOffsets[i] -= 4;
+                    }
+                }
             }
         }
 

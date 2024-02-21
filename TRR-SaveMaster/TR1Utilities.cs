@@ -8,7 +8,7 @@ namespace TRR_SaveMaster
     class TR1Utilities
     {
         // Static offsets
-        private const int saveNumberOffset = 0xC;
+        private const int saveNumberOffset = 0x00C;
         private const int weaponsConfigNumOffset = 0x4EC;
         private const int magnumAmmoOffset = 0x4C2;
         private const int uziAmmoOffset = 0x4C4;
@@ -246,10 +246,10 @@ namespace TRR_SaveMaster
             { 13, "Natla's Mines"           },
             { 14, "Atlantis"                },
             { 15, "The Great Pyramid"       },
-            { 16,  "Return to Egypt"        },
-            { 17,  "Temple of the Cat"      },
-            { 18,  "Atlantean Stronghold"   },
-            { 19,  "The Hive"               },
+            { 16, "Return to Egypt"         },
+            { 17, "Temple of the Cat"       },
+            { 18, "Atlantean Stronghold"    },
+            { 19, "The Hive"                },
         };
 
         private void SetHealthOffsets(params int[] offsets)
@@ -260,6 +260,12 @@ namespace TRR_SaveMaster
             {
                 healthOffsets.Add(offsets[i]);
             }
+        }
+
+        private bool IsPS4Savegame()
+        {
+            FileInfo fileInfo = new FileInfo(savegamePath);
+            return fileInfo.Length == 0x400000;
         }
 
         private void DetermineOffsets()
@@ -420,6 +426,25 @@ namespace TRR_SaveMaster
 
                 SetHealthOffsets(0x10DF);
             }
+
+            if (IsPS4Savegame())
+            {
+                for (int i = 0; i < healthOffsets.Count; i++)
+                {
+                    if (healthOffsets[i] >= 0x64E && healthOffsets[i] < 0x6B0)
+                    {
+                        healthOffsets[i] -= 1;
+                    }
+                    else if (healthOffsets[i] >= 0x6B0)
+                    {
+                        healthOffsets[i] -= 4;
+                    }
+                }
+
+                magnumAmmoOffset2 -= 4;
+                uziAmmoOffset2 -= 4;
+                shotgunAmmoOffset2 -= 4;
+            }
         }
 
         public void DisplayGameInfo(CheckBox chkPistols, CheckBox chkMagnums, CheckBox chkUzis,
@@ -484,7 +509,6 @@ namespace TRR_SaveMaster
             NumericUpDown nudUziAmmo, NumericUpDown nudMagnumAmmo, NumericUpDown nudShotgunAmmo,
             TrackBar trbHealth)
         {
-            //WriteSaveNumber((UInt16)nudSaveNumber.Value);     // Do we still need this one?
             WriteNumSmallMedipacks((byte)nudSmallMedipacks.Value);
             WriteNumLargeMedipacks((byte)nudLargeMedipacks.Value);
 

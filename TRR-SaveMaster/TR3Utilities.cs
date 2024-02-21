@@ -334,6 +334,12 @@ namespace TRR_SaveMaster
             }
         }
 
+        private bool IsPS4Savegame()
+        {
+            FileInfo fileInfo = new FileInfo(savegamePath);
+            return fileInfo.Length == 0x400000;
+        }
+
         private void DetermineOffsets()
         {
             byte levelIndex = GetLevelIndex();
@@ -664,6 +670,17 @@ namespace TRR_SaveMaster
                 mp5AmmoOffset2 = 0x19C4;
 
                 SetHealthOffsets(0x1810);
+            }
+
+            if (IsPS4Savegame())
+            {
+                for (int i = 0; i < healthOffsets.Count; i++)
+                {
+                    if (healthOffsets[i] >= 0xAAA)
+                    {
+                        healthOffsets[i] -= 2;
+                    }
+                }
             }
         }
 
