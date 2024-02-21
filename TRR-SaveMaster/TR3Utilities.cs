@@ -362,313 +362,106 @@ namespace TRR_SaveMaster
 
             if (levelIndex == 1)        // Jungle
             {
-                deagleAmmoOffset2 = 0x1EDA;
-                uziAmmoOffset2 = 0x1EE2;
-                shotgunAmmoOffset2 = 0x1EEA;
-                harpoonGunAmmoOffset2 = 0x1EF2;
-                rocketLauncherAmmoOffset2 = 0x1EFA;
-                grenadeLauncherAmmoOffset2 = 0x1F02;
-                mp5AmmoOffset2 = 0x1F0A;
-
                 SetHealthOffsets(0xB26);
             }
             else if (levelIndex == 2)   // Temple Ruins
             {
-                deagleAmmoOffset2 = 0x3068;
-                uziAmmoOffset2 = 0x3070;
-                shotgunAmmoOffset2 = 0x3078;
-                harpoonGunAmmoOffset2 = 0x3080;
-                rocketLauncherAmmoOffset2 = 0x3088;
-                grenadeLauncherAmmoOffset2 = 0x3090;
-                mp5AmmoOffset2 = 0x3098;
-
-                SetHealthOffsets(0xDCC);
+                SetHealthOffsets(0xDCC, 0xDE6, 0xE00);
             }
             else if (levelIndex == 3)   // The River Ganges
             {
-                deagleAmmoOffset2 = 0x2152;
-                uziAmmoOffset2 = 0x215A;
-                shotgunAmmoOffset2 = 0x2162;
-                harpoonGunAmmoOffset2 = 0x216A;
-                rocketLauncherAmmoOffset2 = 0x2172;
-                grenadeLauncherAmmoOffset2 = 0x217A;
-                mp5AmmoOffset2 = 0x2182;
-
                 SetHealthOffsets(0xAFC);
             }
             else if (levelIndex == 4)   // Caves of Kaliya
             {
-                deagleAmmoOffset2 = 0x131A;
-                uziAmmoOffset2 = 0x1322;
-                shotgunAmmoOffset2 = 0x132A;
-                harpoonGunAmmoOffset2 = 0x1332;
-                rocketLauncherAmmoOffset2 = 0x133A;
-                grenadeLauncherAmmoOffset2 = 0x1342;
-                mp5AmmoOffset2 = 0x134A;
-
                 SetHealthOffsets(0x1038);
             }
             else if (levelIndex == 5)   // Coastal Village
             {
-                deagleAmmoOffset2 = 0x21E8;
-                uziAmmoOffset2 = 0x21F0;
-                shotgunAmmoOffset2 = 0x21F8;
-                harpoonGunAmmoOffset2 = 0x2200;
-                rocketLauncherAmmoOffset2 = 0x2208;
-                grenadeLauncherAmmoOffset2 = 0x2210;
-                mp5AmmoOffset2 = 0x2218;
-
                 SetHealthOffsets(0xCB8);
             }
             else if (levelIndex == 6)   // Crash Site
             {
-                deagleAmmoOffset2 = 0x222A;
-                uziAmmoOffset2 = 0x2232;
-                shotgunAmmoOffset2 = 0x223A;
-                harpoonGunAmmoOffset2 = 0x2242;
-                rocketLauncherAmmoOffset2 = 0x224A;
-                grenadeLauncherAmmoOffset2 = 0x2252;
-                mp5AmmoOffset2 = 0x225A;
-
                 SetHealthOffsets(0x2046);
             }
             else if (levelIndex == 7)   // Madubu Gorge
             {
-                deagleAmmoOffset2 = 0x1D52;
-                uziAmmoOffset2 = 0x1D5A;
-                shotgunAmmoOffset2 = 0x1D62;
-                harpoonGunAmmoOffset2 = 0x1D6A;
-                rocketLauncherAmmoOffset2 = 0x1D72;
-                grenadeLauncherAmmoOffset2 = 0x1D7A;
-                mp5AmmoOffset2 = 0x1D82;
-
                 SetHealthOffsets(0x1250);
             }
             else if (levelIndex == 8)   // Temple of Puna
             {
-                deagleAmmoOffset2 = 0x1810;
-                uziAmmoOffset2 = 0x1818;
-                shotgunAmmoOffset2 = 0x1820;
-                harpoonGunAmmoOffset2 = 0x1828;
-                rocketLauncherAmmoOffset2 = 0x1830;
-                grenadeLauncherAmmoOffset2 = 0x1838;
-                mp5AmmoOffset2 = 0x1840;
-
                 SetHealthOffsets(0xAD2);
             }
-
             else if (levelIndex == 9)   // Thames Wharf
             {
-                deagleAmmoOffset2 = 0x21D6;
-                uziAmmoOffset2 = 0x21DE;
-                shotgunAmmoOffset2 = 0x21E6;
-                harpoonGunAmmoOffset2 = 0x21EE;
-                rocketLauncherAmmoOffset2 = 0x21F6;
-                grenadeLauncherAmmoOffset2 = 0x21FE;
-                mp5AmmoOffset2 = 0x2206;
-
                 SetHealthOffsets(0x10AA);
             }
             else if (levelIndex == 10)  // Aldwych
             {
-                deagleAmmoOffset2 = 0x2F1E;
-                uziAmmoOffset2 = 0x2F26;
-                shotgunAmmoOffset2 = 0x2F2E;
-                harpoonGunAmmoOffset2 = 0x2F36;
-                rocketLauncherAmmoOffset2 = 0x2F3E;
-                grenadeLauncherAmmoOffset2 = 0x2F46;
-                mp5AmmoOffset2 = 0x2F4E;
-
                 SetHealthOffsets(0x2C9A);
             }
             else if (levelIndex == 11)  // Lud's Gate
             {
-                deagleAmmoOffset2 = 0x27F0;
-                uziAmmoOffset2 = 0x27F8;
-                shotgunAmmoOffset2 = 0x2800;
-                harpoonGunAmmoOffset2 = 0x2808;
-                rocketLauncherAmmoOffset2 = 0x2810;
-                grenadeLauncherAmmoOffset2 = 0x2818;
-                mp5AmmoOffset2 = 0x2820;
-
                 SetHealthOffsets(0xFF0, 0x100A);
             }
             else if (levelIndex == 12)  // City
             {
-                deagleAmmoOffset2 = 0x10EA;
-                uziAmmoOffset2 = 0x10F2;
-                shotgunAmmoOffset2 = 0x10FA;
-                harpoonGunAmmoOffset2 = 0x1102;
-                rocketLauncherAmmoOffset2 = 0x110A;
-                grenadeLauncherAmmoOffset2 = 0x1112;
-                mp5AmmoOffset2 = 0x111A;
-
                 SetHealthOffsets(0xBB2);
             }
             else if (levelIndex == 13)  // Nevada Desert
             {
-                deagleAmmoOffset2 = 0x2126;
-                uziAmmoOffset2 = 0x212E;
-                shotgunAmmoOffset2 = 0x2136;
-                harpoonGunAmmoOffset2 = 0x213E;
-                rocketLauncherAmmoOffset2 = 0x2146;
-                grenadeLauncherAmmoOffset2 = 0x214E;
-                mp5AmmoOffset2 = 0x2156;
-
                 SetHealthOffsets(0xAF8);
             }
             else if (levelIndex == 14)  // High Security Compound
             {
-                deagleAmmoOffset2 = 0x29DE;
-                uziAmmoOffset2 = 0x29E6;
-                shotgunAmmoOffset2 = 0x29EE;
-                harpoonGunAmmoOffset2 = 0x29F6;
-                rocketLauncherAmmoOffset2 = 0x29FE;
-                grenadeLauncherAmmoOffset2 = 0x2A06;
-                mp5AmmoOffset2 = 0x2A0E;
-
                 SetHealthOffsets(0xB4C);
             }
             else if (levelIndex == 15)  // Area 51
             {
-                deagleAmmoOffset2 = 0x2CB0;
-                uziAmmoOffset2 = 0x2CB8;
-                shotgunAmmoOffset2 = 0x2CC0;
-                harpoonGunAmmoOffset2 = 0x2CC8;
-                rocketLauncherAmmoOffset2 = 0x2CD0;
-                grenadeLauncherAmmoOffset2 = 0x2CD8;
-                mp5AmmoOffset2 = 0x2CE0;
-
                 SetHealthOffsets(0x11E4);
             }
             else if (levelIndex == 16)  // Antarctica
             {
-                deagleAmmoOffset2 = 0x2320;
-                uziAmmoOffset2 = 0x2328;
-                shotgunAmmoOffset2 = 0x2330;
-                harpoonGunAmmoOffset2 = 0x2338;
-                rocketLauncherAmmoOffset2 = 0x2340;
-                grenadeLauncherAmmoOffset2 = 0x2348;
-                mp5AmmoOffset2 = 0x2350;
-
                 SetHealthOffsets(0xB12);
             }
             else if (levelIndex == 17)  // RX-Tech Mines
             {
-                deagleAmmoOffset2 = 0x2368;
-                uziAmmoOffset2 = 0x2370;
-                shotgunAmmoOffset2 = 0x2378;
-                harpoonGunAmmoOffset2 = 0x2380;
-                rocketLauncherAmmoOffset2 = 0x2388;
-                grenadeLauncherAmmoOffset2 = 0x2390;
-                mp5AmmoOffset2 = 0x2398;
-
                 SetHealthOffsets(0xFB0);
             }
             else if (levelIndex == 18)  // Lost City of Tinnos
             {
-                deagleAmmoOffset2 = 0x28F4;
-                uziAmmoOffset2 = 0x28FC;
-                shotgunAmmoOffset2 = 0x2904;
-                harpoonGunAmmoOffset2 = 0x290C;
-                rocketLauncherAmmoOffset2 = 0x2914;
-                grenadeLauncherAmmoOffset2 = 0x291C;
-                mp5AmmoOffset2 = 0x2924;
-
                 SetHealthOffsets(0xB7C);
             }
             else if (levelIndex == 19)  // Meteorite Cavern
             {
-                deagleAmmoOffset2 = 0x109A;
-                uziAmmoOffset2 = 0x10A2;
-                shotgunAmmoOffset2 = 0x10AA;
-                harpoonGunAmmoOffset2 = 0x10B2;
-                rocketLauncherAmmoOffset2 = 0x10BA;
-                grenadeLauncherAmmoOffset2 = 0x10C2;
-                mp5AmmoOffset2 = 0x10CA;
-
                 SetHealthOffsets(0xAD0);
             }
             else if (levelIndex == 20)  // All Hallows
             {
-                //deagleAmmoOffset2 = 0;
-                //uziAmmoOffset2 = 0;
-                //shotgunAmmoOffset2 = 0;
-                //harpoonGunAmmoOffset2 = 0;
-                //rocketLauncherAmmoOffset2 = 0;
-                //grenadeLauncherAmmoOffset2 = 0;
-                //mp5AmmoOffset2 = 0;
+                // Need to find health offsets for this level...
             }
             else if (levelIndex == 21)  // Highland Fling
             {
-                deagleAmmoOffset2 = 0x2102;
-                uziAmmoOffset2 = 0x210A;
-                shotgunAmmoOffset2 = 0x2112;
-                harpoonGunAmmoOffset2 = 0x211A;
-                rocketLauncherAmmoOffset2 = 0x2122;
-                grenadeLauncherAmmoOffset2 = 0x212A;
-                mp5AmmoOffset2 = 0x2132;
-
                 SetHealthOffsets(0x1BF4);
             }
             else if (levelIndex == 22)  // Willard's Lair
             {
-                deagleAmmoOffset2 = 0x2486;
-                uziAmmoOffset2 = 0x248E;
-                shotgunAmmoOffset2 = 0x2496;
-                harpoonGunAmmoOffset2 = 0x249E;
-                rocketLauncherAmmoOffset2 = 0x24A6;
-                grenadeLauncherAmmoOffset2 = 0x24AE;
-                mp5AmmoOffset2 = 0x24B6;
-
                 SetHealthOffsets(0x15EE);
             }
             else if (levelIndex == 23)  // Shakespeare Cliff
             {
-                deagleAmmoOffset2 = 0x2524;
-                uziAmmoOffset2 = 0x252C;
-                shotgunAmmoOffset2 = 0x2534;
-                harpoonGunAmmoOffset2 = 0x253C;
-                rocketLauncherAmmoOffset2 = 0x2544;
-                grenadeLauncherAmmoOffset2 = 0x254C;
-                mp5AmmoOffset2 = 0x2554;
-
                 SetHealthOffsets(0x1338);
             }
             else if (levelIndex == 24)  // Sleeping with the Fishes
             {
-                deagleAmmoOffset2 = 0x2326;
-                uziAmmoOffset2 = 0x232E;
-                shotgunAmmoOffset2 = 0x2336;
-                harpoonGunAmmoOffset2 = 0x233E;
-                rocketLauncherAmmoOffset2 = 0x2346;
-                grenadeLauncherAmmoOffset2 = 0x234E;
-                mp5AmmoOffset2 = 0x2356;
-
                 SetHealthOffsets(0xB5A);
             }
             else if (levelIndex == 25)  // It's a Madhouse!
             {
-                deagleAmmoOffset2 = 0x1F84;
-                uziAmmoOffset2 = 0x1F8C;
-                shotgunAmmoOffset2 = 0x1F94;
-                harpoonGunAmmoOffset2 = 0x1F9C;
-                rocketLauncherAmmoOffset2 = 0x1FA4;
-                grenadeLauncherAmmoOffset2 = 0x1FAC;
-                mp5AmmoOffset2 = 0x1FB4;
-
                 SetHealthOffsets(0x1084);
             }
             else if (levelIndex == 26)  // Reunion
             {
-                deagleAmmoOffset2 = 0x1994;
-                uziAmmoOffset2 = 0x199C;
-                shotgunAmmoOffset2 = 0x19A4;
-                harpoonGunAmmoOffset2 = 0x19AC;
-                rocketLauncherAmmoOffset2 = 0x19B4;
-                grenadeLauncherAmmoOffset2 = 0x19BC;
-                mp5AmmoOffset2 = 0x19C4;
-
                 SetHealthOffsets(0x1810);
             }
 
@@ -789,13 +582,16 @@ namespace TRR_SaveMaster
 
             if (secondaryAmmoIndex != -1)
             {
-                mp5AmmoOffset2 = GetSecondaryAmmoOffset(mp5AmmoOffset2);
-                grenadeLauncherAmmoOffset2 = GetSecondaryAmmoOffset(grenadeLauncherAmmoOffset2);
-                rocketLauncherAmmoOffset2 = GetSecondaryAmmoOffset(rocketLauncherAmmoOffset2);
-                harpoonGunAmmoOffset2 = GetSecondaryAmmoOffset(harpoonGunAmmoOffset2);
-                shotgunAmmoOffset2 = GetSecondaryAmmoOffset(shotgunAmmoOffset2);
-                uziAmmoOffset2 = GetSecondaryAmmoOffset(uziAmmoOffset2);
-                deagleAmmoOffset2 = GetSecondaryAmmoOffset(deagleAmmoOffset2);
+                byte levelIndex = GetLevelIndex();
+                int baseSecondaryAmmoOffset = ammoIndexData[levelIndex][0];
+
+                deagleAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0xAC);
+                uziAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0xA4);
+                shotgunAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x9C);
+                harpoonGunAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x94);
+                rocketLauncherAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x8C);
+                grenadeLauncherAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x84);
+                mp5AmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x7C);
             }
 
             WriteShotgunAmmo(chkShotgun.Checked, (UInt16)(nudShotgunAmmo.Value * 6));
