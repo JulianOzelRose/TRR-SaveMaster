@@ -53,7 +53,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>TR_Remastered_Icon.ico</ApplicationIcon>
+    <ApplicationIcon>TRR-SaveMaster.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -119,7 +119,7 @@
   <ItemGroup>
     <Content Include="bin\x64\Release\TRR-SaveMaster.exe" />
     <Content Include="Images\About_Background.png" />
-    <Content Include="TR_Remastered_Icon.ico" />
+    <Content Include="TRR-SaveMaster.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
