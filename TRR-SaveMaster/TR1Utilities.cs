@@ -221,10 +221,13 @@ namespace TRR_SaveMaster
 
         private bool IsKnownByteFlagPattern(byte byteFlag1, byte byteFlag2, byte byteFlag3)
         {
-            if (byteFlag1 == 0x02 && byteFlag2 == 0x00 && byteFlag3 == 0x02) return true;        // Standing
-            if (byteFlag1 == 0x13 && byteFlag2 == 0x00 && byteFlag3 == 0x13) return true;        // Climbing
-            if (byteFlag1 == 0x21 && byteFlag2 == 0x00 && byteFlag3 == 0x21) return true;        // On water
-            if (byteFlag1 == 0x0D && byteFlag2 == 0x00 && byteFlag3 == 0x0D) return true;        // Underwater
+            if (byteFlag1 == 0x02 && byteFlag2 == 0x00 && byteFlag3 == 0x02) return true;       // Standing
+            if (byteFlag1 == 0x13 && byteFlag2 == 0x00 && byteFlag3 == 0x13) return true;       // Climbing
+            if (byteFlag1 == 0x21 && byteFlag2 == 0x00 && byteFlag3 == 0x21) return true;       // On water
+            if (byteFlag1 == 0x0D && byteFlag2 == 0x00 && byteFlag3 == 0x0D) return true;       // Underwater
+            if (byteFlag1 == 0x17 && byteFlag2 == 0x00 && byteFlag3 == 0x02) return true;       // Rolling
+            if (byteFlag1 == 0x41 && byteFlag2 == 0x00 && byteFlag3 == 0x02) return true;       // Walking on top of water
+            if (byteFlag1 == 0x41 && byteFlag2 == 0x00 && byteFlag3 == 0x41) return true;       // Walking on top of water 2
 
             return false;
         }

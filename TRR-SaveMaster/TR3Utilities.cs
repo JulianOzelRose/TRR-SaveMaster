@@ -442,7 +442,7 @@ namespace TRR_SaveMaster
             }
             else if (levelIndex == 21)  // Highland Fling
             {
-                SetHealthOffsets(0x1BF4);
+                SetHealthOffsets(0x1BF4, 0x1C0E);
             }
             else if (levelIndex == 22)  // Willard's Lair
             {
@@ -626,6 +626,9 @@ namespace TRR_SaveMaster
             if (byteFlag1 == 0x13 && byteFlag2 == 0x00 && byteFlag3 == 0x13) return true;       // Climbing
             if (byteFlag1 == 0x21 && byteFlag2 == 0x00 && byteFlag3 == 0x21) return true;       // On water
             if (byteFlag1 == 0x0D && byteFlag2 == 0x00 && byteFlag3 == 0x0D) return true;       // Underwater
+            if (byteFlag1 == 0x17 && byteFlag2 == 0x00 && byteFlag3 == 0x02) return true;       // Rolling
+            if (byteFlag1 == 0x41 && byteFlag2 == 0x00 && byteFlag3 == 0x02) return true;       // Walking on top of water
+            if (byteFlag1 == 0x41 && byteFlag2 == 0x00 && byteFlag3 == 0x41) return true;       // Walking on top of water 2
 
             return false;
         }
