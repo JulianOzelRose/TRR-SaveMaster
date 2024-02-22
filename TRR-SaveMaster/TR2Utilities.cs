@@ -180,7 +180,7 @@ namespace TRR_SaveMaster
             return healthPercentage;
         }
 
-        private readonly Dictionary<byte, int[]> ammoIndexData = new Dictionary<byte, int[]>
+        private readonly Dictionary<byte, int[]> ammoIndexDataPC = new Dictionary<byte, int[]>
         {
             {  1, new int[] { 0x19BA, 0x19BB, 0x19BC, 0x19BD } },   // The Great Wall
             {  2, new int[] { 0x1CFC, 0x1CFD, 0x1CFE, 0x1CFF } },   // Venice
@@ -206,9 +206,46 @@ namespace TRR_SaveMaster
             { 22, new int[] { 0x210A, 0x210B, 0x210C, 0x210D } },   // Kingdom
         };
 
+        private readonly Dictionary<byte, int[]> ammoIndexDataPS4 = new Dictionary<byte, int[]>
+        {
+            {  1, new int[] { 0x19B6, 0x19B7, 0x19B8, 0x19B9 } },   // The Great Wall
+            {  2, new int[] { 0x1CF8, 0x1CF9, 0x1CFA, 0x1CFB } },   // Venice
+            {  3, new int[] { 0x1F0C, 0x1F0D, 0x1F0E, 0x1F0F } },   // Bartoli's Hideout
+            {  4, new int[] { 0x2A1E, 0x2A1F, 0x2A20, 0x2A21 } },   // Opera House
+            {  5, new int[] { 0x1AEA, 0x1AEB, 0x1AEC, 0x1AED } },   // Offshore Rig
+            {  6, new int[] { 0x1EB8, 0x1EB9, 0x1EBA, 0x1EBB } },   // Diving Area
+            {  7, new int[] { 0x140C, 0x140D, 0x140E, 0x140F } },   // 40 Fathoms
+            {  8, new int[] { 0x2594, 0x2595, 0x2596, 0x2597 } },   // Wreck of the Maria Doria
+            {  9, new int[] { 0x17BE, 0x17BF, 0x17C0, 0x17C1 } },   // Living Quarters
+            { 10, new int[] { 0x1C0A, 0x1C0A, 0x1C0B, 0x1C0E } },   // The Deck
+            { 11, new int[] { 0x1F5E, 0x1F5F, 0x1F60, 0x1F61 } },   // Tibetan Foothills
+            { 12, new int[] { 0x2B52, 0x2B53, 0x2B54, 0x2B55 } },   // Barkhang Monastery
+            { 13, new int[] { 0x227E, 0x227F, 0x2280, 0x2281 } },   // Catacombs of the Talion
+            { 14, new int[] { 0x1DEA, 0x1DEB, 0x1DEC, 0x1DED } },   // Ice Palace
+            { 15, new int[] { 0x2CAE, 0x2CAB, 0x2CAC, 0x2CAD } },   // Temple of Xian
+            { 16, new int[] { 0x1E3E, 0x1E3F, 0x1E40, 0x1E41 } },   // Floating Islands
+            { 17, new int[] { 0x1578, 0x1579, 0x157A, 0x157B } },   // The Dragon's Lair
+            { 18, new int[] { 0x1AAC, 0x1AAB, 0x1AAC, 0x1AAD } },   // Home Sweet Home
+            { 19, new int[] { 0x2CF6, 0x2CF7, 0x2CF8, 0x2CF9 } },   // The Cold War
+            { 20, new int[] { 0x2CEE, 0x2CEF, 0x2CF0, 0x2CF1 } },   // Fool's Gold
+            { 21, new int[] { 0x2AEC, 0x2AED, 0x2AEE, 0x2AEF } },   // Furnace of the Gods
+            { 22, new int[] { 0x2106, 0x2107, 0x2108, 0x2109 } },   // Kingdom
+        };
+
         private int GetSecondaryAmmoIndex()
         {
             byte levelIndex = GetLevelIndex();
+
+            Dictionary<byte, int[]> ammoIndexData;
+
+            if (IsPS4Savegame())
+            {
+                ammoIndexData = ammoIndexDataPS4;
+            }
+            else
+            {
+                ammoIndexData = ammoIndexDataPC;
+            }
 
             if (ammoIndexData.ContainsKey(levelIndex))
             {
@@ -685,6 +722,17 @@ namespace TRR_SaveMaster
 
             if (secondaryAmmoIndex != -1)
             {
+                Dictionary<byte, int[]> ammoIndexData;
+
+                if (IsPS4Savegame())
+                {
+                    ammoIndexData = ammoIndexDataPS4;
+                }
+                else
+                {
+                    ammoIndexData = ammoIndexDataPC;
+                }
+
                 int baseSecondaryAmmoOffset = ammoIndexData[levelIndex][0];
 
                 automaticPistolsAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0xAC);

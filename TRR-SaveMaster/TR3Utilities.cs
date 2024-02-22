@@ -583,6 +583,18 @@ namespace TRR_SaveMaster
             if (secondaryAmmoIndex != -1)
             {
                 byte levelIndex = GetLevelIndex();
+
+                Dictionary<byte, int[]> ammoIndexData;
+
+                if (IsPS4Savegame())
+                {
+                    ammoIndexData = ammoIndexDataPS4;
+                }
+                else
+                {
+                    ammoIndexData = ammoIndexDataPC;
+                }
+
                 int baseSecondaryAmmoOffset = ammoIndexData[levelIndex][0];
 
                 deagleAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0xAC);
@@ -658,7 +670,7 @@ namespace TRR_SaveMaster
             { 26, "Reunion"                     },
         };
 
-        private readonly Dictionary<byte, int[]> ammoIndexData = new Dictionary<byte, int[]>()
+        private readonly Dictionary<byte, int[]> ammoIndexDataPC = new Dictionary<byte, int[]>()
         {
             {  1, new int[] { 0x1F86, 0x1F87, 0x1F88, 0x1F89 } },   // Jungle
             {  2, new int[] { 0x3114, 0x3115, 0x3116, 0x3117 } },   // Temple Ruins
@@ -687,9 +699,49 @@ namespace TRR_SaveMaster
             { 26, new int[] { 0x1A40, 0x1A41, 0x1A42, 0x1A43 } },   // Reunion
         };
 
+        private readonly Dictionary<byte, int[]> ammoIndexDataPS4 = new Dictionary<byte, int[]>()
+        {
+            {  1, new int[] { 0x1F84, 0x1F85, 0x1F86, 0x1F87 } },   // Jungle
+            {  2, new int[] { 0x3112, 0x3113, 0x3114, 0x3115 } },   // Temple Ruins
+            {  3, new int[] { 0x21FC, 0x21FD, 0x21FE, 0x21FF } },   // The River Ganges
+            {  4, new int[] { 0x13C4, 0x13C5, 0x13C6, 0x13C7 } },   // Caves of Kaliya
+            {  5, new int[] { 0x2292, 0x2293, 0x2294, 0x2295 } },   // Coastal Village
+            {  6, new int[] { 0x22D4, 0x22D5, 0x22D6, 0x22D7 } },   // Crash Site
+            {  7, new int[] { 0x1DFC, 0x1DFD, 0x1DFE, 0x1DFF } },   // Madubu Gorge
+            {  8, new int[] { 0x18BA, 0x18BB, 0x18BC, 0x18BD } },   // Temple of Puna
+            {  9, new int[] { 0x2280, 0x2281, 0x2282, 0x2283 } },   // Thames Wharf
+            { 10, new int[] { 0x2FC8, 0x2FC9, 0x2FCA, 0x2FCB } },   // Aldwych
+            { 11, new int[] { 0x289A, 0x289B, 0x289C, 0x289D } },   // Lud's Gate
+            { 12, new int[] { 0x1194, 0x1195, 0x1196, 0x1197 } },   // City
+            { 13, new int[] { 0x21D0, 0x21D1, 0x21D2, 0x21D3 } },   // Nevada Desert
+            { 14, new int[] { 0x2A88, 0x2A89, 0x2A8A, 0x2A8B } },   // High Security Compound
+            { 15, new int[] { 0x2D5A, 0x2D5B, 0x2D5C, 0x2D5D } },   // Area 51
+            { 16, new int[] { 0x23CA, 0x23CB, 0x23CC, 0x23CD } },   // Antarctica
+            { 17, new int[] { 0x2412, 0x2413, 0x2414, 0x2415 } },   // RX-Tech Mines
+            { 18, new int[] { 0x299E, 0x299F, 0x29A0, 0x29A1 } },   // Lost City of Tinnos
+            { 19, new int[] { 0x1144, 0x1145, 0x1146, 0x1147 } },   // Meteorite Cavern
+            { 21, new int[] { 0x21AC, 0x21AD, 0x21AE, 0x21AF } },   // Highland Fling
+            { 22, new int[] { 0x2530, 0x2531, 0x2532, 0x2533 } },   // Willard's Lair
+            { 23, new int[] { 0x25CE, 0x25CF, 0x25D0, 0x25D1 } },   // Shakespeare Cliff
+            { 24, new int[] { 0x23D0, 0x23D1, 0x23D2, 0x23D3 } },   // Sleeping with the Fishes
+            { 25, new int[] { 0x202E, 0x202F, 0x2030, 0x2031 } },   // It's a Madhouse!
+            { 26, new int[] { 0x1A3E, 0x1A3F, 0x1A40, 0x1A41 } },   // Reunion
+        };
+
         private int GetSecondaryAmmoIndex()
         {
             byte levelIndex = GetLevelIndex();
+
+            Dictionary<byte, int[]> ammoIndexData;
+
+            if (IsPS4Savegame())
+            {
+                ammoIndexData = ammoIndexDataPS4;
+            }
+            else
+            {
+                ammoIndexData = ammoIndexDataPC;
+            }
 
             if (ammoIndexData.ContainsKey(levelIndex))
             {
