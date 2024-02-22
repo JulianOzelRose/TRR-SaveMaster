@@ -2,6 +2,7 @@
 This is a savegame editor for Tomb Raider I-III Remastered. It works on all levels and expansions. You can change health, weapons, ammunition and more.
 Compatible with PC and PS4 savegames. For instructions on how to download and use this savegame editor, scroll down to
 the section below. Additionally, technical details on reverse engineering the Tomb Raider I-III Remastered series are included on later on in this README.
+For a tool that allows you to transfer individual savegames from one file to another and convert to and from PC/PS4, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
 ![TRR-SaveMaster-UI](https://github.com/JulianOzelRose/TRR-SaveMaster/assets/95890436/81f76d43-0996-454a-9d2d-105f429a20a9)
 
