@@ -34,6 +34,9 @@ namespace TRR_SaveMaster
 
             btnRefreshTR1.Enabled = !string.IsNullOrEmpty(savegamePath);
             tsmiCreateBackup.Enabled = !string.IsNullOrEmpty(savegamePath);
+
+            slblStatus.Text = !string.IsNullOrEmpty(savegamePath) ?
+                $"{cmbSavegamesTR1.Items.Count} savegames found for Tomb Raider I" : "Ready";
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
@@ -125,7 +128,7 @@ namespace TRR_SaveMaster
 
                     tsmiCreateBackup.Enabled = true;
 
-                    slblStatus.Text = $"Loaded file: \"{savegamePath}\"";
+                    slblStatus.Text = $"Loaded savegame file: \"{savegamePath}\"";
                 }
             }
         }
@@ -340,7 +343,7 @@ namespace TRR_SaveMaster
 
                 DisableButtonsTR1();
 
-                slblStatus.Text = $"Successfully patched savegame: {savegame.Name} - {savegame.Number}";
+                slblStatus.Text = $"Successfully patched savegame: '{savegame.Name} - {savegame.Number}'";
             }
             catch (Exception ex)
             {
@@ -366,7 +369,7 @@ namespace TRR_SaveMaster
 
                 DisableButtonsTR2();
 
-                slblStatus.Text = $"Successfully patched savegame: {savegame.Name} - {savegame.Number}";
+                slblStatus.Text = $"Successfully patched savegame: '{savegame.Name} - {savegame.Number}'";
             }
             catch (Exception ex)
             {
@@ -391,7 +394,7 @@ namespace TRR_SaveMaster
 
                 DisableButtonsTR3();
 
-                slblStatus.Text = $"Successfully patched savegame: {savegame.Name} - {savegame.Number}";
+                slblStatus.Text = $"Successfully patched savegame: '{savegame.Name} - {savegame.Number}'";
             }
             catch (Exception ex)
             {
@@ -421,6 +424,9 @@ namespace TRR_SaveMaster
             {
                 cmbSavegamesTR1.Items.Clear();
                 TR1.PopulateSavegames(cmbSavegamesTR1);
+
+                slblStatus.Text = !string.IsNullOrEmpty(savegamePath) ?
+                    $"{cmbSavegamesTR1.Items.Count} savegames found for Tomb Raider I" : "Ready";
             }
             else
             {
@@ -434,6 +440,9 @@ namespace TRR_SaveMaster
             {
                 cmbSavegamesTR2.Items.Clear();
                 TR2.PopulateSavegames(cmbSavegamesTR2);
+
+                slblStatus.Text = !string.IsNullOrEmpty(savegamePath) ?
+                    $"{cmbSavegamesTR2.Items.Count} savegames found for Tomb Raider II" : "Ready";
             }
             else
             {
@@ -447,6 +456,9 @@ namespace TRR_SaveMaster
             {
                 cmbSavegamesTR3.Items.Clear();
                 TR3.PopulateSavegames(cmbSavegamesTR3);
+
+                slblStatus.Text = !string.IsNullOrEmpty(savegamePath) ?
+                    $"{cmbSavegamesTR3.Items.Count} savegames found for Tomb Raider III" : "Ready";
             }
             else
             {
@@ -469,7 +481,7 @@ namespace TRR_SaveMaster
 
                 isLoading = false;
 
-                slblStatus.Text = $"Successfully loaded savegame: {selectedSavegame.Name} - {selectedSavegame.Number}";
+                slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame.Name} - {selectedSavegame.Number}'";
             }
         }
 
@@ -495,7 +507,7 @@ namespace TRR_SaveMaster
 
                 isLoading = false;
 
-                slblStatus.Text = $"Successfully loaded savegame: {selectedSavegame.Name} - {selectedSavegame.Number}";
+                slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame.Name} - {selectedSavegame.Number}'";
             }
         }
 
@@ -517,7 +529,7 @@ namespace TRR_SaveMaster
 
                 isLoading = false;
 
-                slblStatus.Text = $"Successfully loaded savegame: {savegame.Name} - {savegame.Number}";
+                slblStatus.Text = $"Successfully loaded savegame: '{savegame.Name} - {savegame.Number}'";
             }
         }
 
@@ -535,6 +547,9 @@ namespace TRR_SaveMaster
                 {
                     DisplayGameInfoTR1(cmbSavegamesTR1.SelectedItem as Savegame);
                 }
+
+                slblStatus.Text = !string.IsNullOrEmpty(savegamePath) ?
+                    $"{cmbSavegamesTR1.Items.Count} savegames found for Tomb Raider I" : "Ready";
             }
             else if (tabGame.SelectedIndex == TAB_TR2)
             {
@@ -548,6 +563,9 @@ namespace TRR_SaveMaster
                 {
                     DisplayGameInfoTR2(cmbSavegamesTR2.SelectedItem as Savegame);
                 }
+
+                slblStatus.Text = !string.IsNullOrEmpty(savegamePath) ?
+                    $"{cmbSavegamesTR2.Items.Count} savegames found for Tomb Raider II" : "Ready";
             }
             else if (tabGame.SelectedIndex == TAB_TR3)
             {
@@ -561,6 +579,9 @@ namespace TRR_SaveMaster
                 {
                     DisplayGameInfoTR3(cmbSavegamesTR3.SelectedItem as Savegame);
                 }
+
+                slblStatus.Text = !string.IsNullOrEmpty(savegamePath) ?
+                    $"{cmbSavegamesTR3.Items.Count} savegames found for Tomb Raider III" : "Ready";
             }
         }
 
@@ -622,7 +643,7 @@ namespace TRR_SaveMaster
 
                 File.Copy(savegamePath, backupFilePath, true);
 
-                slblStatus.Text = $"Created savegame backup: {backupFilePath}";
+                slblStatus.Text = $"Created savegame backup: \"{backupFilePath}\"";
             }
         }
 
