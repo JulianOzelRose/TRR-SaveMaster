@@ -61,7 +61,7 @@ namespace TRR_SaveMaster
             this.btnSaveTR2 = new System.Windows.Forms.Button();
             this.btnCancelTR2 = new System.Windows.Forms.Button();
             this.btnRefreshTR2 = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
+            this.lblSavegameTR2 = new System.Windows.Forms.Label();
             this.cmbSavegamesTR2 = new System.Windows.Forms.ComboBox();
             this.grpWeaponsTR2 = new System.Windows.Forms.GroupBox();
             this.lblPistolAmmoTR2 = new System.Windows.Forms.Label();
@@ -103,14 +103,14 @@ namespace TRR_SaveMaster
             this.chkGrenadeLauncherTR3 = new System.Windows.Forms.CheckBox();
             this.nudUziAmmoTR3 = new System.Windows.Forms.NumericUpDown();
             this.nudMP5AmmoTR3 = new System.Windows.Forms.NumericUpDown();
-            this.nudHarpoonGunAmmoTR3 = new System.Windows.Forms.NumericUpDown();
             this.nudRocketLauncherAmmoTR3 = new System.Windows.Forms.NumericUpDown();
             this.nudGrenadeLauncherAmmoTR3 = new System.Windows.Forms.NumericUpDown();
+            this.nudHarpoonGunAmmoTR3 = new System.Windows.Forms.NumericUpDown();
             this.nudDeagleAmmoTR3 = new System.Windows.Forms.NumericUpDown();
-            this.chkShotgunTR3 = new System.Windows.Forms.CheckBox();
             this.chkRocketLauncherTR3 = new System.Windows.Forms.CheckBox();
-            this.chkMP5TR3 = new System.Windows.Forms.CheckBox();
             this.chkUziTR3 = new System.Windows.Forms.CheckBox();
+            this.chkShotgunTR3 = new System.Windows.Forms.CheckBox();
+            this.chkMP5TR3 = new System.Windows.Forms.CheckBox();
             this.chkDeagleTR3 = new System.Windows.Forms.CheckBox();
             this.chkPistolsTR3 = new System.Windows.Forms.CheckBox();
             this.grpHealthTR3 = new System.Windows.Forms.GroupBox();
@@ -172,9 +172,9 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudShotgunAmmoTR3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudUziAmmoTR3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMP5AmmoTR3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudHarpoonGunAmmoTR3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRocketLauncherAmmoTR3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGrenadeLauncherAmmoTR3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHarpoonGunAmmoTR3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDeagleAmmoTR3)).BeginInit();
             this.grpHealthTR3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trbHealthTR3)).BeginInit();
@@ -225,7 +225,7 @@ namespace TRR_SaveMaster
             // btnRefreshTR1
             // 
             this.btnRefreshTR1.Enabled = false;
-            this.btnRefreshTR1.Location = new System.Drawing.Point(626, 13);
+            this.btnRefreshTR1.Location = new System.Drawing.Point(628, 13);
             this.btnRefreshTR1.Name = "btnRefreshTR1";
             this.btnRefreshTR1.Size = new System.Drawing.Size(80, 23);
             this.btnRefreshTR1.TabIndex = 30;
@@ -236,7 +236,7 @@ namespace TRR_SaveMaster
             // lblSavegameTR1
             // 
             this.lblSavegameTR1.AutoSize = true;
-            this.lblSavegameTR1.Location = new System.Drawing.Point(389, 17);
+            this.lblSavegameTR1.Location = new System.Drawing.Point(376, 18);
             this.lblSavegameTR1.Name = "lblSavegameTR1";
             this.lblSavegameTR1.Size = new System.Drawing.Size(61, 13);
             this.lblSavegameTR1.TabIndex = 22;
@@ -297,9 +297,9 @@ namespace TRR_SaveMaster
             // 
             this.cmbSavegamesTR1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSavegamesTR1.FormattingEnabled = true;
-            this.cmbSavegamesTR1.Location = new System.Drawing.Point(456, 14);
+            this.cmbSavegamesTR1.Location = new System.Drawing.Point(441, 14);
             this.cmbSavegamesTR1.Name = "cmbSavegamesTR1";
-            this.cmbSavegamesTR1.Size = new System.Drawing.Size(165, 21);
+            this.cmbSavegamesTR1.Size = new System.Drawing.Size(182, 21);
             this.cmbSavegamesTR1.TabIndex = 21;
             this.cmbSavegamesTR1.SelectedIndexChanged += new System.EventHandler(this.cmbSavegamesTR1_SelectedIndexChanged);
             // 
@@ -503,7 +503,7 @@ namespace TRR_SaveMaster
             this.tpTR2.Controls.Add(this.btnSaveTR2);
             this.tpTR2.Controls.Add(this.btnCancelTR2);
             this.tpTR2.Controls.Add(this.btnRefreshTR2);
-            this.tpTR2.Controls.Add(this.label9);
+            this.tpTR2.Controls.Add(this.lblSavegameTR2);
             this.tpTR2.Controls.Add(this.cmbSavegamesTR2);
             this.tpTR2.Controls.Add(this.grpWeaponsTR2);
             this.tpTR2.Controls.Add(this.grpHealthTR2);
@@ -549,7 +549,7 @@ namespace TRR_SaveMaster
             // btnRefreshTR2
             // 
             this.btnRefreshTR2.Enabled = false;
-            this.btnRefreshTR2.Location = new System.Drawing.Point(626, 13);
+            this.btnRefreshTR2.Location = new System.Drawing.Point(628, 13);
             this.btnRefreshTR2.Name = "btnRefreshTR2";
             this.btnRefreshTR2.Size = new System.Drawing.Size(80, 23);
             this.btnRefreshTR2.TabIndex = 35;
@@ -557,22 +557,22 @@ namespace TRR_SaveMaster
             this.btnRefreshTR2.UseVisualStyleBackColor = true;
             this.btnRefreshTR2.Click += new System.EventHandler(this.btnRefreshTR2_Click);
             // 
-            // label9
+            // lblSavegameTR2
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(389, 17);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(61, 13);
-            this.label9.TabIndex = 27;
-            this.label9.Text = "Savegame:";
+            this.lblSavegameTR2.AutoSize = true;
+            this.lblSavegameTR2.Location = new System.Drawing.Point(376, 18);
+            this.lblSavegameTR2.Name = "lblSavegameTR2";
+            this.lblSavegameTR2.Size = new System.Drawing.Size(61, 13);
+            this.lblSavegameTR2.TabIndex = 27;
+            this.lblSavegameTR2.Text = "Savegame:";
             // 
             // cmbSavegamesTR2
             // 
             this.cmbSavegamesTR2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSavegamesTR2.FormattingEnabled = true;
-            this.cmbSavegamesTR2.Location = new System.Drawing.Point(456, 14);
+            this.cmbSavegamesTR2.Location = new System.Drawing.Point(441, 14);
             this.cmbSavegamesTR2.Name = "cmbSavegamesTR2";
-            this.cmbSavegamesTR2.Size = new System.Drawing.Size(165, 21);
+            this.cmbSavegamesTR2.Size = new System.Drawing.Size(182, 21);
             this.cmbSavegamesTR2.TabIndex = 26;
             this.cmbSavegamesTR2.SelectedIndexChanged += new System.EventHandler(this.cmbSavegamesTR2_SelectedIndexChanged);
             // 
@@ -915,7 +915,7 @@ namespace TRR_SaveMaster
             // btnRefreshTR3
             // 
             this.btnRefreshTR3.Enabled = false;
-            this.btnRefreshTR3.Location = new System.Drawing.Point(626, 13);
+            this.btnRefreshTR3.Location = new System.Drawing.Point(628, 13);
             this.btnRefreshTR3.Name = "btnRefreshTR3";
             this.btnRefreshTR3.Size = new System.Drawing.Size(80, 23);
             this.btnRefreshTR3.TabIndex = 36;
@@ -958,7 +958,7 @@ namespace TRR_SaveMaster
             // lblSavegameTR3
             // 
             this.lblSavegameTR3.AutoSize = true;
-            this.lblSavegameTR3.Location = new System.Drawing.Point(389, 17);
+            this.lblSavegameTR3.Location = new System.Drawing.Point(376, 18);
             this.lblSavegameTR3.Name = "lblSavegameTR3";
             this.lblSavegameTR3.Size = new System.Drawing.Size(61, 13);
             this.lblSavegameTR3.TabIndex = 19;
@@ -968,9 +968,9 @@ namespace TRR_SaveMaster
             // 
             this.cmbSavegamesTR3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSavegamesTR3.FormattingEnabled = true;
-            this.cmbSavegamesTR3.Location = new System.Drawing.Point(456, 14);
+            this.cmbSavegamesTR3.Location = new System.Drawing.Point(441, 14);
             this.cmbSavegamesTR3.Name = "cmbSavegamesTR3";
-            this.cmbSavegamesTR3.Size = new System.Drawing.Size(165, 21);
+            this.cmbSavegamesTR3.Size = new System.Drawing.Size(182, 21);
             this.cmbSavegamesTR3.TabIndex = 18;
             this.cmbSavegamesTR3.SelectedIndexChanged += new System.EventHandler(this.cmbSavegamesTR3_SelectedIndexChanged);
             // 
@@ -1072,20 +1072,6 @@ namespace TRR_SaveMaster
             this.nudMP5AmmoTR3.ValueChanged += new System.EventHandler(this.nudMP5AmmoTR3_ValueChanged);
             this.nudMP5AmmoTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudMP5AmmoTR3_KeyPress);
             // 
-            // nudHarpoonGunAmmoTR3
-            // 
-            this.nudHarpoonGunAmmoTR3.Location = new System.Drawing.Point(288, 204);
-            this.nudHarpoonGunAmmoTR3.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.nudHarpoonGunAmmoTR3.Name = "nudHarpoonGunAmmoTR3";
-            this.nudHarpoonGunAmmoTR3.Size = new System.Drawing.Size(53, 20);
-            this.nudHarpoonGunAmmoTR3.TabIndex = 12;
-            this.nudHarpoonGunAmmoTR3.ValueChanged += new System.EventHandler(this.nudHarpoonGunAmmoTR3_ValueChanged);
-            this.nudHarpoonGunAmmoTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudHarpoonGunAmmoTR3_KeyPress);
-            // 
             // nudRocketLauncherAmmoTR3
             // 
             this.nudRocketLauncherAmmoTR3.Location = new System.Drawing.Point(288, 152);
@@ -1114,6 +1100,20 @@ namespace TRR_SaveMaster
             this.nudGrenadeLauncherAmmoTR3.ValueChanged += new System.EventHandler(this.nudGrenadeLauncherAmmoTR3_ValueChanged);
             this.nudGrenadeLauncherAmmoTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudGrenadeLauncherAmmoTR3_KeyPress);
             // 
+            // nudHarpoonGunAmmoTR3
+            // 
+            this.nudHarpoonGunAmmoTR3.Location = new System.Drawing.Point(288, 204);
+            this.nudHarpoonGunAmmoTR3.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.nudHarpoonGunAmmoTR3.Name = "nudHarpoonGunAmmoTR3";
+            this.nudHarpoonGunAmmoTR3.Size = new System.Drawing.Size(53, 20);
+            this.nudHarpoonGunAmmoTR3.TabIndex = 12;
+            this.nudHarpoonGunAmmoTR3.ValueChanged += new System.EventHandler(this.nudHarpoonGunAmmoTR3_ValueChanged);
+            this.nudHarpoonGunAmmoTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudHarpoonGunAmmoTR3_KeyPress);
+            // 
             // nudDeagleAmmoTR3
             // 
             this.nudDeagleAmmoTR3.Location = new System.Drawing.Point(288, 74);
@@ -1128,17 +1128,6 @@ namespace TRR_SaveMaster
             this.nudDeagleAmmoTR3.ValueChanged += new System.EventHandler(this.nudDeagleAmmoTR3_ValueChanged);
             this.nudDeagleAmmoTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudDeagleAmmoTR3_KeyPress);
             // 
-            // chkShotgunTR3
-            // 
-            this.chkShotgunTR3.AutoSize = true;
-            this.chkShotgunTR3.Location = new System.Drawing.Point(22, 49);
-            this.chkShotgunTR3.Name = "chkShotgunTR3";
-            this.chkShotgunTR3.Size = new System.Drawing.Size(69, 17);
-            this.chkShotgunTR3.TabIndex = 5;
-            this.chkShotgunTR3.Text = "Shotgun:";
-            this.chkShotgunTR3.UseVisualStyleBackColor = true;
-            this.chkShotgunTR3.CheckedChanged += new System.EventHandler(this.chkShotgunTR3_CheckedChanged);
-            // 
             // chkRocketLauncherTR3
             // 
             this.chkRocketLauncherTR3.AutoSize = true;
@@ -1150,17 +1139,6 @@ namespace TRR_SaveMaster
             this.chkRocketLauncherTR3.UseVisualStyleBackColor = true;
             this.chkRocketLauncherTR3.CheckedChanged += new System.EventHandler(this.chkRocketLauncherTR3_CheckedChanged);
             // 
-            // chkMP5TR3
-            // 
-            this.chkMP5TR3.AutoSize = true;
-            this.chkMP5TR3.Location = new System.Drawing.Point(22, 126);
-            this.chkMP5TR3.Name = "chkMP5TR3";
-            this.chkMP5TR3.Size = new System.Drawing.Size(51, 17);
-            this.chkMP5TR3.TabIndex = 3;
-            this.chkMP5TR3.Text = "MP5:";
-            this.chkMP5TR3.UseVisualStyleBackColor = true;
-            this.chkMP5TR3.CheckedChanged += new System.EventHandler(this.chkMP5TR3_CheckedChanged);
-            // 
             // chkUziTR3
             // 
             this.chkUziTR3.AutoSize = true;
@@ -1171,6 +1149,28 @@ namespace TRR_SaveMaster
             this.chkUziTR3.Text = "Uzis:";
             this.chkUziTR3.UseVisualStyleBackColor = true;
             this.chkUziTR3.CheckedChanged += new System.EventHandler(this.chkUziTR3_CheckedChanged);
+            // 
+            // chkShotgunTR3
+            // 
+            this.chkShotgunTR3.AutoSize = true;
+            this.chkShotgunTR3.Location = new System.Drawing.Point(22, 49);
+            this.chkShotgunTR3.Name = "chkShotgunTR3";
+            this.chkShotgunTR3.Size = new System.Drawing.Size(69, 17);
+            this.chkShotgunTR3.TabIndex = 5;
+            this.chkShotgunTR3.Text = "Shotgun:";
+            this.chkShotgunTR3.UseVisualStyleBackColor = true;
+            this.chkShotgunTR3.CheckedChanged += new System.EventHandler(this.chkShotgunTR3_CheckedChanged);
+            // 
+            // chkMP5TR3
+            // 
+            this.chkMP5TR3.AutoSize = true;
+            this.chkMP5TR3.Location = new System.Drawing.Point(22, 126);
+            this.chkMP5TR3.Name = "chkMP5TR3";
+            this.chkMP5TR3.Size = new System.Drawing.Size(51, 17);
+            this.chkMP5TR3.TabIndex = 3;
+            this.chkMP5TR3.Text = "MP5:";
+            this.chkMP5TR3.UseVisualStyleBackColor = true;
+            this.chkMP5TR3.CheckedChanged += new System.EventHandler(this.chkMP5TR3_CheckedChanged);
             // 
             // chkDeagleTR3
             // 
@@ -1547,9 +1547,9 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudShotgunAmmoTR3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudUziAmmoTR3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMP5AmmoTR3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudHarpoonGunAmmoTR3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRocketLauncherAmmoTR3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGrenadeLauncherAmmoTR3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHarpoonGunAmmoTR3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDeagleAmmoTR3)).EndInit();
             this.grpHealthTR3.ResumeLayout(false);
             this.grpHealthTR3.PerformLayout();
@@ -1615,7 +1615,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.ToolStripMenuItem tsmiSendFeedback;
         private System.Windows.Forms.ToolStripMenuItem tsmiAbout;
         private System.Windows.Forms.Button btnRefreshTR1;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblSavegameTR2;
         private System.Windows.Forms.ComboBox cmbSavegamesTR2;
         private System.Windows.Forms.GroupBox grpWeaponsTR2;
         private System.Windows.Forms.Label lblPistolAmmoTR2;
