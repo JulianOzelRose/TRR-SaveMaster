@@ -118,6 +118,8 @@ namespace TRR_SaveMaster
             this.lblHealthTR3 = new System.Windows.Forms.Label();
             this.trbHealthTR3 = new System.Windows.Forms.TrackBar();
             this.grpItemsTR3 = new System.Windows.Forms.GroupBox();
+            this.lblCollectibleCrystalsTR3 = new System.Windows.Forms.Label();
+            this.nudCollectibleCrystalsTR3 = new System.Windows.Forms.NumericUpDown();
             this.lblFlaresTR3 = new System.Windows.Forms.Label();
             this.lblLargeMedipacksTR3 = new System.Windows.Forms.Label();
             this.lblSmallMedipacksTR3 = new System.Windows.Forms.Label();
@@ -177,6 +179,7 @@ namespace TRR_SaveMaster
             this.grpHealthTR3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trbHealthTR3)).BeginInit();
             this.grpItemsTR3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCollectibleCrystalsTR3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudFlaresTR3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLargeMedipacksTR3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSmallMedipacksTR3)).BeginInit();
@@ -1234,6 +1237,8 @@ namespace TRR_SaveMaster
             // 
             // grpItemsTR3
             // 
+            this.grpItemsTR3.Controls.Add(this.lblCollectibleCrystalsTR3);
+            this.grpItemsTR3.Controls.Add(this.nudCollectibleCrystalsTR3);
             this.grpItemsTR3.Controls.Add(this.lblFlaresTR3);
             this.grpItemsTR3.Controls.Add(this.lblLargeMedipacksTR3);
             this.grpItemsTR3.Controls.Add(this.lblSmallMedipacksTR3);
@@ -1247,10 +1252,33 @@ namespace TRR_SaveMaster
             this.grpItemsTR3.TabStop = false;
             this.grpItemsTR3.Text = "Items";
             // 
+            // lblCollectibleCrystalsTR3
+            // 
+            this.lblCollectibleCrystalsTR3.AutoSize = true;
+            this.lblCollectibleCrystalsTR3.Location = new System.Drawing.Point(13, 100);
+            this.lblCollectibleCrystalsTR3.Name = "lblCollectibleCrystalsTR3";
+            this.lblCollectibleCrystalsTR3.Size = new System.Drawing.Size(97, 13);
+            this.lblCollectibleCrystalsTR3.TabIndex = 21;
+            this.lblCollectibleCrystalsTR3.Text = "Collectible Crystals:";
+            // 
+            // nudCollectibleCrystalsTR3
+            // 
+            this.nudCollectibleCrystalsTR3.Location = new System.Drawing.Point(273, 103);
+            this.nudCollectibleCrystalsTR3.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.nudCollectibleCrystalsTR3.Name = "nudCollectibleCrystalsTR3";
+            this.nudCollectibleCrystalsTR3.Size = new System.Drawing.Size(53, 20);
+            this.nudCollectibleCrystalsTR3.TabIndex = 20;
+            this.nudCollectibleCrystalsTR3.ValueChanged += new System.EventHandler(this.nudCollectibleCrystalsTR3_ValueChanged);
+            this.nudCollectibleCrystalsTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudCollectibleCrystalsTR3_KeyPress);
+            // 
             // lblFlaresTR3
             // 
             this.lblFlaresTR3.AutoSize = true;
-            this.lblFlaresTR3.Location = new System.Drawing.Point(13, 108);
+            this.lblFlaresTR3.Location = new System.Drawing.Point(13, 77);
             this.lblFlaresTR3.Name = "lblFlaresTR3";
             this.lblFlaresTR3.Size = new System.Drawing.Size(38, 13);
             this.lblFlaresTR3.TabIndex = 19;
@@ -1259,7 +1287,7 @@ namespace TRR_SaveMaster
             // lblLargeMedipacksTR3
             // 
             this.lblLargeMedipacksTR3.AutoSize = true;
-            this.lblLargeMedipacksTR3.Location = new System.Drawing.Point(13, 71);
+            this.lblLargeMedipacksTR3.Location = new System.Drawing.Point(13, 54);
             this.lblLargeMedipacksTR3.Name = "lblLargeMedipacksTR3";
             this.lblLargeMedipacksTR3.Size = new System.Drawing.Size(92, 13);
             this.lblLargeMedipacksTR3.TabIndex = 18;
@@ -1276,7 +1304,7 @@ namespace TRR_SaveMaster
             // 
             // nudFlaresTR3
             // 
-            this.nudFlaresTR3.Location = new System.Drawing.Point(273, 101);
+            this.nudFlaresTR3.Location = new System.Drawing.Point(273, 78);
             this.nudFlaresTR3.Maximum = new decimal(new int[] {
             255,
             0,
@@ -1290,7 +1318,7 @@ namespace TRR_SaveMaster
             // 
             // nudLargeMedipacksTR3
             // 
-            this.nudLargeMedipacksTR3.Location = new System.Drawing.Point(273, 64);
+            this.nudLargeMedipacksTR3.Location = new System.Drawing.Point(273, 53);
             this.nudLargeMedipacksTR3.Maximum = new decimal(new int[] {
             255,
             0,
@@ -1304,7 +1332,7 @@ namespace TRR_SaveMaster
             // 
             // nudSmallMedipacksTR3
             // 
-            this.nudSmallMedipacksTR3.Location = new System.Drawing.Point(273, 29);
+            this.nudSmallMedipacksTR3.Location = new System.Drawing.Point(273, 28);
             this.nudSmallMedipacksTR3.Maximum = new decimal(new int[] {
             255,
             0,
@@ -1443,21 +1471,21 @@ namespace TRR_SaveMaster
             // tsmiViewReadme
             // 
             this.tsmiViewReadme.Name = "tsmiViewReadme";
-            this.tsmiViewReadme.Size = new System.Drawing.Size(180, 22);
+            this.tsmiViewReadme.Size = new System.Drawing.Size(153, 22);
             this.tsmiViewReadme.Text = "View README";
             this.tsmiViewReadme.Click += new System.EventHandler(this.tsmiViewReadme_Click);
             // 
             // tsmiSendFeedback
             // 
             this.tsmiSendFeedback.Name = "tsmiSendFeedback";
-            this.tsmiSendFeedback.Size = new System.Drawing.Size(180, 22);
+            this.tsmiSendFeedback.Size = new System.Drawing.Size(153, 22);
             this.tsmiSendFeedback.Text = "Send Feedback";
             this.tsmiSendFeedback.Click += new System.EventHandler(this.tsmiSendFeedback_Click);
             // 
             // tsmiAbout
             // 
             this.tsmiAbout.Name = "tsmiAbout";
-            this.tsmiAbout.Size = new System.Drawing.Size(180, 22);
+            this.tsmiAbout.Size = new System.Drawing.Size(153, 22);
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
             // 
@@ -1528,6 +1556,7 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.trbHealthTR3)).EndInit();
             this.grpItemsTR3.ResumeLayout(false);
             this.grpItemsTR3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCollectibleCrystalsTR3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudFlaresTR3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLargeMedipacksTR3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSmallMedipacksTR3)).EndInit();
@@ -1652,6 +1681,8 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.Button btnSaveTR3;
         private System.Windows.Forms.Button btnCancelTR3;
         private System.Windows.Forms.Button btnRefreshTR3;
+        private System.Windows.Forms.Label lblCollectibleCrystalsTR3;
+        private System.Windows.Forms.NumericUpDown nudCollectibleCrystalsTR3;
     }
 }
 

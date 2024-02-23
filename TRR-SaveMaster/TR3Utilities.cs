@@ -17,6 +17,7 @@ namespace TRR_SaveMaster
         private int largeMedipackOffset;
         private int flaresOffset;
         private int weaponsConfigNumOffset;
+        private int collectibleCrystalsOffset;
         private int harpoonGunOffset;
         private int deagleAmmoOffset;
         private int harpoonGunAmmoOffset;
@@ -123,6 +124,11 @@ namespace TRR_SaveMaster
             return ReadByte(savegameOffset + flaresOffset);
         }
 
+        private byte GetNumCollectibleCrystals()
+        {
+            return ReadByte(savegameOffset + collectibleCrystalsOffset);
+        }
+
         private UInt16 GetShotgunAmmo()
         {
             return ReadUInt16(savegameOffset + shotgunAmmoOffset);
@@ -211,6 +217,11 @@ namespace TRR_SaveMaster
         private void WriteWeaponsConfigNum(byte value)
         {
             WriteByte(savegameOffset + weaponsConfigNumOffset, value);
+        }
+
+        private void WriteNumCollectibleCrystals(byte value)
+        {
+            WriteByte(savegameOffset + collectibleCrystalsOffset, value);
         }
 
         private void WriteHealthValue(double newHealthPercentage)
@@ -351,6 +362,7 @@ namespace TRR_SaveMaster
             rocketLauncherAmmoOffset = 0x6E + (levelIndex * 0x40);
             harpoonGunAmmoOffset = 0x70 + (levelIndex * 0x40);
             grenadeLauncherAmmoOffset = 0x72 + (levelIndex * 0x40);
+            collectibleCrystalsOffset = 0x78 + (levelIndex * 0x40);
 
             smallMedipackOffset = 0x74 + (levelIndex * 0x40);
             largeMedipackOffset = 0x75 + (levelIndex * 0x40);
@@ -482,7 +494,7 @@ namespace TRR_SaveMaster
             NumericUpDown nudSmallMedipacks, NumericUpDown nudLargeMedipacks, NumericUpDown nudFlares,
             NumericUpDown nudShotgunAmmo, NumericUpDown nudDeagleAmmo, NumericUpDown nudGrenadeLauncherAmmo,
             NumericUpDown nudRocketLauncherAmmo, NumericUpDown nudHarpoonGunAmmo, NumericUpDown nudMP5Ammo, NumericUpDown nudUziAmmo,
-            TrackBar trbHealth, Label lblHealth, Label lblHealthError)
+            TrackBar trbHealth, Label lblHealth, Label lblHealthError, NumericUpDown nudCollectibleCrystals)
         {
             DetermineOffsets();
 
@@ -497,6 +509,17 @@ namespace TRR_SaveMaster
             nudHarpoonGunAmmo.Value = GetHarpoonGunAmmo();
             nudMP5Ammo.Value = GetMP5Ammo();
             nudUziAmmo.Value = GetUziAmmo();
+
+            if (GetLevelIndex() >= 21)
+            {
+                nudCollectibleCrystals.Enabled = false;
+                nudCollectibleCrystals.Value = 0;
+            }
+            else
+            {
+                nudCollectibleCrystals.Enabled = true;
+                nudCollectibleCrystals.Value = GetNumCollectibleCrystals();
+            }
 
             byte weaponsConfigNum = GetWeaponsConfigNum();
 
@@ -557,7 +580,7 @@ namespace TRR_SaveMaster
             NumericUpDown nudFlares, NumericUpDown nudSmallMedipacks, NumericUpDown nudLargeMedipacks,
             NumericUpDown nudShotgunAmmo, NumericUpDown nudDeagleAmmo, NumericUpDown nudGrenadeLauncherAmmo,
             NumericUpDown nudRocketLauncherAmmo, NumericUpDown nudHarpoonGunAmmo, NumericUpDown nudMP5Ammo,
-            NumericUpDown nudUziAmmo, TrackBar trbHealth)
+            NumericUpDown nudUziAmmo, TrackBar trbHealth, NumericUpDown nudCollectibleCrystals)
         {
             DetermineOffsets();
 
@@ -613,6 +636,11 @@ namespace TRR_SaveMaster
             WriteHarpoonGunAmmo(chkHarpoonGun.Checked, (UInt16)nudHarpoonGunAmmo.Value);
             WriteMP5Ammo(chkMP5.Checked, (UInt16)nudMP5Ammo.Value);
             WriteUziAmmo(chkUzi.Checked, (UInt16)nudUziAmmo.Value);
+
+            if (nudCollectibleCrystals.Enabled)
+            {
+                WriteNumCollectibleCrystals((byte)nudCollectibleCrystals.Value);
+            }
 
             if (trbHealth.Enabled)
             {

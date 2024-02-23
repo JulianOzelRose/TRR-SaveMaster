@@ -385,8 +385,8 @@ namespace TRR_SaveMaster
 
                     TR3.WriteChanges(chkPistolsTR3, chkDeagleTR3, chkUziTR3, chkShotgunTR3, chkMP5TR3, chkRocketLauncherTR3,
                         chkGrenadeLauncherTR3, chkHarpoonGunTR3, nudFlaresTR3, nudSmallMedipacksTR3, nudLargeMedipacksTR3,
-                        nudShotgunAmmoTR3, nudDeagleAmmoTR3, nudGrenadeLauncherAmmoTR3,
-                        nudRocketLauncherAmmoTR3, nudHarpoonGunAmmoTR3, nudMP5AmmoTR3, nudUziAmmoTR3, trbHealthTR3);
+                        nudShotgunAmmoTR3, nudDeagleAmmoTR3, nudGrenadeLauncherAmmoTR3, nudRocketLauncherAmmoTR3,
+                        nudHarpoonGunAmmoTR3, nudMP5AmmoTR3, nudUziAmmoTR3, trbHealthTR3, nudCollectibleCrystalsTR3);
                 }
 
                 DisableButtonsTR3();
@@ -510,11 +510,10 @@ namespace TRR_SaveMaster
                 TR3.SetSavegameOffset(savegame.Offset);
 
                 TR3.DisplayGameInfo(chkPistolsTR3, chkShotgunTR3, chkDeagleTR3, chkUziTR3, chkMP5TR3,
-                    chkRocketLauncherTR3, chkGrenadeLauncherTR3, chkHarpoonGunTR3,
-                    nudSmallMedipacksTR3, nudLargeMedipacksTR3, nudFlaresTR3,
-                    nudShotgunAmmoTR3, nudDeagleAmmoTR3, nudGrenadeLauncherAmmoTR3,
+                    chkRocketLauncherTR3, chkGrenadeLauncherTR3, chkHarpoonGunTR3, nudSmallMedipacksTR3,
+                    nudLargeMedipacksTR3, nudFlaresTR3, nudShotgunAmmoTR3, nudDeagleAmmoTR3, nudGrenadeLauncherAmmoTR3,
                     nudRocketLauncherAmmoTR3, nudHarpoonGunAmmoTR3, nudMP5AmmoTR3, nudUziAmmoTR3,
-                    trbHealthTR3, lblHealthTR3, lblHealthErrorTR3);
+                    trbHealthTR3, lblHealthTR3, lblHealthErrorTR3, nudCollectibleCrystalsTR3);
 
                 isLoading = false;
 
@@ -1067,6 +1066,14 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void nudCollectibleCrystalsTR3_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR3.SelectedIndex != -1)
+            {
+                EnableButtonsTR3();
+            }
+        }
+
         private void nudSmallMedipacksTR3_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (char.IsDigit(e.KeyChar) && cmbSavegamesTR3.SelectedIndex != -1)
@@ -1140,6 +1147,14 @@ namespace TRR_SaveMaster
         }
 
         private void nudUziAmmoTR3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR3.SelectedIndex != -1)
+            {
+                EnableButtonsTR3();
+            }
+        }
+
+        private void nudCollectibleCrystalsTR3_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (char.IsDigit(e.KeyChar) && cmbSavegamesTR3.SelectedIndex != -1)
             {
