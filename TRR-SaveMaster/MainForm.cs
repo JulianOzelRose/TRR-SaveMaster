@@ -221,6 +221,57 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void cmbSavegamesTR1_MouseDown(object sender, MouseEventArgs e)
+        {
+            cmbSavegamesTR1.SelectedIndexChanged -= cmbSavegamesTR1_SelectedIndexChanged;
+
+            for (int i = 0; i < cmbSavegamesTR1.Items.Count; i++)
+            {
+                if (cmbSavegamesTR1.Items[i] is Savegame savegame)
+                {
+                    TR1.UpdateDisplayName(savegame);
+
+                    cmbSavegamesTR1.Items[i] = savegame;
+                }
+            }
+
+            cmbSavegamesTR1.SelectedIndexChanged += cmbSavegamesTR1_SelectedIndexChanged;
+        }
+
+        private void cmbSavegamesTR2_MouseDown(object sender, MouseEventArgs e)
+        {
+            cmbSavegamesTR2.SelectedIndexChanged -= cmbSavegamesTR2_SelectedIndexChanged;
+
+            for (int i = 0; i < cmbSavegamesTR2.Items.Count; i++)
+            {
+                if (cmbSavegamesTR2.Items[i] is Savegame savegame)
+                {
+                    TR2.UpdateDisplayName(savegame);
+
+                    cmbSavegamesTR2.Items[i] = savegame;
+                }
+            }
+
+            cmbSavegamesTR2.SelectedIndexChanged += cmbSavegamesTR2_SelectedIndexChanged;
+        }
+
+        private void cmbSavegamesTR3_MouseDown(object sender, MouseEventArgs e)
+        {
+            cmbSavegamesTR3.SelectedIndexChanged -= cmbSavegamesTR3_SelectedIndexChanged;
+
+            for (int i = 0; i < cmbSavegamesTR3.Items.Count; i++)
+            {
+                if (cmbSavegamesTR3.Items[i] is Savegame savegame)
+                {
+                    TR3.UpdateDisplayName(savegame);
+
+                    cmbSavegamesTR3.Items[i] = savegame;
+                }
+            }
+
+            cmbSavegamesTR3.SelectedIndexChanged += cmbSavegamesTR3_SelectedIndexChanged;
+        }
+
         private void cmbSavegamesTR1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!userIndexChanged) return;

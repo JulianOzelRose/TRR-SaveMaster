@@ -765,10 +765,10 @@ namespace TRR_SaveMaster
 
         public void UpdateDisplayName(Savegame savegame)
         {
-            byte levelIndex = GetLevelIndex();
+            byte levelIndex = ReadByte(savegame.Offset + levelIndexOffset);
 
             string levelName = levelNames[levelIndex];
-            UInt16 saveNumber = GetSaveNumber();
+            UInt16 saveNumber = ReadUInt16(savegame.Offset + saveNumberOffset);
 
             savegame.UpdateDisplayName(levelName, saveNumber);
         }

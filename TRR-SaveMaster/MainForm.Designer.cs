@@ -302,6 +302,7 @@ namespace TRR_SaveMaster
             this.cmbSavegamesTR1.Size = new System.Drawing.Size(182, 21);
             this.cmbSavegamesTR1.TabIndex = 21;
             this.cmbSavegamesTR1.SelectedIndexChanged += new System.EventHandler(this.cmbSavegamesTR1_SelectedIndexChanged);
+            this.cmbSavegamesTR1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cmbSavegamesTR1_MouseDown);
             // 
             // btnCancelTR1
             // 
@@ -575,6 +576,7 @@ namespace TRR_SaveMaster
             this.cmbSavegamesTR2.Size = new System.Drawing.Size(182, 21);
             this.cmbSavegamesTR2.TabIndex = 26;
             this.cmbSavegamesTR2.SelectedIndexChanged += new System.EventHandler(this.cmbSavegamesTR2_SelectedIndexChanged);
+            this.cmbSavegamesTR2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cmbSavegamesTR2_MouseDown);
             // 
             // grpWeaponsTR2
             // 
@@ -973,6 +975,7 @@ namespace TRR_SaveMaster
             this.cmbSavegamesTR3.Size = new System.Drawing.Size(182, 21);
             this.cmbSavegamesTR3.TabIndex = 18;
             this.cmbSavegamesTR3.SelectedIndexChanged += new System.EventHandler(this.cmbSavegamesTR3_SelectedIndexChanged);
+            this.cmbSavegamesTR3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cmbSavegamesTR3_MouseDown);
             // 
             // grpWeaponsTR3
             // 
