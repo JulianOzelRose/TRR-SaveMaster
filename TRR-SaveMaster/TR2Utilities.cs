@@ -186,7 +186,7 @@ namespace TRR_SaveMaster
             {  1, new int[] { 0x19BA, 0x19BB, 0x19BC, 0x19BD } },   // The Great Wall
             {  2, new int[] { 0x1CFC, 0x1CFD, 0x1CFE, 0x1CFF } },   // Venice
             {  3, new int[] { 0x1F10, 0x1F11, 0x1F12, 0x1F13 } },   // Bartoli's Hideout
-            {  4, new int[] { 0x2A22, 0x2A23, 0x2A24, 0x2A25 } },   // Opera House
+            {  4, new int[] { 0x2A16, 0x2A17, 0x2A18, 0x2A19 } },   // Opera House
             {  5, new int[] { 0x1AEE, 0x1AEF, 0x1AF0, 0x1AF1 } },   // Offshore Rig
             {  6, new int[] { 0x1EBC, 0x1EBD, 0x1EBE, 0x1EBF } },   // Diving Area
             {  7, new int[] { 0x1410, 0x1411, 0x1412, 0x1413 } },   // 40 Fathoms
@@ -212,7 +212,7 @@ namespace TRR_SaveMaster
             {  1, new int[] { 0x19B6, 0x19B7, 0x19B8, 0x19B9 } },   // The Great Wall
             {  2, new int[] { 0x1CF8, 0x1CF9, 0x1CFA, 0x1CFB } },   // Venice
             {  3, new int[] { 0x1F0C, 0x1F0D, 0x1F0E, 0x1F0F } },   // Bartoli's Hideout
-            {  4, new int[] { 0x2A1E, 0x2A1F, 0x2A20, 0x2A21 } },   // Opera House
+            {  4, new int[] { 0x2A12, 0x2A13, 0x2A14, 0x2A15 } },   // Opera House
             {  5, new int[] { 0x1AEA, 0x1AEB, 0x1AEC, 0x1AED } },   // Offshore Rig
             {  6, new int[] { 0x1EB8, 0x1EB9, 0x1EBA, 0x1EBB } },   // Diving Area
             {  7, new int[] { 0x140C, 0x140D, 0x140E, 0x140F } },   // 40 Fathoms
