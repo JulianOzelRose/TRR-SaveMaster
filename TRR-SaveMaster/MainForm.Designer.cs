@@ -331,20 +331,20 @@ namespace TRR_SaveMaster
             // lblLargeMedipacksTR1
             // 
             this.lblLargeMedipacksTR1.AutoSize = true;
-            this.lblLargeMedipacksTR1.Location = new System.Drawing.Point(13, 57);
+            this.lblLargeMedipacksTR1.Location = new System.Drawing.Point(18, 57);
             this.lblLargeMedipacksTR1.Name = "lblLargeMedipacksTR1";
-            this.lblLargeMedipacksTR1.Size = new System.Drawing.Size(92, 13);
+            this.lblLargeMedipacksTR1.Size = new System.Drawing.Size(96, 13);
             this.lblLargeMedipacksTR1.TabIndex = 18;
-            this.lblLargeMedipacksTR1.Text = "Large Medipacks:";
+            this.lblLargeMedipacksTR1.Text = "Large Medi Packs:";
             // 
             // lblSmallMedipacksTR1
             // 
             this.lblSmallMedipacksTR1.AutoSize = true;
-            this.lblSmallMedipacksTR1.Location = new System.Drawing.Point(13, 31);
+            this.lblSmallMedipacksTR1.Location = new System.Drawing.Point(18, 31);
             this.lblSmallMedipacksTR1.Name = "lblSmallMedipacksTR1";
-            this.lblSmallMedipacksTR1.Size = new System.Drawing.Size(90, 13);
+            this.lblSmallMedipacksTR1.Size = new System.Drawing.Size(94, 13);
             this.lblSmallMedipacksTR1.TabIndex = 9;
-            this.lblSmallMedipacksTR1.Text = "Small Medipacks:";
+            this.lblSmallMedipacksTR1.Text = "Small Medi Packs:";
             // 
             // nudLargeMedipacksTR1
             // 
@@ -830,7 +830,7 @@ namespace TRR_SaveMaster
             // lblFlaresTR2
             // 
             this.lblFlaresTR2.AutoSize = true;
-            this.lblFlaresTR2.Location = new System.Drawing.Point(13, 83);
+            this.lblFlaresTR2.Location = new System.Drawing.Point(18, 83);
             this.lblFlaresTR2.Name = "lblFlaresTR2";
             this.lblFlaresTR2.Size = new System.Drawing.Size(38, 13);
             this.lblFlaresTR2.TabIndex = 19;
@@ -839,20 +839,20 @@ namespace TRR_SaveMaster
             // lblLargeMedipacksTR2
             // 
             this.lblLargeMedipacksTR2.AutoSize = true;
-            this.lblLargeMedipacksTR2.Location = new System.Drawing.Point(13, 57);
+            this.lblLargeMedipacksTR2.Location = new System.Drawing.Point(18, 57);
             this.lblLargeMedipacksTR2.Name = "lblLargeMedipacksTR2";
-            this.lblLargeMedipacksTR2.Size = new System.Drawing.Size(92, 13);
+            this.lblLargeMedipacksTR2.Size = new System.Drawing.Size(96, 13);
             this.lblLargeMedipacksTR2.TabIndex = 18;
-            this.lblLargeMedipacksTR2.Text = "Large Medipacks:";
+            this.lblLargeMedipacksTR2.Text = "Large Medi Packs:";
             // 
             // lblSmallMedipacksTR2
             // 
             this.lblSmallMedipacksTR2.AutoSize = true;
-            this.lblSmallMedipacksTR2.Location = new System.Drawing.Point(13, 31);
+            this.lblSmallMedipacksTR2.Location = new System.Drawing.Point(18, 31);
             this.lblSmallMedipacksTR2.Name = "lblSmallMedipacksTR2";
-            this.lblSmallMedipacksTR2.Size = new System.Drawing.Size(90, 13);
+            this.lblSmallMedipacksTR2.Size = new System.Drawing.Size(94, 13);
             this.lblSmallMedipacksTR2.TabIndex = 9;
-            this.lblSmallMedipacksTR2.Text = "Small Medipacks:";
+            this.lblSmallMedipacksTR2.Text = "Small Medi Packs:";
             // 
             // nudFlaresTR2
             // 
@@ -1258,7 +1258,7 @@ namespace TRR_SaveMaster
             // lblCollectibleCrystalsTR3
             // 
             this.lblCollectibleCrystalsTR3.AutoSize = true;
-            this.lblCollectibleCrystalsTR3.Location = new System.Drawing.Point(13, 109);
+            this.lblCollectibleCrystalsTR3.Location = new System.Drawing.Point(18, 109);
             this.lblCollectibleCrystalsTR3.Name = "lblCollectibleCrystalsTR3";
             this.lblCollectibleCrystalsTR3.Size = new System.Drawing.Size(97, 13);
             this.lblCollectibleCrystalsTR3.TabIndex = 21;
@@ -1281,7 +1281,7 @@ namespace TRR_SaveMaster
             // lblFlaresTR3
             // 
             this.lblFlaresTR3.AutoSize = true;
-            this.lblFlaresTR3.Location = new System.Drawing.Point(13, 83);
+            this.lblFlaresTR3.Location = new System.Drawing.Point(18, 83);
             this.lblFlaresTR3.Name = "lblFlaresTR3";
             this.lblFlaresTR3.Size = new System.Drawing.Size(38, 13);
             this.lblFlaresTR3.TabIndex = 19;
@@ -1290,20 +1290,20 @@ namespace TRR_SaveMaster
             // lblLargeMedipacksTR3
             // 
             this.lblLargeMedipacksTR3.AutoSize = true;
-            this.lblLargeMedipacksTR3.Location = new System.Drawing.Point(13, 57);
+            this.lblLargeMedipacksTR3.Location = new System.Drawing.Point(18, 57);
             this.lblLargeMedipacksTR3.Name = "lblLargeMedipacksTR3";
-            this.lblLargeMedipacksTR3.Size = new System.Drawing.Size(92, 13);
+            this.lblLargeMedipacksTR3.Size = new System.Drawing.Size(96, 13);
             this.lblLargeMedipacksTR3.TabIndex = 18;
-            this.lblLargeMedipacksTR3.Text = "Large Medipacks:";
+            this.lblLargeMedipacksTR3.Text = "Large Medi Packs:";
             // 
             // lblSmallMedipacksTR3
             // 
             this.lblSmallMedipacksTR3.AutoSize = true;
-            this.lblSmallMedipacksTR3.Location = new System.Drawing.Point(13, 31);
+            this.lblSmallMedipacksTR3.Location = new System.Drawing.Point(18, 31);
             this.lblSmallMedipacksTR3.Name = "lblSmallMedipacksTR3";
-            this.lblSmallMedipacksTR3.Size = new System.Drawing.Size(90, 13);
+            this.lblSmallMedipacksTR3.Size = new System.Drawing.Size(94, 13);
             this.lblSmallMedipacksTR3.TabIndex = 9;
-            this.lblSmallMedipacksTR3.Text = "Small Medipacks:";
+            this.lblSmallMedipacksTR3.Text = "Small Medi Packs:";
             // 
             // nudFlaresTR3
             // 
