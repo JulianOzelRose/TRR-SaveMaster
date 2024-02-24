@@ -4,13 +4,15 @@
     {
         public int Offset { get; set; }
         public int Number { get; set; }
+        public int Slot { get; set; }
         public string Name { get; set; }
 
-        public Savegame(int savegameOffset, int saveNumber, string levelName)
+        public Savegame(int savegameOffset, int slot, int saveNumber, string levelName)
         {
             Number = saveNumber;
             Name = levelName;
             Offset = savegameOffset;
+            Slot = slot;
         }
 
         public void UpdateDisplayName(string levelName, int saveNumber)

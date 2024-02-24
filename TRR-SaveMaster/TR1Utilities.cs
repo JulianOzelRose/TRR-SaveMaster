@@ -9,12 +9,12 @@ namespace TRR_SaveMaster
     {
         // Static offsets
         private const int saveNumberOffset = 0x00C;
-        private const int weaponsConfigNumOffset = 0x4EC;
         private const int magnumAmmoOffset = 0x4C2;
         private const int uziAmmoOffset = 0x4C4;
         private const int shotgunAmmoOffset = 0x4C6;
         private const int smallMedipackOffset = 0x4C8;
         private const int largeMedipackOffset = 0x4C9;
+        private const int weaponsConfigNumOffset = 0x4EC;
         private const int levelIndexOffset = 0x62C;
 
         // Dynamic offsets
@@ -24,6 +24,7 @@ namespace TRR_SaveMaster
 
         // Constants
         private const int BASE_SAVEGAME_OFFSET_TR1 = 0x2000;
+        private const int MAX_SAVEGAME_OFFSET_TR1 = 0x72000;
         private const int SAVEGAME_ITERATOR = 0x3800;
 
         // Health
@@ -554,6 +555,34 @@ namespace TRR_SaveMaster
             savegameOffset = offset;
         }
 
+        public void PopulateEmptySlots(ComboBox cmbSavegames)
+        {
+            if (cmbSavegames.Items.Count == 32)
+            {
+                return;
+            }
+
+            for (int i = cmbSavegames.Items.Count; i < 32; i++)
+            {
+                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR1 + (i * SAVEGAME_ITERATOR);
+
+                if (currentSavegameOffset < MAX_SAVEGAME_OFFSET_TR1)
+                {
+                    UInt16 saveNumber = ReadUInt16(currentSavegameOffset + saveNumberOffset);
+                    byte levelIndex = ReadByte(currentSavegameOffset + levelIndexOffset);
+
+                    if (saveNumber != 0 && levelIndex >= 1 && levelIndex <= 19)
+                    {
+                        string levelName = levelNames[levelIndex];
+                        int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR1) / SAVEGAME_ITERATOR;
+
+                        Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName);
+                        cmbSavegames.Items.Add(savegame);
+                    }
+                }
+            }
+        }
+
         public void PopulateSavegames(ComboBox cmbSavegames)
         {
             int currentSavegameOffset;
@@ -570,8 +599,9 @@ namespace TRR_SaveMaster
                 if (saveNumber != 0 && levelIndex >= 1 && levelIndex <= 19)
                 {
                     string levelName = levelNames[levelIndex];
+                    int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR1) / SAVEGAME_ITERATOR;
 
-                    Savegame savegame = new Savegame(currentSavegameOffset, saveNumber, levelName);
+                    Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName);
                     cmbSavegames.Items.Add(savegame);
 
                     numSaves++;

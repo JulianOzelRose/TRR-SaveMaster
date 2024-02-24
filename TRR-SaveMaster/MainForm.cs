@@ -12,8 +12,8 @@ namespace TRR_SaveMaster
         }
 
         // Savegame
-        private string savegamePath;
         private Savegame previousSelectedSavegame;
+        private string savegamePath;
         private bool isLoading = false;
         private bool userIndexChanged = true;
 
@@ -235,6 +235,8 @@ namespace TRR_SaveMaster
                 }
             }
 
+            TR1.PopulateEmptySlots(cmbSavegamesTR1);
+
             cmbSavegamesTR1.SelectedIndexChanged += cmbSavegamesTR1_SelectedIndexChanged;
         }
 
@@ -252,6 +254,8 @@ namespace TRR_SaveMaster
                 }
             }
 
+            TR2.PopulateEmptySlots(cmbSavegamesTR2);
+
             cmbSavegamesTR2.SelectedIndexChanged += cmbSavegamesTR2_SelectedIndexChanged;
         }
 
@@ -268,6 +272,8 @@ namespace TRR_SaveMaster
                     cmbSavegamesTR3.Items[i] = savegame;
                 }
             }
+
+            TR3.PopulateEmptySlots(cmbSavegamesTR3);
 
             cmbSavegamesTR3.SelectedIndexChanged += cmbSavegamesTR3_SelectedIndexChanged;
         }
@@ -401,7 +407,7 @@ namespace TRR_SaveMaster
 
                     DisableButtonsTR1();
 
-                    slblStatus.Text = $"Successfully patched savegame: '{savegame.Name} - {savegame.Number}'";
+                    slblStatus.Text = $"Successfully patched savegame: '{savegame}'";
                 }
                 catch (Exception ex)
                 {
@@ -429,7 +435,7 @@ namespace TRR_SaveMaster
 
                     DisableButtonsTR2();
 
-                    slblStatus.Text = $"Successfully patched savegame: '{savegame.Name} - {savegame.Number}'";
+                    slblStatus.Text = $"Successfully patched savegame: '{savegame}'";
                 }
                 catch (Exception ex)
                 {
@@ -456,7 +462,7 @@ namespace TRR_SaveMaster
 
                     DisableButtonsTR3();
 
-                    slblStatus.Text = $"Successfully patched savegame: '{savegame.Name} - {savegame.Number}'";
+                    slblStatus.Text = $"Successfully patched savegame: '{savegame}'";
                 }
                 catch (Exception ex)
                 {
@@ -588,7 +594,7 @@ namespace TRR_SaveMaster
                         nudSmallMedipacksTR1, nudLargeMedipacksTR1, nudUziAmmoTR1, nudShotgunAmmoTR1, nudMagnumAmmoTR1,
                         trbHealthTR1, lblHealthTR1, lblHealthErrorTR1);
 
-                    slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame.Name} - {selectedSavegame.Number}'";
+                    slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame}'";
                 }
                 catch (Exception ex)
                 {
@@ -626,7 +632,7 @@ namespace TRR_SaveMaster
                         nudShotgunAmmoTR2, nudFlaresTR2, nudSmallMedipacksTR2, nudLargeMedipacksTR2,
                         trbHealthTR2, lblHealthTR2, lblHealthErrorTR2);
 
-                    slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame.Name} - {selectedSavegame.Number}'";
+                    slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame}'";
                 }
                 catch (Exception ex)
                 {
@@ -660,7 +666,7 @@ namespace TRR_SaveMaster
                         nudRocketLauncherAmmoTR3, nudHarpoonGunAmmoTR3, nudMP5AmmoTR3, nudUziAmmoTR3,
                         trbHealthTR3, lblHealthTR3, lblHealthErrorTR3, nudCollectibleCrystalsTR3);
 
-                    slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame.Name} - {selectedSavegame.Number}'";
+                    slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame}'";
                 }
                 catch (Exception ex)
                 {

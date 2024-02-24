@@ -32,6 +32,7 @@ namespace TRR_SaveMaster
 
         // Constants
         private const int BASE_SAVEGAME_OFFSET_TR2 = 0x72000;
+        private const int MAX_SAVEGAME_OFFSET_TR2 = 0xE2000;
         private const int SAVEGAME_ITERATOR = 0x3800;
 
         // Health
@@ -783,6 +784,34 @@ namespace TRR_SaveMaster
             savegameOffset = offset;
         }
 
+        public void PopulateEmptySlots(ComboBox cmbSavegames)
+        {
+            if (cmbSavegames.Items.Count == 32)
+            {
+                return;
+            }
+
+            for (int i = cmbSavegames.Items.Count; i < 32; i++)
+            {
+                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR2 + (i * SAVEGAME_ITERATOR);
+
+                if (currentSavegameOffset < MAX_SAVEGAME_OFFSET_TR2)
+                {
+                    UInt16 saveNumber = ReadUInt16(currentSavegameOffset + saveNumberOffset);
+                    byte levelIndex = ReadByte(currentSavegameOffset + levelIndexOffset);
+
+                    if (saveNumber != 0 && levelIndex >= 1 && levelIndex <= 22)
+                    {
+                        string levelName = levelNames[levelIndex];
+                        int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR2) / SAVEGAME_ITERATOR;
+
+                        Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName);
+                        cmbSavegames.Items.Add(savegame);
+                    }
+                }
+            }
+        }
+
         public void PopulateSavegames(ComboBox cmbSavegames)
         {
             int currentSavegameOffset;
@@ -799,8 +828,9 @@ namespace TRR_SaveMaster
                 if (saveNumber != 0 && levelIndex >= 1 && levelIndex <= 22)
                 {
                     string levelName = levelNames[levelIndex];
+                    int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR2) / SAVEGAME_ITERATOR;
 
-                    Savegame savegame = new Savegame(currentSavegameOffset, saveNumber, levelName);
+                    Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName);
                     cmbSavegames.Items.Add(savegame);
 
                     numSaves++;
