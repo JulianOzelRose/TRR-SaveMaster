@@ -362,11 +362,11 @@ namespace TRR_SaveMaster
             rocketLauncherAmmoOffset = 0x6E + (levelIndex * 0x40);
             harpoonGunAmmoOffset = 0x70 + (levelIndex * 0x40);
             grenadeLauncherAmmoOffset = 0x72 + (levelIndex * 0x40);
-            collectibleCrystalsOffset = 0x78 + (levelIndex * 0x40);
 
             smallMedipackOffset = 0x74 + (levelIndex * 0x40);
             largeMedipackOffset = 0x75 + (levelIndex * 0x40);
             flaresOffset = 0x77 + (levelIndex * 0x40);
+            collectibleCrystalsOffset = 0x78 + (levelIndex * 0x40);
             weaponsConfigNumOffset = 0xA0 + (levelIndex * 0x40);
             harpoonGunOffset = 0xA1 + (levelIndex * 0x40);
 
@@ -802,6 +802,16 @@ namespace TRR_SaveMaster
         private int GetSecondaryAmmoOffset(int baseOffset)
         {
             return baseOffset + (secondaryAmmoIndex * 0x1A);
+        }
+
+        public void UpdateDisplayName(Savegame savegame)
+        {
+            byte levelIndex = GetLevelIndex();
+
+            string levelName = levelNames[levelIndex];
+            UInt16 saveNumber = GetSaveNumber();
+
+            savegame.UpdateDisplayName(levelName, saveNumber);
         }
 
         public void SetSavegamePath(string path)

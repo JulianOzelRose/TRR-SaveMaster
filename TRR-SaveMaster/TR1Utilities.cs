@@ -534,6 +534,16 @@ namespace TRR_SaveMaster
             }
         }
 
+        public void UpdateDisplayName(Savegame savegame)
+        {
+            byte levelIndex = GetLevelIndex();
+
+            string levelName = levelNames[levelIndex];
+            UInt16 saveNumber = GetSaveNumber();
+
+            savegame.UpdateDisplayName(levelName, saveNumber);
+        }
+
         public void SetSavegamePath(string path)
         {
             savegamePath = path;

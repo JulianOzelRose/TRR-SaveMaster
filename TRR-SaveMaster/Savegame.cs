@@ -13,6 +13,12 @@
             Offset = savegameOffset;
         }
 
+        public void UpdateDisplayName(string levelName, int saveNumber)
+        {
+            Name = levelName;
+            Number = saveNumber;
+        }
+
         public override string ToString()
         {
             return $"{Name} - {Number}";

@@ -192,6 +192,8 @@ namespace TRR_SaveMaster
                 {
                     WriteChangesTR1(cmbSavegamesTR1.SelectedItem as Savegame);
                 }
+
+                DisableButtonsTR1();
             }
             else if (tabGame.SelectedIndex == TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1 && btnSaveTR2.Enabled)
             {
@@ -202,6 +204,8 @@ namespace TRR_SaveMaster
                 {
                     WriteChangesTR2(cmbSavegamesTR2.SelectedItem as Savegame);
                 }
+
+                DisableButtonsTR2();
             }
             else if (tabGame.SelectedIndex == TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1 && btnSaveTR3.Enabled)
             {
@@ -212,6 +216,8 @@ namespace TRR_SaveMaster
                 {
                     WriteChangesTR3(cmbSavegamesTR3.SelectedItem as Savegame);
                 }
+
+                DisableButtonsTR3();
             }
         }
 
@@ -466,6 +472,45 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void UpdateSavegameDisplayNameTR1(ComboBox cmbSavegames, Savegame selectedSavegame)
+        {
+            cmbSavegames.SelectedIndexChanged -= cmbSavegamesTR1_SelectedIndexChanged;
+
+            if (cmbSavegames.SelectedItem != null)
+            {
+                int selectedIndex = cmbSavegames.SelectedIndex;
+                cmbSavegames.Items[selectedIndex] = selectedSavegame;
+            }
+
+            cmbSavegames.SelectedIndexChanged += cmbSavegamesTR1_SelectedIndexChanged;
+        }
+
+        private void UpdateSavegameDisplayNameTR2(ComboBox cmbSavegames, Savegame selectedSavegame)
+        {
+            cmbSavegames.SelectedIndexChanged -= cmbSavegamesTR2_SelectedIndexChanged;
+
+            if (cmbSavegames.SelectedItem != null)
+            {
+                int selectedIndex = cmbSavegames.SelectedIndex;
+                cmbSavegames.Items[selectedIndex] = selectedSavegame;
+            }
+
+            cmbSavegames.SelectedIndexChanged += cmbSavegamesTR2_SelectedIndexChanged;
+        }
+
+        private void UpdateSavegameDisplayNameTR3(ComboBox cmbSavegames, Savegame selectedSavegame)
+        {
+            cmbSavegames.SelectedIndexChanged -= cmbSavegamesTR3_SelectedIndexChanged;
+
+            if (cmbSavegames.SelectedItem != null)
+            {
+                int selectedIndex = cmbSavegames.SelectedIndex;
+                cmbSavegames.Items[selectedIndex] = selectedSavegame;
+            }
+
+            cmbSavegames.SelectedIndexChanged += cmbSavegamesTR3_SelectedIndexChanged;
+        }
+
         private void DisplayGameInfoTR1(Savegame selectedSavegame)
         {
             if (selectedSavegame != null)
@@ -473,7 +518,12 @@ namespace TRR_SaveMaster
                 isLoading = true;
 
                 TR1.SetSavegamePath(savegamePath);
+
                 TR1.SetSavegameOffset(selectedSavegame.Offset);
+
+                TR1.UpdateDisplayName(selectedSavegame);
+
+                UpdateSavegameDisplayNameTR1(cmbSavegamesTR1, selectedSavegame);
 
                 TR1.DisplayGameInfo(chkPistolsTR1, chkMagnumsTR1, chkUzisTR1, chkShotgunTR1,
                     nudSmallMedipacksTR1, nudLargeMedipacksTR1, nudUziAmmoTR1, nudShotgunAmmoTR1, nudMagnumAmmoTR1,
@@ -495,6 +545,10 @@ namespace TRR_SaveMaster
 
                 TR2.SetSavegameOffset(selectedSavegame.Offset);
 
+                TR2.UpdateDisplayName(selectedSavegame);
+
+                UpdateSavegameDisplayNameTR2(cmbSavegamesTR2, selectedSavegame);
+
                 TR2.SetLevelParams(chkPistolsTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkM16TR2,
                     chkGrenadeLauncherTR2, chkHarpoonGunTR2, nudAutomaticPistolsAmmoTR2, nudUziAmmoTR2,
                     nudM16AmmoTR2, nudGrenadeLauncherAmmoTR2, nudHarpoonGunAmmoTR2);
@@ -511,15 +565,19 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void DisplayGameInfoTR3(Savegame savegame)
+        private void DisplayGameInfoTR3(Savegame selectedSavegame)
         {
-            if (savegame != null)
+            if (selectedSavegame != null)
             {
                 isLoading = true;
 
                 TR3.SetSavegamePath(savegamePath);
 
-                TR3.SetSavegameOffset(savegame.Offset);
+                TR3.SetSavegameOffset(selectedSavegame.Offset);
+
+                TR3.UpdateDisplayName(selectedSavegame);
+
+                UpdateSavegameDisplayNameTR3(cmbSavegamesTR3, selectedSavegame);
 
                 TR3.DisplayGameInfo(chkPistolsTR3, chkShotgunTR3, chkDeagleTR3, chkUziTR3, chkMP5TR3,
                     chkRocketLauncherTR3, chkGrenadeLauncherTR3, chkHarpoonGunTR3, nudSmallMedipacksTR3,
@@ -529,7 +587,7 @@ namespace TRR_SaveMaster
 
                 isLoading = false;
 
-                slblStatus.Text = $"Successfully loaded savegame: '{savegame.Name} - {savegame.Number}'";
+                slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame.Name} - {selectedSavegame.Number}'";
             }
         }
 
