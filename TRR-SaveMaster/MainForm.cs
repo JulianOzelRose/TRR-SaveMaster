@@ -337,33 +337,37 @@ namespace TRR_SaveMaster
 
         private void WriteChangesTR1(Savegame savegame)
         {
-            try
+            if (savegame != null)
             {
-                if (savegame != null)
+                try
                 {
+                    TR1.SetSavegamePath(savegamePath);
+
                     TR1.SetSavegameOffset(savegame.Offset);
 
                     TR1.WriteChanges(chkPistolsTR1, chkMagnumsTR1, chkUzisTR1, chkShotgunTR1, nudSmallMedipacksTR1,
                         nudLargeMedipacksTR1, nudUziAmmoTR1, nudMagnumAmmoTR1, nudShotgunAmmoTR1, trbHealthTR1);
+
+                    DisableButtonsTR1();
+
+                    slblStatus.Text = $"Successfully patched savegame: '{savegame.Name} - {savegame.Number}'";
                 }
-
-                DisableButtonsTR1();
-
-                slblStatus.Text = $"Successfully patched savegame: '{savegame.Name} - {savegame.Number}'";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                slblStatus.Text = $"Error writing to savegame.";
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    slblStatus.Text = $"Error writing to savegame.";
+                }
             }
         }
 
         private void WriteChangesTR2(Savegame savegame)
         {
-            try
+            if (savegame != null)
             {
-                if (savegame != null)
+                try
                 {
+                    TR2.SetSavegamePath(savegamePath);
+
                     TR2.SetSavegameOffset(savegame.Offset);
 
                     TR2.WriteChanges(chkPistolsTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkShotgunTR2,
@@ -371,41 +375,43 @@ namespace TRR_SaveMaster
                         nudSmallMedipacksTR2, nudLargeMedipacksTR2, nudAutomaticPistolsAmmoTR2,
                         nudUziAmmoTR2, nudM16AmmoTR2, nudGrenadeLauncherAmmoTR2, nudHarpoonGunAmmoTR2,
                         nudShotgunAmmoTR2, trbHealthTR2);
+
+                    DisableButtonsTR2();
+
+                    slblStatus.Text = $"Successfully patched savegame: '{savegame.Name} - {savegame.Number}'";
                 }
-
-                DisableButtonsTR2();
-
-                slblStatus.Text = $"Successfully patched savegame: '{savegame.Name} - {savegame.Number}'";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                slblStatus.Text = $"Error writing to savegame.";
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    slblStatus.Text = $"Error writing to savegame.";
+                }
             }
         }
 
         private void WriteChangesTR3(Savegame savegame)
         {
-            try
+            if (savegame != null)
             {
-                if (savegame != null)
+                try
                 {
+                    TR3.SetSavegamePath(savegamePath);
+
                     TR3.SetSavegameOffset(savegame.Offset);
 
                     TR3.WriteChanges(chkPistolsTR3, chkDeagleTR3, chkUziTR3, chkShotgunTR3, chkMP5TR3, chkRocketLauncherTR3,
                         chkGrenadeLauncherTR3, chkHarpoonGunTR3, nudFlaresTR3, nudSmallMedipacksTR3, nudLargeMedipacksTR3,
                         nudShotgunAmmoTR3, nudDeagleAmmoTR3, nudGrenadeLauncherAmmoTR3, nudRocketLauncherAmmoTR3,
                         nudHarpoonGunAmmoTR3, nudMP5AmmoTR3, nudUziAmmoTR3, trbHealthTR3, nudCollectibleCrystalsTR3);
+
+                    DisableButtonsTR3();
+
+                    slblStatus.Text = $"Successfully patched savegame: '{savegame.Name} - {savegame.Number}'";
                 }
-
-                DisableButtonsTR3();
-
-                slblStatus.Text = $"Successfully patched savegame: '{savegame.Name} - {savegame.Number}'";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                slblStatus.Text = $"Error writing to savegame.";
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    slblStatus.Text = $"Error writing to savegame.";
+                }
             }
         }
 
@@ -517,21 +523,29 @@ namespace TRR_SaveMaster
             {
                 isLoading = true;
 
-                TR1.SetSavegamePath(savegamePath);
+                try
+                {
+                    TR1.SetSavegamePath(savegamePath);
 
-                TR1.SetSavegameOffset(selectedSavegame.Offset);
+                    TR1.SetSavegameOffset(selectedSavegame.Offset);
 
-                TR1.UpdateDisplayName(selectedSavegame);
+                    TR1.UpdateDisplayName(selectedSavegame);
 
-                UpdateSavegameDisplayNameTR1(cmbSavegamesTR1, selectedSavegame);
+                    UpdateSavegameDisplayNameTR1(cmbSavegamesTR1, selectedSavegame);
 
-                TR1.DisplayGameInfo(chkPistolsTR1, chkMagnumsTR1, chkUzisTR1, chkShotgunTR1,
-                    nudSmallMedipacksTR1, nudLargeMedipacksTR1, nudUziAmmoTR1, nudShotgunAmmoTR1, nudMagnumAmmoTR1,
-                    trbHealthTR1, lblHealthTR1, lblHealthErrorTR1);
+                    TR1.DisplayGameInfo(chkPistolsTR1, chkMagnumsTR1, chkUzisTR1, chkShotgunTR1,
+                        nudSmallMedipacksTR1, nudLargeMedipacksTR1, nudUziAmmoTR1, nudShotgunAmmoTR1, nudMagnumAmmoTR1,
+                        trbHealthTR1, lblHealthTR1, lblHealthErrorTR1);
+
+                    slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame.Name} - {selectedSavegame.Number}'";
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    slblStatus.Text = $"Error retrieving savegame info.";
+                }
 
                 isLoading = false;
-
-                slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame.Name} - {selectedSavegame.Number}'";
             }
         }
 
@@ -541,27 +555,35 @@ namespace TRR_SaveMaster
             {
                 isLoading = true;
 
-                TR2.SetSavegamePath(savegamePath);
+                try
+                {
+                    TR2.SetSavegamePath(savegamePath);
 
-                TR2.SetSavegameOffset(selectedSavegame.Offset);
+                    TR2.SetSavegameOffset(selectedSavegame.Offset);
 
-                TR2.UpdateDisplayName(selectedSavegame);
+                    TR2.UpdateDisplayName(selectedSavegame);
 
-                UpdateSavegameDisplayNameTR2(cmbSavegamesTR2, selectedSavegame);
+                    UpdateSavegameDisplayNameTR2(cmbSavegamesTR2, selectedSavegame);
 
-                TR2.SetLevelParams(chkPistolsTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkM16TR2,
-                    chkGrenadeLauncherTR2, chkHarpoonGunTR2, nudAutomaticPistolsAmmoTR2, nudUziAmmoTR2,
-                    nudM16AmmoTR2, nudGrenadeLauncherAmmoTR2, nudHarpoonGunAmmoTR2);
+                    TR2.SetLevelParams(chkPistolsTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkM16TR2,
+                        chkGrenadeLauncherTR2, chkHarpoonGunTR2, nudAutomaticPistolsAmmoTR2, nudUziAmmoTR2,
+                        nudM16AmmoTR2, nudGrenadeLauncherAmmoTR2, nudHarpoonGunAmmoTR2);
 
-                TR2.DisplayGameInfo(chkPistolsTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkM16TR2,
-                    chkGrenadeLauncherTR2, chkHarpoonGunTR2, nudAutomaticPistolsAmmoTR2, chkShotgunTR2,
-                    nudUziAmmoTR2, nudM16AmmoTR2, nudGrenadeLauncherAmmoTR2, nudHarpoonGunAmmoTR2,
-                    nudShotgunAmmoTR2, nudFlaresTR2, nudSmallMedipacksTR2, nudLargeMedipacksTR2,
-                    trbHealthTR2, lblHealthTR2, lblHealthErrorTR2);
+                    TR2.DisplayGameInfo(chkPistolsTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkM16TR2,
+                        chkGrenadeLauncherTR2, chkHarpoonGunTR2, nudAutomaticPistolsAmmoTR2, chkShotgunTR2,
+                        nudUziAmmoTR2, nudM16AmmoTR2, nudGrenadeLauncherAmmoTR2, nudHarpoonGunAmmoTR2,
+                        nudShotgunAmmoTR2, nudFlaresTR2, nudSmallMedipacksTR2, nudLargeMedipacksTR2,
+                        trbHealthTR2, lblHealthTR2, lblHealthErrorTR2);
+
+                    slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame.Name} - {selectedSavegame.Number}'";
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    slblStatus.Text = $"Error retrieving savegame info.";
+                }
 
                 isLoading = false;
-
-                slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame.Name} - {selectedSavegame.Number}'";
             }
         }
 
@@ -571,23 +593,31 @@ namespace TRR_SaveMaster
             {
                 isLoading = true;
 
-                TR3.SetSavegamePath(savegamePath);
+                try
+                {
+                    TR3.SetSavegamePath(savegamePath);
 
-                TR3.SetSavegameOffset(selectedSavegame.Offset);
+                    TR3.SetSavegameOffset(selectedSavegame.Offset);
 
-                TR3.UpdateDisplayName(selectedSavegame);
+                    TR3.UpdateDisplayName(selectedSavegame);
 
-                UpdateSavegameDisplayNameTR3(cmbSavegamesTR3, selectedSavegame);
+                    UpdateSavegameDisplayNameTR3(cmbSavegamesTR3, selectedSavegame);
 
-                TR3.DisplayGameInfo(chkPistolsTR3, chkShotgunTR3, chkDeagleTR3, chkUziTR3, chkMP5TR3,
-                    chkRocketLauncherTR3, chkGrenadeLauncherTR3, chkHarpoonGunTR3, nudSmallMedipacksTR3,
-                    nudLargeMedipacksTR3, nudFlaresTR3, nudShotgunAmmoTR3, nudDeagleAmmoTR3, nudGrenadeLauncherAmmoTR3,
-                    nudRocketLauncherAmmoTR3, nudHarpoonGunAmmoTR3, nudMP5AmmoTR3, nudUziAmmoTR3,
-                    trbHealthTR3, lblHealthTR3, lblHealthErrorTR3, nudCollectibleCrystalsTR3);
+                    TR3.DisplayGameInfo(chkPistolsTR3, chkShotgunTR3, chkDeagleTR3, chkUziTR3, chkMP5TR3,
+                        chkRocketLauncherTR3, chkGrenadeLauncherTR3, chkHarpoonGunTR3, nudSmallMedipacksTR3,
+                        nudLargeMedipacksTR3, nudFlaresTR3, nudShotgunAmmoTR3, nudDeagleAmmoTR3, nudGrenadeLauncherAmmoTR3,
+                        nudRocketLauncherAmmoTR3, nudHarpoonGunAmmoTR3, nudMP5AmmoTR3, nudUziAmmoTR3,
+                        trbHealthTR3, lblHealthTR3, lblHealthErrorTR3, nudCollectibleCrystalsTR3);
+
+                    slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame.Name} - {selectedSavegame.Number}'";
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    slblStatus.Text = $"Error retrieving savegame info.";
+                }
 
                 isLoading = false;
-
-                slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame.Name} - {selectedSavegame.Number}'";
             }
         }
 
