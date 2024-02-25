@@ -451,7 +451,7 @@ namespace TRR_SaveMaster
             }
             else if (levelIndex == 20)  // All Hallows
             {
-                // Need to find health offsets for this level...
+                SetHealthOffsets(0x1076, 0x1090, 0x10AA);
             }
             else if (levelIndex == 21)  // Highland Fling
             {
@@ -723,6 +723,7 @@ namespace TRR_SaveMaster
             { 17, new int[] { 0x2414, 0x2415, 0x2416, 0x2417 } },   // RX-Tech Mines
             { 18, new int[] { 0x29A0, 0x29A1, 0x29A2, 0x29A3 } },   // Lost City of Tinnos
             { 19, new int[] { 0x1146, 0x1147, 0x1148, 0x1149 } },   // Meteorite Cavern
+            { 20, new int[] { 0x1822, 0x1823, 0x1824, 0x1825 } },   // All Hallows
             { 21, new int[] { 0x21AE, 0x21AF, 0x21B0, 0x21B1 } },   // Highland Fling
             { 22, new int[] { 0x2532, 0x2533, 0x2534, 0x2535 } },   // Willard's Lair
             { 23, new int[] { 0x25D0, 0x25D1, 0x25D2, 0x25D3 } },   // Shakespeare Cliff
@@ -752,6 +753,7 @@ namespace TRR_SaveMaster
             { 17, new int[] { 0x2412, 0x2413, 0x2414, 0x2415 } },   // RX-Tech Mines
             { 18, new int[] { 0x299E, 0x299F, 0x29A0, 0x29A1 } },   // Lost City of Tinnos
             { 19, new int[] { 0x1144, 0x1145, 0x1146, 0x1147 } },   // Meteorite Cavern
+            { 20, new int[] { 0x1820, 0x1821, 0x1822, 0x1823 } },   // All Hallows
             { 21, new int[] { 0x21AC, 0x21AD, 0x21AE, 0x21AF } },   // Highland Fling
             { 22, new int[] { 0x2530, 0x2531, 0x2532, 0x2533 } },   // Willard's Lair
             { 23, new int[] { 0x25CE, 0x25CF, 0x25D0, 0x25D1 } },   // Shakespeare Cliff
