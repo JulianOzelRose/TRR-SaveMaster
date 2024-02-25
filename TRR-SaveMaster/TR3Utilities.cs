@@ -42,7 +42,8 @@ namespace TRR_SaveMaster
         // Health
         private const UInt16 MAX_HEALTH_VALUE = 1000;
         private const UInt16 MIN_HEALTH_VALUE = 1;
-        private List<int> healthOffsets = new List<int>();
+        private int MAX_HEALTH_OFFSET;
+        private int MIN_HEALTH_OFFSET;
 
         // Strings
         private string savegamePath;
@@ -167,19 +168,19 @@ namespace TRR_SaveMaster
 
         private int GetHealthOffset()
         {
-            for (int i = 0; i < healthOffsets.Count; i++)
+            for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset += 0x1A)
             {
-                UInt16 value = ReadUInt16(savegameOffset + healthOffsets[i]);
+                UInt16 value = ReadUInt16(savegameOffset + offset);
 
                 if (value >= MIN_HEALTH_VALUE && value <= MAX_HEALTH_VALUE)
                 {
-                    byte byteFlag1 = ReadByte(savegameOffset + healthOffsets[i] - 10);
-                    byte byteFlag2 = ReadByte(savegameOffset + healthOffsets[i] - 9);
-                    byte byteFlag3 = ReadByte(savegameOffset + healthOffsets[i] - 8);
+                    byte byteFlag1 = ReadByte(savegameOffset + offset - 10);
+                    byte byteFlag2 = ReadByte(savegameOffset + offset - 9);
+                    byte byteFlag3 = ReadByte(savegameOffset + offset - 8);
 
                     if (IsKnownByteFlagPattern(byteFlag1, byteFlag2, byteFlag3))
                     {
-                        return (savegameOffset + healthOffsets[i]);
+                        return (savegameOffset + offset);
                     }
                 }
             }
@@ -371,122 +372,141 @@ namespace TRR_SaveMaster
             weaponsConfigNumOffset = 0xA0 + (levelIndex * 0x40);
             harpoonGunOffset = 0xA1 + (levelIndex * 0x40);
 
-            healthOffsets.Clear();
-
             if (levelIndex == 1)        // Jungle
             {
-                SetHealthOffsets(0xB26);
+                MIN_HEALTH_OFFSET = 0xB26;
+                MAX_HEALTH_OFFSET = 0xB26;
             }
             else if (levelIndex == 2)   // Temple Ruins
             {
-                SetHealthOffsets(0xDCC, 0xDE6, 0xE00);
+                MIN_HEALTH_OFFSET = 0xDCC;
+                MAX_HEALTH_OFFSET = 0xE00;
             }
             else if (levelIndex == 3)   // The River Ganges
             {
-                SetHealthOffsets(0xAFC);
+                MIN_HEALTH_OFFSET = 0xAFC;
+                MAX_HEALTH_OFFSET = 0xAFC;
             }
             else if (levelIndex == 4)   // Caves of Kaliya
             {
-                SetHealthOffsets(0x1038);
+                MIN_HEALTH_OFFSET = 0x1038;
+                MAX_HEALTH_OFFSET = 0x118A;
             }
             else if (levelIndex == 5)   // Coastal Village
             {
-                SetHealthOffsets(0xCB8);
+                MIN_HEALTH_OFFSET = 0xCB8;
+                MAX_HEALTH_OFFSET = 0xCB8;
             }
             else if (levelIndex == 6)   // Crash Site
             {
-                SetHealthOffsets(0x2046);
+                MIN_HEALTH_OFFSET = 0x2046;
+                MAX_HEALTH_OFFSET = 0x2046;
             }
             else if (levelIndex == 7)   // Madubu Gorge
             {
-                SetHealthOffsets(0x1250);
+                MIN_HEALTH_OFFSET = 0x1250;
+                MAX_HEALTH_OFFSET = 0x126A;
             }
             else if (levelIndex == 8)   // Temple of Puna
             {
-                SetHealthOffsets(0xAD2);
+                MIN_HEALTH_OFFSET = 0xAD2;
+                MAX_HEALTH_OFFSET = 0xAD2;
             }
             else if (levelIndex == 9)   // Thames Wharf
             {
-                SetHealthOffsets(0x10AA);
+                MIN_HEALTH_OFFSET = 0x10AA;
+                MAX_HEALTH_OFFSET = 0x10AA;
             }
             else if (levelIndex == 10)  // Aldwych
             {
-                SetHealthOffsets(0x2C9A);
+                MIN_HEALTH_OFFSET = 0x2C9A;
+                MAX_HEALTH_OFFSET = 0x2D02;
             }
             else if (levelIndex == 11)  // Lud's Gate
             {
-                SetHealthOffsets(0xFF0, 0x100A);
+                MIN_HEALTH_OFFSET = 0xFF0;
+                MAX_HEALTH_OFFSET = 0x100A;
             }
             else if (levelIndex == 12)  // City
             {
-                SetHealthOffsets(0xBB2);
+                MIN_HEALTH_OFFSET = 0xBB2;
+                MAX_HEALTH_OFFSET = 0xBB2;
             }
             else if (levelIndex == 13)  // Nevada Desert
             {
-                SetHealthOffsets(0xAF8);
+                MIN_HEALTH_OFFSET = 0xAF8;
+                MAX_HEALTH_OFFSET = 0xAF8;
             }
             else if (levelIndex == 14)  // High Security Compound
             {
-                SetHealthOffsets(0xB4C);
+                MIN_HEALTH_OFFSET = 0xB4C;
+                MAX_HEALTH_OFFSET = 0xB4C;
             }
             else if (levelIndex == 15)  // Area 51
             {
-                SetHealthOffsets(0x11E4);
+                MIN_HEALTH_OFFSET = 0x11E4;
+                MAX_HEALTH_OFFSET = 0x1218;
             }
             else if (levelIndex == 16)  // Antarctica
             {
-                SetHealthOffsets(0xB12);
+                MIN_HEALTH_OFFSET = 0xB12;
+                MAX_HEALTH_OFFSET = 0xB12;
             }
             else if (levelIndex == 17)  // RX-Tech Mines
             {
-                SetHealthOffsets(0xFB0);
+                MIN_HEALTH_OFFSET = 0xFB0;
+                MAX_HEALTH_OFFSET = 0xFB0;
             }
             else if (levelIndex == 18)  // Lost City of Tinnos
             {
-                SetHealthOffsets(0xB7C);
+                MIN_HEALTH_OFFSET = 0xB7C;
+                MAX_HEALTH_OFFSET = 0xB7C;
             }
             else if (levelIndex == 19)  // Meteorite Cavern
             {
-                SetHealthOffsets(0xAD0);
+                MIN_HEALTH_OFFSET = 0xAD0;
+                MAX_HEALTH_OFFSET = 0xAD0;
             }
             else if (levelIndex == 20)  // All Hallows
             {
-                SetHealthOffsets(0x1076, 0x1090, 0x10AA);
+                MIN_HEALTH_OFFSET = 0x1076;
+                MAX_HEALTH_OFFSET = 0x10AA;
             }
             else if (levelIndex == 21)  // Highland Fling
             {
-                SetHealthOffsets(0x1BF4, 0x1C0E);
+                MIN_HEALTH_OFFSET = 0x1BF4;
+                MAX_HEALTH_OFFSET = 0x1C0E;
             }
             else if (levelIndex == 22)  // Willard's Lair
             {
-                SetHealthOffsets(0x15EE);
+                MIN_HEALTH_OFFSET = 0x15EE;
+                MAX_HEALTH_OFFSET = 0x15EE;
             }
             else if (levelIndex == 23)  // Shakespeare Cliff
             {
-                SetHealthOffsets(0x1338);
+                MIN_HEALTH_OFFSET = 0x1338;
+                MAX_HEALTH_OFFSET = 0x1352;
             }
             else if (levelIndex == 24)  // Sleeping with the Fishes
             {
-                SetHealthOffsets(0xB5A);
+                MIN_HEALTH_OFFSET = 0xB5A;
+                MAX_HEALTH_OFFSET = 0xB5A;
             }
             else if (levelIndex == 25)  // It's a Madhouse!
             {
-                SetHealthOffsets(0x1084);
+                MIN_HEALTH_OFFSET = 0x1084;
+                MAX_HEALTH_OFFSET = 0x1084;
             }
             else if (levelIndex == 26)  // Reunion
             {
-                SetHealthOffsets(0x1810);
+                MIN_HEALTH_OFFSET = 0x1810;
+                MAX_HEALTH_OFFSET = 0x1844;
             }
 
             if (IsPS4Savegame())
             {
-                for (int i = 0; i < healthOffsets.Count; i++)
-                {
-                    if (healthOffsets[i] >= 0xAAA)
-                    {
-                        healthOffsets[i] -= 2;
-                    }
-                }
+                MIN_HEALTH_OFFSET -= 2;
+                MAX_HEALTH_OFFSET -= 2;
             }
         }
 
@@ -658,18 +678,10 @@ namespace TRR_SaveMaster
             if (byteFlag1 == 0x17 && byteFlag2 == 0x00 && byteFlag3 == 0x02) return true;       // Rolling
             if (byteFlag1 == 0x41 && byteFlag2 == 0x00 && byteFlag3 == 0x02) return true;       // Walking on top of water
             if (byteFlag1 == 0x41 && byteFlag2 == 0x00 && byteFlag3 == 0x41) return true;       // Walking on top of water 2
+            if (byteFlag1 == 0x03 && byteFlag2 == 0x00 && byteFlag3 == 0x03) return true;       // Sliding forward
+            if (byteFlag1 == 0x20 && byteFlag2 == 0x00 && byteFlag3 == 0x20) return true;       // Sliding backward
 
             return false;
-        }
-
-        private void SetHealthOffsets(params int[] offsets)
-        {
-            healthOffsets.Clear();
-
-            for (int i = 0; i < offsets.Length; i++)
-            {
-                healthOffsets.Add(offsets[i]);
-            }
         }
 
         private readonly Dictionary<byte, string> levelNames = new Dictionary<byte, string>()
@@ -693,7 +705,7 @@ namespace TRR_SaveMaster
             { 17, "RX-Tech Mines"               },
             { 18, "Lost City Of Tinnos"         },
             { 19, "Meteorite Cavern"            },
-            { 20, "All Hallows"                 },  // Need to test this level...
+            { 20, "All Hallows"                 },
             { 21, "Highland Fling"              },
             { 22, "Willard's Lair"              },
             { 23, "Shakespeare Cliff"           },
@@ -783,7 +795,7 @@ namespace TRR_SaveMaster
 
                 int[] offsets = new int[indexData.Length];
 
-                for (int index = 0; index < 10; index++)
+                for (int index = 0; index < 15; index++)
                 {
                     Array.Copy(indexData, offsets, indexData.Length);
 
