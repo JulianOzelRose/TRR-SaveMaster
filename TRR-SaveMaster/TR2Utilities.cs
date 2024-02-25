@@ -205,6 +205,7 @@ namespace TRR_SaveMaster
             { 20, new int[] { 0x2CF2, 0x2CF3, 0x2CF4, 0x2CF5 } },   // Fool's Gold
             { 21, new int[] { 0x2AF0, 0x2AF1, 0x2AF2, 0x2AF3 } },   // Furnace of the Gods
             { 22, new int[] { 0x210A, 0x210B, 0x210C, 0x210D } },   // Kingdom
+            { 23, new int[] { 0x2354, 0x2355, 0x2356, 0x2357 } },   // Nightmare in Vegas
         };
 
         private readonly Dictionary<byte, int[]> ammoIndexDataPS4 = new Dictionary<byte, int[]>
@@ -231,6 +232,7 @@ namespace TRR_SaveMaster
             { 20, new int[] { 0x2CEE, 0x2CEF, 0x2CF0, 0x2CF1 } },   // Fool's Gold
             { 21, new int[] { 0x2AEC, 0x2AED, 0x2AEE, 0x2AEF } },   // Furnace of the Gods
             { 22, new int[] { 0x2106, 0x2107, 0x2108, 0x2109 } },   // Kingdom
+            { 23, new int[] { 0x2350, 0x2351, 0x2352, 0x2353 } },   // Nightmare in Vegas
         };
 
         private int GetSecondaryAmmoIndex()
@@ -324,7 +326,7 @@ namespace TRR_SaveMaster
             { 20,  "Fool's Gold"                },
             { 21,  "Furnace of the Gods"        },
             { 22,  "Kingdom"                    },
-            { 23,  "Nightmare in Vegas"         },  // Need to test this level...
+            { 23,  "Nightmare in Vegas"         },
         };
 
         private void SetHealthOffsets(params int[] offsets)
@@ -566,7 +568,7 @@ namespace TRR_SaveMaster
             }
             else if (levelIndex == 23)  // Nightmare in Vegas
             {
-                // Need to find health offsets for this level...
+                SetHealthOffsets(0xDDA, 0xDE6, 0xDF2);
             }
 
             if (IsPS4Savegame())
@@ -581,20 +583,43 @@ namespace TRR_SaveMaster
             }
         }
 
-        public void SetLevelParams(CheckBox chkPistols, CheckBox chkAutomaticPistols, CheckBox chkUzis, CheckBox chkM16,
-            CheckBox chkGrenadeLauncher, CheckBox chkHarpoonGun, NumericUpDown nudAutomaticPistolsAmmo, NumericUpDown nudUziAmmo,
-            NumericUpDown nudM16Ammo, NumericUpDown nudGrenadeLauncherAmmo, NumericUpDown nudHarpoonGunAmmo)
+        public void SetLevelParams(CheckBox chkPistols, CheckBox chkShotgun, CheckBox chkAutomaticPistols, CheckBox chkUzis,
+            CheckBox chkM16, CheckBox chkGrenadeLauncher, CheckBox chkHarpoonGun, NumericUpDown nudShotgunAmmo,
+            NumericUpDown nudAutomaticPistolsAmmo, NumericUpDown nudUziAmmo, NumericUpDown nudM16Ammo,
+            NumericUpDown nudGrenadeLauncherAmmo, NumericUpDown nudHarpoonGunAmmo)
         {
-            if (GetLevelIndex() == 18)
+            byte levelIndex = GetLevelIndex();
+
+            if (levelIndex == 18)       // Home Sweet Home
             {
                 chkPistols.Enabled = false;
+                chkShotgun.Enabled = true;
                 chkAutomaticPistols.Enabled = false;
                 chkUzis.Enabled = false;
                 chkM16.Enabled = false;
                 chkGrenadeLauncher.Enabled = false;
                 chkHarpoonGun.Enabled = false;
+
+                nudShotgunAmmo.Enabled = true;
                 nudAutomaticPistolsAmmo.Enabled = false;
                 nudUziAmmo.Enabled = false;
+                nudM16Ammo.Enabled = false;
+                nudGrenadeLauncherAmmo.Enabled = false;
+                nudHarpoonGunAmmo.Enabled = false;
+            }
+            else if (levelIndex == 23)  // Nightmare in Vegas
+            {
+                chkPistols.Enabled = true;
+                chkShotgun.Enabled = true;
+                chkAutomaticPistols.Enabled = true;
+                chkUzis.Enabled = true;
+                chkM16.Enabled = false;
+                chkGrenadeLauncher.Enabled = false;
+                chkHarpoonGun.Enabled = false;
+
+                nudShotgunAmmo.Enabled = true;
+                nudAutomaticPistolsAmmo.Enabled = true;
+                nudUziAmmo.Enabled = true;
                 nudM16Ammo.Enabled = false;
                 nudGrenadeLauncherAmmo.Enabled = false;
                 nudHarpoonGunAmmo.Enabled = false;
@@ -602,11 +627,14 @@ namespace TRR_SaveMaster
             else
             {
                 chkPistols.Enabled = true;
+                chkShotgun.Enabled = true;
                 chkAutomaticPistols.Enabled = true;
                 chkUzis.Enabled = true;
                 chkM16.Enabled = true;
                 chkGrenadeLauncher.Enabled = true;
                 chkHarpoonGun.Enabled = true;
+
+                nudShotgunAmmo.Enabled = true;
                 nudAutomaticPistolsAmmo.Enabled = true;
                 nudUziAmmo.Enabled = true;
                 nudM16Ammo.Enabled = true;
@@ -628,10 +656,20 @@ namespace TRR_SaveMaster
             nudLargeMedipacks.Value = GetNumLargeMedipacks();
             nudFlares.Value = GetNumFlares();
 
-            if (GetLevelIndex() == 18)
+            byte levelIndex = GetLevelIndex();
+
+            if (levelIndex == 18)       // Home Sweet Home
             {
                 nudAutomaticPistolsAmmo.Value = 0;
                 nudUziAmmo.Value = 0;
+                nudM16Ammo.Value = 0;
+                nudGrenadeLauncherAmmo.Value = 0;
+                nudHarpoonGunAmmo.Value = 0;
+            }
+            else if (levelIndex == 23)  // Nightmare in Vegas
+            {
+                nudAutomaticPistolsAmmo.Value = GetAutomaticPistolsAmmo();
+                nudUziAmmo.Value = GetUziAmmo();
                 nudM16Ammo.Value = 0;
                 nudGrenadeLauncherAmmo.Value = 0;
                 nudHarpoonGunAmmo.Value = 0;
@@ -747,16 +785,25 @@ namespace TRR_SaveMaster
                 m16AmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x7C);
             }
 
-            if (levelIndex != 18)
+            if (levelIndex == 18)       // Home Sweet Home
             {
+                WriteShotgunAmmo(chkShotgun.Checked, (UInt16)(nudShotgunAmmo.Value * 6));
+            }
+            else if (levelIndex == 23)  // Nightmare in Vegas
+            {
+                WriteShotgunAmmo(chkShotgun.Checked, (UInt16)(nudShotgunAmmo.Value * 6));
+                WriteAutomaticPistolsAmmo(chkAutomaticPistols.Checked, (UInt16)nudAutomaticPistolsAmmo.Value);
+                WriteUziAmmo(chkUzis.Checked, (UInt16)nudUziAmmo.Value);
+            }
+            else
+            {
+                WriteShotgunAmmo(chkShotgun.Checked, (UInt16)(nudShotgunAmmo.Value * 6));
                 WriteAutomaticPistolsAmmo(chkAutomaticPistols.Checked, (UInt16)nudAutomaticPistolsAmmo.Value);
                 WriteUziAmmo(chkUzis.Checked, (UInt16)nudUziAmmo.Value);
                 WriteHarpoonGunAmmo(chkHarpoonGun.Checked, (UInt16)nudHarpoonGunAmmo.Value);
                 WriteGrenadeLauncherAmmo(chkGrenadeLauncher.Checked, (UInt16)nudGrenadeLauncherAmmo.Value);
                 WriteM16Ammo(chkM16.Checked, (UInt16)nudM16Ammo.Value);
             }
-
-            WriteShotgunAmmo(chkShotgun.Checked, (UInt16)(nudShotgunAmmo.Value * 6));
 
             if (trbHealth.Enabled)
             {
@@ -800,7 +847,7 @@ namespace TRR_SaveMaster
                     UInt16 saveNumber = ReadUInt16(currentSavegameOffset + saveNumberOffset);
                     byte levelIndex = ReadByte(currentSavegameOffset + levelIndexOffset);
 
-                    if (saveNumber != 0 && levelIndex >= 1 && levelIndex <= 22)
+                    if (saveNumber != 0 && levelIndex >= 1 && levelIndex <= 23)
                     {
                         string levelName = levelNames[levelIndex];
                         int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR2) / SAVEGAME_ITERATOR;
@@ -825,7 +872,7 @@ namespace TRR_SaveMaster
                 UInt16 saveNumber = GetSaveNumber();
                 byte levelIndex = GetLevelIndex();
 
-                if (saveNumber != 0 && levelIndex >= 1 && levelIndex <= 22)
+                if (saveNumber != 0 && levelIndex >= 1 && levelIndex <= 23)
                 {
                     string levelName = levelNames[levelIndex];
                     int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR2) / SAVEGAME_ITERATOR;

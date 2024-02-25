@@ -622,8 +622,8 @@ namespace TRR_SaveMaster
 
                     UpdateSavegameDisplayNameTR2(cmbSavegamesTR2, selectedSavegame);
 
-                    TR2.SetLevelParams(chkPistolsTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkM16TR2,
-                        chkGrenadeLauncherTR2, chkHarpoonGunTR2, nudAutomaticPistolsAmmoTR2, nudUziAmmoTR2,
+                    TR2.SetLevelParams(chkPistolsTR2, chkShotgunTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkM16TR2,
+                        chkGrenadeLauncherTR2, chkHarpoonGunTR2, nudShotgunAmmoTR2, nudAutomaticPistolsAmmoTR2, nudUziAmmoTR2,
                         nudM16AmmoTR2, nudGrenadeLauncherAmmoTR2, nudHarpoonGunAmmoTR2);
 
                     TR2.DisplayGameInfo(chkPistolsTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkM16TR2,
