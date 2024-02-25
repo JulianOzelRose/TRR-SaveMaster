@@ -225,17 +225,20 @@ namespace TRR_SaveMaster
         {
             cmbSavegamesTR1.SelectedIndexChanged -= cmbSavegamesTR1_SelectedIndexChanged;
 
-            for (int i = 0; i < cmbSavegamesTR1.Items.Count; i++)
+            if (!string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath))
             {
-                if (cmbSavegamesTR1.Items[i] is Savegame savegame)
+                for (int i = 0; i < cmbSavegamesTR1.Items.Count; i++)
                 {
-                    TR1.UpdateDisplayName(savegame);
+                    if (cmbSavegamesTR1.Items[i] is Savegame savegame)
+                    {
+                        TR1.UpdateDisplayName(savegame);
 
-                    cmbSavegamesTR1.Items[i] = savegame;
+                        cmbSavegamesTR1.Items[i] = savegame;
+                    }
                 }
-            }
 
-            TR1.PopulateEmptySlots(cmbSavegamesTR1);
+                TR1.PopulateEmptySlots(cmbSavegamesTR1);
+            }
 
             cmbSavegamesTR1.SelectedIndexChanged += cmbSavegamesTR1_SelectedIndexChanged;
         }
@@ -244,17 +247,20 @@ namespace TRR_SaveMaster
         {
             cmbSavegamesTR2.SelectedIndexChanged -= cmbSavegamesTR2_SelectedIndexChanged;
 
-            for (int i = 0; i < cmbSavegamesTR2.Items.Count; i++)
+            if (!string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath))
             {
-                if (cmbSavegamesTR2.Items[i] is Savegame savegame)
+                for (int i = 0; i < cmbSavegamesTR2.Items.Count; i++)
                 {
-                    TR2.UpdateDisplayName(savegame);
+                    if (cmbSavegamesTR2.Items[i] is Savegame savegame)
+                    {
+                        TR2.UpdateDisplayName(savegame);
 
-                    cmbSavegamesTR2.Items[i] = savegame;
+                        cmbSavegamesTR2.Items[i] = savegame;
+                    }
                 }
-            }
 
-            TR2.PopulateEmptySlots(cmbSavegamesTR2);
+                TR2.PopulateEmptySlots(cmbSavegamesTR2);
+            }
 
             cmbSavegamesTR2.SelectedIndexChanged += cmbSavegamesTR2_SelectedIndexChanged;
         }
@@ -263,17 +269,20 @@ namespace TRR_SaveMaster
         {
             cmbSavegamesTR3.SelectedIndexChanged -= cmbSavegamesTR3_SelectedIndexChanged;
 
-            for (int i = 0; i < cmbSavegamesTR3.Items.Count; i++)
+            if (!string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath))
             {
-                if (cmbSavegamesTR3.Items[i] is Savegame savegame)
+                for (int i = 0; i < cmbSavegamesTR3.Items.Count; i++)
                 {
-                    TR3.UpdateDisplayName(savegame);
+                    if (cmbSavegamesTR3.Items[i] is Savegame savegame)
+                    {
+                        TR3.UpdateDisplayName(savegame);
 
-                    cmbSavegamesTR3.Items[i] = savegame;
+                        cmbSavegamesTR3.Items[i] = savegame;
+                    }
                 }
-            }
 
-            TR3.PopulateEmptySlots(cmbSavegamesTR3);
+                TR3.PopulateEmptySlots(cmbSavegamesTR3);
+            }
 
             cmbSavegamesTR3.SelectedIndexChanged += cmbSavegamesTR3_SelectedIndexChanged;
         }
