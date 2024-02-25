@@ -229,6 +229,8 @@ namespace TRR_SaveMaster
             if (byteFlag1 == 0x17 && byteFlag2 == 0x00 && byteFlag3 == 0x02) return true;       // Rolling
             if (byteFlag1 == 0x41 && byteFlag2 == 0x00 && byteFlag3 == 0x02) return true;       // Walking on top of water
             if (byteFlag1 == 0x41 && byteFlag2 == 0x00 && byteFlag3 == 0x41) return true;       // Walking on top of water 2
+            if (byteFlag1 == 0x03 && byteFlag2 == 0x00 && byteFlag3 == 0x03) return true;       // Sliding forward
+            if (byteFlag1 == 0x20 && byteFlag2 == 0x00 && byteFlag3 == 0x20) return true;       // Sliding backward
 
             return false;
         }
@@ -435,14 +437,7 @@ namespace TRR_SaveMaster
             {
                 for (int i = 0; i < healthOffsets.Count; i++)
                 {
-                    if (healthOffsets[i] >= 0x64E && healthOffsets[i] < 0x6B0)
-                    {
-                        healthOffsets[i] -= 1;
-                    }
-                    else if (healthOffsets[i] >= 0x6B0)
-                    {
-                        healthOffsets[i] -= 4;
-                    }
+                    healthOffsets[i] -= 4;
                 }
 
                 magnumAmmoOffset2 -= 4;
