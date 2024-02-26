@@ -35,8 +35,16 @@ namespace TRR_SaveMaster
             btnRefreshTR1.Enabled = !string.IsNullOrEmpty(savegamePath);
             tsmiCreateBackup.Enabled = !string.IsNullOrEmpty(savegamePath);
 
-            slblStatus.Text = !string.IsNullOrEmpty(savegamePath) ?
-                $"{cmbSavegamesTR1.Items.Count} savegames found for Tomb Raider I" : "Ready";
+            if (!string.IsNullOrEmpty(savegamePath))
+            {
+                this.Text = $"Tomb Raider I-III Remastered Savegame Editor {(IsPS4Savegame() ? "(PS4)" : "(PC)")}";
+                slblStatus.Text = $"{cmbSavegamesTR1.Items.Count} savegames found for Tomb Raider I";
+            }
+            else
+            {
+                this.Text = $"Tomb Raider I-III Remastered Savegame Editor";
+                slblStatus.Text = "Ready";
+            }
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
@@ -86,6 +94,12 @@ namespace TRR_SaveMaster
             }
         }
 
+        private bool IsPS4Savegame()
+        {
+            FileInfo fileInfo = new FileInfo(savegamePath);
+            return fileInfo.Length == 0x400000;
+        }
+
         private void PromptBrowseSavegamePath()
         {
             DialogResult result = MessageBox.Show("Savegame path has not been set. Would you like to set it now?",
@@ -127,6 +141,8 @@ namespace TRR_SaveMaster
                     btnRefreshTR3.Enabled = true;
 
                     tsmiCreateBackup.Enabled = true;
+
+                    this.Text = $"Tomb Raider I-III Remastered Savegame Editor {(IsPS4Savegame() ? "(PS4)" : "(PC)")}";
 
                     slblStatus.Text = $"Loaded savegame file: \"{savegamePath}\"";
                 }
