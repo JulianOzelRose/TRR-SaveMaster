@@ -15,17 +15,17 @@ click "Yes". Your savegame path should be as follows:
 
 Just replace "USERNAME" with your actual username, and "77777777777777777" with whatever numeric ID you see. The number is your Steam Community ID, so if
 you have multiple accounts with Tomb Raider I-III Remastered, there may be multiple folders. Because the savegame file is located in a hidden directory, you will have to enable
-"Show hidden files, folders, or drives" in Windows Explorer. If you are trying to edit PS4 savegames, the savegame file is `memory.dat`.
-
-Once you have selected your savegame path, your savegames should populate in the editor. The editor will remember your savegame path, so there is no need to re-enter it every time.
-Since Tomb Raider I-III Remastered saves and loads savegames for the expansions in the same slots as the originals, this editor does the same. So the "Tomb Raider I" tab will also display
-Unfinished Business savegames, the "Tomb Raider II" tab will display The Golden Mask savegames, and the "Tomb Raider III" tab will display The Lost Artifact savegames.
+"Show hidden files, folders, or drives" in Windows Explorer. Once you have selected your savegame path, your savegames should populate in the editor. The editor will remember
+your savegame path, so there is no need to re-enter it every time.
 
 Once the savegames are populated in the editor, you can select them using the combo box labeled "Savegame" in the top-right corner. The editor will automatically refresh savegame
-data when switching tabs or selecting savegames -- but if another savegame is added and not displaying, you can click "Refresh" to re-populate the savegames. If you would
-like to create a backup of your savegame file before writing to it, you can click "File" then "Create backup", and a file `savegame.dat.bak` will be created in the same
-directory as your savegame file. Once you are done making changes, click "Save" to apply changes. Because the game caches savegames into memory, you must restart your game
+data when switching tabs or selecting savegames. If another savegame is added and not displaying, you can click "Refresh" to re-populate the savegames. If you would
+like to create a backup of your savegame file before writing to it, click "File" then "Create backup", and a file of the same name with a `.bak` extension will be created in the same
+directory. Once you are done making changes, click "Save" to apply them. Because the game caches savegames into memory, you must restart your game
 in order for the changes to take effect.
+
+It is highly recommended that you periodically backup your savegame file. While this savegame editor has been thoroughly tested and employs error handling to prevent faulty writes,
+no system is perfect. Regular backups can safeguard your progress in the event of unforeseen issues or errors during the editing process.
 
 ## Reverse engineering Tomb Raider I-III Remastered
 This section details the technical aspects of reverse engineering Tomb Raider I-III Remastered. All savegames are stored in a single file; `savegame.dat`.
