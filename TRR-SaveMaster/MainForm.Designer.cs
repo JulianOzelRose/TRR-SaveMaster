@@ -142,6 +142,10 @@ namespace TRR_SaveMaster
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSendFeedback = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsddbEdit = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsmiEnableAllWeapons = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiSetMaximumAmmunition = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiSetMaximumItems = new System.Windows.Forms.ToolStripMenuItem();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
             this.grpHealthTR1.SuspendLayout();
@@ -1368,6 +1372,7 @@ namespace TRR_SaveMaster
             this.tsrToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tsrToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsddbFile,
+            this.tsddbEdit,
             this.tsddbView,
             this.tsddbHelp});
             this.tsrToolStrip.Location = new System.Drawing.Point(0, 0);
@@ -1395,32 +1400,32 @@ namespace TRR_SaveMaster
             // tsmiBrowsePath
             // 
             this.tsmiBrowsePath.Name = "tsmiBrowsePath";
-            this.tsmiBrowsePath.Size = new System.Drawing.Size(150, 22);
+            this.tsmiBrowsePath.Size = new System.Drawing.Size(180, 22);
             this.tsmiBrowsePath.Text = "Browse path...";
             this.tsmiBrowsePath.Click += new System.EventHandler(this.tsmiBrowsePath_Click);
             // 
             // tsmiFileSeparator
             // 
             this.tsmiFileSeparator.Name = "tsmiFileSeparator";
-            this.tsmiFileSeparator.Size = new System.Drawing.Size(147, 6);
+            this.tsmiFileSeparator.Size = new System.Drawing.Size(177, 6);
             // 
             // tsmiCreateBackup
             // 
             this.tsmiCreateBackup.Enabled = false;
             this.tsmiCreateBackup.Name = "tsmiCreateBackup";
-            this.tsmiCreateBackup.Size = new System.Drawing.Size(150, 22);
+            this.tsmiCreateBackup.Size = new System.Drawing.Size(180, 22);
             this.tsmiCreateBackup.Text = "Create backup";
             this.tsmiCreateBackup.Click += new System.EventHandler(this.tsmiCreateBackup_Click);
             // 
             // tsmiFileSeparator2
             // 
             this.tsmiFileSeparator2.Name = "tsmiFileSeparator2";
-            this.tsmiFileSeparator2.Size = new System.Drawing.Size(147, 6);
+            this.tsmiFileSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // tsmiExit
             // 
             this.tsmiExit.Name = "tsmiExit";
-            this.tsmiExit.Size = new System.Drawing.Size(150, 22);
+            this.tsmiExit.Size = new System.Drawing.Size(180, 22);
             this.tsmiExit.Text = "Exit";
             this.tsmiExit.Click += new System.EventHandler(this.tsmiExit_Click);
             // 
@@ -1442,7 +1447,7 @@ namespace TRR_SaveMaster
             // 
             this.tsmiAlwaysOnTop.CheckOnClick = true;
             this.tsmiAlwaysOnTop.Name = "tsmiAlwaysOnTop";
-            this.tsmiAlwaysOnTop.Size = new System.Drawing.Size(149, 22);
+            this.tsmiAlwaysOnTop.Size = new System.Drawing.Size(180, 22);
             this.tsmiAlwaysOnTop.Text = "Always on top";
             this.tsmiAlwaysOnTop.Click += new System.EventHandler(this.tsmiAlwaysOnTop_Click);
             // 
@@ -1452,7 +1457,7 @@ namespace TRR_SaveMaster
             this.tsmiStatusBar.CheckOnClick = true;
             this.tsmiStatusBar.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiStatusBar.Name = "tsmiStatusBar";
-            this.tsmiStatusBar.Size = new System.Drawing.Size(149, 22);
+            this.tsmiStatusBar.Size = new System.Drawing.Size(180, 22);
             this.tsmiStatusBar.Text = "Status Bar";
             this.tsmiStatusBar.Click += new System.EventHandler(this.tsmiStatusBar_Click);
             // 
@@ -1474,23 +1479,62 @@ namespace TRR_SaveMaster
             // tsmiViewReadme
             // 
             this.tsmiViewReadme.Name = "tsmiViewReadme";
-            this.tsmiViewReadme.Size = new System.Drawing.Size(153, 22);
+            this.tsmiViewReadme.Size = new System.Drawing.Size(180, 22);
             this.tsmiViewReadme.Text = "View README";
             this.tsmiViewReadme.Click += new System.EventHandler(this.tsmiViewReadme_Click);
             // 
             // tsmiSendFeedback
             // 
             this.tsmiSendFeedback.Name = "tsmiSendFeedback";
-            this.tsmiSendFeedback.Size = new System.Drawing.Size(153, 22);
+            this.tsmiSendFeedback.Size = new System.Drawing.Size(180, 22);
             this.tsmiSendFeedback.Text = "Send Feedback";
             this.tsmiSendFeedback.Click += new System.EventHandler(this.tsmiSendFeedback_Click);
             // 
             // tsmiAbout
             // 
             this.tsmiAbout.Name = "tsmiAbout";
-            this.tsmiAbout.Size = new System.Drawing.Size(153, 22);
+            this.tsmiAbout.Size = new System.Drawing.Size(180, 22);
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
+            // 
+            // tsddbEdit
+            // 
+            this.tsddbEdit.AutoToolTip = false;
+            this.tsddbEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsddbEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiEnableAllWeapons,
+            this.tsmiSetMaximumAmmunition,
+            this.tsmiSetMaximumItems});
+            this.tsddbEdit.Image = ((System.Drawing.Image)(resources.GetObject("tsddbEdit.Image")));
+            this.tsddbEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddbEdit.Name = "tsddbEdit";
+            this.tsddbEdit.ShowDropDownArrow = false;
+            this.tsddbEdit.Size = new System.Drawing.Size(31, 22);
+            this.tsddbEdit.Text = "Edit";
+            // 
+            // tsmiEnableAllWeapons
+            // 
+            this.tsmiEnableAllWeapons.Enabled = false;
+            this.tsmiEnableAllWeapons.Name = "tsmiEnableAllWeapons";
+            this.tsmiEnableAllWeapons.Size = new System.Drawing.Size(217, 22);
+            this.tsmiEnableAllWeapons.Text = "Enable all weapons";
+            this.tsmiEnableAllWeapons.Click += new System.EventHandler(this.tsmiEnableAllWeapons_Click);
+            // 
+            // tsmiSetMaximumAmmunition
+            // 
+            this.tsmiSetMaximumAmmunition.Enabled = false;
+            this.tsmiSetMaximumAmmunition.Name = "tsmiSetMaximumAmmunition";
+            this.tsmiSetMaximumAmmunition.Size = new System.Drawing.Size(217, 22);
+            this.tsmiSetMaximumAmmunition.Text = "Set maximum ammunition";
+            this.tsmiSetMaximumAmmunition.Click += new System.EventHandler(this.tsmiSetMaximumAmmunition_Click);
+            // 
+            // tsmiSetMaximumItems
+            // 
+            this.tsmiSetMaximumItems.Enabled = false;
+            this.tsmiSetMaximumItems.Name = "tsmiSetMaximumItems";
+            this.tsmiSetMaximumItems.Size = new System.Drawing.Size(217, 22);
+            this.tsmiSetMaximumItems.Text = "Set maximum items";
+            this.tsmiSetMaximumItems.Click += new System.EventHandler(this.tsmiSetMaximumItems_Click);
             // 
             // MainForm
             // 
@@ -1686,6 +1730,10 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.Button btnRefreshTR3;
         private System.Windows.Forms.Label lblCollectibleCrystalsTR3;
         private System.Windows.Forms.NumericUpDown nudCollectibleCrystalsTR3;
+        private System.Windows.Forms.ToolStripDropDownButton tsddbEdit;
+        private System.Windows.Forms.ToolStripMenuItem tsmiEnableAllWeapons;
+        private System.Windows.Forms.ToolStripMenuItem tsmiSetMaximumAmmunition;
+        private System.Windows.Forms.ToolStripMenuItem tsmiSetMaximumItems;
     }
 }
 

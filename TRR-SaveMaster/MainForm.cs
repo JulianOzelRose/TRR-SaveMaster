@@ -35,6 +35,10 @@ namespace TRR_SaveMaster
             btnRefreshTR1.Enabled = !string.IsNullOrEmpty(savegamePath);
             tsmiCreateBackup.Enabled = !string.IsNullOrEmpty(savegamePath);
 
+            tsmiEnableAllWeapons.Enabled = !string.IsNullOrEmpty(savegamePath);
+            tsmiSetMaximumAmmunition.Enabled = !string.IsNullOrEmpty(savegamePath);
+            tsmiSetMaximumItems.Enabled = !string.IsNullOrEmpty(savegamePath);
+
             if (!string.IsNullOrEmpty(savegamePath))
             {
                 this.Text = $"Tomb Raider I-III Remastered Savegame Editor {(IsPS4Savegame() ? "(PS4)" : "(PC)")}";
@@ -139,6 +143,10 @@ namespace TRR_SaveMaster
                     btnRefreshTR1.Enabled = true;
                     btnRefreshTR2.Enabled = true;
                     btnRefreshTR3.Enabled = true;
+
+                    tsmiEnableAllWeapons.Enabled = true;
+                    tsmiSetMaximumAmmunition.Enabled = true;
+                    tsmiSetMaximumItems.Enabled = true;
 
                     tsmiCreateBackup.Enabled = true;
 
@@ -827,6 +835,87 @@ namespace TRR_SaveMaster
         private void tsmiBrowsePath_Click(object sender, EventArgs e)
         {
             BrowseSavegamePath();
+        }
+
+        private void tsmiEnableAllWeapons_Click(object sender, EventArgs e)
+        {
+            if (tabGame.SelectedIndex == TAB_TR1)
+            {
+                EnableAllWeapons(grpWeaponsTR1);
+            }
+            else if (tabGame.SelectedIndex == TAB_TR2)
+            {
+                EnableAllWeapons(grpWeaponsTR2);
+            }
+            else if (tabGame.SelectedIndex == TAB_TR3)
+            {
+                EnableAllWeapons(grpWeaponsTR3);
+            }
+        }
+
+        private void tsmiSetMaximumAmmunition_Click(object sender, EventArgs e)
+        {
+            if (tabGame.SelectedIndex == TAB_TR1)
+            {
+                SetMaximumAmmunition(grpWeaponsTR1);
+            }
+            else if (tabGame.SelectedIndex == TAB_TR2)
+            {
+                SetMaximumAmmunition(grpWeaponsTR2);
+            }
+            else if (tabGame.SelectedIndex == TAB_TR3)
+            {
+                SetMaximumAmmunition(grpWeaponsTR3);
+            }
+        }
+
+        private void tsmiSetMaximumItems_Click(object sender, EventArgs e)
+        {
+            if (tabGame.SelectedIndex == TAB_TR1)
+            {
+                SetMaximumItems(grpItemsTR1);
+            }
+            else if (tabGame.SelectedIndex == TAB_TR2)
+            {
+                SetMaximumItems(grpItemsTR2);
+            }
+            else if (tabGame.SelectedIndex == TAB_TR3)
+            {
+                SetMaximumItems(grpItemsTR3);
+            }
+        }
+
+        private void EnableAllWeapons(GroupBox grpWeapons)
+        {
+            foreach (Control control in grpWeapons.Controls)
+            {
+                if (control is CheckBox chkWeapon && chkWeapon.Enabled)
+                {
+                    chkWeapon.Checked = true;
+                }
+            }
+        }
+
+        private void SetMaximumAmmunition(GroupBox grpWeapons)
+        {
+            foreach (Control control in grpWeapons.Controls)
+            {
+                if (control is NumericUpDown nudAmmo && nudAmmo.Enabled)
+                {
+                    nudAmmo.Value = nudAmmo.Maximum;
+                }
+            }
+        }
+
+        private void SetMaximumItems(GroupBox grpItems)
+        {
+            foreach (Control control in grpItems.Controls)
+            {
+                if (control is NumericUpDown nudItem && nudItem.Enabled)
+                {
+                    nudItem.Value = nudItem.Maximum;
+                }
+            }
         }
 
         private void EnableButtonsTR1()
