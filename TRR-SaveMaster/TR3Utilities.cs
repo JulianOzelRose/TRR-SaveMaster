@@ -515,7 +515,8 @@ namespace TRR_SaveMaster
             NumericUpDown nudSmallMedipacks, NumericUpDown nudLargeMedipacks, NumericUpDown nudFlares,
             NumericUpDown nudShotgunAmmo, NumericUpDown nudDeagleAmmo, NumericUpDown nudGrenadeLauncherAmmo,
             NumericUpDown nudRocketLauncherAmmo, NumericUpDown nudHarpoonGunAmmo, NumericUpDown nudMP5Ammo, NumericUpDown nudUziAmmo,
-            TrackBar trbHealth, Label lblHealth, Label lblHealthError, NumericUpDown nudCollectibleCrystals)
+            TrackBar trbHealth, Label lblHealth, Label lblHealthError, NumericUpDown nudCollectibleCrystals,
+            Label lblCollectibleCrystals)
         {
             DetermineOffsets();
 
@@ -534,12 +535,16 @@ namespace TRR_SaveMaster
             if (GetLevelIndex() >= 21)
             {
                 nudCollectibleCrystals.Enabled = false;
+                lblCollectibleCrystals.Visible = false;
                 nudCollectibleCrystals.Value = 0;
+                nudCollectibleCrystals.Visible = false;
             }
             else
             {
                 nudCollectibleCrystals.Enabled = true;
+                lblCollectibleCrystals.Visible = true;
                 nudCollectibleCrystals.Value = GetNumCollectibleCrystals();
+                nudCollectibleCrystals.Visible = true;
             }
 
             byte weaponsConfigNum = GetWeaponsConfigNum();
@@ -622,12 +627,11 @@ namespace TRR_SaveMaster
             WriteWeaponsConfigNum(newWeaponsConfigNum);
             WriteHarpoonGunPresent(chkHarpoonGun.Checked);
 
+            byte levelIndex = GetLevelIndex();
             secondaryAmmoIndex = GetSecondaryAmmoIndex();
 
             if (secondaryAmmoIndex != -1)
             {
-                byte levelIndex = GetLevelIndex();
-
                 Dictionary<byte, int[]> ammoIndexData;
 
                 if (IsPS4Savegame())
@@ -658,7 +662,7 @@ namespace TRR_SaveMaster
             WriteMP5Ammo(chkMP5.Checked, (UInt16)nudMP5Ammo.Value);
             WriteUziAmmo(chkUzi.Checked, (UInt16)nudUziAmmo.Value);
 
-            if (nudCollectibleCrystals.Enabled)
+            if (levelIndex < 21)
             {
                 WriteNumCollectibleCrystals((byte)nudCollectibleCrystals.Value);
             }
