@@ -38,6 +38,7 @@ namespace TRR_SaveMaster
             tsmiEnableAllWeapons.Enabled = !string.IsNullOrEmpty(savegamePath);
             tsmiSetMaximumAmmunition.Enabled = !string.IsNullOrEmpty(savegamePath);
             tsmiSetMaximumItems.Enabled = !string.IsNullOrEmpty(savegamePath);
+            tsmiStatistics.Enabled = !string.IsNullOrEmpty(savegamePath);
 
             if (!string.IsNullOrEmpty(savegamePath))
             {
@@ -147,6 +148,7 @@ namespace TRR_SaveMaster
                     tsmiEnableAllWeapons.Enabled = true;
                     tsmiSetMaximumAmmunition.Enabled = true;
                     tsmiSetMaximumItems.Enabled = true;
+                    tsmiStatistics.Enabled = true;
 
                     tsmiCreateBackup.Enabled = true;
 
@@ -830,6 +832,31 @@ namespace TRR_SaveMaster
             AboutForm aboutForm = new AboutForm();
             aboutForm.TopMost = TopMost;
             aboutForm.ShowDialog();
+        }
+
+        private void tsmiStatistics_Click(object sender, EventArgs e)
+        {
+            StatisticsForm statisticsForm = new StatisticsForm(slblStatus, savegamePath, tabGame.SelectedIndex);
+            Savegame selectedSavegame = null;
+
+            if (tabGame.SelectedIndex == TAB_TR1)
+            {
+                selectedSavegame = cmbSavegamesTR1.Items[cmbSavegamesTR1.SelectedIndex] as Savegame;
+            }
+            else if (tabGame.SelectedIndex == TAB_TR2)
+            {
+                selectedSavegame = cmbSavegamesTR2.Items[cmbSavegamesTR2.SelectedIndex] as Savegame;
+            }
+            else if (tabGame.SelectedIndex == TAB_TR3)
+            {
+                selectedSavegame = cmbSavegamesTR3.Items[cmbSavegamesTR3.SelectedIndex] as Savegame;
+            }
+
+            if (selectedSavegame != null)
+            {
+                statisticsForm.SetSavegame(selectedSavegame);
+                statisticsForm.ShowDialog();
+            }
         }
 
         private void tsmiBrowsePath_Click(object sender, EventArgs e)
