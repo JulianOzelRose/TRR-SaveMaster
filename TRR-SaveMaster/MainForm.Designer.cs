@@ -139,6 +139,8 @@ namespace TRR_SaveMaster
             this.tsmiEnableAllWeapons = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSetMaximumAmmunition = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSetMaximumItems = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiEditSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmiStatistics = new System.Windows.Forms.ToolStripMenuItem();
             this.tsddbView = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiStatusBar = new System.Windows.Forms.ToolStripMenuItem();
@@ -146,8 +148,6 @@ namespace TRR_SaveMaster
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSendFeedback = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiEditSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmiStatistics = new System.Windows.Forms.ToolStripMenuItem();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
             this.grpHealthTR1.SuspendLayout();
@@ -1472,6 +1472,19 @@ namespace TRR_SaveMaster
             this.tsmiSetMaximumItems.Text = "Set maximum items";
             this.tsmiSetMaximumItems.Click += new System.EventHandler(this.tsmiSetMaximumItems_Click);
             // 
+            // tsmiEditSeparator
+            // 
+            this.tsmiEditSeparator.Name = "tsmiEditSeparator";
+            this.tsmiEditSeparator.Size = new System.Drawing.Size(214, 6);
+            // 
+            // tsmiStatistics
+            // 
+            this.tsmiStatistics.Enabled = false;
+            this.tsmiStatistics.Name = "tsmiStatistics";
+            this.tsmiStatistics.Size = new System.Drawing.Size(217, 22);
+            this.tsmiStatistics.Text = "Statistics";
+            this.tsmiStatistics.Click += new System.EventHandler(this.tsmiStatistics_Click);
+            // 
             // tsddbView
             // 
             this.tsddbView.AutoToolTip = false;
@@ -1539,18 +1552,6 @@ namespace TRR_SaveMaster
             this.tsmiAbout.Size = new System.Drawing.Size(153, 22);
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
-            // 
-            // tsmiEditSeparator
-            // 
-            this.tsmiEditSeparator.Name = "tsmiEditSeparator";
-            this.tsmiEditSeparator.Size = new System.Drawing.Size(214, 6);
-            // 
-            // tsmiStatistics
-            // 
-            this.tsmiStatistics.Name = "tsmiStatistics";
-            this.tsmiStatistics.Size = new System.Drawing.Size(217, 22);
-            this.tsmiStatistics.Text = "Statistics";
-            this.tsmiStatistics.Click += new System.EventHandler(this.tsmiStatistics_Click);
             // 
             // MainForm
             // 
