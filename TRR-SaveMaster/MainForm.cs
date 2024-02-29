@@ -140,6 +140,10 @@ namespace TRR_SaveMaster
 
                     savegamePath = fileBrowserDialog.FileName;
 
+                    cmbSavegamesTR1.Items.Clear();
+                    cmbSavegamesTR2.Items.Clear();
+                    cmbSavegamesTR3.Items.Clear();
+
                     if (tabGame.SelectedIndex == TAB_TR1)
                     {
                         PopulateSavegamesTR1();
