@@ -32,15 +32,15 @@ namespace TRR_SaveMaster
             GetSavegamePath();
             PopulateSavegamesTR1();
 
-            btnRefreshTR1.Enabled = !string.IsNullOrEmpty(savegamePath);
-            tsmiCreateBackup.Enabled = !string.IsNullOrEmpty(savegamePath);
+            btnRefreshTR1.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
+            tsmiCreateBackup.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
 
-            tsmiEnableAllWeapons.Enabled = !string.IsNullOrEmpty(savegamePath);
-            tsmiSetMaximumAmmunition.Enabled = !string.IsNullOrEmpty(savegamePath);
-            tsmiSetMaximumItems.Enabled = !string.IsNullOrEmpty(savegamePath);
-            tsmiStatistics.Enabled = !string.IsNullOrEmpty(savegamePath);
+            tsmiEnableAllWeapons.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
+            tsmiSetMaximumAmmunition.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
+            tsmiSetMaximumItems.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
+            tsmiStatistics.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
 
-            if (!string.IsNullOrEmpty(savegamePath))
+            if (!string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath))
             {
                 this.Text = $"Tomb Raider I-III Remastered Savegame Editor {(IsPS4Savegame() ? "(PS4)" : "(PC)")}";
                 slblStatus.Text = $"{cmbSavegamesTR1.Items.Count} savegames found for Tomb Raider I";
@@ -105,6 +105,12 @@ namespace TRR_SaveMaster
             return fileInfo.Length == 0x400000;
         }
 
+        private bool IsValidSavegame(string path)
+        {
+            FileInfo fileInfo = new FileInfo(path);
+            return fileInfo.Length >= 0x152004;
+        }
+
         private void PromptBrowseSavegamePath()
         {
             DialogResult result = MessageBox.Show("Savegame path has not been set. Would you like to set it now?",
@@ -126,6 +132,12 @@ namespace TRR_SaveMaster
 
                 if (fileBrowserDialog.ShowDialog() == DialogResult.OK)
                 {
+                    if (!IsValidSavegame(fileBrowserDialog.FileName))
+                    {
+                        MessageBox.Show("Invalid savegame file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
                     savegamePath = fileBrowserDialog.FileName;
 
                     if (tabGame.SelectedIndex == TAB_TR1)
@@ -529,7 +541,7 @@ namespace TRR_SaveMaster
                 cmbSavegamesTR1.Items.Clear();
                 TR1.PopulateSavegames(cmbSavegamesTR1);
 
-                slblStatus.Text = !string.IsNullOrEmpty(savegamePath) ?
+                slblStatus.Text = (!string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath)) ?
                     $"{cmbSavegamesTR1.Items.Count} savegames found for Tomb Raider I" : "Ready";
             }
             else
@@ -545,7 +557,7 @@ namespace TRR_SaveMaster
                 cmbSavegamesTR2.Items.Clear();
                 TR2.PopulateSavegames(cmbSavegamesTR2);
 
-                slblStatus.Text = !string.IsNullOrEmpty(savegamePath) ?
+                slblStatus.Text = (!string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath)) ?
                     $"{cmbSavegamesTR2.Items.Count} savegames found for Tomb Raider II" : "Ready";
             }
             else
@@ -561,7 +573,7 @@ namespace TRR_SaveMaster
                 cmbSavegamesTR3.Items.Clear();
                 TR3.PopulateSavegames(cmbSavegamesTR3);
 
-                slblStatus.Text = !string.IsNullOrEmpty(savegamePath) ?
+                slblStatus.Text = (!string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath)) ?
                     $"{cmbSavegamesTR3.Items.Count} savegames found for Tomb Raider III" : "Ready";
             }
             else
@@ -717,7 +729,7 @@ namespace TRR_SaveMaster
         {
             if (tabGame.SelectedIndex == TAB_TR1)
             {
-                btnRefreshTR1.Enabled = !string.IsNullOrEmpty(savegamePath);
+                btnRefreshTR1.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
 
                 if (cmbSavegamesTR1.Items.Count == 0)
                 {
@@ -728,12 +740,12 @@ namespace TRR_SaveMaster
                     DisplayGameInfoTR1(cmbSavegamesTR1.SelectedItem as Savegame);
                 }
 
-                slblStatus.Text = !string.IsNullOrEmpty(savegamePath) ?
+                slblStatus.Text = (!string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath)) ?
                     $"{cmbSavegamesTR1.Items.Count} savegames found for Tomb Raider I" : "Ready";
             }
             else if (tabGame.SelectedIndex == TAB_TR2)
             {
-                btnRefreshTR2.Enabled = !string.IsNullOrEmpty(savegamePath);
+                btnRefreshTR2.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
 
                 if (cmbSavegamesTR2.Items.Count == 0)
                 {
@@ -744,12 +756,12 @@ namespace TRR_SaveMaster
                     DisplayGameInfoTR2(cmbSavegamesTR2.SelectedItem as Savegame);
                 }
 
-                slblStatus.Text = !string.IsNullOrEmpty(savegamePath) ?
+                slblStatus.Text = (!string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath)) ?
                     $"{cmbSavegamesTR2.Items.Count} savegames found for Tomb Raider II" : "Ready";
             }
             else if (tabGame.SelectedIndex == TAB_TR3)
             {
-                btnRefreshTR3.Enabled = !string.IsNullOrEmpty(savegamePath);
+                btnRefreshTR3.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
 
                 if (cmbSavegamesTR3.Items.Count == 0)
                 {
@@ -760,7 +772,7 @@ namespace TRR_SaveMaster
                     DisplayGameInfoTR3(cmbSavegamesTR3.SelectedItem as Savegame);
                 }
 
-                slblStatus.Text = !string.IsNullOrEmpty(savegamePath) ?
+                slblStatus.Text = (!string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath)) ?
                     $"{cmbSavegamesTR3.Items.Count} savegames found for Tomb Raider III" : "Ready";
             }
         }
