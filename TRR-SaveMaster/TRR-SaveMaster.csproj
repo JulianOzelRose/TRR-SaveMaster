@@ -128,6 +128,7 @@
   <ItemGroup>
     <Content Include="bin\x64\Release\TRR-SaveMaster.exe" />
     <Content Include="Images\About_Background.png" />
+    <None Include="Images\PayPal_Image.png" />
     <Content Include="TRR-SaveMaster.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
