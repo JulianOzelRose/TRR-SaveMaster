@@ -102,6 +102,67 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void ClearControlsInGroupBox(GroupBox groupBox)
+        {
+            foreach (Control control in groupBox.Controls)
+            {
+                if (control is NumericUpDown numericUpDown)
+                {
+                    numericUpDown.Value = 0;
+                    numericUpDown.Enabled = true;
+                }
+                else if (control is CheckBox checkBox)
+                {
+                    checkBox.Checked = false;
+                    checkBox.Enabled = true;
+                }
+                else if (control is TrackBar trackBar)
+                {
+                    trackBar.Value = trackBar.Minimum;
+                    trackBar.Enabled = true;
+                }
+            }
+        }
+
+        private void ClearControlsTR1()
+        {
+            ClearControlsInGroupBox(grpItemsTR1);
+            ClearControlsInGroupBox(grpWeaponsTR1);
+            ClearControlsInGroupBox(grpHealthTR1);
+
+            lblHealthErrorTR1.Visible = false;
+            lblHealthTR1.Text = "0.1%";
+
+            btnSaveTR1.Enabled = false;
+            btnCancelTR1.Enabled = false;
+        }
+
+        private void ClearControlsTR2()
+        {
+            ClearControlsInGroupBox(grpItemsTR2);
+            ClearControlsInGroupBox(grpWeaponsTR2);
+            ClearControlsInGroupBox(grpHealthTR2);
+
+            lblHealthErrorTR2.Visible = false;
+            lblHealthTR2.Text = "0.1%";
+
+            btnSaveTR2.Enabled = false;
+            btnCancelTR2.Enabled = false;
+        }
+
+        private void ClearControlsTR3()
+        {
+            ClearControlsInGroupBox(grpItemsTR3);
+            ClearControlsInGroupBox(grpWeaponsTR3);
+            ClearControlsInGroupBox(grpHealthTR3);
+
+            lblHealthErrorTR3.Visible = false;
+            lblHealthTR3.Text = "0.1%";
+
+            btnSaveTR3.Enabled = false;
+            btnCancelTR3.Enabled = false;
+        }
+
         private bool IsPS4Savegame()
         {
             FileInfo fileInfo = new FileInfo(savegamePath);
@@ -142,6 +203,10 @@ namespace TRR_SaveMaster
                     }
 
                     savegamePath = fileBrowserDialog.FileName;
+
+                    ClearControlsTR1();
+                    ClearControlsTR2();
+                    ClearControlsTR3();
 
                     cmbSavegamesTR1.Items.Clear();
                     cmbSavegamesTR2.Items.Clear();
