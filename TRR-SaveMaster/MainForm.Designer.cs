@@ -130,7 +130,7 @@ namespace TRR_SaveMaster
             this.slblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsrToolStrip = new System.Windows.Forms.ToolStrip();
             this.tsddbFile = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tsmiBrowsePath = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiBrowseSavegamePath = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiFileSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiCreateBackup = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiFileSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -148,6 +148,7 @@ namespace TRR_SaveMaster
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSendFeedback = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiBackupBeforeSaving = new System.Windows.Forms.ToolStripMenuItem();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
             this.grpHealthTR1.SuspendLayout();
@@ -1396,8 +1397,9 @@ namespace TRR_SaveMaster
             this.tsddbFile.AutoToolTip = false;
             this.tsddbFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tsddbFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiBrowsePath,
+            this.tsmiBrowseSavegamePath,
             this.tsmiFileSeparator,
+            this.tsmiBackupBeforeSaving,
             this.tsmiCreateBackup,
             this.tsmiFileSeparator2,
             this.tsmiExit});
@@ -1408,35 +1410,35 @@ namespace TRR_SaveMaster
             this.tsddbFile.Size = new System.Drawing.Size(29, 22);
             this.tsddbFile.Text = "File";
             // 
-            // tsmiBrowsePath
+            // tsmiBrowseSavegamePath
             // 
-            this.tsmiBrowsePath.Name = "tsmiBrowsePath";
-            this.tsmiBrowsePath.Size = new System.Drawing.Size(150, 22);
-            this.tsmiBrowsePath.Text = "Browse path...";
-            this.tsmiBrowsePath.Click += new System.EventHandler(this.tsmiBrowsePath_Click);
+            this.tsmiBrowseSavegamePath.Name = "tsmiBrowseSavegamePath";
+            this.tsmiBrowseSavegamePath.Size = new System.Drawing.Size(204, 22);
+            this.tsmiBrowseSavegamePath.Text = "Browse savegame path...";
+            this.tsmiBrowseSavegamePath.Click += new System.EventHandler(this.tsmiBrowseSavegamePath_Click);
             // 
             // tsmiFileSeparator
             // 
             this.tsmiFileSeparator.Name = "tsmiFileSeparator";
-            this.tsmiFileSeparator.Size = new System.Drawing.Size(147, 6);
+            this.tsmiFileSeparator.Size = new System.Drawing.Size(201, 6);
             // 
             // tsmiCreateBackup
             // 
             this.tsmiCreateBackup.Enabled = false;
             this.tsmiCreateBackup.Name = "tsmiCreateBackup";
-            this.tsmiCreateBackup.Size = new System.Drawing.Size(150, 22);
+            this.tsmiCreateBackup.Size = new System.Drawing.Size(204, 22);
             this.tsmiCreateBackup.Text = "Create backup";
             this.tsmiCreateBackup.Click += new System.EventHandler(this.tsmiCreateBackup_Click);
             // 
             // tsmiFileSeparator2
             // 
             this.tsmiFileSeparator2.Name = "tsmiFileSeparator2";
-            this.tsmiFileSeparator2.Size = new System.Drawing.Size(147, 6);
+            this.tsmiFileSeparator2.Size = new System.Drawing.Size(201, 6);
             // 
             // tsmiExit
             // 
             this.tsmiExit.Name = "tsmiExit";
-            this.tsmiExit.Size = new System.Drawing.Size(150, 22);
+            this.tsmiExit.Size = new System.Drawing.Size(204, 22);
             this.tsmiExit.Text = "Exit";
             this.tsmiExit.Click += new System.EventHandler(this.tsmiExit_Click);
             // 
@@ -1562,6 +1564,16 @@ namespace TRR_SaveMaster
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
             // 
+            // tsmiBackupBeforeSaving
+            // 
+            this.tsmiBackupBeforeSaving.Checked = true;
+            this.tsmiBackupBeforeSaving.CheckOnClick = true;
+            this.tsmiBackupBeforeSaving.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiBackupBeforeSaving.Enabled = false;
+            this.tsmiBackupBeforeSaving.Name = "tsmiBackupBeforeSaving";
+            this.tsmiBackupBeforeSaving.Size = new System.Drawing.Size(204, 22);
+            this.tsmiBackupBeforeSaving.Text = "Backup before saving";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1675,7 +1687,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.ToolStripStatusLabel slblStatus;
         private System.Windows.Forms.ToolStrip tsrToolStrip;
         private System.Windows.Forms.ToolStripDropDownButton tsddbFile;
-        private System.Windows.Forms.ToolStripMenuItem tsmiBrowsePath;
+        private System.Windows.Forms.ToolStripMenuItem tsmiBrowseSavegamePath;
         private System.Windows.Forms.ToolStripSeparator tsmiFileSeparator;
         private System.Windows.Forms.ToolStripMenuItem tsmiCreateBackup;
         private System.Windows.Forms.ToolStripSeparator tsmiFileSeparator2;
@@ -1762,6 +1774,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.ToolStripMenuItem tsmiSetMaximumItems;
         private System.Windows.Forms.ToolStripSeparator tsmiEditSeparator;
         private System.Windows.Forms.ToolStripMenuItem tsmiStatistics;
+        private System.Windows.Forms.ToolStripMenuItem tsmiBackupBeforeSaving;
     }
 }
 

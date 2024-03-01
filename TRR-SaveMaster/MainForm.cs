@@ -37,6 +37,7 @@ namespace TRR_SaveMaster
 
             btnRefreshTR1.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
             tsmiCreateBackup.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
+            tsmiBackupBeforeSaving.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
 
             tsmiEnableAllWeapons.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
             tsmiSetMaximumAmmunition.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
@@ -235,6 +236,7 @@ namespace TRR_SaveMaster
                     tsmiStatistics.Enabled = true;
 
                     tsmiCreateBackup.Enabled = true;
+                    tsmiBackupBeforeSaving.Enabled = true;
 
                     this.Text = $"Tomb Raider I-III Remastered Savegame Editor {(IsPS4Savegame() ? "(PS4)" : "(PC)")}";
 
@@ -258,13 +260,21 @@ namespace TRR_SaveMaster
                     {
                         string directoryPath = line.Substring("Path=".Length);
                         savegamePath = directoryPath;
-                        return;
+                    }
+                    else if (line.StartsWith("AutoBackup="))
+                    {
+                        bool autoBackup;
+
+                        if (bool.TryParse(line.Substring("AutoBackup=".Length), out autoBackup))
+                        {
+                            tsmiBackupBeforeSaving.Checked = autoBackup;
+                        }
                     }
                 }
             }
             else
             {
-                File.WriteAllText(filePath, $"Path={savegamePath}");
+                SaveSavegamePath();
             }
         }
 
@@ -273,7 +283,10 @@ namespace TRR_SaveMaster
             string rootFolder = AppDomain.CurrentDomain.BaseDirectory;
             string filePath = Path.Combine(rootFolder, "path.ini");
 
-            File.WriteAllText(filePath, $"Path={savegamePath}");
+            string content = $"Path={savegamePath}\n";
+            content += $"AutoBackup={tsmiBackupBeforeSaving.Checked}";
+
+            File.WriteAllText(filePath, content);
         }
 
         private void btnExitTR1_Click(object sender, EventArgs e)
@@ -511,12 +524,38 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void CreateBackup()
+        {
+            if (!string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath))
+            {
+                string directory = Path.GetDirectoryName(savegamePath);
+                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(savegamePath);
+                string fileExtension = Path.GetExtension(savegamePath);
+
+                string backupFilePath = Path.Combine(directory, $"{fileNameWithoutExtension}{fileExtension}.bak");
+
+                if (File.Exists(backupFilePath))
+                {
+                    File.SetAttributes(backupFilePath, File.GetAttributes(backupFilePath) & ~FileAttributes.ReadOnly);
+                }
+
+                File.Copy(savegamePath, backupFilePath, true);
+
+                slblStatus.Text = $"Created savegame backup: \"{backupFilePath}\"";
+            }
+        }
+
         private void WriteChangesTR1(Savegame savegame)
         {
             if (savegame != null)
             {
                 try
                 {
+                    if (tsmiBackupBeforeSaving.Checked)
+                    {
+                        CreateBackup();
+                    }
+
                     TR1.SetSavegamePath(savegamePath);
 
                     TR1.SetSavegameOffset(savegame.Offset);
@@ -542,6 +581,11 @@ namespace TRR_SaveMaster
             {
                 try
                 {
+                    if (tsmiBackupBeforeSaving.Checked)
+                    {
+                        CreateBackup();
+                    }
+
                     TR2.SetSavegamePath(savegamePath);
 
                     TR2.SetSavegameOffset(savegame.Offset);
@@ -570,6 +614,11 @@ namespace TRR_SaveMaster
             {
                 try
                 {
+                    if (tsmiBackupBeforeSaving.Checked)
+                    {
+                        CreateBackup();
+                    }
+
                     TR3.SetSavegamePath(savegamePath);
 
                     TR3.SetSavegameOffset(savegame.Offset);
@@ -892,23 +941,7 @@ namespace TRR_SaveMaster
 
         private void tsmiCreateBackup_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath))
-            {
-                string directory = Path.GetDirectoryName(savegamePath);
-                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(savegamePath);
-                string fileExtension = Path.GetExtension(savegamePath);
-
-                string backupFilePath = Path.Combine(directory, $"{fileNameWithoutExtension}{fileExtension}.bak");
-
-                if (File.Exists(backupFilePath))
-                {
-                    File.SetAttributes(backupFilePath, File.GetAttributes(backupFilePath) & ~FileAttributes.ReadOnly);
-                }
-
-                File.Copy(savegamePath, backupFilePath, true);
-
-                slblStatus.Text = $"Created savegame backup: \"{backupFilePath}\"";
-            }
+            CreateBackup();
         }
 
         private void tsmiAbout_Click(object sender, EventArgs e)
@@ -943,7 +976,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void tsmiBrowsePath_Click(object sender, EventArgs e)
+        private void tsmiBrowseSavegamePath_Click(object sender, EventArgs e)
         {
             BrowseSavegamePath();
         }
