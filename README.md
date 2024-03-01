@@ -4,7 +4,7 @@ Compatible with PC and PS4 savegames. For instructions on how to download and us
 the section below. Additionally, technical details on reverse engineering the Tomb Raider I-III Remastered series are included on later on in this README.
 For a tool that allows you to transfer individual savegames from one file to another and convert to PC/PS4, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
-![TRR-SaveMaster-UI](https://github.com/JulianOzelRose/TRR-SaveMaster/assets/95890436/29f6df72-6264-4252-9ea3-3f2e3c4e38e6)
+![TRR-SaveMaster-UI](https://github.com/JulianOzelRose/TRR-SaveMaster/assets/95890436/1b63992a-6c2d-41e2-8527-3167e1cee9a9)
 
 ## Installation and use
 To download this savegame editor, simply navigate to the [Release](https://github.com/JulianOzelRose/TRR-SaveMaster/tree/master/TRR-SaveMaster/bin/x64/Release) folder,
