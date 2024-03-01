@@ -19,13 +19,14 @@ you have multiple accounts with Tomb Raider I-III Remastered, there may be multi
 your savegame path, so there is no need to re-enter it every time.
 
 Once the savegames are populated in the editor, you can select them using the combo box labeled "Savegame" in the top-right corner. The editor will automatically refresh savegame
-data when switching tabs or selecting savegames. If another savegame is added and not displaying, you can click "Refresh" to re-populate the savegames. If you would
-like to create a backup of your savegame file before writing to it, click "File" then "Create backup", and a file of the same name with a `.bak` extension will be created in the same
-directory. Once you are done making changes, click "Save" to apply them. Because the game caches savegames into memory, you must restart your game
-in order for the changes to take effect.
+data when switching tabs or selecting savegames. If another savegame is added and not displaying, you can click "Refresh" to re-populate the savegames. Once you are done making changes,
+click "Save" to apply them. Because the game caches savegames into memory, you must restart your game in order for the changes to take effect.
 
-It is highly recommended that you periodically backup your savegame file. While this savegame editor has been thoroughly tested and employs error handling to prevent faulty writes,
-no system is perfect. Regular backups can safeguard your progress in the event of unforeseen issues or errors during the editing process.
+This savegame editor has an auto backup feature, which will automatically create backups of your savegame file before writing. It is enabled by default. You can toggle this feature on or
+off by clicking "File", then checking "Backup before saving". The backup will be saved in the same directory as your savegame file, with a `.bak` extension. It is highly recommended that you
+leave this feature enabled. While this savegame editor has been thoroughly tested and employs error handling to prevent faulty writes, no system is perfect.
+Regular backups can safeguard your progress in the event of unforeseen issues or errors during the editing process. If you would like to manually create a backup of your savegame file,
+you can also do this by clicking "File" then "Create backup".
 
 ## Reverse engineering Tomb Raider I-III Remastered
 This section details the technical aspects of reverse engineering Tomb Raider I-III Remastered. All savegames are stored in a single file; `savegame.dat`.
@@ -63,10 +64,59 @@ for (int i = 0; i < 32; i++)
 }
 ```
 
-Because you are dealing with multiple savegames stored in a single file, it is best to use relative offsets and calculate them accordingly. You can find more
-details on this for each game in the sections below.
+Because you are dealing with multiple savegames stored in a single file, you need to use relative offsets and calculate them accordingly. You can find more
+details on this for each game in the next sections below. The tables below denote the (static) offsets for all 3 games. Note, they are relative offsets.
+So when calculating, you will have to add them to the base savegame offset.
 
-## Tomb Raider I
+#### Tomb Raider I
+| Offset    | Type    | Description        |
+|:----------|:--------|:-------------------|
+| 0x00C     | UInt16  | Save Number        |
+| 0x4EC     | BYTE    | Weapons            |
+| 0x4C2     | UInt16  | Magnum Ammo 1      |
+| 0x4C4     | UInt16  | Uzi Ammo 1         |
+| 0x4C6     | UInt16  | Shotgun Ammo 1     |
+| 0x4C8     | BYTE    | Small Medipack     |
+| 0x4C9     | BYTE    | Large Medipack     |
+| 0x614     | UInt32  | Time Taken         |
+| 0x618     | UInt16  | Ammo Used          |
+| 0x61C     | UInt16  | Hits               |
+| 0x620     | UInt16  | Kills              |
+| 0x624     | UInt32  | Distance Travelled |
+| 0x628     | BYTE    | Secrets Found      |
+| 0x62A     | BYTE    | Pickups Found      |
+| 0x62B     | BYTE    | Medi Packs Used    |
+| 0x62C     | BYTE    | Level Index        |
+
+#### Tomb Raider II
+| Offset    | Type    | Description        |
+|:----------|:--------|:-------------------|
+| 0x00C     | UInt16  | Save Number        |
+| 0x610     | UInt32  | Time Taken         |
+| 0x614     | UInt16  | Ammo Used          |
+| 0x618     | UInt16  | Hits               |
+| 0x61C     | UInt16  | Kills              |
+| 0x624     | BYTE    | Secrets Found      |
+| 0x626     | BYTE    | Pickups Found      |
+| 0x620     | UInt32  | Distance Travelled |
+| 0x628     | BYTE    | Level Index        |
+
+#### Tomb Raider III
+| Offset    | Type    | Description        |
+|:----------|:--------|:-------------------|
+| 0x00C     | UInt16  | Save Number        |
+| 0x8A4     | BYTE    | Crystals Found     |
+| 0x8AC     | UInt32  | Time Taken         |
+| 0x8B0     | UInt16  | Ammo Used          |
+| 0x8C0     | BYTE    | Secrets Found      |
+| 0x8C2     | BYTE    | Pickups Found      |
+| 0x8C3     | BYTE    | Medi Packs Used    |
+| 0x8B4     | UInt16  | Hits               |
+| 0x8B8     | UInt16  | Kills              |
+| 0x8BC     | UInt32  | Distance Travelled |
+| 0x8D6     | BYTE    | Level Index        |
+
+## Reverse engineering Tomb Raider I savegames
 Because almost all of the offsets in Tomb Raider I are static, it is the most straightforward game to reverse of the trilogy. Weapons inventory configuration
 is stored on a single offset, referred to in this editor's code as `weaponsConfigNum`. It has a base number of 1, which indicates no weapons present.
 You can use bitwise to determine which weapons are present in inventory. Each weapon corresponds to a specific byte flag. See the table blow.
@@ -80,21 +130,9 @@ You can use bitwise to determine which weapons are present in inventory. Each we
 
 Ammunition is stored on up to two offsets. If a weapon is not equipped, it is only stored on one offset (primary). If the weapon is equipped, it is stored on
 both offsets (primary and secondary). The primary offsets in Tomb Raider I are static. While the secondary offsets are dynamic, they only vary based on the
-level -- so there is no need to recalculate them once they have been determined based on the level index. See the table below for Tomb Raider I offsets.
-Note, they are relative offsets. So when calculating, you will have to add them to the base savegame offset.
+level -- so there is no need to recalculate them once they have been determined based on the level index.
 
-| Offset    | Type    | Description        |
-|:----------|:--------|:-------------------|
-| 0x00C     | UInt16  | Save Number        |
-| 0x4EC     | BYTE    | Weapons            |
-| 0x4C2     | UInt16  | Magnum Ammo 1      |
-| 0x4C4     | UInt16  | Uzi Ammo 1         |
-| 0x4C6     | UInt16  | Shotgun Ammo 1     |
-| 0x4C8     | BYTE    | Small Medipack     |
-| 0x4C9     | BYTE    | Large Medipack     |
-| 0x62C     | BYTE    | Level Index        |
-
-## Tomb Raider II
+## Reverse engineering Tomb Raider II savegames
 Reversing Tomb Raider II presents more challenges than Tomb Raider I. This is because most of the game's offsets are dynamic. However, weapons are stored in the
 same fashion as they are in Tomb Raider I; on a single offset. You can use bitwise to extract which weapons are present in inventory the same way as in Tomb Raider I.
 See the table below for weapon byte flags.
@@ -109,7 +147,7 @@ See the table below for weapon byte flags.
 | Grenade Launcher | 64               |
 | Harpoon Gun      | 128              |
 
-There are only two static offsets in Tomb Raider II savegames; the save number is stored on `0x00C`, and the level index is stored on `0x628`. Everything else must
+There are very few static offsets in Tomb Raider II savegames; just level index, save number, and statistics are stored statically. Everything else must
 be calculated dynamically. This can be done based on just the level index. See the code below.
 
 ```
@@ -182,9 +220,9 @@ private int GetSecondaryAmmoOffset(int baseOffset)
 }
 ```
 
-## Tomb Raider III
-Similar to Tomb Raider II, most of the offsets in Tomb Raider III are dynamic. The only exceptions are the save number on `0x00C` and the
-level index on `0x8D6`. You can calculate most of the remaining offsets based on the level index, just as with Tomb Raider II. See the code below.
+## Reverse engineering Tomb Raider III savegames
+Similar to Tomb Raider II, most of the offsets in Tomb Raider III are dynamic. The only exceptions are the save number, the level index, and the statistics.
+You can calculate most of the remaining offsets based on the level index, just as with Tomb Raider II. See the code below.
 
 ```
 byte levelIndex = GetLevelIndex();
