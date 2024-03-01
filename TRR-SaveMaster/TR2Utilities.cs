@@ -174,12 +174,9 @@ namespace TRR_SaveMaster
             return -1;
         }
 
-        private double GetHealthPercentage(int healthOffset)
+        private UInt16 GetHealthValue(int healthOffset)
         {
-            UInt16 health = ReadUInt16(healthOffset);
-            double healthPercentage = ((double)health / MAX_HEALTH_VALUE) * 100.0;
-
-            return healthPercentage;
+            return ReadUInt16(healthOffset);
         }
 
         private readonly Dictionary<byte, int[]> ammoIndexDataPC = new Dictionary<byte, int[]>
@@ -352,13 +349,12 @@ namespace TRR_SaveMaster
             WriteByte(savegameOffset + weaponsConfigNumOffset, value);
         }
 
-        private void WriteHealthValue(double newHealthPercentage)
+        private void WriteHealthValue(UInt16 newHealth)
         {
             int healthOffset = GetHealthOffset();
 
             if (healthOffset != -1)
             {
-                UInt16 newHealth = (UInt16)(newHealthPercentage / 100.0 * MAX_HEALTH_VALUE);
                 WriteUInt16(healthOffset, newHealth);
             }
         }
@@ -729,8 +725,9 @@ namespace TRR_SaveMaster
 
             if (healthOffset != -1)
             {
-                double healthPercentage = GetHealthPercentage(healthOffset);
-                trbHealth.Value = (UInt16)healthPercentage;
+                UInt16 health = GetHealthValue(healthOffset);
+                double healthPercentage = ((double)health / MAX_HEALTH_VALUE) * 100;
+                trbHealth.Value = health;
                 trbHealth.Enabled = true;
 
                 lblHealth.Text = healthPercentage.ToString("0.0") + "%";
@@ -740,7 +737,7 @@ namespace TRR_SaveMaster
             else
             {
                 trbHealth.Enabled = false;
-                trbHealth.Value = 0;
+                trbHealth.Value = 1;
                 lblHealthError.Visible = true;
                 lblHealth.Visible = false;
             }
@@ -816,7 +813,7 @@ namespace TRR_SaveMaster
 
             if (trbHealth.Enabled)
             {
-                WriteHealthValue((double)trbHealth.Value);
+                WriteHealthValue((UInt16)trbHealth.Value);
             }
         }
 

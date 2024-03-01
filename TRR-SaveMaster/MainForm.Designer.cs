@@ -273,7 +273,7 @@ namespace TRR_SaveMaster
             // lblHealthErrorTR1
             // 
             this.lblHealthErrorTR1.AutoSize = true;
-            this.lblHealthErrorTR1.Location = new System.Drawing.Point(93, 55);
+            this.lblHealthErrorTR1.Location = new System.Drawing.Point(93, 51);
             this.lblHealthErrorTR1.Name = "lblHealthErrorTR1";
             this.lblHealthErrorTR1.Size = new System.Drawing.Size(136, 13);
             this.lblHealthErrorTR1.TabIndex = 2;
@@ -287,16 +287,19 @@ namespace TRR_SaveMaster
             this.lblHealthTR1.Name = "lblHealthTR1";
             this.lblHealthTR1.Size = new System.Drawing.Size(30, 13);
             this.lblHealthTR1.TabIndex = 1;
-            this.lblHealthTR1.Text = "0.0%";
+            this.lblHealthTR1.Text = "0.1%";
             // 
             // trbHealthTR1
             // 
             this.trbHealthTR1.BackColor = System.Drawing.Color.White;
             this.trbHealthTR1.Location = new System.Drawing.Point(16, 23);
-            this.trbHealthTR1.Maximum = 100;
+            this.trbHealthTR1.Maximum = 1000;
+            this.trbHealthTR1.Minimum = 1;
             this.trbHealthTR1.Name = "trbHealthTR1";
             this.trbHealthTR1.Size = new System.Drawing.Size(272, 45);
             this.trbHealthTR1.TabIndex = 0;
+            this.trbHealthTR1.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trbHealthTR1.Value = 1;
             this.trbHealthTR1.Scroll += new System.EventHandler(this.trbHealthTR1_Scroll);
             // 
             // cmbSavegamesTR1
@@ -792,7 +795,7 @@ namespace TRR_SaveMaster
             // lblHealthErrorTR2
             // 
             this.lblHealthErrorTR2.AutoSize = true;
-            this.lblHealthErrorTR2.Location = new System.Drawing.Point(93, 55);
+            this.lblHealthErrorTR2.Location = new System.Drawing.Point(93, 51);
             this.lblHealthErrorTR2.Name = "lblHealthErrorTR2";
             this.lblHealthErrorTR2.Size = new System.Drawing.Size(136, 13);
             this.lblHealthErrorTR2.TabIndex = 20;
@@ -806,16 +809,19 @@ namespace TRR_SaveMaster
             this.lblHealthTR2.Name = "lblHealthTR2";
             this.lblHealthTR2.Size = new System.Drawing.Size(30, 13);
             this.lblHealthTR2.TabIndex = 1;
-            this.lblHealthTR2.Text = "0.0%";
+            this.lblHealthTR2.Text = "0.1%";
             // 
             // trbHealthTR2
             // 
             this.trbHealthTR2.BackColor = System.Drawing.Color.White;
             this.trbHealthTR2.Location = new System.Drawing.Point(16, 23);
-            this.trbHealthTR2.Maximum = 100;
+            this.trbHealthTR2.Maximum = 1000;
+            this.trbHealthTR2.Minimum = 1;
             this.trbHealthTR2.Name = "trbHealthTR2";
             this.trbHealthTR2.Size = new System.Drawing.Size(272, 45);
             this.trbHealthTR2.TabIndex = 0;
+            this.trbHealthTR2.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trbHealthTR2.Value = 1;
             this.trbHealthTR2.Scroll += new System.EventHandler(this.trbHealthTR2_Scroll);
             // 
             // grpItemsTR2
@@ -1218,7 +1224,7 @@ namespace TRR_SaveMaster
             // lblHealthErrorTR3
             // 
             this.lblHealthErrorTR3.AutoSize = true;
-            this.lblHealthErrorTR3.Location = new System.Drawing.Point(93, 55);
+            this.lblHealthErrorTR3.Location = new System.Drawing.Point(93, 51);
             this.lblHealthErrorTR3.Name = "lblHealthErrorTR3";
             this.lblHealthErrorTR3.Size = new System.Drawing.Size(136, 13);
             this.lblHealthErrorTR3.TabIndex = 20;
@@ -1232,16 +1238,19 @@ namespace TRR_SaveMaster
             this.lblHealthTR3.Name = "lblHealthTR3";
             this.lblHealthTR3.Size = new System.Drawing.Size(30, 13);
             this.lblHealthTR3.TabIndex = 1;
-            this.lblHealthTR3.Text = "0.0%";
+            this.lblHealthTR3.Text = "0.1%";
             // 
             // trbHealthTR3
             // 
             this.trbHealthTR3.BackColor = System.Drawing.Color.White;
             this.trbHealthTR3.Location = new System.Drawing.Point(16, 23);
-            this.trbHealthTR3.Maximum = 100;
+            this.trbHealthTR3.Maximum = 1000;
+            this.trbHealthTR3.Minimum = 1;
             this.trbHealthTR3.Name = "trbHealthTR3";
             this.trbHealthTR3.Size = new System.Drawing.Size(272, 45);
             this.trbHealthTR3.TabIndex = 0;
+            this.trbHealthTR3.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trbHealthTR3.Value = 1;
             this.trbHealthTR3.Scroll += new System.EventHandler(this.trbHealthTR3_Scroll);
             // 
             // grpItemsTR3

@@ -27,6 +27,9 @@ namespace TRR_SaveMaster
         private const int TAB_TR2 = 1;
         private const int TAB_TR3 = 2;
 
+        // Health
+        private const UInt16 MAX_HEALTH_VALUE = 1000;
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             GetSavegamePath();
@@ -412,7 +415,7 @@ namespace TRR_SaveMaster
 
         private void trbHealthTR1_Scroll(object sender, EventArgs e)
         {
-            double healthPercentage = (double)trbHealthTR1.Value;
+            double healthPercentage = ((double)trbHealthTR1.Value / (double)MAX_HEALTH_VALUE) * 100;
             lblHealthTR1.Text = healthPercentage.ToString("0.0") + "%";
 
             if (!isLoading && cmbSavegamesTR1.SelectedIndex != -1)
@@ -423,7 +426,7 @@ namespace TRR_SaveMaster
 
         private void trbHealthTR2_Scroll(object sender, EventArgs e)
         {
-            double healthPercentage = (double)trbHealthTR2.Value;
+            double healthPercentage = ((double)trbHealthTR2.Value / (double)MAX_HEALTH_VALUE * 100);
             lblHealthTR2.Text = healthPercentage.ToString("0.0") + "%";
 
             if (!isLoading && cmbSavegamesTR2.SelectedIndex != -1)
@@ -434,7 +437,7 @@ namespace TRR_SaveMaster
 
         private void trbHealthTR3_Scroll(object sender, EventArgs e)
         {
-            double healthPercentage = (double)trbHealthTR3.Value;
+            double healthPercentage = ((double)trbHealthTR3.Value / (double)MAX_HEALTH_VALUE * 100);
             lblHealthTR3.Text = healthPercentage.ToString("0.0") + "%";
 
             if (!isLoading && cmbSavegamesTR3.SelectedIndex != -1)
