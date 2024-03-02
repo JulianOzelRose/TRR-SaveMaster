@@ -14,7 +14,7 @@ namespace TRR_SaveMaster
         private int hitsOffset;
         private int killsOffset;
         private int secretsFoundOffset;
-        private int pickupsFoundOffset;
+        private int pickupsOffset;
         private int medipacksUsedOffset;
         private int distanceTravelledOffset;
         private int timeTakenOffset;
@@ -81,7 +81,7 @@ namespace TRR_SaveMaster
                 hitsOffset = 0x61C;
                 killsOffset = 0x620;
                 secretsFoundOffset = 0x628;
-                pickupsFoundOffset = 0x62A;
+                pickupsOffset = 0x62A;
                 medipacksUsedOffset = 0x62B;
                 distanceTravelledOffset = 0x624;
                 timeTakenOffset = 0x614;
@@ -93,7 +93,7 @@ namespace TRR_SaveMaster
                 hitsOffset = 0x618;
                 killsOffset = 0x61C;
                 secretsFoundOffset = 0x624;
-                pickupsFoundOffset = 0x626;
+                pickupsOffset = 0x626;
                 medipacksUsedOffset = 0x627;
                 distanceTravelledOffset = 0x620;
                 timeTakenOffset = 0x610;
@@ -106,7 +106,7 @@ namespace TRR_SaveMaster
                 hitsOffset = 0x8B4;
                 killsOffset = 0x8B8;
                 secretsFoundOffset = 0x8C0;
-                pickupsFoundOffset = 0x8C2;
+                pickupsOffset = 0x8C2;
                 medipacksUsedOffset = 0x8C3;
                 distanceTravelledOffset = 0x8BC;
                 timeTakenOffset = 0x8AC;
@@ -120,10 +120,10 @@ namespace TRR_SaveMaster
             if (SELECTED_TAB == TAB_TR1)
             {
                 nudSecretsFoundMax.Value = secretsFoundMaxTR1[levelIndex];
-                nudPickupsFoundMax.Value = pickupsFoundMaxTR1[levelIndex];
+                nudPickupsMax.Value = pickupsFoundMaxTR1[levelIndex];
 
                 nudSecretsFound.Maximum = nudSecretsFoundMax.Value;
-                nudPickupsFound.Maximum = nudPickupsFoundMax.Value;
+                nudPickups.Maximum = nudPickupsMax.Value;
 
                 nudCrystalsFound.Enabled = false;
                 nudCrystalsFound.Value = 0;
@@ -131,10 +131,10 @@ namespace TRR_SaveMaster
             else if (SELECTED_TAB == TAB_TR2)
             {
                 nudSecretsFoundMax.Value = secretsFoundMaxTR2[levelIndex];
-                nudPickupsFoundMax.Value = pickupsFoundMaxTR2[levelIndex];
+                nudPickupsMax.Value = pickupsFoundMaxTR2[levelIndex];
 
                 nudSecretsFound.Maximum = nudSecretsFoundMax.Value;
-                nudPickupsFound.Maximum = nudPickupsFoundMax.Value;
+                nudPickups.Maximum = nudPickupsMax.Value;
 
                 nudCrystalsFound.Enabled = false;
                 nudCrystalsFound.Value = 0;
@@ -142,10 +142,10 @@ namespace TRR_SaveMaster
             else if (SELECTED_TAB == TAB_TR3)
             {
                 nudSecretsFoundMax.Value = secretsFoundMaxTR3[levelIndex];
-                nudPickupsFoundMax.Value = pickupsFoundMaxTR3[levelIndex];
+                nudPickupsMax.Value = pickupsFoundMaxTR3[levelIndex];
 
                 nudSecretsFound.Maximum = nudSecretsFoundMax.Value;
-                nudPickupsFound.Maximum = nudPickupsFoundMax.Value;
+                nudPickups.Maximum = nudPickupsMax.Value;
 
                 nudCrystalsFound.Enabled = true;
                 nudCrystalsFound.Value = GetNumCrystalsFound();
@@ -157,7 +157,7 @@ namespace TRR_SaveMaster
             isLoading = true;
 
             nudSecretsFound.Value = GetNumSecretsFound();
-            nudPickupsFound.Value = GetNumPickupsFound();
+            nudPickups.Value = GetNumPickups();
             nudKills.Value = GetNumKills();
             nudAmmoUsed.Value = GetAmmoUsed();
             nudHits.Value = GetNumHits();
@@ -203,12 +203,12 @@ namespace TRR_SaveMaster
 
         private void DisplayTimeTaken()
         {
-            UInt32 timeTakenRaw = GetTimeTaken();
-            UInt32 timeTakenSeconds = timeTakenRaw / 30;
-            UInt32 remainingSeconds = timeTakenSeconds % 60;
-            UInt32 totalMinutes = timeTakenSeconds / 60;
-            UInt32 remainingMinutes = totalMinutes % 60;
-            UInt32 totalHours = totalMinutes / 60;
+            Int32 timeTakenRaw = GetTimeTaken();
+            Int32 timeTakenSeconds = timeTakenRaw / 30;
+            Int32 remainingSeconds = timeTakenSeconds % 60;
+            Int32 totalMinutes = timeTakenSeconds / 60;
+            Int32 remainingMinutes = totalMinutes % 60;
+            Int32 totalHours = totalMinutes / 60;
 
             nudHours.Value = totalHours;
             nudMinutes.Value = remainingMinutes;
@@ -394,6 +394,16 @@ namespace TRR_SaveMaster
             }
         }
 
+        private sbyte ReadInt8(int offset)
+        {
+            return (sbyte)ReadByte(offset);
+        }
+
+        private void WriteInt8(int offset, sbyte value)
+        {
+            WriteByte(offset, (byte)value);
+        }
+
         private UInt16 ReadUInt16(int offset)
         {
             byte lowerByte = ReadByte(offset);
@@ -412,7 +422,25 @@ namespace TRR_SaveMaster
             return (UInt32)(byte1 + (byte2 << 8) + (byte3 << 16) + (byte4 << 24));
         }
 
+        private Int32 ReadInt32(int offset)
+        {
+            byte byte1 = ReadByte(offset);
+            byte byte2 = ReadByte(offset + 1);
+            byte byte3 = ReadByte(offset + 2);
+            byte byte4 = ReadByte(offset + 3);
+
+            return (Int32)(byte1 + (byte2 << 8) + (byte3 << 16) + (byte4 << 24));
+        }
+
         private void WriteUInt32(int offset, UInt32 value)
+        {
+            WriteByte(offset, (byte)value);
+            WriteByte(offset + 1, (byte)(value >> 8));
+            WriteByte(offset + 2, (byte)(value >> 16));
+            WriteByte(offset + 3, (byte)(value >> 24));
+        }
+
+        private void WriteInt32(int offset, Int32 value)
         {
             WriteByte(offset, (byte)value);
             WriteByte(offset + 1, (byte)(value >> 8));
@@ -442,19 +470,19 @@ namespace TRR_SaveMaster
             return ReadByte(savegameOffset + levelIndexOffset);
         }
 
-        private UInt16 GetAmmoUsed()
+        private Int32 GetAmmoUsed()
         {
-            return ReadUInt16(savegameOffset + ammoUsedOffset);
+            return ReadInt32(savegameOffset + ammoUsedOffset);
         }
 
-        private UInt16 GetNumHits()
+        private Int32 GetNumHits()
         {
-            return ReadUInt16(savegameOffset + hitsOffset);
+            return ReadInt32(savegameOffset + hitsOffset);
         }
 
-        private UInt16 GetNumKills()
+        private Int32 GetNumKills()
         {
-            return ReadUInt16(savegameOffset + killsOffset);
+            return ReadInt32(savegameOffset + killsOffset);
         }
 
         private UInt32 GetDistanceTravelled()
@@ -462,49 +490,43 @@ namespace TRR_SaveMaster
             return ReadUInt32(savegameOffset + distanceTravelledOffset);
         }
 
-        private UInt32 GetTimeTaken()
+        private Int32 GetTimeTaken()
         {
-            return ReadUInt32(savegameOffset + timeTakenOffset);
+            return ReadInt32(savegameOffset + timeTakenOffset);
         }
 
-        private byte RawSecretsValueToDisplayValue(byte rawValue)
+        private UInt16 RawSecretsValueToDisplayValue(UInt16 rawValue)
         {
-            byte[] mapping = {
-                    0, 1, 1, 2, 1, 2, 2, 3, 1, 2,
-                    2, 3, 2, 3, 3, 4, 1, 2, 2, 3,
-                    2, 3, 3, 4, 2, 3, 3, 4, 3, 4,
-                    4, 5, 1, 2, 2, 3, 2, 3, 3, 4,
-                    2, 3, 3, 4, 3, 4, 4, 5, 2, 3,
-                    3, 4, 3, 4, 4, 5, 3, 4, 4, 5,
-                    4, 5, 5, 6, 1, 2, 2, 3, 2, 3
-            };
-
-            if (rawValue >= 0 && rawValue < mapping.Length)
-            {
-                return mapping[rawValue];
-            }
-            else
+            if (rawValue == 0)
             {
                 return 0;
             }
+
+            UInt16 count = 0;
+
+            while (rawValue != 0)
+            {
+                count += (UInt16)(rawValue & 1);
+                rawValue >>= 1;
+            }
+
+            return count;
         }
 
-        private byte GetNumSecretsFound()
+        private UInt16 GetNumSecretsFound()
         {
-            byte rawValue = ReadByte(savegameOffset + secretsFoundOffset);
-            byte displayValue = RawSecretsValueToDisplayValue(rawValue);
-
-            return displayValue;
+            UInt16 rawValue = ReadUInt16(savegameOffset + secretsFoundOffset);
+            return RawSecretsValueToDisplayValue(rawValue);
         }
 
-        private byte GetNumPickupsFound()
+        private sbyte GetNumPickups()
         {
-            return ReadByte(savegameOffset + pickupsFoundOffset);
+            return ReadInt8(savegameOffset + pickupsOffset);
         }
 
-        private byte GetNumMedipacksUsed()
+        private sbyte GetNumMedipacksUsed()
         {
-            return ReadByte(savegameOffset + medipacksUsedOffset);
+            return ReadInt8(savegameOffset + medipacksUsedOffset);
         }
 
         private byte GetNumCrystalsFound()
@@ -512,121 +534,41 @@ namespace TRR_SaveMaster
             return ReadByte(savegameOffset + crystalsFoundOffset);
         }
 
-        private void WriteAmmoUsed(UInt16 value)
+        private void WriteAmmoUsed(Int32 value)
         {
-            WriteUInt16(savegameOffset + ammoUsedOffset, value);
+            WriteInt32(savegameOffset + ammoUsedOffset, value);
         }
 
-        private void WriteNumHits(UInt16 value)
+        private void WriteNumHits(Int32 value)
         {
-            WriteUInt16(savegameOffset + hitsOffset, value);
+            WriteInt32(savegameOffset + hitsOffset, value);
         }
 
-        private void WriteNumKills(UInt16 value)
+        private void WriteNumKills(Int32 value)
         {
-            WriteUInt16(savegameOffset + killsOffset, value);
+            WriteInt32(savegameOffset + killsOffset, value);
         }
 
-        private void WriteNumSecretsFoundTR1(byte value)
+        private void WriteNumSecretsFound(UInt16 value)
         {
-            byte rawValue = 0;
+            UInt16 rawValue = 0;
 
-            if (value == 0)
+            for (int i = 0; i < value; i++)
             {
-                rawValue = 0;
-            }
-            else if (value == 1)
-            {
-                rawValue = 4;
-            }
-            else if (value == 2)
-            {
-                rawValue = 12;
-            }
-            else if (value == 3)
-            {
-                rawValue = 28;
-            }
-            else if (value == 4)
-            {
-                rawValue = 29;
-            }
-            else if (value == 5)
-            {
-                rawValue = 31;
+                rawValue |= (UInt16)(1 << i);
             }
 
-            WriteByte(savegameOffset + secretsFoundOffset, rawValue);
+            WriteUInt16(savegameOffset + secretsFoundOffset, rawValue);
         }
 
-        private void WriteNumSecretsFoundTR2(byte value)
+        private void WriteNumPickups(sbyte value)
         {
-            byte rawValue = 0;
-
-            if (value == 0)
-            {
-                rawValue = 0;
-            }
-            else if (value == 1)
-            {
-                rawValue = 4;
-            }
-            else if (value == 2)
-            {
-                rawValue = 5;
-            }
-            else if (value == 3)
-            {
-                rawValue = 7;
-            }
-
-            WriteByte(savegameOffset + secretsFoundOffset, rawValue);
+            WriteInt8(savegameOffset + pickupsOffset, value);
         }
 
-        private void WriteNumSecretsFoundTR3(byte value)
+        private void WriteNumMedipacksUsed(sbyte value)
         {
-            byte rawValue = 0;
-
-            if (value == 0)
-            {
-                rawValue = 0;
-            }
-            else if (value == 1)
-            {
-                rawValue = 4;
-            }
-            else if (value == 2)
-            {
-                rawValue = 5;
-            }
-            else if (value == 3)
-            {
-                rawValue = 7;
-            }
-            else if (value == 4)
-            {
-                rawValue = 15;
-            }
-            else if (value == 5)
-            {
-                rawValue = 31;
-            }
-            else if (value == 6)
-            {
-                rawValue = 63;
-            }
-
-            WriteByte(savegameOffset + secretsFoundOffset, rawValue);
-        }
-
-        private void WriteNumPickupsFound(byte value)
-        {
-            WriteByte(savegameOffset + pickupsFoundOffset, value);
-        }
-
-        private void WriteNumMedipacksUsed(byte value)
-        {
-            WriteByte(savegameOffset + medipacksUsedOffset, value);
+            WriteInt8(savegameOffset + medipacksUsedOffset, value);
         }
 
         private void WriteNumCrystalsFound(byte value)
@@ -634,9 +576,9 @@ namespace TRR_SaveMaster
             WriteByte(savegameOffset + crystalsFoundOffset, value);
         }
 
-        private void WriteTimeTaken(UInt32 value)
+        private void WriteTimeTaken(Int32 value)
         {
-            WriteUInt32(savegameOffset + timeTakenOffset, value);
+            WriteInt32(savegameOffset + timeTakenOffset, value);
         }
 
         private void WriteDistanceTravelled(UInt32 value)
@@ -657,25 +599,17 @@ namespace TRR_SaveMaster
         {
             try
             {
-                WriteAmmoUsed((UInt16)nudAmmoUsed.Value);
-                WriteNumHits((UInt16)nudHits.Value);
-                WriteNumKills((UInt16)nudKills.Value);
-                WriteNumPickupsFound((byte)nudPickupsFound.Value);
-                WriteNumMedipacksUsed((byte)(nudMedipacksUsed.Value * 2));
-                WriteTimeTaken((UInt32)(nudHours.Value * 3600 + nudMinutes.Value * 60 + nudSeconds.Value) * 30);
+                WriteAmmoUsed((Int32)nudAmmoUsed.Value);
+                WriteNumHits((Int32)nudHits.Value);
+                WriteNumKills((Int32)nudKills.Value);
+                WriteNumPickups((sbyte)nudPickups.Value);
+                WriteNumMedipacksUsed((sbyte)(nudMedipacksUsed.Value * 2));
+                WriteTimeTaken((Int32)(nudHours.Value * 3600 + nudMinutes.Value * 60 + nudSeconds.Value) * 30);
                 WriteDistanceTravelled((UInt32)nudDistanceTravelled.Value);
+                WriteNumSecretsFound((UInt16)nudSecretsFound.Value);
 
-                if (SELECTED_TAB == TAB_TR1)
+                if (SELECTED_TAB == TAB_TR3)
                 {
-                    WriteNumSecretsFoundTR1((byte)nudSecretsFound.Value);
-                }
-                else if (SELECTED_TAB == TAB_TR2)
-                {
-                    WriteNumSecretsFoundTR2((byte)nudSecretsFound.Value);
-                }
-                else if (SELECTED_TAB == TAB_TR3)
-                {
-                    WriteNumSecretsFoundTR3((byte)nudSecretsFound.Value);
                     WriteNumCrystalsFound((byte)nudCrystalsFound.Value);
                 }
 
@@ -766,7 +700,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void nudPickupsFound_ValueChanged(object sender, EventArgs e)
+        private void nudPickups_ValueChanged(object sender, EventArgs e)
         {
             if (!isLoading)
             {
@@ -774,7 +708,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void nudPickupsFoundMax_ValueChanged(object sender, EventArgs e)
+        private void nudPickupsMax_ValueChanged(object sender, EventArgs e)
         {
             if (!isLoading)
             {
@@ -870,7 +804,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void nudPickupsFound_KeyPress(object sender, KeyPressEventArgs e)
+        private void nudPickups_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (char.IsDigit(e.KeyChar))
             {
@@ -878,7 +812,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void nudPickupsFoundMax_KeyPress(object sender, KeyPressEventArgs e)
+        private void nudPickupsMax_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (char.IsDigit(e.KeyChar))
             {

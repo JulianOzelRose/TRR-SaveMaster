@@ -42,14 +42,14 @@ namespace TRR_SaveMaster
             this.nudDistanceTravelled = new System.Windows.Forms.NumericUpDown();
             this.lblSlash = new System.Windows.Forms.Label();
             this.nudHits = new System.Windows.Forms.NumericUpDown();
-            this.nudPickupsFoundMax = new System.Windows.Forms.NumericUpDown();
+            this.nudPickupsMax = new System.Windows.Forms.NumericUpDown();
             this.lblOf2 = new System.Windows.Forms.Label();
             this.nudSecretsFoundMax = new System.Windows.Forms.NumericUpDown();
             this.lblOf = new System.Windows.Forms.Label();
             this.nudMedipacksUsed = new System.Windows.Forms.NumericUpDown();
             this.nudAmmoUsed = new System.Windows.Forms.NumericUpDown();
             this.nudKills = new System.Windows.Forms.NumericUpDown();
-            this.nudPickupsFound = new System.Windows.Forms.NumericUpDown();
+            this.nudPickups = new System.Windows.Forms.NumericUpDown();
             this.nudCrystalsFound = new System.Windows.Forms.NumericUpDown();
             this.nudSecretsFound = new System.Windows.Forms.NumericUpDown();
             this.lblCrystalsFound = new System.Windows.Forms.Label();
@@ -67,12 +67,12 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudHours)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDistanceTravelled)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHits)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPickupsFoundMax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPickupsMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSecretsFoundMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMedipacksUsed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAmmoUsed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudKills)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPickupsFound)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPickups)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrystalsFound)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSecretsFound)).BeginInit();
             this.SuspendLayout();
@@ -90,14 +90,14 @@ namespace TRR_SaveMaster
             this.grpLevel.Controls.Add(this.nudDistanceTravelled);
             this.grpLevel.Controls.Add(this.lblSlash);
             this.grpLevel.Controls.Add(this.nudHits);
-            this.grpLevel.Controls.Add(this.nudPickupsFoundMax);
+            this.grpLevel.Controls.Add(this.nudPickupsMax);
             this.grpLevel.Controls.Add(this.lblOf2);
             this.grpLevel.Controls.Add(this.nudSecretsFoundMax);
             this.grpLevel.Controls.Add(this.lblOf);
             this.grpLevel.Controls.Add(this.nudMedipacksUsed);
             this.grpLevel.Controls.Add(this.nudAmmoUsed);
             this.grpLevel.Controls.Add(this.nudKills);
-            this.grpLevel.Controls.Add(this.nudPickupsFound);
+            this.grpLevel.Controls.Add(this.nudPickups);
             this.grpLevel.Controls.Add(this.nudCrystalsFound);
             this.grpLevel.Controls.Add(this.nudSecretsFound);
             this.grpLevel.Controls.Add(this.lblCrystalsFound);
@@ -106,7 +106,7 @@ namespace TRR_SaveMaster
             this.grpLevel.Controls.Add(this.lblAmmoUsedHits);
             this.grpLevel.Controls.Add(this.lblPickups);
             this.grpLevel.Controls.Add(this.lblKills);
-            this.grpLevel.Location = new System.Drawing.Point(10, 7);
+            this.grpLevel.Location = new System.Drawing.Point(10, 4);
             this.grpLevel.Name = "grpLevel";
             this.grpLevel.Size = new System.Drawing.Size(363, 242);
             this.grpLevel.TabIndex = 8;
@@ -162,7 +162,7 @@ namespace TRR_SaveMaster
             // 
             this.nudHours.Location = new System.Drawing.Point(150, 23);
             this.nudHours.Maximum = new decimal(new int[] {
-            39768,
+            19884,
             0,
             0,
             0});
@@ -201,6 +201,7 @@ namespace TRR_SaveMaster
             // 
             // nudDistanceTravelled
             // 
+            this.nudDistanceTravelled.DecimalPlaces = 2;
             this.nudDistanceTravelled.Increment = new decimal(new int[] {
             1,
             0,
@@ -231,7 +232,7 @@ namespace TRR_SaveMaster
             // 
             this.nudHits.Location = new System.Drawing.Point(225, 153);
             this.nudHits.Maximum = new decimal(new int[] {
-            65535,
+            2147483647,
             0,
             0,
             0});
@@ -241,20 +242,20 @@ namespace TRR_SaveMaster
             this.nudHits.ValueChanged += new System.EventHandler(this.nudHits_ValueChanged);
             this.nudHits.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudHits_KeyPress);
             // 
-            // nudPickupsFoundMax
+            // nudPickupsMax
             // 
-            this.nudPickupsFoundMax.Enabled = false;
-            this.nudPickupsFoundMax.Location = new System.Drawing.Point(225, 101);
-            this.nudPickupsFoundMax.Maximum = new decimal(new int[] {
+            this.nudPickupsMax.Enabled = false;
+            this.nudPickupsMax.Location = new System.Drawing.Point(225, 101);
+            this.nudPickupsMax.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
-            this.nudPickupsFoundMax.Name = "nudPickupsFoundMax";
-            this.nudPickupsFoundMax.Size = new System.Drawing.Size(51, 20);
-            this.nudPickupsFoundMax.TabIndex = 27;
-            this.nudPickupsFoundMax.ValueChanged += new System.EventHandler(this.nudPickupsFoundMax_ValueChanged);
-            this.nudPickupsFoundMax.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudPickupsFoundMax_KeyPress);
+            this.nudPickupsMax.Name = "nudPickupsMax";
+            this.nudPickupsMax.Size = new System.Drawing.Size(51, 20);
+            this.nudPickupsMax.TabIndex = 27;
+            this.nudPickupsMax.ValueChanged += new System.EventHandler(this.nudPickupsMax_ValueChanged);
+            this.nudPickupsMax.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudPickupsMax_KeyPress);
             // 
             // lblOf2
             // 
@@ -299,10 +300,10 @@ namespace TRR_SaveMaster
             65536});
             this.nudMedipacksUsed.Location = new System.Drawing.Point(150, 179);
             this.nudMedipacksUsed.Maximum = new decimal(new int[] {
-            255,
+            635,
             0,
             0,
-            0});
+            65536});
             this.nudMedipacksUsed.Name = "nudMedipacksUsed";
             this.nudMedipacksUsed.Size = new System.Drawing.Size(51, 20);
             this.nudMedipacksUsed.TabIndex = 22;
@@ -313,7 +314,7 @@ namespace TRR_SaveMaster
             // 
             this.nudAmmoUsed.Location = new System.Drawing.Point(150, 153);
             this.nudAmmoUsed.Maximum = new decimal(new int[] {
-            65535,
+            2147483647,
             0,
             0,
             0});
@@ -327,7 +328,7 @@ namespace TRR_SaveMaster
             // 
             this.nudKills.Location = new System.Drawing.Point(150, 127);
             this.nudKills.Maximum = new decimal(new int[] {
-            65535,
+            2147483647,
             0,
             0,
             0});
@@ -337,19 +338,19 @@ namespace TRR_SaveMaster
             this.nudKills.ValueChanged += new System.EventHandler(this.nudKills_ValueChanged);
             this.nudKills.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudKills_KeyPress);
             // 
-            // nudPickupsFound
+            // nudPickups
             // 
-            this.nudPickupsFound.Location = new System.Drawing.Point(150, 101);
-            this.nudPickupsFound.Maximum = new decimal(new int[] {
-            255,
+            this.nudPickups.Location = new System.Drawing.Point(150, 101);
+            this.nudPickups.Maximum = new decimal(new int[] {
+            127,
             0,
             0,
             0});
-            this.nudPickupsFound.Name = "nudPickupsFound";
-            this.nudPickupsFound.Size = new System.Drawing.Size(51, 20);
-            this.nudPickupsFound.TabIndex = 19;
-            this.nudPickupsFound.ValueChanged += new System.EventHandler(this.nudPickupsFound_ValueChanged);
-            this.nudPickupsFound.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudPickupsFound_KeyPress);
+            this.nudPickups.Name = "nudPickups";
+            this.nudPickups.Size = new System.Drawing.Size(51, 20);
+            this.nudPickups.TabIndex = 19;
+            this.nudPickups.ValueChanged += new System.EventHandler(this.nudPickups_ValueChanged);
+            this.nudPickups.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudPickups_KeyPress);
             // 
             // nudCrystalsFound
             // 
@@ -369,7 +370,7 @@ namespace TRR_SaveMaster
             // 
             this.nudSecretsFound.Location = new System.Drawing.Point(150, 49);
             this.nudSecretsFound.Maximum = new decimal(new int[] {
-            255,
+            16,
             0,
             0,
             0});
@@ -436,7 +437,7 @@ namespace TRR_SaveMaster
             // btnSave
             // 
             this.btnSave.Enabled = false;
-            this.btnSave.Location = new System.Drawing.Point(298, 255);
+            this.btnSave.Location = new System.Drawing.Point(298, 252);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 9;
@@ -446,7 +447,7 @@ namespace TRR_SaveMaster
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(136, 255);
+            this.btnClose.Location = new System.Drawing.Point(136, 252);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 11;
@@ -457,7 +458,7 @@ namespace TRR_SaveMaster
             // btnCancel
             // 
             this.btnCancel.Enabled = false;
-            this.btnCancel.Location = new System.Drawing.Point(217, 255);
+            this.btnCancel.Location = new System.Drawing.Point(217, 252);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 12;
@@ -469,7 +470,7 @@ namespace TRR_SaveMaster
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(386, 288);
+            this.ClientSize = new System.Drawing.Size(382, 282);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnSave);
@@ -491,12 +492,12 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudHours)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDistanceTravelled)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHits)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPickupsFoundMax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPickupsMax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSecretsFoundMax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMedipacksUsed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAmmoUsed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudKills)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPickupsFound)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPickups)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrystalsFound)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSecretsFound)).EndInit();
             this.ResumeLayout(false);
@@ -517,10 +518,10 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.NumericUpDown nudMedipacksUsed;
         private System.Windows.Forms.NumericUpDown nudAmmoUsed;
         private System.Windows.Forms.NumericUpDown nudKills;
-        private System.Windows.Forms.NumericUpDown nudPickupsFound;
+        private System.Windows.Forms.NumericUpDown nudPickups;
         private System.Windows.Forms.NumericUpDown nudCrystalsFound;
         private System.Windows.Forms.NumericUpDown nudSecretsFound;
-        private System.Windows.Forms.NumericUpDown nudPickupsFoundMax;
+        private System.Windows.Forms.NumericUpDown nudPickupsMax;
         private System.Windows.Forms.Label lblOf2;
         private System.Windows.Forms.NumericUpDown nudSecretsFoundMax;
         private System.Windows.Forms.Label lblOf;
