@@ -78,27 +78,28 @@ So when calculating, you will have to add them to the base savegame offset.
 | 0x4C8     | BYTE    | Small Medipack     |
 | 0x4C9     | BYTE    | Large Medipack     |
 | 0x4EC     | BYTE    | Weapons            |
-| 0x614     | UInt32  | Time Taken         |
-| 0x618     | UInt16  | Ammo Used          |
-| 0x61C     | UInt16  | Hits               |
-| 0x620     | UInt16  | Kills              |
+| 0x614     | Int32   | Time Taken         |
+| 0x618     | Int32   | Ammo Used          |
+| 0x61C     | Int32   | Hits               |
+| 0x620     | Int32   | Kills              |
 | 0x624     | UInt32  | Distance Travelled |
-| 0x628     | BYTE    | Secrets Found      |
-| 0x62A     | BYTE    | Pickups Found      |
-| 0x62B     | BYTE    | Medi Packs Used    |
+| 0x628     | UInt16  | Secrets Found      |
+| 0x62A     | Int8    | Pickups            |
+| 0x62B     | Int8    | Medi Packs Used    |
 | 0x62C     | BYTE    | Level Index        |
 
 #### Tomb Raider II
 | Offset    | Type    | Description        |
 |:----------|:--------|:-------------------|
 | 0x00C     | UInt16  | Save Number        |
-| 0x610     | UInt32  | Time Taken         |
-| 0x614     | UInt16  | Ammo Used          |
-| 0x618     | UInt16  | Hits               |
-| 0x61C     | UInt16  | Kills              |
+| 0x610     | Int32   | Time Taken         |
+| 0x614     | Int32   | Ammo Used          |
+| 0x618     | Int32   | Hits               |
+| 0x61C     | Int32   | Kills              |
 | 0x620     | UInt32  | Distance Travelled |
-| 0x624     | BYTE    | Secrets Found      |
-| 0x626     | BYTE    | Pickups Found      |
+| 0x624     | UInt16  | Secrets Found      |
+| 0x626     | Int8    | Pickups            |
+| 0x627     | Int8    | Medi Packs Used    |
 | 0x628     | BYTE    | Level Index        |
 
 #### Tomb Raider III
@@ -106,14 +107,14 @@ So when calculating, you will have to add them to the base savegame offset.
 |:----------|:--------|:-------------------|
 | 0x00C     | UInt16  | Save Number        |
 | 0x8A4     | BYTE    | Crystals Found     |
-| 0x8AC     | UInt32  | Time Taken         |
-| 0x8B0     | UInt16  | Ammo Used          |
-| 0x8B4     | UInt16  | Hits               |
-| 0x8B8     | UInt16  | Kills              |
+| 0x8AC     | Int32   | Time Taken         |
+| 0x8B0     | Int32   | Ammo Used          |
+| 0x8B4     | Int32   | Hits               |
+| 0x8B8     | Int32   | Kills              |
 | 0x8BC     | UInt32  | Distance Travelled |
-| 0x8C0     | BYTE    | Secrets Found      |
-| 0x8C2     | BYTE    | Pickups Found      |
-| 0x8C3     | BYTE    | Medi Packs Used    |
+| 0x8C0     | UInt16  | Secrets Found      |
+| 0x8C2     | Int8    | Pickups            |
+| 0x8C3     | Int8    | Medi Packs Used    |
 | 0x8D6     | BYTE    | Level Index        |
 
 ## Reverse engineering Tomb Raider I savegames
