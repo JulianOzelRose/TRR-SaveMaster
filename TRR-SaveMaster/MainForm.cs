@@ -972,6 +972,7 @@ namespace TRR_SaveMaster
             if (selectedSavegame != null)
             {
                 statisticsForm.SetSavegame(selectedSavegame);
+                statisticsForm.TopMost = TopMost;
                 statisticsForm.ShowDialog();
             }
         }
