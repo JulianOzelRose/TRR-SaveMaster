@@ -176,14 +176,15 @@ namespace TRR_SaveMaster
 
         private void DisplayDistanceTravelled()
         {
-            UInt32 distanceTravelledMeters = GetDistanceTravelled() / 445;
+            UInt32 distanceTravelledRaw = GetDistanceTravelled();
 
+            decimal distanceTravelledMeters = distanceTravelledRaw / 445;
             decimal distanceToShow;
 
             if (distanceTravelledMeters >= 1000)
             {
                 decimal distanceInKilometers = (decimal)distanceTravelledMeters / 1000.0m;
-                distanceToShow = decimal.Round(distanceInKilometers + 0.005m, 2, MidpointRounding.AwayFromZero);
+                distanceToShow = decimal.Floor(distanceInKilometers * 100) / 100;
 
                 nudDistanceTravelled.DecimalPlaces = 2;
                 nudDistanceTravelled.Increment = 0.01m;
@@ -581,18 +582,18 @@ namespace TRR_SaveMaster
             WriteInt32(savegameOffset + timeTakenOffset, value);
         }
 
-        private void WriteDistanceTravelled(UInt32 value)
+        private void WriteDistanceTravelled(decimal value)
         {
             bool isMeter = lblDistanceTravelledUnit.Text == "m";
 
             if (!isMeter)
             {
-                value = (UInt32)(value * 1000);
+                value = (decimal)(value * 1000);
             }
 
             value *= 445;
 
-            WriteUInt32(savegameOffset + distanceTravelledOffset, value);
+            WriteUInt32(savegameOffset + distanceTravelledOffset, (UInt32)value);
         }
 
         private void WriteChanges()
@@ -605,7 +606,7 @@ namespace TRR_SaveMaster
                 WriteNumPickups((sbyte)nudPickups.Value);
                 WriteNumMedipacksUsed((sbyte)(nudMedipacksUsed.Value * 2));
                 WriteTimeTaken((Int32)(nudHours.Value * 3600 + nudMinutes.Value * 60 + nudSeconds.Value) * 30);
-                WriteDistanceTravelled((UInt32)nudDistanceTravelled.Value);
+                WriteDistanceTravelled((decimal)nudDistanceTravelled.Value);
                 WriteNumSecretsFound((UInt16)nudSecretsFound.Value);
 
                 if (SELECTED_TAB == TAB_TR3)
@@ -650,6 +651,20 @@ namespace TRR_SaveMaster
         {
             btnSave.Enabled = false;
             btnCancel.Enabled = false;
+        }
+
+        private void ConfirmChanges()
+        {
+            if (btnSave.Enabled)
+            {
+                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame statistics?",
+                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    WriteChanges();
+                }
+            }
         }
 
         private void nudHours_ValueChanged(object sender, EventArgs e)
@@ -857,20 +872,6 @@ namespace TRR_SaveMaster
             if (char.IsDigit(e.KeyChar))
             {
                 EnableButtons();
-            }
-        }
-
-        private void ConfirmChanges()
-        {
-            if (btnSave.Enabled)
-            {
-                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame statistics?",
-                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                if (result == DialogResult.Yes)
-                {
-                    WriteChanges();
-                }
             }
         }
     }
