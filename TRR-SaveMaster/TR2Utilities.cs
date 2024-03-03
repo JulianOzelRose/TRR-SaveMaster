@@ -255,7 +255,7 @@ namespace TRR_SaveMaster
                 int[] offsets1 = new int[indexData.Length];
                 int[] offsets2 = new int[indexData.Length];
 
-                for (int index = 0; index < 20; index++)
+                for (int index = 0; index < 25; index++)
                 {
                     Array.Copy(indexData, offsets1, indexData.Length);
 
@@ -468,7 +468,7 @@ namespace TRR_SaveMaster
             if (levelIndex == 1)        // The Great Wall
             {
                 MIN_HEALTH_OFFSET = 0xB64;
-                MAX_HEALTH_OFFSET = 0xB7C;
+                MAX_HEALTH_OFFSET = 0xBAC;
             }
             else if (levelIndex == 2)   // Venice
             {
@@ -478,7 +478,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 3)   // Bartoli's Hideout
             {
                 MIN_HEALTH_OFFSET = 0x1734;
-                MAX_HEALTH_OFFSET = 0x1758;
+                MAX_HEALTH_OFFSET = 0x1764;
             }
             else if (levelIndex == 4)   // Opera House
             {
@@ -523,7 +523,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 12)  // Barkhang Monastery
             {
                 MIN_HEALTH_OFFSET = 0x2522;
-                MAX_HEALTH_OFFSET = 0x2552;
+                MAX_HEALTH_OFFSET = 0x25FA;
             }
             else if (levelIndex == 13)  // Catacombs of the Talion
             {
@@ -538,7 +538,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 15)  // Temple of Xian
             {
                 MIN_HEALTH_OFFSET = 0x2A7A;
-                MAX_HEALTH_OFFSET = 0x2A9E;
+                MAX_HEALTH_OFFSET = 0x2AB6;
             }
             else if (levelIndex == 16)  // Floating Islands
             {
@@ -548,7 +548,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 17)  // The Dragon's Lair
             {
                 MIN_HEALTH_OFFSET = 0xF78;
-                MAX_HEALTH_OFFSET = 0xF90;
+                MAX_HEALTH_OFFSET = 0xFC0;
             }
             else if (levelIndex == 18)  // Home Sweet Home
             {
@@ -558,22 +558,22 @@ namespace TRR_SaveMaster
             else if (levelIndex == 19)  // The Cold War
             {
                 MIN_HEALTH_OFFSET = 0x1626;
-                MAX_HEALTH_OFFSET = 0x163E;
+                MAX_HEALTH_OFFSET = 0x1656;
             }
             else if (levelIndex == 20)  // Fool's Gold
             {
                 MIN_HEALTH_OFFSET = 0x1D80;
-                MAX_HEALTH_OFFSET = 0x1D80;
+                MAX_HEALTH_OFFSET = 0x1DBC;
             }
             else if (levelIndex == 21)  // Furnace of the Gods
             {
                 MIN_HEALTH_OFFSET = 0x1FD4;
-                MAX_HEALTH_OFFSET = 0x1FE0;
+                MAX_HEALTH_OFFSET = 0x2064;
             }
             else if (levelIndex == 22)  // Kingdom
             {
                 MIN_HEALTH_OFFSET = 0x91A;
-                MAX_HEALTH_OFFSET = 0x91A;
+                MAX_HEALTH_OFFSET = 0x926;
             }
             else if (levelIndex == 23)  // Nightmare in Vegas
             {
