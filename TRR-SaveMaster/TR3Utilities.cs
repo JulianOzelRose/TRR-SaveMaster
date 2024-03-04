@@ -376,7 +376,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 2)   // Temple Ruins
             {
                 MIN_HEALTH_OFFSET = 0xDCC;
-                MAX_HEALTH_OFFSET = 0xE00;
+                MAX_HEALTH_OFFSET = 0xE34;
             }
             else if (levelIndex == 3)   // The River Ganges
             {
@@ -396,12 +396,12 @@ namespace TRR_SaveMaster
             else if (levelIndex == 6)   // Crash Site
             {
                 MIN_HEALTH_OFFSET = 0x2046;
-                MAX_HEALTH_OFFSET = 0x2046;
+                MAX_HEALTH_OFFSET = 0x217E;
             }
             else if (levelIndex == 7)   // Madubu Gorge
             {
                 MIN_HEALTH_OFFSET = 0x1250;
-                MAX_HEALTH_OFFSET = 0x126A;
+                MAX_HEALTH_OFFSET = 0x12B8;
             }
             else if (levelIndex == 8)   // Temple of Puna
             {
@@ -441,7 +441,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 15)  // Area 51
             {
                 MIN_HEALTH_OFFSET = 0x11E4;
-                MAX_HEALTH_OFFSET = 0x1218;
+                MAX_HEALTH_OFFSET = 0x129A;
             }
             else if (levelIndex == 16)  // Antarctica
             {
@@ -471,7 +471,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 21)  // Highland Fling
             {
                 MIN_HEALTH_OFFSET = 0x1BF4;
-                MAX_HEALTH_OFFSET = 0x1C0E;
+                MAX_HEALTH_OFFSET = 0x1CAA;
             }
             else if (levelIndex == 22)  // Willard's Lair
             {
@@ -496,7 +496,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 26)  // Reunion
             {
                 MIN_HEALTH_OFFSET = 0x1810;
-                MAX_HEALTH_OFFSET = 0x1844;
+                MAX_HEALTH_OFFSET = 0x1892;
             }
 
             if (IsPS4Savegame())
