@@ -92,6 +92,16 @@ namespace TRR_SaveMaster
             }
         }
 
+        private Int32 ReadInt32(int offset)
+        {
+            byte byte1 = ReadByte(offset);
+            byte byte2 = ReadByte(offset + 1);
+            byte byte3 = ReadByte(offset + 2);
+            byte byte4 = ReadByte(offset + 3);
+
+            return (Int32)(byte1 + (byte2 << 8) + (byte3 << 16) + (byte4 << 24));
+        }
+
         private byte GetNumSmallMedipacks()
         {
             return ReadByte(savegameOffset + smallMedipackOffset);
@@ -107,9 +117,9 @@ namespace TRR_SaveMaster
             return ReadByte(savegameOffset + flaresOffset);
         }
 
-        private UInt16 GetSaveNumber()
+        private Int32 GetSaveNumber()
         {
-            return ReadUInt16(savegameOffset + saveNumberOffset);
+            return ReadInt32(savegameOffset + saveNumberOffset);
         }
 
         private byte GetLevelIndex()
@@ -737,7 +747,7 @@ namespace TRR_SaveMaster
             else
             {
                 trbHealth.Enabled = false;
-                trbHealth.Value = 1;
+                trbHealth.Value = trbHealth.Minimum;
                 lblHealthError.Visible = true;
                 lblHealth.Visible = false;
             }
@@ -822,7 +832,7 @@ namespace TRR_SaveMaster
             byte levelIndex = ReadByte(savegame.Offset + levelIndexOffset);
 
             string levelName = levelNames[levelIndex];
-            UInt16 saveNumber = ReadUInt16(savegame.Offset + saveNumberOffset);
+            Int32 saveNumber = ReadInt32(savegame.Offset + saveNumberOffset);
 
             savegame.UpdateDisplayName(levelName, saveNumber);
         }
@@ -850,10 +860,10 @@ namespace TRR_SaveMaster
 
                 if (currentSavegameOffset < MAX_SAVEGAME_OFFSET_TR2)
                 {
-                    UInt16 saveNumber = ReadUInt16(currentSavegameOffset + saveNumberOffset);
+                    Int32 saveNumber = ReadInt32(currentSavegameOffset + saveNumberOffset);
                     byte levelIndex = ReadByte(currentSavegameOffset + levelIndexOffset);
 
-                    if (saveNumber != 0 && levelIndex >= 1 && levelIndex <= 23)
+                    if (saveNumber >= 1 && levelIndex >= 1 && levelIndex <= 23)
                     {
                         string levelName = levelNames[levelIndex];
                         int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR2) / SAVEGAME_ITERATOR;
@@ -867,18 +877,17 @@ namespace TRR_SaveMaster
 
         public void PopulateSavegames(ComboBox cmbSavegames)
         {
-            int currentSavegameOffset;
             int numSaves = 0;
 
             for (int i = 0; i < 32; i++)
             {
-                currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR2 + (i * SAVEGAME_ITERATOR);
+                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR2 + (i * SAVEGAME_ITERATOR);
                 SetSavegameOffset(currentSavegameOffset);
 
-                UInt16 saveNumber = GetSaveNumber();
+                Int32 saveNumber = GetSaveNumber();
                 byte levelIndex = GetLevelIndex();
 
-                if (saveNumber != 0 && levelIndex >= 1 && levelIndex <= 23)
+                if (saveNumber >= 1 && levelIndex >= 1 && levelIndex <= 23)
                 {
                     string levelName = levelNames[levelIndex];
                     int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR2) / SAVEGAME_ITERATOR;
