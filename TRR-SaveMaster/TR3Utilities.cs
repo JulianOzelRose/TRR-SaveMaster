@@ -45,6 +45,9 @@ namespace TRR_SaveMaster
         private int MAX_HEALTH_OFFSET;
         private int MIN_HEALTH_OFFSET;
 
+        // Platform
+        private Platform platform;
+
         // Strings
         private string savegamePath;
 
@@ -353,12 +356,6 @@ namespace TRR_SaveMaster
             }
         }
 
-        private bool IsPS4Savegame()
-        {
-            FileInfo fileInfo = new FileInfo(savegamePath);
-            return fileInfo.Length == 0x400000;
-        }
-
         private void DetermineOffsets()
         {
             byte levelIndex = GetLevelIndex();
@@ -509,7 +506,7 @@ namespace TRR_SaveMaster
                 MAX_HEALTH_OFFSET = 0x1892;
             }
 
-            if (IsPS4Savegame())
+            if (platform != Platform.PC)
             {
                 MIN_HEALTH_OFFSET -= 2;
                 MAX_HEALTH_OFFSET -= 2;
@@ -641,13 +638,13 @@ namespace TRR_SaveMaster
             {
                 Dictionary<byte, int[]> ammoIndexData;
 
-                if (IsPS4Savegame())
+                if (platform == Platform.PC)
                 {
-                    ammoIndexData = ammoIndexDataPS4;
+                    ammoIndexData = ammoIndexDataPC;
                 }
                 else
                 {
-                    ammoIndexData = ammoIndexDataPC;
+                    ammoIndexData = ammoIndexDataConsole;
                 }
 
                 int baseSecondaryAmmoOffset = ammoIndexData[levelIndex][0];
@@ -755,7 +752,7 @@ namespace TRR_SaveMaster
             { 26, new int[] { 0x1A40, 0x1A41, 0x1A42, 0x1A43 } },   // Reunion
         };
 
-        private readonly Dictionary<byte, int[]> ammoIndexDataPS4 = new Dictionary<byte, int[]>()
+        private readonly Dictionary<byte, int[]> ammoIndexDataConsole = new Dictionary<byte, int[]>()
         {
             {  1, new int[] { 0x1F84, 0x1F85, 0x1F86, 0x1F87 } },   // Jungle
             {  2, new int[] { 0x3112, 0x3113, 0x3114, 0x3115 } },   // Temple Ruins
@@ -791,13 +788,13 @@ namespace TRR_SaveMaster
 
             Dictionary<byte, int[]> ammoIndexData;
 
-            if (IsPS4Savegame())
+            if (platform == Platform.PC)
             {
-                ammoIndexData = ammoIndexDataPS4;
+                ammoIndexData = ammoIndexDataPC;
             }
             else
             {
-                ammoIndexData = ammoIndexDataPC;
+                ammoIndexData = ammoIndexDataConsole;
             }
 
             if (ammoIndexData.ContainsKey(levelIndex))
@@ -838,6 +835,11 @@ namespace TRR_SaveMaster
             Int32 saveNumber = ReadInt32(savegame.Offset + saveNumberOffset);
 
             savegame.UpdateDisplayName(levelName, saveNumber);
+        }
+
+        public void SetPlatform(Platform platform)
+        {
+            this.platform = platform;
         }
 
         public void SetSavegamePath(string path)

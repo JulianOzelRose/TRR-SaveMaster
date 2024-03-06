@@ -32,6 +32,9 @@ namespace TRR_SaveMaster
         private const UInt16 MIN_HEALTH_VALUE = 1;
         private List<int> healthOffsets = new List<int>();
 
+        // Platform
+        private Platform platform;
+
         // Strings
         private string savegamePath;
 
@@ -274,12 +277,6 @@ namespace TRR_SaveMaster
             }
         }
 
-        private bool IsPS4Savegame()
-        {
-            FileInfo fileInfo = new FileInfo(savegamePath);
-            return fileInfo.Length == 0x400000;
-        }
-
         private void DetermineOffsets()
         {
             byte levelIndex = GetLevelIndex();
@@ -439,7 +436,7 @@ namespace TRR_SaveMaster
                 SetHealthOffsets(0x10DF);
             }
 
-            if (IsPS4Savegame())
+            if (platform != Platform.PC)
             {
                 for (int i = 0; i < healthOffsets.Count; i++)
                 {
@@ -545,6 +542,11 @@ namespace TRR_SaveMaster
             Int32 saveNumber = ReadInt32(savegame.Offset + saveNumberOffset);
 
             savegame.UpdateDisplayName(levelName, saveNumber);
+        }
+
+        public void SetPlatform(Platform platform)
+        {
+            this.platform = platform;
         }
 
         public void SetSavegamePath(string path)

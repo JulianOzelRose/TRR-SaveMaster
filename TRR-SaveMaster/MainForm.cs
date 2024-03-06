@@ -16,6 +16,7 @@ namespace TRR_SaveMaster
         private string savegamePath;
         private bool isLoading = false;
         private bool userIndexChanged = true;
+        private Platform platform;
 
         // Utils
         readonly TR1Utilities TR1 = new TR1Utilities();
@@ -46,14 +47,18 @@ namespace TRR_SaveMaster
 
             if (!string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath))
             {
-                this.Text = $"Tomb Raider I-III Remastered Savegame Editor {(IsPS4Savegame() ? "(PS4)" : "(PC)")}";
                 slblStatus.Text = $"{cmbSavegamesTR1.Items.Count} savegames found for Tomb Raider I";
             }
             else
             {
-                this.Text = $"Tomb Raider I-III Remastered Savegame Editor";
                 slblStatus.Text = "Ready";
             }
+
+            TR1.SetPlatform(platform);
+            TR2.SetPlatform(platform);
+            TR3.SetPlatform(platform);
+
+            this.Text = $"Tomb Raider I-III Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(platform)})";
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
@@ -109,7 +114,7 @@ namespace TRR_SaveMaster
             {
                 if (control is NumericUpDown numericUpDown)
                 {
-                    numericUpDown.Value = 0;
+                    numericUpDown.Value = numericUpDown.Minimum;
                     numericUpDown.Enabled = true;
                 }
                 else if (control is CheckBox checkBox)
@@ -133,6 +138,7 @@ namespace TRR_SaveMaster
 
             lblHealthErrorTR1.Visible = false;
             lblHealthTR1.Text = "0.1%";
+            lblHealthTR1.Visible = true;
 
             btnSaveTR1.Enabled = false;
             btnCancelTR1.Enabled = false;
@@ -146,6 +152,7 @@ namespace TRR_SaveMaster
 
             lblHealthErrorTR2.Visible = false;
             lblHealthTR2.Text = "0.1%";
+            lblHealthTR2.Visible = true;
 
             btnSaveTR2.Enabled = false;
             btnCancelTR2.Enabled = false;
@@ -159,18 +166,13 @@ namespace TRR_SaveMaster
 
             lblHealthErrorTR3.Visible = false;
             lblHealthTR3.Text = "0.1%";
+            lblHealthTR3.Visible = true;
 
             btnSaveTR3.Enabled = false;
             btnCancelTR3.Enabled = false;
         }
 
-        private bool IsPS4Savegame()
-        {
-            FileInfo fileInfo = new FileInfo(savegamePath);
-            return fileInfo.Length == 0x400000;
-        }
-
-        private bool IsValidSavegame(string path)
+        private bool IsValidSavegameFile(string path)
         {
             FileInfo fileInfo = new FileInfo(path);
             return fileInfo.Length >= 0x152004;
@@ -197,7 +199,7 @@ namespace TRR_SaveMaster
 
                 if (fileBrowserDialog.ShowDialog() == DialogResult.OK)
                 {
-                    if (!IsValidSavegame(fileBrowserDialog.FileName))
+                    if (!IsValidSavegameFile(fileBrowserDialog.FileName))
                     {
                         MessageBox.Show("Invalid savegame file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
@@ -238,10 +240,45 @@ namespace TRR_SaveMaster
                     tsmiCreateBackup.Enabled = true;
                     tsmiBackupBeforeSaving.Enabled = true;
 
-                    this.Text = $"Tomb Raider I-III Remastered Savegame Editor {(IsPS4Savegame() ? "(PS4)" : "(PC)")}";
+                    this.Text = $"Tomb Raider I-III Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(platform)})";
 
                     slblStatus.Text = $"Loaded savegame file: \"{savegamePath}\"";
                 }
+            }
+        }
+
+        private void SetPlatform(Platform platform)
+        {
+            tsmiPC.CheckedChanged -= tsmiPC_CheckedChanged;
+            tsmiPlayStation4.CheckedChanged -= tsmiPlayStation4_CheckedChanged;
+            tsmiNintendoSwitch.CheckedChanged -= tsmiNintendoSwitch_CheckedChanged;
+
+            tsmiPC.Checked = (platform == Platform.PC);
+            tsmiPlayStation4.Checked = (platform == Platform.PlayStation4);
+            tsmiNintendoSwitch.Checked = (platform == Platform.NintendoSwitch);
+
+            tsmiPC.CheckedChanged += tsmiPC_CheckedChanged;
+            tsmiPlayStation4.CheckedChanged += tsmiPlayStation4_CheckedChanged;
+            tsmiNintendoSwitch.CheckedChanged += tsmiNintendoSwitch_CheckedChanged;
+
+            this.platform = platform;
+            this.Text = $"Tomb Raider I-III Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(platform)})";
+
+            TR1.SetPlatform(platform);
+            TR2.SetPlatform(platform);
+            TR3.SetPlatform(platform);
+
+            if (tabGame.SelectedIndex == TAB_TR1 && cmbSavegamesTR1.SelectedIndex != -1)
+            {
+                DisplayGameInfoTR1(cmbSavegamesTR1.SelectedItem as Savegame);
+            }
+            else if (tabGame.SelectedIndex == TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1)
+            {
+                DisplayGameInfoTR2(cmbSavegamesTR2.SelectedItem as Savegame);
+            }
+            else if (tabGame.SelectedIndex == TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1)
+            {
+                DisplayGameInfoTR3(cmbSavegamesTR3.SelectedItem as Savegame);
             }
         }
 
@@ -270,6 +307,27 @@ namespace TRR_SaveMaster
                             tsmiBackupBeforeSaving.Checked = autoBackup;
                         }
                     }
+                    else if (line.StartsWith("Platform="))
+                    {
+                        string platform = line.Substring("Platform=".Length);
+
+                        if (platform == "PC")
+                        {
+                            SetPlatform(Platform.PC);
+                        }
+                        else if (platform == "PS4")
+                        {
+                            SetPlatform(Platform.PlayStation4);
+                        }
+                        else if (platform == "NintendoSwitch")
+                        {
+                            SetPlatform(Platform.NintendoSwitch);
+                        }
+                        else
+                        {
+                            SetPlatform(Platform.PC);
+                        }
+                    }
                 }
             }
             else
@@ -284,7 +342,24 @@ namespace TRR_SaveMaster
             string filePath = Path.Combine(rootFolder, "path.ini");
 
             string content = $"Path={savegamePath}\n";
-            content += $"AutoBackup={tsmiBackupBeforeSaving.Checked}";
+            content += $"AutoBackup={tsmiBackupBeforeSaving.Checked}\n";
+
+            string platform = "";
+
+            if (tsmiPC.Checked)
+            {
+                platform = "PC";
+            }
+            else if (tsmiPlayStation4.Checked)
+            {
+                platform = "PS4";
+            }
+            else if (tsmiNintendoSwitch.Checked)
+            {
+                platform = "NintendoSwitch";
+            }
+
+            content += $"Platform={platform}";
 
             File.WriteAllText(filePath, content);
         }
@@ -980,6 +1055,21 @@ namespace TRR_SaveMaster
         private void tsmiBrowseSavegamePath_Click(object sender, EventArgs e)
         {
             BrowseSavegamePath();
+        }
+
+        private void tsmiPC_CheckedChanged(object sender, EventArgs e)
+        {
+            SetPlatform(Platform.PC);
+        }
+
+        private void tsmiPlayStation4_CheckedChanged(object sender, EventArgs e)
+        {
+            SetPlatform(Platform.PlayStation4);
+        }
+
+        private void tsmiNintendoSwitch_CheckedChanged(object sender, EventArgs e)
+        {
+            SetPlatform(Platform.NintendoSwitch);
         }
 
         private void tsmiEnableAllWeapons_Click(object sender, EventArgs e)

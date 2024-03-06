@@ -41,6 +41,9 @@ namespace TRR_SaveMaster
         private int MAX_HEALTH_OFFSET;
         private int MIN_HEALTH_OFFSET;
 
+        // Platform
+        private Platform platform;
+
         // Strings
         private string savegamePath;
 
@@ -216,7 +219,7 @@ namespace TRR_SaveMaster
             { 23, new int[] { 0x2354, 0x2355, 0x2356, 0x2357 } },   // Nightmare in Vegas
         };
 
-        private readonly Dictionary<byte, int[]> ammoIndexDataPS4 = new Dictionary<byte, int[]>
+        private readonly Dictionary<byte, int[]> ammoIndexDataConsole = new Dictionary<byte, int[]>
         {
             {  1, new int[] { 0x19B6, 0x19B7, 0x19B8, 0x19B9 } },   // The Great Wall
             {  2, new int[] { 0x1CF8, 0x1CF9, 0x1CFA, 0x1CFB } },   // Venice
@@ -249,13 +252,13 @@ namespace TRR_SaveMaster
 
             Dictionary<byte, int[]> ammoIndexData;
 
-            if (IsPS4Savegame())
+            if (platform == Platform.PC)
             {
-                ammoIndexData = ammoIndexDataPS4;
+                ammoIndexData = ammoIndexDataPC;
             }
             else
             {
-                ammoIndexData = ammoIndexDataPC;
+                ammoIndexData = ammoIndexDataConsole;
             }
 
             if (ammoIndexData.ContainsKey(levelIndex))
@@ -453,12 +456,6 @@ namespace TRR_SaveMaster
             }
         }
 
-        private bool IsPS4Savegame()
-        {
-            FileInfo fileInfo = new FileInfo(savegamePath);
-            return fileInfo.Length == 0x400000;
-        }
-
         private void DetermineOffsets()
         {
             byte levelIndex = GetLevelIndex();
@@ -591,7 +588,7 @@ namespace TRR_SaveMaster
                 MAX_HEALTH_OFFSET = 0xDF2;
             }
 
-            if (IsPS4Savegame())
+            if (platform != Platform.PC)
             {
                 MIN_HEALTH_OFFSET -= 4;
                 MAX_HEALTH_OFFSET -= 4;
@@ -782,13 +779,13 @@ namespace TRR_SaveMaster
             {
                 Dictionary<byte, int[]> ammoIndexData;
 
-                if (IsPS4Savegame())
+                if (platform == Platform.PC)
                 {
-                    ammoIndexData = ammoIndexDataPS4;
+                    ammoIndexData = ammoIndexDataPC;
                 }
                 else
                 {
-                    ammoIndexData = ammoIndexDataPC;
+                    ammoIndexData = ammoIndexDataConsole;
                 }
 
                 int baseSecondaryAmmoOffset = ammoIndexData[levelIndex][0];
@@ -835,6 +832,11 @@ namespace TRR_SaveMaster
             Int32 saveNumber = ReadInt32(savegame.Offset + saveNumberOffset);
 
             savegame.UpdateDisplayName(levelName, saveNumber);
+        }
+
+        public void SetPlatform(Platform platform)
+        {
+            this.platform = platform;
         }
 
         public void SetSavegamePath(string path)

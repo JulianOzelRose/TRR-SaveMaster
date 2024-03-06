@@ -2,6 +2,31 @@
 
 namespace TRR_SaveMaster
 {
+    public enum Platform
+    {
+        PC,
+        PlayStation4,
+        NintendoSwitch
+    }
+
+    public static class PlatformExtensions
+    {
+        public static string ToFriendlyString(this Platform platform)
+        {
+            switch (platform)
+            {
+                case Platform.PC:
+                    return "PC";
+                case Platform.PlayStation4:
+                    return "PS4";
+                case Platform.NintendoSwitch:
+                    return "Nintendo Switch";
+                default:
+                    return platform.ToString();
+            }
+        }
+    }
+
     public class Savegame
     {
         public int Offset { get; set; }

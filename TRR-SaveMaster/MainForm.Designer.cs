@@ -132,6 +132,7 @@ namespace TRR_SaveMaster
             this.tsddbFile = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiBrowseSavegamePath = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiFileSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmiBackupBeforeSaving = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCreateBackup = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiFileSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiExit = new System.Windows.Forms.ToolStripMenuItem();
@@ -141,14 +142,18 @@ namespace TRR_SaveMaster
             this.tsmiSetMaximumItems = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEditSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiStatistics = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsddbView = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsddbSettings = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiStatusBar = new System.Windows.Forms.ToolStripMenuItem();
             this.tsddbHelp = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSendFeedback = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiBackupBeforeSaving = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiSettingsSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmiPlatform = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiPC = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiPlayStation4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiNintendoSwitch = new System.Windows.Forms.ToolStripMenuItem();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
             this.grpHealthTR1.SuspendLayout();
@@ -1385,7 +1390,7 @@ namespace TRR_SaveMaster
             this.tsrToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsddbFile,
             this.tsddbEdit,
-            this.tsddbView,
+            this.tsddbSettings,
             this.tsddbHelp});
             this.tsrToolStrip.Location = new System.Drawing.Point(0, 0);
             this.tsrToolStrip.Name = "tsrToolStrip";
@@ -1421,6 +1426,16 @@ namespace TRR_SaveMaster
             // 
             this.tsmiFileSeparator.Name = "tsmiFileSeparator";
             this.tsmiFileSeparator.Size = new System.Drawing.Size(201, 6);
+            // 
+            // tsmiBackupBeforeSaving
+            // 
+            this.tsmiBackupBeforeSaving.Checked = true;
+            this.tsmiBackupBeforeSaving.CheckOnClick = true;
+            this.tsmiBackupBeforeSaving.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiBackupBeforeSaving.Enabled = false;
+            this.tsmiBackupBeforeSaving.Name = "tsmiBackupBeforeSaving";
+            this.tsmiBackupBeforeSaving.Size = new System.Drawing.Size(204, 22);
+            this.tsmiBackupBeforeSaving.Text = "Backup before saving";
             // 
             // tsmiCreateBackup
             // 
@@ -1496,25 +1511,27 @@ namespace TRR_SaveMaster
             this.tsmiStatistics.Text = "Statistics";
             this.tsmiStatistics.Click += new System.EventHandler(this.tsmiStatistics_Click);
             // 
-            // tsddbView
+            // tsddbSettings
             // 
-            this.tsddbView.AutoToolTip = false;
-            this.tsddbView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsddbView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsddbSettings.AutoToolTip = false;
+            this.tsddbSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsddbSettings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiPlatform,
+            this.tsmiSettingsSeparator,
             this.tsmiAlwaysOnTop,
             this.tsmiStatusBar});
-            this.tsddbView.Image = ((System.Drawing.Image)(resources.GetObject("tsddbView.Image")));
-            this.tsddbView.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsddbView.Name = "tsddbView";
-            this.tsddbView.ShowDropDownArrow = false;
-            this.tsddbView.Size = new System.Drawing.Size(36, 22);
-            this.tsddbView.Text = "View";
+            this.tsddbSettings.Image = ((System.Drawing.Image)(resources.GetObject("tsddbSettings.Image")));
+            this.tsddbSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddbSettings.Name = "tsddbSettings";
+            this.tsddbSettings.ShowDropDownArrow = false;
+            this.tsddbSettings.Size = new System.Drawing.Size(53, 22);
+            this.tsddbSettings.Text = "Settings";
             // 
             // tsmiAlwaysOnTop
             // 
             this.tsmiAlwaysOnTop.CheckOnClick = true;
             this.tsmiAlwaysOnTop.Name = "tsmiAlwaysOnTop";
-            this.tsmiAlwaysOnTop.Size = new System.Drawing.Size(149, 22);
+            this.tsmiAlwaysOnTop.Size = new System.Drawing.Size(180, 22);
             this.tsmiAlwaysOnTop.Text = "Always on top";
             this.tsmiAlwaysOnTop.Click += new System.EventHandler(this.tsmiAlwaysOnTop_Click);
             // 
@@ -1524,7 +1541,7 @@ namespace TRR_SaveMaster
             this.tsmiStatusBar.CheckOnClick = true;
             this.tsmiStatusBar.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiStatusBar.Name = "tsmiStatusBar";
-            this.tsmiStatusBar.Size = new System.Drawing.Size(149, 22);
+            this.tsmiStatusBar.Size = new System.Drawing.Size(180, 22);
             this.tsmiStatusBar.Text = "Status Bar";
             this.tsmiStatusBar.Click += new System.EventHandler(this.tsmiStatusBar_Click);
             // 
@@ -1564,15 +1581,46 @@ namespace TRR_SaveMaster
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
             // 
-            // tsmiBackupBeforeSaving
+            // tsmiSettingsSeparator
             // 
-            this.tsmiBackupBeforeSaving.Checked = true;
-            this.tsmiBackupBeforeSaving.CheckOnClick = true;
-            this.tsmiBackupBeforeSaving.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.tsmiBackupBeforeSaving.Enabled = false;
-            this.tsmiBackupBeforeSaving.Name = "tsmiBackupBeforeSaving";
-            this.tsmiBackupBeforeSaving.Size = new System.Drawing.Size(204, 22);
-            this.tsmiBackupBeforeSaving.Text = "Backup before saving";
+            this.tsmiSettingsSeparator.Name = "tsmiSettingsSeparator";
+            this.tsmiSettingsSeparator.Size = new System.Drawing.Size(177, 6);
+            // 
+            // tsmiPlatform
+            // 
+            this.tsmiPlatform.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiPC,
+            this.tsmiPlayStation4,
+            this.tsmiNintendoSwitch});
+            this.tsmiPlatform.Name = "tsmiPlatform";
+            this.tsmiPlatform.Size = new System.Drawing.Size(180, 22);
+            this.tsmiPlatform.Text = "Platform";
+            // 
+            // tsmiPC
+            // 
+            this.tsmiPC.Checked = true;
+            this.tsmiPC.CheckOnClick = true;
+            this.tsmiPC.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiPC.Name = "tsmiPC";
+            this.tsmiPC.Size = new System.Drawing.Size(180, 22);
+            this.tsmiPC.Text = "PC";
+            this.tsmiPC.CheckedChanged += new System.EventHandler(this.tsmiPC_CheckedChanged);
+            // 
+            // tsmiPlayStation4
+            // 
+            this.tsmiPlayStation4.CheckOnClick = true;
+            this.tsmiPlayStation4.Name = "tsmiPlayStation4";
+            this.tsmiPlayStation4.Size = new System.Drawing.Size(180, 22);
+            this.tsmiPlayStation4.Text = "PlayStation 4";
+            this.tsmiPlayStation4.CheckedChanged += new System.EventHandler(this.tsmiPlayStation4_CheckedChanged);
+            // 
+            // tsmiNintendoSwitch
+            // 
+            this.tsmiNintendoSwitch.CheckOnClick = true;
+            this.tsmiNintendoSwitch.Name = "tsmiNintendoSwitch";
+            this.tsmiNintendoSwitch.Size = new System.Drawing.Size(180, 22);
+            this.tsmiNintendoSwitch.Text = "Nintendo Switch";
+            this.tsmiNintendoSwitch.CheckedChanged += new System.EventHandler(this.tsmiNintendoSwitch_CheckedChanged);
             // 
             // MainForm
             // 
@@ -1692,7 +1740,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.ToolStripMenuItem tsmiCreateBackup;
         private System.Windows.Forms.ToolStripSeparator tsmiFileSeparator2;
         private System.Windows.Forms.ToolStripMenuItem tsmiExit;
-        private System.Windows.Forms.ToolStripDropDownButton tsddbView;
+        private System.Windows.Forms.ToolStripDropDownButton tsddbSettings;
         private System.Windows.Forms.ToolStripMenuItem tsmiAlwaysOnTop;
         private System.Windows.Forms.ToolStripMenuItem tsmiStatusBar;
         private System.Windows.Forms.ToolStripDropDownButton tsddbHelp;
@@ -1775,6 +1823,11 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.ToolStripSeparator tsmiEditSeparator;
         private System.Windows.Forms.ToolStripMenuItem tsmiStatistics;
         private System.Windows.Forms.ToolStripMenuItem tsmiBackupBeforeSaving;
+        private System.Windows.Forms.ToolStripSeparator tsmiSettingsSeparator;
+        private System.Windows.Forms.ToolStripMenuItem tsmiPlatform;
+        private System.Windows.Forms.ToolStripMenuItem tsmiPC;
+        private System.Windows.Forms.ToolStripMenuItem tsmiPlayStation4;
+        private System.Windows.Forms.ToolStripMenuItem tsmiNintendoSwitch;
     }
 }
 
