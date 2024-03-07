@@ -1,10 +1,10 @@
 # Tomb Raider I-III Remastered Savegame Editor
-This is a savegame editor for Tomb Raider I-III Remastered. It works on all levels and expansions. You can change health, weapons, ammunition and more.
-Compatible with PC and PS4 savegames. For instructions on how to download and use this savegame editor, scroll down to
+This is a savegame editor for Tomb Raider I-III Remastered. It works on all levels, including bonus levels. You can edit health, weapons, ammunition and statistics.
+Compatible with PC, PS4, and Nintendo Switch savegames. For instructions on how to download and use this savegame editor, scroll down to
 the section below. Additionally, technical details on reverse engineering the Tomb Raider I-III Remastered series are included on later on in this README.
-For a tool that allows you to transfer individual savegames from one file to another and convert to PC/PS4, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
+For a tool that allows you to transfer individual savegames from one file to another and convert to PC/PS4/Nintendo Switch, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
-![TRR-SaveMaster-UI](https://github.com/JulianOzelRose/TRR-SaveMaster/assets/95890436/1b63992a-6c2d-41e2-8527-3167e1cee9a9)
+![TRR-SaveMaster-UI](https://github.com/JulianOzelRose/TRR-SaveMaster/assets/95890436/246596cf-a384-42b1-b3e8-cc0630985c7d)
 
 ## Installation and use
 To download this savegame editor, simply navigate to the [Release](https://github.com/JulianOzelRose/TRR-SaveMaster/tree/master/TRR-SaveMaster/bin/x64/Release) folder,
@@ -18,9 +18,11 @@ you have multiple accounts with Tomb Raider I-III Remastered, there may be multi
 "Show hidden files, folders, or drives" in Windows Explorer. Once you have selected your savegame path, your savegames should populate in the editor. The editor will remember
 your savegame path, so there is no need to re-enter it every time.
 
-Once the savegames are populated in the editor, you can select them using the combo box labeled "Savegame" in the top-right corner. The editor will automatically refresh savegame
-data when switching tabs or selecting savegames. If another savegame is added and not displaying, you can click "Refresh" to re-populate the savegames. Once you are done making changes,
-click "Save" to apply them. Because the game caches savegames into memory, you must restart your game in order for the changes to take effect.
+By default, this savegame editor assumes PC format of savegames. To change the savegame platform, click "Settings", then "Platform", then select your savegame platform.
+Current supported platforms are PC, PS4, and Nintendo Switch. Once the savegames are populated in the editor, you can select them using the combo box labeled "Savegame"
+in the top-right corner. The editor will automatically refresh savegame data when switching tabs or clicking the savegame combo box. If another savegame is added and not displaying,
+you can click "Refresh" to re-populate the savegames. Once you are done making changes, click "Save" to apply them. Because the game caches savegames into memory,
+you must restart your game in order for the changes to take effect.
 
 This savegame editor has an auto backup feature, which will automatically create backups of your savegame file before writing. It is enabled by default. You can toggle this feature on or
 off by clicking "File", then checking "Backup before saving". The backup will be saved in the same directory as your savegame file, with a `.bak` extension. It is highly recommended that you
@@ -46,17 +48,18 @@ level index falls within a valid range for the game, and if the save number is n
 ```
 for (int i = 0; i < 32; i++)
 {
-    currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR1 + (i * SAVEGAME_ITERATOR);
+    int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR1 + (i * SAVEGAME_ITERATOR);
     SetSavegameOffset(currentSavegameOffset);
 
-    UInt16 saveNumber = GetSaveNumber();
+    Int32 saveNumber = GetSaveNumber();
     byte levelIndex = GetLevelIndex();
 
-    if (saveNumber != 0 && levelIndex >= 1 && levelIndex <= 19)
+    if (saveNumber >= 1 && levelIndex >= 1 && levelIndex <= 19)
     {
         string levelName = levelNames[levelIndex];
+        int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR1) / SAVEGAME_ITERATOR;
 
-        Savegame savegame = new Savegame(currentSavegameOffset, saveNumber, levelName);
+        Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName);
         cmbSavegames.Items.Add(savegame);
 
         numSaves++;
@@ -71,13 +74,13 @@ So when calculating, you will have to add them to the base savegame offset.
 #### Tomb Raider I
 | Offset    | Type    | Description        |
 |:----------|:--------|:-------------------|
-| 0x00C     | UInt16  | Save Number        |
+| 0x00C     | Int32   | Save Number        |
 | 0x4C2     | UInt16  | Magnum Ammo 1      |
 | 0x4C4     | UInt16  | Uzi Ammo 1         |
 | 0x4C6     | UInt16  | Shotgun Ammo 1     |
-| 0x4C8     | BYTE    | Small Medipack     |
-| 0x4C9     | BYTE    | Large Medipack     |
-| 0x4EC     | BYTE    | Weapons            |
+| 0x4C8     | UInt8   | Small Medipack     |
+| 0x4C9     | UInt8   | Large Medipack     |
+| 0x4EC     | UInt8   | Weapons            |
 | 0x614     | Int32   | Time Taken         |
 | 0x618     | Int32   | Ammo Used          |
 | 0x61C     | Int32   | Hits               |
@@ -86,12 +89,12 @@ So when calculating, you will have to add them to the base savegame offset.
 | 0x628     | UInt16  | Secrets Found      |
 | 0x62A     | Int8    | Pickups            |
 | 0x62B     | Int8    | Medi Packs Used    |
-| 0x62C     | BYTE    | Level Index        |
+| 0x62C     | UInt8   | Level Index        |
 
 #### Tomb Raider II
 | Offset    | Type    | Description        |
 |:----------|:--------|:-------------------|
-| 0x00C     | UInt16  | Save Number        |
+| 0x00C     | Int32   | Save Number        |
 | 0x610     | Int32   | Time Taken         |
 | 0x614     | Int32   | Ammo Used          |
 | 0x618     | Int32   | Hits               |
@@ -100,13 +103,13 @@ So when calculating, you will have to add them to the base savegame offset.
 | 0x624     | UInt16  | Secrets Found      |
 | 0x626     | Int8    | Pickups            |
 | 0x627     | Int8    | Medi Packs Used    |
-| 0x628     | BYTE    | Level Index        |
+| 0x628     | UInt8   | Level Index        |
 
 #### Tomb Raider III
 | Offset    | Type    | Description        |
 |:----------|:--------|:-------------------|
-| 0x00C     | UInt16  | Save Number        |
-| 0x8A4     | BYTE    | Crystals Found     |
+| 0x00C     | Int32   | Save Number        |
+| 0x8A4     | UInt8   | Crystals Found     |
 | 0x8AC     | Int32   | Time Taken         |
 | 0x8B0     | Int32   | Ammo Used          |
 | 0x8B4     | Int32   | Hits               |
@@ -115,7 +118,7 @@ So when calculating, you will have to add them to the base savegame offset.
 | 0x8C0     | UInt16  | Secrets Found      |
 | 0x8C2     | Int8    | Pickups            |
 | 0x8C3     | Int8    | Medi Packs Used    |
-| 0x8D6     | BYTE    | Level Index        |
+| 0x8D6     | UInt8   | Level Index        |
 
 ## Reverse engineering Tomb Raider I savegames
 Because almost all of the offsets in Tomb Raider I are static, it is the most straightforward game to reverse of the trilogy. Weapons inventory configuration
@@ -181,6 +184,17 @@ private int GetSecondaryAmmoIndex()
 {
     byte levelIndex = GetLevelIndex();
 
+    Dictionary<byte, int[]> ammoIndexData;
+
+    if (platform == Platform.PC)
+    {
+        ammoIndexData = ammoIndexDataPC;
+    }
+    else
+    {
+        ammoIndexData = ammoIndexDataConsole;
+    }
+
     if (ammoIndexData.ContainsKey(levelIndex))
     {
         int[] indexData = ammoIndexData[levelIndex];
@@ -188,7 +202,7 @@ private int GetSecondaryAmmoIndex()
         int[] offsets1 = new int[indexData.Length];
         int[] offsets2 = new int[indexData.Length];
 
-        for (int index = 0; index < 20; index++)
+        for (int index = 0; index < 25; index++)
         {
             Array.Copy(indexData, offsets1, indexData.Length);
 
@@ -213,11 +227,6 @@ private int GetSecondaryAmmoIndex()
     }
 
     return -1;
-}
-
-private int GetSecondaryAmmoOffset(int baseOffset)
-{
-    return baseOffset + (secondaryAmmoIndex * 0xC);
 }
 ```
 
@@ -268,13 +277,24 @@ private int GetSecondaryAmmoIndex()
 {
     byte levelIndex = GetLevelIndex();
 
+    Dictionary<byte, int[]> ammoIndexData;
+
+    if (platform == Platform.PC)
+    {
+        ammoIndexData = ammoIndexDataPC;
+    }
+    else
+    {
+        ammoIndexData = ammoIndexDataConsole;
+    }
+
     if (ammoIndexData.ContainsKey(levelIndex))
     {
         int[] indexData = ammoIndexData[levelIndex];
 
         int[] offsets = new int[indexData.Length];
 
-        for (int index = 0; index < 10; index++)
+        for (int index = 0; index < 15; index++)
         {
             Array.Copy(indexData, offsets, indexData.Length);
 
