@@ -631,6 +631,8 @@ namespace TRR_SaveMaster
                         CreateBackup();
                     }
 
+                    File.SetAttributes(savegamePath, File.GetAttributes(savegamePath) & ~FileAttributes.ReadOnly);
+
                     TR1.SetSavegamePath(savegamePath);
 
                     TR1.SetSavegameOffset(savegame.Offset);
@@ -660,6 +662,8 @@ namespace TRR_SaveMaster
                     {
                         CreateBackup();
                     }
+
+                    File.SetAttributes(savegamePath, File.GetAttributes(savegamePath) & ~FileAttributes.ReadOnly);
 
                     TR2.SetSavegamePath(savegamePath);
 
@@ -693,6 +697,8 @@ namespace TRR_SaveMaster
                     {
                         CreateBackup();
                     }
+
+                    File.SetAttributes(savegamePath, File.GetAttributes(savegamePath) & ~FileAttributes.ReadOnly);
 
                     TR3.SetSavegamePath(savegamePath);
 
