@@ -95,6 +95,14 @@ namespace TRR_SaveMaster
             return (Int32)(byte1 + (byte2 << 8) + (byte3 << 16) + (byte4 << 24));
         }
 
+        private void WriteInt32(int offset, Int32 value)
+        {
+            WriteByte(offset, (byte)value);
+            WriteByte(offset + 1, (byte)(value >> 8));
+            WriteByte(offset + 2, (byte)(value >> 16));
+            WriteByte(offset + 3, (byte)(value >> 24));
+        }
+
         private byte GetNumSmallMedipacks()
         {
             return ReadByte(savegameOffset + smallMedipackOffset);
@@ -160,6 +168,11 @@ namespace TRR_SaveMaster
         private UInt16 GetHealthValue(int healthOffset)
         {
             return ReadUInt16(healthOffset);
+        }
+
+        private void WriteSaveNumber(Int32 value)
+        {
+            WriteInt32(savegameOffset + saveNumberOffset, value);
         }
 
         private void WriteNumSmallMedipacks(byte value)
@@ -451,8 +464,8 @@ namespace TRR_SaveMaster
 
         public void DisplayGameInfo(CheckBox chkPistols, CheckBox chkMagnums, CheckBox chkUzis,
             CheckBox chkShotgun, NumericUpDown nudSmallMedipacks, NumericUpDown nudLargeMedipacks,
-            NumericUpDown nudUziAmmo, NumericUpDown nudShotgunAmmo, NumericUpDown nudMagnumAmmo, TrackBar trbHealth,
-            Label lblHealth, Label lblHealthError)
+            NumericUpDown nudUziAmmo, NumericUpDown nudShotgunAmmo, NumericUpDown nudMagnumAmmo,
+            NumericUpDown nudSaveNumber, TrackBar trbHealth, Label lblHealth, Label lblHealthError)
         {
             DetermineOffsets();
 
@@ -478,6 +491,7 @@ namespace TRR_SaveMaster
                 chkUzis.Checked = (weaponsConfigNum & Uzis) != 0;
             }
 
+            nudSaveNumber.Value = GetSaveNumber();
             nudSmallMedipacks.Value = GetNumSmallMedipacks();
             nudLargeMedipacks.Value = GetNumLargeMedipacks();
 
@@ -508,10 +522,11 @@ namespace TRR_SaveMaster
         }
 
         public void WriteChanges(CheckBox chkPistols, CheckBox chkMagnums, CheckBox chkUzis,
-            CheckBox chkShotgun, NumericUpDown nudSmallMedipacks, NumericUpDown nudLargeMedipacks,
-            NumericUpDown nudUziAmmo, NumericUpDown nudMagnumAmmo, NumericUpDown nudShotgunAmmo,
-            TrackBar trbHealth)
+            CheckBox chkShotgun, NumericUpDown nudSaveNumber, NumericUpDown nudSmallMedipacks,
+            NumericUpDown nudLargeMedipacks, NumericUpDown nudUziAmmo, NumericUpDown nudMagnumAmmo,
+            NumericUpDown nudShotgunAmmo, TrackBar trbHealth)
         {
+            WriteSaveNumber((Int32)nudSaveNumber.Value);
             WriteNumSmallMedipacks((byte)nudSmallMedipacks.Value);
             WriteNumLargeMedipacks((byte)nudLargeMedipacks.Value);
 
@@ -575,7 +590,7 @@ namespace TRR_SaveMaster
                     Int32 saveNumber = ReadInt32(currentSavegameOffset + saveNumberOffset);
                     byte levelIndex = ReadByte(currentSavegameOffset + levelIndexOffset);
 
-                    if (saveNumber >= 1 && levelIndex >= 1 && levelIndex <= 19)
+                    if (saveNumber >= 0 && levelIndex >= 1 && levelIndex <= 19)
                     {
                         string levelName = levelNames[levelIndex];
                         int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR1) / SAVEGAME_ITERATOR;
@@ -599,7 +614,7 @@ namespace TRR_SaveMaster
                 Int32 saveNumber = GetSaveNumber();
                 byte levelIndex = GetLevelIndex();
 
-                if (saveNumber >= 1 && levelIndex >= 1 && levelIndex <= 19)
+                if (saveNumber >= 0 && levelIndex >= 1 && levelIndex <= 19)
                 {
                     string levelName = levelNames[levelIndex];
                     int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR1) / SAVEGAME_ITERATOR;

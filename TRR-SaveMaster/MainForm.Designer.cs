@@ -143,17 +143,23 @@ namespace TRR_SaveMaster
             this.tsmiEditSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiStatistics = new System.Windows.Forms.ToolStripMenuItem();
             this.tsddbSettings = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsmiPlatform = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiPC = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiPlayStation4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiNintendoSwitch = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiSettingsSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiStatusBar = new System.Windows.Forms.ToolStripMenuItem();
             this.tsddbHelp = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSendFeedback = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiSettingsSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmiPlatform = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiPC = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiPlayStation4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiNintendoSwitch = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblSaveNumberTR1 = new System.Windows.Forms.Label();
+            this.nudSaveNumberTR1 = new System.Windows.Forms.NumericUpDown();
+            this.nudSaveNumberTR2 = new System.Windows.Forms.NumericUpDown();
+            this.lblSaveNumberTR2 = new System.Windows.Forms.Label();
+            this.nudSaveNumberTR3 = new System.Windows.Forms.NumericUpDown();
+            this.lblSaveNumberTR3 = new System.Windows.Forms.Label();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
             this.grpHealthTR1.SuspendLayout();
@@ -197,6 +203,9 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudSmallMedipacksTR3)).BeginInit();
             this.ssrStatusStrip.SuspendLayout();
             this.tsrToolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR3)).BeginInit();
             this.SuspendLayout();
             // 
             // tabGame
@@ -218,6 +227,8 @@ namespace TRR_SaveMaster
             // tpTR1
             // 
             this.tpTR1.BackColor = System.Drawing.Color.White;
+            this.tpTR1.Controls.Add(this.nudSaveNumberTR1);
+            this.tpTR1.Controls.Add(this.lblSaveNumberTR1);
             this.tpTR1.Controls.Add(this.btnRefreshTR1);
             this.tpTR1.Controls.Add(this.lblSavegameTR1);
             this.tpTR1.Controls.Add(this.btnExitTR1);
@@ -515,6 +526,8 @@ namespace TRR_SaveMaster
             // tpTR2
             // 
             this.tpTR2.BackColor = System.Drawing.Color.White;
+            this.tpTR2.Controls.Add(this.nudSaveNumberTR2);
+            this.tpTR2.Controls.Add(this.lblSaveNumberTR2);
             this.tpTR2.Controls.Add(this.btnExitTR2);
             this.tpTR2.Controls.Add(this.btnSaveTR2);
             this.tpTR2.Controls.Add(this.btnCancelTR2);
@@ -917,6 +930,8 @@ namespace TRR_SaveMaster
             // tpTR3
             // 
             this.tpTR3.BackColor = System.Drawing.Color.White;
+            this.tpTR3.Controls.Add(this.nudSaveNumberTR3);
+            this.tpTR3.Controls.Add(this.lblSaveNumberTR3);
             this.tpTR3.Controls.Add(this.btnRefreshTR3);
             this.tpTR3.Controls.Add(this.btnExitTR3);
             this.tpTR3.Controls.Add(this.btnSaveTR3);
@@ -1527,11 +1542,52 @@ namespace TRR_SaveMaster
             this.tsddbSettings.Size = new System.Drawing.Size(53, 22);
             this.tsddbSettings.Text = "Settings";
             // 
+            // tsmiPlatform
+            // 
+            this.tsmiPlatform.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiPC,
+            this.tsmiPlayStation4,
+            this.tsmiNintendoSwitch});
+            this.tsmiPlatform.Name = "tsmiPlatform";
+            this.tsmiPlatform.Size = new System.Drawing.Size(149, 22);
+            this.tsmiPlatform.Text = "Platform";
+            // 
+            // tsmiPC
+            // 
+            this.tsmiPC.Checked = true;
+            this.tsmiPC.CheckOnClick = true;
+            this.tsmiPC.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiPC.Name = "tsmiPC";
+            this.tsmiPC.Size = new System.Drawing.Size(162, 22);
+            this.tsmiPC.Text = "PC";
+            this.tsmiPC.CheckedChanged += new System.EventHandler(this.tsmiPC_CheckedChanged);
+            // 
+            // tsmiPlayStation4
+            // 
+            this.tsmiPlayStation4.CheckOnClick = true;
+            this.tsmiPlayStation4.Name = "tsmiPlayStation4";
+            this.tsmiPlayStation4.Size = new System.Drawing.Size(162, 22);
+            this.tsmiPlayStation4.Text = "PlayStation 4";
+            this.tsmiPlayStation4.CheckedChanged += new System.EventHandler(this.tsmiPlayStation4_CheckedChanged);
+            // 
+            // tsmiNintendoSwitch
+            // 
+            this.tsmiNintendoSwitch.CheckOnClick = true;
+            this.tsmiNintendoSwitch.Name = "tsmiNintendoSwitch";
+            this.tsmiNintendoSwitch.Size = new System.Drawing.Size(162, 22);
+            this.tsmiNintendoSwitch.Text = "Nintendo Switch";
+            this.tsmiNintendoSwitch.CheckedChanged += new System.EventHandler(this.tsmiNintendoSwitch_CheckedChanged);
+            // 
+            // tsmiSettingsSeparator
+            // 
+            this.tsmiSettingsSeparator.Name = "tsmiSettingsSeparator";
+            this.tsmiSettingsSeparator.Size = new System.Drawing.Size(146, 6);
+            // 
             // tsmiAlwaysOnTop
             // 
             this.tsmiAlwaysOnTop.CheckOnClick = true;
             this.tsmiAlwaysOnTop.Name = "tsmiAlwaysOnTop";
-            this.tsmiAlwaysOnTop.Size = new System.Drawing.Size(180, 22);
+            this.tsmiAlwaysOnTop.Size = new System.Drawing.Size(149, 22);
             this.tsmiAlwaysOnTop.Text = "Always on top";
             this.tsmiAlwaysOnTop.Click += new System.EventHandler(this.tsmiAlwaysOnTop_Click);
             // 
@@ -1541,7 +1597,7 @@ namespace TRR_SaveMaster
             this.tsmiStatusBar.CheckOnClick = true;
             this.tsmiStatusBar.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiStatusBar.Name = "tsmiStatusBar";
-            this.tsmiStatusBar.Size = new System.Drawing.Size(180, 22);
+            this.tsmiStatusBar.Size = new System.Drawing.Size(149, 22);
             this.tsmiStatusBar.Text = "Status Bar";
             this.tsmiStatusBar.Click += new System.EventHandler(this.tsmiStatusBar_Click);
             // 
@@ -1581,46 +1637,74 @@ namespace TRR_SaveMaster
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
             // 
-            // tsmiSettingsSeparator
+            // lblSaveNumberTR1
             // 
-            this.tsmiSettingsSeparator.Name = "tsmiSettingsSeparator";
-            this.tsmiSettingsSeparator.Size = new System.Drawing.Size(177, 6);
+            this.lblSaveNumberTR1.AutoSize = true;
+            this.lblSaveNumberTR1.Location = new System.Drawing.Point(22, 18);
+            this.lblSaveNumberTR1.Name = "lblSaveNumberTR1";
+            this.lblSaveNumberTR1.Size = new System.Drawing.Size(75, 13);
+            this.lblSaveNumberTR1.TabIndex = 19;
+            this.lblSaveNumberTR1.Text = "Save Number:";
             // 
-            // tsmiPlatform
+            // nudSaveNumberTR1
             // 
-            this.tsmiPlatform.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiPC,
-            this.tsmiPlayStation4,
-            this.tsmiNintendoSwitch});
-            this.tsmiPlatform.Name = "tsmiPlatform";
-            this.tsmiPlatform.Size = new System.Drawing.Size(180, 22);
-            this.tsmiPlatform.Text = "Platform";
+            this.nudSaveNumberTR1.Location = new System.Drawing.Point(101, 16);
+            this.nudSaveNumberTR1.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudSaveNumberTR1.Name = "nudSaveNumberTR1";
+            this.nudSaveNumberTR1.Size = new System.Drawing.Size(53, 20);
+            this.nudSaveNumberTR1.TabIndex = 19;
+            this.nudSaveNumberTR1.ValueChanged += new System.EventHandler(this.nudSaveNumberTR1_ValueChanged);
+            this.nudSaveNumberTR1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSaveNumberTR1_KeyPress);
             // 
-            // tsmiPC
+            // nudSaveNumberTR2
             // 
-            this.tsmiPC.Checked = true;
-            this.tsmiPC.CheckOnClick = true;
-            this.tsmiPC.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.tsmiPC.Name = "tsmiPC";
-            this.tsmiPC.Size = new System.Drawing.Size(180, 22);
-            this.tsmiPC.Text = "PC";
-            this.tsmiPC.CheckedChanged += new System.EventHandler(this.tsmiPC_CheckedChanged);
+            this.nudSaveNumberTR2.Location = new System.Drawing.Point(101, 16);
+            this.nudSaveNumberTR2.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudSaveNumberTR2.Name = "nudSaveNumberTR2";
+            this.nudSaveNumberTR2.Size = new System.Drawing.Size(53, 20);
+            this.nudSaveNumberTR2.TabIndex = 39;
+            this.nudSaveNumberTR2.ValueChanged += new System.EventHandler(this.nudSaveNumberTR2_ValueChanged);
+            this.nudSaveNumberTR2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSaveNumberTR2_KeyPress);
             // 
-            // tsmiPlayStation4
+            // lblSaveNumberTR2
             // 
-            this.tsmiPlayStation4.CheckOnClick = true;
-            this.tsmiPlayStation4.Name = "tsmiPlayStation4";
-            this.tsmiPlayStation4.Size = new System.Drawing.Size(180, 22);
-            this.tsmiPlayStation4.Text = "PlayStation 4";
-            this.tsmiPlayStation4.CheckedChanged += new System.EventHandler(this.tsmiPlayStation4_CheckedChanged);
+            this.lblSaveNumberTR2.AutoSize = true;
+            this.lblSaveNumberTR2.Location = new System.Drawing.Point(22, 18);
+            this.lblSaveNumberTR2.Name = "lblSaveNumberTR2";
+            this.lblSaveNumberTR2.Size = new System.Drawing.Size(75, 13);
+            this.lblSaveNumberTR2.TabIndex = 40;
+            this.lblSaveNumberTR2.Text = "Save Number:";
             // 
-            // tsmiNintendoSwitch
+            // nudSaveNumberTR3
             // 
-            this.tsmiNintendoSwitch.CheckOnClick = true;
-            this.tsmiNintendoSwitch.Name = "tsmiNintendoSwitch";
-            this.tsmiNintendoSwitch.Size = new System.Drawing.Size(180, 22);
-            this.tsmiNintendoSwitch.Text = "Nintendo Switch";
-            this.tsmiNintendoSwitch.CheckedChanged += new System.EventHandler(this.tsmiNintendoSwitch_CheckedChanged);
+            this.nudSaveNumberTR3.Location = new System.Drawing.Point(101, 16);
+            this.nudSaveNumberTR3.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudSaveNumberTR3.Name = "nudSaveNumberTR3";
+            this.nudSaveNumberTR3.Size = new System.Drawing.Size(53, 20);
+            this.nudSaveNumberTR3.TabIndex = 37;
+            this.nudSaveNumberTR3.ValueChanged += new System.EventHandler(this.nudSaveNumberTR3_ValueChanged);
+            this.nudSaveNumberTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSaveNumberTR3_KeyPress);
+            // 
+            // lblSaveNumberTR3
+            // 
+            this.lblSaveNumberTR3.AutoSize = true;
+            this.lblSaveNumberTR3.Location = new System.Drawing.Point(22, 18);
+            this.lblSaveNumberTR3.Name = "lblSaveNumberTR3";
+            this.lblSaveNumberTR3.Size = new System.Drawing.Size(75, 13);
+            this.lblSaveNumberTR3.TabIndex = 38;
+            this.lblSaveNumberTR3.Text = "Save Number:";
             // 
             // MainForm
             // 
@@ -1697,6 +1781,9 @@ namespace TRR_SaveMaster
             this.ssrStatusStrip.PerformLayout();
             this.tsrToolStrip.ResumeLayout(false);
             this.tsrToolStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1828,6 +1915,12 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.ToolStripMenuItem tsmiPC;
         private System.Windows.Forms.ToolStripMenuItem tsmiPlayStation4;
         private System.Windows.Forms.ToolStripMenuItem tsmiNintendoSwitch;
+        private System.Windows.Forms.NumericUpDown nudSaveNumberTR1;
+        private System.Windows.Forms.Label lblSaveNumberTR1;
+        private System.Windows.Forms.NumericUpDown nudSaveNumberTR2;
+        private System.Windows.Forms.Label lblSaveNumberTR2;
+        private System.Windows.Forms.NumericUpDown nudSaveNumberTR3;
+        private System.Windows.Forms.Label lblSaveNumberTR3;
     }
 }
 

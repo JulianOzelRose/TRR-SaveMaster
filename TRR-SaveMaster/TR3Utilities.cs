@@ -109,6 +109,14 @@ namespace TRR_SaveMaster
             return (Int32)(byte1 + (byte2 << 8) + (byte3 << 16) + (byte4 << 24));
         }
 
+        private void WriteInt32(int offset, Int32 value)
+        {
+            WriteByte(offset, (byte)value);
+            WriteByte(offset + 1, (byte)(value >> 8));
+            WriteByte(offset + 2, (byte)(value >> 16));
+            WriteByte(offset + 3, (byte)(value >> 24));
+        }
+
         private Int32 GetSaveNumber()
         {
             return ReadInt32(savegameOffset + saveNumberOffset);
@@ -209,6 +217,11 @@ namespace TRR_SaveMaster
         private bool IsHarpoonGunPresent()
         {
             return ReadByte(savegameOffset + harpoonGunOffset) != 0;
+        }
+
+        private void WriteSaveNumber(Int32 value)
+        {
+            WriteInt32(savegameOffset + saveNumberOffset, value);
         }
 
         private void WriteNumSmallMedipacks(byte value)
@@ -514,7 +527,7 @@ namespace TRR_SaveMaster
         }
 
         public void DisplayGameInfo(CheckBox chkPistols, CheckBox chkShotgun, CheckBox chkDeagle, CheckBox chkUzi, CheckBox chkMP5,
-            CheckBox chkRocketLauncher, CheckBox chkGrenadeLauncher, CheckBox chkHarpoonGun,
+            CheckBox chkRocketLauncher, CheckBox chkGrenadeLauncher, CheckBox chkHarpoonGun, NumericUpDown nudSaveNumber,
             NumericUpDown nudSmallMedipacks, NumericUpDown nudLargeMedipacks, NumericUpDown nudFlares,
             NumericUpDown nudShotgunAmmo, NumericUpDown nudDeagleAmmo, NumericUpDown nudGrenadeLauncherAmmo,
             NumericUpDown nudRocketLauncherAmmo, NumericUpDown nudHarpoonGunAmmo, NumericUpDown nudMP5Ammo, NumericUpDown nudUziAmmo,
@@ -523,6 +536,7 @@ namespace TRR_SaveMaster
         {
             DetermineOffsets();
 
+            nudSaveNumber.Value = GetSaveNumber();
             nudSmallMedipacks.Value = GetNumSmallMedipacks();
             nudLargeMedipacks.Value = GetNumLargeMedipacks();
             nudFlares.Value = GetNumFlares();
@@ -607,13 +621,14 @@ namespace TRR_SaveMaster
 
         public void WriteChanges(CheckBox chkPistols, CheckBox chkDeagle, CheckBox chkUzi, CheckBox chkShotgun,
             CheckBox chkMP5, CheckBox chkRocketLauncher, CheckBox chkGrenadeLauncher, CheckBox chkHarpoonGun,
-            NumericUpDown nudFlares, NumericUpDown nudSmallMedipacks, NumericUpDown nudLargeMedipacks,
-            NumericUpDown nudShotgunAmmo, NumericUpDown nudDeagleAmmo, NumericUpDown nudGrenadeLauncherAmmo,
-            NumericUpDown nudRocketLauncherAmmo, NumericUpDown nudHarpoonGunAmmo, NumericUpDown nudMP5Ammo,
-            NumericUpDown nudUziAmmo, TrackBar trbHealth, NumericUpDown nudCollectibleCrystals)
+            NumericUpDown nudSaveNumber, NumericUpDown nudFlares, NumericUpDown nudSmallMedipacks,
+            NumericUpDown nudLargeMedipacks, NumericUpDown nudShotgunAmmo, NumericUpDown nudDeagleAmmo,
+            NumericUpDown nudGrenadeLauncherAmmo, NumericUpDown nudRocketLauncherAmmo, NumericUpDown nudHarpoonGunAmmo,
+            NumericUpDown nudMP5Ammo, NumericUpDown nudUziAmmo, TrackBar trbHealth, NumericUpDown nudCollectibleCrystals)
         {
             DetermineOffsets();
 
+            WriteSaveNumber((Int32)nudSaveNumber.Value);
             WriteNumFlares((byte)nudFlares.Value);
             WriteNumSmallMedipacks((byte)nudSmallMedipacks.Value);
             WriteNumLargeMedipacks((byte)nudLargeMedipacks.Value);
@@ -868,7 +883,7 @@ namespace TRR_SaveMaster
                     Int32 saveNumber = ReadInt32(currentSavegameOffset + saveNumberOffset);
                     byte levelIndex = ReadByte(currentSavegameOffset + levelIndexOffset);
 
-                    if (saveNumber >= 1 && levelIndex >= 1 && levelIndex <= 26)
+                    if (saveNumber >= 0 && levelIndex >= 1 && levelIndex <= 26)
                     {
                         string levelName = levelNames[levelIndex];
                         int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR3) / SAVEGAME_ITERATOR;
@@ -892,7 +907,7 @@ namespace TRR_SaveMaster
                 Int32 saveNumber = GetSaveNumber();
                 byte levelIndex = GetLevelIndex();
 
-                if (saveNumber >= 1 && levelIndex >= 1 && levelIndex <= 26)
+                if (saveNumber >= 0 && levelIndex >= 1 && levelIndex <= 26)
                 {
                     string levelName = levelNames[levelIndex];
                     int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR3) / SAVEGAME_ITERATOR;
