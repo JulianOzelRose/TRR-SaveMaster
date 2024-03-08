@@ -46,18 +46,8 @@ namespace TRR_SaveMaster
         private void StatisticsForm_Load(object sender, EventArgs e)
         {
             DetermineOffsets();
-
-            try
-            {
-                SetParams();
-                DisplayStatistics();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                slblStatus.Text = $"Error loading savegame statistics.";
-                this.Close();
-            }
+            SetParams();
+            DisplayStatistics();
         }
 
         private void StatisticsForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -126,7 +116,6 @@ namespace TRR_SaveMaster
                 nudPickups.Maximum = nudPickupsMax.Value;
 
                 nudCrystalsFound.Enabled = false;
-                nudCrystalsFound.Value = 0;
             }
             else if (SELECTED_TAB == TAB_TR2)
             {
@@ -137,7 +126,6 @@ namespace TRR_SaveMaster
                 nudPickups.Maximum = nudPickupsMax.Value;
 
                 nudCrystalsFound.Enabled = false;
-                nudCrystalsFound.Value = 0;
             }
             else if (SELECTED_TAB == TAB_TR3)
             {
@@ -148,7 +136,6 @@ namespace TRR_SaveMaster
                 nudPickups.Maximum = nudPickupsMax.Value;
 
                 nudCrystalsFound.Enabled = true;
-                nudCrystalsFound.Value = GetNumCrystalsFound();
             }
         }
 
@@ -156,19 +143,32 @@ namespace TRR_SaveMaster
         {
             isLoading = true;
 
-            nudSecretsFound.Value = GetNumSecretsFound();
-            nudPickups.Value = GetNumPickups();
-            nudKills.Value = GetNumKills();
-            nudAmmoUsed.Value = GetAmmoUsed();
-            nudHits.Value = GetNumHits();
-            nudMedipacksUsed.Value = (decimal)GetNumMedipacksUsed() / 2;
-
-            DisplayDistanceTravelled();
-            DisplayTimeTaken();
-
-            if (SELECTED_TAB == TAB_TR3)
+            try
             {
-                nudCrystalsFound.Value = GetNumCrystalsFound();
+                nudSecretsFound.Value = GetNumSecretsFound();
+                nudPickups.Value = GetNumPickups();
+                nudKills.Value = GetNumKills();
+                nudAmmoUsed.Value = GetAmmoUsed();
+                nudHits.Value = GetNumHits();
+                nudMedipacksUsed.Value = (decimal)GetNumMedipacksUsed() / 2;
+
+                DisplayDistanceTravelled();
+                DisplayTimeTaken();
+
+                if (SELECTED_TAB == TAB_TR3)
+                {
+                    nudCrystalsFound.Value = GetNumCrystalsFound();
+                }
+                else
+                {
+                    nudCrystalsFound.Value = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                slblStatus.Text = $"Error loading savegame statistics.";
+                this.Close();
             }
 
             isLoading = false;
