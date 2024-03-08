@@ -2,9 +2,9 @@
 This is a savegame editor for Tomb Raider I-III Remastered. It works on all levels, including bonus levels. You can edit health, weapons, ammunition and statistics.
 Compatible with PC, PS4, and Nintendo Switch savegames. For instructions on how to download and use this savegame editor, scroll down to
 the section below. Additionally, technical details on reverse engineering the Tomb Raider I-III Remastered series are included on later on in this README.
-For a tool that allows you to transfer individual savegames from one file to another and convert to PC/PS4/Nintendo Switch, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
+For a tool that allows you to transfer individual savegames from one file to another and convert them to PC, PS4, and Nintendo Switch format, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
-![TRR-SaveMaster-UI](https://github.com/JulianOzelRose/TRR-SaveMaster/assets/95890436/246596cf-a384-42b1-b3e8-cc0630985c7d)
+![TRR-SaveMaster-UI](https://github.com/JulianOzelRose/TRR-SaveMaster/assets/95890436/e108c9ca-b2bf-4598-982c-c437144f0efe)
 
 ## Installation and use
 To download this savegame editor, simply navigate to the [Release](https://github.com/JulianOzelRose/TRR-SaveMaster/tree/master/TRR-SaveMaster/bin/x64/Release) folder,
@@ -43,7 +43,7 @@ See the table below.
 
 There is a consistent difference of 0x3800 between each savegame, so that value can be used as an iterator when cycling through savegames. When a savegame slot
 is empty, the space will be occupied by null padding. There are a number of ways to check if a savegame is present in the slot. One way is to check if the
-level index falls within a valid range for the game, and if the save number is not equal to 0. See the example below.
+level index falls within a valid range for the game. See the example below.
 
 ```
 for (int i = 0; i < 32; i++)
@@ -54,7 +54,7 @@ for (int i = 0; i < 32; i++)
     Int32 saveNumber = GetSaveNumber();
     byte levelIndex = GetLevelIndex();
 
-    if (saveNumber >= 1 && levelIndex >= 1 && levelIndex <= 19)
+    if (saveNumber >= 0 && levelIndex >= 1 && levelIndex <= 19)
     {
         string levelName = levelNames[levelIndex];
         int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR1) / SAVEGAME_ITERATOR;
