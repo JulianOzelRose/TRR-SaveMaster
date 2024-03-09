@@ -888,8 +888,22 @@ namespace TRR_SaveMaster
                         string levelName = levelNames[levelIndex];
                         int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR3) / SAVEGAME_ITERATOR;
 
-                        Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName);
-                        cmbSavegames.Items.Add(savegame);
+                        bool savegameExists = false;
+
+                        foreach (Savegame existingSavegame in cmbSavegames.Items)
+                        {
+                            if (existingSavegame.Slot == slot)
+                            {
+                                savegameExists = true;
+                                break;
+                            }
+                        }
+
+                        if (!savegameExists)
+                        {
+                            Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName);
+                            cmbSavegames.Items.Add(savegame);
+                        }
                     }
                 }
             }
