@@ -1052,15 +1052,15 @@ namespace TRR_SaveMaster
             StatisticsForm statisticsForm = new StatisticsForm(slblStatus, savegamePath, tabGame.SelectedIndex);
             Savegame selectedSavegame = null;
 
-            if (tabGame.SelectedIndex == TAB_TR1)
+            if (tabGame.SelectedIndex == TAB_TR1 && cmbSavegamesTR1.SelectedIndex != -1)
             {
                 selectedSavegame = cmbSavegamesTR1.Items[cmbSavegamesTR1.SelectedIndex] as Savegame;
             }
-            else if (tabGame.SelectedIndex == TAB_TR2)
+            else if (tabGame.SelectedIndex == TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1)
             {
                 selectedSavegame = cmbSavegamesTR2.Items[cmbSavegamesTR2.SelectedIndex] as Savegame;
             }
-            else if (tabGame.SelectedIndex == TAB_TR3)
+            else if (tabGame.SelectedIndex == TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1)
             {
                 selectedSavegame = cmbSavegamesTR3.Items[cmbSavegamesTR3.SelectedIndex] as Savegame;
             }
