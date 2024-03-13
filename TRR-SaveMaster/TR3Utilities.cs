@@ -187,7 +187,7 @@ namespace TRR_SaveMaster
             return ReadUInt16(savegameOffset + rocketLauncherAmmoOffset);
         }
 
-        private int GetHealthOffset()
+        public int GetHealthOffset()
         {
             for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset += 0x1A)
             {

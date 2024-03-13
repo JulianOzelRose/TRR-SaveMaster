@@ -32,6 +32,8 @@ namespace TRR_SaveMaster
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabGame = new System.Windows.Forms.TabControl();
             this.tpTR1 = new System.Windows.Forms.TabPage();
+            this.nudSaveNumberTR1 = new System.Windows.Forms.NumericUpDown();
+            this.lblSaveNumberTR1 = new System.Windows.Forms.Label();
             this.btnRefreshTR1 = new System.Windows.Forms.Button();
             this.lblSavegameTR1 = new System.Windows.Forms.Label();
             this.btnExitTR1 = new System.Windows.Forms.Button();
@@ -57,6 +59,8 @@ namespace TRR_SaveMaster
             this.chkUzisTR1 = new System.Windows.Forms.CheckBox();
             this.chkPistolsTR1 = new System.Windows.Forms.CheckBox();
             this.tpTR2 = new System.Windows.Forms.TabPage();
+            this.nudSaveNumberTR2 = new System.Windows.Forms.NumericUpDown();
+            this.lblSaveNumberTR2 = new System.Windows.Forms.Label();
             this.btnExitTR2 = new System.Windows.Forms.Button();
             this.btnSaveTR2 = new System.Windows.Forms.Button();
             this.btnCancelTR2 = new System.Windows.Forms.Button();
@@ -90,6 +94,8 @@ namespace TRR_SaveMaster
             this.nudLargeMedipacksTR2 = new System.Windows.Forms.NumericUpDown();
             this.nudSmallMedipacksTR2 = new System.Windows.Forms.NumericUpDown();
             this.tpTR3 = new System.Windows.Forms.TabPage();
+            this.nudSaveNumberTR3 = new System.Windows.Forms.NumericUpDown();
+            this.lblSaveNumberTR3 = new System.Windows.Forms.Label();
             this.btnRefreshTR3 = new System.Windows.Forms.Button();
             this.btnExitTR3 = new System.Windows.Forms.Button();
             this.btnSaveTR3 = new System.Windows.Forms.Button();
@@ -142,6 +148,7 @@ namespace TRR_SaveMaster
             this.tsmiSetMaximumItems = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEditSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiStatistics = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiPosition = new System.Windows.Forms.ToolStripMenuItem();
             this.tsddbSettings = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiPlatform = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPC = new System.Windows.Forms.ToolStripMenuItem();
@@ -154,14 +161,9 @@ namespace TRR_SaveMaster
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSendFeedback = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblSaveNumberTR1 = new System.Windows.Forms.Label();
-            this.nudSaveNumberTR1 = new System.Windows.Forms.NumericUpDown();
-            this.nudSaveNumberTR2 = new System.Windows.Forms.NumericUpDown();
-            this.lblSaveNumberTR2 = new System.Windows.Forms.Label();
-            this.nudSaveNumberTR3 = new System.Windows.Forms.NumericUpDown();
-            this.lblSaveNumberTR3 = new System.Windows.Forms.Label();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR1)).BeginInit();
             this.grpHealthTR1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trbHealthTR1)).BeginInit();
             this.grpItemsTR1.SuspendLayout();
@@ -172,6 +174,7 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudMagnumAmmoTR1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudUziAmmoTR1)).BeginInit();
             this.tpTR2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR2)).BeginInit();
             this.grpWeaponsTR2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudShotgunAmmoTR2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudUziAmmoTR2)).BeginInit();
@@ -186,6 +189,7 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudLargeMedipacksTR2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSmallMedipacksTR2)).BeginInit();
             this.tpTR3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR3)).BeginInit();
             this.grpWeaponsTR3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudShotgunAmmoTR3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudUziAmmoTR3)).BeginInit();
@@ -203,9 +207,6 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudSmallMedipacksTR3)).BeginInit();
             this.ssrStatusStrip.SuspendLayout();
             this.tsrToolStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR3)).BeginInit();
             this.SuspendLayout();
             // 
             // tabGame
@@ -244,6 +245,29 @@ namespace TRR_SaveMaster
             this.tpTR1.Size = new System.Drawing.Size(713, 316);
             this.tpTR1.TabIndex = 0;
             this.tpTR1.Text = "Tomb Raider I";
+            // 
+            // nudSaveNumberTR1
+            // 
+            this.nudSaveNumberTR1.Location = new System.Drawing.Point(101, 16);
+            this.nudSaveNumberTR1.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudSaveNumberTR1.Name = "nudSaveNumberTR1";
+            this.nudSaveNumberTR1.Size = new System.Drawing.Size(53, 20);
+            this.nudSaveNumberTR1.TabIndex = 19;
+            this.nudSaveNumberTR1.ValueChanged += new System.EventHandler(this.nudSaveNumberTR1_ValueChanged);
+            this.nudSaveNumberTR1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSaveNumberTR1_KeyPress);
+            // 
+            // lblSaveNumberTR1
+            // 
+            this.lblSaveNumberTR1.AutoSize = true;
+            this.lblSaveNumberTR1.Location = new System.Drawing.Point(22, 18);
+            this.lblSaveNumberTR1.Name = "lblSaveNumberTR1";
+            this.lblSaveNumberTR1.Size = new System.Drawing.Size(75, 13);
+            this.lblSaveNumberTR1.TabIndex = 19;
+            this.lblSaveNumberTR1.Text = "Save Number:";
             // 
             // btnRefreshTR1
             // 
@@ -542,6 +566,29 @@ namespace TRR_SaveMaster
             this.tpTR2.Size = new System.Drawing.Size(713, 316);
             this.tpTR2.TabIndex = 2;
             this.tpTR2.Text = "Tomb Raider II";
+            // 
+            // nudSaveNumberTR2
+            // 
+            this.nudSaveNumberTR2.Location = new System.Drawing.Point(101, 16);
+            this.nudSaveNumberTR2.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudSaveNumberTR2.Name = "nudSaveNumberTR2";
+            this.nudSaveNumberTR2.Size = new System.Drawing.Size(53, 20);
+            this.nudSaveNumberTR2.TabIndex = 39;
+            this.nudSaveNumberTR2.ValueChanged += new System.EventHandler(this.nudSaveNumberTR2_ValueChanged);
+            this.nudSaveNumberTR2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSaveNumberTR2_KeyPress);
+            // 
+            // lblSaveNumberTR2
+            // 
+            this.lblSaveNumberTR2.AutoSize = true;
+            this.lblSaveNumberTR2.Location = new System.Drawing.Point(22, 18);
+            this.lblSaveNumberTR2.Name = "lblSaveNumberTR2";
+            this.lblSaveNumberTR2.Size = new System.Drawing.Size(75, 13);
+            this.lblSaveNumberTR2.TabIndex = 40;
+            this.lblSaveNumberTR2.Text = "Save Number:";
             // 
             // btnExitTR2
             // 
@@ -946,6 +993,29 @@ namespace TRR_SaveMaster
             this.tpTR3.Size = new System.Drawing.Size(713, 316);
             this.tpTR3.TabIndex = 4;
             this.tpTR3.Text = "Tomb Raider III";
+            // 
+            // nudSaveNumberTR3
+            // 
+            this.nudSaveNumberTR3.Location = new System.Drawing.Point(101, 16);
+            this.nudSaveNumberTR3.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudSaveNumberTR3.Name = "nudSaveNumberTR3";
+            this.nudSaveNumberTR3.Size = new System.Drawing.Size(53, 20);
+            this.nudSaveNumberTR3.TabIndex = 37;
+            this.nudSaveNumberTR3.ValueChanged += new System.EventHandler(this.nudSaveNumberTR3_ValueChanged);
+            this.nudSaveNumberTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSaveNumberTR3_KeyPress);
+            // 
+            // lblSaveNumberTR3
+            // 
+            this.lblSaveNumberTR3.AutoSize = true;
+            this.lblSaveNumberTR3.Location = new System.Drawing.Point(22, 18);
+            this.lblSaveNumberTR3.Name = "lblSaveNumberTR3";
+            this.lblSaveNumberTR3.Size = new System.Drawing.Size(75, 13);
+            this.lblSaveNumberTR3.TabIndex = 38;
+            this.lblSaveNumberTR3.Text = "Save Number:";
             // 
             // btnRefreshTR3
             // 
@@ -1481,7 +1551,8 @@ namespace TRR_SaveMaster
             this.tsmiSetMaximumAmmunition,
             this.tsmiSetMaximumItems,
             this.tsmiEditSeparator,
-            this.tsmiStatistics});
+            this.tsmiStatistics,
+            this.tsmiPosition});
             this.tsddbEdit.Image = ((System.Drawing.Image)(resources.GetObject("tsddbEdit.Image")));
             this.tsddbEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsddbEdit.Name = "tsddbEdit";
@@ -1525,6 +1596,14 @@ namespace TRR_SaveMaster
             this.tsmiStatistics.Size = new System.Drawing.Size(217, 22);
             this.tsmiStatistics.Text = "Statistics";
             this.tsmiStatistics.Click += new System.EventHandler(this.tsmiStatistics_Click);
+            // 
+            // tsmiPosition
+            // 
+            this.tsmiPosition.Enabled = false;
+            this.tsmiPosition.Name = "tsmiPosition";
+            this.tsmiPosition.Size = new System.Drawing.Size(217, 22);
+            this.tsmiPosition.Text = "Position";
+            this.tsmiPosition.Click += new System.EventHandler(this.tsmiPosition_Click);
             // 
             // tsddbSettings
             // 
@@ -1637,75 +1716,6 @@ namespace TRR_SaveMaster
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
             // 
-            // lblSaveNumberTR1
-            // 
-            this.lblSaveNumberTR1.AutoSize = true;
-            this.lblSaveNumberTR1.Location = new System.Drawing.Point(22, 18);
-            this.lblSaveNumberTR1.Name = "lblSaveNumberTR1";
-            this.lblSaveNumberTR1.Size = new System.Drawing.Size(75, 13);
-            this.lblSaveNumberTR1.TabIndex = 19;
-            this.lblSaveNumberTR1.Text = "Save Number:";
-            // 
-            // nudSaveNumberTR1
-            // 
-            this.nudSaveNumberTR1.Location = new System.Drawing.Point(101, 16);
-            this.nudSaveNumberTR1.Maximum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            0});
-            this.nudSaveNumberTR1.Name = "nudSaveNumberTR1";
-            this.nudSaveNumberTR1.Size = new System.Drawing.Size(53, 20);
-            this.nudSaveNumberTR1.TabIndex = 19;
-            this.nudSaveNumberTR1.ValueChanged += new System.EventHandler(this.nudSaveNumberTR1_ValueChanged);
-            this.nudSaveNumberTR1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSaveNumberTR1_KeyPress);
-            // 
-            // nudSaveNumberTR2
-            // 
-            this.nudSaveNumberTR2.Location = new System.Drawing.Point(101, 16);
-            this.nudSaveNumberTR2.Maximum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            0});
-            this.nudSaveNumberTR2.Name = "nudSaveNumberTR2";
-            this.nudSaveNumberTR2.Size = new System.Drawing.Size(53, 20);
-            this.nudSaveNumberTR2.TabIndex = 39;
-            this.nudSaveNumberTR2.ValueChanged += new System.EventHandler(this.nudSaveNumberTR2_ValueChanged);
-            this.nudSaveNumberTR2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSaveNumberTR2_KeyPress);
-            // 
-            // lblSaveNumberTR2
-            // 
-            this.lblSaveNumberTR2.AutoSize = true;
-            this.lblSaveNumberTR2.Location = new System.Drawing.Point(22, 18);
-            this.lblSaveNumberTR2.Name = "lblSaveNumberTR2";
-            this.lblSaveNumberTR2.Size = new System.Drawing.Size(75, 13);
-            this.lblSaveNumberTR2.TabIndex = 40;
-            this.lblSaveNumberTR2.Text = "Save Number:";
-            // 
-            // nudSaveNumberTR3
-            // 
-            this.nudSaveNumberTR3.Location = new System.Drawing.Point(101, 16);
-            this.nudSaveNumberTR3.Maximum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            0});
-            this.nudSaveNumberTR3.Name = "nudSaveNumberTR3";
-            this.nudSaveNumberTR3.Size = new System.Drawing.Size(53, 20);
-            this.nudSaveNumberTR3.TabIndex = 37;
-            this.nudSaveNumberTR3.ValueChanged += new System.EventHandler(this.nudSaveNumberTR3_ValueChanged);
-            this.nudSaveNumberTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSaveNumberTR3_KeyPress);
-            // 
-            // lblSaveNumberTR3
-            // 
-            this.lblSaveNumberTR3.AutoSize = true;
-            this.lblSaveNumberTR3.Location = new System.Drawing.Point(22, 18);
-            this.lblSaveNumberTR3.Name = "lblSaveNumberTR3";
-            this.lblSaveNumberTR3.Size = new System.Drawing.Size(75, 13);
-            this.lblSaveNumberTR3.TabIndex = 38;
-            this.lblSaveNumberTR3.Text = "Save Number:";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1727,6 +1737,7 @@ namespace TRR_SaveMaster
             this.tabGame.ResumeLayout(false);
             this.tpTR1.ResumeLayout(false);
             this.tpTR1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR1)).EndInit();
             this.grpHealthTR1.ResumeLayout(false);
             this.grpHealthTR1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trbHealthTR1)).EndInit();
@@ -1741,6 +1752,7 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudUziAmmoTR1)).EndInit();
             this.tpTR2.ResumeLayout(false);
             this.tpTR2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR2)).EndInit();
             this.grpWeaponsTR2.ResumeLayout(false);
             this.grpWeaponsTR2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudShotgunAmmoTR2)).EndInit();
@@ -1759,6 +1771,7 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudSmallMedipacksTR2)).EndInit();
             this.tpTR3.ResumeLayout(false);
             this.tpTR3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR3)).EndInit();
             this.grpWeaponsTR3.ResumeLayout(false);
             this.grpWeaponsTR3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudShotgunAmmoTR3)).EndInit();
@@ -1781,9 +1794,6 @@ namespace TRR_SaveMaster
             this.ssrStatusStrip.PerformLayout();
             this.tsrToolStrip.ResumeLayout(false);
             this.tsrToolStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1921,6 +1931,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.Label lblSaveNumberTR2;
         private System.Windows.Forms.NumericUpDown nudSaveNumberTR3;
         private System.Windows.Forms.Label lblSaveNumberTR3;
+        private System.Windows.Forms.ToolStripMenuItem tsmiPosition;
     }
 }
 

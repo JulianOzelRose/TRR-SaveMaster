@@ -44,6 +44,7 @@ namespace TRR_SaveMaster
             tsmiSetMaximumAmmunition.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
             tsmiSetMaximumItems.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
             tsmiStatistics.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
+            tsmiPosition.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
 
             if (!string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath))
             {
@@ -239,6 +240,7 @@ namespace TRR_SaveMaster
                     tsmiSetMaximumAmmunition.Enabled = true;
                     tsmiSetMaximumItems.Enabled = true;
                     tsmiStatistics.Enabled = true;
+                    tsmiPosition.Enabled = true;
 
                     tsmiCreateBackup.Enabled = true;
                     tsmiBackupBeforeSaving.Enabled = true;
@@ -1070,6 +1072,66 @@ namespace TRR_SaveMaster
                 statisticsForm.SetSavegame(selectedSavegame);
                 statisticsForm.TopMost = TopMost;
                 statisticsForm.ShowDialog();
+            }
+        }
+
+        private void tsmiPosition_Click(object sender, EventArgs e)
+        {
+            PositionForm positionForm = new PositionForm(slblStatus, tsmiBackupBeforeSaving.Checked,
+                savegamePath, tabGame.SelectedIndex);
+
+            Savegame selectedSavegame = null;
+
+            string errorMessage = $"Unable to find coordinates. Try saving the game with Lara standing.";
+
+            if (tabGame.SelectedIndex == TAB_TR1 && cmbSavegamesTR1.SelectedIndex != -1)
+            {
+                selectedSavegame = cmbSavegamesTR1.Items[cmbSavegamesTR1.SelectedIndex] as Savegame;
+
+                int healthOffset = TR1.GetHealthOffset();
+
+                if (healthOffset == -1)
+                {
+                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                positionForm.SetHealthOffset(healthOffset - selectedSavegame.Offset);
+            }
+            else if (tabGame.SelectedIndex == TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1)
+            {
+                selectedSavegame = cmbSavegamesTR2.Items[cmbSavegamesTR2.SelectedIndex] as Savegame;
+
+                int healthOffset = TR2.GetHealthOffset();
+
+                if (healthOffset == -1)
+                {
+                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                positionForm.SetHealthOffset(healthOffset - selectedSavegame.Offset);
+            }
+            else if (tabGame.SelectedIndex == TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1)
+            {
+                selectedSavegame = cmbSavegamesTR3.Items[cmbSavegamesTR3.SelectedIndex] as Savegame;
+
+                int healthOffset = TR3.GetHealthOffset();
+
+                if (healthOffset == -1)
+                {
+                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                positionForm.SetHealthOffset(healthOffset - selectedSavegame.Offset);
+            }
+
+            if (selectedSavegame != null)
+            {
+                positionForm.SetSavegame(selectedSavegame);
+                positionForm.TopMost = TopMost;
+                positionForm.ShowDialog();
             }
         }
 

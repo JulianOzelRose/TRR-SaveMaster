@@ -143,7 +143,7 @@ namespace TRR_SaveMaster
             return ReadUInt16(savegameOffset + shotgunAmmoOffset);
         }
 
-        private int GetHealthOffset()
+        public int GetHealthOffset()
         {
             for (int i = 0; i < healthOffsets.Count; i++)
             {
