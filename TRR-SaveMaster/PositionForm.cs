@@ -45,6 +45,7 @@ namespace TRR_SaveMaster
         {
             DetermineOffsets();
             DisplayCoordinates();
+            EnableEndOfLevelButtonConditionally();
         }
 
         private void PositionForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -127,28 +128,43 @@ namespace TRR_SaveMaster
 
         private void btnEndOfLevel_Click(object sender, EventArgs e)
         {
+            byte levelIndex = GetLevelIndex();
             Int32[] endOfLevelCoordinates = new Int32[4];
 
             if (SELECTED_TAB == TAB_TR1)
             {
-                byte levelIndex = GetLevelIndex();
                 endOfLevelCoordinates = endOfLevelCoordinatesTR1[levelIndex];
             }
             else if (SELECTED_TAB == TAB_TR2)
             {
-                //byte levelIndex = GetLevelIndex();
-                //endOfLevelCoordinates = endOfLevelCoordinatesTR2[levelIndex];
+                endOfLevelCoordinates = endOfLevelCoordinatesTR2[levelIndex];
             }
             else if (SELECTED_TAB == TAB_TR3)
             {
-                //byte levelIndex = GetLevelIndex();
-                //endOfLevelCoordinates = endOfLevelCoordinatesTR3[levelIndex];
+                endOfLevelCoordinates = endOfLevelCoordinatesTR3[levelIndex];
             }
 
             nudXCoordinate.Value = endOfLevelCoordinates[0];
             nudYCoordinate.Value = endOfLevelCoordinates[1];
             nudZCoordinate.Value = endOfLevelCoordinates[2];
             nudDirection.Value = (byte)endOfLevelCoordinates[3];
+        }
+
+        private void EnableEndOfLevelButtonConditionally()
+        {
+            if (SELECTED_TAB == TAB_TR1)
+            {
+                btnEndOfLevel.Enabled = true;
+            }
+            else if (SELECTED_TAB == TAB_TR2)
+            {
+                byte levelIndex = GetLevelIndex();
+                btnEndOfLevel.Enabled = (levelIndex != 2 && levelIndex != 18 && levelIndex != 22 && levelIndex != 23);
+            }
+            else if (SELECTED_TAB == TAB_TR3)
+            {
+                btnEndOfLevel.Enabled = false;
+            }
         }
 
         private void ConfirmChanges()
@@ -188,10 +204,40 @@ namespace TRR_SaveMaster
             { 19, new Int32[] { 41573, 11264, 43109, 9      } },    // The Hive
         };
 
+        private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR2 = new Dictionary<byte, Int32[]>
+        {
+            { 1,  new Int32[] { 88689, 20480, 68958, 65      } },   // The Great Wall
+            { 2,  new Int32[] { 63246, 768, 48965, 148       } },   // Venice (need to find a good end-of-level coordinate set)
+            { 3,  new Int32[] { 40544, -1024, 37470, 138     } },   // Bartoli's Hideout
+            { 4,  new Int32[] { 53514, 6912, 49394, 121      } },   // Opera House
+            { 5,  new Int32[] { 38438, -256, 27539, 70       } },   // Offshore Rig
+            { 6,  new Int32[] { 56032, 3072, 61923, 76       } },   // Diving Area
+            { 7,  new Int32[] { 81295, -3584, 46423, 50      } },   // 40 Fathoms
+            { 8,  new Int32[] { 69941, 8571, 15852, 89       } },   // Wreck of the Maria Doria
+            { 9,  new Int32[] { 67684, -1818, 35154, 42      } },   // Living Quarters
+            { 10, new Int32[] { 35485, 1792, 15873, 105      } },   // The Deck
+            { 11, new Int32[] { 11722, 15616, 32039, 146     } },   // Tibetan Foothills
+            { 12, new Int32[] { 27388, 768, 22043, 44        } },   // Barkhang Monastery
+            { 13, new Int32[] { 51564, 7936, 65955, 52       } },   // Catacombs of the Talion
+            { 14, new Int32[] { 57937, 9984, 30156, 127      } },   // Ice Palace
+            { 15, new Int32[] { 17027, -24415, 61925, 33     } },   // Temple of Xian
+            { 16, new Int32[] { 21984, -7424, 65024, 40      } },   // Floating Islands
+            { 17, new Int32[] { 51123, -7187, 28285, 22      } },   // The Dragon's Lair
+            { 18, new Int32[] { 56931, 2560, 57466, 1        } },   // Home Sweet Home (there is no "end of level" here)
+            { 19, new Int32[] { 51066, -10239, 21074, 90     } },   // The Cold War
+            { 20, new Int32[] { 1544, 23552, 35616, 58       } },   // Fool's Gold
+            { 21, new Int32[] { 81334, 3584, 80114, 90       } },   // Furnace of the Gods
+            { 22, new Int32[] { 25965, 1792, 55397, 77       } },   // Kingdom (missing level trigger for final boss)
+            { 23, new Int32[] { 49949, -5888, 55394, 44      } },   // Nightmare in Vegas
+        };
+
+        private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR3 = new Dictionary<byte, Int32[]>
+        {
+
+        };
+
         private void DetermineOffsets()
         {
-            btnEndOfLevel.Enabled = (SELECTED_TAB == TAB_TR1);
-
             if (SELECTED_TAB == TAB_TR1)
             {
                 levelIndexOffset = 0x62C;
@@ -211,16 +257,56 @@ namespace TRR_SaveMaster
             directionOffset = healthOffset - 0x10;
         }
 
+        private Int32 GetXCoordinate()
+        {
+            return ReadInt32(savegameOffset + xCoordinateOffset);
+        }
+
+        private Int32 GetYCoordinate()
+        {
+            return ReadInt32(savegameOffset + yCoordinateOffset);
+        }
+
+        private Int32 GetZCoordinate()
+        {
+            return ReadInt32(savegameOffset + zCoordinateOffset);
+        }
+
+        private byte GetDirectionValue()
+        {
+            return ReadByte(savegameOffset + directionOffset);
+        }
+
+        private void WriteXCoordinate(Int32 value)
+        {
+            WriteInt32(savegameOffset + xCoordinateOffset, value);
+        }
+
+        private void WriteYCoordinate(Int32 value)
+        {
+            WriteInt32(savegameOffset + yCoordinateOffset, value);
+        }
+
+        private void WriteZCoordinate(Int32 value)
+        {
+            WriteInt32(savegameOffset + zCoordinateOffset, value);
+        }
+
+        private void WriteDirectionValue(byte value)
+        {
+            WriteByte(savegameOffset + directionOffset, value);
+        }
+
         private void DisplayCoordinates()
         {
             isLoading = true;
 
             try
             {
-                nudXCoordinate.Value = ReadInt32(savegameOffset + xCoordinateOffset);
-                nudYCoordinate.Value = ReadInt32(savegameOffset + yCoordinateOffset);
-                nudZCoordinate.Value = ReadInt32(savegameOffset + zCoordinateOffset);
-                nudDirection.Value = ReadByte(savegameOffset + directionOffset);
+                nudXCoordinate.Value = GetXCoordinate();
+                nudYCoordinate.Value = GetYCoordinate();
+                nudZCoordinate.Value = GetZCoordinate();
+                nudDirection.Value = GetDirectionValue();
             }
             catch (Exception ex)
             {
@@ -243,10 +329,10 @@ namespace TRR_SaveMaster
 
                 File.SetAttributes(savegamePath, File.GetAttributes(savegamePath) & ~FileAttributes.ReadOnly);
 
-                WriteInt32(savegameOffset + xCoordinateOffset, (Int32)nudXCoordinate.Value);
-                WriteInt32(savegameOffset + yCoordinateOffset, (Int32)nudYCoordinate.Value);
-                WriteInt32(savegameOffset + zCoordinateOffset, (Int32)nudZCoordinate.Value);
-                WriteByte(savegameOffset + directionOffset, (byte)nudDirection.Value);
+                WriteXCoordinate((Int32)nudXCoordinate.Value);
+                WriteYCoordinate((Int32)nudYCoordinate.Value);
+                WriteZCoordinate((Int32)nudZCoordinate.Value);
+                WriteDirectionValue((byte)nudDirection.Value);
 
                 DisableButtons();
 
