@@ -523,7 +523,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 8)   // Wreck of the Maria Doria
             {
                 MIN_HEALTH_OFFSET = 0x238E;
-                MAX_HEALTH_OFFSET = 0x23EE;
+                MAX_HEALTH_OFFSET = 0x242A;
             }
             else if (levelIndex == 9)   // Living Quarters
             {
@@ -558,7 +558,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 15)  // Temple of Xian
             {
                 MIN_HEALTH_OFFSET = 0x2A7A;
-                MAX_HEALTH_OFFSET = 0x2AB6;
+                MAX_HEALTH_OFFSET = 0x2AC2;
             }
             else if (levelIndex == 16)  // Floating Islands
             {
