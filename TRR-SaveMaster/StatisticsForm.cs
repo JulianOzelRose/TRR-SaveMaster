@@ -32,13 +32,15 @@ namespace TRR_SaveMaster
         // Misc
         private ToolStripStatusLabel slblStatus;
         private bool isLoading = true;
+        private bool backupBeforeSaving = false;
         private int SELECTED_TAB;
 
-        public StatisticsForm(ToolStripStatusLabel slblStatus, string savegamePath, int SELECTED_TAB)
+        public StatisticsForm(ToolStripStatusLabel slblStatus, bool backupBeforeSaving, string savegamePath, int SELECTED_TAB)
         {
             InitializeComponent();
 
             this.slblStatus = slblStatus;
+            this.backupBeforeSaving = backupBeforeSaving;
             this.savegamePath = savegamePath;
             this.SELECTED_TAB = SELECTED_TAB;
         }
@@ -466,6 +468,25 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void CreateBackup()
+        {
+            if (!string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath))
+            {
+                string directory = Path.GetDirectoryName(savegamePath);
+                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(savegamePath);
+                string fileExtension = Path.GetExtension(savegamePath);
+
+                string backupFilePath = Path.Combine(directory, $"{fileNameWithoutExtension}{fileExtension}.bak");
+
+                if (File.Exists(backupFilePath))
+                {
+                    File.SetAttributes(backupFilePath, File.GetAttributes(backupFilePath) & ~FileAttributes.ReadOnly);
+                }
+
+                File.Copy(savegamePath, backupFilePath, true);
+            }
+        }
+
         private byte GetLevelIndex()
         {
             return ReadByte(savegameOffset + levelIndexOffset);
@@ -600,6 +621,13 @@ namespace TRR_SaveMaster
         {
             try
             {
+                if (backupBeforeSaving)
+                {
+                    CreateBackup();
+                }
+
+                File.SetAttributes(savegamePath, File.GetAttributes(savegamePath) & ~FileAttributes.ReadOnly);
+
                 WriteAmmoUsed((Int32)nudAmmoUsed.Value);
                 WriteNumHits((Int32)nudHits.Value);
                 WriteNumKills((Int32)nudKills.Value);

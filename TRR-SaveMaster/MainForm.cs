@@ -1051,7 +1051,9 @@ namespace TRR_SaveMaster
 
         private void tsmiStatistics_Click(object sender, EventArgs e)
         {
-            StatisticsForm statisticsForm = new StatisticsForm(slblStatus, savegamePath, tabGame.SelectedIndex);
+            StatisticsForm statisticsForm = new StatisticsForm(slblStatus, tsmiBackupBeforeSaving.Checked,
+                savegamePath, tabGame.SelectedIndex);
+
             Savegame selectedSavegame = null;
 
             if (tabGame.SelectedIndex == TAB_TR1 && cmbSavegamesTR1.SelectedIndex != -1)
