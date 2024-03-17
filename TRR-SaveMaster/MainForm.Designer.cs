@@ -324,7 +324,7 @@ namespace TRR_SaveMaster
             // lblHealthTR1
             // 
             this.lblHealthTR1.AutoSize = true;
-            this.lblHealthTR1.Location = new System.Drawing.Point(292, 29);
+            this.lblHealthTR1.Location = new System.Drawing.Point(292, 27);
             this.lblHealthTR1.Name = "lblHealthTR1";
             this.lblHealthTR1.Size = new System.Drawing.Size(30, 13);
             this.lblHealthTR1.TabIndex = 1;
@@ -871,7 +871,7 @@ namespace TRR_SaveMaster
             // lblHealthTR2
             // 
             this.lblHealthTR2.AutoSize = true;
-            this.lblHealthTR2.Location = new System.Drawing.Point(292, 29);
+            this.lblHealthTR2.Location = new System.Drawing.Point(292, 27);
             this.lblHealthTR2.Name = "lblHealthTR2";
             this.lblHealthTR2.Size = new System.Drawing.Size(30, 13);
             this.lblHealthTR2.TabIndex = 1;
@@ -1325,7 +1325,7 @@ namespace TRR_SaveMaster
             // lblHealthTR3
             // 
             this.lblHealthTR3.AutoSize = true;
-            this.lblHealthTR3.Location = new System.Drawing.Point(292, 29);
+            this.lblHealthTR3.Location = new System.Drawing.Point(292, 27);
             this.lblHealthTR3.Name = "lblHealthTR3";
             this.lblHealthTR3.Size = new System.Drawing.Size(30, 13);
             this.lblHealthTR3.TabIndex = 1;
