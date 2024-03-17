@@ -1,15 +1,15 @@
 # Tomb Raider I-III Remastered Savegame Editor
-This is a savegame editor for Tomb Raider I-III Remastered. It works on all levels, including bonus levels. You can edit health, weapons, ammunition, statistics, and Lara's position.
+This is a savegame editor for Tomb Raider I-III Remastered. It works on all levels, including bonus levels. You can edit items, health, weapons, ammunition, statistics, and coordinates.
 Compatible with PC, PS4, and Nintendo Switch savegames. For instructions on how to download and use this savegame editor, scroll down to
 the section below. Additionally, technical details on reverse engineering the Tomb Raider I-III Remastered series are included on later on in this README.
 For a tool that allows you to transfer individual savegames from one file to another and convert them to PC, PS4, and Nintendo Switch format, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
-![TRR-SaveMaster-UI](https://github.com/JulianOzelRose/TRR-SaveMaster/assets/95890436/e108c9ca-b2bf-4598-982c-c437144f0efe)
+![TRR-SaveMaster-UI](https://github.com/JulianOzelRose/TRR-SaveMaster/assets/95890436/5ebcc4b9-ff5c-4303-bcb8-4706c15a1124)
 
 ## Installation and use
-To download this savegame editor, simply navigate to the [Release](https://github.com/JulianOzelRose/TRR-SaveMaster/tree/master/TRR-SaveMaster/bin/x64/Release) folder,
-then download `TRR-SaveMaster.exe`. You can save it anywhere on your computer. Once downloaded, run the file. The editor will then prompt you to select your savegame path,
-click "Yes". Your savegame path should be as follows:
+To download this savegame editor, simply navigate to the [Releases](https://github.com/JulianOzelRose/TRR-SaveMaster/releases) folder,
+then download the .exe file of the latest version. You can save it anywhere on your computer. Once downloaded, open the file.
+The editor will then prompt you to select your savegame path, click "Yes". Your savegame path should be as follows:
 
 `C:\Users\USERNAME\AppData\Roaming\TRX\77777777777777777\savegame.dat`
 
