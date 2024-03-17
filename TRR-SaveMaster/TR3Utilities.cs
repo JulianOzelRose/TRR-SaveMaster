@@ -501,7 +501,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 23)  // Shakespeare Cliff
             {
                 MIN_HEALTH_OFFSET = 0x1338;
-                MAX_HEALTH_OFFSET = 0x1352;
+                MAX_HEALTH_OFFSET = 0x1386;
             }
             else if (levelIndex == 24)  // Sleeping with the Fishes
             {
@@ -511,12 +511,12 @@ namespace TRR_SaveMaster
             else if (levelIndex == 25)  // It's a Madhouse!
             {
                 MIN_HEALTH_OFFSET = 0x1084;
-                MAX_HEALTH_OFFSET = 0x1084;
+                MAX_HEALTH_OFFSET = 0x1106;
             }
             else if (levelIndex == 26)  // Reunion
             {
                 MIN_HEALTH_OFFSET = 0x1810;
-                MAX_HEALTH_OFFSET = 0x1892;
+                MAX_HEALTH_OFFSET = 0x18C6;
             }
 
             if (platform != Platform.PC)
