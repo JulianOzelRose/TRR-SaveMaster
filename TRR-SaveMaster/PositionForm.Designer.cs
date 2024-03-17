@@ -99,8 +99,8 @@ namespace TRR_SaveMaster
             this.picInfoZCoordinate.Size = new System.Drawing.Size(20, 20);
             this.picInfoZCoordinate.TabIndex = 10;
             this.picInfoZCoordinate.TabStop = false;
-            this.tipPosition.SetToolTip(this.picInfoZCoordinate, "Represents depth position in the game world. Increasing moves Lara forwards, decr" +
-        "easing moves her backwards.");
+            this.tipPosition.SetToolTip(this.picInfoZCoordinate, "Represents depth position in game. Increasing moves Lara forwards, decreasing mov" +
+        "es her backwards.");
             // 
             // picInfoYCoordinate
             // 
@@ -121,8 +121,8 @@ namespace TRR_SaveMaster
             this.picInfoXCoordinate.Size = new System.Drawing.Size(20, 20);
             this.picInfoXCoordinate.TabIndex = 8;
             this.picInfoXCoordinate.TabStop = false;
-            this.tipPosition.SetToolTip(this.picInfoXCoordinate, "Represents horizontal position in the game world. Decreasing moves Lara to the le" +
-        "ft, increasing moves her to the right.");
+            this.tipPosition.SetToolTip(this.picInfoXCoordinate, "Represents horizontal position in game. Decreasing moves Lara to the left, increa" +
+        "sing moves her to the right.");
             // 
             // btnEndOfLevel
             // 

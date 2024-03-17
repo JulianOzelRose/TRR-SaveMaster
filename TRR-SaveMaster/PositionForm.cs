@@ -254,6 +254,12 @@ namespace TRR_SaveMaster
             { 18, new Int32[] { 28077, 4608, 38480, 211       } },  // Lost City of Tinnos (too many level triggers to jump to end)
             { 19, new Int32[] { 22709, 0, 27287, 29           } },  // Meteorite Cavern
             { 20, new Int32[] { 33698, 1536, 38769, 6         } },  // All Hallows
+            { 21, new Int32[] { 47664, -5120, 67966, 100      } },  // Highland Fling
+            { 22, new Int32[] { 77238, -3840, 18147, 55       } },  // Willard's Lair
+            { 23, new Int32[] { 87565, 15126, 42498, 104      } },  // Shakespeare Cliff
+            { 24, new Int32[] { 68708, -13568, 41653, 111     } },  // Sleeping with the Fishes
+            { 25, new Int32[] { 94093, 5632, 34368, 133       } },  // It's a Madhouse! (just need Hand of Rathmore from beginning)
+            { 26, new Int32[] { 81708, 5376, 36764, 62        } },  // Reunion
         };
 
         private void DetermineOffsets()
