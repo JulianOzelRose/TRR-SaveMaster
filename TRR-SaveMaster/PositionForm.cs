@@ -131,15 +131,15 @@ namespace TRR_SaveMaster
             byte levelIndex = GetLevelIndex();
             Int32[] endOfLevelCoordinates = new Int32[4];
 
-            if (SELECTED_TAB == TAB_TR1)
+            if (SELECTED_TAB == TAB_TR1 && endOfLevelCoordinatesTR1.ContainsKey(levelIndex))
             {
                 endOfLevelCoordinates = endOfLevelCoordinatesTR1[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR2)
+            else if (SELECTED_TAB == TAB_TR2 && endOfLevelCoordinatesTR2.ContainsKey(levelIndex))
             {
                 endOfLevelCoordinates = endOfLevelCoordinatesTR2[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR3)
+            else if (SELECTED_TAB == TAB_TR3 && endOfLevelCoordinatesTR3.ContainsKey(levelIndex))
             {
                 endOfLevelCoordinates = endOfLevelCoordinatesTR3[levelIndex];
             }
@@ -152,18 +152,19 @@ namespace TRR_SaveMaster
 
         private void EnableEndOfLevelButtonConditionally()
         {
+            byte levelIndex = GetLevelIndex();
+
             if (SELECTED_TAB == TAB_TR1)
             {
                 btnEndOfLevel.Enabled = true;
             }
             else if (SELECTED_TAB == TAB_TR2)
             {
-                byte levelIndex = GetLevelIndex();
-                btnEndOfLevel.Enabled = (levelIndex != 2 && levelIndex != 18 && levelIndex != 22 && levelIndex != 23);
+                btnEndOfLevel.Enabled = endOfLevelCoordinatesTR2.ContainsKey(levelIndex);
             }
             else if (SELECTED_TAB == TAB_TR3)
             {
-                btnEndOfLevel.Enabled = false;
+                btnEndOfLevel.Enabled = endOfLevelCoordinatesTR3.ContainsKey(levelIndex);
             }
         }
 
@@ -207,7 +208,7 @@ namespace TRR_SaveMaster
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR2 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 88689, 20480, 68958, 65      } },   // The Great Wall
-            { 2,  new Int32[] { 63246, 768, 48965, 148       } },   // Venice (need to find a good end-of-level coordinate set)
+            //{ 2,  new Int32[] { 63246, 768, 48965, 148       } }, // Venice (too many level triggers to jump to end)
             { 3,  new Int32[] { 40544, -1024, 37470, 138     } },   // Bartoli's Hideout
             { 4,  new Int32[] { 53514, 6912, 49394, 121      } },   // Opera House
             { 5,  new Int32[] { 38438, -256, 27539, 70       } },   // Offshore Rig
@@ -223,17 +224,36 @@ namespace TRR_SaveMaster
             { 15, new Int32[] { 17027, -24415, 61925, 33     } },   // Temple of Xian
             { 16, new Int32[] { 21984, -7424, 65024, 40      } },   // Floating Islands
             { 17, new Int32[] { 51123, -7187, 28285, 22      } },   // The Dragon's Lair
-            { 18, new Int32[] { 56931, 2560, 57466, 1        } },   // Home Sweet Home (there is no "end of level" here)
+            //{ 18, new Int32[] { 56931, 2560, 57466, 1        } }, // Home Sweet Home (there is no "end of level" here)
             { 19, new Int32[] { 51066, -10239, 21074, 90     } },   // The Cold War
             { 20, new Int32[] { 1544, 23552, 35616, 58       } },   // Fool's Gold
             { 21, new Int32[] { 81334, 3584, 80114, 90       } },   // Furnace of the Gods
-            { 22, new Int32[] { 25965, 1792, 55397, 77       } },   // Kingdom (missing level trigger for final boss)
+            //{ 22, new Int32[] { 25965, 1792, 55397, 77       } }, // Kingdom (missing level trigger for final boss)
             { 23, new Int32[] { 49949, -5888, 55394, 44      } },   // Nightmare in Vegas
         };
 
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR3 = new Dictionary<byte, Int32[]>
         {
-
+            { 1,  new Int32[] { 22951, 23808, 71168, 132      } },  // Jungle
+            { 2,  new Int32[] { 10895, 2304, 70849, 214       } },  // Temple Ruins
+            { 3,  new Int32[] { 43585, 5888, 68146, 167       } },  // The River Ganges
+            { 4,  new Int32[] { 41083, -4864, 52861, 24       } },  // Caves of Kaliya
+            { 5,  new Int32[] { 73241, -5120, 79274, 191      } },  // Costal Village
+            { 6,  new Int32[] { 77776, -1792, 60997, 41       } },  // Crash Site
+            { 7,  new Int32[] { 57195, 13056, 72148, 96       } },  // Madubu Gorge
+            { 8,  new Int32[] { 51739, -8811, 57985, 28       } },  // Temple of Puna
+            { 9,  new Int32[] { 55907, -21504, 45565, 0       } },  // Thames Wharf
+            { 10, new Int32[] { 55028, 2560, 34299, 104       } },  // Aldwych
+            { 11, new Int32[] { 34488, -28160, 48438, 207     } },  // Lud's Gate
+            { 12, new Int32[] { 37989, -12032, 53019, 14      } },  // City
+            { 13, new Int32[] { 47088, -3072, 66099, 113      } },  // Nevada Desert
+            { 14, new Int32[] { 55160, 0, 65196, 96           } },  // High Security Compound
+            { 15, new Int32[] { 44438, -7424, 35311, 18       } },  // Area 51
+            { 16, new Int32[] { 44748, -7168, 60733, 80       } },  // Antarctica
+            { 17, new Int32[] { 9606, 0, 16931, 3             } },  // RX-Tech Mines
+            { 18, new Int32[] { 28077, 4608, 38480, 211       } },  // Lost City of Tinnos (too many level triggers to jump to end)
+            { 19, new Int32[] { 22709, 0, 27287, 29           } },  // Meteorite Cavern
+            { 20, new Int32[] { 33698, 1536, 38769, 6         } },  // All Hallows
         };
 
         private void DetermineOffsets()
