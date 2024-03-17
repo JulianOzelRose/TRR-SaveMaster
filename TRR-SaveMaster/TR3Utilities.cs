@@ -441,7 +441,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 11)  // Lud's Gate
             {
                 MIN_HEALTH_OFFSET = 0xFF0;
-                MAX_HEALTH_OFFSET = 0x100A;
+                MAX_HEALTH_OFFSET = 0x103E;
             }
             else if (levelIndex == 12)  // City
             {
@@ -456,7 +456,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 14)  // High Security Compound
             {
                 MIN_HEALTH_OFFSET = 0xB4C;
-                MAX_HEALTH_OFFSET = 0xB4C;
+                MAX_HEALTH_OFFSET = 0xB66;
             }
             else if (levelIndex == 15)  // Area 51
             {
@@ -471,7 +471,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 17)  // RX-Tech Mines
             {
                 MIN_HEALTH_OFFSET = 0xFB0;
-                MAX_HEALTH_OFFSET = 0xFB0;
+                MAX_HEALTH_OFFSET = 0xFCA;
             }
             else if (levelIndex == 18)  // Lost City of Tinnos
             {
