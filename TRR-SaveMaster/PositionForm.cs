@@ -208,7 +208,7 @@ namespace TRR_SaveMaster
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR2 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 88689, 20480, 68958, 65      } },   // The Great Wall
-            //{ 2,  new Int32[] { 63246, 768, 48965, 148       } }, // Venice (too many level triggers to jump to end)
+            { 2,  new Int32[] { 25184, 251, 78543, 154       } },   // Venice
             { 3,  new Int32[] { 40544, -1024, 37470, 138     } },   // Bartoli's Hideout
             { 4,  new Int32[] { 53514, 6912, 49394, 121      } },   // Opera House
             { 5,  new Int32[] { 38438, -256, 27539, 70       } },   // Offshore Rig
