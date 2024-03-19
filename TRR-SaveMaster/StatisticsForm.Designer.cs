@@ -356,7 +356,7 @@ namespace TRR_SaveMaster
             // 
             this.nudCrystalsFound.Location = new System.Drawing.Point(150, 75);
             this.nudCrystalsFound.Maximum = new decimal(new int[] {
-            255,
+            2147483647,
             0,
             0,
             0});

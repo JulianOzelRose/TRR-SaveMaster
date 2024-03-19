@@ -551,9 +551,9 @@ namespace TRR_SaveMaster
             return ReadInt8(savegameOffset + medipacksUsedOffset);
         }
 
-        private byte GetNumCrystalsFound()
+        private Int32 GetNumCrystalsFound()
         {
-            return ReadByte(savegameOffset + crystalsFoundOffset);
+            return ReadInt32(savegameOffset + crystalsFoundOffset);
         }
 
         private void WriteAmmoUsed(Int32 value)
@@ -593,9 +593,9 @@ namespace TRR_SaveMaster
             WriteInt8(savegameOffset + medipacksUsedOffset, value);
         }
 
-        private void WriteNumCrystalsFound(byte value)
+        private void WriteNumCrystalsFound(Int32 value)
         {
-            WriteByte(savegameOffset + crystalsFoundOffset, value);
+            WriteInt32(savegameOffset + crystalsFoundOffset, value);
         }
 
         private void WriteTimeTaken(Int32 value)
@@ -639,7 +639,7 @@ namespace TRR_SaveMaster
 
                 if (SELECTED_TAB == TAB_TR3)
                 {
-                    WriteNumCrystalsFound((byte)nudCrystalsFound.Value);
+                    WriteNumCrystalsFound((Int32)nudCrystalsFound.Value);
                 }
 
                 DisableButtons();
