@@ -207,59 +207,59 @@ namespace TRR_SaveMaster
 
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR2 = new Dictionary<byte, Int32[]>
         {
-            { 1,  new Int32[] { 88689, 20480, 68958, 65      } },   // The Great Wall
-            { 2,  new Int32[] { 25184, 251, 78543, 154       } },   // Venice
-            { 3,  new Int32[] { 40544, -1024, 37470, 138     } },   // Bartoli's Hideout
-            { 4,  new Int32[] { 53514, 6912, 49394, 121      } },   // Opera House
-            { 5,  new Int32[] { 38438, -256, 27539, 70       } },   // Offshore Rig
-            { 6,  new Int32[] { 56032, 3072, 61923, 76       } },   // Diving Area
-            { 7,  new Int32[] { 81295, -3584, 46423, 50      } },   // 40 Fathoms
-            { 8,  new Int32[] { 69941, 8571, 15852, 89       } },   // Wreck of the Maria Doria
-            { 9,  new Int32[] { 67684, -1818, 35154, 42      } },   // Living Quarters
-            { 10, new Int32[] { 35485, 1792, 15873, 105      } },   // The Deck
-            { 11, new Int32[] { 11722, 15616, 32039, 146     } },   // Tibetan Foothills
-            { 12, new Int32[] { 27388, 768, 22043, 44        } },   // Barkhang Monastery
-            { 13, new Int32[] { 51564, 7936, 65955, 52       } },   // Catacombs of the Talion
-            { 14, new Int32[] { 57937, 9984, 30156, 127      } },   // Ice Palace
-            { 15, new Int32[] { 17027, -24415, 61925, 33     } },   // Temple of Xian
-            { 16, new Int32[] { 21984, -7424, 65024, 40      } },   // Floating Islands
-            { 17, new Int32[] { 51123, -7187, 28285, 22      } },   // The Dragon's Lair
-            //{ 18, new Int32[] { 56931, 2560, 57466, 1        } }, // Home Sweet Home (there is no "end of level" here)
-            { 19, new Int32[] { 51066, -10239, 21074, 90     } },   // The Cold War
-            { 20, new Int32[] { 1544, 23552, 35616, 58       } },   // Fool's Gold
-            { 21, new Int32[] { 81334, 3584, 80114, 90       } },   // Furnace of the Gods
-            //{ 22, new Int32[] { 25965, 1792, 55397, 77       } }, // Kingdom (missing level trigger for final boss)
-            { 23, new Int32[] { 49949, -5888, 55394, 44      } },   // Nightmare in Vegas
+            { 1,  new Int32[] { 88689, 20480, 68958, 65     } },    // The Great Wall
+            { 2,  new Int32[] { 25184, 251, 78543, 154      } },    // Venice
+            { 3,  new Int32[] { 40544, -1024, 37470, 138    } },    // Bartoli's Hideout
+            { 4,  new Int32[] { 53514, 6912, 49394, 121     } },    // Opera House
+            { 5,  new Int32[] { 38438, -256, 27539, 70      } },    // Offshore Rig
+            { 6,  new Int32[] { 54742, 3072, 61941, 5       } },    // Diving Area
+            { 7,  new Int32[] { 81295, -3584, 46423, 50     } },    // 40 Fathoms
+            { 8,  new Int32[] { 69941, 8571, 15852, 89      } },    // Wreck of the Maria Doria
+            { 9,  new Int32[] { 67684, -1818, 35154, 42     } },    // Living Quarters
+            { 10, new Int32[] { 35485, 1792, 15873, 105     } },    // The Deck
+            { 11, new Int32[] { 11722, 15616, 32039, 146    } },    // Tibetan Foothills
+            { 12, new Int32[] { 27388, 768, 22043, 44       } },    // Barkhang Monastery
+            { 13, new Int32[] { 51564, 7936, 65955, 52      } },    // Catacombs of the Talion
+            { 14, new Int32[] { 57937, 9984, 30156, 127     } },    // Ice Palace
+            { 15, new Int32[] { 17027, -24415, 61925, 33    } },    // Temple of Xian
+            { 16, new Int32[] { 21984, -7424, 65024, 40     } },    // Floating Islands
+            { 17, new Int32[] { 51123, -7187, 28285, 22     } },    // The Dragon's Lair
+            //{ 18, new Int32[] { 56931, 2560, 57466, 1       } },  // Home Sweet Home (there is no "end of level" here)
+            { 19, new Int32[] { 51066, -10239, 21074, 90    } },    // The Cold War
+            { 20, new Int32[] { 1544, 23552, 35616, 58      } },    // Fool's Gold
+            { 21, new Int32[] { 81334, 3584, 80114, 90      } },    // Furnace of the Gods
+            //{ 22, new Int32[] { 25965, 1792, 55397, 77      } },  // Kingdom (missing level trigger for final boss)
+            { 23, new Int32[] { 49949, -5888, 55394, 44     } },    // Nightmare in Vegas
         };
 
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR3 = new Dictionary<byte, Int32[]>
         {
-            { 1,  new Int32[] { 22951, 23808, 71168, 132      } },  // Jungle
-            { 2,  new Int32[] { 10895, 2304, 70849, 214       } },  // Temple Ruins
-            { 3,  new Int32[] { 43585, 5888, 68146, 167       } },  // The River Ganges
-            { 4,  new Int32[] { 41083, -4864, 52861, 24       } },  // Caves of Kaliya
-            { 5,  new Int32[] { 73241, -5120, 79274, 191      } },  // Costal Village
-            { 6,  new Int32[] { 77776, -1792, 60997, 41       } },  // Crash Site
-            { 7,  new Int32[] { 57195, 13056, 72148, 96       } },  // Madubu Gorge
-            { 8,  new Int32[] { 51739, -8811, 57985, 28       } },  // Temple of Puna
-            { 9,  new Int32[] { 55907, -21504, 45565, 0       } },  // Thames Wharf
-            { 10, new Int32[] { 55028, 2560, 34299, 104       } },  // Aldwych
-            { 11, new Int32[] { 34488, -28160, 48438, 207     } },  // Lud's Gate
-            { 12, new Int32[] { 37989, -12032, 53019, 14      } },  // City
-            { 13, new Int32[] { 47088, -3072, 66099, 113      } },  // Nevada Desert
-            { 14, new Int32[] { 55160, 0, 65196, 96           } },  // High Security Compound
-            { 15, new Int32[] { 44438, -7424, 35311, 18       } },  // Area 51
-            { 16, new Int32[] { 44748, -7168, 60733, 80       } },  // Antarctica
-            { 17, new Int32[] { 9606, 0, 16931, 3             } },  // RX-Tech Mines
-            { 18, new Int32[] { 28077, 4608, 38480, 211       } },  // Lost City of Tinnos (too many level triggers to jump to end)
-            { 19, new Int32[] { 22709, 0, 27287, 29           } },  // Meteorite Cavern
-            { 20, new Int32[] { 33698, 1536, 38769, 6         } },  // All Hallows
-            { 21, new Int32[] { 47664, -5120, 67966, 100      } },  // Highland Fling
-            { 22, new Int32[] { 77238, -3840, 18147, 55       } },  // Willard's Lair
-            { 23, new Int32[] { 87565, 15126, 42498, 104      } },  // Shakespeare Cliff
-            { 24, new Int32[] { 68708, -13568, 41653, 111     } },  // Sleeping with the Fishes
-            { 25, new Int32[] { 94093, 5632, 34368, 133       } },  // It's a Madhouse! (just need Hand of Rathmore from beginning)
-            { 26, new Int32[] { 81708, 5376, 36764, 62        } },  // Reunion
+            { 1,  new Int32[] { 22951, 23808, 71168, 132    } },    // Jungle
+            { 2,  new Int32[] { 10895, 2304, 70849, 214     } },    // Temple Ruins
+            { 3,  new Int32[] { 43585, 5888, 68146, 167     } },    // The River Ganges
+            { 4,  new Int32[] { 41083, -4864, 52861, 24     } },    // Caves of Kaliya
+            { 5,  new Int32[] { 73241, -5120, 79274, 191    } },    // Costal Village
+            { 6,  new Int32[] { 77776, -1792, 60997, 41     } },    // Crash Site
+            { 7,  new Int32[] { 57195, 13056, 72148, 96     } },    // Madubu Gorge
+            { 8,  new Int32[] { 51739, -8811, 57985, 28     } },    // Temple of Puna
+            { 9,  new Int32[] { 55907, -21504, 45565, 0     } },    // Thames Wharf
+            { 10, new Int32[] { 55028, 2560, 34299, 104     } },    // Aldwych
+            { 11, new Int32[] { 34488, -28160, 48438, 207   } },    // Lud's Gate
+            { 12, new Int32[] { 37989, -12032, 53019, 14    } },    // City
+            { 13, new Int32[] { 47088, -3072, 66099, 113    } },    // Nevada Desert
+            { 14, new Int32[] { 55160, 0, 65196, 96         } },    // High Security Compound
+            { 15, new Int32[] { 44438, -7424, 35311, 18     } },    // Area 51
+            { 16, new Int32[] { 44748, -7168, 60733, 80     } },    // Antarctica
+            { 17, new Int32[] { 9606, 0, 16931, 3           } },    // RX-Tech Mines
+            { 18, new Int32[] { 28077, 4608, 38480, 211     } },    // Lost City of Tinnos (too many level triggers to jump to end)
+            { 19, new Int32[] { 22709, 0, 27287, 29         } },    // Meteorite Cavern
+            { 20, new Int32[] { 33698, 1536, 38769, 6       } },    // All Hallows
+            { 21, new Int32[] { 47664, -5120, 67966, 100    } },    // Highland Fling
+            { 22, new Int32[] { 77238, -3840, 18147, 55     } },    // Willard's Lair
+            { 23, new Int32[] { 87565, 15126, 42498, 104    } },    // Shakespeare Cliff
+            { 24, new Int32[] { 68708, -13568, 41653, 111   } },    // Sleeping with the Fishes
+            { 25, new Int32[] { 94093, 5632, 34368, 133     } },    // It's a Madhouse! (just need Hand of Rathmore from beginning)
+            { 26, new Int32[] { 81708, 5376, 36764, 62      } },    // Reunion
         };
 
         private void DetermineOffsets()
