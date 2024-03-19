@@ -109,7 +109,8 @@ So when calculating, you will have to add them to the base savegame offset.
 | Offset    | Type    | Description        |
 |:----------|:--------|:-------------------|
 | 0x00C     | Int32   | Save Number        |
-| 0x8A4     | UInt8   | Crystals Found     |
+| 0x8A4     | Int32   | Crystals Found     |
+| 0x8A8     | Int32   | Crystals Used      |
 | 0x8AC     | Int32   | Time Taken         |
 | 0x8B0     | Int32   | Ammo Used          |
 | 0x8B4     | Int32   | Hits               |
