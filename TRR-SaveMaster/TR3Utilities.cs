@@ -9,6 +9,7 @@ namespace TRR_SaveMaster
     class TR3Utilities
     {
         // Static offsets
+        private const int gameModeOffset = 0x008;
         private const int saveNumberOffset = 0x00C;
         private const int levelIndexOffset = 0x8D6;
 
@@ -115,6 +116,12 @@ namespace TRR_SaveMaster
             WriteByte(offset + 1, (byte)(value >> 8));
             WriteByte(offset + 2, (byte)(value >> 16));
             WriteByte(offset + 3, (byte)(value >> 24));
+        }
+
+        private GameMode GetGameMode()
+        {
+            int gameMode = ReadByte(savegameOffset + gameModeOffset);
+            return gameMode == 0 ? GameMode.Normal : GameMode.Plus;
         }
 
         private Int32 GetSaveNumber()
@@ -558,6 +565,7 @@ namespace TRR_SaveMaster
             }
             else
             {
+                lblCollectibleCrystals.Text = GetGameMode() == GameMode.Normal ? "Collectible Crystals:" : "Savegame Crystals:";
                 nudCollectibleCrystals.Enabled = true;
                 lblCollectibleCrystals.Visible = true;
                 nudCollectibleCrystals.Value = GetNumCollectibleCrystals();
@@ -848,8 +856,9 @@ namespace TRR_SaveMaster
 
             string levelName = levelNames[levelIndex];
             Int32 saveNumber = ReadInt32(savegame.Offset + saveNumberOffset);
+            GameMode gameMode = ReadByte(savegame.Offset + gameModeOffset) == 0 ? GameMode.Normal : GameMode.Plus;
 
-            savegame.UpdateDisplayName(levelName, saveNumber);
+            savegame.UpdateDisplayName(levelName, saveNumber, gameMode);
         }
 
         public void SetPlatform(Platform platform)
@@ -882,6 +891,7 @@ namespace TRR_SaveMaster
                 {
                     Int32 saveNumber = ReadInt32(currentSavegameOffset + saveNumberOffset);
                     byte levelIndex = ReadByte(currentSavegameOffset + levelIndexOffset);
+                    GameMode gameMode = ReadByte(currentSavegameOffset + gameModeOffset) == 0 ? GameMode.Normal : GameMode.Plus;
 
                     if (saveNumber >= 0 && levelIndex >= 1 && levelIndex <= 26)
                     {
@@ -901,7 +911,7 @@ namespace TRR_SaveMaster
 
                         if (!savegameExists)
                         {
-                            Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName);
+                            Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode);
                             cmbSavegames.Items.Add(savegame);
                         }
                     }
@@ -925,8 +935,9 @@ namespace TRR_SaveMaster
                 {
                     string levelName = levelNames[levelIndex];
                     int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR3) / SAVEGAME_ITERATOR;
+                    GameMode gameMode = GetGameMode();
 
-                    Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName);
+                    Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode);
                     cmbSavegames.Items.Add(savegame);
 
                     numSaves++;
