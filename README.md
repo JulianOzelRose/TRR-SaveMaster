@@ -7,8 +7,8 @@ For a tool that allows you to transfer individual savegames from one file to ano
 ![TRR-SaveMaster-UI](https://github.com/JulianOzelRose/TRR-SaveMaster/assets/95890436/5ebcc4b9-ff5c-4303-bcb8-4706c15a1124)
 
 ## Installation and use
-To download this savegame editor, simply navigate to the [Releases](https://github.com/JulianOzelRose/TRR-SaveMaster/releases) folder,
-then download the .exe file of the latest version. You can save it anywhere on your computer. Once downloaded, open the file.
+To download this savegame editor, simply navigate to the [Releases](https://github.com/JulianOzelRose/TRR-SaveMaster/releases) page,
+then download the .exe file of the latest version under "Assets". You can save it anywhere on your computer. Once downloaded, open the file.
 The editor will then prompt you to select your savegame path, click "Yes". Your savegame path should be as follows:
 
 `C:\Users\USERNAME\AppData\Roaming\TRX\77777777777777777\savegame.dat`
