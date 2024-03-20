@@ -159,8 +159,24 @@ namespace TRR_SaveMaster
                 nudAmmoUsed.Value = GetAmmoUsed();
                 nudHits.Value = GetNumHits();
                 nudMedipacksUsed.Value = (decimal)GetNumMedipacksUsed() / 2;
-                nudCrystalsFound.Value = GetNumCrystalsFound();
-                nudCrystalsUsed.Value = GetNumCrystalsUsed();
+
+                if (SELECTED_TAB == TAB_TR3)
+                {
+                    nudCrystalsFound.Value = GetNumCrystalsFound();
+                }
+                else
+                {
+                    nudCrystalsFound.Value = 0;
+                }
+
+                if (SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR3)
+                {
+                    nudCrystalsUsed.Value = GetNumCrystalsUsed();
+                }
+                else
+                {
+                    nudCrystalsUsed.Value = 0;
+                }
 
                 DisplayDistanceTravelled();
                 DisplayTimeTaken();
