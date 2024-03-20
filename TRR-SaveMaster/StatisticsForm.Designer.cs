@@ -61,6 +61,8 @@ namespace TRR_SaveMaster
             this.btnSave = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.nudCrystalsUsed = new System.Windows.Forms.NumericUpDown();
+            this.lblCrystalsUsed = new System.Windows.Forms.Label();
             this.grpLevel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSeconds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMinutes)).BeginInit();
@@ -75,10 +77,13 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudPickups)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrystalsFound)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSecretsFound)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCrystalsUsed)).BeginInit();
             this.SuspendLayout();
             // 
             // grpLevel
             // 
+            this.grpLevel.Controls.Add(this.lblCrystalsUsed);
+            this.grpLevel.Controls.Add(this.nudCrystalsUsed);
             this.grpLevel.Controls.Add(this.lblColon2);
             this.grpLevel.Controls.Add(this.lblColon);
             this.grpLevel.Controls.Add(this.nudSeconds);
@@ -108,7 +113,7 @@ namespace TRR_SaveMaster
             this.grpLevel.Controls.Add(this.lblKills);
             this.grpLevel.Location = new System.Drawing.Point(10, 4);
             this.grpLevel.Name = "grpLevel";
-            this.grpLevel.Size = new System.Drawing.Size(363, 242);
+            this.grpLevel.Size = new System.Drawing.Size(363, 267);
             this.grpLevel.TabIndex = 8;
             this.grpLevel.TabStop = false;
             // 
@@ -184,7 +189,7 @@ namespace TRR_SaveMaster
             // lblDistanceTravelledUnit
             // 
             this.lblDistanceTravelledUnit.AutoSize = true;
-            this.lblDistanceTravelledUnit.Location = new System.Drawing.Point(208, 209);
+            this.lblDistanceTravelledUnit.Location = new System.Drawing.Point(208, 235);
             this.lblDistanceTravelledUnit.Name = "lblDistanceTravelledUnit";
             this.lblDistanceTravelledUnit.Size = new System.Drawing.Size(15, 13);
             this.lblDistanceTravelledUnit.TabIndex = 32;
@@ -193,7 +198,7 @@ namespace TRR_SaveMaster
             // lblDistanceTravelled
             // 
             this.lblDistanceTravelled.AutoSize = true;
-            this.lblDistanceTravelled.Location = new System.Drawing.Point(11, 205);
+            this.lblDistanceTravelled.Location = new System.Drawing.Point(11, 231);
             this.lblDistanceTravelled.Name = "lblDistanceTravelled";
             this.lblDistanceTravelled.Size = new System.Drawing.Size(99, 13);
             this.lblDistanceTravelled.TabIndex = 31;
@@ -207,7 +212,7 @@ namespace TRR_SaveMaster
             0,
             0,
             131072});
-            this.nudDistanceTravelled.Location = new System.Drawing.Point(150, 205);
+            this.nudDistanceTravelled.Location = new System.Drawing.Point(150, 231);
             this.nudDistanceTravelled.Maximum = new decimal(new int[] {
             -1,
             0,
@@ -222,7 +227,7 @@ namespace TRR_SaveMaster
             // lblSlash
             // 
             this.lblSlash.AutoSize = true;
-            this.lblSlash.Location = new System.Drawing.Point(208, 157);
+            this.lblSlash.Location = new System.Drawing.Point(208, 183);
             this.lblSlash.Name = "lblSlash";
             this.lblSlash.Size = new System.Drawing.Size(12, 13);
             this.lblSlash.TabIndex = 29;
@@ -230,7 +235,7 @@ namespace TRR_SaveMaster
             // 
             // nudHits
             // 
-            this.nudHits.Location = new System.Drawing.Point(225, 153);
+            this.nudHits.Location = new System.Drawing.Point(225, 179);
             this.nudHits.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -245,7 +250,7 @@ namespace TRR_SaveMaster
             // nudPickupsMax
             // 
             this.nudPickupsMax.Enabled = false;
-            this.nudPickupsMax.Location = new System.Drawing.Point(225, 101);
+            this.nudPickupsMax.Location = new System.Drawing.Point(225, 127);
             this.nudPickupsMax.Maximum = new decimal(new int[] {
             255,
             0,
@@ -260,7 +265,7 @@ namespace TRR_SaveMaster
             // lblOf2
             // 
             this.lblOf2.AutoSize = true;
-            this.lblOf2.Location = new System.Drawing.Point(206, 105);
+            this.lblOf2.Location = new System.Drawing.Point(206, 131);
             this.lblOf2.Name = "lblOf2";
             this.lblOf2.Size = new System.Drawing.Size(16, 13);
             this.lblOf2.TabIndex = 26;
@@ -298,7 +303,7 @@ namespace TRR_SaveMaster
             0,
             0,
             65536});
-            this.nudMedipacksUsed.Location = new System.Drawing.Point(150, 179);
+            this.nudMedipacksUsed.Location = new System.Drawing.Point(150, 205);
             this.nudMedipacksUsed.Maximum = new decimal(new int[] {
             635,
             0,
@@ -312,7 +317,7 @@ namespace TRR_SaveMaster
             // 
             // nudAmmoUsed
             // 
-            this.nudAmmoUsed.Location = new System.Drawing.Point(150, 153);
+            this.nudAmmoUsed.Location = new System.Drawing.Point(150, 179);
             this.nudAmmoUsed.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -326,7 +331,7 @@ namespace TRR_SaveMaster
             // 
             // nudKills
             // 
-            this.nudKills.Location = new System.Drawing.Point(150, 127);
+            this.nudKills.Location = new System.Drawing.Point(150, 153);
             this.nudKills.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -340,7 +345,7 @@ namespace TRR_SaveMaster
             // 
             // nudPickups
             // 
-            this.nudPickups.Location = new System.Drawing.Point(150, 101);
+            this.nudPickups.Location = new System.Drawing.Point(150, 127);
             this.nudPickups.Maximum = new decimal(new int[] {
             127,
             0,
@@ -392,7 +397,7 @@ namespace TRR_SaveMaster
             // lblMedipacksUsed
             // 
             this.lblMedipacksUsed.AutoSize = true;
-            this.lblMedipacksUsed.Location = new System.Drawing.Point(11, 179);
+            this.lblMedipacksUsed.Location = new System.Drawing.Point(11, 205);
             this.lblMedipacksUsed.Name = "lblMedipacksUsed";
             this.lblMedipacksUsed.Size = new System.Drawing.Size(94, 13);
             this.lblMedipacksUsed.TabIndex = 13;
@@ -410,7 +415,7 @@ namespace TRR_SaveMaster
             // lblAmmoUsedHits
             // 
             this.lblAmmoUsedHits.AutoSize = true;
-            this.lblAmmoUsedHits.Location = new System.Drawing.Point(11, 153);
+            this.lblAmmoUsedHits.Location = new System.Drawing.Point(11, 179);
             this.lblAmmoUsedHits.Name = "lblAmmoUsedHits";
             this.lblAmmoUsedHits.Size = new System.Drawing.Size(90, 13);
             this.lblAmmoUsedHits.TabIndex = 12;
@@ -419,7 +424,7 @@ namespace TRR_SaveMaster
             // lblPickups
             // 
             this.lblPickups.AutoSize = true;
-            this.lblPickups.Location = new System.Drawing.Point(11, 101);
+            this.lblPickups.Location = new System.Drawing.Point(11, 127);
             this.lblPickups.Name = "lblPickups";
             this.lblPickups.Size = new System.Drawing.Size(48, 13);
             this.lblPickups.TabIndex = 10;
@@ -428,7 +433,7 @@ namespace TRR_SaveMaster
             // lblKills
             // 
             this.lblKills.AutoSize = true;
-            this.lblKills.Location = new System.Drawing.Point(11, 127);
+            this.lblKills.Location = new System.Drawing.Point(11, 153);
             this.lblKills.Name = "lblKills";
             this.lblKills.Size = new System.Drawing.Size(28, 13);
             this.lblKills.TabIndex = 11;
@@ -437,7 +442,7 @@ namespace TRR_SaveMaster
             // btnSave
             // 
             this.btnSave.Enabled = false;
-            this.btnSave.Location = new System.Drawing.Point(298, 252);
+            this.btnSave.Location = new System.Drawing.Point(298, 277);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 9;
@@ -447,7 +452,7 @@ namespace TRR_SaveMaster
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(136, 252);
+            this.btnClose.Location = new System.Drawing.Point(136, 277);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 11;
@@ -458,7 +463,7 @@ namespace TRR_SaveMaster
             // btnCancel
             // 
             this.btnCancel.Enabled = false;
-            this.btnCancel.Location = new System.Drawing.Point(217, 252);
+            this.btnCancel.Location = new System.Drawing.Point(217, 277);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 12;
@@ -466,11 +471,34 @@ namespace TRR_SaveMaster
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // nudCrystalsUsed
+            // 
+            this.nudCrystalsUsed.Location = new System.Drawing.Point(150, 101);
+            this.nudCrystalsUsed.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudCrystalsUsed.Name = "nudCrystalsUsed";
+            this.nudCrystalsUsed.Size = new System.Drawing.Size(51, 20);
+            this.nudCrystalsUsed.TabIndex = 39;
+            this.nudCrystalsUsed.ValueChanged += new System.EventHandler(this.nudCrystalsUsed_ValueChanged);
+            this.nudCrystalsUsed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudCrystalsUsed_KeyPress);
+            // 
+            // lblCrystalsUsed
+            // 
+            this.lblCrystalsUsed.AutoSize = true;
+            this.lblCrystalsUsed.Location = new System.Drawing.Point(11, 101);
+            this.lblCrystalsUsed.Name = "lblCrystalsUsed";
+            this.lblCrystalsUsed.Size = new System.Drawing.Size(74, 13);
+            this.lblCrystalsUsed.TabIndex = 40;
+            this.lblCrystalsUsed.Text = "Crystals Used:";
+            // 
             // StatisticsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(382, 282);
+            this.ClientSize = new System.Drawing.Size(382, 308);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnSave);
@@ -500,6 +528,7 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudPickups)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrystalsFound)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSecretsFound)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCrystalsUsed)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -537,5 +566,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.Label lblColon2;
         private System.Windows.Forms.Label lblColon;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Label lblCrystalsUsed;
+        private System.Windows.Forms.NumericUpDown nudCrystalsUsed;
     }
 }

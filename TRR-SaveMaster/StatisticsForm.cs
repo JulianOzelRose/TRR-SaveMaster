@@ -10,6 +10,7 @@ namespace TRR_SaveMaster
         // Offsets
         private int levelIndexOffset;
         private int crystalsFoundOffset;
+        private int crystalsUsedOffset;
         private int ammoUsedOffset;
         private int hitsOffset;
         private int killsOffset;
@@ -69,6 +70,7 @@ namespace TRR_SaveMaster
             if (SELECTED_TAB == TAB_TR1)
             {
                 levelIndexOffset = 0x62C;
+                crystalsUsedOffset = 0x610;
                 ammoUsedOffset = 0x618;
                 hitsOffset = 0x61C;
                 killsOffset = 0x620;
@@ -94,6 +96,7 @@ namespace TRR_SaveMaster
             {
                 levelIndexOffset = 0x8D6;
                 crystalsFoundOffset = 0x8A4;
+                crystalsUsedOffset = 0x8A8;
                 ammoUsedOffset = 0x8B0;
                 hitsOffset = 0x8B4;
                 killsOffset = 0x8B8;
@@ -118,6 +121,7 @@ namespace TRR_SaveMaster
                 nudPickups.Maximum = nudPickupsMax.Value;
 
                 nudCrystalsFound.Enabled = false;
+                nudCrystalsUsed.Enabled = selectedSavegame.Mode == GameMode.Plus;
             }
             else if (SELECTED_TAB == TAB_TR2)
             {
@@ -128,6 +132,7 @@ namespace TRR_SaveMaster
                 nudPickups.Maximum = nudPickupsMax.Value;
 
                 nudCrystalsFound.Enabled = false;
+                nudCrystalsUsed.Enabled = false;
             }
             else if (SELECTED_TAB == TAB_TR3)
             {
@@ -138,6 +143,7 @@ namespace TRR_SaveMaster
                 nudPickups.Maximum = nudPickupsMax.Value;
 
                 nudCrystalsFound.Enabled = true;
+                nudCrystalsUsed.Enabled = selectedSavegame.Mode == GameMode.Plus;
             }
         }
 
@@ -153,18 +159,11 @@ namespace TRR_SaveMaster
                 nudAmmoUsed.Value = GetAmmoUsed();
                 nudHits.Value = GetNumHits();
                 nudMedipacksUsed.Value = (decimal)GetNumMedipacksUsed() / 2;
+                nudCrystalsFound.Value = GetNumCrystalsFound();
+                nudCrystalsUsed.Value = GetNumCrystalsUsed();
 
                 DisplayDistanceTravelled();
                 DisplayTimeTaken();
-
-                if (SELECTED_TAB == TAB_TR3)
-                {
-                    nudCrystalsFound.Value = GetNumCrystalsFound();
-                }
-                else
-                {
-                    nudCrystalsFound.Value = 0;
-                }
             }
             catch (Exception ex)
             {
@@ -556,6 +555,11 @@ namespace TRR_SaveMaster
             return ReadInt32(savegameOffset + crystalsFoundOffset);
         }
 
+        private Int32 GetNumCrystalsUsed()
+        {
+            return ReadInt32(savegameOffset + crystalsUsedOffset);
+        }
+
         private void WriteAmmoUsed(Int32 value)
         {
             WriteInt32(savegameOffset + ammoUsedOffset, value);
@@ -596,6 +600,11 @@ namespace TRR_SaveMaster
         private void WriteNumCrystalsFound(Int32 value)
         {
             WriteInt32(savegameOffset + crystalsFoundOffset, value);
+        }
+
+        private void WriteNumCrystalsUsed(Int32 value)
+        {
+            WriteInt32(savegameOffset + crystalsUsedOffset, value);
         }
 
         private void WriteTimeTaken(Int32 value)
@@ -640,6 +649,12 @@ namespace TRR_SaveMaster
                 if (SELECTED_TAB == TAB_TR3)
                 {
                     WriteNumCrystalsFound((Int32)nudCrystalsFound.Value);
+                }
+
+                if ((SELECTED_TAB == TAB_TR1 && selectedSavegame.Mode == GameMode.Plus) ||
+                    (SELECTED_TAB == TAB_TR3 && selectedSavegame.Mode == GameMode.Plus))
+                {
+                    WriteNumCrystalsUsed((Int32)nudCrystalsUsed.Value);
                 }
 
                 DisableButtons();
@@ -799,6 +814,14 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void nudCrystalsUsed_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLoading)
+            {
+                EnableButtons();
+            }
+        }
+
         private void nudHours_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (char.IsDigit(e.KeyChar))
@@ -896,6 +919,14 @@ namespace TRR_SaveMaster
         }
 
         private void nudDistanceTravelled_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar))
+            {
+                EnableButtons();
+            }
+        }
+
+        private void nudCrystalsUsed_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (char.IsDigit(e.KeyChar))
             {
