@@ -160,7 +160,7 @@ namespace TRR_SaveMaster
                 nudHits.Value = GetNumHits();
                 nudMedipacksUsed.Value = (decimal)GetNumMedipacksUsed() / 2;
 
-                if (SELECTED_TAB == TAB_TR3)
+                if (nudCrystalsFound.Enabled)
                 {
                     nudCrystalsFound.Value = GetNumCrystalsFound();
                 }
@@ -169,7 +169,7 @@ namespace TRR_SaveMaster
                     nudCrystalsFound.Value = 0;
                 }
 
-                if (SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR3)
+                if (nudCrystalsUsed.Enabled)
                 {
                     nudCrystalsUsed.Value = GetNumCrystalsUsed();
                 }
@@ -662,13 +662,12 @@ namespace TRR_SaveMaster
                 WriteDistanceTravelled((decimal)nudDistanceTravelled.Value);
                 WriteNumSecretsFound((UInt16)nudSecretsFound.Value);
 
-                if (SELECTED_TAB == TAB_TR3)
+                if (nudCrystalsFound.Enabled)
                 {
                     WriteNumCrystalsFound((Int32)nudCrystalsFound.Value);
                 }
 
-                if ((SELECTED_TAB == TAB_TR1 && selectedSavegame.Mode == GameMode.Plus) ||
-                    (SELECTED_TAB == TAB_TR3 && selectedSavegame.Mode == GameMode.Plus))
+                if (nudCrystalsUsed.Enabled)
                 {
                     WriteNumCrystalsUsed((Int32)nudCrystalsUsed.Value);
                 }
