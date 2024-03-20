@@ -40,11 +40,7 @@ namespace TRR_SaveMaster
             tsmiCreateBackup.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
             tsmiBackupBeforeSaving.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
 
-            tsmiEnableAllWeapons.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
-            tsmiSetMaximumAmmunition.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
-            tsmiSetMaximumItems.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
-            tsmiStatistics.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
-            tsmiPosition.Enabled = !string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath);
+            EnableToolStripMenuItemsConditionally();
 
             if (!string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath))
             {
@@ -236,11 +232,7 @@ namespace TRR_SaveMaster
                     btnRefreshTR2.Enabled = true;
                     btnRefreshTR3.Enabled = true;
 
-                    tsmiEnableAllWeapons.Enabled = true;
-                    tsmiSetMaximumAmmunition.Enabled = true;
-                    tsmiSetMaximumItems.Enabled = true;
-                    tsmiStatistics.Enabled = true;
-                    tsmiPosition.Enabled = true;
+                    EnableToolStripMenuItemsConditionally();
 
                     tsmiCreateBackup.Enabled = true;
                     tsmiBackupBeforeSaving.Enabled = true;
@@ -509,6 +501,7 @@ namespace TRR_SaveMaster
 
             DisplayGameInfoTR1(cmbSavegamesTR1.SelectedItem as Savegame);
             DisableButtonsTR1();
+            EnableToolStripMenuItemsConditionally();
         }
 
         private void cmbSavegamesTR2_SelectedIndexChanged(object sender, EventArgs e)
@@ -530,6 +523,7 @@ namespace TRR_SaveMaster
 
             DisplayGameInfoTR2(cmbSavegamesTR2.SelectedItem as Savegame);
             DisableButtonsTR2();
+            EnableToolStripMenuItemsConditionally();
         }
 
         private void cmbSavegamesTR3_SelectedIndexChanged(object sender, EventArgs e)
@@ -551,6 +545,7 @@ namespace TRR_SaveMaster
 
             DisplayGameInfoTR3(cmbSavegamesTR3.SelectedItem as Savegame);
             DisableButtonsTR3();
+            EnableToolStripMenuItemsConditionally();
         }
 
         private void btnCancelTR1_Click(object sender, EventArgs e)
@@ -994,6 +989,8 @@ namespace TRR_SaveMaster
                 slblStatus.Text = (!string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath)) ?
                     $"{cmbSavegamesTR3.Items.Count} savegames found for Tomb Raider III" : "Ready";
             }
+
+            EnableToolStripMenuItemsConditionally();
         }
 
         private void tabGame_Deselecting(object sender, TabControlCancelEventArgs e)
@@ -1235,6 +1232,34 @@ namespace TRR_SaveMaster
                 {
                     nudItem.Value = nudItem.Maximum;
                 }
+            }
+        }
+
+        private void EnableToolStripMenuItemsConditionally()
+        {
+            if (tabGame.SelectedIndex == TAB_TR1)
+            {
+                tsmiEnableAllWeapons.Enabled = cmbSavegamesTR1.SelectedIndex != -1;
+                tsmiSetMaximumAmmunition.Enabled = cmbSavegamesTR1.SelectedIndex != -1;
+                tsmiSetMaximumItems.Enabled = cmbSavegamesTR1.SelectedIndex != -1;
+                tsmiStatistics.Enabled = cmbSavegamesTR1.SelectedIndex != -1;
+                tsmiPosition.Enabled = cmbSavegamesTR1.SelectedIndex != -1;
+            }
+            else if (tabGame.SelectedIndex == TAB_TR2)
+            {
+                tsmiEnableAllWeapons.Enabled = cmbSavegamesTR2.SelectedIndex != -1;
+                tsmiSetMaximumAmmunition.Enabled = cmbSavegamesTR2.SelectedIndex != -1;
+                tsmiSetMaximumItems.Enabled = cmbSavegamesTR2.SelectedIndex != -1;
+                tsmiStatistics.Enabled = cmbSavegamesTR2.SelectedIndex != -1;
+                tsmiPosition.Enabled = cmbSavegamesTR2.SelectedIndex != -1;
+            }
+            else if (tabGame.SelectedIndex == TAB_TR3)
+            {
+                tsmiEnableAllWeapons.Enabled = cmbSavegamesTR3.SelectedIndex != -1;
+                tsmiSetMaximumAmmunition.Enabled = cmbSavegamesTR3.SelectedIndex != -1;
+                tsmiSetMaximumItems.Enabled = cmbSavegamesTR3.SelectedIndex != -1;
+                tsmiStatistics.Enabled = cmbSavegamesTR3.SelectedIndex != -1;
+                tsmiPosition.Enabled = cmbSavegamesTR3.SelectedIndex != -1;
             }
         }
 
