@@ -802,8 +802,16 @@ namespace TRR_SaveMaster
 
             if (cmbSavegames.SelectedItem != null)
             {
-                int selectedIndex = cmbSavegames.SelectedIndex;
-                cmbSavegames.Items[selectedIndex] = selectedSavegame;
+                int selectedIndex = cmbSavegames.Items.IndexOf(selectedSavegame);
+
+                if (selectedIndex != -1)
+                {
+                    cmbSavegames.Items[selectedIndex] = selectedSavegame;
+                }
+                else
+                {
+                    cmbSavegames.Items.Add(selectedSavegame);
+                }
             }
 
             cmbSavegames.SelectedIndexChanged += cmbSavegamesTR1_SelectedIndexChanged;
@@ -815,8 +823,16 @@ namespace TRR_SaveMaster
 
             if (cmbSavegames.SelectedItem != null)
             {
-                int selectedIndex = cmbSavegames.SelectedIndex;
-                cmbSavegames.Items[selectedIndex] = selectedSavegame;
+                int selectedIndex = cmbSavegames.Items.IndexOf(selectedSavegame);
+
+                if (selectedIndex != -1)
+                {
+                    cmbSavegames.Items[selectedIndex] = selectedSavegame;
+                }
+                else
+                {
+                    cmbSavegames.Items.Add(selectedSavegame);
+                }
             }
 
             cmbSavegames.SelectedIndexChanged += cmbSavegamesTR2_SelectedIndexChanged;
@@ -828,8 +844,16 @@ namespace TRR_SaveMaster
 
             if (cmbSavegames.SelectedItem != null)
             {
-                int selectedIndex = cmbSavegames.SelectedIndex;
-                cmbSavegames.Items[selectedIndex] = selectedSavegame;
+                int selectedIndex = cmbSavegames.Items.IndexOf(selectedSavegame);
+
+                if (selectedIndex != -1)
+                {
+                    cmbSavegames.Items[selectedIndex] = selectedSavegame;
+                }
+                else
+                {
+                    cmbSavegames.Items.Add(selectedSavegame);
+                }
             }
 
             cmbSavegames.SelectedIndexChanged += cmbSavegamesTR3_SelectedIndexChanged;
