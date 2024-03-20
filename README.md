@@ -81,6 +81,7 @@ So when calculating, you will have to add them to the base savegame offset.
 | 0x4C8     | UInt8   | Small Medipack     |
 | 0x4C9     | UInt8   | Large Medipack     |
 | 0x4EC     | UInt8   | Weapons            |
+| 0x610     | Int32   | Crystals Used      |
 | 0x614     | Int32   | Time Taken         |
 | 0x618     | Int32   | Ammo Used          |
 | 0x61C     | Int32   | Hits               |
