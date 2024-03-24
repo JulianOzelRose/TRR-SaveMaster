@@ -2,7 +2,8 @@
 This is a savegame editor for Tomb Raider I-III Remastered. It works on all levels, including bonus levels. You can edit items, health, weapons, ammunition, statistics, and coordinates.
 Compatible with PC, PS4, and Nintendo Switch savegames. For instructions on how to download and use this savegame editor, scroll down to
 the section below. Additionally, technical details on reverse engineering the Tomb Raider I-III Remastered series are included on later on in this README.
-For a tool that allows you to transfer individual savegames from one file to another and convert them to PC, PS4, and Nintendo Switch format, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
+For a tool that allows you to transfer individual savegames from one file to another, convert savegames to PC/PS4/Nintendo Switch format, and reorder/delete savegames,
+check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
 ![TRR-SaveMaster-UI](https://github.com/JulianOzelRose/TRR-SaveMaster/assets/95890436/5ebcc4b9-ff5c-4303-bcb8-4706c15a1124)
 
@@ -74,6 +75,7 @@ So when calculating, you will have to add them to the base savegame offset.
 #### Tomb Raider I
 | Offset    | Type    | Description        |
 |:----------|:--------|:-------------------|
+| 0x008     | UInt8   | Game Mode          |
 | 0x00C     | Int32   | Save Number        |
 | 0x4C2     | UInt16  | Magnum Ammo 1      |
 | 0x4C4     | UInt16  | Uzi Ammo 1         |
@@ -95,6 +97,7 @@ So when calculating, you will have to add them to the base savegame offset.
 #### Tomb Raider II
 | Offset    | Type    | Description        |
 |:----------|:--------|:-------------------|
+| 0x008     | UInt8   | Game Mode          |
 | 0x00C     | Int32   | Save Number        |
 | 0x610     | Int32   | Time Taken         |
 | 0x614     | Int32   | Ammo Used          |
@@ -109,6 +112,7 @@ So when calculating, you will have to add them to the base savegame offset.
 #### Tomb Raider III
 | Offset    | Type    | Description        |
 |:----------|:--------|:-------------------|
+| 0x008     | UInt8   | Game Mode          |
 | 0x00C     | Int32   | Save Number        |
 | 0x8A4     | Int32   | Crystals Found     |
 | 0x8A8     | Int32   | Crystals Used      |
@@ -121,6 +125,46 @@ So when calculating, you will have to add them to the base savegame offset.
 | 0x8C2     | Int8    | Pickups            |
 | 0x8C3     | Int8    | Medi Packs Used    |
 | 0x8D6     | UInt8   | Level Index        |
+
+## Using heuristics to find the health offset
+In all 3 games, health is stored as a UInt16 value ranging from 1 (lowest health possible) to 1000 (maximum health). Because
+health is dynamically allocated, it is necessary to use heuristics to determine its location. The health offset tends to shift
+to a higher address when additional entities become active, and to a lower address as entities become inactive or die.
+
+Because health is always stored right next to character movement data, it is possible to determine the current health offset
+by checking the surrounding data for character movement byte flags. The algorithm below is for Tomb Raider III health detection.
+First, it iterates through the predetermined health offset range for the level. Next, it checks if the value of the current offset
+falls within a valid health range (1 to 1000 inclusive). If the value falls within a valid range, it performs one more heuristic check
+by examining the surrounding data for character movement byte flags. If a valid pattern is found, the offset is returned as the
+current health offset.
+
+This algorithm is able to determine the correct health offset ~96% of the time. Although it is theoretically possible to increase
+the detection rate by adding more character movement byte flags, doing so would result in false positives, as certain character movement
+byte flags coincide with null padding or other unrelated data.
+
+```
+public int GetHealthOffset()
+{
+    for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset += 0x1A)
+    {
+        UInt16 value = ReadUInt16(savegameOffset + offset);
+
+        if (value >= MIN_HEALTH_VALUE && value <= MAX_HEALTH_VALUE)
+        {
+            byte byteFlag1 = ReadByte(savegameOffset + offset - 10);
+            byte byteFlag2 = ReadByte(savegameOffset + offset - 9);
+            byte byteFlag3 = ReadByte(savegameOffset + offset - 8);
+
+            if (IsKnownByteFlagPattern(byteFlag1, byteFlag2, byteFlag3))
+            {
+                return (savegameOffset + offset);
+            }
+        }
+    }
+
+    return -1;
+}
+```
 
 ## Reverse engineering Tomb Raider I savegames
 Because almost all of the offsets in Tomb Raider I are static, it is the most straightforward game to reverse of the trilogy. Weapons inventory configuration
