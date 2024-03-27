@@ -1,8 +1,8 @@
 # Tomb Raider I-III Remastered Savegame Editor
 This is a savegame editor for Tomb Raider I-III Remastered. It works on all levels, including bonus levels. You can edit items, health, weapons, ammunition, statistics, and coordinates.
 Compatible with PC, PS4, and Nintendo Switch savegames. For instructions on how to download and use this savegame editor, scroll down to
-the section below. Additionally, technical details on reverse engineering the Tomb Raider I-III Remastered series are included on later on in this README.
-For a tool that allows you to transfer individual savegames from one file to another, convert savegames to PC/PS4/Nintendo Switch format, and reorder/delete savegames,
+the section below. Additionally, technical details on reverse engineering the Tomb Raider I-III Remastered trilogy are included on later on in this README.
+For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder or delete savegames,
 check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
 ![TRR-SaveMaster-UI](https://github.com/JulianOzelRose/TRR-SaveMaster/assets/95890436/5ebcc4b9-ff5c-4303-bcb8-4706c15a1124)
@@ -26,7 +26,7 @@ you can click "Refresh" to re-populate the savegames. Once you are done making c
 you must restart your game in order for the changes to take effect.
 
 This savegame editor has an auto backup feature, which will automatically create backups of your savegame file before writing. It is enabled by default. You can toggle this feature on or
-off by clicking "File", then checking "Backup before saving". The backup will be saved in the same directory as your savegame file, with a `.bak` extension. It is highly recommended that you
+off by clicking "File", then checking "Backup before saving". The backup will be saved in the same directory as your savegame file, with `.bak` suffixed to the file name. It is highly recommended that you
 leave this feature enabled. While this savegame editor has been thoroughly tested and employs error handling to prevent faulty writes, no system is perfect.
 Regular backups can safeguard your progress in the event of unforeseen issues or errors during the editing process. If you would like to manually create a backup of your savegame file,
 you can also do this by clicking "File" then "Create backup".
