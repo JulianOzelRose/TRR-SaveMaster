@@ -448,7 +448,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 11)  // Lud's Gate
             {
                 MIN_HEALTH_OFFSET = 0xFF0;
-                MAX_HEALTH_OFFSET = 0x103E;
+                MAX_HEALTH_OFFSET = 0x1058;
             }
             else if (levelIndex == 12)  // City
             {
