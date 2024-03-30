@@ -105,6 +105,25 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void PopulateSavegamesConditionally()
+        {
+            if (tabGame.SelectedIndex == TAB_TR1)
+            {
+                DisableButtonsTR1();
+                PopulateSavegamesTR1();
+            }
+            else if (tabGame.SelectedIndex == TAB_TR2)
+            {
+                DisableButtonsTR2();
+                PopulateSavegamesTR2();
+            }
+            else if (tabGame.SelectedIndex == TAB_TR3)
+            {
+                DisableButtonsTR3();
+                PopulateSavegamesTR3();
+            }
+        }
+
         private void ClearControlsInGroupBox(GroupBox groupBox)
         {
             foreach (Control control in groupBox.Controls)
@@ -215,18 +234,7 @@ namespace TRR_SaveMaster
                     cmbSavegamesTR2.Items.Clear();
                     cmbSavegamesTR3.Items.Clear();
 
-                    if (tabGame.SelectedIndex == TAB_TR1)
-                    {
-                        PopulateSavegamesTR1();
-                    }
-                    else if (tabGame.SelectedIndex == TAB_TR2)
-                    {
-                        PopulateSavegamesTR2();
-                    }
-                    else if (tabGame.SelectedIndex == TAB_TR3)
-                    {
-                        PopulateSavegamesTR3();
-                    }
+                    PopulateSavegamesConditionally();
 
                     btnRefreshTR1.Enabled = true;
                     btnRefreshTR2.Enabled = true;
@@ -626,6 +634,19 @@ namespace TRR_SaveMaster
             {
                 try
                 {
+                    TR1.SetSavegamePath(savegamePath);
+                    TR1.SetSavegameOffset(savegame.Offset);
+
+                    if (!TR1.IsSavegamePresent())
+                    {
+                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
+                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        DisableButtonsTR1();
+                        PopulateSavegamesTR1();
+                        return;
+                    }
+
                     if (tsmiBackupBeforeSaving.Checked)
                     {
                         CreateBackup();
@@ -633,15 +654,10 @@ namespace TRR_SaveMaster
 
                     File.SetAttributes(savegamePath, File.GetAttributes(savegamePath) & ~FileAttributes.ReadOnly);
 
-                    TR1.SetSavegamePath(savegamePath);
-
-                    TR1.SetSavegameOffset(savegame.Offset);
-
                     TR1.WriteChanges(chkPistolsTR1, chkMagnumsTR1, chkUzisTR1, chkShotgunTR1, nudSaveNumberTR1,
                         nudSmallMedipacksTR1, nudLargeMedipacksTR1, nudUziAmmoTR1, nudMagnumAmmoTR1, nudShotgunAmmoTR1, trbHealthTR1);
 
                     TR1.UpdateDisplayName(savegame);
-
                     UpdateSavegameDisplayNameTR1(cmbSavegamesTR1, savegame);
 
                     DisableButtonsTR1();
@@ -662,16 +678,25 @@ namespace TRR_SaveMaster
             {
                 try
                 {
+                    TR2.SetSavegamePath(savegamePath);
+                    TR2.SetSavegameOffset(savegame.Offset);
+
+                    if (!TR2.IsSavegamePresent())
+                    {
+                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
+                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        DisableButtonsTR2();
+                        PopulateSavegamesTR2();
+                        return;
+                    }
+
                     if (tsmiBackupBeforeSaving.Checked)
                     {
                         CreateBackup();
                     }
 
                     File.SetAttributes(savegamePath, File.GetAttributes(savegamePath) & ~FileAttributes.ReadOnly);
-
-                    TR2.SetSavegamePath(savegamePath);
-
-                    TR2.SetSavegameOffset(savegame.Offset);
 
                     TR2.WriteChanges(chkPistolsTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkShotgunTR2,
                         chkM16TR2, chkGrenadeLauncherTR2, chkHarpoonGunTR2, nudSaveNumberTR2, nudFlaresTR2,
@@ -680,7 +705,6 @@ namespace TRR_SaveMaster
                         nudShotgunAmmoTR2, trbHealthTR2);
 
                     TR2.UpdateDisplayName(savegame);
-
                     UpdateSavegameDisplayNameTR2(cmbSavegamesTR2, savegame);
 
                     DisableButtonsTR2();
@@ -701,6 +725,19 @@ namespace TRR_SaveMaster
             {
                 try
                 {
+                    TR3.SetSavegamePath(savegamePath);
+                    TR3.SetSavegameOffset(savegame.Offset);
+
+                    if (!TR3.IsSavegamePresent())
+                    {
+                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
+                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        DisableButtonsTR3();
+                        PopulateSavegamesTR3();
+                        return;
+                    }
+
                     if (tsmiBackupBeforeSaving.Checked)
                     {
                         CreateBackup();
@@ -708,17 +745,12 @@ namespace TRR_SaveMaster
 
                     File.SetAttributes(savegamePath, File.GetAttributes(savegamePath) & ~FileAttributes.ReadOnly);
 
-                    TR3.SetSavegamePath(savegamePath);
-
-                    TR3.SetSavegameOffset(savegame.Offset);
-
                     TR3.WriteChanges(chkPistolsTR3, chkDeagleTR3, chkUziTR3, chkShotgunTR3, chkMP5TR3, chkRocketLauncherTR3,
                         chkGrenadeLauncherTR3, chkHarpoonGunTR3, nudSaveNumberTR3, nudFlaresTR3, nudSmallMedipacksTR3,
                         nudLargeMedipacksTR3, nudShotgunAmmoTR3, nudDeagleAmmoTR3, nudGrenadeLauncherAmmoTR3, nudRocketLauncherAmmoTR3,
                         nudHarpoonGunAmmoTR3, nudMP5AmmoTR3, nudUziAmmoTR3, trbHealthTR3, nudCollectibleCrystalsTR3);
 
                     TR3.UpdateDisplayName(savegame);
-
                     UpdateSavegameDisplayNameTR3(cmbSavegamesTR3, savegame);
 
                     DisableButtonsTR3();
@@ -868,11 +900,19 @@ namespace TRR_SaveMaster
                 try
                 {
                     TR1.SetSavegamePath(savegamePath);
-
                     TR1.SetSavegameOffset(selectedSavegame.Offset);
 
-                    TR1.UpdateDisplayName(selectedSavegame);
+                    if (!TR1.IsSavegamePresent())
+                    {
+                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
+                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+                        DisableButtonsTR1();
+                        PopulateSavegamesTR1();
+                        return;
+                    }
+
+                    TR1.UpdateDisplayName(selectedSavegame);
                     UpdateSavegameDisplayNameTR1(cmbSavegamesTR1, selectedSavegame);
 
                     TR1.DisplayGameInfo(chkPistolsTR1, chkMagnumsTR1, chkUzisTR1, chkShotgunTR1,
@@ -900,11 +940,19 @@ namespace TRR_SaveMaster
                 try
                 {
                     TR2.SetSavegamePath(savegamePath);
-
                     TR2.SetSavegameOffset(selectedSavegame.Offset);
 
-                    TR2.UpdateDisplayName(selectedSavegame);
+                    if (!TR2.IsSavegamePresent())
+                    {
+                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
+                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+                        DisableButtonsTR2();
+                        PopulateSavegamesTR2();
+                        return;
+                    }
+
+                    TR2.UpdateDisplayName(selectedSavegame);
                     UpdateSavegameDisplayNameTR2(cmbSavegamesTR2, selectedSavegame);
 
                     TR2.SetLevelParams(chkPistolsTR2, chkShotgunTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkM16TR2,
@@ -938,11 +986,19 @@ namespace TRR_SaveMaster
                 try
                 {
                     TR3.SetSavegamePath(savegamePath);
-
                     TR3.SetSavegameOffset(selectedSavegame.Offset);
 
-                    TR3.UpdateDisplayName(selectedSavegame);
+                    if (!TR3.IsSavegamePresent())
+                    {
+                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
+                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+                        DisableButtonsTR3();
+                        PopulateSavegamesTR3();
+                        return;
+                    }
+
+                    TR3.UpdateDisplayName(selectedSavegame);
                     UpdateSavegameDisplayNameTR3(cmbSavegamesTR3, selectedSavegame);
 
                     TR3.DisplayGameInfo(chkPistolsTR3, chkShotgunTR3, chkDeagleTR3, chkUziTR3, chkMP5TR3,
@@ -1077,17 +1133,31 @@ namespace TRR_SaveMaster
 
             Savegame selectedSavegame = null;
 
+            bool savegamePresent = false;
+
             if (tabGame.SelectedIndex == TAB_TR1 && cmbSavegamesTR1.SelectedIndex != -1)
             {
                 selectedSavegame = cmbSavegamesTR1.Items[cmbSavegamesTR1.SelectedIndex] as Savegame;
+                savegamePresent = TR1.IsSavegamePresent();
             }
             else if (tabGame.SelectedIndex == TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1)
             {
                 selectedSavegame = cmbSavegamesTR2.Items[cmbSavegamesTR2.SelectedIndex] as Savegame;
+                savegamePresent = TR2.IsSavegamePresent();
             }
             else if (tabGame.SelectedIndex == TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1)
             {
                 selectedSavegame = cmbSavegamesTR3.Items[cmbSavegamesTR3.SelectedIndex] as Savegame;
+                savegamePresent = TR3.IsSavegamePresent();
+            }
+
+            if (!savegamePresent)
+            {
+                string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
+                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                PopulateSavegamesConditionally();
+                return;
             }
 
             if (selectedSavegame != null)
@@ -1105,48 +1175,76 @@ namespace TRR_SaveMaster
 
             Savegame selectedSavegame = null;
 
-            string errorMessage = $"Unable to find coordinates. Try saving the game with Lara standing.";
-
             if (tabGame.SelectedIndex == TAB_TR1 && cmbSavegamesTR1.SelectedIndex != -1)
             {
-                selectedSavegame = cmbSavegamesTR1.Items[cmbSavegamesTR1.SelectedIndex] as Savegame;
+                if (!TR1.IsSavegamePresent())
+                {
+                    string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
+                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    DisableButtonsTR1();
+                    PopulateSavegamesTR1();
+                    return;
+                }
 
                 int healthOffset = TR1.GetHealthOffset();
 
                 if (healthOffset == -1)
                 {
+                    string errorMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
                     MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
+                selectedSavegame = cmbSavegamesTR1.Items[cmbSavegamesTR1.SelectedIndex] as Savegame;
                 positionForm.SetHealthOffset(healthOffset - selectedSavegame.Offset);
             }
             else if (tabGame.SelectedIndex == TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1)
             {
-                selectedSavegame = cmbSavegamesTR2.Items[cmbSavegamesTR2.SelectedIndex] as Savegame;
+                if (!TR2.IsSavegamePresent())
+                {
+                    string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
+                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    DisableButtonsTR2();
+                    PopulateSavegamesTR2();
+                    return;
+                }
 
                 int healthOffset = TR2.GetHealthOffset();
 
                 if (healthOffset == -1)
                 {
+                    string errorMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
                     MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
+                selectedSavegame = cmbSavegamesTR2.Items[cmbSavegamesTR2.SelectedIndex] as Savegame;
                 positionForm.SetHealthOffset(healthOffset - selectedSavegame.Offset);
             }
             else if (tabGame.SelectedIndex == TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1)
             {
-                selectedSavegame = cmbSavegamesTR3.Items[cmbSavegamesTR3.SelectedIndex] as Savegame;
+                if (!TR3.IsSavegamePresent())
+                {
+                    string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
+                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    DisableButtonsTR3();
+                    PopulateSavegamesTR3();
+                    return;
+                }
 
                 int healthOffset = TR3.GetHealthOffset();
 
                 if (healthOffset == -1)
                 {
+                    string errorMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
                     MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
+                selectedSavegame = cmbSavegamesTR3.Items[cmbSavegamesTR3.SelectedIndex] as Savegame;
                 positionForm.SetHealthOffset(healthOffset - selectedSavegame.Offset);
             }
 
