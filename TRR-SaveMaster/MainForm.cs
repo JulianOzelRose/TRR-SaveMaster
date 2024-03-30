@@ -12,7 +12,9 @@ namespace TRR_SaveMaster
         }
 
         // Savegame
-        private Savegame previousSelectedSavegame;
+        private Savegame previousSelectedSavegameTR1;
+        private Savegame previousSelectedSavegameTR2;
+        private Savegame previousSelectedSavegameTR3;
         private string savegamePath;
         private bool isLoading = false;
         private bool userIndexChanged = true;
@@ -494,18 +496,18 @@ namespace TRR_SaveMaster
         {
             if (!userIndexChanged) return;
 
-            if (previousSelectedSavegame != null && btnSaveTR1.Enabled)
+            if (previousSelectedSavegameTR1 != null && btnSaveTR1.Enabled)
             {
                 DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
                     "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
-                    WriteChangesTR1(previousSelectedSavegame);
+                    WriteChangesTR1(previousSelectedSavegameTR1);
                 }
             }
 
-            previousSelectedSavegame = cmbSavegamesTR1.SelectedItem as Savegame;
+            previousSelectedSavegameTR1 = cmbSavegamesTR1.SelectedItem as Savegame;
 
             DisplayGameInfoTR1(cmbSavegamesTR1.SelectedItem as Savegame);
             DisableButtonsTR1();
@@ -516,18 +518,18 @@ namespace TRR_SaveMaster
         {
             if (!userIndexChanged) return;
 
-            if (previousSelectedSavegame != null && btnSaveTR2.Enabled)
+            if (previousSelectedSavegameTR2 != null && btnSaveTR2.Enabled)
             {
                 DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
                     "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
-                    WriteChangesTR2(previousSelectedSavegame);
+                    WriteChangesTR2(previousSelectedSavegameTR2);
                 }
             }
 
-            previousSelectedSavegame = cmbSavegamesTR2.SelectedItem as Savegame;
+            previousSelectedSavegameTR2 = cmbSavegamesTR2.SelectedItem as Savegame;
 
             DisplayGameInfoTR2(cmbSavegamesTR2.SelectedItem as Savegame);
             DisableButtonsTR2();
@@ -538,18 +540,18 @@ namespace TRR_SaveMaster
         {
             if (!userIndexChanged) return;
 
-            if (previousSelectedSavegame != null && btnSaveTR3.Enabled)
+            if (previousSelectedSavegameTR3 != null && btnSaveTR3.Enabled)
             {
                 DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
                     "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
-                    WriteChangesTR3(previousSelectedSavegame);
+                    WriteChangesTR3(previousSelectedSavegameTR3);
                 }
             }
 
-            previousSelectedSavegame = cmbSavegamesTR3.SelectedItem as Savegame;
+            previousSelectedSavegameTR3 = cmbSavegamesTR3.SelectedItem as Savegame;
 
             DisplayGameInfoTR3(cmbSavegamesTR3.SelectedItem as Savegame);
             DisableButtonsTR3();
