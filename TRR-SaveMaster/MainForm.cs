@@ -794,7 +794,7 @@ namespace TRR_SaveMaster
             }
             else
             {
-                MessageBox.Show("Savegame path is null.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Could not find savegame file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -810,7 +810,7 @@ namespace TRR_SaveMaster
             }
             else
             {
-                MessageBox.Show("Savegame path is null.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Could not find savegame file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -826,7 +826,7 @@ namespace TRR_SaveMaster
             }
             else
             {
-                MessageBox.Show("Savegame path is null.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Could not find savegame file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1130,6 +1130,14 @@ namespace TRR_SaveMaster
 
         private void tsmiStatistics_Click(object sender, EventArgs e)
         {
+            if (!File.Exists(savegamePath))
+            {
+                string errorMessage = $"Could not find savegame file.";
+                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+
             StatisticsForm statisticsForm = new StatisticsForm(slblStatus, tsmiBackupBeforeSaving.Checked,
                 savegamePath, tabGame.SelectedIndex);
 
@@ -1172,6 +1180,14 @@ namespace TRR_SaveMaster
 
         private void tsmiPosition_Click(object sender, EventArgs e)
         {
+            if (!File.Exists(savegamePath))
+            {
+                string errorMessage = $"Could not find savegame file.";
+                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+
             PositionForm positionForm = new PositionForm(slblStatus, tsmiBackupBeforeSaving.Checked,
                 savegamePath, tabGame.SelectedIndex);
 
