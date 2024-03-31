@@ -32,9 +32,9 @@ Regular backups can safeguard your progress in the event of unforeseen issues or
 you can also do this by clicking "File" then "Create backup".
 
 ## Reverse engineering Tomb Raider I-III Remastered
-This section details the technical aspects of reverse engineering Tomb Raider I-III Remastered. All savegames are stored in a single file; `savegame.dat`.
-Savegames for expansions are stored in the same slots as the original game. Each savegame slot for each game begins at a specific offset in the file.
-See the table below.
+This section details the technical aspects of reverse engineering the savegames of the Tomb Raider I-III Remastered trilogy. All savegames are stored in the `savegame.dat` file.
+Savegames for expansions are stored in the same slots as the original game. Each savegame slot for each game begins at a specific offset in the file, with a maximum of 32
+slots per game. See the table below.
 
 | Game                               | Offset  |
 |:-----------------------------------|:--------|
@@ -42,9 +42,9 @@ See the table below.
 | Tomb Raider II                     | 0x72000 |
 | Tomb Raider III                    | 0xE2000 |
 
-There is a consistent difference of 0x3800 between each savegame, so that value can be used as an iterator when cycling through savegames. When a savegame slot
-is empty, the space will be occupied by null padding. There are a number of ways to check if a savegame is present in the slot. One way is to check if the
-level index falls within a valid range for the game. See the example below.
+Because each savegame has a constant size of 0x3800 bytes, that value can be used as an iterator when cycling through savegames.
+When a savegame slot is occupied, the value at offset `0x004` is set to 1. When a savegame slot is empty,
+the value is 0. See the code below.
 
 ```
 for (int i = 0; i < 32; i++)
@@ -54,13 +54,15 @@ for (int i = 0; i < 32; i++)
 
     Int32 saveNumber = GetSaveNumber();
     byte levelIndex = GetLevelIndex();
+    bool savegamePresent = IsSavegamePresent();
 
-    if (saveNumber >= 0 && levelIndex >= 1 && levelIndex <= 19)
+    if (savegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
     {
         string levelName = levelNames[levelIndex];
         int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR1) / SAVEGAME_ITERATOR;
+        GameMode gameMode = GetGameMode();
 
-        Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName);
+        Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode);
         cmbSavegames.Items.Add(savegame);
 
         numSaves++;
@@ -69,12 +71,13 @@ for (int i = 0; i < 32; i++)
 ```
 
 Because you are dealing with multiple savegames stored in a single file, you need to use relative offsets and calculate them accordingly. You can find more
-details on this for each game in the next sections below. The tables below denote the (static) offsets for all 3 games. Note, they are relative offsets.
+details on this for each game in the sections below further. The tables below denote the static offsets for all 3 games. Note, they are relative offsets.
 So when calculating, you will have to add them to the base savegame offset.
 
 #### Tomb Raider I
 | Offset    | Type    | Description        |
 |:----------|:--------|:-------------------|
+| 0x004     | UInt8   | Slot Occupied      |
 | 0x008     | UInt8   | Game Mode          |
 | 0x00C     | Int32   | Save Number        |
 | 0x4C2     | UInt16  | Magnum Ammo 1      |
@@ -97,6 +100,7 @@ So when calculating, you will have to add them to the base savegame offset.
 #### Tomb Raider II
 | Offset    | Type    | Description        |
 |:----------|:--------|:-------------------|
+| 0x004     | UInt8   | Slot Occupied      |
 | 0x008     | UInt8   | Game Mode          |
 | 0x00C     | Int32   | Save Number        |
 | 0x610     | Int32   | Time Taken         |
@@ -112,6 +116,7 @@ So when calculating, you will have to add them to the base savegame offset.
 #### Tomb Raider III
 | Offset    | Type    | Description        |
 |:----------|:--------|:-------------------|
+| 0x004     | UInt8   | Slot Occupied      |
 | 0x008     | UInt8   | Game Mode          |
 | 0x00C     | Int32   | Save Number        |
 | 0x8A4     | Int32   | Crystals Found     |
@@ -180,7 +185,24 @@ You can use bitwise to determine which weapons are present in inventory. Each we
 
 Ammunition is stored on up to two offsets. If a weapon is not equipped, it is only stored on one offset (primary). If the weapon is equipped, it is stored on
 both offsets (primary and secondary). The primary offsets in Tomb Raider I are static. While the secondary offsets are dynamic, they only vary based on the
-level -- so there is no need to recalculate them once they have been determined based on the level index.
+level -- so there is no need to recalculate them once they have been determined based on the level index. When removing a weapon from inventory, the editor
+zeroes the secondary ammo bytes to free its address space. See the code below.
+
+```
+private void WriteShotgunAmmo(bool isPresent, UInt16 ammo)
+{
+    WriteUInt16(savegameOffset + shotgunAmmoOffset, ammo);
+
+    if (isPresent)
+    {
+        WriteUInt16(savegameOffset + shotgunAmmoOffset2, ammo);
+    }
+    else
+    {
+        WriteUInt16(savegameOffset + shotgunAmmoOffset2, 0);
+    }
+}
+```
 
 ## Reverse engineering Tomb Raider II savegames
 Reversing Tomb Raider II presents more challenges than Tomb Raider I. This is because most of the game's offsets are dynamic. However, weapons are stored in the
@@ -276,6 +298,27 @@ private int GetSecondaryAmmoIndex()
 }
 ```
 
+Once the secondary ammo index has been determined, all that remains is to calculate the offsets and write the ammo values. Similar to the Tomb Raider I
+implementation, the editor also zeroes the secondary ammo bytes when removing a weapon to free its address space. However, due to the dynamic
+nature of the ammo index in Tomb Raider II, it is important to account for edge cases where the ammo index cannot be found. In such cases, the editor
+only writes to the primary offset to avoid corrupting the savegame.
+
+```
+private void WriteAutomaticPistolsAmmo(bool isPresent, UInt16 ammo)
+{
+    WriteUInt16(savegameOffset + automaticPistolsAmmoOffset, ammo);
+
+    if (isPresent && secondaryAmmoIndex != -1)
+    {
+        WriteUInt16(savegameOffset + automaticPistolsAmmoOffset2, ammo);
+    }
+    else if (!isPresent && secondaryAmmoIndex != -1)
+    {
+        WriteUInt16(savegameOffset + automaticPistolsAmmoOffset2, 0);
+    }
+}
+```
+
 ## Reverse engineering Tomb Raider III savegames
 Similar to Tomb Raider II, most of the offsets in Tomb Raider III are dynamic. The only exceptions are the save number, the level index, and the statistics.
 You can calculate most of the remaining offsets based on the level index, just as with Tomb Raider II. See the code below.
@@ -359,3 +402,24 @@ private int GetSecondaryAmmoIndex()
     return -1;
 }
 ```
+
+Once the secondary ammo index has been determined and the offsets have been calculated, the process of writing to the ammo offsets is the same as in Tomb Raider II.
+When removing a weapon, the secondary ammo bytes must be zeroed to free up its address space. If the ammo index cannot be determined, the editor will only write
+to the primary offset to avoid corrupting the savegame.
+
+```
+private void WriteRocketLauncherAmmo(bool isPresent, UInt16 ammo)
+{
+    WriteUInt16(savegameOffset + rocketLauncherAmmoOffset, ammo);
+
+    if (isPresent && secondaryAmmoIndex != -1)
+    {
+        WriteUInt16(savegameOffset + rocketLauncherAmmoOffset2, ammo);
+    }
+    else if (!isPresent && secondaryAmmoIndex != -1)
+    {
+        WriteUInt16(savegameOffset + rocketLauncherAmmoOffset2, 0);
+    }
+}
+```
+
