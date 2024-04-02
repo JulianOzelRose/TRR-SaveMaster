@@ -830,18 +830,27 @@ namespace TRR_SaveMaster
             {
                 int[] indexData = ammoIndexData[levelIndex];
 
-                int[] offsets = new int[indexData.Length];
+                int[] offsets1 = new int[indexData.Length];
+                int[] offsets2 = new int[indexData.Length];
 
                 for (int index = 0; index < 15; index++)
                 {
-                    Array.Copy(indexData, offsets, indexData.Length);
+                    Array.Copy(indexData, offsets1, indexData.Length);
 
                     for (int i = 0; i < indexData.Length; i++)
                     {
-                        offsets[i] += savegameOffset + (index * 0x1A);
+                        offsets2[i] = offsets1[i] + 0xA;
+
+                        offsets1[i] += savegameOffset + (index * 0x1A);
+                        offsets2[i] += savegameOffset + (index * 0x1A);
                     }
 
-                    if (offsets.All(offset => ReadByte(offset) == 0xFF))
+                    if (offsets1.All(offset => ReadByte(offset) == 0xFF))
+                    {
+                        return index;
+                    }
+
+                    if (offsets2.All(offset => ReadByte(offset) == 0xFF))
                     {
                         return index;
                     }
