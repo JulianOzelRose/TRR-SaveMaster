@@ -8,7 +8,7 @@ check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 ![TRR-SaveMaster-UI](https://github.com/JulianOzelRose/TRR-SaveMaster/assets/95890436/5ebcc4b9-ff5c-4303-bcb8-4706c15a1124)
 
 ## Installation and use
-To download this savegame editor, simply navigate to the [Releases](https://github.com/JulianOzelRose/TRR-SaveMaster/releases) page,
+To download and use this savegame editor, simply navigate to the [Releases](https://github.com/JulianOzelRose/TRR-SaveMaster/releases) page,
 then download the .exe file of the latest version under "Assets". You can save it anywhere on your computer. Once downloaded, open the file.
 The editor will then prompt you to select your savegame path, click "Yes". Your savegame path should be as follows:
 
@@ -358,8 +358,10 @@ in inventory along with the byte flags. See the table below for Tomb Raider III 
 
 Ammunition is stored in a similar fashion to Tomb Raider II. The logic of a primary offset and secondary offset still apply; unequipped weapons
 only store ammo on the primary offset, and equipped weapons store ammo on both offsets. The secondary ammo index also correlates with the number
-of active entities, and the index can be determined by the location of the `{0xFF, 0xFF, 0xFF, 0xFF}` array. The ammo index in Tomb Raider III
-shifts by a consistent value of 0x1A. See the code below for calculating the secondary ammo index.
+of active entities, and the index can be determined by the location of the `{0xFF, 0xFF, 0xFF, 0xFF}` array.
+
+The ammo index in Tomb Raider III typically shifts by a value of 0x1A. However, much like in Tomb Raider II, there are some exceptions to this pattern. Each index corresponds to
+two possible locations of the 0xFF array, the second array being +0xA bytes from the first array. See the code below for calculating the secondary ammo index.
 
 ```
 private int GetSecondaryAmmoIndex()
@@ -381,18 +383,27 @@ private int GetSecondaryAmmoIndex()
     {
         int[] indexData = ammoIndexData[levelIndex];
 
-        int[] offsets = new int[indexData.Length];
+        int[] offsets1 = new int[indexData.Length];
+        int[] offsets2 = new int[indexData.Length];
 
         for (int index = 0; index < 15; index++)
         {
-            Array.Copy(indexData, offsets, indexData.Length);
+            Array.Copy(indexData, offsets1, indexData.Length);
 
             for (int i = 0; i < indexData.Length; i++)
             {
-                offsets[i] += savegameOffset + (index * 0x1A);
+                offsets2[i] = offsets1[i] + 0xA;
+
+                offsets1[i] += savegameOffset + (index * 0x1A);
+                offsets2[i] += savegameOffset + (index * 0x1A);
             }
 
-            if (offsets.All(offset => ReadByte(offset) == 0xFF))
+            if (offsets1.All(offset => ReadByte(offset) == 0xFF))
+            {
+                return index;
+            }
+
+            if (offsets2.All(offset => ReadByte(offset) == 0xFF))
             {
                 return index;
             }
