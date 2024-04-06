@@ -32,10 +32,19 @@ namespace TRR_SaveMaster
         private int uziAmmoOffset2;
         private int automaticPistolsAmmoOffset2;
 
-        // Constants
+        // Savegame constants
         private const int BASE_SAVEGAME_OFFSET_TR2 = 0x72000;
         private const int MAX_SAVEGAME_OFFSET_TR2 = 0xE2000;
         private const int SAVEGAME_ITERATOR = 0x3800;
+
+        // Weapon byte flags
+        private const byte WEAPON_PISTOLS = 2;
+        private const byte WEAPON_AUTOMATIC_PISTOLS = 4;
+        private const byte WEAPON_UZIS = 8;
+        private const byte WEAPON_SHOTGUN = 16;
+        private const byte WEAPON_M16 = 32;
+        private const byte WEAPON_GRENADE_LAUNCHER = 64;
+        private const byte WEAPON_HARPOON_GUN = 128;
 
         // Health
         private const UInt16 MAX_HEALTH_VALUE = 1000;
@@ -726,14 +735,6 @@ namespace TRR_SaveMaster
 
             byte weaponsConfigNum = GetWeaponsConfigNum();
 
-            const byte Pistols = 2;
-            const byte AutomaticPistols = 4;
-            const byte Uzis = 8;
-            const byte Shotgun = 16;
-            const byte M16 = 32;
-            const byte GrenadeLauncher = 64;
-            const byte HarpoonGun = 128;
-
             if (weaponsConfigNum == 1)
             {
                 chkPistols.Checked = false;
@@ -746,13 +747,13 @@ namespace TRR_SaveMaster
             }
             else
             {
-                chkPistols.Checked = (weaponsConfigNum & Pistols) != 0;
-                chkAutomaticPistols.Checked = (weaponsConfigNum & AutomaticPistols) != 0;
-                chkUzis.Checked = (weaponsConfigNum & Uzis) != 0;
-                chkShotgun.Checked = (weaponsConfigNum & Shotgun) != 0;
-                chkM16.Checked = (weaponsConfigNum & M16) != 0;
-                chkGrenadeLauncher.Checked = (weaponsConfigNum & GrenadeLauncher) != 0;
-                chkHarpoonGun.Checked = (weaponsConfigNum & HarpoonGun) != 0;
+                chkPistols.Checked = (weaponsConfigNum & WEAPON_PISTOLS) != 0;
+                chkAutomaticPistols.Checked = (weaponsConfigNum & WEAPON_AUTOMATIC_PISTOLS) != 0;
+                chkUzis.Checked = (weaponsConfigNum & WEAPON_UZIS) != 0;
+                chkShotgun.Checked = (weaponsConfigNum & WEAPON_SHOTGUN) != 0;
+                chkM16.Checked = (weaponsConfigNum & WEAPON_M16) != 0;
+                chkGrenadeLauncher.Checked = (weaponsConfigNum & WEAPON_GRENADE_LAUNCHER) != 0;
+                chkHarpoonGun.Checked = (weaponsConfigNum & WEAPON_HARPOON_GUN) != 0;
             }
 
             int healthOffset = GetHealthOffset();
@@ -790,13 +791,13 @@ namespace TRR_SaveMaster
 
             byte newWeaponsConfigNum = 1;
 
-            if (chkPistols.Checked) newWeaponsConfigNum += 2;
-            if (chkAutomaticPistols.Checked) newWeaponsConfigNum += 4;
-            if (chkUzis.Checked) newWeaponsConfigNum += 8;
-            if (chkShotgun.Checked) newWeaponsConfigNum += 16;
-            if (chkM16.Checked) newWeaponsConfigNum += 32;
-            if (chkGrenadeLauncher.Checked) newWeaponsConfigNum += 64;
-            if (chkHarpoonGun.Checked) newWeaponsConfigNum += 128;
+            if (chkPistols.Checked) newWeaponsConfigNum += WEAPON_PISTOLS;
+            if (chkAutomaticPistols.Checked) newWeaponsConfigNum += WEAPON_AUTOMATIC_PISTOLS;
+            if (chkUzis.Checked) newWeaponsConfigNum += WEAPON_UZIS;
+            if (chkShotgun.Checked) newWeaponsConfigNum += WEAPON_SHOTGUN;
+            if (chkM16.Checked) newWeaponsConfigNum += WEAPON_M16;
+            if (chkGrenadeLauncher.Checked) newWeaponsConfigNum += WEAPON_GRENADE_LAUNCHER;
+            if (chkHarpoonGun.Checked) newWeaponsConfigNum += WEAPON_HARPOON_GUN;
 
             WriteWeaponsConfigNum(newWeaponsConfigNum);
 

@@ -24,10 +24,16 @@ namespace TRR_SaveMaster
         private int shotgunAmmoOffset2;
         private int magnumAmmoOffset2;
 
-        // Constants
+        // Savegame constants
         private const int BASE_SAVEGAME_OFFSET_TR1 = 0x2000;
         private const int MAX_SAVEGAME_OFFSET_TR1 = 0x72000;
         private const int SAVEGAME_ITERATOR = 0x3800;
+
+        // Weapon byte flags
+        private const byte WEAPON_PISTOLS = 2;
+        private const byte WEAPON_MAGNUMS = 4;
+        private const byte WEAPON_UZIS = 8;
+        private const byte WEAPON_SHOTGUN = 16;
 
         // Health
         private const UInt16 MAX_HEALTH_VALUE = 1000;
@@ -489,24 +495,19 @@ namespace TRR_SaveMaster
 
             byte weaponsConfigNum = GetWeaponsConfigNum();
 
-            const byte Pistols = 2;
-            const byte Magnums = 4;
-            const byte Uzis = 8;
-            const byte Shotgun = 16;
-
             if (weaponsConfigNum == 1)
             {
                 chkPistols.Checked = false;
-                chkShotgun.Checked = false;
-                chkUzis.Checked = false;
                 chkMagnums.Checked = false;
+                chkUzis.Checked = false;
+                chkShotgun.Checked = false;
             }
             else
             {
-                chkPistols.Checked = (weaponsConfigNum & Pistols) != 0;
-                chkMagnums.Checked = (weaponsConfigNum & Magnums) != 0;
-                chkShotgun.Checked = (weaponsConfigNum & Shotgun) != 0;
-                chkUzis.Checked = (weaponsConfigNum & Uzis) != 0;
+                chkPistols.Checked = (weaponsConfigNum & WEAPON_PISTOLS) != 0;
+                chkMagnums.Checked = (weaponsConfigNum & WEAPON_MAGNUMS) != 0;
+                chkUzis.Checked = (weaponsConfigNum & WEAPON_UZIS) != 0;
+                chkShotgun.Checked = (weaponsConfigNum & WEAPON_SHOTGUN) != 0;
             }
 
             nudSaveNumber.Value = GetSaveNumber();
@@ -550,10 +551,10 @@ namespace TRR_SaveMaster
 
             byte newWeaponsConfigNum = 1;
 
-            if (chkPistols.Checked) newWeaponsConfigNum += 2;
-            if (chkMagnums.Checked) newWeaponsConfigNum += 4;
-            if (chkUzis.Checked) newWeaponsConfigNum += 8;
-            if (chkShotgun.Checked) newWeaponsConfigNum += 16;
+            if (chkPistols.Checked) newWeaponsConfigNum += WEAPON_PISTOLS;
+            if (chkMagnums.Checked) newWeaponsConfigNum += WEAPON_MAGNUMS;
+            if (chkUzis.Checked) newWeaponsConfigNum += WEAPON_UZIS;
+            if (chkShotgun.Checked) newWeaponsConfigNum += WEAPON_SHOTGUN;
 
             WriteWeaponsConfigNum(newWeaponsConfigNum);
 

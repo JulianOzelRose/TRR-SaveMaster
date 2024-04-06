@@ -36,10 +36,19 @@ namespace TRR_SaveMaster
         private int grenadeLauncherAmmoOffset2;
         private int shotgunAmmoOffset2;
 
-        // Constants
+        // Savegame constants
         private const int BASE_SAVEGAME_OFFSET_TR3 = 0xE2000;
         private const int MAX_SAVEGAME_OFFSET_TR3 = 0x152000;
         private const int SAVEGAME_ITERATOR = 0x3800;
+
+        // Weapon byte flags
+        private const byte WEAPON_PISTOLS = 2;
+        private const byte WEAPON_DEAGLE = 4;
+        private const byte WEAPON_UZIS = 8;
+        private const byte WEAPON_SHOTGUN = 16;
+        private const byte WEAPON_MP5 = 32;
+        private const byte WEAPON_ROCKET_LAUNCHER = 64;
+        private const byte WEAPON_GRENADE_LAUNCHER = 128;
 
         // Health
         private const UInt16 MAX_HEALTH_VALUE = 1000;
@@ -539,7 +548,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        public void DisplayGameInfo(CheckBox chkPistols, CheckBox chkShotgun, CheckBox chkDeagle, CheckBox chkUzi, CheckBox chkMP5,
+        public void DisplayGameInfo(CheckBox chkPistols, CheckBox chkShotgun, CheckBox chkDeagle, CheckBox chkUzis, CheckBox chkMP5,
             CheckBox chkRocketLauncher, CheckBox chkGrenadeLauncher, CheckBox chkHarpoonGun, NumericUpDown nudSaveNumber,
             NumericUpDown nudSmallMedipacks, NumericUpDown nudLargeMedipacks, NumericUpDown nudFlares,
             NumericUpDown nudShotgunAmmo, NumericUpDown nudDeagleAmmo, NumericUpDown nudGrenadeLauncherAmmo,
@@ -580,33 +589,25 @@ namespace TRR_SaveMaster
 
             byte weaponsConfigNum = GetWeaponsConfigNum();
 
-            const byte Pistols = 2;
-            const byte Deagle = 4;
-            const byte Uzis = 8;
-            const byte Shotgun = 16;
-            const byte MP5 = 32;
-            const byte RocketLauncher = 64;
-            const byte GrenadeLauncher = 128;
-
             if (weaponsConfigNum == 1)
             {
                 chkPistols.Checked = false;
-                chkShotgun.Checked = false;
                 chkDeagle.Checked = false;
-                chkUzi.Checked = false;
+                chkUzis.Checked = false;
+                chkShotgun.Checked = false;
                 chkMP5.Checked = false;
                 chkRocketLauncher.Checked = false;
                 chkGrenadeLauncher.Checked = false;
             }
             else
             {
-                chkPistols.Checked = (weaponsConfigNum & Pistols) != 0;
-                chkShotgun.Checked = (weaponsConfigNum & Shotgun) != 0;
-                chkDeagle.Checked = (weaponsConfigNum & Deagle) != 0;
-                chkUzi.Checked = (weaponsConfigNum & Uzis) != 0;
-                chkMP5.Checked = (weaponsConfigNum & MP5) != 0;
-                chkRocketLauncher.Checked = (weaponsConfigNum & RocketLauncher) != 0;
-                chkGrenadeLauncher.Checked = (weaponsConfigNum & GrenadeLauncher) != 0;
+                chkPistols.Checked = (weaponsConfigNum & WEAPON_PISTOLS) != 0;
+                chkDeagle.Checked = (weaponsConfigNum & WEAPON_DEAGLE) != 0;
+                chkUzis.Checked = (weaponsConfigNum & WEAPON_UZIS) != 0;
+                chkShotgun.Checked = (weaponsConfigNum & WEAPON_SHOTGUN) != 0;
+                chkMP5.Checked = (weaponsConfigNum & WEAPON_MP5) != 0;
+                chkRocketLauncher.Checked = (weaponsConfigNum & WEAPON_ROCKET_LAUNCHER) != 0;
+                chkGrenadeLauncher.Checked = (weaponsConfigNum & WEAPON_GRENADE_LAUNCHER) != 0;
             }
 
             chkHarpoonGun.Checked = IsHarpoonGunPresent();
@@ -633,7 +634,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        public void WriteChanges(CheckBox chkPistols, CheckBox chkDeagle, CheckBox chkUzi, CheckBox chkShotgun,
+        public void WriteChanges(CheckBox chkPistols, CheckBox chkDeagle, CheckBox chkUzis, CheckBox chkShotgun,
             CheckBox chkMP5, CheckBox chkRocketLauncher, CheckBox chkGrenadeLauncher, CheckBox chkHarpoonGun,
             NumericUpDown nudSaveNumber, NumericUpDown nudFlares, NumericUpDown nudSmallMedipacks,
             NumericUpDown nudLargeMedipacks, NumericUpDown nudShotgunAmmo, NumericUpDown nudDeagleAmmo,
@@ -649,13 +650,13 @@ namespace TRR_SaveMaster
 
             byte newWeaponsConfigNum = 1;
 
-            if (chkPistols.Checked) newWeaponsConfigNum += 2;
-            if (chkDeagle.Checked) newWeaponsConfigNum += 4;
-            if (chkUzi.Checked) newWeaponsConfigNum += 8;
-            if (chkShotgun.Checked) newWeaponsConfigNum += 16;
-            if (chkMP5.Checked) newWeaponsConfigNum += 32;
-            if (chkRocketLauncher.Checked) newWeaponsConfigNum += 64;
-            if (chkGrenadeLauncher.Checked) newWeaponsConfigNum += 128;
+            if (chkPistols.Checked) newWeaponsConfigNum += WEAPON_PISTOLS;
+            if (chkDeagle.Checked) newWeaponsConfigNum += WEAPON_DEAGLE;
+            if (chkUzis.Checked) newWeaponsConfigNum += WEAPON_UZIS;
+            if (chkShotgun.Checked) newWeaponsConfigNum += WEAPON_SHOTGUN;
+            if (chkMP5.Checked) newWeaponsConfigNum += WEAPON_MP5;
+            if (chkRocketLauncher.Checked) newWeaponsConfigNum += WEAPON_ROCKET_LAUNCHER;
+            if (chkGrenadeLauncher.Checked) newWeaponsConfigNum += WEAPON_GRENADE_LAUNCHER;
 
             WriteWeaponsConfigNum(newWeaponsConfigNum);
             WriteHarpoonGunPresent(chkHarpoonGun.Checked);
@@ -693,7 +694,7 @@ namespace TRR_SaveMaster
             WriteRocketLauncherAmmo(chkRocketLauncher.Checked, (UInt16)nudRocketLauncherAmmo.Value);
             WriteHarpoonGunAmmo(chkHarpoonGun.Checked, (UInt16)nudHarpoonGunAmmo.Value);
             WriteMP5Ammo(chkMP5.Checked, (UInt16)nudMP5Ammo.Value);
-            WriteUziAmmo(chkUzi.Checked, (UInt16)nudUziAmmo.Value);
+            WriteUziAmmo(chkUzis.Checked, (UInt16)nudUziAmmo.Value);
 
             if (levelIndex < 21)
             {
