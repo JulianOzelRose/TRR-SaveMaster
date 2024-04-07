@@ -31,7 +31,7 @@ namespace TRR_SaveMaster
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PositionForm));
-            this.grpLevel = new System.Windows.Forms.GroupBox();
+            this.grpSavegame = new System.Windows.Forms.GroupBox();
             this.picInfoDirection = new System.Windows.Forms.PictureBox();
             this.picInfoZCoordinate = new System.Windows.Forms.PictureBox();
             this.picInfoYCoordinate = new System.Windows.Forms.PictureBox();
@@ -49,7 +49,7 @@ namespace TRR_SaveMaster
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.tipPosition = new System.Windows.Forms.ToolTip(this.components);
-            this.grpLevel.SuspendLayout();
+            this.grpSavegame.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoDirection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoZCoordinate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoYCoordinate)).BeginInit();
@@ -60,26 +60,26 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudXCoordinate)).BeginInit();
             this.SuspendLayout();
             // 
-            // grpLevel
+            // grpSavegame
             // 
-            this.grpLevel.Controls.Add(this.picInfoDirection);
-            this.grpLevel.Controls.Add(this.picInfoZCoordinate);
-            this.grpLevel.Controls.Add(this.picInfoYCoordinate);
-            this.grpLevel.Controls.Add(this.picInfoXCoordinate);
-            this.grpLevel.Controls.Add(this.btnEndOfLevel);
-            this.grpLevel.Controls.Add(this.nudDirection);
-            this.grpLevel.Controls.Add(this.lblDirection);
-            this.grpLevel.Controls.Add(this.lblZCoordinate);
-            this.grpLevel.Controls.Add(this.lblYCoordinate);
-            this.grpLevel.Controls.Add(this.lblXCoordinate);
-            this.grpLevel.Controls.Add(this.nudZCoordinate);
-            this.grpLevel.Controls.Add(this.nudYCoordinate);
-            this.grpLevel.Controls.Add(this.nudXCoordinate);
-            this.grpLevel.Location = new System.Drawing.Point(12, 5);
-            this.grpLevel.Name = "grpLevel";
-            this.grpLevel.Size = new System.Drawing.Size(333, 191);
-            this.grpLevel.TabIndex = 0;
-            this.grpLevel.TabStop = false;
+            this.grpSavegame.Controls.Add(this.picInfoDirection);
+            this.grpSavegame.Controls.Add(this.picInfoZCoordinate);
+            this.grpSavegame.Controls.Add(this.picInfoYCoordinate);
+            this.grpSavegame.Controls.Add(this.picInfoXCoordinate);
+            this.grpSavegame.Controls.Add(this.btnEndOfLevel);
+            this.grpSavegame.Controls.Add(this.nudDirection);
+            this.grpSavegame.Controls.Add(this.lblDirection);
+            this.grpSavegame.Controls.Add(this.lblZCoordinate);
+            this.grpSavegame.Controls.Add(this.lblYCoordinate);
+            this.grpSavegame.Controls.Add(this.lblXCoordinate);
+            this.grpSavegame.Controls.Add(this.nudZCoordinate);
+            this.grpSavegame.Controls.Add(this.nudYCoordinate);
+            this.grpSavegame.Controls.Add(this.nudXCoordinate);
+            this.grpSavegame.Location = new System.Drawing.Point(12, 5);
+            this.grpSavegame.Name = "grpSavegame";
+            this.grpSavegame.Size = new System.Drawing.Size(333, 191);
+            this.grpSavegame.TabIndex = 0;
+            this.grpSavegame.TabStop = false;
             // 
             // picInfoDirection
             // 
@@ -303,7 +303,7 @@ namespace TRR_SaveMaster
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.grpLevel);
+            this.Controls.Add(this.grpSavegame);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -314,8 +314,8 @@ namespace TRR_SaveMaster
             this.Text = "Edit Position";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PositionForm_FormClosing);
             this.Load += new System.EventHandler(this.PositionForm_Load);
-            this.grpLevel.ResumeLayout(false);
-            this.grpLevel.PerformLayout();
+            this.grpSavegame.ResumeLayout(false);
+            this.grpSavegame.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoDirection)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoZCoordinate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoYCoordinate)).EndInit();
@@ -330,7 +330,7 @@ namespace TRR_SaveMaster
 
         #endregion
 
-        private System.Windows.Forms.GroupBox grpLevel;
+        private System.Windows.Forms.GroupBox grpSavegame;
         private System.Windows.Forms.NumericUpDown nudXCoordinate;
         private System.Windows.Forms.Label lblZCoordinate;
         private System.Windows.Forms.Label lblYCoordinate;

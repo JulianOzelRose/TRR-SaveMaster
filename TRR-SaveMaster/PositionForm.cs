@@ -8,6 +8,7 @@ namespace TRR_SaveMaster
     public partial class PositionForm : Form
     {
         // Offsets
+        private const int slotStatusOffset = 0x004;
         private int levelIndexOffset;
         private int xCoordinateOffset;
         private int yCoordinateOffset;
@@ -57,7 +58,7 @@ namespace TRR_SaveMaster
         {
             selectedSavegame = savegame;
             savegameOffset = savegame.Offset;
-            grpLevel.Text = $"{selectedSavegame}";
+            grpSavegame.Text = $"{selectedSavegame}";
         }
 
         public void SetHealthOffset(int offset)
@@ -100,6 +101,11 @@ namespace TRR_SaveMaster
             WriteByte(offset + 1, (byte)(value >> 8));
             WriteByte(offset + 2, (byte)(value >> 16));
             WriteByte(offset + 3, (byte)(value >> 24));
+        }
+
+        private bool IsSavegamePresent()
+        {
+            return ReadByte(savegameOffset + slotStatusOffset) != 0;
         }
 
         private byte GetLevelIndex()
@@ -329,6 +335,16 @@ namespace TRR_SaveMaster
 
             try
             {
+                if (!IsSavegamePresent())
+                {
+                    string errorMessage = $"Savegame no longer present.";
+                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    DisableButtons();
+                    this.Close();
+                    return;
+                }
+
                 nudXCoordinate.Value = GetXCoordinate();
                 nudYCoordinate.Value = GetYCoordinate();
                 nudZCoordinate.Value = GetZCoordinate();
@@ -348,6 +364,16 @@ namespace TRR_SaveMaster
         {
             try
             {
+                if (!IsSavegamePresent())
+                {
+                    string errorMessage = $"Savegame no longer present.";
+                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    DisableButtons();
+                    this.Close();
+                    return;
+                }
+
                 if (backupBeforeSaving)
                 {
                     CreateBackup();
