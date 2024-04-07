@@ -8,6 +8,7 @@ namespace TRR_SaveMaster
     public partial class StatisticsForm : Form
     {
         // Offsets
+        private const int slotStatusOffset = 0x004;
         private int levelIndexOffset;
         private int crystalsFoundOffset;
         private int crystalsUsedOffset;
@@ -62,7 +63,7 @@ namespace TRR_SaveMaster
         {
             selectedSavegame = savegame;
             savegameOffset = savegame.Offset;
-            grpLevel.Text = $"{selectedSavegame}";
+            grpSavegame.Text = $"{selectedSavegame}";
         }
 
         private void DetermineOffsets()
@@ -153,6 +154,16 @@ namespace TRR_SaveMaster
 
             try
             {
+                if (!IsSavegamePresent())
+                {
+                    string errorMessage = $"Savegame no longer present.";
+                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    DisableButtons();
+                    this.Close();
+                    return;
+                }
+
                 nudSecretsFound.Value = GetNumSecretsFound();
                 nudPickups.Value = GetNumPickups();
                 nudKills.Value = GetNumKills();
@@ -502,6 +513,11 @@ namespace TRR_SaveMaster
             }
         }
 
+        private bool IsSavegamePresent()
+        {
+            return ReadByte(savegameOffset + slotStatusOffset) != 0;
+        }
+
         private byte GetLevelIndex()
         {
             return ReadByte(savegameOffset + levelIndexOffset);
@@ -646,6 +662,16 @@ namespace TRR_SaveMaster
         {
             try
             {
+                if (!IsSavegamePresent())
+                {
+                    string errorMessage = $"Savegame no longer present.";
+                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    DisableButtons();
+                    this.Close();
+                    return;
+                }
+
                 if (backupBeforeSaving)
                 {
                     CreateBackup();

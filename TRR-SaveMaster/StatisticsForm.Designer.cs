@@ -30,7 +30,9 @@ namespace TRR_SaveMaster
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StatisticsForm));
-            this.grpLevel = new System.Windows.Forms.GroupBox();
+            this.grpSavegame = new System.Windows.Forms.GroupBox();
+            this.lblCrystalsUsed = new System.Windows.Forms.Label();
+            this.nudCrystalsUsed = new System.Windows.Forms.NumericUpDown();
             this.lblColon2 = new System.Windows.Forms.Label();
             this.lblColon = new System.Windows.Forms.Label();
             this.nudSeconds = new System.Windows.Forms.NumericUpDown();
@@ -61,9 +63,8 @@ namespace TRR_SaveMaster
             this.btnSave = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.nudCrystalsUsed = new System.Windows.Forms.NumericUpDown();
-            this.lblCrystalsUsed = new System.Windows.Forms.Label();
-            this.grpLevel.SuspendLayout();
+            this.grpSavegame.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCrystalsUsed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSeconds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMinutes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHours)).BeginInit();
@@ -77,45 +78,67 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudPickups)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrystalsFound)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSecretsFound)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCrystalsUsed)).BeginInit();
             this.SuspendLayout();
             // 
-            // grpLevel
+            // grpSavegame
             // 
-            this.grpLevel.Controls.Add(this.lblCrystalsUsed);
-            this.grpLevel.Controls.Add(this.nudCrystalsUsed);
-            this.grpLevel.Controls.Add(this.lblColon2);
-            this.grpLevel.Controls.Add(this.lblColon);
-            this.grpLevel.Controls.Add(this.nudSeconds);
-            this.grpLevel.Controls.Add(this.nudMinutes);
-            this.grpLevel.Controls.Add(this.nudHours);
-            this.grpLevel.Controls.Add(this.lblTimeTaken);
-            this.grpLevel.Controls.Add(this.lblDistanceTravelledUnit);
-            this.grpLevel.Controls.Add(this.lblDistanceTravelled);
-            this.grpLevel.Controls.Add(this.nudDistanceTravelled);
-            this.grpLevel.Controls.Add(this.lblSlash);
-            this.grpLevel.Controls.Add(this.nudHits);
-            this.grpLevel.Controls.Add(this.nudPickupsMax);
-            this.grpLevel.Controls.Add(this.lblOf2);
-            this.grpLevel.Controls.Add(this.nudSecretsFoundMax);
-            this.grpLevel.Controls.Add(this.lblOf);
-            this.grpLevel.Controls.Add(this.nudMedipacksUsed);
-            this.grpLevel.Controls.Add(this.nudAmmoUsed);
-            this.grpLevel.Controls.Add(this.nudKills);
-            this.grpLevel.Controls.Add(this.nudPickups);
-            this.grpLevel.Controls.Add(this.nudCrystalsFound);
-            this.grpLevel.Controls.Add(this.nudSecretsFound);
-            this.grpLevel.Controls.Add(this.lblCrystalsFound);
-            this.grpLevel.Controls.Add(this.lblMedipacksUsed);
-            this.grpLevel.Controls.Add(this.lblSecretsFound);
-            this.grpLevel.Controls.Add(this.lblAmmoUsedHits);
-            this.grpLevel.Controls.Add(this.lblPickups);
-            this.grpLevel.Controls.Add(this.lblKills);
-            this.grpLevel.Location = new System.Drawing.Point(10, 4);
-            this.grpLevel.Name = "grpLevel";
-            this.grpLevel.Size = new System.Drawing.Size(363, 267);
-            this.grpLevel.TabIndex = 8;
-            this.grpLevel.TabStop = false;
+            this.grpSavegame.Controls.Add(this.lblCrystalsUsed);
+            this.grpSavegame.Controls.Add(this.nudCrystalsUsed);
+            this.grpSavegame.Controls.Add(this.lblColon2);
+            this.grpSavegame.Controls.Add(this.lblColon);
+            this.grpSavegame.Controls.Add(this.nudSeconds);
+            this.grpSavegame.Controls.Add(this.nudMinutes);
+            this.grpSavegame.Controls.Add(this.nudHours);
+            this.grpSavegame.Controls.Add(this.lblTimeTaken);
+            this.grpSavegame.Controls.Add(this.lblDistanceTravelledUnit);
+            this.grpSavegame.Controls.Add(this.lblDistanceTravelled);
+            this.grpSavegame.Controls.Add(this.nudDistanceTravelled);
+            this.grpSavegame.Controls.Add(this.lblSlash);
+            this.grpSavegame.Controls.Add(this.nudHits);
+            this.grpSavegame.Controls.Add(this.nudPickupsMax);
+            this.grpSavegame.Controls.Add(this.lblOf2);
+            this.grpSavegame.Controls.Add(this.nudSecretsFoundMax);
+            this.grpSavegame.Controls.Add(this.lblOf);
+            this.grpSavegame.Controls.Add(this.nudMedipacksUsed);
+            this.grpSavegame.Controls.Add(this.nudAmmoUsed);
+            this.grpSavegame.Controls.Add(this.nudKills);
+            this.grpSavegame.Controls.Add(this.nudPickups);
+            this.grpSavegame.Controls.Add(this.nudCrystalsFound);
+            this.grpSavegame.Controls.Add(this.nudSecretsFound);
+            this.grpSavegame.Controls.Add(this.lblCrystalsFound);
+            this.grpSavegame.Controls.Add(this.lblMedipacksUsed);
+            this.grpSavegame.Controls.Add(this.lblSecretsFound);
+            this.grpSavegame.Controls.Add(this.lblAmmoUsedHits);
+            this.grpSavegame.Controls.Add(this.lblPickups);
+            this.grpSavegame.Controls.Add(this.lblKills);
+            this.grpSavegame.Location = new System.Drawing.Point(10, 4);
+            this.grpSavegame.Name = "grpSavegame";
+            this.grpSavegame.Size = new System.Drawing.Size(363, 267);
+            this.grpSavegame.TabIndex = 8;
+            this.grpSavegame.TabStop = false;
+            // 
+            // lblCrystalsUsed
+            // 
+            this.lblCrystalsUsed.AutoSize = true;
+            this.lblCrystalsUsed.Location = new System.Drawing.Point(11, 101);
+            this.lblCrystalsUsed.Name = "lblCrystalsUsed";
+            this.lblCrystalsUsed.Size = new System.Drawing.Size(74, 13);
+            this.lblCrystalsUsed.TabIndex = 40;
+            this.lblCrystalsUsed.Text = "Crystals Used:";
+            // 
+            // nudCrystalsUsed
+            // 
+            this.nudCrystalsUsed.Location = new System.Drawing.Point(150, 101);
+            this.nudCrystalsUsed.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudCrystalsUsed.Name = "nudCrystalsUsed";
+            this.nudCrystalsUsed.Size = new System.Drawing.Size(51, 20);
+            this.nudCrystalsUsed.TabIndex = 39;
+            this.nudCrystalsUsed.ValueChanged += new System.EventHandler(this.nudCrystalsUsed_ValueChanged);
+            this.nudCrystalsUsed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudCrystalsUsed_KeyPress);
             // 
             // lblColon2
             // 
@@ -471,29 +494,6 @@ namespace TRR_SaveMaster
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // nudCrystalsUsed
-            // 
-            this.nudCrystalsUsed.Location = new System.Drawing.Point(150, 101);
-            this.nudCrystalsUsed.Maximum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            0});
-            this.nudCrystalsUsed.Name = "nudCrystalsUsed";
-            this.nudCrystalsUsed.Size = new System.Drawing.Size(51, 20);
-            this.nudCrystalsUsed.TabIndex = 39;
-            this.nudCrystalsUsed.ValueChanged += new System.EventHandler(this.nudCrystalsUsed_ValueChanged);
-            this.nudCrystalsUsed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudCrystalsUsed_KeyPress);
-            // 
-            // lblCrystalsUsed
-            // 
-            this.lblCrystalsUsed.AutoSize = true;
-            this.lblCrystalsUsed.Location = new System.Drawing.Point(11, 101);
-            this.lblCrystalsUsed.Name = "lblCrystalsUsed";
-            this.lblCrystalsUsed.Size = new System.Drawing.Size(74, 13);
-            this.lblCrystalsUsed.TabIndex = 40;
-            this.lblCrystalsUsed.Text = "Crystals Used:";
-            // 
             // StatisticsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -502,7 +502,7 @@ namespace TRR_SaveMaster
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.grpLevel);
+            this.Controls.Add(this.grpSavegame);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -513,8 +513,9 @@ namespace TRR_SaveMaster
             this.Text = "Edit Statistics";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StatisticsForm_FormClosing);
             this.Load += new System.EventHandler(this.StatisticsForm_Load);
-            this.grpLevel.ResumeLayout(false);
-            this.grpLevel.PerformLayout();
+            this.grpSavegame.ResumeLayout(false);
+            this.grpSavegame.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCrystalsUsed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSeconds)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMinutes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHours)).EndInit();
@@ -528,14 +529,13 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudPickups)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrystalsFound)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSecretsFound)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCrystalsUsed)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox grpLevel;
+        private System.Windows.Forms.GroupBox grpSavegame;
         private System.Windows.Forms.Label lblCrystalsFound;
         private System.Windows.Forms.Label lblMedipacksUsed;
         private System.Windows.Forms.Label lblSecretsFound;
