@@ -834,7 +834,7 @@ namespace TRR_SaveMaster
                 int[] offsets1 = new int[indexData.Length];
                 int[] offsets2 = new int[indexData.Length];
 
-                for (int index = 0; index < 15; index++)
+                for (int index = 0; index < 20; index++)
                 {
                     Array.Copy(indexData, offsets1, indexData.Length);
 
