@@ -1342,6 +1342,29 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void tsmiMaxEverything_Click(object sender, EventArgs e)
+        {
+            tsmiEnableAllWeapons.PerformClick();
+            tsmiSetMaximumAmmunition.PerformClick();
+            tsmiSetMaximumItems.PerformClick();
+
+            if (tabGame.SelectedIndex == TAB_TR1 && trbHealthTR1.Enabled)
+            {
+                trbHealthTR1.Value = trbHealthTR1.Maximum;
+                lblHealthTR1.Text = "100.0%";
+            }
+            else if (tabGame.SelectedIndex == TAB_TR2 && trbHealthTR2.Enabled)
+            {
+                trbHealthTR2.Value = trbHealthTR2.Maximum;
+                lblHealthTR2.Text = "100.0%";
+            }
+            else if (tabGame.SelectedIndex == TAB_TR3 && trbHealthTR3.Enabled)
+            {
+                trbHealthTR3.Value = trbHealthTR3.Maximum;
+                lblHealthTR3.Text = "100.0%";
+            }
+        }
+
         private void EnableAllWeapons(GroupBox grpWeapons)
         {
             foreach (Control control in grpWeapons.Controls)
@@ -1384,6 +1407,7 @@ namespace TRR_SaveMaster
                 tsmiSetMaximumItems.Enabled = cmbSavegamesTR1.SelectedIndex != -1;
                 tsmiStatistics.Enabled = cmbSavegamesTR1.SelectedIndex != -1;
                 tsmiPosition.Enabled = cmbSavegamesTR1.SelectedIndex != -1;
+                tsmiMaxEverything.Enabled = cmbSavegamesTR1.SelectedIndex != -1;
             }
             else if (tabGame.SelectedIndex == TAB_TR2)
             {
@@ -1392,6 +1416,7 @@ namespace TRR_SaveMaster
                 tsmiSetMaximumItems.Enabled = cmbSavegamesTR2.SelectedIndex != -1;
                 tsmiStatistics.Enabled = cmbSavegamesTR2.SelectedIndex != -1;
                 tsmiPosition.Enabled = cmbSavegamesTR2.SelectedIndex != -1;
+                tsmiMaxEverything.Enabled = cmbSavegamesTR2.SelectedIndex != -1;
             }
             else if (tabGame.SelectedIndex == TAB_TR3)
             {
@@ -1400,6 +1425,7 @@ namespace TRR_SaveMaster
                 tsmiSetMaximumItems.Enabled = cmbSavegamesTR3.SelectedIndex != -1;
                 tsmiStatistics.Enabled = cmbSavegamesTR3.SelectedIndex != -1;
                 tsmiPosition.Enabled = cmbSavegamesTR3.SelectedIndex != -1;
+                tsmiMaxEverything.Enabled = cmbSavegamesTR3.SelectedIndex != -1;
             }
         }
 

@@ -161,6 +161,7 @@ namespace TRR_SaveMaster
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSendFeedback = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiMaxEverything = new System.Windows.Forms.ToolStripMenuItem();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR1)).BeginInit();
@@ -1550,6 +1551,7 @@ namespace TRR_SaveMaster
             this.tsmiEnableAllWeapons,
             this.tsmiSetMaximumAmmunition,
             this.tsmiSetMaximumItems,
+            this.tsmiMaxEverything,
             this.tsmiEditSeparator,
             this.tsmiStatistics,
             this.tsmiPosition});
@@ -1715,6 +1717,14 @@ namespace TRR_SaveMaster
             this.tsmiAbout.Size = new System.Drawing.Size(153, 22);
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
+            // 
+            // tsmiMaxEverything
+            // 
+            this.tsmiMaxEverything.Enabled = false;
+            this.tsmiMaxEverything.Name = "tsmiMaxEverything";
+            this.tsmiMaxEverything.Size = new System.Drawing.Size(217, 22);
+            this.tsmiMaxEverything.Text = "Max everything";
+            this.tsmiMaxEverything.Click += new System.EventHandler(this.tsmiMaxEverything_Click);
             // 
             // MainForm
             // 
@@ -1932,6 +1942,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.NumericUpDown nudSaveNumberTR3;
         private System.Windows.Forms.Label lblSaveNumberTR3;
         private System.Windows.Forms.ToolStripMenuItem tsmiPosition;
+        private System.Windows.Forms.ToolStripMenuItem tsmiMaxEverything;
     }
 }
 
