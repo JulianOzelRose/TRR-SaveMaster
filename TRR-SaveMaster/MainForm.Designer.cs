@@ -146,6 +146,7 @@ namespace TRR_SaveMaster
             this.tsmiEnableAllWeapons = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSetMaximumAmmunition = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSetMaximumItems = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiMaxEverything = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEditSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiStatistics = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPosition = new System.Windows.Forms.ToolStripMenuItem();
@@ -161,7 +162,8 @@ namespace TRR_SaveMaster
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSendFeedback = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiMaxEverything = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiDeleteSavegame = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiEditSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR1)).BeginInit();
@@ -1554,7 +1556,9 @@ namespace TRR_SaveMaster
             this.tsmiMaxEverything,
             this.tsmiEditSeparator,
             this.tsmiStatistics,
-            this.tsmiPosition});
+            this.tsmiPosition,
+            this.tsmiEditSeparator2,
+            this.tsmiDeleteSavegame});
             this.tsddbEdit.Image = ((System.Drawing.Image)(resources.GetObject("tsddbEdit.Image")));
             this.tsddbEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsddbEdit.Name = "tsddbEdit";
@@ -1585,6 +1589,14 @@ namespace TRR_SaveMaster
             this.tsmiSetMaximumItems.Size = new System.Drawing.Size(217, 22);
             this.tsmiSetMaximumItems.Text = "Set maximum items";
             this.tsmiSetMaximumItems.Click += new System.EventHandler(this.tsmiSetMaximumItems_Click);
+            // 
+            // tsmiMaxEverything
+            // 
+            this.tsmiMaxEverything.Enabled = false;
+            this.tsmiMaxEverything.Name = "tsmiMaxEverything";
+            this.tsmiMaxEverything.Size = new System.Drawing.Size(217, 22);
+            this.tsmiMaxEverything.Text = "Max everything";
+            this.tsmiMaxEverything.Click += new System.EventHandler(this.tsmiMaxEverything_Click);
             // 
             // tsmiEditSeparator
             // 
@@ -1700,31 +1712,36 @@ namespace TRR_SaveMaster
             // tsmiViewReadme
             // 
             this.tsmiViewReadme.Name = "tsmiViewReadme";
-            this.tsmiViewReadme.Size = new System.Drawing.Size(153, 22);
+            this.tsmiViewReadme.Size = new System.Drawing.Size(180, 22);
             this.tsmiViewReadme.Text = "View README";
             this.tsmiViewReadme.Click += new System.EventHandler(this.tsmiViewReadme_Click);
             // 
             // tsmiSendFeedback
             // 
             this.tsmiSendFeedback.Name = "tsmiSendFeedback";
-            this.tsmiSendFeedback.Size = new System.Drawing.Size(153, 22);
+            this.tsmiSendFeedback.Size = new System.Drawing.Size(180, 22);
             this.tsmiSendFeedback.Text = "Send Feedback";
             this.tsmiSendFeedback.Click += new System.EventHandler(this.tsmiSendFeedback_Click);
             // 
             // tsmiAbout
             // 
             this.tsmiAbout.Name = "tsmiAbout";
-            this.tsmiAbout.Size = new System.Drawing.Size(153, 22);
+            this.tsmiAbout.Size = new System.Drawing.Size(180, 22);
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
             // 
-            // tsmiMaxEverything
+            // tsmiDeleteSavegame
             // 
-            this.tsmiMaxEverything.Enabled = false;
-            this.tsmiMaxEverything.Name = "tsmiMaxEverything";
-            this.tsmiMaxEverything.Size = new System.Drawing.Size(217, 22);
-            this.tsmiMaxEverything.Text = "Max everything";
-            this.tsmiMaxEverything.Click += new System.EventHandler(this.tsmiMaxEverything_Click);
+            this.tsmiDeleteSavegame.Enabled = false;
+            this.tsmiDeleteSavegame.Name = "tsmiDeleteSavegame";
+            this.tsmiDeleteSavegame.Size = new System.Drawing.Size(217, 22);
+            this.tsmiDeleteSavegame.Text = "Delete savegame";
+            this.tsmiDeleteSavegame.Click += new System.EventHandler(this.tsmiDeleteSavegame_Click);
+            // 
+            // tsmiEditSeparator2
+            // 
+            this.tsmiEditSeparator2.Name = "tsmiEditSeparator2";
+            this.tsmiEditSeparator2.Size = new System.Drawing.Size(214, 6);
             // 
             // MainForm
             // 
@@ -1943,6 +1960,8 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.Label lblSaveNumberTR3;
         private System.Windows.Forms.ToolStripMenuItem tsmiPosition;
         private System.Windows.Forms.ToolStripMenuItem tsmiMaxEverything;
+        private System.Windows.Forms.ToolStripMenuItem tsmiDeleteSavegame;
+        private System.Windows.Forms.ToolStripSeparator tsmiEditSeparator2;
     }
 }
 

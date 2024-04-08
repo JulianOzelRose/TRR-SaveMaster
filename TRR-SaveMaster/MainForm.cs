@@ -19,6 +19,7 @@ namespace TRR_SaveMaster
         private bool isLoading = false;
         private bool userIndexChanged = true;
         private Platform platform;
+        private const int SAVEGAME_ITERATOR = 0x3800;
 
         // Utils
         readonly TR1Utilities TR1 = new TR1Utilities();
@@ -1365,6 +1366,68 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void tsmiDeleteSavegame_Click(object sender, EventArgs e)
+        {
+            Savegame savegameToDelete = null;
+
+            if (tabGame.SelectedIndex == TAB_TR1)
+            {
+                savegameToDelete = cmbSavegamesTR1.SelectedItem as Savegame;
+            }
+            else if (tabGame.SelectedIndex == TAB_TR2)
+            {
+                savegameToDelete = cmbSavegamesTR2.SelectedItem as Savegame;
+            }
+            else if (tabGame.SelectedIndex == TAB_TR3)
+            {
+                savegameToDelete = cmbSavegamesTR3.SelectedItem as Savegame;
+            }
+
+            if (savegameToDelete != null)
+            {
+                DialogResult result = MessageBox.Show($"Are you sure you wish to delete '{savegameToDelete}'?",
+                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    DeleteSavegame(savegameToDelete);
+                    PopulateSavegamesConditionally();
+                }
+            }
+        }
+
+        private void DeleteSavegame(Savegame savegame)
+        {
+            string deletedSavegameString = savegame.ToString();
+
+            try
+            {
+                if (tsmiBackupBeforeSaving.Checked)
+                {
+                    CreateBackup();
+                }
+
+                using (FileStream saveFile = new FileStream(savegamePath, FileMode.Open, FileAccess.Write, FileShare.ReadWrite))
+                {
+                    for (int offset = savegame.Offset; offset < (savegame.Offset + SAVEGAME_ITERATOR); offset++)
+                    {
+                        saveFile.Seek(offset, SeekOrigin.Begin);
+                        saveFile.WriteByte(0);
+                    }
+                }
+
+                slblStatus.Text = $"Successfully deleted savegame: '{deletedSavegameString}'";
+
+                MessageBox.Show($"Successfully deleted '{deletedSavegameString}'.",
+                    "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                slblStatus.Text = $"Error deleting savegame.";
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void EnableAllWeapons(GroupBox grpWeapons)
         {
             foreach (Control control in grpWeapons.Controls)
@@ -1408,6 +1471,7 @@ namespace TRR_SaveMaster
                 tsmiStatistics.Enabled = cmbSavegamesTR1.SelectedIndex != -1;
                 tsmiPosition.Enabled = cmbSavegamesTR1.SelectedIndex != -1;
                 tsmiMaxEverything.Enabled = cmbSavegamesTR1.SelectedIndex != -1;
+                tsmiDeleteSavegame.Enabled = cmbSavegamesTR1.SelectedIndex != -1;
             }
             else if (tabGame.SelectedIndex == TAB_TR2)
             {
@@ -1417,6 +1481,7 @@ namespace TRR_SaveMaster
                 tsmiStatistics.Enabled = cmbSavegamesTR2.SelectedIndex != -1;
                 tsmiPosition.Enabled = cmbSavegamesTR2.SelectedIndex != -1;
                 tsmiMaxEverything.Enabled = cmbSavegamesTR2.SelectedIndex != -1;
+                tsmiDeleteSavegame.Enabled = cmbSavegamesTR2.SelectedIndex != -1;
             }
             else if (tabGame.SelectedIndex == TAB_TR3)
             {
@@ -1426,6 +1491,7 @@ namespace TRR_SaveMaster
                 tsmiStatistics.Enabled = cmbSavegamesTR3.SelectedIndex != -1;
                 tsmiPosition.Enabled = cmbSavegamesTR3.SelectedIndex != -1;
                 tsmiMaxEverything.Enabled = cmbSavegamesTR3.SelectedIndex != -1;
+                tsmiDeleteSavegame.Enabled = cmbSavegamesTR3.SelectedIndex != -1;
             }
         }
 
