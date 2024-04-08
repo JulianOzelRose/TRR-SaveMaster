@@ -5,7 +5,8 @@ the section below. Additionally, technical details on reverse engineering the To
 For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder or delete savegames,
 check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
-![TRR-SaveMaster-UI](https://github.com/JulianOzelRose/TRR-SaveMaster/assets/95890436/5ebcc4b9-ff5c-4303-bcb8-4706c15a1124)
+![TRR-SaveMaster-UI](https://github.com/JulianOzelRose/TRR-SaveMaster/assets/95890436/45dfea37-abd2-4a68-87dd-c451fa30264f)
+
 
 ## Installation and use
 To download and use this savegame editor, simply navigate to the [Releases](https://github.com/JulianOzelRose/TRR-SaveMaster/releases) page,
@@ -170,6 +171,61 @@ public int GetHealthOffset()
     return -1;
 }
 ```
+
+## Using bitwise to determine and write weapons present
+In all 3 games, weapons information is stored on a single offset, referred to in this editor's code as `weaponsConfigNum`. It has a base number of 1,
+which indicates no weapons present. Each weapon added corresponds to a unique byte flag, which can be found in the sections below. To determine which weapons
+are present in inventory, you can use bitwise on the weapons configuration number. The code below demonstrates how this can be done for Tomb Raider II.
+
+```
+private const byte WEAPON_PISTOLS = 2;
+private const byte WEAPON_AUTOMATIC_PISTOLS = 4;
+private const byte WEAPON_UZIS = 8;
+private const byte WEAPON_SHOTGUN = 16;
+private const byte WEAPON_M16 = 32;
+private const byte WEAPON_GRENADE_LAUNCHER = 64;
+private const byte WEAPON_HARPOON_GUN = 128;
+
+byte weaponsConfigNum = GetWeaponsConfigNum();
+
+if (weaponsConfigNum == 1)
+{
+    chkPistols.Checked = false;
+    chkAutomaticPistols.Checked = false;
+    chkUzis.Checked = false;
+    chkShotgun.Checked = false;
+    chkM16.Checked = false;
+    chkGrenadeLauncher.Checked = false;
+    chkHarpoonGun.Checked = false;
+}
+else
+{
+    chkPistols.Checked = (weaponsConfigNum & WEAPON_PISTOLS) != 0;
+    chkAutomaticPistols.Checked = (weaponsConfigNum & WEAPON_AUTOMATIC_PISTOLS) != 0;
+    chkUzis.Checked = (weaponsConfigNum & WEAPON_UZIS) != 0;
+    chkShotgun.Checked = (weaponsConfigNum & WEAPON_SHOTGUN) != 0;
+    chkM16.Checked = (weaponsConfigNum & WEAPON_M16) != 0;
+    chkGrenadeLauncher.Checked = (weaponsConfigNum & WEAPON_GRENADE_LAUNCHER) != 0;
+    chkHarpoonGun.Checked = (weaponsConfigNum & WEAPON_HARPOON_GUN) != 0;
+}
+```
+
+When writing to this variable, the logic is the same, but only in reverse. Begin with the
+base number of 1, and increment conditionally based on which weapons are checkmarked in the interface.
+See the code blow.
+
+```
+byte newWeaponsConfigNum = 1;
+
+if (chkPistols.Checked) newWeaponsConfigNum += WEAPON_PISTOLS;
+if (chkAutomaticPistols.Checked) newWeaponsConfigNum += WEAPON_AUTOMATIC_PISTOLS;
+if (chkUzis.Checked) newWeaponsConfigNum += WEAPON_UZIS;
+if (chkShotgun.Checked) newWeaponsConfigNum += WEAPON_SHOTGUN;
+if (chkM16.Checked) newWeaponsConfigNum += WEAPON_M16;
+if (chkGrenadeLauncher.Checked) newWeaponsConfigNum += WEAPON_GRENADE_LAUNCHER;
+if (chkHarpoonGun.Checked) newWeaponsConfigNum += WEAPON_HARPOON_GUN;
+```
+
 
 ## Reverse engineering Tomb Raider I savegames
 Because almost all of the offsets in Tomb Raider I are static, it is the most straightforward game to reverse of the trilogy. Weapons inventory configuration
@@ -349,7 +405,7 @@ in inventory along with the byte flags. See the table below for Tomb Raider III 
 | Weapon           | Byte flag        |
 |:-----------------|:-----------------|
 | Pistols          | 2                |
-| Deagle           | 4                |
+| Desert Eagle     | 4                |
 | Uzis             | 8                |
 | Shotgun          | 16               |
 | MP5              | 32               |
@@ -386,7 +442,7 @@ private int GetSecondaryAmmoIndex()
         int[] offsets1 = new int[indexData.Length];
         int[] offsets2 = new int[indexData.Length];
 
-        for (int index = 0; index < 15; index++)
+        for (int index = 0; index < 20; index++)
         {
             Array.Copy(indexData, offsets1, indexData.Length);
 
