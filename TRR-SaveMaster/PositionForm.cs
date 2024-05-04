@@ -13,7 +13,7 @@ namespace TRR_SaveMaster
         private int xCoordinateOffset;
         private int yCoordinateOffset;
         private int zCoordinateOffset;
-        private int directionOffset;
+        private int orientationOffset;
 
         // Tabs
         private const int TAB_TR1 = 0;
@@ -153,7 +153,7 @@ namespace TRR_SaveMaster
             nudXCoordinate.Value = endOfLevelCoordinates[0];
             nudYCoordinate.Value = endOfLevelCoordinates[1];
             nudZCoordinate.Value = endOfLevelCoordinates[2];
-            nudDirection.Value = (byte)endOfLevelCoordinates[3];
+            nudOrientation.Value = (byte)endOfLevelCoordinates[3];
         }
 
         private void EnableEndOfLevelButtonConditionally()
@@ -286,7 +286,7 @@ namespace TRR_SaveMaster
             xCoordinateOffset = healthOffset - 0x24;
             yCoordinateOffset = healthOffset - 0x20;
             zCoordinateOffset = healthOffset - 0x1C;
-            directionOffset = healthOffset - 0x10;
+            orientationOffset = healthOffset - 0x10;
         }
 
         private Int32 GetXCoordinate()
@@ -304,9 +304,9 @@ namespace TRR_SaveMaster
             return ReadInt32(savegameOffset + zCoordinateOffset);
         }
 
-        private byte GetDirectionValue()
+        private byte GetOrientation()
         {
-            return ReadByte(savegameOffset + directionOffset);
+            return ReadByte(savegameOffset + orientationOffset);
         }
 
         private void WriteXCoordinate(Int32 value)
@@ -324,9 +324,9 @@ namespace TRR_SaveMaster
             WriteInt32(savegameOffset + zCoordinateOffset, value);
         }
 
-        private void WriteDirectionValue(byte value)
+        private void WriteOrientation(byte value)
         {
-            WriteByte(savegameOffset + directionOffset, value);
+            WriteByte(savegameOffset + orientationOffset, value);
         }
 
         private void DisplayCoordinates()
@@ -348,7 +348,7 @@ namespace TRR_SaveMaster
                 nudXCoordinate.Value = GetXCoordinate();
                 nudYCoordinate.Value = GetYCoordinate();
                 nudZCoordinate.Value = GetZCoordinate();
-                nudDirection.Value = GetDirectionValue();
+                nudOrientation.Value = GetOrientation();
             }
             catch (Exception ex)
             {
@@ -384,7 +384,7 @@ namespace TRR_SaveMaster
                 WriteXCoordinate((Int32)nudXCoordinate.Value);
                 WriteYCoordinate((Int32)nudYCoordinate.Value);
                 WriteZCoordinate((Int32)nudZCoordinate.Value);
-                WriteDirectionValue((byte)nudDirection.Value);
+                WriteOrientation((byte)nudOrientation.Value);
 
                 DisableButtons();
 
@@ -449,7 +449,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void nudDirection_ValueChanged(object sender, EventArgs e)
+        private void nudOrientation_ValueChanged(object sender, EventArgs e)
         {
             if (!isLoading)
             {
@@ -481,7 +481,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void nudDirection_KeyPress(object sender, KeyPressEventArgs e)
+        private void nudOrientation_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (char.IsDigit(e.KeyChar))
             {
