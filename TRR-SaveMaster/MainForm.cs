@@ -1407,6 +1407,8 @@ namespace TRR_SaveMaster
                     CreateBackup();
                 }
 
+                File.SetAttributes(savegamePath, File.GetAttributes(savegamePath) & ~FileAttributes.ReadOnly);
+
                 using (FileStream saveFile = new FileStream(savegamePath, FileMode.Open, FileAccess.Write, FileShare.ReadWrite))
                 {
                     for (int offset = savegame.Offset; offset < (savegame.Offset + SAVEGAME_ITERATOR); offset++)
