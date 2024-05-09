@@ -89,7 +89,7 @@ namespace TRR_SaveMaster
             this.picInfoRoom.Size = new System.Drawing.Size(20, 20);
             this.picInfoRoom.TabIndex = 11;
             this.picInfoRoom.TabStop = false;
-            this.tipPosition.SetToolTip(this.picInfoRoom, "Modifies movement relative to Lara\'s facing direction.");
+            this.tipPosition.SetToolTip(this.picInfoRoom, "Represents the unique room number that Lara is located in.");
             // 
             // picInfoZCoordinate
             // 
