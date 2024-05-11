@@ -13,6 +13,7 @@ namespace TRR_SaveMaster
         private int xCoordinateOffset;
         private int yCoordinateOffset;
         private int zCoordinateOffset;
+        private int orientationOffset;
         private int roomOffset;
 
         // Tabs
@@ -85,6 +86,14 @@ namespace TRR_SaveMaster
             }
         }
 
+        private Int16 ReadInt16(int offset)
+        {
+            byte lowerByte = ReadByte(offset);
+            byte upperByte = ReadByte(offset + 1);
+
+            return (Int16)(lowerByte + (upperByte << 8));
+        }
+
         private Int32 ReadInt32(int offset)
         {
             byte byte1 = ReadByte(offset);
@@ -93,6 +102,12 @@ namespace TRR_SaveMaster
             byte byte4 = ReadByte(offset + 3);
 
             return (Int32)(byte1 + (byte2 << 8) + (byte3 << 16) + (byte4 << 24));
+        }
+
+        private void WriteInt16(int offset, Int16 value)
+        {
+            WriteByte(offset, (byte)value);
+            WriteByte(offset + 1, (byte)(value >> 8));
         }
 
         private void WriteInt32(int offset, Int32 value)
@@ -286,6 +301,7 @@ namespace TRR_SaveMaster
             xCoordinateOffset = healthOffset - 0x24;
             yCoordinateOffset = healthOffset - 0x20;
             zCoordinateOffset = healthOffset - 0x1C;
+            orientationOffset = healthOffset - 0x16;
             roomOffset = healthOffset - 0x10;
         }
 
@@ -302,6 +318,14 @@ namespace TRR_SaveMaster
         private Int32 GetZCoordinate()
         {
             return ReadInt32(savegameOffset + zCoordinateOffset);
+        }
+
+        private Int16 GetOrientation()
+        {
+            Int16 rawValue = ReadInt16(savegameOffset + orientationOffset);
+            double degrees = rawValue * 180.0 / Int16.MaxValue;
+
+            return (degrees > 0) ? (Int16)degrees : (Int16)(-degrees);
         }
 
         private byte GetRoom()
@@ -322,6 +346,12 @@ namespace TRR_SaveMaster
         private void WriteZCoordinate(Int32 value)
         {
             WriteInt32(savegameOffset + zCoordinateOffset, value);
+        }
+
+        private void WriteOrientation(Int16 value)
+        {
+            Int16 rawValue = (Int16)(value * Int16.MaxValue / 180);
+            WriteInt16(savegameOffset + orientationOffset, rawValue);
         }
 
         private void WriteRoom(byte value)
@@ -348,6 +378,7 @@ namespace TRR_SaveMaster
                 nudXCoordinate.Value = GetXCoordinate();
                 nudYCoordinate.Value = GetYCoordinate();
                 nudZCoordinate.Value = GetZCoordinate();
+                nudOrientation.Value = GetOrientation();
                 nudRoom.Value = GetRoom();
             }
             catch (Exception ex)
@@ -384,6 +415,7 @@ namespace TRR_SaveMaster
                 WriteXCoordinate((Int32)nudXCoordinate.Value);
                 WriteYCoordinate((Int32)nudYCoordinate.Value);
                 WriteZCoordinate((Int32)nudZCoordinate.Value);
+                WriteOrientation((Int16)nudOrientation.Value);
                 WriteRoom((byte)nudRoom.Value);
 
                 DisableButtons();
@@ -457,6 +489,14 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void nudOrientation_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLoading)
+            {
+                EnableButtons();
+            }
+        }
+
         private void nudXCoordinate_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (char.IsDigit(e.KeyChar))
@@ -482,6 +522,14 @@ namespace TRR_SaveMaster
         }
 
         private void nudRoom_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar))
+            {
+                EnableButtons();
+            }
+        }
+
+        private void nudOrientation_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (char.IsDigit(e.KeyChar))
             {

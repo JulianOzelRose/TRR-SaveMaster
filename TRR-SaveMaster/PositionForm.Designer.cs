@@ -32,6 +32,9 @@ namespace TRR_SaveMaster
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PositionForm));
             this.grpSavegame = new System.Windows.Forms.GroupBox();
+            this.lblOrientation = new System.Windows.Forms.Label();
+            this.picInfoOrientation = new System.Windows.Forms.PictureBox();
+            this.nudOrientation = new System.Windows.Forms.NumericUpDown();
             this.picInfoRoom = new System.Windows.Forms.PictureBox();
             this.picInfoZCoordinate = new System.Windows.Forms.PictureBox();
             this.picInfoYCoordinate = new System.Windows.Forms.PictureBox();
@@ -50,6 +53,8 @@ namespace TRR_SaveMaster
             this.btnClose = new System.Windows.Forms.Button();
             this.tipPosition = new System.Windows.Forms.ToolTip(this.components);
             this.grpSavegame.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picInfoOrientation)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudOrientation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoRoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoZCoordinate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoYCoordinate)).BeginInit();
@@ -62,6 +67,9 @@ namespace TRR_SaveMaster
             // 
             // grpSavegame
             // 
+            this.grpSavegame.Controls.Add(this.lblOrientation);
+            this.grpSavegame.Controls.Add(this.picInfoOrientation);
+            this.grpSavegame.Controls.Add(this.nudOrientation);
             this.grpSavegame.Controls.Add(this.picInfoRoom);
             this.grpSavegame.Controls.Add(this.picInfoZCoordinate);
             this.grpSavegame.Controls.Add(this.picInfoYCoordinate);
@@ -77,14 +85,47 @@ namespace TRR_SaveMaster
             this.grpSavegame.Controls.Add(this.nudXCoordinate);
             this.grpSavegame.Location = new System.Drawing.Point(12, 5);
             this.grpSavegame.Name = "grpSavegame";
-            this.grpSavegame.Size = new System.Drawing.Size(333, 191);
+            this.grpSavegame.Size = new System.Drawing.Size(333, 215);
             this.grpSavegame.TabIndex = 0;
             this.grpSavegame.TabStop = false;
+            // 
+            // lblOrientation
+            // 
+            this.lblOrientation.AutoSize = true;
+            this.lblOrientation.Location = new System.Drawing.Point(12, 111);
+            this.lblOrientation.Name = "lblOrientation";
+            this.lblOrientation.Size = new System.Drawing.Size(61, 13);
+            this.lblOrientation.TabIndex = 14;
+            this.lblOrientation.Text = "Orientation:";
+            // 
+            // picInfoOrientation
+            // 
+            this.picInfoOrientation.Image = global::TRR_SaveMaster.Properties.Resources.ToolTip_Image;
+            this.picInfoOrientation.Location = new System.Drawing.Point(300, 111);
+            this.picInfoOrientation.Name = "picInfoOrientation";
+            this.picInfoOrientation.Size = new System.Drawing.Size(20, 20);
+            this.picInfoOrientation.TabIndex = 13;
+            this.picInfoOrientation.TabStop = false;
+            this.tipPosition.SetToolTip(this.picInfoOrientation, "Represents the direction Lara is facing in degrees. Valid range is 0 - 359.");
+            // 
+            // nudOrientation
+            // 
+            this.nudOrientation.Location = new System.Drawing.Point(201, 111);
+            this.nudOrientation.Maximum = new decimal(new int[] {
+            359,
+            0,
+            0,
+            0});
+            this.nudOrientation.Name = "nudOrientation";
+            this.nudOrientation.Size = new System.Drawing.Size(88, 20);
+            this.nudOrientation.TabIndex = 12;
+            this.nudOrientation.ValueChanged += new System.EventHandler(this.nudOrientation_ValueChanged);
+            this.nudOrientation.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudOrientation_KeyPress);
             // 
             // picInfoRoom
             // 
             this.picInfoRoom.Image = global::TRR_SaveMaster.Properties.Resources.ToolTip_Image;
-            this.picInfoRoom.Location = new System.Drawing.Point(300, 111);
+            this.picInfoRoom.Location = new System.Drawing.Point(300, 137);
             this.picInfoRoom.Name = "picInfoRoom";
             this.picInfoRoom.Size = new System.Drawing.Size(20, 20);
             this.picInfoRoom.TabIndex = 11;
@@ -127,7 +168,7 @@ namespace TRR_SaveMaster
             // btnEndOfLevel
             // 
             this.btnEndOfLevel.Enabled = false;
-            this.btnEndOfLevel.Location = new System.Drawing.Point(107, 147);
+            this.btnEndOfLevel.Location = new System.Drawing.Point(110, 172);
             this.btnEndOfLevel.Name = "btnEndOfLevel";
             this.btnEndOfLevel.Size = new System.Drawing.Size(110, 23);
             this.btnEndOfLevel.TabIndex = 5;
@@ -137,7 +178,7 @@ namespace TRR_SaveMaster
             // 
             // nudRoom
             // 
-            this.nudRoom.Location = new System.Drawing.Point(201, 111);
+            this.nudRoom.Location = new System.Drawing.Point(201, 137);
             this.nudRoom.Maximum = new decimal(new int[] {
             255,
             0,
@@ -152,7 +193,7 @@ namespace TRR_SaveMaster
             // lblRoom
             // 
             this.lblRoom.AutoSize = true;
-            this.lblRoom.Location = new System.Drawing.Point(12, 111);
+            this.lblRoom.Location = new System.Drawing.Point(12, 137);
             this.lblRoom.Name = "lblRoom";
             this.lblRoom.Size = new System.Drawing.Size(38, 13);
             this.lblRoom.TabIndex = 6;
@@ -260,7 +301,7 @@ namespace TRR_SaveMaster
             // btnSave
             // 
             this.btnSave.Enabled = false;
-            this.btnSave.Location = new System.Drawing.Point(270, 202);
+            this.btnSave.Location = new System.Drawing.Point(270, 226);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 1;
@@ -271,7 +312,7 @@ namespace TRR_SaveMaster
             // btnCancel
             // 
             this.btnCancel.Enabled = false;
-            this.btnCancel.Location = new System.Drawing.Point(189, 202);
+            this.btnCancel.Location = new System.Drawing.Point(189, 226);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 2;
@@ -281,7 +322,7 @@ namespace TRR_SaveMaster
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(108, 202);
+            this.btnClose.Location = new System.Drawing.Point(108, 226);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 3;
@@ -299,7 +340,7 @@ namespace TRR_SaveMaster
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(357, 235);
+            this.ClientSize = new System.Drawing.Size(357, 256);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
@@ -316,6 +357,8 @@ namespace TRR_SaveMaster
             this.Load += new System.EventHandler(this.PositionForm_Load);
             this.grpSavegame.ResumeLayout(false);
             this.grpSavegame.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picInfoOrientation)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudOrientation)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoRoom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoZCoordinate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoYCoordinate)).EndInit();
@@ -348,5 +391,8 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.PictureBox picInfoYCoordinate;
         private System.Windows.Forms.PictureBox picInfoXCoordinate;
         private System.Windows.Forms.ToolTip tipPosition;
+        private System.Windows.Forms.Label lblOrientation;
+        private System.Windows.Forms.PictureBox picInfoOrientation;
+        private System.Windows.Forms.NumericUpDown nudOrientation;
     }
 }
