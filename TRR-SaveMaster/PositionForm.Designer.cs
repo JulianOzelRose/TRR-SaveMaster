@@ -52,6 +52,13 @@ namespace TRR_SaveMaster
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.tipPosition = new System.Windows.Forms.ToolTip(this.components);
+            this.btnSecret2 = new System.Windows.Forms.Button();
+            this.btnSecret1 = new System.Windows.Forms.Button();
+            this.btnSecret3 = new System.Windows.Forms.Button();
+            this.btnSecret4 = new System.Windows.Forms.Button();
+            this.btnSecret5 = new System.Windows.Forms.Button();
+            this.btnSecret6 = new System.Windows.Forms.Button();
+            this.lblSeparator = new System.Windows.Forms.Label();
             this.grpSavegame.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoOrientation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOrientation)).BeginInit();
@@ -67,6 +74,13 @@ namespace TRR_SaveMaster
             // 
             // grpSavegame
             // 
+            this.grpSavegame.Controls.Add(this.lblSeparator);
+            this.grpSavegame.Controls.Add(this.btnSecret6);
+            this.grpSavegame.Controls.Add(this.btnSecret5);
+            this.grpSavegame.Controls.Add(this.btnSecret4);
+            this.grpSavegame.Controls.Add(this.btnSecret3);
+            this.grpSavegame.Controls.Add(this.btnSecret1);
+            this.grpSavegame.Controls.Add(this.btnSecret2);
             this.grpSavegame.Controls.Add(this.lblOrientation);
             this.grpSavegame.Controls.Add(this.picInfoOrientation);
             this.grpSavegame.Controls.Add(this.nudOrientation);
@@ -85,14 +99,14 @@ namespace TRR_SaveMaster
             this.grpSavegame.Controls.Add(this.nudXCoordinate);
             this.grpSavegame.Location = new System.Drawing.Point(12, 5);
             this.grpSavegame.Name = "grpSavegame";
-            this.grpSavegame.Size = new System.Drawing.Size(333, 215);
+            this.grpSavegame.Size = new System.Drawing.Size(333, 271);
             this.grpSavegame.TabIndex = 0;
             this.grpSavegame.TabStop = false;
             // 
             // lblOrientation
             // 
             this.lblOrientation.AutoSize = true;
-            this.lblOrientation.Location = new System.Drawing.Point(12, 111);
+            this.lblOrientation.Location = new System.Drawing.Point(12, 103);
             this.lblOrientation.Name = "lblOrientation";
             this.lblOrientation.Size = new System.Drawing.Size(61, 13);
             this.lblOrientation.TabIndex = 14;
@@ -101,7 +115,7 @@ namespace TRR_SaveMaster
             // picInfoOrientation
             // 
             this.picInfoOrientation.Image = global::TRR_SaveMaster.Properties.Resources.ToolTip_Image;
-            this.picInfoOrientation.Location = new System.Drawing.Point(300, 111);
+            this.picInfoOrientation.Location = new System.Drawing.Point(300, 103);
             this.picInfoOrientation.Name = "picInfoOrientation";
             this.picInfoOrientation.Size = new System.Drawing.Size(20, 20);
             this.picInfoOrientation.TabIndex = 13;
@@ -110,7 +124,7 @@ namespace TRR_SaveMaster
             // 
             // nudOrientation
             // 
-            this.nudOrientation.Location = new System.Drawing.Point(201, 111);
+            this.nudOrientation.Location = new System.Drawing.Point(201, 103);
             this.nudOrientation.Maximum = new decimal(new int[] {
             359,
             0,
@@ -125,7 +139,7 @@ namespace TRR_SaveMaster
             // picInfoRoom
             // 
             this.picInfoRoom.Image = global::TRR_SaveMaster.Properties.Resources.ToolTip_Image;
-            this.picInfoRoom.Location = new System.Drawing.Point(300, 137);
+            this.picInfoRoom.Location = new System.Drawing.Point(300, 129);
             this.picInfoRoom.Name = "picInfoRoom";
             this.picInfoRoom.Size = new System.Drawing.Size(20, 20);
             this.picInfoRoom.TabIndex = 11;
@@ -135,7 +149,7 @@ namespace TRR_SaveMaster
             // picInfoZCoordinate
             // 
             this.picInfoZCoordinate.Image = global::TRR_SaveMaster.Properties.Resources.ToolTip_Image;
-            this.picInfoZCoordinate.Location = new System.Drawing.Point(300, 85);
+            this.picInfoZCoordinate.Location = new System.Drawing.Point(300, 77);
             this.picInfoZCoordinate.Name = "picInfoZCoordinate";
             this.picInfoZCoordinate.Size = new System.Drawing.Size(20, 20);
             this.picInfoZCoordinate.TabIndex = 10;
@@ -146,7 +160,7 @@ namespace TRR_SaveMaster
             // picInfoYCoordinate
             // 
             this.picInfoYCoordinate.Image = global::TRR_SaveMaster.Properties.Resources.ToolTip_Image;
-            this.picInfoYCoordinate.Location = new System.Drawing.Point(300, 59);
+            this.picInfoYCoordinate.Location = new System.Drawing.Point(300, 51);
             this.picInfoYCoordinate.Name = "picInfoYCoordinate";
             this.picInfoYCoordinate.Size = new System.Drawing.Size(20, 20);
             this.picInfoYCoordinate.TabIndex = 9;
@@ -157,7 +171,7 @@ namespace TRR_SaveMaster
             // picInfoXCoordinate
             // 
             this.picInfoXCoordinate.Image = global::TRR_SaveMaster.Properties.Resources.ToolTip_Image;
-            this.picInfoXCoordinate.Location = new System.Drawing.Point(300, 33);
+            this.picInfoXCoordinate.Location = new System.Drawing.Point(300, 25);
             this.picInfoXCoordinate.Name = "picInfoXCoordinate";
             this.picInfoXCoordinate.Size = new System.Drawing.Size(20, 20);
             this.picInfoXCoordinate.TabIndex = 8;
@@ -168,9 +182,9 @@ namespace TRR_SaveMaster
             // btnEndOfLevel
             // 
             this.btnEndOfLevel.Enabled = false;
-            this.btnEndOfLevel.Location = new System.Drawing.Point(110, 172);
+            this.btnEndOfLevel.Location = new System.Drawing.Point(117, 178);
             this.btnEndOfLevel.Name = "btnEndOfLevel";
-            this.btnEndOfLevel.Size = new System.Drawing.Size(110, 23);
+            this.btnEndOfLevel.Size = new System.Drawing.Size(100, 23);
             this.btnEndOfLevel.TabIndex = 5;
             this.btnEndOfLevel.Text = "End of Level";
             this.btnEndOfLevel.UseVisualStyleBackColor = true;
@@ -178,7 +192,7 @@ namespace TRR_SaveMaster
             // 
             // nudRoom
             // 
-            this.nudRoom.Location = new System.Drawing.Point(201, 137);
+            this.nudRoom.Location = new System.Drawing.Point(201, 129);
             this.nudRoom.Maximum = new decimal(new int[] {
             255,
             0,
@@ -193,7 +207,7 @@ namespace TRR_SaveMaster
             // lblRoom
             // 
             this.lblRoom.AutoSize = true;
-            this.lblRoom.Location = new System.Drawing.Point(12, 137);
+            this.lblRoom.Location = new System.Drawing.Point(12, 129);
             this.lblRoom.Name = "lblRoom";
             this.lblRoom.Size = new System.Drawing.Size(38, 13);
             this.lblRoom.TabIndex = 6;
@@ -202,7 +216,7 @@ namespace TRR_SaveMaster
             // lblZCoordinate
             // 
             this.lblZCoordinate.AutoSize = true;
-            this.lblZCoordinate.Location = new System.Drawing.Point(12, 85);
+            this.lblZCoordinate.Location = new System.Drawing.Point(12, 77);
             this.lblZCoordinate.Name = "lblZCoordinate";
             this.lblZCoordinate.Size = new System.Drawing.Size(63, 13);
             this.lblZCoordinate.TabIndex = 5;
@@ -211,7 +225,7 @@ namespace TRR_SaveMaster
             // lblYCoordinate
             // 
             this.lblYCoordinate.AutoSize = true;
-            this.lblYCoordinate.Location = new System.Drawing.Point(12, 59);
+            this.lblYCoordinate.Location = new System.Drawing.Point(12, 51);
             this.lblYCoordinate.Name = "lblYCoordinate";
             this.lblYCoordinate.Size = new System.Drawing.Size(63, 13);
             this.lblYCoordinate.TabIndex = 4;
@@ -220,7 +234,7 @@ namespace TRR_SaveMaster
             // lblXCoordinate
             // 
             this.lblXCoordinate.AutoSize = true;
-            this.lblXCoordinate.Location = new System.Drawing.Point(12, 33);
+            this.lblXCoordinate.Location = new System.Drawing.Point(12, 25);
             this.lblXCoordinate.Name = "lblXCoordinate";
             this.lblXCoordinate.Size = new System.Drawing.Size(63, 13);
             this.lblXCoordinate.TabIndex = 3;
@@ -233,7 +247,7 @@ namespace TRR_SaveMaster
             0,
             0,
             0});
-            this.nudZCoordinate.Location = new System.Drawing.Point(201, 85);
+            this.nudZCoordinate.Location = new System.Drawing.Point(201, 77);
             this.nudZCoordinate.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -257,7 +271,7 @@ namespace TRR_SaveMaster
             0,
             0,
             0});
-            this.nudYCoordinate.Location = new System.Drawing.Point(201, 59);
+            this.nudYCoordinate.Location = new System.Drawing.Point(201, 51);
             this.nudYCoordinate.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -281,7 +295,7 @@ namespace TRR_SaveMaster
             0,
             0,
             0});
-            this.nudXCoordinate.Location = new System.Drawing.Point(201, 33);
+            this.nudXCoordinate.Location = new System.Drawing.Point(201, 25);
             this.nudXCoordinate.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -301,7 +315,7 @@ namespace TRR_SaveMaster
             // btnSave
             // 
             this.btnSave.Enabled = false;
-            this.btnSave.Location = new System.Drawing.Point(270, 226);
+            this.btnSave.Location = new System.Drawing.Point(270, 282);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 1;
@@ -312,7 +326,7 @@ namespace TRR_SaveMaster
             // btnCancel
             // 
             this.btnCancel.Enabled = false;
-            this.btnCancel.Location = new System.Drawing.Point(189, 226);
+            this.btnCancel.Location = new System.Drawing.Point(189, 282);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 2;
@@ -322,7 +336,7 @@ namespace TRR_SaveMaster
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(108, 226);
+            this.btnClose.Location = new System.Drawing.Point(108, 282);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 3;
@@ -336,11 +350,85 @@ namespace TRR_SaveMaster
             this.tipPosition.InitialDelay = 500;
             this.tipPosition.ReshowDelay = 100;
             // 
+            // btnSecret2
+            // 
+            this.btnSecret2.Enabled = false;
+            this.btnSecret2.Location = new System.Drawing.Point(117, 207);
+            this.btnSecret2.Name = "btnSecret2";
+            this.btnSecret2.Size = new System.Drawing.Size(100, 23);
+            this.btnSecret2.TabIndex = 15;
+            this.btnSecret2.Text = "Secret 2";
+            this.btnSecret2.UseVisualStyleBackColor = true;
+            this.btnSecret2.Click += new System.EventHandler(this.btnSecret2_Click);
+            // 
+            // btnSecret1
+            // 
+            this.btnSecret1.Enabled = false;
+            this.btnSecret1.Location = new System.Drawing.Point(11, 207);
+            this.btnSecret1.Name = "btnSecret1";
+            this.btnSecret1.Size = new System.Drawing.Size(100, 23);
+            this.btnSecret1.TabIndex = 16;
+            this.btnSecret1.Text = "Secret 1";
+            this.btnSecret1.UseVisualStyleBackColor = true;
+            this.btnSecret1.Click += new System.EventHandler(this.btnSecret1_Click);
+            // 
+            // btnSecret3
+            // 
+            this.btnSecret3.Enabled = false;
+            this.btnSecret3.Location = new System.Drawing.Point(221, 207);
+            this.btnSecret3.Name = "btnSecret3";
+            this.btnSecret3.Size = new System.Drawing.Size(100, 23);
+            this.btnSecret3.TabIndex = 17;
+            this.btnSecret3.Text = "Secret 3";
+            this.btnSecret3.UseVisualStyleBackColor = true;
+            this.btnSecret3.Click += new System.EventHandler(this.btnSecret3_Click);
+            // 
+            // btnSecret4
+            // 
+            this.btnSecret4.Enabled = false;
+            this.btnSecret4.Location = new System.Drawing.Point(11, 236);
+            this.btnSecret4.Name = "btnSecret4";
+            this.btnSecret4.Size = new System.Drawing.Size(100, 23);
+            this.btnSecret4.TabIndex = 18;
+            this.btnSecret4.Text = "Secret 4";
+            this.btnSecret4.UseVisualStyleBackColor = true;
+            this.btnSecret4.Click += new System.EventHandler(this.btnSecret4_Click);
+            // 
+            // btnSecret5
+            // 
+            this.btnSecret5.Enabled = false;
+            this.btnSecret5.Location = new System.Drawing.Point(117, 236);
+            this.btnSecret5.Name = "btnSecret5";
+            this.btnSecret5.Size = new System.Drawing.Size(100, 23);
+            this.btnSecret5.TabIndex = 19;
+            this.btnSecret5.Text = "Secret 5";
+            this.btnSecret5.UseVisualStyleBackColor = true;
+            this.btnSecret5.Click += new System.EventHandler(this.btnSecret5_Click);
+            // 
+            // btnSecret6
+            // 
+            this.btnSecret6.Enabled = false;
+            this.btnSecret6.Location = new System.Drawing.Point(221, 236);
+            this.btnSecret6.Name = "btnSecret6";
+            this.btnSecret6.Size = new System.Drawing.Size(100, 23);
+            this.btnSecret6.TabIndex = 20;
+            this.btnSecret6.Text = "Secret 6";
+            this.btnSecret6.UseVisualStyleBackColor = true;
+            this.btnSecret6.Click += new System.EventHandler(this.btnSecret6_Click);
+            // 
+            // lblSeparator
+            // 
+            this.lblSeparator.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblSeparator.Location = new System.Drawing.Point(14, 166);
+            this.lblSeparator.Name = "lblSeparator";
+            this.lblSeparator.Size = new System.Drawing.Size(306, 2);
+            this.lblSeparator.TabIndex = 21;
+            // 
             // PositionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(357, 256);
+            this.ClientSize = new System.Drawing.Size(357, 312);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
@@ -394,5 +482,12 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.Label lblOrientation;
         private System.Windows.Forms.PictureBox picInfoOrientation;
         private System.Windows.Forms.NumericUpDown nudOrientation;
+        private System.Windows.Forms.Button btnSecret6;
+        private System.Windows.Forms.Button btnSecret5;
+        private System.Windows.Forms.Button btnSecret4;
+        private System.Windows.Forms.Button btnSecret3;
+        private System.Windows.Forms.Button btnSecret1;
+        private System.Windows.Forms.Button btnSecret2;
+        private System.Windows.Forms.Label lblSeparator;
     }
 }
