@@ -182,6 +182,10 @@ namespace TRR_SaveMaster
             {
                 secret1Coordinates = secret1CoordinatesTR1[levelIndex];
             }
+            else if (SELECTED_TAB == TAB_TR2 && secret1CoordinatesTR2.ContainsKey(levelIndex))
+            {
+                secret1Coordinates = secret1CoordinatesTR2[levelIndex];
+            }
 
             nudXCoordinate.Value = secret1Coordinates[0];
             nudYCoordinate.Value = secret1Coordinates[1];
@@ -199,6 +203,10 @@ namespace TRR_SaveMaster
             {
                 secret2Coordinates = secret2CoordinatesTR1[levelIndex];
             }
+            else if (SELECTED_TAB == TAB_TR2 && secret2CoordinatesTR2.ContainsKey(levelIndex))
+            {
+                secret2Coordinates = secret2CoordinatesTR2[levelIndex];
+            }
 
             nudXCoordinate.Value = secret2Coordinates[0];
             nudYCoordinate.Value = secret2Coordinates[1];
@@ -215,6 +223,10 @@ namespace TRR_SaveMaster
             if (SELECTED_TAB == TAB_TR1 && secret3CoordinatesTR1.ContainsKey(levelIndex))
             {
                 secret3Coordinates = secret3CoordinatesTR1[levelIndex];
+            }
+            else if (SELECTED_TAB == TAB_TR2 && secret3CoordinatesTR2.ContainsKey(levelIndex))
+            {
+                secret3Coordinates = secret3CoordinatesTR2[levelIndex];
             }
 
             nudXCoordinate.Value = secret3Coordinates[0];
@@ -296,7 +308,11 @@ namespace TRR_SaveMaster
             }
             else if (SELECTED_TAB == TAB_TR2)
             {
-
+                btnSecret1.Enabled = secret1CoordinatesTR2.ContainsKey(levelIndex);
+                btnSecret2.Enabled = secret2CoordinatesTR2.ContainsKey(levelIndex);
+                btnSecret3.Enabled = secret3CoordinatesTR2.ContainsKey(levelIndex);
+                btnSecret4.Enabled = false;
+                btnSecret5.Enabled = false;
             }
             else if (SELECTED_TAB == TAB_TR3)
             {
@@ -471,6 +487,81 @@ namespace TRR_SaveMaster
         private readonly Dictionary<byte, Int32[]> secret5CoordinatesTR1 = new Dictionary<byte, int[]>
         {
             { 3,  new Int32[] { 43411, -2304, 74652, 180, 14    } },    // Lost Valley
+        };
+
+        private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR2 = new Dictionary<byte, int[]>
+        {
+            { 1,  new Int32[] { 62441, 853, 36520, 91, 38       } },    // The Great Wall
+            { 2,  new Int32[] { 44124, 0, 29131, 86, 58         } },    // Venice
+            { 3,  new Int32[] { 71123, 512, 35977, 18, 107      } },    // Bartoli's Hideout
+            { 4,  new Int32[] { 63389, 6400, 36188, 260, 187    } },    // Opera House
+            { 5,  new Int32[] { 21892, 1645, 94204, 175, 77     } },    // Offshore Rig
+            { 6,  new Int32[] { 28165, 3840, 63589, 8, 48       } },    // Diving Area
+            { 7,  new Int32[] { 66812, -5888, 76596, 19, 20     } },    // 40 Fathoms
+            { 8,  new Int32[] { 66952, 4352, 39847, 0, 10       } },    // Wreck of the Maria Doria
+            { 9,  new Int32[] { 76901, -4096, 88369, 15, 1      } },    // Living Quarters
+            { 10, new Int32[] { 62017, 13129, 61211, 0, 24      } },    // The Deck
+            { 11, new Int32[] { 78167, 0, 38231, 106, 11        } },    // Tibetan Foothills
+            { 12, new Int32[] { 31425, 0, 49835, 179, 159       } },    // Barkhang Monastery
+            { 13, new Int32[] { 11877, -3840, 41759, 132, 5     } },    // Catacombs of the Talion
+            { 14, new Int32[] { 68019, 5632, 90211, 0, 106      } },    // Ice Palace
+            { 15, new Int32[] { 18333, 13312, 55781, 270, 162   } },    // Temple of Xian
+            { 16, new Int32[] { 73238, -7157, 69341, 171, 3     } },    // Floating Islands
+            { 19, new Int32[] { 87600, 2749, 67225, 270, 31     } },    // The Cold War
+            { 20, new Int32[] { 65051, 1024, 61781, 175, 48     } },    // Fool's Gold (need to find better coordinates)
+            { 21, new Int32[] { 57801, -4608, 8924, 147, 13     } },    // Furnace of the Gods
+            { 22, new Int32[] { 45545, 6912, 63918, 164, 35     } },    // Kingdom
+            { 23, new Int32[] { 47626, 15360, 85915, 1, 76      } },    // Nightmare in Vegas
+        };
+
+        private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR2 = new Dictionary<byte, int[]>
+        {
+            { 1,  new Int32[] { 41293, 7168, 60959, 84, 54      } },    // The Great Wall
+            { 2,  new Int32[] { 37749, 5101, 16083, 270, 126    } },    // Venice
+            { 3,  new Int32[] { 41282, 8604, 34215, 16, 51      } },    // Bartoli's Hideout
+            { 4,  new Int32[] { 68940, 7681, 49695, 270, 46     } },    // Opera House
+            { 5,  new Int32[] { 21119, -8704, 71287, 0, 50      } },    // Offshore Rig
+            { 6,  new Int32[] { 58785, 3484, 87611, 178, 11     } },    // Diving Area
+            { 7,  new Int32[] { 89974, -4105, 71062, 113, 33    } },    // 40 Fathoms
+            { 8,  new Int32[] { 58921, 1792, 101125, 179, 13    } },    // Wreck of the Maria Doria
+            { 9,  new Int32[] { 54990, 1024, 73829, 180, 62     } },    // Living Quarters
+            { 10, new Int32[] { 34640, -5220, 57976, 270, 93    } },    // The Deck
+            { 11, new Int32[] { 31114, -1280, 96376, 2, 14      } },    // Tibetan Foothills
+            { 12, new Int32[] { 45446, 924, 35353, 80, 6        } },    // Barkhang Monastery
+            { 13, new Int32[] { 6727, -1024, 59718, 169, 94     } },    // Catacombs of the Talion
+            { 14, new Int32[] { 73314, -1024, 68778, 7, 4       } },    // Ice Palace
+            { 15, new Int32[] { 19558, 24064, 37644, 56, 23     } },    // Temple of Xian
+            { 16, new Int32[] { 38242, -7168, 63049, 0, 25      } },    // Floating Islands
+            { 19, new Int32[] { 67911, -8960, 47612, 88, 85     } },    // The Cold War
+            { 20, new Int32[] { 68520, -1024, 56985, 73, 35     } },    // Fool's Gold
+            { 21, new Int32[] { 35213, -11776, 64963, 90, 33    } },    // Furnace of the Gods
+            { 22, new Int32[] { 77351, 934, 73365, 27, 46       } },    // Kingdom
+            { 23, new Int32[] { 64940, 13312, 51962, 175, 46    } },    // Nightmare in Vegas
+        };
+
+        private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR2 = new Dictionary<byte, int[]>
+        {
+            { 1,  new Int32[] { 86384, 26112, 74257, 89, 79     } },    // The Great Wall
+            { 2,  new Int32[] { 62357, -1792, 61898, 30, 91     } },    // Venice
+            { 3,  new Int32[] { 38114, 256, 34146, 270, 131     } },    // Bartoli's Hideout
+            { 4,  new Int32[] { 77923, 1024, 45436, 90, 189     } },    // Opera House
+            { 5,  new Int32[] { 38419, 6144, 57147, 153, 109    } },    // Offshore Rig
+            { 6,  new Int32[] { 52543, 5632, 57736, 170, 78     } },    // Diving Area
+            { 7,  new Int32[] { 74657, -3940, 46640, 270, 68    } },    // 40 Fathoms
+            { 8,  new Int32[] { 41079, 0, 48630, 270, 11        } },    // Wreck of the Maria Doria
+            { 9,  new Int32[] { 45270, 2769, 72180, 12, 32      } },    // Living Quarters
+            { 10, new Int32[] { 27770, -4096, 38488, 270, 82    } },    // The Deck
+            { 11, new Int32[] { 76230, 10496, 19632, 78, 144    } },    // Tibetan Foothills
+            { 12, new Int32[] { 46738, -2560, 24111, 90, 100    } },    // Barkhang Monastery
+            { 13, new Int32[] { 45575, 1792, 67974, 161, 49     } },    // Catacombs of the Talion
+            { 14, new Int32[] { 45954, 11008, 29150, 270, 7     } },    // Ice Palace
+            { 15, new Int32[] { 46485, 14848, 23391, 166, 121   } },    // Temple of Xian
+            { 16, new Int32[] { 35373, -10240, 54882, 177, 41   } },    // Floating Islands
+            { 19, new Int32[] { 21998, -4096, 17069, 175, 81    } },    // The Cold War
+            { 20, new Int32[] { 15809, 5120, 32258, 163, 94     } },    // Fool's Gold
+            { 21, new Int32[] { 66210, -21673, 88461, 180, 58   } },    // Furnace of the Gods
+            { 22, new Int32[] { 53847, 3690, 54704, 177, 82     } },    // Kingdom
+            { 23, new Int32[] { 34406, -256, 57823, 94, 6       } },    // Nightmare in Vegas
         };
 
         private void DetermineOffsets()
