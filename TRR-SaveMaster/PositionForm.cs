@@ -381,7 +381,7 @@ namespace TRR_SaveMaster
             { 20, new Int32[] { 1544, 23552, 35616, 180, 58     } },    // Fool's Gold
             { 21, new Int32[] { 81334, 3584, 80114, 180, 90     } },    // Furnace of the Gods
             //{ 22, new Int32[] { 25965, 1792, 55397, 0, 77       } },  // Kingdom (missing level trigger for final boss)
-            { 23, new Int32[] { 49949, -5888, 55394, 0, 44      } },    // Nightmare in Vegas
+            //{ 23, new Int32[] { 49949, -5888, 55394, 0, 44      } },  // Nightmare in Vegas (missing level trigger for final boss)
         };
 
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR3 = new Dictionary<byte, Int32[]>
