@@ -63,7 +63,7 @@ namespace TRR_SaveMaster
         {
             selectedSavegame = savegame;
             savegameOffset = savegame.Offset;
-            grpSavegame.Text = $"{selectedSavegame}";
+            grpSavegameStatistics.Text = $"{selectedSavegame}";
         }
 
         private void DetermineOffsets()
@@ -303,7 +303,7 @@ namespace TRR_SaveMaster
             {  5, 4 },  // Coastal Village
             {  6, 3 },  // Crash Site
             {  7, 3 },  // Madubu Gorge
-            {  8, 1 },  // Temple Of Puna
+            {  8, 1 },  // Temple of Puna
             {  9, 5 },  // Thames Wharf
             { 10, 5 },  // Aldwych
             { 11, 6 },  // Lud's Gate
@@ -313,7 +313,7 @@ namespace TRR_SaveMaster
             { 15, 3 },  // Area 51
             { 16, 3 },  // Antarctica
             { 17, 3 },  // RX-Tech Mines
-            { 18, 3 },  // Lost City Of Tinnos
+            { 18, 3 },  // Lost City of Tinnos
             { 19, 0 },  // Meteorite Cavern
             { 20, 0 },  // All Hallows
             { 21, 3 },  // Highland Fling
@@ -333,7 +333,7 @@ namespace TRR_SaveMaster
             {  5, 29 }, // Coastal Village
             {  6, 26 }, // Crash Site
             {  7, 12 }, // Madubu Gorge
-            {  8, 11 }, // Temple Of Puna
+            {  8, 11 }, // Temple of Puna
             {  9, 32 }, // Thames Wharf
             { 10, 50 }, // Aldwych
             { 11, 59 }, // Lud's Gate
@@ -343,7 +343,7 @@ namespace TRR_SaveMaster
             { 15, 36 }, // Area 51
             { 16, 34 }, // Antarctica
             { 17, 26 }, // RX-Tech Mines
-            { 18, 33 }, // Lost City Of Tinnos
+            { 18, 33 }, // Lost City of Tinnos
             { 19, 7  }, // Meteorite Cavern
             { 20, 15 }, // All Hallows
             { 21, 47 }, // Highland Fling
@@ -741,7 +741,7 @@ namespace TRR_SaveMaster
         {
             if (btnSave.Enabled)
             {
-                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame statistics?",
+                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
                     "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
