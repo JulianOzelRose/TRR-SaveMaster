@@ -186,6 +186,10 @@ namespace TRR_SaveMaster
             {
                 secret1Coordinates = secret1CoordinatesTR2[levelIndex];
             }
+            else if (SELECTED_TAB == TAB_TR3 && secret1CoordinatesTR3.ContainsKey(levelIndex))
+            {
+                secret1Coordinates = secret1CoordinatesTR3[levelIndex];
+            }
 
             nudXCoordinate.Value = secret1Coordinates[0];
             nudYCoordinate.Value = secret1Coordinates[1];
@@ -206,6 +210,10 @@ namespace TRR_SaveMaster
             else if (SELECTED_TAB == TAB_TR2 && secret2CoordinatesTR2.ContainsKey(levelIndex))
             {
                 secret2Coordinates = secret2CoordinatesTR2[levelIndex];
+            }
+            else if (SELECTED_TAB == TAB_TR3 && secret2CoordinatesTR3.ContainsKey(levelIndex))
+            {
+                secret2Coordinates = secret2CoordinatesTR3[levelIndex];
             }
 
             nudXCoordinate.Value = secret2Coordinates[0];
@@ -228,6 +236,10 @@ namespace TRR_SaveMaster
             {
                 secret3Coordinates = secret3CoordinatesTR2[levelIndex];
             }
+            else if (SELECTED_TAB == TAB_TR3 && secret3CoordinatesTR3.ContainsKey(levelIndex))
+            {
+                secret3Coordinates = secret3CoordinatesTR3[levelIndex];
+            }
 
             nudXCoordinate.Value = secret3Coordinates[0];
             nudYCoordinate.Value = secret3Coordinates[1];
@@ -244,6 +256,10 @@ namespace TRR_SaveMaster
             if (SELECTED_TAB == TAB_TR1 && secret4CoordinatesTR1.ContainsKey(levelIndex))
             {
                 secret4Coordinates = secret4CoordinatesTR1[levelIndex];
+            }
+            else if (SELECTED_TAB == TAB_TR3 && secret4CoordinatesTR3.ContainsKey(levelIndex))
+            {
+                secret4Coordinates = secret4CoordinatesTR3[levelIndex];
             }
 
             nudXCoordinate.Value = secret4Coordinates[0];
@@ -262,6 +278,10 @@ namespace TRR_SaveMaster
             {
                 secret5Coordinates = secret5CoordinatesTR1[levelIndex];
             }
+            else if (SELECTED_TAB == TAB_TR3 && secret5CoordinatesTR3.ContainsKey(levelIndex))
+            {
+                secret5Coordinates = secret5CoordinatesTR3[levelIndex];
+            }
 
             nudXCoordinate.Value = secret5Coordinates[0];
             nudYCoordinate.Value = secret5Coordinates[1];
@@ -272,7 +292,19 @@ namespace TRR_SaveMaster
 
         private void btnSecret6_Click(object sender, EventArgs e)
         {
+            byte levelIndex = GetLevelIndex();
+            Int32[] secret6Coordinates = new Int32[4];
 
+            if (SELECTED_TAB == TAB_TR3 && secret6CoordinatesTR3.ContainsKey(levelIndex))
+            {
+                secret6Coordinates = secret6CoordinatesTR3[levelIndex];
+            }
+
+            nudXCoordinate.Value = secret6Coordinates[0];
+            nudYCoordinate.Value = secret6Coordinates[1];
+            nudZCoordinate.Value = secret6Coordinates[2];
+            nudOrientation.Value = (Int16)secret6Coordinates[3];
+            nudRoom.Value = (byte)secret6Coordinates[4];
         }
 
         private void EnableEndOfLevelButtonConditionally()
@@ -313,10 +345,16 @@ namespace TRR_SaveMaster
                 btnSecret3.Enabled = secret3CoordinatesTR2.ContainsKey(levelIndex);
                 btnSecret4.Enabled = false;
                 btnSecret5.Enabled = false;
+                btnSecret6.Enabled = false;
             }
             else if (SELECTED_TAB == TAB_TR3)
             {
-
+                btnSecret1.Enabled = secret1CoordinatesTR3.ContainsKey(levelIndex);
+                btnSecret2.Enabled = secret2CoordinatesTR3.ContainsKey(levelIndex);
+                btnSecret3.Enabled = secret3CoordinatesTR3.ContainsKey(levelIndex);
+                btnSecret4.Enabled = secret4CoordinatesTR3.ContainsKey(levelIndex);
+                btnSecret5.Enabled = secret5CoordinatesTR3.ContainsKey(levelIndex);
+                btnSecret6.Enabled = secret6CoordinatesTR3.ContainsKey(levelIndex);
             }
         }
 
@@ -324,7 +362,7 @@ namespace TRR_SaveMaster
         {
             if (btnSave.Enabled)
             {
-                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame coordinates?",
+                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
                     "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
@@ -564,6 +602,90 @@ namespace TRR_SaveMaster
             { 23, new Int32[] { 34406, -256, 57823, 94, 6       } },    // Nightmare in Vegas
         };
 
+        private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR3 = new Dictionary<byte, int[]>
+        {
+            { 1,  new Int32[] { 27465, 2939, 32501, 270, 21     } },    // Jungle
+            { 2,  new Int32[] { 60023, 8192, 62828, 2, 87       } },    // Temple Ruins
+            { 3,  new Int32[] { 86619, 768, 34715, 270, 18      } },    // The River Ganges
+            { 5,  new Int32[] { 11365, -768, 34715, 270, 2      } },    // Coastal Village
+            { 6,  new Int32[] { 32667, -1280, 82377, 90, 93     } },    // Crash Site
+            { 7,  new Int32[] { 72603 , -21096, 33487, 35, 18   } },    // Madubu Gorge
+            { 8,  new Int32[] { 30315, -18176, 59491, 0, 11     } },    // Temple of Puna
+            { 9,  new Int32[] { 48603, -11520, 28522, 179, 148  } },    // Thames Wharf
+            { 10, new Int32[] { 56423, 12800, 68509, 180, 5     } },    // Aldwych
+            { 11, new Int32[] { 58267, -8704, 28929, 90, 72     } },    // Lud's Gate
+            { 12, new Int32[] { 41553, -2048, 52727, 175, 8     } },    // City
+            { 13, new Int32[] { 33380, -256, 32125, 4, 18       } },    // Nevada Desert
+            //{ 14, new Int32[] { 1617, -512, 38501, 179, 57      } },  // High Security Compound (too many level triggers)
+            { 15, new Int32[] { 41790, 3584, 62022, 85, 62      } },    // Area 51
+            { 16, new Int32[] { 21105, -6045, 28890, 270, 163   } },    // Antarctica
+            { 17, new Int32[] { 45957, 3840, 49662, 270, 186    } },    // RX-Tech Mines
+            { 18, new Int32[] { 80392, -3966, 58467, 0, 46      } },    // Lost City of Tinnos
+        };
+
+        private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR3 = new Dictionary<byte, int[]>
+        {
+            { 1,  new Int32[] { 25391, 17313, 57665, 8, 17      } },    // Jungle
+            { 2,  new Int32[] { 42667, 3840, 19841, 88, 181     } },    // Temple Ruins
+            { 3,  new Int32[] { 91465, 282, 32869, 0, 22        } },    // The River Ganges
+            { 5,  new Int32[] { 14231, -7168, 76215, 148, 15    } },    // Coastal Village
+            { 6,  new Int32[] { 36965, -1766, 53380, 270, 53    } },    // Crash Site
+            { 7,  new Int32[] { 80943, -24293, 20684, 91, 14    } },    // Madubu Gorge
+            { 9,  new Int32[] { 39666, -12288, 45979, 0, 96     } },    // Thames Wharf
+            { 10, new Int32[] { 67012, -1059, 52362, 179, 57    } },    // Aldwych
+            { 11, new Int32[] { 62643, -20736, 31265, 90, 17    } },    // Lud's Gate
+            { 13, new Int32[] { 42909, 1280, 50651, 270, 33     } },    // Nevada Desert
+            { 14, new Int32[] { 82138, -256, 7431, 82, 177      } },    // High Security Compound
+            { 15, new Int32[] { 13285, 2816, 55926, 270, 55     } },    // Area 51
+            { 16, new Int32[] { 51567, -6400, 26044, 270, 190   } },    // Antarctica
+            //{ 17, new Int32[] { 45157, 3840, 49625, 90, 186     } },  // RX-Tech Mines (too many level triggers)
+            { 18, new Int32[] { 33893, -4864, 51729, 270, 59    } },    // Lost City of Tinnos
+        };
+
+        private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR3 = new Dictionary<byte, int[]>
+        {
+            { 1,  new Int32[] { 19099, 24064, 58269, 180, 135   } },    // Jungle
+            { 2,  new Int32[] { 56421, 1280, 93662, 270, 125    } },    // Temple Ruins
+            { 3,  new Int32[] { 56788, -3840, 25499, 1, 113     } },    // The River Ganges
+            { 5,  new Int32[] { 25035, -6384, 87999, 179, 124   } },    // Coastal Village
+            { 6,  new Int32[] { 70551, -6886, 27749, 162, 60    } },    // Crash Site
+            { 7,  new Int32[] { 30187, 758, 54883, 126, 83      } },    // Madubu Gorge
+            { 9,  new Int32[] { 44229, -19968, 51885, 180, 62   } },    // Thames Wharf
+            //{ 10, new Int32[] { 48689, -4608, 39966, 0, 62      } },  // Aldwych (too many level triggers)
+            { 11, new Int32[] { 43394, -22016, 28800, 177, 68   } },    // Lud's Gate
+            { 13, new Int32[] { 13068, -3328, 47205, 178, 48    } },    // Nevada Desert
+            { 15, new Int32[] { 46603, -6656, 41077, 270, 42    } },    // Area 51
+            { 16, new Int32[] { 40442, -5120, 19822, 4, 201     } },    // Antarctica
+            { 17, new Int32[] { 13597, 3656, 29356, 1, 5        } },    // RX-Tech Mines
+            { 18, new Int32[] { 47934, 6144, 47565, 270, 156    } },    // Lost City of Tinnos
+        };
+
+        private readonly Dictionary<byte, Int32[]> secret4CoordinatesTR3 = new Dictionary<byte, int[]>
+        {
+            { 1,  new Int32[] { 95333, 18944, 70002, 270, 77    } },    // Jungle
+            { 2,  new Int32[] { 40459, 6968, 96815, 270, 142    } },    // Temple Ruins
+            { 3,  new Int32[] { 33999, -5562, 64020, 122, 173   } },    // The River Ganges
+            { 5,  new Int32[] { 26928, -659, 71547, 0, 156      } },    // Coastal Village
+            { 9,  new Int32[] { 55908, -21504, 45568, 90, 0     } },    // Thames Wharf
+            //{ 10, new Int32[] { 48696, -2048, 50277, 4, 15      } },  // Aldwych (too many level triggers)
+            { 11, new Int32[] { 71581, -18432, 25031, 270, 54   } },    // Lud's Gate
+        };
+
+        private readonly Dictionary<byte, Int32[]> secret5CoordinatesTR3 = new Dictionary<byte, int[]>
+        {
+            { 1,  new Int32[] { 89422, 24064, 57445, 178, 76    } },    // Jungle
+            { 3,  new Int32[] { 42075, 4810, 79061, 84, 162     } },    // The River Ganges
+            { 9,  new Int32[] { 51301, -14848, 56743, 89, 180   } },    // Thames Wharf
+            //{ 10, new Int32[] { 48335, -3328, 66778, 28, 55     } },  // Aldwych (too many level triggers)
+            { 11, new Int32[] { 46851, -3002, 37141, 16, 134    } },    // Lud's Gate
+        };
+
+        private readonly Dictionary<byte, Int32[]> secret6CoordinatesTR3 = new Dictionary<byte, int[]>
+        {
+            { 1,  new Int32[] { 82252, 26624, 63587, 0, 99      } },    // Jungle
+            { 11, new Int32[] { 56161, -2614, 22934, 16, 102    } },    // Lud's Gate
+        };
+
         private void DetermineOffsets()
         {
             if (SELECTED_TAB == TAB_TR1)
@@ -631,7 +753,7 @@ namespace TRR_SaveMaster
 
         private void WriteOrientation(Int16 value)
         {
-            Int16 rawValue = (Int16)(value * Int16.MaxValue / 180);
+            Int16 rawValue = (Int16)(value * Int16.MaxValue / 180.0);
             WriteInt16(savegameOffset + orientationOffset, rawValue);
         }
 
