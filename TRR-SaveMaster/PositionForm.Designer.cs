@@ -31,7 +31,14 @@ namespace TRR_SaveMaster
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PositionForm));
-            this.grpSavegame = new System.Windows.Forms.GroupBox();
+            this.grpSavegameCoordinates = new System.Windows.Forms.GroupBox();
+            this.lblSeparator = new System.Windows.Forms.Label();
+            this.btnSecret6 = new System.Windows.Forms.Button();
+            this.btnSecret5 = new System.Windows.Forms.Button();
+            this.btnSecret4 = new System.Windows.Forms.Button();
+            this.btnSecret3 = new System.Windows.Forms.Button();
+            this.btnSecret1 = new System.Windows.Forms.Button();
+            this.btnSecret2 = new System.Windows.Forms.Button();
             this.lblOrientation = new System.Windows.Forms.Label();
             this.picInfoOrientation = new System.Windows.Forms.PictureBox();
             this.nudOrientation = new System.Windows.Forms.NumericUpDown();
@@ -52,14 +59,7 @@ namespace TRR_SaveMaster
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.tipPosition = new System.Windows.Forms.ToolTip(this.components);
-            this.btnSecret2 = new System.Windows.Forms.Button();
-            this.btnSecret1 = new System.Windows.Forms.Button();
-            this.btnSecret3 = new System.Windows.Forms.Button();
-            this.btnSecret4 = new System.Windows.Forms.Button();
-            this.btnSecret5 = new System.Windows.Forms.Button();
-            this.btnSecret6 = new System.Windows.Forms.Button();
-            this.lblSeparator = new System.Windows.Forms.Label();
-            this.grpSavegame.SuspendLayout();
+            this.grpSavegameCoordinates.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoOrientation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOrientation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoRoom)).BeginInit();
@@ -72,36 +72,110 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudXCoordinate)).BeginInit();
             this.SuspendLayout();
             // 
-            // grpSavegame
+            // grpSavegameCoordinates
             // 
-            this.grpSavegame.Controls.Add(this.lblSeparator);
-            this.grpSavegame.Controls.Add(this.btnSecret6);
-            this.grpSavegame.Controls.Add(this.btnSecret5);
-            this.grpSavegame.Controls.Add(this.btnSecret4);
-            this.grpSavegame.Controls.Add(this.btnSecret3);
-            this.grpSavegame.Controls.Add(this.btnSecret1);
-            this.grpSavegame.Controls.Add(this.btnSecret2);
-            this.grpSavegame.Controls.Add(this.lblOrientation);
-            this.grpSavegame.Controls.Add(this.picInfoOrientation);
-            this.grpSavegame.Controls.Add(this.nudOrientation);
-            this.grpSavegame.Controls.Add(this.picInfoRoom);
-            this.grpSavegame.Controls.Add(this.picInfoZCoordinate);
-            this.grpSavegame.Controls.Add(this.picInfoYCoordinate);
-            this.grpSavegame.Controls.Add(this.picInfoXCoordinate);
-            this.grpSavegame.Controls.Add(this.btnEndOfLevel);
-            this.grpSavegame.Controls.Add(this.nudRoom);
-            this.grpSavegame.Controls.Add(this.lblRoom);
-            this.grpSavegame.Controls.Add(this.lblZCoordinate);
-            this.grpSavegame.Controls.Add(this.lblYCoordinate);
-            this.grpSavegame.Controls.Add(this.lblXCoordinate);
-            this.grpSavegame.Controls.Add(this.nudZCoordinate);
-            this.grpSavegame.Controls.Add(this.nudYCoordinate);
-            this.grpSavegame.Controls.Add(this.nudXCoordinate);
-            this.grpSavegame.Location = new System.Drawing.Point(12, 5);
-            this.grpSavegame.Name = "grpSavegame";
-            this.grpSavegame.Size = new System.Drawing.Size(333, 271);
-            this.grpSavegame.TabIndex = 0;
-            this.grpSavegame.TabStop = false;
+            this.grpSavegameCoordinates.Controls.Add(this.lblSeparator);
+            this.grpSavegameCoordinates.Controls.Add(this.btnSecret6);
+            this.grpSavegameCoordinates.Controls.Add(this.btnSecret5);
+            this.grpSavegameCoordinates.Controls.Add(this.btnSecret4);
+            this.grpSavegameCoordinates.Controls.Add(this.btnSecret3);
+            this.grpSavegameCoordinates.Controls.Add(this.btnSecret1);
+            this.grpSavegameCoordinates.Controls.Add(this.btnSecret2);
+            this.grpSavegameCoordinates.Controls.Add(this.lblOrientation);
+            this.grpSavegameCoordinates.Controls.Add(this.picInfoOrientation);
+            this.grpSavegameCoordinates.Controls.Add(this.nudOrientation);
+            this.grpSavegameCoordinates.Controls.Add(this.picInfoRoom);
+            this.grpSavegameCoordinates.Controls.Add(this.picInfoZCoordinate);
+            this.grpSavegameCoordinates.Controls.Add(this.picInfoYCoordinate);
+            this.grpSavegameCoordinates.Controls.Add(this.picInfoXCoordinate);
+            this.grpSavegameCoordinates.Controls.Add(this.btnEndOfLevel);
+            this.grpSavegameCoordinates.Controls.Add(this.nudRoom);
+            this.grpSavegameCoordinates.Controls.Add(this.lblRoom);
+            this.grpSavegameCoordinates.Controls.Add(this.lblZCoordinate);
+            this.grpSavegameCoordinates.Controls.Add(this.lblYCoordinate);
+            this.grpSavegameCoordinates.Controls.Add(this.lblXCoordinate);
+            this.grpSavegameCoordinates.Controls.Add(this.nudZCoordinate);
+            this.grpSavegameCoordinates.Controls.Add(this.nudYCoordinate);
+            this.grpSavegameCoordinates.Controls.Add(this.nudXCoordinate);
+            this.grpSavegameCoordinates.Location = new System.Drawing.Point(12, 5);
+            this.grpSavegameCoordinates.Name = "grpSavegameCoordinates";
+            this.grpSavegameCoordinates.Size = new System.Drawing.Size(333, 271);
+            this.grpSavegameCoordinates.TabIndex = 0;
+            this.grpSavegameCoordinates.TabStop = false;
+            // 
+            // lblSeparator
+            // 
+            this.lblSeparator.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblSeparator.Location = new System.Drawing.Point(14, 166);
+            this.lblSeparator.Name = "lblSeparator";
+            this.lblSeparator.Size = new System.Drawing.Size(306, 2);
+            this.lblSeparator.TabIndex = 21;
+            // 
+            // btnSecret6
+            // 
+            this.btnSecret6.Enabled = false;
+            this.btnSecret6.Location = new System.Drawing.Point(221, 236);
+            this.btnSecret6.Name = "btnSecret6";
+            this.btnSecret6.Size = new System.Drawing.Size(100, 23);
+            this.btnSecret6.TabIndex = 20;
+            this.btnSecret6.Text = "Secret 6";
+            this.btnSecret6.UseVisualStyleBackColor = true;
+            this.btnSecret6.Click += new System.EventHandler(this.btnSecret6_Click);
+            // 
+            // btnSecret5
+            // 
+            this.btnSecret5.Enabled = false;
+            this.btnSecret5.Location = new System.Drawing.Point(117, 236);
+            this.btnSecret5.Name = "btnSecret5";
+            this.btnSecret5.Size = new System.Drawing.Size(100, 23);
+            this.btnSecret5.TabIndex = 19;
+            this.btnSecret5.Text = "Secret 5";
+            this.btnSecret5.UseVisualStyleBackColor = true;
+            this.btnSecret5.Click += new System.EventHandler(this.btnSecret5_Click);
+            // 
+            // btnSecret4
+            // 
+            this.btnSecret4.Enabled = false;
+            this.btnSecret4.Location = new System.Drawing.Point(11, 236);
+            this.btnSecret4.Name = "btnSecret4";
+            this.btnSecret4.Size = new System.Drawing.Size(100, 23);
+            this.btnSecret4.TabIndex = 18;
+            this.btnSecret4.Text = "Secret 4";
+            this.btnSecret4.UseVisualStyleBackColor = true;
+            this.btnSecret4.Click += new System.EventHandler(this.btnSecret4_Click);
+            // 
+            // btnSecret3
+            // 
+            this.btnSecret3.Enabled = false;
+            this.btnSecret3.Location = new System.Drawing.Point(221, 207);
+            this.btnSecret3.Name = "btnSecret3";
+            this.btnSecret3.Size = new System.Drawing.Size(100, 23);
+            this.btnSecret3.TabIndex = 17;
+            this.btnSecret3.Text = "Secret 3";
+            this.btnSecret3.UseVisualStyleBackColor = true;
+            this.btnSecret3.Click += new System.EventHandler(this.btnSecret3_Click);
+            // 
+            // btnSecret1
+            // 
+            this.btnSecret1.Enabled = false;
+            this.btnSecret1.Location = new System.Drawing.Point(11, 207);
+            this.btnSecret1.Name = "btnSecret1";
+            this.btnSecret1.Size = new System.Drawing.Size(100, 23);
+            this.btnSecret1.TabIndex = 16;
+            this.btnSecret1.Text = "Secret 1";
+            this.btnSecret1.UseVisualStyleBackColor = true;
+            this.btnSecret1.Click += new System.EventHandler(this.btnSecret1_Click);
+            // 
+            // btnSecret2
+            // 
+            this.btnSecret2.Enabled = false;
+            this.btnSecret2.Location = new System.Drawing.Point(117, 207);
+            this.btnSecret2.Name = "btnSecret2";
+            this.btnSecret2.Size = new System.Drawing.Size(100, 23);
+            this.btnSecret2.TabIndex = 15;
+            this.btnSecret2.Text = "Secret 2";
+            this.btnSecret2.UseVisualStyleBackColor = true;
+            this.btnSecret2.Click += new System.EventHandler(this.btnSecret2_Click);
             // 
             // lblOrientation
             // 
@@ -350,80 +424,6 @@ namespace TRR_SaveMaster
             this.tipPosition.InitialDelay = 500;
             this.tipPosition.ReshowDelay = 100;
             // 
-            // btnSecret2
-            // 
-            this.btnSecret2.Enabled = false;
-            this.btnSecret2.Location = new System.Drawing.Point(117, 207);
-            this.btnSecret2.Name = "btnSecret2";
-            this.btnSecret2.Size = new System.Drawing.Size(100, 23);
-            this.btnSecret2.TabIndex = 15;
-            this.btnSecret2.Text = "Secret 2";
-            this.btnSecret2.UseVisualStyleBackColor = true;
-            this.btnSecret2.Click += new System.EventHandler(this.btnSecret2_Click);
-            // 
-            // btnSecret1
-            // 
-            this.btnSecret1.Enabled = false;
-            this.btnSecret1.Location = new System.Drawing.Point(11, 207);
-            this.btnSecret1.Name = "btnSecret1";
-            this.btnSecret1.Size = new System.Drawing.Size(100, 23);
-            this.btnSecret1.TabIndex = 16;
-            this.btnSecret1.Text = "Secret 1";
-            this.btnSecret1.UseVisualStyleBackColor = true;
-            this.btnSecret1.Click += new System.EventHandler(this.btnSecret1_Click);
-            // 
-            // btnSecret3
-            // 
-            this.btnSecret3.Enabled = false;
-            this.btnSecret3.Location = new System.Drawing.Point(221, 207);
-            this.btnSecret3.Name = "btnSecret3";
-            this.btnSecret3.Size = new System.Drawing.Size(100, 23);
-            this.btnSecret3.TabIndex = 17;
-            this.btnSecret3.Text = "Secret 3";
-            this.btnSecret3.UseVisualStyleBackColor = true;
-            this.btnSecret3.Click += new System.EventHandler(this.btnSecret3_Click);
-            // 
-            // btnSecret4
-            // 
-            this.btnSecret4.Enabled = false;
-            this.btnSecret4.Location = new System.Drawing.Point(11, 236);
-            this.btnSecret4.Name = "btnSecret4";
-            this.btnSecret4.Size = new System.Drawing.Size(100, 23);
-            this.btnSecret4.TabIndex = 18;
-            this.btnSecret4.Text = "Secret 4";
-            this.btnSecret4.UseVisualStyleBackColor = true;
-            this.btnSecret4.Click += new System.EventHandler(this.btnSecret4_Click);
-            // 
-            // btnSecret5
-            // 
-            this.btnSecret5.Enabled = false;
-            this.btnSecret5.Location = new System.Drawing.Point(117, 236);
-            this.btnSecret5.Name = "btnSecret5";
-            this.btnSecret5.Size = new System.Drawing.Size(100, 23);
-            this.btnSecret5.TabIndex = 19;
-            this.btnSecret5.Text = "Secret 5";
-            this.btnSecret5.UseVisualStyleBackColor = true;
-            this.btnSecret5.Click += new System.EventHandler(this.btnSecret5_Click);
-            // 
-            // btnSecret6
-            // 
-            this.btnSecret6.Enabled = false;
-            this.btnSecret6.Location = new System.Drawing.Point(221, 236);
-            this.btnSecret6.Name = "btnSecret6";
-            this.btnSecret6.Size = new System.Drawing.Size(100, 23);
-            this.btnSecret6.TabIndex = 20;
-            this.btnSecret6.Text = "Secret 6";
-            this.btnSecret6.UseVisualStyleBackColor = true;
-            this.btnSecret6.Click += new System.EventHandler(this.btnSecret6_Click);
-            // 
-            // lblSeparator
-            // 
-            this.lblSeparator.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblSeparator.Location = new System.Drawing.Point(14, 166);
-            this.lblSeparator.Name = "lblSeparator";
-            this.lblSeparator.Size = new System.Drawing.Size(306, 2);
-            this.lblSeparator.TabIndex = 21;
-            // 
             // PositionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -432,7 +432,7 @@ namespace TRR_SaveMaster
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.grpSavegame);
+            this.Controls.Add(this.grpSavegameCoordinates);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -443,8 +443,8 @@ namespace TRR_SaveMaster
             this.Text = "Edit Position";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PositionForm_FormClosing);
             this.Load += new System.EventHandler(this.PositionForm_Load);
-            this.grpSavegame.ResumeLayout(false);
-            this.grpSavegame.PerformLayout();
+            this.grpSavegameCoordinates.ResumeLayout(false);
+            this.grpSavegameCoordinates.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoOrientation)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOrientation)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoRoom)).EndInit();
@@ -461,7 +461,7 @@ namespace TRR_SaveMaster
 
         #endregion
 
-        private System.Windows.Forms.GroupBox grpSavegame;
+        private System.Windows.Forms.GroupBox grpSavegameCoordinates;
         private System.Windows.Forms.NumericUpDown nudXCoordinate;
         private System.Windows.Forms.Label lblZCoordinate;
         private System.Windows.Forms.Label lblYCoordinate;

@@ -60,7 +60,7 @@ namespace TRR_SaveMaster
         {
             selectedSavegame = savegame;
             savegameOffset = savegame.Offset;
-            grpSavegame.Text = $"{selectedSavegame}";
+            grpSavegameCoordinates.Text = $"{selectedSavegame}";
         }
 
         public void SetHealthOffset(int offset)
@@ -621,6 +621,11 @@ namespace TRR_SaveMaster
             { 16, new Int32[] { 21105, -6045, 28890, 270, 163   } },    // Antarctica
             { 17, new Int32[] { 45957, 3840, 49662, 270, 186    } },    // RX-Tech Mines
             { 18, new Int32[] { 80392, -3966, 58467, 0, 46      } },    // Lost City of Tinnos
+            { 21, new Int32[] { 42907, -11570, 52496, 270, 45   } },    // Highland Fling
+            { 22, new Int32[] { 53637, 8704, 77308, 85, 102     } },    // Willard's Lair
+            { 23, new Int32[] { 35369, -6400, 55195, 2, 36      } },    // Shakespeare Cliff
+            { 24, new Int32[] { 68917, 2305, 56601, 176, 59     } },    // Sleeping with the Fishes
+            { 25, new Int32[] { 57286, -256, 30032, 89, 89      } },    // It's a Madhouse!
         };
 
         private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR3 = new Dictionary<byte, int[]>
@@ -640,6 +645,11 @@ namespace TRR_SaveMaster
             { 16, new Int32[] { 51567, -6400, 26044, 270, 190   } },    // Antarctica
             //{ 17, new Int32[] { 45157, 3840, 49625, 90, 186     } },  // RX-Tech Mines (too many level triggers)
             { 18, new Int32[] { 33893, -4864, 51729, 270, 59    } },    // Lost City of Tinnos
+            { 21, new Int32[] { 54784, -4864, 72134, 0, 112     } },    // Highland Fling
+            { 22, new Int32[] { 67056, -512, 72603, 1, 1        } },    // Willard's Lair
+            { 23, new Int32[] { 25079, 2204, 52325, 179, 67     } },    // Shakespeare Cliff
+            { 24, new Int32[] { 29847, -3395, 34721, 161, 11    } },    // Sleeping with the Fishes
+            { 25, new Int32[] { 39282, -2304, 59755, 3, 107     } },    // It's a Madhouse!
         };
 
         private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR3 = new Dictionary<byte, int[]>
@@ -658,6 +668,11 @@ namespace TRR_SaveMaster
             { 16, new Int32[] { 40442, -5120, 19822, 4, 201     } },    // Antarctica
             { 17, new Int32[] { 13597, 3656, 29356, 1, 5        } },    // RX-Tech Mines
             { 18, new Int32[] { 47934, 6144, 47565, 270, 156    } },    // Lost City of Tinnos
+            { 21, new Int32[] { 14530, -3999, 65507, 91, 120    } },    // Highland Fling
+            { 22, new Int32[] { 66929, -5888, 30246, 84, 81     } },    // Willard's Lair
+            { 23, new Int32[] { 74467, 17921, 38413, 10, 110    } },    // Shakespeare Cliff
+            { 24, new Int32[] { 54689, -5883, 31115, 89, 88     } },    // Sleeping with the Fishes
+            { 25, new Int32[] { 80449, 1792, 30034, 91, 50      } },    // It's a Madhouse!
         };
 
         private readonly Dictionary<byte, Int32[]> secret4CoordinatesTR3 = new Dictionary<byte, int[]>
