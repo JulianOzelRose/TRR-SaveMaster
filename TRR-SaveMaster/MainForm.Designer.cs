@@ -114,7 +114,7 @@ namespace TRR_SaveMaster
             this.nudHarpoonGunAmmoTR3 = new System.Windows.Forms.NumericUpDown();
             this.nudDeagleAmmoTR3 = new System.Windows.Forms.NumericUpDown();
             this.chkRocketLauncherTR3 = new System.Windows.Forms.CheckBox();
-            this.chkUziTR3 = new System.Windows.Forms.CheckBox();
+            this.chkUzisTR3 = new System.Windows.Forms.CheckBox();
             this.chkShotgunTR3 = new System.Windows.Forms.CheckBox();
             this.chkMP5TR3 = new System.Windows.Forms.CheckBox();
             this.chkDeagleTR3 = new System.Windows.Forms.CheckBox();
@@ -150,6 +150,8 @@ namespace TRR_SaveMaster
             this.tsmiEditSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiStatistics = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPosition = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiEditSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmiDeleteSavegame = new System.Windows.Forms.ToolStripMenuItem();
             this.tsddbSettings = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiPlatform = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPC = new System.Windows.Forms.ToolStripMenuItem();
@@ -162,8 +164,6 @@ namespace TRR_SaveMaster
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSendFeedback = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiDeleteSavegame = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiEditSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR1)).BeginInit();
@@ -1096,7 +1096,7 @@ namespace TRR_SaveMaster
             this.grpWeaponsTR3.Controls.Add(this.nudHarpoonGunAmmoTR3);
             this.grpWeaponsTR3.Controls.Add(this.nudDeagleAmmoTR3);
             this.grpWeaponsTR3.Controls.Add(this.chkRocketLauncherTR3);
-            this.grpWeaponsTR3.Controls.Add(this.chkUziTR3);
+            this.grpWeaponsTR3.Controls.Add(this.chkUzisTR3);
             this.grpWeaponsTR3.Controls.Add(this.chkShotgunTR3);
             this.grpWeaponsTR3.Controls.Add(this.chkMP5TR3);
             this.grpWeaponsTR3.Controls.Add(this.chkDeagleTR3);
@@ -1248,16 +1248,16 @@ namespace TRR_SaveMaster
             this.chkRocketLauncherTR3.UseVisualStyleBackColor = true;
             this.chkRocketLauncherTR3.CheckedChanged += new System.EventHandler(this.chkRocketLauncherTR3_CheckedChanged);
             // 
-            // chkUziTR3
+            // chkUzisTR3
             // 
-            this.chkUziTR3.AutoSize = true;
-            this.chkUziTR3.Location = new System.Drawing.Point(22, 100);
-            this.chkUziTR3.Name = "chkUziTR3";
-            this.chkUziTR3.Size = new System.Drawing.Size(49, 17);
-            this.chkUziTR3.TabIndex = 2;
-            this.chkUziTR3.Text = "Uzis:";
-            this.chkUziTR3.UseVisualStyleBackColor = true;
-            this.chkUziTR3.CheckedChanged += new System.EventHandler(this.chkUziTR3_CheckedChanged);
+            this.chkUzisTR3.AutoSize = true;
+            this.chkUzisTR3.Location = new System.Drawing.Point(22, 100);
+            this.chkUzisTR3.Name = "chkUzisTR3";
+            this.chkUzisTR3.Size = new System.Drawing.Size(49, 17);
+            this.chkUzisTR3.TabIndex = 2;
+            this.chkUzisTR3.Text = "Uzis:";
+            this.chkUzisTR3.UseVisualStyleBackColor = true;
+            this.chkUzisTR3.CheckedChanged += new System.EventHandler(this.chkUzisTR3_CheckedChanged);
             // 
             // chkShotgunTR3
             // 
@@ -1619,6 +1619,19 @@ namespace TRR_SaveMaster
             this.tsmiPosition.Text = "Position";
             this.tsmiPosition.Click += new System.EventHandler(this.tsmiPosition_Click);
             // 
+            // tsmiEditSeparator2
+            // 
+            this.tsmiEditSeparator2.Name = "tsmiEditSeparator2";
+            this.tsmiEditSeparator2.Size = new System.Drawing.Size(214, 6);
+            // 
+            // tsmiDeleteSavegame
+            // 
+            this.tsmiDeleteSavegame.Enabled = false;
+            this.tsmiDeleteSavegame.Name = "tsmiDeleteSavegame";
+            this.tsmiDeleteSavegame.Size = new System.Drawing.Size(217, 22);
+            this.tsmiDeleteSavegame.Text = "Delete savegame";
+            this.tsmiDeleteSavegame.Click += new System.EventHandler(this.tsmiDeleteSavegame_Click);
+            // 
             // tsddbSettings
             // 
             this.tsddbSettings.AutoToolTip = false;
@@ -1712,36 +1725,23 @@ namespace TRR_SaveMaster
             // tsmiViewReadme
             // 
             this.tsmiViewReadme.Name = "tsmiViewReadme";
-            this.tsmiViewReadme.Size = new System.Drawing.Size(180, 22);
+            this.tsmiViewReadme.Size = new System.Drawing.Size(153, 22);
             this.tsmiViewReadme.Text = "View README";
             this.tsmiViewReadme.Click += new System.EventHandler(this.tsmiViewReadme_Click);
             // 
             // tsmiSendFeedback
             // 
             this.tsmiSendFeedback.Name = "tsmiSendFeedback";
-            this.tsmiSendFeedback.Size = new System.Drawing.Size(180, 22);
+            this.tsmiSendFeedback.Size = new System.Drawing.Size(153, 22);
             this.tsmiSendFeedback.Text = "Send Feedback";
             this.tsmiSendFeedback.Click += new System.EventHandler(this.tsmiSendFeedback_Click);
             // 
             // tsmiAbout
             // 
             this.tsmiAbout.Name = "tsmiAbout";
-            this.tsmiAbout.Size = new System.Drawing.Size(180, 22);
+            this.tsmiAbout.Size = new System.Drawing.Size(153, 22);
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
-            // 
-            // tsmiDeleteSavegame
-            // 
-            this.tsmiDeleteSavegame.Enabled = false;
-            this.tsmiDeleteSavegame.Name = "tsmiDeleteSavegame";
-            this.tsmiDeleteSavegame.Size = new System.Drawing.Size(217, 22);
-            this.tsmiDeleteSavegame.Text = "Delete savegame";
-            this.tsmiDeleteSavegame.Click += new System.EventHandler(this.tsmiDeleteSavegame_Click);
-            // 
-            // tsmiEditSeparator2
-            // 
-            this.tsmiEditSeparator2.Name = "tsmiEditSeparator2";
-            this.tsmiEditSeparator2.Size = new System.Drawing.Size(214, 6);
             // 
             // MainForm
             // 
@@ -1920,7 +1920,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.CheckBox chkShotgunTR3;
         private System.Windows.Forms.CheckBox chkRocketLauncherTR3;
         private System.Windows.Forms.CheckBox chkMP5TR3;
-        private System.Windows.Forms.CheckBox chkUziTR3;
+        private System.Windows.Forms.CheckBox chkUzisTR3;
         private System.Windows.Forms.CheckBox chkDeagleTR3;
         private System.Windows.Forms.CheckBox chkPistolsTR3;
         private System.Windows.Forms.GroupBox grpHealthTR3;

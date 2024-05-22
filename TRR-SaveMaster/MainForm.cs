@@ -748,7 +748,7 @@ namespace TRR_SaveMaster
 
                     File.SetAttributes(savegamePath, File.GetAttributes(savegamePath) & ~FileAttributes.ReadOnly);
 
-                    TR3.WriteChanges(chkPistolsTR3, chkDeagleTR3, chkUziTR3, chkShotgunTR3, chkMP5TR3, chkRocketLauncherTR3,
+                    TR3.WriteChanges(chkPistolsTR3, chkDeagleTR3, chkUzisTR3, chkShotgunTR3, chkMP5TR3, chkRocketLauncherTR3,
                         chkGrenadeLauncherTR3, chkHarpoonGunTR3, nudSaveNumberTR3, nudFlaresTR3, nudSmallMedipacksTR3,
                         nudLargeMedipacksTR3, nudShotgunAmmoTR3, nudDeagleAmmoTR3, nudGrenadeLauncherAmmoTR3, nudRocketLauncherAmmoTR3,
                         nudHarpoonGunAmmoTR3, nudMP5AmmoTR3, nudUziAmmoTR3, trbHealthTR3, nudCollectibleCrystalsTR3);
@@ -1004,7 +1004,7 @@ namespace TRR_SaveMaster
                     TR3.UpdateDisplayName(selectedSavegame);
                     UpdateSavegameDisplayNameTR3(cmbSavegamesTR3, selectedSavegame);
 
-                    TR3.DisplayGameInfo(chkPistolsTR3, chkShotgunTR3, chkDeagleTR3, chkUziTR3, chkMP5TR3,
+                    TR3.DisplayGameInfo(chkPistolsTR3, chkShotgunTR3, chkDeagleTR3, chkUzisTR3, chkMP5TR3,
                         chkRocketLauncherTR3, chkGrenadeLauncherTR3, chkHarpoonGunTR3, nudSaveNumberTR3, nudSmallMedipacksTR3,
                         nudLargeMedipacksTR3, nudFlaresTR3, nudShotgunAmmoTR3, nudDeagleAmmoTR3, nudGrenadeLauncherAmmoTR3,
                         nudRocketLauncherAmmoTR3, nudHarpoonGunAmmoTR3, nudMP5AmmoTR3, nudUziAmmoTR3,
@@ -1385,6 +1385,8 @@ namespace TRR_SaveMaster
 
             if (savegameToDelete != null)
             {
+                System.Media.SystemSounds.Asterisk.Play();
+
                 DialogResult result = MessageBox.Show($"Are you sure you wish to delete '{savegameToDelete}'?",
                     "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -2125,7 +2127,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void chkUziTR3_CheckedChanged(object sender, EventArgs e)
+        private void chkUzisTR3_CheckedChanged(object sender, EventArgs e)
         {
             if (!isLoading && cmbSavegamesTR3.SelectedIndex != -1)
             {
