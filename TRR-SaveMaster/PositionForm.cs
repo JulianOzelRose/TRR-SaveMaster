@@ -616,7 +616,7 @@ namespace TRR_SaveMaster
             { 11, new Int32[] { 58267, -8704, 28929, 90, 72     } },    // Lud's Gate
             { 12, new Int32[] { 41553, -2048, 52727, 175, 8     } },    // City
             { 13, new Int32[] { 33380, -256, 32125, 4, 18       } },    // Nevada Desert
-            //{ 14, new Int32[] { 1617, -512, 38501, 179, 57      } },  // High Security Compound (too many level triggers)
+            { 14, new Int32[] { 1549, -512, 38499, 179, 54      } },    // High Security Compound
             { 15, new Int32[] { 41790, 3584, 62022, 85, 62      } },    // Area 51
             { 16, new Int32[] { 21105, -6045, 28890, 270, 163   } },    // Antarctica
             { 17, new Int32[] { 45957, 3840, 49662, 270, 186    } },    // RX-Tech Mines
