@@ -453,7 +453,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 9)   // Thames Wharf
             {
                 MIN_HEALTH_OFFSET = 0x10AA;
-                MAX_HEALTH_OFFSET = 0x10AA;
+                MAX_HEALTH_OFFSET = 0x10DE;
             }
             else if (levelIndex == 10)  // Aldwych
             {
