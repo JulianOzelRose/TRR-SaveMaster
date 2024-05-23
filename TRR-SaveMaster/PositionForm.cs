@@ -452,7 +452,7 @@ namespace TRR_SaveMaster
             { 26, new Int32[] { 81708, 5376, 36764, 180, 62     } },    // Reunion
         };
 
-        private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR1 = new Dictionary<byte, int[]>
+        private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR1 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 89465, 1016, 37019, 0, 5        } },    // Caves
             { 2,  new Int32[] { 66881, 3072, 44181, 1, 88       } },    // City of Vilcabamba
@@ -475,7 +475,7 @@ namespace TRR_SaveMaster
             { 19, new Int32[] { 33897, 6400, 37136, 102, 2      } },    // The Hive
         };
 
-        private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR1 = new Dictionary<byte, int[]>
+        private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR1 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 67735, -2560, 50275, 0, 28      } },    // Caves
             { 2,  new Int32[] { 71580, -1024, 19332, 280, 21    } },    // City of Vilcabamba
@@ -496,7 +496,7 @@ namespace TRR_SaveMaster
             { 18, new Int32[] { 13925, -12388, 48591, 84, 64    } },    // Atlantean Stronghold
         };
 
-        private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR1 = new Dictionary<byte, int[]>
+        private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR1 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 14851, 6912, 93351, 0, 26       } },    // Caves
             { 2,  new Int32[] { 12001, -3072, 18955, 145, 79    } },    // City of Vilcabamba
@@ -515,19 +515,19 @@ namespace TRR_SaveMaster
             { 17, new Int32[] { 50082, 0, 90793, 5, 72          } },    // Temple of the Cat
         };
 
-        private readonly Dictionary<byte, Int32[]> secret4CoordinatesTR1 = new Dictionary<byte, int[]>
+        private readonly Dictionary<byte, Int32[]> secret4CoordinatesTR1 = new Dictionary<byte, Int32[]>
         {
             { 3,  new Int32[] { 37393, -389, 97165, 44, 9       } },    // Lost Valley
             { 5,  new Int32[] { 43759, 23552, 46400, 3, 60      } },    // St. Francis' Folly
             { 17, new Int32[] { 38269, -5888, 48350, 88, 93     } },    // Temple of the Cat
         };
 
-        private readonly Dictionary<byte, Int32[]> secret5CoordinatesTR1 = new Dictionary<byte, int[]>
+        private readonly Dictionary<byte, Int32[]> secret5CoordinatesTR1 = new Dictionary<byte, Int32[]>
         {
             { 3,  new Int32[] { 43411, -2304, 74652, 180, 14    } },    // Lost Valley
         };
 
-        private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR2 = new Dictionary<byte, int[]>
+        private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR2 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 62441, 853, 36520, 91, 38       } },    // The Great Wall
             { 2,  new Int32[] { 44124, 0, 29131, 86, 58         } },    // Venice
@@ -546,13 +546,13 @@ namespace TRR_SaveMaster
             { 15, new Int32[] { 18333, 13312, 55781, 270, 162   } },    // Temple of Xian
             { 16, new Int32[] { 73238, -7157, 69341, 171, 3     } },    // Floating Islands
             { 19, new Int32[] { 87600, 2749, 67225, 270, 31     } },    // The Cold War
-            { 20, new Int32[] { 65051, 1024, 61781, 175, 48     } },    // Fool's Gold (need to find better coordinates)
+            //{ 20, new Int32[] { 65051, 1024, 61781, 175, 48     } },  // Fool's Gold (too many level triggers)
             { 21, new Int32[] { 57801, -4608, 8924, 147, 13     } },    // Furnace of the Gods
             { 22, new Int32[] { 45545, 6912, 63918, 164, 35     } },    // Kingdom
             { 23, new Int32[] { 47626, 15360, 85915, 1, 76      } },    // Nightmare in Vegas
         };
 
-        private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR2 = new Dictionary<byte, int[]>
+        private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR2 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 41293, 7168, 60959, 84, 54      } },    // The Great Wall
             { 2,  new Int32[] { 37749, 5101, 16083, 270, 126    } },    // Venice
@@ -577,7 +577,7 @@ namespace TRR_SaveMaster
             { 23, new Int32[] { 64940, 13312, 51962, 175, 46    } },    // Nightmare in Vegas
         };
 
-        private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR2 = new Dictionary<byte, int[]>
+        private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR2 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 86384, 26112, 74257, 89, 79     } },    // The Great Wall
             { 2,  new Int32[] { 62357, -1792, 61898, 30, 91     } },    // Venice
@@ -602,7 +602,7 @@ namespace TRR_SaveMaster
             { 23, new Int32[] { 34406, -256, 57823, 94, 6       } },    // Nightmare in Vegas
         };
 
-        private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR3 = new Dictionary<byte, int[]>
+        private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR3 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 27465, 2939, 32501, 270, 21     } },    // Jungle
             { 2,  new Int32[] { 60023, 8192, 62828, 2, 87       } },    // Temple Ruins
@@ -628,7 +628,7 @@ namespace TRR_SaveMaster
             { 25, new Int32[] { 57286, -256, 30032, 89, 89      } },    // It's a Madhouse!
         };
 
-        private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR3 = new Dictionary<byte, int[]>
+        private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR3 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 25391, 17313, 57665, 8, 17      } },    // Jungle
             { 2,  new Int32[] { 42667, 3840, 19841, 88, 181     } },    // Temple Ruins
@@ -652,7 +652,7 @@ namespace TRR_SaveMaster
             { 25, new Int32[] { 39282, -2304, 59755, 3, 107     } },    // It's a Madhouse!
         };
 
-        private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR3 = new Dictionary<byte, int[]>
+        private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR3 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 19099, 24064, 58269, 180, 135   } },    // Jungle
             { 2,  new Int32[] { 56421, 1280, 93662, 270, 125    } },    // Temple Ruins
@@ -675,7 +675,7 @@ namespace TRR_SaveMaster
             { 25, new Int32[] { 80449, 1792, 30034, 91, 50      } },    // It's a Madhouse!
         };
 
-        private readonly Dictionary<byte, Int32[]> secret4CoordinatesTR3 = new Dictionary<byte, int[]>
+        private readonly Dictionary<byte, Int32[]> secret4CoordinatesTR3 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 95333, 18944, 70002, 270, 77    } },    // Jungle
             { 2,  new Int32[] { 40459, 6968, 96815, 270, 142    } },    // Temple Ruins
@@ -686,7 +686,7 @@ namespace TRR_SaveMaster
             { 11, new Int32[] { 71581, -18432, 25031, 270, 54   } },    // Lud's Gate
         };
 
-        private readonly Dictionary<byte, Int32[]> secret5CoordinatesTR3 = new Dictionary<byte, int[]>
+        private readonly Dictionary<byte, Int32[]> secret5CoordinatesTR3 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 89422, 24064, 57445, 178, 76    } },    // Jungle
             { 3,  new Int32[] { 42075, 4810, 79061, 84, 162     } },    // The River Ganges
@@ -695,7 +695,7 @@ namespace TRR_SaveMaster
             { 11, new Int32[] { 46851, -3002, 37141, 16, 134    } },    // Lud's Gate
         };
 
-        private readonly Dictionary<byte, Int32[]> secret6CoordinatesTR3 = new Dictionary<byte, int[]>
+        private readonly Dictionary<byte, Int32[]> secret6CoordinatesTR3 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 82252, 26624, 63587, 0, 99      } },    // Jungle
             { 11, new Int32[] { 56161, -2614, 22934, 16, 102    } },    // Lud's Gate
