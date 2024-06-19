@@ -299,7 +299,7 @@ only are the secondary ammo offsets allocated dynamically based on the level, th
 In order to calculate the secondary ammo offsets, you need to find the ammo index. The ammo index is correlated with the number of active entities in the game. If there
 are 0 entities, the index is 0. If there are 2 entities, the index is 2, and so on.
 
-There is an array consisting of `{0xFF, 0xFF, 0xFF, 0xFF}` that precedes the null padding of the savegame and shifts consistently along with the secondary ammo offsets.
+There is a 4-byte array consisting of `{0xFF, 0xFF, 0xFF, 0xFF}` that precedes the null padding of the savegame and shifts consistently along with the secondary ammo offsets.
 This array's location can be used to calculate both the base secondary ammo offsets, as well as the secondary ammo index itself. While the distance is mostly consistent,
 there are some exceptions. Each index corresponds to two possible locations of the 0xFF array. The second location is +0xA bytes away from the first. See the code below.
 
@@ -413,8 +413,9 @@ in inventory along with the byte flags. See the table below for Tomb Raider III 
 | Grenade Launcher | 128              |
 
 Ammunition is stored in a similar fashion to Tomb Raider II. The logic of a primary offset and secondary offset still apply; unequipped weapons
-only store ammo on the primary offset, and equipped weapons store ammo on both offsets. The secondary ammo index also correlates with the number
-of active entities, and the index can be determined by the location of the `{0xFF, 0xFF, 0xFF, 0xFF}` array.
+only store ammo on the primary offset, and equipped weapons store ammo on both offsets. The only exception seems to be the Harpoon Gun, which stores
+its ammo values on both offsets, whether equipped or not. The secondary ammo index also correlates with the number of active entities, and the index
+can be determined by the location of the `{0xFF, 0xFF, 0xFF, 0xFF}` array.
 
 The ammo index in Tomb Raider III typically shifts by a value of 0x1A. However, much like in Tomb Raider II, there are some exceptions to this pattern. Each index corresponds to
 two possible locations of the 0xFF array, the second array being +0xA bytes from the first array. See the code below for calculating the secondary ammo index.
