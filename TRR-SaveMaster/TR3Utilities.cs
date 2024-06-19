@@ -353,13 +353,9 @@ namespace TRR_SaveMaster
         {
             WriteUInt16(savegameOffset + harpoonGunAmmoOffset, ammo);
 
-            if (isPresent && secondaryAmmoIndex != -1)
+            if (secondaryAmmoIndex != -1)
             {
                 WriteUInt16(savegameOffset + harpoonGunAmmoOffset2, ammo);
-            }
-            else if (!isPresent && secondaryAmmoIndex != -1)
-            {
-                WriteUInt16(savegameOffset + harpoonGunAmmoOffset2, 0);
             }
         }
 
