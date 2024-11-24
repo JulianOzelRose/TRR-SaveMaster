@@ -32,7 +32,21 @@ leave this feature enabled. While this savegame editor has been thoroughly teste
 Regular backups can safeguard your progress in the event of unforeseen issues or errors during the editing process. If you would like to manually create a backup of your savegame file,
 you can also do this by clicking "File" then "Create backup".
 
-## Reverse engineering Tomb Raider I-III Remastered
+## Using the Position Editor
+![PositionEditor](https://github.com/user-attachments/assets/ea700f7d-9c22-4b2f-9b64-2fcaaa176f0f)
+
+This savegame editor includes a Position Editor feature. To use it, click "Edit," then select "Position." For Lara's coordinates to be correctly parsed, the health bytes must be located. If the health bytes cannot be found, try saving the game while Lara is standing. Once in the Position Editor menu, you can teleport to pre-determined coordinates, such as the end of the level or secret locations.  
+
+- The **X-coordinate** represents Lara's horizontal position in the game. Decreasing its value moves her to the left, while increasing it moves her to the right.  
+- The **Y-coordinate** represents Lara's vertical position in the game. Decreasing it moves her up, while increasing it moves her down.  
+- The **Z-coordinate** represents Lara's depth position in the game. Increasing it moves her forward, while decreasing it moves her backward.  
+- The **Orientation** value determines the direction Lara is facing, measured in degrees.
+- The **Room** value represents the unique room number Lara is currently in.  
+
+It's essential that the Room number matches Lara's current coordinates; otherwise, the game will not interpret her position correctly. Click "Save" in this menu to apply changes, or "Cancel" to retain Lara's current
+position.
+
+## Tomb Raider I-III Remastered Savegame Format
 This section details the technical aspects of reverse engineering the savegames of the Tomb Raider I-III Remastered trilogy. All savegames are stored in the `savegame.dat` file.
 Savegames for expansions are stored in the same slots as the original game. Each savegame slot for each game begins at a specific offset in the file, with a maximum of 32
 slots per game. See the table below.
@@ -227,7 +241,7 @@ if (chkHarpoonGun.Checked) newWeaponsConfigNum += WEAPON_HARPOON_GUN;
 ```
 
 
-## Reverse engineering Tomb Raider I savegames
+## Tomb Raider I savegame format
 Because almost all of the offsets in Tomb Raider I are static, it is the most straightforward game to reverse of the trilogy. Weapons inventory configuration
 is stored on a single offset, referred to in this editor's code as `weaponsConfigNum`. It has a base number of 1, which indicates no weapons present.
 You can use bitwise to determine which weapons are present in inventory. Each weapon corresponds to a specific byte flag. See the table blow.
@@ -260,7 +274,7 @@ private void WriteShotgunAmmo(bool isPresent, UInt16 ammo)
 }
 ```
 
-## Reverse engineering Tomb Raider II savegames
+## Tomb Raider II savegame format
 Reversing Tomb Raider II presents more challenges than Tomb Raider I. This is because most of the game's offsets are dynamic. However, weapons are stored in the
 same fashion as they are in Tomb Raider I; on a single offset. You can use bitwise to extract which weapons are present in inventory the same way as in Tomb Raider I.
 See the table below for weapon byte flags.
@@ -375,7 +389,7 @@ private void WriteAutomaticPistolsAmmo(bool isPresent, UInt16 ammo)
 }
 ```
 
-## Reverse engineering Tomb Raider III savegames
+## Tomb Raider III savegame format
 Similar to Tomb Raider II, most of the offsets in Tomb Raider III are dynamic. The only exceptions are the save number, the level index, and the statistics.
 You can calculate most of the remaining offsets based on the level index, just as with Tomb Raider II. See the code below.
 
