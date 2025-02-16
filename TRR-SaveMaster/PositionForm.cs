@@ -20,6 +20,7 @@ namespace TRR_SaveMaster
         private const int TAB_TR1 = 0;
         private const int TAB_TR2 = 1;
         private const int TAB_TR3 = 2;
+        private const int TAB_TR4 = 3;
 
         // Savegame
         private Savegame selectedSavegame;
@@ -66,6 +67,7 @@ namespace TRR_SaveMaster
         public void SetHealthOffset(int offset)
         {
             healthOffset = offset;
+            Console.WriteLine($"Reported health offset: 0x{savegameOffset + healthOffset:X}");
         }
 
         private byte ReadByte(int offset)
@@ -164,6 +166,10 @@ namespace TRR_SaveMaster
             else if (SELECTED_TAB == TAB_TR3 && endOfLevelCoordinatesTR3.ContainsKey(levelIndex))
             {
                 endOfLevelCoordinates = endOfLevelCoordinatesTR3[levelIndex];
+            }
+            else if (SELECTED_TAB == TAB_TR4 && endOfLevelCoordinatesTR4.ContainsKey(levelIndex))
+            {
+                endOfLevelCoordinates = endOfLevelCoordinatesTR4[levelIndex];
             }
 
             nudXCoordinate.Value = endOfLevelCoordinates[0];
@@ -323,6 +329,10 @@ namespace TRR_SaveMaster
             {
                 btnEndOfLevel.Enabled = endOfLevelCoordinatesTR3.ContainsKey(levelIndex);
             }
+            else if (SELECTED_TAB == TAB_TR4)
+            {
+                btnEndOfLevel.Enabled = endOfLevelCoordinatesTR4.ContainsKey(levelIndex);
+            }
         }
 
         private void EnableSecretButtonsConditionally()
@@ -450,6 +460,23 @@ namespace TRR_SaveMaster
             { 24, new Int32[] { 68708, -13568, 41653, 90, 111   } },    // Sleeping with the Fishes
             { 25, new Int32[] { 94093, 5632, 34368, 90, 133     } },    // It's a Madhouse! (just need Hand of Rathmore from beginning)
             { 26, new Int32[] { 81708, 5376, 36764, 180, 62     } },    // Reunion
+        };
+
+        private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR4 = new Dictionary<byte, Int32[]>
+        {
+            { 1,  new Int32[] { 16352, 616, -31712, 270, 119    } },    // Angkor Wat
+            { 2,  new Int32[] { 15834, -1664, 26312, 3, 115     } },    // Race for the Iris
+            { 3,  new Int32[] { 25657, 1920, 3828, 0, 57        } },    // The Tomb of Seth
+            { 4,  new Int32[] { -15614, -1885, 4235, 260, 125   } },    // Burial Chambers
+            //{ 5,  new Int32[] { 10823, 256, 19153, 166, 3       } },    // Valley of the Kings
+            //{ 6,  new Int32[] { 18061, -911, 29637, 95, 22      } },    // KV5
+            { 7,  new Int32[] { 25549, 627, 30968, 1, 7         } },    // Temple of Karnak
+            { 8,  new Int32[] { 24018, -256, -28082, 2, 151     } },    // The Great Hypostyle Hall
+            { 9,  new Int32[] { 27169, 3589, 24774, 0, 87       } },    // Sacred Lake
+            { 12, new Int32[] { 20941, -416, 14513, 4, 24       } },    // Guardian of Semerkhet
+            { 14, new Int32[] { 16679, -2944, 26353, 178, 76    } },    // Alexandria
+            { 15, new Int32[] { 10524, -3712, 23811, 176, 154   } },    // Coastal Ruins
+            { 18, new Int32[] { 24454, 0, 11971, 177, 79        } },    // Catacombs
         };
 
         private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR1 = new Dictionary<byte, Int32[]>
@@ -715,27 +742,57 @@ namespace TRR_SaveMaster
             {
                 levelIndexOffset = 0x8D6;
             }
+            else if (SELECTED_TAB == TAB_TR4)
+            {
+                levelIndexOffset = 0x26F;
+            }
 
-            xCoordinateOffset = healthOffset - 0x24;
-            yCoordinateOffset = healthOffset - 0x20;
-            zCoordinateOffset = healthOffset - 0x1C;
-            orientationOffset = healthOffset - 0x16;
-            roomOffset = healthOffset - 0x10;
+            if (SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR2 || SELECTED_TAB == TAB_TR3)
+            {
+                xCoordinateOffset = healthOffset - 0x24;
+                yCoordinateOffset = healthOffset - 0x20;
+                zCoordinateOffset = healthOffset - 0x1C;
+                orientationOffset = healthOffset - 0x16;
+                roomOffset = healthOffset - 0x10;
+            }
+            else if (SELECTED_TAB == TAB_TR4)
+            {
+                orientationOffset = healthOffset - 0x9;     // Verified
+                zCoordinateOffset = healthOffset - 0x10;    // Verified
+                yCoordinateOffset = healthOffset - 0xE;     // Verified
+                xCoordinateOffset = healthOffset - 0xC;     // Fairly certain
+                roomOffset = healthOffset - 0xA;
+            }
         }
 
-        private Int32 GetXCoordinate()
+        private Int32 GetXCoordinateI32()
         {
             return ReadInt32(savegameOffset + xCoordinateOffset);
         }
 
-        private Int32 GetYCoordinate()
+        private Int32 GetYCoordinateI32()
         {
             return ReadInt32(savegameOffset + yCoordinateOffset);
         }
 
-        private Int32 GetZCoordinate()
+        private Int32 GetZCoordinateI32()
         {
             return ReadInt32(savegameOffset + zCoordinateOffset);
+        }
+
+        private Int16 GetXCoordinateI16()
+        {
+            return ReadInt16(savegameOffset + xCoordinateOffset);
+        }
+
+        private Int32 GetYCoordinateI16()
+        {
+            return ReadInt16(savegameOffset + yCoordinateOffset);
+        }
+
+        private Int32 GetZCoordinateI16()
+        {
+            return ReadInt16(savegameOffset + zCoordinateOffset);
         }
 
         private Int16 GetOrientation()
@@ -751,19 +808,34 @@ namespace TRR_SaveMaster
             return ReadByte(savegameOffset + roomOffset);
         }
 
-        private void WriteXCoordinate(Int32 value)
+        private void WriteXCoordinateI32(Int32 value)
         {
             WriteInt32(savegameOffset + xCoordinateOffset, value);
         }
 
-        private void WriteYCoordinate(Int32 value)
+        private void WriteYCoordinateI32(Int32 value)
         {
             WriteInt32(savegameOffset + yCoordinateOffset, value);
         }
 
-        private void WriteZCoordinate(Int32 value)
+        private void WriteZCoordinateI32(Int32 value)
         {
             WriteInt32(savegameOffset + zCoordinateOffset, value);
+        }
+
+        private void WriteXCoordinateI16(Int16 value)
+        {
+            WriteInt16(savegameOffset + xCoordinateOffset, value);
+        }
+
+        private void WriteYCoordinateI16(Int16 value)
+        {
+            WriteInt16(savegameOffset + yCoordinateOffset, value);
+        }
+
+        private void WriteZCoordinateI16(Int16 value)
+        {
+            WriteInt16(savegameOffset + zCoordinateOffset, value);
         }
 
         private void WriteOrientation(Int16 value)
@@ -793,11 +865,23 @@ namespace TRR_SaveMaster
                     return;
                 }
 
-                nudXCoordinate.Value = GetXCoordinate();
-                nudYCoordinate.Value = GetYCoordinate();
-                nudZCoordinate.Value = GetZCoordinate();
-                nudOrientation.Value = GetOrientation();
-                nudRoom.Value = GetRoom();
+                if (SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR2 || SELECTED_TAB == TAB_TR3)
+                {
+                    nudXCoordinate.Value = GetXCoordinateI32();
+                    nudYCoordinate.Value = GetYCoordinateI32();
+                    nudZCoordinate.Value = GetZCoordinateI32();
+                    nudOrientation.Value = GetOrientation();
+                    nudRoom.Value = GetRoom();
+                }
+                else if (SELECTED_TAB == TAB_TR4)
+                {
+                    nudXCoordinate.Value = GetXCoordinateI16();
+                    nudYCoordinate.Value = GetYCoordinateI16();
+                    nudZCoordinate.Value = GetZCoordinateI16();
+                    nudOrientation.Value = GetOrientation();
+                    nudRoom.Value = GetRoom();
+                }
+
             }
             catch (Exception ex)
             {
@@ -830,11 +914,22 @@ namespace TRR_SaveMaster
 
                 File.SetAttributes(savegamePath, File.GetAttributes(savegamePath) & ~FileAttributes.ReadOnly);
 
-                WriteXCoordinate((Int32)nudXCoordinate.Value);
-                WriteYCoordinate((Int32)nudYCoordinate.Value);
-                WriteZCoordinate((Int32)nudZCoordinate.Value);
-                WriteOrientation((Int16)nudOrientation.Value);
-                WriteRoom((byte)nudRoom.Value);
+                if (SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR2 || SELECTED_TAB == TAB_TR3)
+                {
+                    WriteXCoordinateI32((Int32)nudXCoordinate.Value);
+                    WriteYCoordinateI32((Int32)nudYCoordinate.Value);
+                    WriteZCoordinateI32((Int32)nudZCoordinate.Value);
+                    WriteOrientation((Int16)nudOrientation.Value);
+                    WriteRoom((byte)nudRoom.Value);
+                }
+                else if (SELECTED_TAB == TAB_TR4)
+                {
+                    WriteXCoordinateI16((Int16)nudXCoordinate.Value);
+                    WriteYCoordinateI16((Int16)nudYCoordinate.Value);
+                    WriteZCoordinateI16((Int16)nudZCoordinate.Value);
+                    WriteOrientation((Int16)nudOrientation.Value);
+                    WriteRoom((byte)nudRoom.Value);
+                }
 
                 DisableButtons();
 

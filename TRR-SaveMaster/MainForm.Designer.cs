@@ -132,11 +132,56 @@ namespace TRR_SaveMaster
             this.nudFlaresTR3 = new System.Windows.Forms.NumericUpDown();
             this.nudLargeMedipacksTR3 = new System.Windows.Forms.NumericUpDown();
             this.nudSmallMedipacksTR3 = new System.Windows.Forms.NumericUpDown();
+            this.tpTR4 = new System.Windows.Forms.TabPage();
+            this.btnExitTR4 = new System.Windows.Forms.Button();
+            this.btnCancelTR4 = new System.Windows.Forms.Button();
+            this.btnSaveTR4 = new System.Windows.Forms.Button();
+            this.nudSaveNumberTR4 = new System.Windows.Forms.NumericUpDown();
+            this.lblSaveNumberTR4 = new System.Windows.Forms.Label();
+            this.btnRefreshTR4 = new System.Windows.Forms.Button();
+            this.lblSavegameTR4 = new System.Windows.Forms.Label();
+            this.grpHealthTR4 = new System.Windows.Forms.GroupBox();
+            this.lblHealthErrorTR4 = new System.Windows.Forms.Label();
+            this.lblHealthTR4 = new System.Windows.Forms.Label();
+            this.trbHealthTR4 = new System.Windows.Forms.TrackBar();
+            this.cmbSavegamesTR4 = new System.Windows.Forms.ComboBox();
+            this.grpItemsTR4 = new System.Windows.Forms.GroupBox();
+            this.lblGoldenSkullsTR4 = new System.Windows.Forms.Label();
+            this.nudGoldenSkullsTR4 = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.nudFlaresTR4 = new System.Windows.Forms.NumericUpDown();
+            this.lblLargeMedipacksTR4 = new System.Windows.Forms.Label();
+            this.lblSmallMedipacksTR4 = new System.Windows.Forms.Label();
+            this.nudLargeMedipacksTR4 = new System.Windows.Forms.NumericUpDown();
+            this.nudSmallMedipacksTR4 = new System.Windows.Forms.NumericUpDown();
+            this.grpWeaponsTR4 = new System.Windows.Forms.GroupBox();
+            this.lblPresentTR4 = new System.Windows.Forms.Label();
+            this.lblAmmo3TR4 = new System.Windows.Forms.Label();
+            this.lblAmmo2TR4 = new System.Windows.Forms.Label();
+            this.lblAmmo1TR4 = new System.Windows.Forms.Label();
+            this.nudGrenadeGunFlashAmmoTR4 = new System.Windows.Forms.NumericUpDown();
+            this.nudGrenadeGunSuperAmmoTR4 = new System.Windows.Forms.NumericUpDown();
+            this.nudCrossbowExplosiveAmmoTR4 = new System.Windows.Forms.NumericUpDown();
+            this.nudCrossbowPoisonAmmoTR4 = new System.Windows.Forms.NumericUpDown();
+            this.nudShotgunWideshotAmmoTR4 = new System.Windows.Forms.NumericUpDown();
+            this.nudShotgunNormalAmmoTR4 = new System.Windows.Forms.NumericUpDown();
+            this.chkGrenadeGunTR4 = new System.Windows.Forms.CheckBox();
+            this.nudUziAmmoTR4 = new System.Windows.Forms.NumericUpDown();
+            this.nudRevolverAmmoTR4 = new System.Windows.Forms.NumericUpDown();
+            this.nudGrenadeGunNormalAmmoTR4 = new System.Windows.Forms.NumericUpDown();
+            this.nudCrossbowNormalAmmoTR4 = new System.Windows.Forms.NumericUpDown();
+            this.chkShotgunTR4 = new System.Windows.Forms.CheckBox();
+            this.chkRevolverTR4 = new System.Windows.Forms.CheckBox();
+            this.chkUziTR4 = new System.Windows.Forms.CheckBox();
+            this.chkCrossbowTR4 = new System.Windows.Forms.CheckBox();
+            this.lblPistolAmmoTR4 = new System.Windows.Forms.Label();
+            this.chkPistolsTR4 = new System.Windows.Forms.CheckBox();
             this.ssrStatusStrip = new System.Windows.Forms.StatusStrip();
             this.slblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsrToolStrip = new System.Windows.Forms.ToolStrip();
             this.tsddbFile = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tsmiBrowseSavegamePath = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiBrowseTRXSavegamePath = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiBrowseTRX2SavegamePath = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiFileSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiBackupBeforeSaving = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCreateBackup = new System.Windows.Forms.ToolStripMenuItem();
@@ -162,7 +207,7 @@ namespace TRR_SaveMaster
             this.tsmiStatusBar = new System.Windows.Forms.ToolStripMenuItem();
             this.tsddbHelp = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiSendFeedback = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiReportBug = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
@@ -208,6 +253,26 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudFlaresTR3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLargeMedipacksTR3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSmallMedipacksTR3)).BeginInit();
+            this.tpTR4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR4)).BeginInit();
+            this.grpHealthTR4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trbHealthTR4)).BeginInit();
+            this.grpItemsTR4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGoldenSkullsTR4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudFlaresTR4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudLargeMedipacksTR4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSmallMedipacksTR4)).BeginInit();
+            this.grpWeaponsTR4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGrenadeGunFlashAmmoTR4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGrenadeGunSuperAmmoTR4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCrossbowExplosiveAmmoTR4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCrossbowPoisonAmmoTR4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudShotgunWideshotAmmoTR4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudShotgunNormalAmmoTR4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudUziAmmoTR4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRevolverAmmoTR4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGrenadeGunNormalAmmoTR4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCrossbowNormalAmmoTR4)).BeginInit();
             this.ssrStatusStrip.SuspendLayout();
             this.tsrToolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -217,12 +282,13 @@ namespace TRR_SaveMaster
             this.tabGame.Controls.Add(this.tpTR1);
             this.tabGame.Controls.Add(this.tpTR2);
             this.tabGame.Controls.Add(this.tpTR3);
+            this.tabGame.Controls.Add(this.tpTR4);
             this.tabGame.ItemSize = new System.Drawing.Size(238, 20);
             this.tabGame.Location = new System.Drawing.Point(1, 28);
             this.tabGame.Multiline = true;
             this.tabGame.Name = "tabGame";
             this.tabGame.SelectedIndex = 0;
-            this.tabGame.Size = new System.Drawing.Size(721, 344);
+            this.tabGame.Size = new System.Drawing.Size(721, 365);
             this.tabGame.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabGame.TabIndex = 6;
             this.tabGame.SelectedIndexChanged += new System.EventHandler(this.tabGame_SelectedIndexChanged);
@@ -242,10 +308,10 @@ namespace TRR_SaveMaster
             this.tpTR1.Controls.Add(this.grpItemsTR1);
             this.tpTR1.Controls.Add(this.btnSaveTR1);
             this.tpTR1.Controls.Add(this.grpWeaponsTR1);
-            this.tpTR1.Location = new System.Drawing.Point(4, 24);
+            this.tpTR1.Location = new System.Drawing.Point(4, 44);
             this.tpTR1.Name = "tpTR1";
             this.tpTR1.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTR1.Size = new System.Drawing.Size(713, 316);
+            this.tpTR1.Size = new System.Drawing.Size(713, 317);
             this.tpTR1.TabIndex = 0;
             this.tpTR1.Text = "Tomb Raider I";
             // 
@@ -564,9 +630,9 @@ namespace TRR_SaveMaster
             this.tpTR2.Controls.Add(this.grpWeaponsTR2);
             this.tpTR2.Controls.Add(this.grpHealthTR2);
             this.tpTR2.Controls.Add(this.grpItemsTR2);
-            this.tpTR2.Location = new System.Drawing.Point(4, 24);
+            this.tpTR2.Location = new System.Drawing.Point(4, 44);
             this.tpTR2.Name = "tpTR2";
-            this.tpTR2.Size = new System.Drawing.Size(713, 316);
+            this.tpTR2.Size = new System.Drawing.Size(713, 317);
             this.tpTR2.TabIndex = 2;
             this.tpTR2.Text = "Tomb Raider II";
             // 
@@ -991,9 +1057,9 @@ namespace TRR_SaveMaster
             this.tpTR3.Controls.Add(this.grpWeaponsTR3);
             this.tpTR3.Controls.Add(this.grpHealthTR3);
             this.tpTR3.Controls.Add(this.grpItemsTR3);
-            this.tpTR3.Location = new System.Drawing.Point(4, 24);
+            this.tpTR3.Location = new System.Drawing.Point(4, 44);
             this.tpTR3.Name = "tpTR3";
-            this.tpTR3.Size = new System.Drawing.Size(713, 316);
+            this.tpTR3.Size = new System.Drawing.Size(713, 317);
             this.tpTR3.TabIndex = 4;
             this.tpTR3.Text = "Tomb Raider III";
             // 
@@ -1456,11 +1522,555 @@ namespace TRR_SaveMaster
             this.nudSmallMedipacksTR3.ValueChanged += new System.EventHandler(this.nudSmallMedipacksTR3_ValueChanged);
             this.nudSmallMedipacksTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSmallMedipacksTR3_KeyPress);
             // 
+            // tpTR4
+            // 
+            this.tpTR4.Controls.Add(this.btnExitTR4);
+            this.tpTR4.Controls.Add(this.btnCancelTR4);
+            this.tpTR4.Controls.Add(this.btnSaveTR4);
+            this.tpTR4.Controls.Add(this.nudSaveNumberTR4);
+            this.tpTR4.Controls.Add(this.lblSaveNumberTR4);
+            this.tpTR4.Controls.Add(this.btnRefreshTR4);
+            this.tpTR4.Controls.Add(this.lblSavegameTR4);
+            this.tpTR4.Controls.Add(this.grpHealthTR4);
+            this.tpTR4.Controls.Add(this.cmbSavegamesTR4);
+            this.tpTR4.Controls.Add(this.grpItemsTR4);
+            this.tpTR4.Controls.Add(this.grpWeaponsTR4);
+            this.tpTR4.Location = new System.Drawing.Point(4, 44);
+            this.tpTR4.Name = "tpTR4";
+            this.tpTR4.Size = new System.Drawing.Size(713, 317);
+            this.tpTR4.TabIndex = 5;
+            this.tpTR4.Text = "Tomb Raider IV";
+            this.tpTR4.UseVisualStyleBackColor = true;
+            // 
+            // btnExitTR4
+            // 
+            this.btnExitTR4.Location = new System.Drawing.Point(456, 287);
+            this.btnExitTR4.Name = "btnExitTR4";
+            this.btnExitTR4.Size = new System.Drawing.Size(80, 25);
+            this.btnExitTR4.TabIndex = 41;
+            this.btnExitTR4.Text = "Exit";
+            this.btnExitTR4.UseVisualStyleBackColor = true;
+            this.btnExitTR4.Click += new System.EventHandler(this.btnExitTR4_Click);
+            // 
+            // btnCancelTR4
+            // 
+            this.btnCancelTR4.Enabled = false;
+            this.btnCancelTR4.Location = new System.Drawing.Point(542, 287);
+            this.btnCancelTR4.Name = "btnCancelTR4";
+            this.btnCancelTR4.Size = new System.Drawing.Size(80, 25);
+            this.btnCancelTR4.TabIndex = 40;
+            this.btnCancelTR4.Text = "Cancel";
+            this.btnCancelTR4.UseVisualStyleBackColor = true;
+            this.btnCancelTR4.Click += new System.EventHandler(this.btnCancelTR4_Click);
+            // 
+            // btnSaveTR4
+            // 
+            this.btnSaveTR4.Enabled = false;
+            this.btnSaveTR4.Location = new System.Drawing.Point(628, 287);
+            this.btnSaveTR4.Name = "btnSaveTR4";
+            this.btnSaveTR4.Size = new System.Drawing.Size(80, 25);
+            this.btnSaveTR4.TabIndex = 39;
+            this.btnSaveTR4.Text = "Save";
+            this.btnSaveTR4.UseVisualStyleBackColor = true;
+            this.btnSaveTR4.Click += new System.EventHandler(this.btnSaveTR4_Click);
+            // 
+            // nudSaveNumberTR4
+            // 
+            this.nudSaveNumberTR4.Location = new System.Drawing.Point(101, 16);
+            this.nudSaveNumberTR4.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudSaveNumberTR4.Name = "nudSaveNumberTR4";
+            this.nudSaveNumberTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudSaveNumberTR4.TabIndex = 31;
+            this.nudSaveNumberTR4.ValueChanged += new System.EventHandler(this.nudSaveNumberTR4_ValueChanged);
+            this.nudSaveNumberTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSaveNumberTR4_KeyPress);
+            // 
+            // lblSaveNumberTR4
+            // 
+            this.lblSaveNumberTR4.AutoSize = true;
+            this.lblSaveNumberTR4.Location = new System.Drawing.Point(22, 18);
+            this.lblSaveNumberTR4.Name = "lblSaveNumberTR4";
+            this.lblSaveNumberTR4.Size = new System.Drawing.Size(75, 13);
+            this.lblSaveNumberTR4.TabIndex = 32;
+            this.lblSaveNumberTR4.Text = "Save Number:";
+            // 
+            // btnRefreshTR4
+            // 
+            this.btnRefreshTR4.Enabled = false;
+            this.btnRefreshTR4.Location = new System.Drawing.Point(628, 13);
+            this.btnRefreshTR4.Name = "btnRefreshTR4";
+            this.btnRefreshTR4.Size = new System.Drawing.Size(80, 23);
+            this.btnRefreshTR4.TabIndex = 38;
+            this.btnRefreshTR4.Text = "Refresh";
+            this.btnRefreshTR4.UseVisualStyleBackColor = true;
+            this.btnRefreshTR4.Click += new System.EventHandler(this.btnRefreshTR4_Click);
+            // 
+            // lblSavegameTR4
+            // 
+            this.lblSavegameTR4.AutoSize = true;
+            this.lblSavegameTR4.Location = new System.Drawing.Point(376, 18);
+            this.lblSavegameTR4.Name = "lblSavegameTR4";
+            this.lblSavegameTR4.Size = new System.Drawing.Size(61, 13);
+            this.lblSavegameTR4.TabIndex = 34;
+            this.lblSavegameTR4.Text = "Savegame:";
+            // 
+            // grpHealthTR4
+            // 
+            this.grpHealthTR4.Controls.Add(this.lblHealthErrorTR4);
+            this.grpHealthTR4.Controls.Add(this.lblHealthTR4);
+            this.grpHealthTR4.Controls.Add(this.trbHealthTR4);
+            this.grpHealthTR4.Location = new System.Drawing.Point(4, 205);
+            this.grpHealthTR4.Name = "grpHealthTR4";
+            this.grpHealthTR4.Size = new System.Drawing.Size(335, 76);
+            this.grpHealthTR4.TabIndex = 37;
+            this.grpHealthTR4.TabStop = false;
+            this.grpHealthTR4.Text = "Health";
+            // 
+            // lblHealthErrorTR4
+            // 
+            this.lblHealthErrorTR4.AutoSize = true;
+            this.lblHealthErrorTR4.Location = new System.Drawing.Point(93, 51);
+            this.lblHealthErrorTR4.Name = "lblHealthErrorTR4";
+            this.lblHealthErrorTR4.Size = new System.Drawing.Size(136, 13);
+            this.lblHealthErrorTR4.TabIndex = 2;
+            this.lblHealthErrorTR4.Text = "Unable to find health bytes.";
+            this.lblHealthErrorTR4.Visible = false;
+            // 
+            // lblHealthTR4
+            // 
+            this.lblHealthTR4.AutoSize = true;
+            this.lblHealthTR4.Location = new System.Drawing.Point(292, 27);
+            this.lblHealthTR4.Name = "lblHealthTR4";
+            this.lblHealthTR4.Size = new System.Drawing.Size(30, 13);
+            this.lblHealthTR4.TabIndex = 1;
+            this.lblHealthTR4.Text = "0.1%";
+            // 
+            // trbHealthTR4
+            // 
+            this.trbHealthTR4.BackColor = System.Drawing.Color.White;
+            this.trbHealthTR4.Location = new System.Drawing.Point(16, 23);
+            this.trbHealthTR4.Maximum = 1000;
+            this.trbHealthTR4.Minimum = 1;
+            this.trbHealthTR4.Name = "trbHealthTR4";
+            this.trbHealthTR4.Size = new System.Drawing.Size(272, 45);
+            this.trbHealthTR4.TabIndex = 0;
+            this.trbHealthTR4.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trbHealthTR4.Value = 1;
+            this.trbHealthTR4.Scroll += new System.EventHandler(this.trbHealthTR4_Scroll);
+            // 
+            // cmbSavegamesTR4
+            // 
+            this.cmbSavegamesTR4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSavegamesTR4.FormattingEnabled = true;
+            this.cmbSavegamesTR4.Location = new System.Drawing.Point(441, 14);
+            this.cmbSavegamesTR4.Name = "cmbSavegamesTR4";
+            this.cmbSavegamesTR4.Size = new System.Drawing.Size(182, 21);
+            this.cmbSavegamesTR4.TabIndex = 33;
+            this.cmbSavegamesTR4.SelectedIndexChanged += new System.EventHandler(this.cmbSavegamesTR4_SelectedIndexChanged);
+            this.cmbSavegamesTR4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cmbSavegamesTR4_MouseDown);
+            // 
+            // grpItemsTR4
+            // 
+            this.grpItemsTR4.Controls.Add(this.lblGoldenSkullsTR4);
+            this.grpItemsTR4.Controls.Add(this.nudGoldenSkullsTR4);
+            this.grpItemsTR4.Controls.Add(this.label1);
+            this.grpItemsTR4.Controls.Add(this.nudFlaresTR4);
+            this.grpItemsTR4.Controls.Add(this.lblLargeMedipacksTR4);
+            this.grpItemsTR4.Controls.Add(this.lblSmallMedipacksTR4);
+            this.grpItemsTR4.Controls.Add(this.nudLargeMedipacksTR4);
+            this.grpItemsTR4.Controls.Add(this.nudSmallMedipacksTR4);
+            this.grpItemsTR4.Location = new System.Drawing.Point(4, 44);
+            this.grpItemsTR4.Name = "grpItemsTR4";
+            this.grpItemsTR4.Size = new System.Drawing.Size(335, 155);
+            this.grpItemsTR4.TabIndex = 36;
+            this.grpItemsTR4.TabStop = false;
+            this.grpItemsTR4.Text = "Items";
+            // 
+            // lblGoldenSkullsTR4
+            // 
+            this.lblGoldenSkullsTR4.AutoSize = true;
+            this.lblGoldenSkullsTR4.Location = new System.Drawing.Point(18, 109);
+            this.lblGoldenSkullsTR4.Name = "lblGoldenSkullsTR4";
+            this.lblGoldenSkullsTR4.Size = new System.Drawing.Size(75, 13);
+            this.lblGoldenSkullsTR4.TabIndex = 22;
+            this.lblGoldenSkullsTR4.Text = "Golden Skulls:";
+            // 
+            // nudGoldenSkullsTR4
+            // 
+            this.nudGoldenSkullsTR4.Location = new System.Drawing.Point(265, 107);
+            this.nudGoldenSkullsTR4.Maximum = new decimal(new int[] {
+            127,
+            0,
+            0,
+            0});
+            this.nudGoldenSkullsTR4.Name = "nudGoldenSkullsTR4";
+            this.nudGoldenSkullsTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudGoldenSkullsTR4.TabIndex = 21;
+            this.nudGoldenSkullsTR4.ValueChanged += new System.EventHandler(this.nudGoldenSkullsTR4_ValueChanged);
+            this.nudGoldenSkullsTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudGoldenSkullsTR4_KeyPress);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(18, 83);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "Flares:";
+            // 
+            // nudFlaresTR4
+            // 
+            this.nudFlaresTR4.Location = new System.Drawing.Point(265, 81);
+            this.nudFlaresTR4.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.nudFlaresTR4.Name = "nudFlaresTR4";
+            this.nudFlaresTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudFlaresTR4.TabIndex = 19;
+            this.nudFlaresTR4.ValueChanged += new System.EventHandler(this.nudFlaresTR4_ValueChanged);
+            this.nudFlaresTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudFlaresTR4_KeyPress);
+            // 
+            // lblLargeMedipacksTR4
+            // 
+            this.lblLargeMedipacksTR4.AutoSize = true;
+            this.lblLargeMedipacksTR4.Location = new System.Drawing.Point(18, 57);
+            this.lblLargeMedipacksTR4.Name = "lblLargeMedipacksTR4";
+            this.lblLargeMedipacksTR4.Size = new System.Drawing.Size(92, 13);
+            this.lblLargeMedipacksTR4.TabIndex = 18;
+            this.lblLargeMedipacksTR4.Text = "Large Medipacks:";
+            // 
+            // lblSmallMedipacksTR4
+            // 
+            this.lblSmallMedipacksTR4.AutoSize = true;
+            this.lblSmallMedipacksTR4.Location = new System.Drawing.Point(18, 31);
+            this.lblSmallMedipacksTR4.Name = "lblSmallMedipacksTR4";
+            this.lblSmallMedipacksTR4.Size = new System.Drawing.Size(90, 13);
+            this.lblSmallMedipacksTR4.TabIndex = 9;
+            this.lblSmallMedipacksTR4.Text = "Small Medipacks:";
+            // 
+            // nudLargeMedipacksTR4
+            // 
+            this.nudLargeMedipacksTR4.Location = new System.Drawing.Point(265, 55);
+            this.nudLargeMedipacksTR4.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.nudLargeMedipacksTR4.Name = "nudLargeMedipacksTR4";
+            this.nudLargeMedipacksTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudLargeMedipacksTR4.TabIndex = 16;
+            this.nudLargeMedipacksTR4.ValueChanged += new System.EventHandler(this.nudLargeMedipacksTR4_ValueChanged);
+            this.nudLargeMedipacksTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudLargeMedipacksTR4_KeyPress);
+            // 
+            // nudSmallMedipacksTR4
+            // 
+            this.nudSmallMedipacksTR4.Location = new System.Drawing.Point(265, 29);
+            this.nudSmallMedipacksTR4.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.nudSmallMedipacksTR4.Name = "nudSmallMedipacksTR4";
+            this.nudSmallMedipacksTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudSmallMedipacksTR4.TabIndex = 15;
+            this.nudSmallMedipacksTR4.ValueChanged += new System.EventHandler(this.nudSmallMedipacksTR4_ValueChanged);
+            this.nudSmallMedipacksTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSmallMedipacksTR4_KeyPress);
+            // 
+            // grpWeaponsTR4
+            // 
+            this.grpWeaponsTR4.Controls.Add(this.lblPresentTR4);
+            this.grpWeaponsTR4.Controls.Add(this.lblAmmo3TR4);
+            this.grpWeaponsTR4.Controls.Add(this.lblAmmo2TR4);
+            this.grpWeaponsTR4.Controls.Add(this.lblAmmo1TR4);
+            this.grpWeaponsTR4.Controls.Add(this.nudGrenadeGunFlashAmmoTR4);
+            this.grpWeaponsTR4.Controls.Add(this.nudGrenadeGunSuperAmmoTR4);
+            this.grpWeaponsTR4.Controls.Add(this.nudCrossbowExplosiveAmmoTR4);
+            this.grpWeaponsTR4.Controls.Add(this.nudCrossbowPoisonAmmoTR4);
+            this.grpWeaponsTR4.Controls.Add(this.nudShotgunWideshotAmmoTR4);
+            this.grpWeaponsTR4.Controls.Add(this.nudShotgunNormalAmmoTR4);
+            this.grpWeaponsTR4.Controls.Add(this.chkGrenadeGunTR4);
+            this.grpWeaponsTR4.Controls.Add(this.nudUziAmmoTR4);
+            this.grpWeaponsTR4.Controls.Add(this.nudRevolverAmmoTR4);
+            this.grpWeaponsTR4.Controls.Add(this.nudGrenadeGunNormalAmmoTR4);
+            this.grpWeaponsTR4.Controls.Add(this.nudCrossbowNormalAmmoTR4);
+            this.grpWeaponsTR4.Controls.Add(this.chkShotgunTR4);
+            this.grpWeaponsTR4.Controls.Add(this.chkRevolverTR4);
+            this.grpWeaponsTR4.Controls.Add(this.chkUziTR4);
+            this.grpWeaponsTR4.Controls.Add(this.chkCrossbowTR4);
+            this.grpWeaponsTR4.Controls.Add(this.lblPistolAmmoTR4);
+            this.grpWeaponsTR4.Controls.Add(this.chkPistolsTR4);
+            this.grpWeaponsTR4.Location = new System.Drawing.Point(348, 44);
+            this.grpWeaponsTR4.Name = "grpWeaponsTR4";
+            this.grpWeaponsTR4.Size = new System.Drawing.Size(360, 237);
+            this.grpWeaponsTR4.TabIndex = 35;
+            this.grpWeaponsTR4.TabStop = false;
+            this.grpWeaponsTR4.Text = "Weapons";
+            // 
+            // lblPresentTR4
+            // 
+            this.lblPresentTR4.AutoSize = true;
+            this.lblPresentTR4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPresentTR4.Location = new System.Drawing.Point(24, 33);
+            this.lblPresentTR4.Name = "lblPresentTR4";
+            this.lblPresentTR4.Size = new System.Drawing.Size(43, 13);
+            this.lblPresentTR4.TabIndex = 41;
+            this.lblPresentTR4.Text = "Present";
+            // 
+            // lblAmmo3TR4
+            // 
+            this.lblAmmo3TR4.AutoSize = true;
+            this.lblAmmo3TR4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAmmo3TR4.Location = new System.Drawing.Point(286, 33);
+            this.lblAmmo3TR4.Name = "lblAmmo3TR4";
+            this.lblAmmo3TR4.Size = new System.Drawing.Size(45, 13);
+            this.lblAmmo3TR4.TabIndex = 40;
+            this.lblAmmo3TR4.Text = "Ammo 3";
+            // 
+            // lblAmmo2TR4
+            // 
+            this.lblAmmo2TR4.AutoSize = true;
+            this.lblAmmo2TR4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAmmo2TR4.Location = new System.Drawing.Point(226, 33);
+            this.lblAmmo2TR4.Name = "lblAmmo2TR4";
+            this.lblAmmo2TR4.Size = new System.Drawing.Size(45, 13);
+            this.lblAmmo2TR4.TabIndex = 39;
+            this.lblAmmo2TR4.Text = "Ammo 2";
+            // 
+            // lblAmmo1TR4
+            // 
+            this.lblAmmo1TR4.AutoSize = true;
+            this.lblAmmo1TR4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAmmo1TR4.Location = new System.Drawing.Point(164, 33);
+            this.lblAmmo1TR4.Name = "lblAmmo1TR4";
+            this.lblAmmo1TR4.Size = new System.Drawing.Size(45, 13);
+            this.lblAmmo1TR4.TabIndex = 38;
+            this.lblAmmo1TR4.Text = "Ammo 1";
+            // 
+            // nudGrenadeGunFlashAmmoTR4
+            // 
+            this.nudGrenadeGunFlashAmmoTR4.Location = new System.Drawing.Point(288, 164);
+            this.nudGrenadeGunFlashAmmoTR4.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.nudGrenadeGunFlashAmmoTR4.Name = "nudGrenadeGunFlashAmmoTR4";
+            this.nudGrenadeGunFlashAmmoTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudGrenadeGunFlashAmmoTR4.TabIndex = 37;
+            this.nudGrenadeGunFlashAmmoTR4.ValueChanged += new System.EventHandler(this.nudGrenadeGunFlashAmmoTR4_ValueChanged);
+            this.nudGrenadeGunFlashAmmoTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudGrenadeGunFlashAmmoTR4_KeyPress);
+            // 
+            // nudGrenadeGunSuperAmmoTR4
+            // 
+            this.nudGrenadeGunSuperAmmoTR4.Location = new System.Drawing.Point(225, 164);
+            this.nudGrenadeGunSuperAmmoTR4.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.nudGrenadeGunSuperAmmoTR4.Name = "nudGrenadeGunSuperAmmoTR4";
+            this.nudGrenadeGunSuperAmmoTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudGrenadeGunSuperAmmoTR4.TabIndex = 36;
+            this.nudGrenadeGunSuperAmmoTR4.ValueChanged += new System.EventHandler(this.nudGrenadeGunSuperAmmoTR4_ValueChanged);
+            this.nudGrenadeGunSuperAmmoTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudGrenadeGunSuperAmmoTR4_KeyPress);
+            // 
+            // nudCrossbowExplosiveAmmoTR4
+            // 
+            this.nudCrossbowExplosiveAmmoTR4.Location = new System.Drawing.Point(288, 190);
+            this.nudCrossbowExplosiveAmmoTR4.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.nudCrossbowExplosiveAmmoTR4.Name = "nudCrossbowExplosiveAmmoTR4";
+            this.nudCrossbowExplosiveAmmoTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudCrossbowExplosiveAmmoTR4.TabIndex = 35;
+            this.nudCrossbowExplosiveAmmoTR4.ValueChanged += new System.EventHandler(this.nudCrossbowExplosiveAmmoTR4_ValueChanged);
+            this.nudCrossbowExplosiveAmmoTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudCrossbowExplosiveAmmoTR4_KeyPress);
+            // 
+            // nudCrossbowPoisonAmmoTR4
+            // 
+            this.nudCrossbowPoisonAmmoTR4.Location = new System.Drawing.Point(226, 190);
+            this.nudCrossbowPoisonAmmoTR4.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.nudCrossbowPoisonAmmoTR4.Name = "nudCrossbowPoisonAmmoTR4";
+            this.nudCrossbowPoisonAmmoTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudCrossbowPoisonAmmoTR4.TabIndex = 34;
+            this.nudCrossbowPoisonAmmoTR4.ValueChanged += new System.EventHandler(this.nudCrossbowPoisonAmmoTR4_ValueChanged);
+            this.nudCrossbowPoisonAmmoTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudCrossbowPoisonAmmoTR4_KeyPress);
+            // 
+            // nudShotgunWideshotAmmoTR4
+            // 
+            this.nudShotgunWideshotAmmoTR4.Location = new System.Drawing.Point(225, 138);
+            this.nudShotgunWideshotAmmoTR4.Maximum = new decimal(new int[] {
+            10922,
+            0,
+            0,
+            0});
+            this.nudShotgunWideshotAmmoTR4.Name = "nudShotgunWideshotAmmoTR4";
+            this.nudShotgunWideshotAmmoTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudShotgunWideshotAmmoTR4.TabIndex = 33;
+            this.nudShotgunWideshotAmmoTR4.ValueChanged += new System.EventHandler(this.nudShotgunWideshotAmmoTR4_ValueChanged);
+            this.nudShotgunWideshotAmmoTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudShotgunWideshotAmmoTR4_KeyPress);
+            // 
+            // nudShotgunNormalAmmoTR4
+            // 
+            this.nudShotgunNormalAmmoTR4.Location = new System.Drawing.Point(162, 138);
+            this.nudShotgunNormalAmmoTR4.Maximum = new decimal(new int[] {
+            10922,
+            0,
+            0,
+            0});
+            this.nudShotgunNormalAmmoTR4.Name = "nudShotgunNormalAmmoTR4";
+            this.nudShotgunNormalAmmoTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudShotgunNormalAmmoTR4.TabIndex = 32;
+            this.nudShotgunNormalAmmoTR4.ValueChanged += new System.EventHandler(this.nudShotgunNormalAmmoTR4_ValueChanged);
+            this.nudShotgunNormalAmmoTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudShotgunNormalAmmoTR4_KeyPress);
+            // 
+            // chkGrenadeGunTR4
+            // 
+            this.chkGrenadeGunTR4.AutoSize = true;
+            this.chkGrenadeGunTR4.Location = new System.Drawing.Point(22, 164);
+            this.chkGrenadeGunTR4.Name = "chkGrenadeGunTR4";
+            this.chkGrenadeGunTR4.Size = new System.Drawing.Size(93, 17);
+            this.chkGrenadeGunTR4.TabIndex = 31;
+            this.chkGrenadeGunTR4.Text = "Grenade Gun:";
+            this.chkGrenadeGunTR4.UseVisualStyleBackColor = true;
+            this.chkGrenadeGunTR4.CheckedChanged += new System.EventHandler(this.chkGrenadeGunTR4_CheckedChanged);
+            // 
+            // nudUziAmmoTR4
+            // 
+            this.nudUziAmmoTR4.Location = new System.Drawing.Point(162, 85);
+            this.nudUziAmmoTR4.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.nudUziAmmoTR4.Name = "nudUziAmmoTR4";
+            this.nudUziAmmoTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudUziAmmoTR4.TabIndex = 30;
+            this.nudUziAmmoTR4.ValueChanged += new System.EventHandler(this.nudUziAmmoTR4_ValueChanged);
+            this.nudUziAmmoTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudUziAmmoTR4_KeyPress);
+            // 
+            // nudRevolverAmmoTR4
+            // 
+            this.nudRevolverAmmoTR4.Location = new System.Drawing.Point(162, 111);
+            this.nudRevolverAmmoTR4.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.nudRevolverAmmoTR4.Name = "nudRevolverAmmoTR4";
+            this.nudRevolverAmmoTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudRevolverAmmoTR4.TabIndex = 29;
+            this.nudRevolverAmmoTR4.ValueChanged += new System.EventHandler(this.nudRevolverAmmoTR4_ValueChanged);
+            this.nudRevolverAmmoTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudRevolverAmmoTR4_KeyPress);
+            // 
+            // nudGrenadeGunNormalAmmoTR4
+            // 
+            this.nudGrenadeGunNormalAmmoTR4.Location = new System.Drawing.Point(162, 164);
+            this.nudGrenadeGunNormalAmmoTR4.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.nudGrenadeGunNormalAmmoTR4.Name = "nudGrenadeGunNormalAmmoTR4";
+            this.nudGrenadeGunNormalAmmoTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudGrenadeGunNormalAmmoTR4.TabIndex = 28;
+            this.nudGrenadeGunNormalAmmoTR4.ValueChanged += new System.EventHandler(this.nudGrenadeGunNormalAmmoTR4_ValueChanged);
+            this.nudGrenadeGunNormalAmmoTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudGrenadeGunNormalAmmoTR4_KeyPress);
+            // 
+            // nudCrossbowNormalAmmoTR4
+            // 
+            this.nudCrossbowNormalAmmoTR4.Location = new System.Drawing.Point(162, 190);
+            this.nudCrossbowNormalAmmoTR4.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.nudCrossbowNormalAmmoTR4.Name = "nudCrossbowNormalAmmoTR4";
+            this.nudCrossbowNormalAmmoTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudCrossbowNormalAmmoTR4.TabIndex = 27;
+            this.nudCrossbowNormalAmmoTR4.ValueChanged += new System.EventHandler(this.nudCrossbowNormalAmmoTR4_ValueChanged);
+            this.nudCrossbowNormalAmmoTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudCrossbowNormalAmmoTR4_KeyPress);
+            // 
+            // chkShotgunTR4
+            // 
+            this.chkShotgunTR4.AutoSize = true;
+            this.chkShotgunTR4.Location = new System.Drawing.Point(22, 138);
+            this.chkShotgunTR4.Name = "chkShotgunTR4";
+            this.chkShotgunTR4.Size = new System.Drawing.Size(69, 17);
+            this.chkShotgunTR4.TabIndex = 26;
+            this.chkShotgunTR4.Text = "Shotgun:";
+            this.chkShotgunTR4.UseVisualStyleBackColor = true;
+            this.chkShotgunTR4.CheckedChanged += new System.EventHandler(this.chkShotgunTR4_CheckedChanged);
+            // 
+            // chkRevolverTR4
+            // 
+            this.chkRevolverTR4.AutoSize = true;
+            this.chkRevolverTR4.Location = new System.Drawing.Point(22, 111);
+            this.chkRevolverTR4.Name = "chkRevolverTR4";
+            this.chkRevolverTR4.Size = new System.Drawing.Size(72, 17);
+            this.chkRevolverTR4.TabIndex = 25;
+            this.chkRevolverTR4.Text = "Revolver:";
+            this.chkRevolverTR4.UseVisualStyleBackColor = true;
+            this.chkRevolverTR4.CheckedChanged += new System.EventHandler(this.chkRevolverTR4_CheckedChanged);
+            // 
+            // chkUziTR4
+            // 
+            this.chkUziTR4.AutoSize = true;
+            this.chkUziTR4.Location = new System.Drawing.Point(22, 85);
+            this.chkUziTR4.Name = "chkUziTR4";
+            this.chkUziTR4.Size = new System.Drawing.Size(44, 17);
+            this.chkUziTR4.TabIndex = 24;
+            this.chkUziTR4.Text = "Uzi:";
+            this.chkUziTR4.UseVisualStyleBackColor = true;
+            this.chkUziTR4.CheckedChanged += new System.EventHandler(this.chkUziTR4_CheckedChanged);
+            // 
+            // chkCrossbowTR4
+            // 
+            this.chkCrossbowTR4.AutoSize = true;
+            this.chkCrossbowTR4.Location = new System.Drawing.Point(22, 190);
+            this.chkCrossbowTR4.Name = "chkCrossbowTR4";
+            this.chkCrossbowTR4.Size = new System.Drawing.Size(75, 17);
+            this.chkCrossbowTR4.TabIndex = 23;
+            this.chkCrossbowTR4.Text = "Crossbow:";
+            this.chkCrossbowTR4.UseVisualStyleBackColor = true;
+            this.chkCrossbowTR4.CheckedChanged += new System.EventHandler(this.chkCrossbowTR4_CheckedChanged);
+            // 
+            // lblPistolAmmoTR4
+            // 
+            this.lblPistolAmmoTR4.AutoSize = true;
+            this.lblPistolAmmoTR4.Location = new System.Drawing.Point(162, 63);
+            this.lblPistolAmmoTR4.Name = "lblPistolAmmoTR4";
+            this.lblPistolAmmoTR4.Size = new System.Drawing.Size(50, 13);
+            this.lblPistolAmmoTR4.TabIndex = 14;
+            this.lblPistolAmmoTR4.Text = "Unlimited";
+            // 
+            // chkPistolsTR4
+            // 
+            this.chkPistolsTR4.AutoSize = true;
+            this.chkPistolsTR4.Location = new System.Drawing.Point(22, 59);
+            this.chkPistolsTR4.Name = "chkPistolsTR4";
+            this.chkPistolsTR4.Size = new System.Drawing.Size(59, 17);
+            this.chkPistolsTR4.TabIndex = 0;
+            this.chkPistolsTR4.Text = "Pistols:";
+            this.chkPistolsTR4.UseVisualStyleBackColor = true;
+            this.chkPistolsTR4.CheckedChanged += new System.EventHandler(this.chkPistolsTR4_CheckedChanged);
+            // 
             // ssrStatusStrip
             // 
             this.ssrStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.slblStatus});
-            this.ssrStatusStrip.Location = new System.Drawing.Point(0, 369);
+            this.ssrStatusStrip.Location = new System.Drawing.Point(0, 392);
             this.ssrStatusStrip.Name = "ssrStatusStrip";
             this.ssrStatusStrip.Size = new System.Drawing.Size(721, 22);
             this.ssrStatusStrip.SizingGrip = false;
@@ -1490,7 +2100,8 @@ namespace TRR_SaveMaster
             this.tsddbFile.AutoToolTip = false;
             this.tsddbFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tsddbFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiBrowseSavegamePath,
+            this.tsmiBrowseTRXSavegamePath,
+            this.tsmiBrowseTRX2SavegamePath,
             this.tsmiFileSeparator,
             this.tsmiBackupBeforeSaving,
             this.tsmiCreateBackup,
@@ -1503,17 +2114,24 @@ namespace TRR_SaveMaster
             this.tsddbFile.Size = new System.Drawing.Size(29, 22);
             this.tsddbFile.Text = "File";
             // 
-            // tsmiBrowseSavegamePath
+            // tsmiBrowseTRXSavegamePath
             // 
-            this.tsmiBrowseSavegamePath.Name = "tsmiBrowseSavegamePath";
-            this.tsmiBrowseSavegamePath.Size = new System.Drawing.Size(204, 22);
-            this.tsmiBrowseSavegamePath.Text = "Browse savegame path...";
-            this.tsmiBrowseSavegamePath.Click += new System.EventHandler(this.tsmiBrowseSavegamePath_Click);
+            this.tsmiBrowseTRXSavegamePath.Name = "tsmiBrowseTRXSavegamePath";
+            this.tsmiBrowseTRXSavegamePath.Size = new System.Drawing.Size(286, 22);
+            this.tsmiBrowseTRXSavegamePath.Text = "Select Tomb Raider I-III savegame file...";
+            this.tsmiBrowseTRXSavegamePath.Click += new System.EventHandler(this.tsmiBrowseTRXSavegamePath_Click);
+            // 
+            // tsmiBrowseTRX2SavegamePath
+            // 
+            this.tsmiBrowseTRX2SavegamePath.Name = "tsmiBrowseTRX2SavegamePath";
+            this.tsmiBrowseTRX2SavegamePath.Size = new System.Drawing.Size(286, 22);
+            this.tsmiBrowseTRX2SavegamePath.Text = "Select Tomb Raider IV-VI savegame file...";
+            this.tsmiBrowseTRX2SavegamePath.Click += new System.EventHandler(this.tsmiBrowseTRX2SavegamePath_Click);
             // 
             // tsmiFileSeparator
             // 
             this.tsmiFileSeparator.Name = "tsmiFileSeparator";
-            this.tsmiFileSeparator.Size = new System.Drawing.Size(201, 6);
+            this.tsmiFileSeparator.Size = new System.Drawing.Size(283, 6);
             // 
             // tsmiBackupBeforeSaving
             // 
@@ -1522,26 +2140,26 @@ namespace TRR_SaveMaster
             this.tsmiBackupBeforeSaving.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiBackupBeforeSaving.Enabled = false;
             this.tsmiBackupBeforeSaving.Name = "tsmiBackupBeforeSaving";
-            this.tsmiBackupBeforeSaving.Size = new System.Drawing.Size(204, 22);
+            this.tsmiBackupBeforeSaving.Size = new System.Drawing.Size(286, 22);
             this.tsmiBackupBeforeSaving.Text = "Backup before saving";
             // 
             // tsmiCreateBackup
             // 
             this.tsmiCreateBackup.Enabled = false;
             this.tsmiCreateBackup.Name = "tsmiCreateBackup";
-            this.tsmiCreateBackup.Size = new System.Drawing.Size(204, 22);
+            this.tsmiCreateBackup.Size = new System.Drawing.Size(286, 22);
             this.tsmiCreateBackup.Text = "Create backup";
             this.tsmiCreateBackup.Click += new System.EventHandler(this.tsmiCreateBackup_Click);
             // 
             // tsmiFileSeparator2
             // 
             this.tsmiFileSeparator2.Name = "tsmiFileSeparator2";
-            this.tsmiFileSeparator2.Size = new System.Drawing.Size(201, 6);
+            this.tsmiFileSeparator2.Size = new System.Drawing.Size(283, 6);
             // 
             // tsmiExit
             // 
             this.tsmiExit.Name = "tsmiExit";
-            this.tsmiExit.Size = new System.Drawing.Size(204, 22);
+            this.tsmiExit.Size = new System.Drawing.Size(286, 22);
             this.tsmiExit.Text = "Exit";
             this.tsmiExit.Click += new System.EventHandler(this.tsmiExit_Click);
             // 
@@ -1713,7 +2331,7 @@ namespace TRR_SaveMaster
             this.tsddbHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tsddbHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiViewReadme,
-            this.tsmiSendFeedback,
+            this.tsmiReportBug,
             this.tsmiAbout});
             this.tsddbHelp.Image = ((System.Drawing.Image)(resources.GetObject("tsddbHelp.Image")));
             this.tsddbHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -1725,21 +2343,21 @@ namespace TRR_SaveMaster
             // tsmiViewReadme
             // 
             this.tsmiViewReadme.Name = "tsmiViewReadme";
-            this.tsmiViewReadme.Size = new System.Drawing.Size(153, 22);
+            this.tsmiViewReadme.Size = new System.Drawing.Size(148, 22);
             this.tsmiViewReadme.Text = "View README";
             this.tsmiViewReadme.Click += new System.EventHandler(this.tsmiViewReadme_Click);
             // 
-            // tsmiSendFeedback
+            // tsmiReportBug
             // 
-            this.tsmiSendFeedback.Name = "tsmiSendFeedback";
-            this.tsmiSendFeedback.Size = new System.Drawing.Size(153, 22);
-            this.tsmiSendFeedback.Text = "Send Feedback";
-            this.tsmiSendFeedback.Click += new System.EventHandler(this.tsmiSendFeedback_Click);
+            this.tsmiReportBug.Name = "tsmiReportBug";
+            this.tsmiReportBug.Size = new System.Drawing.Size(148, 22);
+            this.tsmiReportBug.Text = "Report a Bug";
+            this.tsmiReportBug.Click += new System.EventHandler(this.tsmiReportBug_Click);
             // 
             // tsmiAbout
             // 
             this.tsmiAbout.Name = "tsmiAbout";
-            this.tsmiAbout.Size = new System.Drawing.Size(153, 22);
+            this.tsmiAbout.Size = new System.Drawing.Size(148, 22);
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
             // 
@@ -1747,7 +2365,7 @@ namespace TRR_SaveMaster
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(721, 391);
+            this.ClientSize = new System.Drawing.Size(721, 414);
             this.Controls.Add(this.tabGame);
             this.Controls.Add(this.ssrStatusStrip);
             this.Controls.Add(this.tsrToolStrip);
@@ -1757,7 +2375,7 @@ namespace TRR_SaveMaster
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Tomb Raider I-III Remastered Savegame Editor";
+            this.Text = "Tomb Raider Remastered Savegame Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
@@ -1817,6 +2435,30 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudFlaresTR3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLargeMedipacksTR3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSmallMedipacksTR3)).EndInit();
+            this.tpTR4.ResumeLayout(false);
+            this.tpTR4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR4)).EndInit();
+            this.grpHealthTR4.ResumeLayout(false);
+            this.grpHealthTR4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trbHealthTR4)).EndInit();
+            this.grpItemsTR4.ResumeLayout(false);
+            this.grpItemsTR4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGoldenSkullsTR4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudFlaresTR4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudLargeMedipacksTR4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSmallMedipacksTR4)).EndInit();
+            this.grpWeaponsTR4.ResumeLayout(false);
+            this.grpWeaponsTR4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGrenadeGunFlashAmmoTR4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGrenadeGunSuperAmmoTR4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCrossbowExplosiveAmmoTR4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCrossbowPoisonAmmoTR4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudShotgunWideshotAmmoTR4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudShotgunNormalAmmoTR4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudUziAmmoTR4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRevolverAmmoTR4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGrenadeGunNormalAmmoTR4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCrossbowNormalAmmoTR4)).EndInit();
             this.ssrStatusStrip.ResumeLayout(false);
             this.ssrStatusStrip.PerformLayout();
             this.tsrToolStrip.ResumeLayout(false);
@@ -1859,7 +2501,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.ToolStripStatusLabel slblStatus;
         private System.Windows.Forms.ToolStrip tsrToolStrip;
         private System.Windows.Forms.ToolStripDropDownButton tsddbFile;
-        private System.Windows.Forms.ToolStripMenuItem tsmiBrowseSavegamePath;
+        private System.Windows.Forms.ToolStripMenuItem tsmiBrowseTRXSavegamePath;
         private System.Windows.Forms.ToolStripSeparator tsmiFileSeparator;
         private System.Windows.Forms.ToolStripMenuItem tsmiCreateBackup;
         private System.Windows.Forms.ToolStripSeparator tsmiFileSeparator2;
@@ -1869,7 +2511,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.ToolStripMenuItem tsmiStatusBar;
         private System.Windows.Forms.ToolStripDropDownButton tsddbHelp;
         private System.Windows.Forms.ToolStripMenuItem tsmiViewReadme;
-        private System.Windows.Forms.ToolStripMenuItem tsmiSendFeedback;
+        private System.Windows.Forms.ToolStripMenuItem tsmiReportBug;
         private System.Windows.Forms.ToolStripMenuItem tsmiAbout;
         private System.Windows.Forms.Button btnRefreshTR1;
         private System.Windows.Forms.Label lblSavegameTR2;
@@ -1962,6 +2604,51 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.ToolStripMenuItem tsmiMaxEverything;
         private System.Windows.Forms.ToolStripMenuItem tsmiDeleteSavegame;
         private System.Windows.Forms.ToolStripSeparator tsmiEditSeparator2;
+        private System.Windows.Forms.TabPage tpTR4;
+        private System.Windows.Forms.NumericUpDown nudSaveNumberTR4;
+        private System.Windows.Forms.Label lblSaveNumberTR4;
+        private System.Windows.Forms.Button btnRefreshTR4;
+        private System.Windows.Forms.Label lblSavegameTR4;
+        private System.Windows.Forms.GroupBox grpHealthTR4;
+        private System.Windows.Forms.Label lblHealthErrorTR4;
+        private System.Windows.Forms.Label lblHealthTR4;
+        private System.Windows.Forms.TrackBar trbHealthTR4;
+        private System.Windows.Forms.ComboBox cmbSavegamesTR4;
+        private System.Windows.Forms.GroupBox grpItemsTR4;
+        private System.Windows.Forms.Label lblLargeMedipacksTR4;
+        private System.Windows.Forms.Label lblSmallMedipacksTR4;
+        private System.Windows.Forms.NumericUpDown nudLargeMedipacksTR4;
+        private System.Windows.Forms.NumericUpDown nudSmallMedipacksTR4;
+        private System.Windows.Forms.GroupBox grpWeaponsTR4;
+        private System.Windows.Forms.Label lblPistolAmmoTR4;
+        private System.Windows.Forms.CheckBox chkPistolsTR4;
+        private System.Windows.Forms.Button btnExitTR4;
+        private System.Windows.Forms.Button btnCancelTR4;
+        private System.Windows.Forms.Button btnSaveTR4;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown nudFlaresTR4;
+        private System.Windows.Forms.ToolStripMenuItem tsmiBrowseTRX2SavegamePath;
+        private System.Windows.Forms.Label lblGoldenSkullsTR4;
+        private System.Windows.Forms.NumericUpDown nudGoldenSkullsTR4;
+        private System.Windows.Forms.NumericUpDown nudGrenadeGunFlashAmmoTR4;
+        private System.Windows.Forms.NumericUpDown nudGrenadeGunSuperAmmoTR4;
+        private System.Windows.Forms.NumericUpDown nudCrossbowExplosiveAmmoTR4;
+        private System.Windows.Forms.NumericUpDown nudCrossbowPoisonAmmoTR4;
+        private System.Windows.Forms.NumericUpDown nudShotgunWideshotAmmoTR4;
+        private System.Windows.Forms.NumericUpDown nudShotgunNormalAmmoTR4;
+        private System.Windows.Forms.CheckBox chkGrenadeGunTR4;
+        private System.Windows.Forms.NumericUpDown nudUziAmmoTR4;
+        private System.Windows.Forms.NumericUpDown nudRevolverAmmoTR4;
+        private System.Windows.Forms.NumericUpDown nudGrenadeGunNormalAmmoTR4;
+        private System.Windows.Forms.NumericUpDown nudCrossbowNormalAmmoTR4;
+        private System.Windows.Forms.CheckBox chkShotgunTR4;
+        private System.Windows.Forms.CheckBox chkRevolverTR4;
+        private System.Windows.Forms.CheckBox chkUziTR4;
+        private System.Windows.Forms.CheckBox chkCrossbowTR4;
+        private System.Windows.Forms.Label lblPresentTR4;
+        private System.Windows.Forms.Label lblAmmo3TR4;
+        private System.Windows.Forms.Label lblAmmo2TR4;
+        private System.Windows.Forms.Label lblAmmo1TR4;
     }
 }
 

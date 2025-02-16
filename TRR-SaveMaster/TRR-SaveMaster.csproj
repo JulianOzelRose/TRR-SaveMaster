@@ -99,6 +99,7 @@
     <Compile Include="TR1Utilities.cs" />
     <Compile Include="TR2Utilities.cs" />
     <Compile Include="TR3Utilities.cs" />
+    <Compile Include="TR4Utilities.cs" />
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
