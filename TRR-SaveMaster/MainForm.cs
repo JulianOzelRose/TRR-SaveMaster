@@ -145,7 +145,7 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == TAB_TR4)
             {
-                //DisableButtonsTR4();
+                DisableButtonsTR4();
                 PopulateSavegamesTR4();
             }
         }
@@ -215,6 +215,21 @@ namespace TRR_SaveMaster
 
             btnSaveTR3.Enabled = false;
             btnCancelTR3.Enabled = false;
+        }
+
+        private void ClearControlsTR4()
+        {
+            ClearControlsInGroupBox(grpItemsTR4);
+            ClearControlsInGroupBox(grpWeaponsTR4);
+            ClearControlsInGroupBox(grpHealthTR4);
+
+            nudSaveNumberTR4.Value = nudSaveNumberTR4.Minimum;
+            lblHealthErrorTR4.Visible = false;
+            lblHealthTR4.Text = "0.1%";
+            lblHealthTR4.Visible = true;
+
+            btnSaveTR4.Enabled = false;
+            btnCancelTR4.Enabled = false;
         }
 
         private bool IsValidSavegameFile(string path)
@@ -307,7 +322,7 @@ namespace TRR_SaveMaster
 
                     savegamePathTRX2 = fileBrowserDialog.FileName;
 
-                    //ClearControlsTR4();
+                    ClearControlsTR4();
 
                     cmbSavegamesTR4.Items.Clear();
                     //cmbSavegamesTR5.Items.Clear();
@@ -452,6 +467,16 @@ namespace TRR_SaveMaster
             content += $"Platform={platform}";
 
             File.WriteAllText(filePath, content);
+        }
+
+        public bool IsTRXTabSelected()
+        {
+            return (tabGame.SelectedIndex == TAB_TR1 || tabGame.SelectedIndex == TAB_TR2 || tabGame.SelectedIndex == TAB_TR3);
+        }
+
+        public bool IsTRX2TabSelected()
+        {
+            return (tabGame.SelectedIndex == TAB_TR4);
         }
 
         private void btnExitTR1_Click(object sender, EventArgs e)
@@ -770,34 +795,24 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void CreateBackupTRX()
+        private void CreateBackup()
         {
-            if (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX))
+            string savegamePath = "";
+
+            if (IsTRXTabSelected())
             {
-                string directory = Path.GetDirectoryName(savegamePathTRX);
-                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(savegamePathTRX);
-                string fileExtension = Path.GetExtension(savegamePathTRX);
-
-                string backupFilePath = Path.Combine(directory, $"{fileNameWithoutExtension}{fileExtension}.bak");
-
-                if (File.Exists(backupFilePath))
-                {
-                    File.SetAttributes(backupFilePath, File.GetAttributes(backupFilePath) & ~FileAttributes.ReadOnly);
-                }
-
-                File.Copy(savegamePathTRX, backupFilePath, true);
-
-                slblStatus.Text = $"Created savegame backup: \"{backupFilePath}\"";
+                savegamePath = savegamePathTRX;
             }
-        }
-
-        private void CreateBackupTRX2()
-        {
-            if (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
+            else if (IsTRX2TabSelected())
             {
-                string directory = Path.GetDirectoryName(savegamePathTRX2);
-                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(savegamePathTRX2);
-                string fileExtension = Path.GetExtension(savegamePathTRX2);
+                savegamePath = savegamePathTRX2;
+            }
+
+            if (!string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath))
+            {
+                string directory = Path.GetDirectoryName(savegamePath);
+                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(savegamePath);
+                string fileExtension = Path.GetExtension(savegamePath);
 
                 string backupFilePath = Path.Combine(directory, $"{fileNameWithoutExtension}{fileExtension}.bak");
 
@@ -806,7 +821,7 @@ namespace TRR_SaveMaster
                     File.SetAttributes(backupFilePath, File.GetAttributes(backupFilePath) & ~FileAttributes.ReadOnly);
                 }
 
-                File.Copy(savegamePathTRX2, backupFilePath, true);
+                File.Copy(savegamePath, backupFilePath, true);
 
                 slblStatus.Text = $"Created savegame backup: \"{backupFilePath}\"";
             }
@@ -833,7 +848,7 @@ namespace TRR_SaveMaster
 
                     if (tsmiBackupBeforeSaving.Checked)
                     {
-                        CreateBackupTRX();
+                        CreateBackup();
                     }
 
                     File.SetAttributes(savegamePathTRX, File.GetAttributes(savegamePathTRX) & ~FileAttributes.ReadOnly);
@@ -877,7 +892,7 @@ namespace TRR_SaveMaster
 
                     if (tsmiBackupBeforeSaving.Checked)
                     {
-                        CreateBackupTRX();
+                        CreateBackup();
                     }
 
                     File.SetAttributes(savegamePathTRX, File.GetAttributes(savegamePathTRX) & ~FileAttributes.ReadOnly);
@@ -924,7 +939,7 @@ namespace TRR_SaveMaster
 
                     if (tsmiBackupBeforeSaving.Checked)
                     {
-                        CreateBackupTRX();
+                        CreateBackup();
                     }
 
                     File.SetAttributes(savegamePathTRX, File.GetAttributes(savegamePathTRX) & ~FileAttributes.ReadOnly);
@@ -970,7 +985,7 @@ namespace TRR_SaveMaster
 
                     if (tsmiBackupBeforeSaving.Checked)
                     {
-                        CreateBackupTRX2();
+                        CreateBackup();
                     }
 
                     File.SetAttributes(savegamePathTRX2, File.GetAttributes(savegamePathTRX2) & ~FileAttributes.ReadOnly);
@@ -1455,14 +1470,7 @@ namespace TRR_SaveMaster
 
         private void tsmiCreateBackup_Click(object sender, EventArgs e)
         {
-            if (tabGame.SelectedIndex == TAB_TR1 || tabGame.SelectedIndex == TAB_TR2 || tabGame.SelectedIndex == TAB_TR3)
-            {
-                CreateBackupTRX();
-            }
-            else
-            {
-                CreateBackupTRX2();
-            }
+            CreateBackup();
         }
 
         private void tsmiAbout_Click(object sender, EventArgs e)
@@ -1542,15 +1550,14 @@ namespace TRR_SaveMaster
 
         private void tsmiPosition_Click(object sender, EventArgs e)
         {
-            if (!File.Exists(savegamePathTRX) && tabGame.SelectedIndex == TAB_TR1 || tabGame.SelectedIndex == TAB_TR2
-                || tabGame.SelectedIndex == TAB_TR3)
+            if (!File.Exists(savegamePathTRX) && IsTRXTabSelected())
             {
                 string errorMessage = $"Could not find savegame file.";
                 MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 return;
             }
-            else if (!File.Exists(savegamePathTRX2) && tabGame.SelectedIndex == TAB_TR4)
+            else if (!File.Exists(savegamePathTRX2) && IsTRX2TabSelected())
             {
                 string errorMessage = $"Could not find savegame file.";
                 MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1560,11 +1567,11 @@ namespace TRR_SaveMaster
 
             string savegamePath = "";
 
-            if (tabGame.SelectedIndex == TAB_TR1 || tabGame.SelectedIndex == TAB_TR2 || tabGame.SelectedIndex == TAB_TR3)
+            if (IsTRXTabSelected())
             {
                 savegamePath = savegamePathTRX;
             }
-            else if (tabGame.SelectedIndex == TAB_TR4)
+            else if (IsTRX2TabSelected())
             {
                 savegamePath = savegamePathTRX2;
             }
@@ -1653,7 +1660,7 @@ namespace TRR_SaveMaster
                     string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
                     MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                    //DisableButtonsTR4();
+                    DisableButtonsTR4();
                     PopulateSavegamesTR4();
                     return;
                 }
@@ -1835,7 +1842,7 @@ namespace TRR_SaveMaster
             int SAVEGAME_SIZE = 0;
             string savegamePath;
 
-            if (tabGame.SelectedIndex == TAB_TR1 || tabGame.SelectedIndex == TAB_TR2 || tabGame.SelectedIndex == TAB_TR3)
+            if (IsTRXTabSelected())
             {
                 SAVEGAME_SIZE = SAVEGAME_SIZE_TRX;
                 savegamePath = savegamePathTRX;
@@ -1851,14 +1858,7 @@ namespace TRR_SaveMaster
             {
                 if (tsmiBackupBeforeSaving.Checked)
                 {
-                    if (tabGame.SelectedIndex == TAB_TR1 || tabGame.SelectedIndex == TAB_TR2 || tabGame.SelectedIndex == TAB_TR3)
-                    {
-                        CreateBackupTRX();
-                    }
-                    else
-                    {
-                        CreateBackupTRX2();
-                    }
+                    CreateBackup();
                 }
 
                 File.SetAttributes(savegamePath, File.GetAttributes(savegamePath) & ~FileAttributes.ReadOnly);
