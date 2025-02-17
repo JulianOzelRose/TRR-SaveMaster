@@ -32,29 +32,29 @@ namespace TRR_SaveMaster
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
             this.lblVersion = new System.Windows.Forms.Label();
             this.lblAuthor = new System.Windows.Forms.Label();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
             this.lblAbout2 = new System.Windows.Forms.Label();
             this.lblAbout3 = new System.Windows.Forms.Label();
             this.lblAbout1 = new System.Windows.Forms.Label();
             this.llbGitHub = new System.Windows.Forms.LinkLabel();
-            this.lblCreationDate = new System.Windows.Forms.Label();
             this.lblAbout4 = new System.Windows.Forms.Label();
             this.picPayPal = new System.Windows.Forms.PictureBox();
+            this.picTitleText = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.picPayPal)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picTitleText)).BeginInit();
             this.SuspendLayout();
             // 
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
             this.lblVersion.BackColor = System.Drawing.Color.Transparent;
-            this.lblVersion.Font = new System.Drawing.Font("Impact", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVersion.ForeColor = System.Drawing.Color.GreenYellow;
-            this.lblVersion.Location = new System.Drawing.Point(408, 29);
+            this.lblVersion.Font = new System.Drawing.Font("Impact", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVersion.ForeColor = System.Drawing.Color.Yellow;
+            this.lblVersion.Location = new System.Drawing.Point(28, 79);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(67, 36);
+            this.lblVersion.Size = new System.Drawing.Size(116, 26);
             this.lblVersion.TabIndex = 22;
-            this.lblVersion.Text = "v1.41";
+            this.lblVersion.Text = "Version 1.60";
             // 
             // lblAuthor
             // 
@@ -62,23 +62,11 @@ namespace TRR_SaveMaster
             this.lblAuthor.BackColor = System.Drawing.Color.Transparent;
             this.lblAuthor.Font = new System.Drawing.Font("Impact", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAuthor.ForeColor = System.Drawing.Color.White;
-            this.lblAuthor.Location = new System.Drawing.Point(154, 69);
+            this.lblAuthor.Location = new System.Drawing.Point(29, 108);
             this.lblAuthor.Name = "lblAuthor";
             this.lblAuthor.Size = new System.Drawing.Size(188, 28);
             this.lblAuthor.TabIndex = 21;
             this.lblAuthor.Text = "by Julian Ozel Rose";
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
-            this.lblTitle.Font = new System.Drawing.Font("Impact", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitle.ForeColor = System.Drawing.Color.GreenYellow;
-            this.lblTitle.Location = new System.Drawing.Point(67, 9);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(346, 60);
-            this.lblTitle.TabIndex = 20;
-            this.lblTitle.Text = "TRR-SaveMaster";
             // 
             // btnOK
             // 
@@ -103,7 +91,7 @@ namespace TRR_SaveMaster
             this.lblAbout2.BackColor = System.Drawing.Color.Transparent;
             this.lblAbout2.Font = new System.Drawing.Font("Yu Gothic Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAbout2.ForeColor = System.Drawing.Color.White;
-            this.lblAbout2.Location = new System.Drawing.Point(212, 145);
+            this.lblAbout2.Location = new System.Drawing.Point(212, 151);
             this.lblAbout2.Name = "lblAbout2";
             this.lblAbout2.Size = new System.Drawing.Size(66, 21);
             this.lblAbout2.TabIndex = 27;
@@ -115,7 +103,7 @@ namespace TRR_SaveMaster
             this.lblAbout3.BackColor = System.Drawing.Color.Transparent;
             this.lblAbout3.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAbout3.ForeColor = System.Drawing.Color.White;
-            this.lblAbout3.Location = new System.Drawing.Point(28, 171);
+            this.lblAbout3.Location = new System.Drawing.Point(28, 177);
             this.lblAbout3.Name = "lblAbout3";
             this.lblAbout3.Size = new System.Drawing.Size(230, 19);
             this.lblAbout3.TabIndex = 26;
@@ -127,7 +115,7 @@ namespace TRR_SaveMaster
             this.lblAbout1.BackColor = System.Drawing.Color.Transparent;
             this.lblAbout1.Font = new System.Drawing.Font("Yu Gothic Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAbout1.ForeColor = System.Drawing.Color.White;
-            this.lblAbout1.Location = new System.Drawing.Point(28, 145);
+            this.lblAbout1.Location = new System.Drawing.Point(28, 151);
             this.lblAbout1.Name = "lblAbout1";
             this.lblAbout1.Size = new System.Drawing.Size(124, 21);
             this.lblAbout1.TabIndex = 25;
@@ -140,7 +128,7 @@ namespace TRR_SaveMaster
             this.llbGitHub.BackColor = System.Drawing.Color.Transparent;
             this.llbGitHub.Font = new System.Drawing.Font("Yu Gothic Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.llbGitHub.LinkColor = System.Drawing.SystemColors.MenuHighlight;
-            this.llbGitHub.Location = new System.Drawing.Point(149, 145);
+            this.llbGitHub.Location = new System.Drawing.Point(149, 151);
             this.llbGitHub.Name = "llbGitHub";
             this.llbGitHub.Size = new System.Drawing.Size(68, 21);
             this.llbGitHub.TabIndex = 24;
@@ -149,25 +137,13 @@ namespace TRR_SaveMaster
             this.llbGitHub.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llbGitHub_LinkClicked);
             this.llbGitHub.MouseHover += new System.EventHandler(this.llbGitHub_MouseHover);
             // 
-            // lblCreationDate
-            // 
-            this.lblCreationDate.AutoSize = true;
-            this.lblCreationDate.BackColor = System.Drawing.Color.Transparent;
-            this.lblCreationDate.Font = new System.Drawing.Font("Yu Gothic Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCreationDate.ForeColor = System.Drawing.Color.White;
-            this.lblCreationDate.Location = new System.Drawing.Point(113, 99);
-            this.lblCreationDate.Name = "lblCreationDate";
-            this.lblCreationDate.Size = new System.Drawing.Size(258, 21);
-            this.lblCreationDate.TabIndex = 28;
-            this.lblCreationDate.Text = "Created on February 17, 2024";
-            // 
             // lblAbout4
             // 
             this.lblAbout4.AutoSize = true;
             this.lblAbout4.BackColor = System.Drawing.Color.Transparent;
             this.lblAbout4.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAbout4.ForeColor = System.Drawing.Color.White;
-            this.lblAbout4.Location = new System.Drawing.Point(28, 199);
+            this.lblAbout4.Location = new System.Drawing.Point(28, 205);
             this.lblAbout4.Name = "lblAbout4";
             this.lblAbout4.Size = new System.Drawing.Size(244, 19);
             this.lblAbout4.TabIndex = 29;
@@ -178,12 +154,22 @@ namespace TRR_SaveMaster
             this.picPayPal.BackColor = System.Drawing.Color.Transparent;
             this.picPayPal.Cursor = System.Windows.Forms.Cursors.Hand;
             this.picPayPal.Image = global::TRR_SaveMaster.Properties.Resources.PayPal_Image;
-            this.picPayPal.Location = new System.Drawing.Point(32, 232);
+            this.picPayPal.Location = new System.Drawing.Point(32, 238);
             this.picPayPal.Name = "picPayPal";
             this.picPayPal.Size = new System.Drawing.Size(120, 51);
             this.picPayPal.TabIndex = 30;
             this.picPayPal.TabStop = false;
             this.picPayPal.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picPayPal_MouseClick);
+            // 
+            // picTitleText
+            // 
+            this.picTitleText.BackColor = System.Drawing.Color.Transparent;
+            this.picTitleText.Image = global::TRR_SaveMaster.Properties.Resources.Title_Text;
+            this.picTitleText.Location = new System.Drawing.Point(48, 16);
+            this.picTitleText.Name = "picTitleText";
+            this.picTitleText.Size = new System.Drawing.Size(427, 45);
+            this.picTitleText.TabIndex = 31;
+            this.picTitleText.TabStop = false;
             // 
             // AboutForm
             // 
@@ -191,17 +177,16 @@ namespace TRR_SaveMaster
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::TRR_SaveMaster.Properties.Resources.About_Background;
             this.ClientSize = new System.Drawing.Size(517, 380);
+            this.Controls.Add(this.lblVersion);
+            this.Controls.Add(this.picTitleText);
             this.Controls.Add(this.picPayPal);
             this.Controls.Add(this.lblAbout4);
-            this.Controls.Add(this.lblCreationDate);
             this.Controls.Add(this.lblAbout2);
             this.Controls.Add(this.lblAbout3);
             this.Controls.Add(this.lblAbout1);
             this.Controls.Add(this.llbGitHub);
             this.Controls.Add(this.btnOK);
-            this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.lblAuthor);
-            this.Controls.Add(this.lblTitle);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -211,6 +196,7 @@ namespace TRR_SaveMaster
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "About";
             ((System.ComponentModel.ISupportInitialize)(this.picPayPal)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picTitleText)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -219,14 +205,13 @@ namespace TRR_SaveMaster
         #endregion
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.Label lblAuthor;
-        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Label lblAbout2;
         private System.Windows.Forms.Label lblAbout3;
         private System.Windows.Forms.Label lblAbout1;
         private System.Windows.Forms.LinkLabel llbGitHub;
-        private System.Windows.Forms.Label lblCreationDate;
         private System.Windows.Forms.Label lblAbout4;
         private System.Windows.Forms.PictureBox picPayPal;
+        private System.Windows.Forms.PictureBox picTitleText;
     }
 }

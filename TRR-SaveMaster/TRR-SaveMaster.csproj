@@ -140,6 +140,7 @@
     <Content Include="Images\About_Background.png" />
     <None Include="Images\PayPal_Image.png" />
     <None Include="Images\ToolTip_Image.png" />
+    <Content Include="Images\Title_Text.png" />
     <Content Include="TRR-SaveMaster.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
