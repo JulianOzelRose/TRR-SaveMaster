@@ -14,10 +14,14 @@ To download and use this savegame editor, simply navigate to the [Releases](http
 then download the .exe file of the latest version under "Assets". You can save it anywhere on your computer. Once downloaded, open the file.
 The editor will then prompt you to select your savegame path, click "Yes". Your savegame path should be as follows:
 
+#### Tomb Raider I-III Remastered:
 `C:\Users\USERNAME\AppData\Roaming\TRX\77777777777777777\savegame.dat`
 
+#### Tomb Raider IV-VI Remastered:
+`C:\Users\USERNAME\AppData\Roaming\TRX2\77777777777777777\savegame.dat`
+
 Just replace "USERNAME" with your actual username, and "77777777777777777" with whatever numeric ID you see. The number is your Steam Community ID, so if
-you have multiple accounts with Tomb Raider I-III Remastered, there may be multiple folders. Because the savegame file is located in a hidden directory, you will have to enable
+you have multiple accounts with Tomb Raider Remastered, there may be multiple folders. Because the savegame file is located in a hidden directory, you will have to enable
 "Show hidden files, folders, or drives" in Windows Explorer. Once you have selected your savegame path, your savegames should populate in the editor. The editor will remember
 your savegame path, so there is no need to re-enter it every time.
 
