@@ -662,7 +662,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 11)  // Tomb of Semerkhet
             {
                 MIN_HEALTH_OFFSET = 0x1F7D;
-                MAX_HEALTH_OFFSET = 0x1F7D;
+                MAX_HEALTH_OFFSET = 0x2DEE;
             }
             else if (levelIndex == 12)  // Guardian of Semerkhet
             {
@@ -949,6 +949,7 @@ namespace TRR_SaveMaster
 
                 if (savegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                 {
+                    //Console.WriteLine($"OFFSET=0x{currentSavegameOffset:X}, saveNumber={saveNumber}, levelIndex={levelIndex}, savegamePresent={savegamePresent}");
                     string levelName = levelNames[levelIndex];
                     int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR4) / SAVEGAME_ITERATOR;
                     GameMode gameMode = GetGameMode();
