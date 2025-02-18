@@ -622,12 +622,12 @@ namespace TRR_SaveMaster
             else if (levelIndex == 2)   // Race for the Iris
             {
                 MIN_HEALTH_OFFSET = 0xE5C;
-                MAX_HEALTH_OFFSET = 0x16F6;
+                MAX_HEALTH_OFFSET = 0x18C2;
             }
             else if (levelIndex == 3)   // Tomb of Seth
             {
                 MIN_HEALTH_OFFSET = 0x7C4;
-                MAX_HEALTH_OFFSET = 0x953;
+                MAX_HEALTH_OFFSET = 0x98A;
             }
             else if (levelIndex == 4)   // Burial Chambers
             {
@@ -652,17 +652,17 @@ namespace TRR_SaveMaster
             else if (levelIndex == 8)   // The Great Hypostyle Wall
             {
                 MIN_HEALTH_OFFSET = 0xC6C;
-                MAX_HEALTH_OFFSET = 0x1564;
+                MAX_HEALTH_OFFSET = 0x1D56;
             }
             else if (levelIndex == 9)   // Sacred Lake
             {
                 MIN_HEALTH_OFFSET = 0x1052;
-                MAX_HEALTH_OFFSET = 0x1434;
+                MAX_HEALTH_OFFSET = 0x1D1C;
             }
             else if (levelIndex == 11)  // Tomb of Semerkhet
             {
                 MIN_HEALTH_OFFSET = 0x1F7D;
-                MAX_HEALTH_OFFSET = 0x2DEE;
+                MAX_HEALTH_OFFSET = 0x3116;
             }
             else if (levelIndex == 12)  // Guardian of Semerkhet
             {
@@ -677,7 +677,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 14)  // Alexandria
             {
                 MIN_HEALTH_OFFSET = 0x5DE;
-                MAX_HEALTH_OFFSET = 0x5DE;
+                MAX_HEALTH_OFFSET = 0x3F6B;
             }
             else if (levelIndex == 15)  // Coastal Ruins
             {
@@ -687,27 +687,27 @@ namespace TRR_SaveMaster
             else if (levelIndex == 16)  // Pharos, Temple of Isis
             {
                 MIN_HEALTH_OFFSET = 0xF07;
-                MAX_HEALTH_OFFSET = 0xF09;
+                MAX_HEALTH_OFFSET = 0x4BC2;
             }
             else if (levelIndex == 17)  // Cleopatra's Palaces
             {
                 MIN_HEALTH_OFFSET = 0x1537;
-                MAX_HEALTH_OFFSET = 0x1537;
+                MAX_HEALTH_OFFSET = 0x5131;
             }
             else if (levelIndex == 18)  // Catacombs
             {
                 MIN_HEALTH_OFFSET = 0x1355;
-                MAX_HEALTH_OFFSET = 0x13C5;
+                MAX_HEALTH_OFFSET = 0x1507;
             }
             else if (levelIndex == 19)  // Temple of Poseidon
             {
                 MIN_HEALTH_OFFSET = 0x1FDB;
-                MAX_HEALTH_OFFSET = 0x204A;
+                MAX_HEALTH_OFFSET = 0x2A18;
             }
             else if (levelIndex == 20)  // The Lost Library
             {
                 MIN_HEALTH_OFFSET = 0x2A45;
-                MAX_HEALTH_OFFSET = 0x2A45;
+                MAX_HEALTH_OFFSET = 0x3FE7;
             }
             else if (levelIndex == 21)  // Hall of Demetrius
             {
