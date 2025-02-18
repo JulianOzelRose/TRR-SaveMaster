@@ -21,6 +21,7 @@ namespace TRR_SaveMaster
         private const int TAB_TR2 = 1;
         private const int TAB_TR3 = 2;
         private const int TAB_TR4 = 3;
+        private const int TAB_TR5 = 4;
 
         // Savegame
         private Savegame selectedSavegame;
@@ -67,7 +68,6 @@ namespace TRR_SaveMaster
         public void SetHealthOffset(int offset)
         {
             healthOffset = offset;
-            Console.WriteLine($"Reported health offset: 0x{savegameOffset + healthOffset:X}");
         }
 
         private byte ReadByte(int offset)
@@ -171,6 +171,10 @@ namespace TRR_SaveMaster
             {
                 endOfLevelCoordinates = endOfLevelCoordinatesTR4[levelIndex];
             }
+            else if (SELECTED_TAB == TAB_TR5 && endOfLevelCoordinatesTR5.ContainsKey(levelIndex))
+            {
+                endOfLevelCoordinates = endOfLevelCoordinatesTR5[levelIndex];
+            }
 
             nudXCoordinate.Value = endOfLevelCoordinates[0];
             nudYCoordinate.Value = endOfLevelCoordinates[1];
@@ -195,6 +199,10 @@ namespace TRR_SaveMaster
             else if (SELECTED_TAB == TAB_TR3 && secret1CoordinatesTR3.ContainsKey(levelIndex))
             {
                 secret1Coordinates = secret1CoordinatesTR3[levelIndex];
+            }
+            else if (SELECTED_TAB == TAB_TR5 && secret1CoordinatesTR5.ContainsKey(levelIndex))
+            {
+                secret1Coordinates = secret1CoordinatesTR5[levelIndex];
             }
 
             nudXCoordinate.Value = secret1Coordinates[0];
@@ -333,6 +341,10 @@ namespace TRR_SaveMaster
             {
                 btnEndOfLevel.Enabled = endOfLevelCoordinatesTR4.ContainsKey(levelIndex);
             }
+            else if (SELECTED_TAB == TAB_TR5)
+            {
+                btnEndOfLevel.Enabled = endOfLevelCoordinatesTR5.ContainsKey(levelIndex);
+            }
         }
 
         private void EnableSecretButtonsConditionally()
@@ -365,6 +377,24 @@ namespace TRR_SaveMaster
                 btnSecret4.Enabled = secret4CoordinatesTR3.ContainsKey(levelIndex);
                 btnSecret5.Enabled = secret5CoordinatesTR3.ContainsKey(levelIndex);
                 btnSecret6.Enabled = secret6CoordinatesTR3.ContainsKey(levelIndex);
+            }
+            else if (SELECTED_TAB == TAB_TR4)
+            {
+                btnSecret1.Enabled = false;
+                btnSecret2.Enabled = false;
+                btnSecret3.Enabled = false;
+                btnSecret4.Enabled = false;
+                btnSecret5.Enabled = false;
+                btnSecret6.Enabled = false;
+            }
+            else if (SELECTED_TAB == TAB_TR5)
+            {
+                btnSecret1.Enabled = secret1CoordinatesTR5.ContainsKey(levelIndex);
+                btnSecret2.Enabled = false;
+                btnSecret3.Enabled = false;
+                btnSecret4.Enabled = false;
+                btnSecret5.Enabled = false;
+                btnSecret6.Enabled = false;
             }
         }
 
@@ -477,6 +507,17 @@ namespace TRR_SaveMaster
             { 14, new Int32[] { 16679, -2944, 26353, 178, 76    } },    // Alexandria
             { 15, new Int32[] { 10524, -3712, 23811, 176, 154   } },    // Coastal Ruins
             { 18, new Int32[] { 24454, 0, 11971, 177, 79        } },    // Catacombs
+        };
+
+        private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR5 = new Dictionary<byte, Int32[]>
+        {
+            { 2,  new Int32[] { 13556, -128, 22793, 270, 70     } },    // Trajan's Markets
+            { 3,  new Int32[] { -30482, 3968, 27715, 260, 70    } },    // The Colosseum
+            { 8,  new Int32[] { 16052, 0, 24786, 172, 1         } },    // Gallows Tree
+            { 9,  new Int32[] { 17664, 4736, 21664, 90, 169     } },    // Labyrinth
+            //{ 10, new Int32[] { 17098, 4992, 20884, 88, 38      } },    // Old Mill
+            { 11, new Int32[] { 18961, -384, 17121, 176, 154    } },    // The 13th Floor
+            { 14, new Int32[] { 19027, -1111, 25801, 178, 198   } },    // Red Alert!
         };
 
         private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR1 = new Dictionary<byte, Int32[]>
@@ -728,6 +769,12 @@ namespace TRR_SaveMaster
             { 11, new Int32[] { 56161, -2614, 22934, 16, 102    } },    // Lud's Gate
         };
 
+        private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR5 = new Dictionary<byte, Int32[]>
+        {
+            { 11, new Int32[] { 16585, 896, 17672, 92, 6        } },    // The 13th Floor
+            { 12, new Int32[] { -28961, -7680, 18629, 84, 148   } },    // Escape with the Iris
+        };
+
         private void DetermineOffsets()
         {
             if (SELECTED_TAB == TAB_TR1)
@@ -746,6 +793,10 @@ namespace TRR_SaveMaster
             {
                 levelIndexOffset = 0x26F;
             }
+            else if (SELECTED_TAB == TAB_TR5)
+            {
+                levelIndexOffset = 0x26F;
+            }
 
             if (SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR2 || SELECTED_TAB == TAB_TR3)
             {
@@ -755,12 +806,12 @@ namespace TRR_SaveMaster
                 orientationOffset = healthOffset - 0x16;
                 roomOffset = healthOffset - 0x10;
             }
-            else if (SELECTED_TAB == TAB_TR4)
+            else if (SELECTED_TAB == TAB_TR4 || SELECTED_TAB == TAB_TR5)
             {
-                orientationOffset = healthOffset - 0x9;     // Verified
-                zCoordinateOffset = healthOffset - 0x10;    // Verified
-                yCoordinateOffset = healthOffset - 0xE;     // Verified
-                xCoordinateOffset = healthOffset - 0xC;     // Fairly certain
+                orientationOffset = healthOffset - 0x9;
+                zCoordinateOffset = healthOffset - 0x10;
+                yCoordinateOffset = healthOffset - 0xE;
+                xCoordinateOffset = healthOffset - 0xC;
                 roomOffset = healthOffset - 0xA;
             }
         }
@@ -873,7 +924,7 @@ namespace TRR_SaveMaster
                     nudOrientation.Value = GetOrientation();
                     nudRoom.Value = GetRoom();
                 }
-                else if (SELECTED_TAB == TAB_TR4)
+                else if (SELECTED_TAB == TAB_TR4 || SELECTED_TAB == TAB_TR5)
                 {
                     nudXCoordinate.Value = GetXCoordinateI16();
                     nudYCoordinate.Value = GetYCoordinateI16();
@@ -922,7 +973,7 @@ namespace TRR_SaveMaster
                     WriteOrientation((Int16)nudOrientation.Value);
                     WriteRoom((byte)nudRoom.Value);
                 }
-                else if (SELECTED_TAB == TAB_TR4)
+                else if (SELECTED_TAB == TAB_TR4 || SELECTED_TAB == TAB_TR5)
                 {
                     WriteXCoordinateI16((Int16)nudXCoordinate.Value);
                     WriteYCoordinateI16((Int16)nudYCoordinate.Value);

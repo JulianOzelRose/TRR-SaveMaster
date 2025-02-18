@@ -16,6 +16,7 @@ namespace TRR_SaveMaster
         private Savegame previousSelectedSavegameTR2;
         private Savegame previousSelectedSavegameTR3;
         private Savegame previousSelectedSavegameTR4;
+        private Savegame previousSelectedSavegameTR5;
         private string savegamePathTRX;
         private string savegamePathTRX2;
         private bool isLoading = false;
@@ -31,12 +32,14 @@ namespace TRR_SaveMaster
         readonly TR2Utilities TR2 = new TR2Utilities();
         readonly TR3Utilities TR3 = new TR3Utilities();
         readonly TR4Utilities TR4 = new TR4Utilities();
+        readonly TR5Utilities TR5 = new TR5Utilities();
 
         // Tabs
         private const int TAB_TR1 = 0;
         private const int TAB_TR2 = 1;
         private const int TAB_TR3 = 2;
         private const int TAB_TR4 = 3;
+        private const int TAB_TR5 = 4;
 
         // Health
         private const UInt16 MAX_HEALTH_VALUE = 1000;
@@ -126,6 +129,17 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void PopulateSavegamesTR5()
+        {
+            cmbSavegamesTR5.Items.Clear();
+
+            if (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
+            {
+                TR5.SetSavegamePath(savegamePathTRX2);
+                TR5.PopulateSavegames(cmbSavegamesTR5);
+            }
+        }
+
         private void PopulateSavegamesConditionally()
         {
             if (tabGame.SelectedIndex == TAB_TR1)
@@ -147,6 +161,11 @@ namespace TRR_SaveMaster
             {
                 DisableButtonsTR4();
                 PopulateSavegamesTR4();
+            }
+            else if (tabGame.SelectedIndex == TAB_TR5)
+            {
+                DisableButtonsTR5();
+                PopulateSavegamesTR5();
             }
         }
 
@@ -325,14 +344,12 @@ namespace TRR_SaveMaster
                     ClearControlsTR4();
 
                     cmbSavegamesTR4.Items.Clear();
-                    //cmbSavegamesTR5.Items.Clear();
-                    //cmbSavegamesTR6.Items.Clear();
+                    cmbSavegamesTR5.Items.Clear();
 
                     PopulateSavegamesConditionally();
 
                     btnRefreshTR4.Enabled = true;
-                    //btnRefreshTR5.Enabled = true;
-                    //btnRefreshTR6.Enabled = true;
+                    btnRefreshTR5.Enabled = true;
 
                     EnableToolStripMenuItemsConditionally();
 
@@ -476,7 +493,7 @@ namespace TRR_SaveMaster
 
         public bool IsTRX2TabSelected()
         {
-            return (tabGame.SelectedIndex == TAB_TR4);
+            return (tabGame.SelectedIndex == TAB_TR4 || tabGame.SelectedIndex == TAB_TR5);
         }
 
         private void btnExitTR1_Click(object sender, EventArgs e)
@@ -495,6 +512,11 @@ namespace TRR_SaveMaster
         }
 
         private void btnExitTR4_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void btnExitTR5_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
@@ -548,6 +570,18 @@ namespace TRR_SaveMaster
                 }
 
                 DisableButtonsTR4();
+            }
+            else if (tabGame.SelectedIndex == TAB_TR5 && cmbSavegamesTR5.SelectedIndex != -1 && btnSaveTR5.Enabled)
+            {
+                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
+                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    WriteChangesTR5(cmbSavegamesTR5.SelectedItem as Savegame);
+                }
+
+                DisableButtonsTR5();
             }
         }
 
@@ -639,6 +673,28 @@ namespace TRR_SaveMaster
             cmbSavegamesTR4.SelectedIndexChanged += cmbSavegamesTR4_SelectedIndexChanged;
         }
 
+        private void cmbSavegamesTR5_MouseDown(object sender, MouseEventArgs e)
+        {
+            cmbSavegamesTR5.SelectedIndexChanged -= cmbSavegamesTR5_SelectedIndexChanged;
+
+            if (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
+            {
+                for (int i = 0; i < cmbSavegamesTR5.Items.Count; i++)
+                {
+                    if (cmbSavegamesTR5.Items[i] is Savegame savegame)
+                    {
+                        TR5.UpdateDisplayName(savegame);
+
+                        cmbSavegamesTR5.Items[i] = savegame;
+                    }
+                }
+
+                TR5.PopulateEmptySlots(cmbSavegamesTR5);
+            }
+
+            cmbSavegamesTR5.SelectedIndexChanged += cmbSavegamesTR5_SelectedIndexChanged;
+        }
+
         private void cmbSavegamesTR1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!userIndexChanged) return;
@@ -727,6 +783,28 @@ namespace TRR_SaveMaster
             EnableToolStripMenuItemsConditionally();
         }
 
+        private void cmbSavegamesTR5_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!userIndexChanged) return;
+
+            if (previousSelectedSavegameTR5 != null && btnSaveTR5.Enabled)
+            {
+                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
+                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    WriteChangesTR5(previousSelectedSavegameTR5);
+                }
+            }
+
+            previousSelectedSavegameTR5 = cmbSavegamesTR5.SelectedItem as Savegame;
+
+            DisplayGameInfoTR5(cmbSavegamesTR5.SelectedItem as Savegame);
+            DisableButtonsTR5();
+            EnableToolStripMenuItemsConditionally();
+        }
+
         private void btnCancelTR1_Click(object sender, EventArgs e)
         {
             DisplayGameInfoTR1(cmbSavegamesTR1.SelectedItem as Savegame);
@@ -749,6 +827,12 @@ namespace TRR_SaveMaster
         {
             DisplayGameInfoTR4(cmbSavegamesTR4.SelectedItem as Savegame);
             DisableButtonsTR4();
+        }
+
+        private void btnCancelTR5_Click(object sender, EventArgs e)
+        {
+            DisplayGameInfoTR5(cmbSavegamesTR5.SelectedItem as Savegame);
+            DisableButtonsTR5();
         }
 
         private void trbHealthTR1_Scroll(object sender, EventArgs e)
@@ -792,6 +876,17 @@ namespace TRR_SaveMaster
             if (!isLoading && cmbSavegamesTR4.SelectedIndex != -1)
             {
                 EnableButtonsTR4();
+            }
+        }
+
+        private void trbHealthTR5_Scroll(object sender, EventArgs e)
+        {
+            double healthPercentage = ((double)trbHealthTR5.Value / (double)MAX_HEALTH_VALUE) * 100;
+            lblHealthTR5.Text = healthPercentage.ToString("0.0") + "%";
+
+            if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
             }
         }
 
@@ -1011,6 +1106,52 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void WriteChangesTR5(Savegame savegame)
+        {
+            if (savegame != null)
+            {
+                try
+                {
+                    TR5.SetSavegamePath(savegamePathTRX2);
+                    TR5.SetSavegameOffset(savegame.Offset);
+
+                    if (!TR5.IsSavegamePresent())
+                    {
+                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
+                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        DisableButtonsTR5();
+                        PopulateSavegamesTR5();
+                        return;
+                    }
+
+                    if (tsmiBackupBeforeSaving.Checked)
+                    {
+                        CreateBackup();
+                    }
+
+                    File.SetAttributes(savegamePathTRX2, File.GetAttributes(savegamePathTRX2) & ~FileAttributes.ReadOnly);
+
+                    TR5.WriteChanges(nudSaveNumberTR5, nudSmallMedipacksTR5, nudLargeMedipacksTR5, nudFlaresTR5, nudSecretsTR5,
+                        chkPistolsTR5, chkRevolverTR5, chkDeagleTR5, chkUziTR5, chkHKGunTR5, chkGrapplingGunTR5, chkShotgunTR5,
+                        nudRevolverAmmoTR5, nudDeagleAmmoTR5, nudUziAmmoTR5, nudHKGunAmmoTR5, nudGrapplingGunAmmoTR5,
+                        nudShotgunNormalAmmoTR5, nudShotgunWideshotAmmoTR5, trbHealthTR5);
+
+                    TR5.UpdateDisplayName(savegame);
+                    UpdateSavegameDisplayNameTR5(cmbSavegamesTR5, savegame);
+
+                    DisableButtonsTR5();
+
+                    slblStatus.Text = $"Successfully patched savegame: '{savegame}'";
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    slblStatus.Text = $"Error writing to savegame.";
+                }
+            }
+        }
+
         private void btnSaveTR1_Click(object sender, EventArgs e)
         {
             WriteChangesTR1(cmbSavegamesTR1.SelectedItem as Savegame);
@@ -1029,6 +1170,11 @@ namespace TRR_SaveMaster
         private void btnSaveTR4_Click(object sender, EventArgs e)
         {
             WriteChangesTR4(cmbSavegamesTR4.SelectedItem as Savegame);
+        }
+
+        private void btnSaveTR5_Click(object sender, EventArgs e)
+        {
+            WriteChangesTR5(cmbSavegamesTR5.SelectedItem as Savegame);
         }
 
         private void btnRefreshTR1_Click(object sender, EventArgs e)
@@ -1088,6 +1234,22 @@ namespace TRR_SaveMaster
 
                 slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2)) ?
                     $"{cmbSavegamesTR4.Items.Count} savegames found for Tomb Raider IV" : "Ready";
+            }
+            else
+            {
+                MessageBox.Show("Could not find savegame file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnRefreshTR5_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
+            {
+                cmbSavegamesTR5.Items.Clear();
+                TR5.PopulateSavegames(cmbSavegamesTR5);
+
+                slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2)) ?
+                    $"{cmbSavegamesTR5.Items.Count} savegames found for Tomb Raider V" : "Ready";
             }
             else
             {
@@ -1177,6 +1339,27 @@ namespace TRR_SaveMaster
             }
 
             cmbSavegames.SelectedIndexChanged += cmbSavegamesTR4_SelectedIndexChanged;
+        }
+
+        private void UpdateSavegameDisplayNameTR5(ComboBox cmbSavegames, Savegame selectedSavegame)
+        {
+            cmbSavegames.SelectedIndexChanged -= cmbSavegamesTR5_SelectedIndexChanged;
+
+            if (cmbSavegames.SelectedItem != null)
+            {
+                int selectedIndex = cmbSavegames.Items.IndexOf(selectedSavegame);
+
+                if (selectedIndex != -1)
+                {
+                    cmbSavegames.Items[selectedIndex] = selectedSavegame;
+                }
+                else
+                {
+                    cmbSavegames.Items.Add(selectedSavegame);
+                }
+            }
+
+            cmbSavegames.SelectedIndexChanged += cmbSavegamesTR5_SelectedIndexChanged;
         }
 
         private void DisplayGameInfoTR1(Savegame selectedSavegame)
@@ -1351,6 +1534,52 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void DisplayGameInfoTR5(Savegame selectedSavegame)
+        {
+            if (selectedSavegame != null)
+            {
+                isLoading = true;
+
+                try
+                {
+                    TR5.SetSavegamePath(savegamePathTRX2);
+                    TR5.SetSavegameOffset(selectedSavegame.Offset);
+
+                    if (!TR5.IsSavegamePresent())
+                    {
+                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
+                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        DisableButtonsTR5();
+                        PopulateSavegamesTR5();
+                        return;
+                    }
+
+                    TR5.UpdateDisplayName(selectedSavegame);
+                    UpdateSavegameDisplayNameTR5(cmbSavegamesTR5, selectedSavegame);
+
+                    TR5.DetermineOffsets();
+                    TR5.SetLevelParams(chkRevolverTR5, chkDeagleTR5, nudRevolverAmmoTR5, nudDeagleAmmoTR5, chkUziTR5, nudUziAmmoTR5, chkShotgunTR5,
+                        nudShotgunNormalAmmoTR5, nudShotgunWideshotAmmoTR5, chkGrapplingGunTR5, nudGrapplingGunAmmoTR5, chkHKGunTR5, nudHKGunAmmoTR5,
+                        chkPistolsTR5, nudFlaresTR5);
+
+                    TR5.DisplayGameInfo(nudSaveNumberTR5, nudSmallMedipacksTR5, nudLargeMedipacksTR5, nudFlaresTR5, nudSecretsTR5,
+                        chkPistolsTR5, chkRevolverTR5, chkDeagleTR5, chkUziTR5, chkHKGunTR5, chkGrapplingGunTR5, chkShotgunTR5,
+                        nudRevolverAmmoTR5, nudDeagleAmmoTR5, nudUziAmmoTR5, nudHKGunAmmoTR5, nudGrapplingGunAmmoTR5,
+                        nudShotgunNormalAmmoTR5, nudShotgunWideshotAmmoTR5, trbHealthTR5, lblHealthTR5, lblHealthErrorTR5);
+
+                    slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame}'";
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    slblStatus.Text = $"Error retrieving savegame info.";
+                }
+
+                isLoading = false;
+            }
+        }
+
         private void tabGame_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabGame.SelectedIndex == TAB_TR1)
@@ -1423,6 +1652,28 @@ namespace TRR_SaveMaster
                 slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2)) ?
                     $"{cmbSavegamesTR4.Items.Count} savegames found for Tomb Raider IV" : "Ready";
             }
+            else if (tabGame.SelectedIndex == TAB_TR5)
+            {
+                if (string.IsNullOrEmpty(savegamePathTRX2))
+                {
+                    PromptBrowseSavegamePathTRX2();
+                    return;
+                }
+
+                btnRefreshTR5.Enabled = !string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2);
+
+                if (cmbSavegamesTR5.Items.Count == 0)
+                {
+                    PopulateSavegamesTR5();
+                }
+                else
+                {
+                    DisplayGameInfoTR5(cmbSavegamesTR5.SelectedItem as Savegame);
+                }
+
+                slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2)) ?
+                    $"{cmbSavegamesTR5.Items.Count} savegames found for Tomb Raider V" : "Ready";
+            }
 
             EnableToolStripMenuItemsConditionally();
         }
@@ -1484,11 +1735,11 @@ namespace TRR_SaveMaster
         {
             string savegamePath = "";
 
-            if (tabGame.SelectedIndex == TAB_TR1 || tabGame.SelectedIndex == TAB_TR2 || tabGame.SelectedIndex == TAB_TR3)
+            if (IsTRXTabSelected())
             {
                 savegamePath = savegamePathTRX;
             }
-            else if (tabGame.SelectedIndex == TAB_TR4)
+            else if (IsTRX2TabSelected())
             {
                 savegamePath = savegamePathTRX2;
             }
@@ -1524,6 +1775,13 @@ namespace TRR_SaveMaster
                 savegamePresent = TR3.IsSavegamePresent();
             }
             else if (tabGame.SelectedIndex == TAB_TR4 && cmbSavegamesTR4.SelectedIndex != -1)
+            {
+                string errorMessage = $"This feature is still under construction.";
+                MessageBox.Show(errorMessage, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+            else if (tabGame.SelectedIndex == TAB_TR5 && cmbSavegamesTR5.SelectedIndex != -1)
             {
                 string errorMessage = $"This feature is still under construction.";
                 MessageBox.Show(errorMessage, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -1677,6 +1935,30 @@ namespace TRR_SaveMaster
                 selectedSavegame = cmbSavegamesTR4.Items[cmbSavegamesTR4.SelectedIndex] as Savegame;
                 positionForm.SetHealthOffset(healthOffset - selectedSavegame.Offset);
             }
+            else if (tabGame.SelectedIndex == TAB_TR5 && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                if (!TR5.IsSavegamePresent())
+                {
+                    string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
+                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    DisableButtonsTR5();
+                    PopulateSavegamesTR5();
+                    return;
+                }
+
+                int healthOffset = TR5.GetHealthOffset();
+
+                if (healthOffset == -1)
+                {
+                    string errorMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
+                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                selectedSavegame = cmbSavegamesTR5.Items[cmbSavegamesTR5.SelectedIndex] as Savegame;
+                positionForm.SetHealthOffset(healthOffset - selectedSavegame.Offset);
+            }
 
             if (selectedSavegame != null)
             {
@@ -1729,6 +2011,10 @@ namespace TRR_SaveMaster
             {
                 EnableAllWeapons(grpWeaponsTR4);
             }
+            else if (tabGame.SelectedIndex == TAB_TR5)
+            {
+                EnableAllWeapons(grpWeaponsTR5);
+            }
         }
 
         private void tsmiSetMaximumAmmunition_Click(object sender, EventArgs e)
@@ -1749,6 +2035,10 @@ namespace TRR_SaveMaster
             {
                 SetMaximumAmmunition(grpWeaponsTR4);
             }
+            else if (tabGame.SelectedIndex == TAB_TR5)
+            {
+                SetMaximumAmmunition(grpWeaponsTR5);
+            }
         }
 
         private void tsmiSetMaximumItems_Click(object sender, EventArgs e)
@@ -1768,6 +2058,10 @@ namespace TRR_SaveMaster
             else if (tabGame.SelectedIndex == TAB_TR4)
             {
                 SetMaximumItems(grpItemsTR4);
+            }
+            else if (tabGame.SelectedIndex == TAB_TR5)
+            {
+                SetMaximumItems(grpItemsTR5);
             }
         }
 
@@ -1797,6 +2091,11 @@ namespace TRR_SaveMaster
                 trbHealthTR4.Value = trbHealthTR4.Maximum;
                 lblHealthTR4.Text = "100.0%";
             }
+            else if (tabGame.SelectedIndex == TAB_TR5 && trbHealthTR5.Enabled)
+            {
+                trbHealthTR5.Value = trbHealthTR5.Maximum;
+                lblHealthTR5.Text = "100.0%";
+            }
         }
 
         private void tsmiDeleteSavegame_Click(object sender, EventArgs e)
@@ -1818,6 +2117,10 @@ namespace TRR_SaveMaster
             else if (tabGame.SelectedIndex == TAB_TR4)
             {
                 savegameToDelete = cmbSavegamesTR4.SelectedItem as Savegame;
+            }
+            else if (tabGame.SelectedIndex == TAB_TR5)
+            {
+                savegameToDelete = cmbSavegamesTR5.SelectedItem as Savegame;
             }
 
             if (savegameToDelete != null)
@@ -1959,6 +2262,16 @@ namespace TRR_SaveMaster
                 tsmiMaxEverything.Enabled = cmbSavegamesTR4.SelectedIndex != -1;
                 tsmiDeleteSavegame.Enabled = cmbSavegamesTR4.SelectedIndex != -1;
             }
+            else if (tabGame.SelectedIndex == TAB_TR5)
+            {
+                tsmiEnableAllWeapons.Enabled = cmbSavegamesTR5.SelectedIndex != -1;
+                tsmiSetMaximumAmmunition.Enabled = cmbSavegamesTR5.SelectedIndex != -1;
+                tsmiSetMaximumItems.Enabled = cmbSavegamesTR5.SelectedIndex != -1;
+                tsmiStatistics.Enabled = cmbSavegamesTR5.SelectedIndex != -1;
+                tsmiPosition.Enabled = cmbSavegamesTR5.SelectedIndex != -1;
+                tsmiMaxEverything.Enabled = cmbSavegamesTR5.SelectedIndex != -1;
+                tsmiDeleteSavegame.Enabled = cmbSavegamesTR5.SelectedIndex != -1;
+            }
         }
 
         private void EnableButtonsTR1()
@@ -1985,6 +2298,12 @@ namespace TRR_SaveMaster
             btnSaveTR4.Enabled = true;
         }
 
+        private void EnableButtonsTR5()
+        {
+            btnCancelTR5.Enabled = true;
+            btnSaveTR5.Enabled = true;
+        }
+
         private void DisableButtonsTR1()
         {
             btnCancelTR1.Enabled = false;
@@ -2007,6 +2326,12 @@ namespace TRR_SaveMaster
         {
             btnCancelTR4.Enabled = false;
             btnSaveTR4.Enabled = false;
+        }
+
+        private void DisableButtonsTR5()
+        {
+            btnCancelTR5.Enabled = false;
+            btnSaveTR5.Enabled = false;
         }
 
         private void nudSaveNumberTR1_ValueChanged(object sender, EventArgs e)
@@ -2731,7 +3056,7 @@ namespace TRR_SaveMaster
 
         private void nudSaveNumberTR4_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!isLoading && cmbSavegamesTR4.SelectedIndex != -1)
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR4.SelectedIndex != -1)
             {
                 EnableButtonsTR4();
             }
@@ -2739,7 +3064,7 @@ namespace TRR_SaveMaster
 
         private void nudSmallMedipacksTR4_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!isLoading && cmbSavegamesTR4.SelectedIndex != -1)
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR4.SelectedIndex != -1)
             {
                 EnableButtonsTR4();
             }
@@ -2747,7 +3072,7 @@ namespace TRR_SaveMaster
 
         private void nudLargeMedipacksTR4_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!isLoading && cmbSavegamesTR4.SelectedIndex != -1)
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR4.SelectedIndex != -1)
             {
                 EnableButtonsTR4();
             }
@@ -2755,7 +3080,7 @@ namespace TRR_SaveMaster
 
         private void nudFlaresTR4_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!isLoading && cmbSavegamesTR4.SelectedIndex != -1)
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR4.SelectedIndex != -1)
             {
                 EnableButtonsTR4();
             }
@@ -2763,7 +3088,7 @@ namespace TRR_SaveMaster
 
         private void nudGoldenSkullsTR4_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!isLoading && cmbSavegamesTR4.SelectedIndex != -1)
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR4.SelectedIndex != -1)
             {
                 EnableButtonsTR4();
             }
@@ -2771,7 +3096,7 @@ namespace TRR_SaveMaster
 
         private void nudUziAmmoTR4_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!isLoading && cmbSavegamesTR4.SelectedIndex != -1)
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR4.SelectedIndex != -1)
             {
                 EnableButtonsTR4();
             }
@@ -2779,7 +3104,7 @@ namespace TRR_SaveMaster
 
         private void nudRevolverAmmoTR4_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!isLoading && cmbSavegamesTR4.SelectedIndex != -1)
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR4.SelectedIndex != -1)
             {
                 EnableButtonsTR4();
             }
@@ -2787,7 +3112,7 @@ namespace TRR_SaveMaster
 
         private void nudShotgunNormalAmmoTR4_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!isLoading && cmbSavegamesTR4.SelectedIndex != -1)
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR4.SelectedIndex != -1)
             {
                 EnableButtonsTR4();
             }
@@ -2795,7 +3120,7 @@ namespace TRR_SaveMaster
 
         private void nudShotgunWideshotAmmoTR4_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!isLoading && cmbSavegamesTR4.SelectedIndex != -1)
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR4.SelectedIndex != -1)
             {
                 EnableButtonsTR4();
             }
@@ -2803,7 +3128,7 @@ namespace TRR_SaveMaster
 
         private void nudGrenadeGunNormalAmmoTR4_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!isLoading && cmbSavegamesTR4.SelectedIndex != -1)
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR4.SelectedIndex != -1)
             {
                 EnableButtonsTR4();
             }
@@ -2811,7 +3136,7 @@ namespace TRR_SaveMaster
 
         private void nudGrenadeGunSuperAmmoTR4_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!isLoading && cmbSavegamesTR4.SelectedIndex != -1)
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR4.SelectedIndex != -1)
             {
                 EnableButtonsTR4();
             }
@@ -2819,7 +3144,7 @@ namespace TRR_SaveMaster
 
         private void nudGrenadeGunFlashAmmoTR4_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!isLoading && cmbSavegamesTR4.SelectedIndex != -1)
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR4.SelectedIndex != -1)
             {
                 EnableButtonsTR4();
             }
@@ -2827,7 +3152,7 @@ namespace TRR_SaveMaster
 
         private void nudCrossbowNormalAmmoTR4_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!isLoading && cmbSavegamesTR4.SelectedIndex != -1)
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR4.SelectedIndex != -1)
             {
                 EnableButtonsTR4();
             }
@@ -2835,7 +3160,7 @@ namespace TRR_SaveMaster
 
         private void nudCrossbowPoisonAmmoTR4_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!isLoading && cmbSavegamesTR4.SelectedIndex != -1)
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR4.SelectedIndex != -1)
             {
                 EnableButtonsTR4();
             }
@@ -2843,7 +3168,7 @@ namespace TRR_SaveMaster
 
         private void nudCrossbowExplosiveAmmoTR4_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!isLoading && cmbSavegamesTR4.SelectedIndex != -1)
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR4.SelectedIndex != -1)
             {
                 EnableButtonsTR4();
             }
@@ -2894,6 +3219,254 @@ namespace TRR_SaveMaster
             if (!isLoading && cmbSavegamesTR4.SelectedIndex != -1)
             {
                 EnableButtonsTR4();
+            }
+        }
+
+        private void nudSaveNumberTR5_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudSmallMedipacksTR5_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudLargeMedipacksTR5_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudFlaresTR5_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudSecretsTR5_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudRevolverAmmoTR5_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudDeagleAmmoTR5_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudUziAmmoTR5_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudHKGunAmmoTR5_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudGrapplingGunAmmoTR5_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudShotgunNormalAmmoTR5_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudShotgunWideshotAmmoTR5_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudSaveNumberTR5_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudSmallMedipacksTR5_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudLargeMedipacksTR5_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudFlaresTR5_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudSecretsTR5_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudRevolverAmmoTR5_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudDeagleAmmoTR5_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudUziAmmoTR5_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudHKGunAmmoTR5_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudGrapplingGunAmmoTR5_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudShotgunNormalAmmoTR5_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void nudShotgunWideshotAmmoTR5_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void chkPistolsTR5_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void chkRevolverTR5_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void chkDeagleTR5_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void chkUziTR5_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void chkHKGunTR5_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void chkGrapplingGunTR5_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
+            }
+        }
+
+        private void chkShotgunTR5_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
+            {
+                EnableButtonsTR5();
             }
         }
     }
