@@ -944,20 +944,45 @@ namespace TRR_SaveMaster
 
         public int GetHealthOffset()
         {
+            byte[] savegameData;
+
+            using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                savegameData = new byte[fs.Length];
+                fs.Read(savegameData, 0, savegameData.Length);
+            }
+
             for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset++)
             {
-                UInt16 value = ReadUInt16(savegameOffset + offset);
+                int valueIndex = savegameOffset + offset;
+
+                if (valueIndex + 1 >= savegameData.Length)
+                {
+                    break;
+                }
+
+                UInt16 value = BitConverter.ToUInt16(savegameData, valueIndex);
 
                 if (value >= MIN_HEALTH_VALUE && value <= MAX_HEALTH_VALUE)
                 {
-                    byte byteFlag1 = ReadByte(savegameOffset + offset - 7);
-                    byte byteFlag2 = ReadByte(savegameOffset + offset - 6);
-                    byte byteFlag3 = ReadByte(savegameOffset + offset - 5);
-                    byte byteFlag4 = ReadByte(savegameOffset + offset - 4);
+                    int flagIndex1 = savegameOffset + offset - 7;
+                    int flagIndex2 = savegameOffset + offset - 6;
+                    int flagIndex3 = savegameOffset + offset - 5;
+                    int flagIndex4 = savegameOffset + offset - 4;
+
+                    if (flagIndex1 < 0 || flagIndex2 < 0 || flagIndex3 < 0 || flagIndex4 < 0 || flagIndex4 >= savegameData.Length)
+                    {
+                        continue;
+                    }
+
+                    byte byteFlag1 = savegameData[flagIndex1];
+                    byte byteFlag2 = savegameData[flagIndex2];
+                    byte byteFlag3 = savegameData[flagIndex3];
+                    byte byteFlag4 = savegameData[flagIndex4];
 
                     if (IsKnownByteFlagPattern(byteFlag1, byteFlag2, byteFlag3, byteFlag4))
                     {
-                        return (savegameOffset + offset);
+                        return savegameOffset + offset;
                     }
                 }
             }
