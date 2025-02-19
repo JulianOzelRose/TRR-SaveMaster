@@ -642,7 +642,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 6)   // KV5
             {
                 MIN_HEALTH_OFFSET = 0xEC4;
-                MAX_HEALTH_OFFSET = 0xF09;
+                MAX_HEALTH_OFFSET = 0xF34;
             }
             else if (levelIndex == 7)   // Temple of Karnak
             {
@@ -892,14 +892,14 @@ namespace TRR_SaveMaster
 
                 if ((value >= MIN_HEALTH_VALUE && value < MAX_HEALTH_VALUE) || value == 0)
                 {
-                    bool isKnownPatternByteFlagPattern = IsKnownByteFlagPattern(
-                        ReadByte(savegameOffset + offset - 7),
-                        ReadByte(savegameOffset + offset - 6),
-                        ReadByte(savegameOffset + offset - 5),
-                        ReadByte(savegameOffset + offset - 4)
-                    );
+                    byte byteFlag1 = ReadByte(savegameOffset + offset - 7);
+                    byte byteFlag2 = ReadByte(savegameOffset + offset - 6);
+                    byte byteFlag3 = ReadByte(savegameOffset + offset - 5);
+                    byte byteFlag4 = ReadByte(savegameOffset + offset - 4);
 
-                    if (isKnownPatternByteFlagPattern)
+                    bool isKnownByteFlagPattern = IsKnownByteFlagPattern(byteFlag1, byteFlag2, byteFlag3, byteFlag4);
+
+                    if (isKnownByteFlagPattern)
                     {
                         if (value != 0)
                         {
