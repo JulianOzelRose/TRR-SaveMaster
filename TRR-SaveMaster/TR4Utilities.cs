@@ -692,7 +692,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 17)  // Cleopatra's Palaces
             {
                 MIN_HEALTH_OFFSET = 0x1537;
-                MAX_HEALTH_OFFSET = 0x5131;
+                MAX_HEALTH_OFFSET = 0x5305;
             }
             else if (levelIndex == 18)  // Catacombs
             {
