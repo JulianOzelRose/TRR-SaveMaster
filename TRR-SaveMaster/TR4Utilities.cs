@@ -717,7 +717,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 22)  // City of the Dead
             {
                 MIN_HEALTH_OFFSET = 0x651;
-                MAX_HEALTH_OFFSET = 0x687;
+                MAX_HEALTH_OFFSET = 0x72B;
             }
             else if (levelIndex == 23)  // Trenches
             {
