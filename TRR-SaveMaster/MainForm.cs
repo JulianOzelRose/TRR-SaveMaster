@@ -1092,7 +1092,7 @@ namespace TRR_SaveMaster
                         nudCrossbowPoisonAmmoTR4, nudCrossbowExplosiveAmmoTR4, trbHealthTR4);
 
                     TR4.UpdateDisplayName(savegame);
-                    UpdateSavegameDisplayNameTR4(cmbSavegamesTR3, savegame);
+                    UpdateSavegameDisplayNameTR4(cmbSavegamesTR4, savegame);
 
                     DisableButtonsTR4();
 
