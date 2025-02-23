@@ -255,6 +255,10 @@ namespace TRR_SaveMaster
             {
                 secret2Coordinates = secret2CoordinatesTR3[levelIndex];
             }
+            else if (SELECTED_TAB == TAB_TR5 && secret2CoordinatesTR5.ContainsKey(levelIndex))
+            {
+                secret2Coordinates = secret2CoordinatesTR5[levelIndex];
+            }
 
             nudXCoordinate.Value = secret2Coordinates[0];
             nudYCoordinate.Value = secret2Coordinates[1];
@@ -279,6 +283,10 @@ namespace TRR_SaveMaster
             else if (SELECTED_TAB == TAB_TR3 && secret3CoordinatesTR3.ContainsKey(levelIndex))
             {
                 secret3Coordinates = secret3CoordinatesTR3[levelIndex];
+            }
+            else if (SELECTED_TAB == TAB_TR5 && secret3CoordinatesTR5.ContainsKey(levelIndex))
+            {
+                secret3Coordinates = secret3CoordinatesTR5[levelIndex];
             }
 
             nudXCoordinate.Value = secret3Coordinates[0];
@@ -416,8 +424,8 @@ namespace TRR_SaveMaster
             else if (SELECTED_TAB == TAB_TR5)
             {
                 btnSecret1.Enabled = secret1CoordinatesTR5.ContainsKey(levelIndex);
-                btnSecret2.Enabled = false;
-                btnSecret3.Enabled = false;
+                btnSecret2.Enabled = secret2CoordinatesTR5.ContainsKey(levelIndex);
+                btnSecret3.Enabled = secret3CoordinatesTR5.ContainsKey(levelIndex);
                 btnSecret4.Enabled = false;
                 btnSecret5.Enabled = false;
                 btnSecret6.Enabled = false;
@@ -539,8 +547,8 @@ namespace TRR_SaveMaster
         {
             { 2,  new Int32[] { 22793, -128, 13556, 270, 70     } },    // Trajan's Markets
             { 3,  new Int32[] { 27715, 3968, 35054, 260, 70     } },    // The Colosseum     
-            //{ 8,  new Int32[] { 16052, 0, 24786, 172, 1         } },    // Gallows Tree (TODO: fix signage)
-            //{ 9,  new Int32[] { 17664, 4736, 21664, 90, 169     } },    // Labyrinth (TODO: fix signage)
+            { 8,  new Int32[] { 24827, 0, 15994, 172, 1         } },    // Gallows Tree
+            { 9,  new Int32[] { 21710, 4736, 17666, 90, 169     } },    // Labyrinth
             { 11, new Int32[] { 17121, -384, 18961, 176, 154    } },    // The 13th Floor
             { 14, new Int32[] { 25801, -1111, 19027, 178, 198   } },    // Red Alert!
         };
@@ -796,8 +804,50 @@ namespace TRR_SaveMaster
 
         private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR5 = new Dictionary<byte, Int32[]>
         {
+            {  1, new Int32[] { 19160, 0, 13542, 178, 215       } },    // Streets of Rome
+            {  2, new Int32[] { 42415, 1664, 17386, 150, 22     } },    // Trajan's Markets
+            {  3, new Int32[] { 40738, 2432, 28419, 14, 112     } },    // The Colosseum
+            {  4, new Int32[] { 33817, -1024, 21649, 94, 23     } },    // The Base
+            {  5, new Int32[] { 33783, 3840, 26797, 92, 5       } },    // The Submarine
+            //{  6, new Int32[] { 8508, 31382, 48141, 4, 62       } },    // Deepsea Dive
+            {  7, new Int32[] { 30841, 2048, 23005, 158, 115    } },    // Sinking Submarine
+            {  8, new Int32[] { 25284, 3072, 21690, 36, 53      } },    // Gallows Tree
+            {  9, new Int32[] { 21068, 3840, 10496, 270, 162    } },    // Labyrinth
+            { 10, new Int32[] { 35365, 2176, 14548, 100, 199    } },    // Old Mill
             { 11, new Int32[] { 17672, 896, 16585, 92, 6        } },    // The 13th Floor
             { 12, new Int32[] { 18629, -7680, 36575, 84, 148    } },    // Escape with the Iris
+            //{ 14, new Int32[] { 27824, 3584, 37978, 82, 206     } },    // Red Alert!
+        };
+
+        private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR5 = new Dictionary<byte, Int32[]>
+        {
+            {  1, new Int32[] { 23822, 0, 28862, 105, 217       } },    // Streets of Rome
+            {  2, new Int32[] { 19233, 128, 21905, 22, 101      } },    // Trajan's Markets
+            {  3, new Int32[] { 15629, 768, 17392, 10, 81       } },    // The Colosseum
+            {  4, new Int32[] { 11313, -2688, 13654, 90, 146    } },    // The Base
+            {  5, new Int32[] { 26969, 512, 20345, 180, 19      } },    // The Submarine
+            {  7, new Int32[] { 25853, 512, 33508, 270, 54      } },    // Sinking Submarine
+            {  8, new Int32[] { 32955, 3456, 31319, 37, 114     } },    // Gallows Tree
+            {  9, new Int32[] { 19319, 9344, 22196, 270, 103    } },    // Labyrinth
+            { 10, new Int32[] { 13390, 5248, 22085, 173, 188    } },    // Old Mill
+            { 11, new Int32[] { 12231, -2560, 26784, 85, 143    } },    // The 13th Floor
+            { 12, new Int32[] { 24075, 0, 34033, 96, 122        } },    // Escape with the Iris
+            { 14, new Int32[] { 44033, -128, 29863, 270, 78     } },    // Red Alert!
+        };
+
+        private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR5 = new Dictionary<byte, Int32[]>
+        {
+            //{  1, new Int32[] { 23822, -3072, 36313, 4, 166     } },    // Streets of Rome
+            {  2, new Int32[] { 35974, 0, 23808, 270, 219       } },    // Trajan's Markets
+            {  3, new Int32[] { 33565, 3968, 35597, 12, 120     } },    // The Colosseum
+            {  4, new Int32[] { 9931, 1024, 25864, 90, 76       } },    // The Base
+            {  5, new Int32[] { 34369, -256, 30870, 90, 15      } },    // The Submarine
+            {  8, new Int32[] { 16166, 5632, 28435, 270, 206    } },    // Gallows Tree
+            {  9, new Int32[] { 18674, 6016, 25793, 1, 251      } },    // Labyrinth
+            { 10, new Int32[] { 14059, 5248, 14798, 180, 197    } },    // Old Mill
+            { 11, new Int32[] { 17217, 128, 29881, 2, 136       } },    // The 13th Floor
+            { 12, new Int32[] { 22888, -3072, 35215, 270, 167   } },    // Escape with the Iris
+            { 14, new Int32[] { 14106, 256, 20740, 87, 216      } },    // Red Alert!
         };
 
         private void DetermineOffsets()
