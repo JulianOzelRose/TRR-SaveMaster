@@ -48,11 +48,11 @@ namespace TRR_SaveMaster
             this.lblVersion.BackColor = System.Drawing.Color.Transparent;
             this.lblVersion.Font = new System.Drawing.Font("Impact", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVersion.ForeColor = System.Drawing.Color.Yellow;
-            this.lblVersion.Location = new System.Drawing.Point(175, 80);
+            this.lblVersion.Location = new System.Drawing.Point(185, 74);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(110, 26);
+            this.lblVersion.Size = new System.Drawing.Size(116, 26);
             this.lblVersion.TabIndex = 22;
-            this.lblVersion.Text = "Version 1.77";
+            this.lblVersion.Text = "Version 1.80";
             // 
             // lblAuthor
             // 
