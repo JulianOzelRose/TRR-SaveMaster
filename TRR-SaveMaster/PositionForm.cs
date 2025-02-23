@@ -51,6 +51,7 @@ namespace TRR_SaveMaster
             DisplayCoordinates();
             EnableEndOfLevelButtonConditionally();
             EnableSecretButtonsConditionally();
+            SetNUDRanges();
         }
 
         private void PositionForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -97,6 +98,14 @@ namespace TRR_SaveMaster
             return (Int16)(lowerByte + (upperByte << 8));
         }
 
+        private UInt16 ReadUInt16(int offset)
+        {
+            byte lowerByte = ReadByte(offset);
+            byte upperByte = ReadByte(offset + 1);
+
+            return (UInt16)(lowerByte + (upperByte << 8));
+        }
+
         private Int32 ReadInt32(int offset)
         {
             byte byte1 = ReadByte(offset);
@@ -111,6 +120,23 @@ namespace TRR_SaveMaster
         {
             WriteByte(offset, (byte)value);
             WriteByte(offset + 1, (byte)(value >> 8));
+        }
+
+        private void WriteUInt16(int offset, UInt16 value)
+        {
+            if (value > 255)
+            {
+                byte upperByte = (byte)(value / 256);
+                byte lowerByte = (byte)(value % 256);
+
+                WriteByte(offset + 1, upperByte);
+                WriteByte(offset, lowerByte);
+            }
+            else
+            {
+                WriteByte(offset + 1, 0);
+                WriteByte(offset, (byte)value);
+            }
         }
 
         private void WriteInt32(int offset, Int32 value)
@@ -494,30 +520,29 @@ namespace TRR_SaveMaster
 
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR4 = new Dictionary<byte, Int32[]>
         {
-            { 1,  new Int32[] { 16352, 616, -31712, 270, 119    } },    // Angkor Wat
-            { 2,  new Int32[] { 15834, -1664, 26312, 3, 115     } },    // Race for the Iris
-            { 3,  new Int32[] { 25657, 1920, 3828, 0, 57        } },    // The Tomb of Seth
-            { 4,  new Int32[] { -15614, -1885, 4235, 260, 125   } },    // Burial Chambers
-            //{ 5,  new Int32[] { 10823, 256, 19153, 166, 3       } },    // Valley of the Kings
-            //{ 6,  new Int32[] { 18061, -911, 29637, 95, 22      } },    // KV5
-            { 7,  new Int32[] { 25549, 627, 30968, 1, 7         } },    // Temple of Karnak
-            { 8,  new Int32[] { 24018, -256, -28082, 2, 151     } },    // The Great Hypostyle Hall
-            { 9,  new Int32[] { 27169, 3589, 24774, 0, 87       } },    // Sacred Lake
-            { 12, new Int32[] { 20941, -416, 14513, 4, 24       } },    // Guardian of Semerkhet
-            { 14, new Int32[] { 16679, -2944, 26353, 178, 76    } },    // Alexandria
-            { 15, new Int32[] { 10524, -3712, 23811, 176, 154   } },    // Coastal Ruins
-            { 18, new Int32[] { 24454, 0, 11971, 177, 79        } },    // Catacombs
+            { 1,  new Int32[] { 33824, 616, 16352, 270, 119     } },    // Angkor Wat
+            { 2,  new Int32[] { 26312, -1664, 15834, 3, 115     } },    // Race for the Iris
+            { 3,  new Int32[] { 3828, 1920, 25657, 0, 57        } },    // The Tomb of Seth
+            { 4,  new Int32[] { 4235, -1885, 49922, 260, 125    } },    // Burial Chambers
+            //{ 5,  new Int32[] { 19153, 256, 10823, 166, 3       } },    // Valley of the Kings
+            //{ 6,  new Int32[] { 29637, -911, 18061, 95, 22      } },    // KV5
+            { 7,  new Int32[] { 30968, 627, 25549, 1, 7         } },    // Temple of Karnak
+            { 8,  new Int32[] { 37454, -256, 24018, 2, 151      } },    // The Great Hypostyle Hall
+            { 9,  new Int32[] { 24774, 3589, 27169, 0, 87       } },    // Sacred Lake
+            { 12, new Int32[] { 14513, -416, 20941, 4, 24       } },    // Guardian of Semerkhet
+            { 14, new Int32[] { 26353, -2944, 16679, 178, 76    } },    // Alexandria
+            { 15, new Int32[] { 23811, -3712, 10524, 176, 154   } },    // Coastal Ruins
+            { 18, new Int32[] { 11971, 0, 24454, 177, 79        } },    // Catacombs
         };
 
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR5 = new Dictionary<byte, Int32[]>
         {
-            { 2,  new Int32[] { 13556, -128, 22793, 270, 70     } },    // Trajan's Markets
-            { 3,  new Int32[] { -30482, 3968, 27715, 260, 70    } },    // The Colosseum
-            { 8,  new Int32[] { 16052, 0, 24786, 172, 1         } },    // Gallows Tree
-            { 9,  new Int32[] { 17664, 4736, 21664, 90, 169     } },    // Labyrinth
-            //{ 10, new Int32[] { 17098, 4992, 20884, 88, 38      } },    // Old Mill
-            { 11, new Int32[] { 18961, -384, 17121, 176, 154    } },    // The 13th Floor
-            { 14, new Int32[] { 19027, -1111, 25801, 178, 198   } },    // Red Alert!
+            { 2,  new Int32[] { 22793, -128, 13556, 270, 70     } },    // Trajan's Markets
+            { 3,  new Int32[] { 27715, 3968, 35054, 260, 70     } },    // The Colosseum     
+            //{ 8,  new Int32[] { 16052, 0, 24786, 172, 1         } },    // Gallows Tree (TODO: fix signage)
+            //{ 9,  new Int32[] { 17664, 4736, 21664, 90, 169     } },    // Labyrinth (TODO: fix signage)
+            { 11, new Int32[] { 17121, -384, 18961, 176, 154    } },    // The 13th Floor
+            { 14, new Int32[] { 25801, -1111, 19027, 178, 198   } },    // Red Alert!
         };
 
         private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR1 = new Dictionary<byte, Int32[]>
@@ -771,8 +796,8 @@ namespace TRR_SaveMaster
 
         private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR5 = new Dictionary<byte, Int32[]>
         {
-            { 11, new Int32[] { 16585, 896, 17672, 92, 6        } },    // The 13th Floor
-            { 12, new Int32[] { -28961, -7680, 18629, 84, 148   } },    // Escape with the Iris
+            { 11, new Int32[] { 17672, 896, 16585, 92, 6        } },    // The 13th Floor
+            { 12, new Int32[] { 18629, -7680, 36575, 84, 148    } },    // Escape with the Iris
         };
 
         private void DetermineOffsets()
@@ -808,11 +833,37 @@ namespace TRR_SaveMaster
             }
             else if (SELECTED_TAB == TAB_TR4 || SELECTED_TAB == TAB_TR5)
             {
-                orientationOffset = healthOffset - 0x9;
-                zCoordinateOffset = healthOffset - 0x10;
+                xCoordinateOffset = healthOffset - 0x10;
                 yCoordinateOffset = healthOffset - 0xE;
-                xCoordinateOffset = healthOffset - 0xC;
+                zCoordinateOffset = healthOffset - 0xC;
+                orientationOffset = healthOffset - 0x9;
                 roomOffset = healthOffset - 0xA;
+            }
+        }
+
+        private void SetNUDRanges()
+        {
+            if (SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR2 || SELECTED_TAB == TAB_TR3)
+            {
+                nudXCoordinate.Maximum = Int32.MaxValue;
+                nudXCoordinate.Minimum = Int32.MinValue;
+
+                nudYCoordinate.Maximum = Int32.MaxValue;
+                nudYCoordinate.Minimum = Int32.MinValue;
+
+                nudZCoordinate.Maximum = Int32.MaxValue;
+                nudZCoordinate.Minimum = Int32.MinValue;
+            }
+            else if (SELECTED_TAB == TAB_TR4 || SELECTED_TAB == TAB_TR5)
+            {
+                nudXCoordinate.Maximum = UInt16.MaxValue;
+                nudXCoordinate.Minimum = UInt16.MinValue;
+
+                nudYCoordinate.Maximum = Int16.MaxValue;
+                nudYCoordinate.Minimum = Int16.MinValue;
+
+                nudZCoordinate.Maximum = UInt16.MaxValue;
+                nudZCoordinate.Minimum = UInt16.MinValue;
             }
         }
 
@@ -836,6 +887,11 @@ namespace TRR_SaveMaster
             return ReadInt16(savegameOffset + xCoordinateOffset);
         }
 
+        private UInt16 GetXCoordinateU16()
+        {
+            return ReadUInt16(savegameOffset + xCoordinateOffset);
+        }
+
         private Int32 GetYCoordinateI16()
         {
             return ReadInt16(savegameOffset + yCoordinateOffset);
@@ -844,6 +900,11 @@ namespace TRR_SaveMaster
         private Int32 GetZCoordinateI16()
         {
             return ReadInt16(savegameOffset + zCoordinateOffset);
+        }
+
+        private UInt16 GetZCoordinateU16()
+        {
+            return ReadUInt16(savegameOffset + zCoordinateOffset);
         }
 
         private Int16 GetOrientation()
@@ -889,6 +950,16 @@ namespace TRR_SaveMaster
             WriteInt16(savegameOffset + zCoordinateOffset, value);
         }
 
+        private void WriteXCoordinateU16(UInt16 value)
+        {
+            WriteUInt16(savegameOffset + xCoordinateOffset, value);
+        }
+
+        private void WriteZCoordinateU16(UInt16 value)
+        {
+            WriteUInt16(savegameOffset + zCoordinateOffset, value);
+        }
+
         private void WriteOrientation(Int16 value)
         {
             Int16 rawValue = (Int16)(value * Int16.MaxValue / 180.0);
@@ -926,9 +997,9 @@ namespace TRR_SaveMaster
                 }
                 else if (SELECTED_TAB == TAB_TR4 || SELECTED_TAB == TAB_TR5)
                 {
-                    nudXCoordinate.Value = GetXCoordinateI16();
+                    nudXCoordinate.Value = GetXCoordinateU16();
                     nudYCoordinate.Value = GetYCoordinateI16();
-                    nudZCoordinate.Value = GetZCoordinateI16();
+                    nudZCoordinate.Value = GetZCoordinateU16();
                     nudOrientation.Value = GetOrientation();
                     nudRoom.Value = GetRoom();
                 }
@@ -975,9 +1046,9 @@ namespace TRR_SaveMaster
                 }
                 else if (SELECTED_TAB == TAB_TR4 || SELECTED_TAB == TAB_TR5)
                 {
-                    WriteXCoordinateI16((Int16)nudXCoordinate.Value);
+                    WriteXCoordinateU16((UInt16)nudXCoordinate.Value);
                     WriteYCoordinateI16((Int16)nudYCoordinate.Value);
-                    WriteZCoordinateI16((Int16)nudZCoordinate.Value);
+                    WriteZCoordinateU16((UInt16)nudZCoordinate.Value);
                     WriteOrientation((Int16)nudOrientation.Value);
                     WriteRoom((byte)nudRoom.Value);
                 }
