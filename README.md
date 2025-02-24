@@ -1,5 +1,5 @@
 # Tomb Raider Remastered Savegame Editor
-This is a savegame editor for Tomb Raider Remastered. It works on all levels, including bonus levels. Support for the second trillogy (Tomb Raider IV-VI Remastered) is in progress.
+This is a savegame editor for Tomb Raider Remastered. Support for the second trilogy (Tomb Raider IV-VI Remastered) is in progress.
 Tomb Raider IV and V are currently supported. You can edit items, health, weapons, ammunition, statistics, and coordinates.
 Compatible with PC, PS4, and Nintendo Switch savegames. For instructions on how to download and use this savegame editor, scroll down to
 the section below. Additionally, technical details on reverse engineering the Tomb Raider I-III Remastered trilogy are included on later on in this README.
@@ -38,7 +38,7 @@ Regular backups can safeguard your progress in the event of unforeseen issues or
 you can also do this by clicking "File" then "Create backup".
 
 ## Using the Position Editor
-![PositionEditor](https://github.com/user-attachments/assets/ea700f7d-9c22-4b2f-9b64-2fcaaa176f0f)
+![PositionEditor-UI](https://github.com/user-attachments/assets/ddeb3235-57f1-435e-9745-a04c00d364d9)
 
 This savegame editor includes a Position Editor feature. To use it, click "Edit," then select "Position." For Lara's coordinates to be correctly parsed, the health bytes must be located. If the health bytes cannot be found, try saving the game while Lara is standing. Once in the Position Editor menu, you can teleport to pre-determined coordinates, such as the end of the level or secret locations.  
 
