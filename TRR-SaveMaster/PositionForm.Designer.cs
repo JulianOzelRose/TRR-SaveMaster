@@ -59,6 +59,8 @@ namespace TRR_SaveMaster
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.tipPosition = new System.Windows.Forms.ToolTip(this.components);
+            this.btnSecret7 = new System.Windows.Forms.Button();
+            this.btnSecret8 = new System.Windows.Forms.Button();
             this.grpSavegameCoordinates.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoOrientation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOrientation)).BeginInit();
@@ -74,6 +76,8 @@ namespace TRR_SaveMaster
             // 
             // grpSavegameCoordinates
             // 
+            this.grpSavegameCoordinates.Controls.Add(this.btnSecret8);
+            this.grpSavegameCoordinates.Controls.Add(this.btnSecret7);
             this.grpSavegameCoordinates.Controls.Add(this.lblSeparator);
             this.grpSavegameCoordinates.Controls.Add(this.btnSecret6);
             this.grpSavegameCoordinates.Controls.Add(this.btnSecret5);
@@ -114,9 +118,9 @@ namespace TRR_SaveMaster
             // btnSecret6
             // 
             this.btnSecret6.Enabled = false;
-            this.btnSecret6.Location = new System.Drawing.Point(221, 236);
+            this.btnSecret6.Location = new System.Drawing.Point(90, 236);
             this.btnSecret6.Name = "btnSecret6";
-            this.btnSecret6.Size = new System.Drawing.Size(100, 23);
+            this.btnSecret6.Size = new System.Drawing.Size(73, 23);
             this.btnSecret6.TabIndex = 20;
             this.btnSecret6.Text = "Secret 6";
             this.btnSecret6.UseVisualStyleBackColor = true;
@@ -125,9 +129,9 @@ namespace TRR_SaveMaster
             // btnSecret5
             // 
             this.btnSecret5.Enabled = false;
-            this.btnSecret5.Location = new System.Drawing.Point(117, 236);
+            this.btnSecret5.Location = new System.Drawing.Point(11, 236);
             this.btnSecret5.Name = "btnSecret5";
-            this.btnSecret5.Size = new System.Drawing.Size(100, 23);
+            this.btnSecret5.Size = new System.Drawing.Size(73, 23);
             this.btnSecret5.TabIndex = 19;
             this.btnSecret5.Text = "Secret 5";
             this.btnSecret5.UseVisualStyleBackColor = true;
@@ -136,9 +140,9 @@ namespace TRR_SaveMaster
             // btnSecret4
             // 
             this.btnSecret4.Enabled = false;
-            this.btnSecret4.Location = new System.Drawing.Point(11, 236);
+            this.btnSecret4.Location = new System.Drawing.Point(247, 207);
             this.btnSecret4.Name = "btnSecret4";
-            this.btnSecret4.Size = new System.Drawing.Size(100, 23);
+            this.btnSecret4.Size = new System.Drawing.Size(73, 23);
             this.btnSecret4.TabIndex = 18;
             this.btnSecret4.Text = "Secret 4";
             this.btnSecret4.UseVisualStyleBackColor = true;
@@ -147,9 +151,9 @@ namespace TRR_SaveMaster
             // btnSecret3
             // 
             this.btnSecret3.Enabled = false;
-            this.btnSecret3.Location = new System.Drawing.Point(221, 207);
+            this.btnSecret3.Location = new System.Drawing.Point(169, 207);
             this.btnSecret3.Name = "btnSecret3";
-            this.btnSecret3.Size = new System.Drawing.Size(100, 23);
+            this.btnSecret3.Size = new System.Drawing.Size(73, 23);
             this.btnSecret3.TabIndex = 17;
             this.btnSecret3.Text = "Secret 3";
             this.btnSecret3.UseVisualStyleBackColor = true;
@@ -160,7 +164,7 @@ namespace TRR_SaveMaster
             this.btnSecret1.Enabled = false;
             this.btnSecret1.Location = new System.Drawing.Point(11, 207);
             this.btnSecret1.Name = "btnSecret1";
-            this.btnSecret1.Size = new System.Drawing.Size(100, 23);
+            this.btnSecret1.Size = new System.Drawing.Size(73, 23);
             this.btnSecret1.TabIndex = 16;
             this.btnSecret1.Text = "Secret 1";
             this.btnSecret1.UseVisualStyleBackColor = true;
@@ -169,9 +173,9 @@ namespace TRR_SaveMaster
             // btnSecret2
             // 
             this.btnSecret2.Enabled = false;
-            this.btnSecret2.Location = new System.Drawing.Point(117, 207);
+            this.btnSecret2.Location = new System.Drawing.Point(90, 207);
             this.btnSecret2.Name = "btnSecret2";
-            this.btnSecret2.Size = new System.Drawing.Size(100, 23);
+            this.btnSecret2.Size = new System.Drawing.Size(73, 23);
             this.btnSecret2.TabIndex = 15;
             this.btnSecret2.Text = "Secret 2";
             this.btnSecret2.UseVisualStyleBackColor = true;
@@ -424,6 +428,28 @@ namespace TRR_SaveMaster
             this.tipPosition.InitialDelay = 500;
             this.tipPosition.ReshowDelay = 100;
             // 
+            // btnSecret7
+            // 
+            this.btnSecret7.Enabled = false;
+            this.btnSecret7.Location = new System.Drawing.Point(169, 236);
+            this.btnSecret7.Name = "btnSecret7";
+            this.btnSecret7.Size = new System.Drawing.Size(73, 23);
+            this.btnSecret7.TabIndex = 22;
+            this.btnSecret7.Text = "Secret 7";
+            this.btnSecret7.UseVisualStyleBackColor = true;
+            this.btnSecret7.Click += new System.EventHandler(this.btnSecret7_Click);
+            // 
+            // btnSecret8
+            // 
+            this.btnSecret8.Enabled = false;
+            this.btnSecret8.Location = new System.Drawing.Point(247, 236);
+            this.btnSecret8.Name = "btnSecret8";
+            this.btnSecret8.Size = new System.Drawing.Size(73, 23);
+            this.btnSecret8.TabIndex = 23;
+            this.btnSecret8.Text = "Secret 8";
+            this.btnSecret8.UseVisualStyleBackColor = true;
+            this.btnSecret8.Click += new System.EventHandler(this.btnSecret8_Click);
+            // 
             // PositionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -489,5 +515,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.Button btnSecret1;
         private System.Windows.Forms.Button btnSecret2;
         private System.Windows.Forms.Label lblSeparator;
+        private System.Windows.Forms.Button btnSecret8;
+        private System.Windows.Forms.Button btnSecret7;
     }
 }

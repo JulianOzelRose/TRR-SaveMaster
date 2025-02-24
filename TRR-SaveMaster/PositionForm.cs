@@ -226,6 +226,10 @@ namespace TRR_SaveMaster
             {
                 secret1Coordinates = secret1CoordinatesTR3[levelIndex];
             }
+            else if (SELECTED_TAB == TAB_TR4 && secret1CoordinatesTR4.ContainsKey(levelIndex))
+            {
+                secret1Coordinates = secret1CoordinatesTR4[levelIndex];
+            }
             else if (SELECTED_TAB == TAB_TR5 && secret1CoordinatesTR5.ContainsKey(levelIndex))
             {
                 secret1Coordinates = secret1CoordinatesTR5[levelIndex];
@@ -254,6 +258,10 @@ namespace TRR_SaveMaster
             else if (SELECTED_TAB == TAB_TR3 && secret2CoordinatesTR3.ContainsKey(levelIndex))
             {
                 secret2Coordinates = secret2CoordinatesTR3[levelIndex];
+            }
+            else if (SELECTED_TAB == TAB_TR4 && secret2CoordinatesTR4.ContainsKey(levelIndex))
+            {
+                secret2Coordinates = secret2CoordinatesTR4[levelIndex];
             }
             else if (SELECTED_TAB == TAB_TR5 && secret2CoordinatesTR5.ContainsKey(levelIndex))
             {
@@ -284,6 +292,10 @@ namespace TRR_SaveMaster
             {
                 secret3Coordinates = secret3CoordinatesTR3[levelIndex];
             }
+            else if (SELECTED_TAB == TAB_TR4 && secret3CoordinatesTR4.ContainsKey(levelIndex))
+            {
+                secret3Coordinates = secret3CoordinatesTR4[levelIndex];
+            }
             else if (SELECTED_TAB == TAB_TR5 && secret3CoordinatesTR5.ContainsKey(levelIndex))
             {
                 secret3Coordinates = secret3CoordinatesTR5[levelIndex];
@@ -309,6 +321,10 @@ namespace TRR_SaveMaster
             {
                 secret4Coordinates = secret4CoordinatesTR3[levelIndex];
             }
+            else if (SELECTED_TAB == TAB_TR4 && secret4CoordinatesTR4.ContainsKey(levelIndex))
+            {
+                secret4Coordinates = secret4CoordinatesTR4[levelIndex];
+            }
 
             nudXCoordinate.Value = secret4Coordinates[0];
             nudYCoordinate.Value = secret4Coordinates[1];
@@ -330,6 +346,10 @@ namespace TRR_SaveMaster
             {
                 secret5Coordinates = secret5CoordinatesTR3[levelIndex];
             }
+            else if (SELECTED_TAB == TAB_TR4 && secret5CoordinatesTR4.ContainsKey(levelIndex))
+            {
+                secret5Coordinates = secret5CoordinatesTR4[levelIndex];
+            }
 
             nudXCoordinate.Value = secret5Coordinates[0];
             nudYCoordinate.Value = secret5Coordinates[1];
@@ -347,12 +367,50 @@ namespace TRR_SaveMaster
             {
                 secret6Coordinates = secret6CoordinatesTR3[levelIndex];
             }
+            else if (SELECTED_TAB == TAB_TR4 && secret6CoordinatesTR4.ContainsKey(levelIndex))
+            {
+                secret6Coordinates = secret6CoordinatesTR4[levelIndex];
+            }
 
             nudXCoordinate.Value = secret6Coordinates[0];
             nudYCoordinate.Value = secret6Coordinates[1];
             nudZCoordinate.Value = secret6Coordinates[2];
             nudOrientation.Value = (Int16)secret6Coordinates[3];
             nudRoom.Value = (byte)secret6Coordinates[4];
+        }
+
+        private void btnSecret7_Click(object sender, EventArgs e)
+        {
+            byte levelIndex = GetLevelIndex();
+            Int32[] secret7Coordinates = new Int32[4];
+
+            if (SELECTED_TAB == TAB_TR4 && secret7CoordinatesTR4.ContainsKey(levelIndex))
+            {
+                secret7Coordinates = secret7CoordinatesTR4[levelIndex];
+            }
+
+            nudXCoordinate.Value = secret7Coordinates[0];
+            nudYCoordinate.Value = secret7Coordinates[1];
+            nudZCoordinate.Value = secret7Coordinates[2];
+            nudOrientation.Value = (Int16)secret7Coordinates[3];
+            nudRoom.Value = (byte)secret7Coordinates[4];
+        }
+
+        private void btnSecret8_Click(object sender, EventArgs e)
+        {
+            byte levelIndex = GetLevelIndex();
+            Int32[] secret8Coordinates = new Int32[4];
+
+            if (SELECTED_TAB == TAB_TR4 && secret8CoordinatesTR4.ContainsKey(levelIndex))
+            {
+                secret8Coordinates = secret8CoordinatesTR4[levelIndex];
+            }
+
+            nudXCoordinate.Value = secret8Coordinates[0];
+            nudYCoordinate.Value = secret8Coordinates[1];
+            nudZCoordinate.Value = secret8Coordinates[2];
+            nudOrientation.Value = (Int16)secret8Coordinates[3];
+            nudRoom.Value = (byte)secret8Coordinates[4];
         }
 
         private void EnableEndOfLevelButtonConditionally()
@@ -393,6 +451,8 @@ namespace TRR_SaveMaster
                 btnSecret4.Enabled = secret4CoordinatesTR1.ContainsKey(levelIndex);
                 btnSecret5.Enabled = secret5CoordinatesTR1.ContainsKey(levelIndex);
                 btnSecret6.Enabled = false;
+                btnSecret7.Enabled = false;
+                btnSecret8.Enabled = false;
             }
             else if (SELECTED_TAB == TAB_TR2)
             {
@@ -402,6 +462,8 @@ namespace TRR_SaveMaster
                 btnSecret4.Enabled = false;
                 btnSecret5.Enabled = false;
                 btnSecret6.Enabled = false;
+                btnSecret7.Enabled = false;
+                btnSecret8.Enabled = false;
             }
             else if (SELECTED_TAB == TAB_TR3)
             {
@@ -411,15 +473,19 @@ namespace TRR_SaveMaster
                 btnSecret4.Enabled = secret4CoordinatesTR3.ContainsKey(levelIndex);
                 btnSecret5.Enabled = secret5CoordinatesTR3.ContainsKey(levelIndex);
                 btnSecret6.Enabled = secret6CoordinatesTR3.ContainsKey(levelIndex);
+                btnSecret7.Enabled = false;
+                btnSecret8.Enabled = false;
             }
             else if (SELECTED_TAB == TAB_TR4)
             {
-                btnSecret1.Enabled = false;
-                btnSecret2.Enabled = false;
-                btnSecret3.Enabled = false;
-                btnSecret4.Enabled = false;
-                btnSecret5.Enabled = false;
-                btnSecret6.Enabled = false;
+                btnSecret1.Enabled = secret1CoordinatesTR4.ContainsKey(levelIndex);
+                btnSecret2.Enabled = secret2CoordinatesTR4.ContainsKey(levelIndex);
+                btnSecret3.Enabled = secret3CoordinatesTR4.ContainsKey(levelIndex);
+                btnSecret4.Enabled = secret4CoordinatesTR4.ContainsKey(levelIndex);
+                btnSecret5.Enabled = secret5CoordinatesTR4.ContainsKey(levelIndex);
+                btnSecret6.Enabled = secret6CoordinatesTR4.ContainsKey(levelIndex);
+                btnSecret7.Enabled = secret7CoordinatesTR4.ContainsKey(levelIndex);
+                btnSecret8.Enabled = secret8CoordinatesTR4.ContainsKey(levelIndex);
             }
             else if (SELECTED_TAB == TAB_TR5)
             {
@@ -429,6 +495,8 @@ namespace TRR_SaveMaster
                 btnSecret4.Enabled = false;
                 btnSecret5.Enabled = false;
                 btnSecret6.Enabled = false;
+                btnSecret7.Enabled = false;
+                btnSecret8.Enabled = false;
             }
         }
 
@@ -800,6 +868,61 @@ namespace TRR_SaveMaster
         {
             { 1,  new Int32[] { 82252, 26624, 63587, 0, 99      } },    // Jungle
             { 11, new Int32[] { 56161, -2614, 22934, 16, 102    } },    // Lud's Gate
+        };
+
+        private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR4 = new Dictionary<byte, Int32[]>
+        {
+            {  1, new Int32[] { 4325, 640, 41774, 173, 20       } },    // Angkor Wat
+            {  3, new Int32[] { 33123, -2790, 18381, 4, 34      } },    // The Tomb of Seth
+            {  5, new Int32[] { 46734, -640, 16946, 173, 2      } },    // Valley of the Kings
+            {  6, new Int32[] { 5924, -640, 11314, 179, 63      } },    // KV5
+        };
+
+        private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR4 = new Dictionary<byte, Int32[]>
+        {
+            {  1, new Int32[] { 8473, 2944, 32486, 87, 144      } },    // Angkor Wat
+            {  3, new Int32[] { 20639, 3072, 20212, 270, 58     } },    // The Tomb of Seth
+            //{  4, new Int32[] { 737, -1280, 21965, 33, 21       } },    // Burial Chambers
+            {  6, new Int32[] { 21553, -4224, 14575, 90, 33     } },    // KV5
+        };
+
+        private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR4 = new Dictionary<byte, Int32[]>
+        {
+            {  1, new Int32[] { 19235, 1664, 26829, 3, 73       } },    // Angkor Wat
+            {  3, new Int32[] { 15267, -1024, 17503, 175, 1     } },    // The Tomb of Seth
+            {  4, new Int32[] { 16053, 128, 37837, 180, 89      } },    // Burial Chambers
+            {  5, new Int32[] { 14898, 2432, 17100, 90, 38      } },    // Valley of the Kings
+            {  6, new Int32[] { 28360, -256, 2982, 180, 87      } },    // KV5
+        };
+
+        private readonly Dictionary<byte, Int32[]> secret4CoordinatesTR4 = new Dictionary<byte, Int32[]>
+        {
+            {  1, new Int32[] { 28985, 2249, 24731, 29, 68      } },    // Angkor Wat
+            {  3, new Int32[] { 15267, -1024, 17503, 175, 1     } },    // The Tomb of Seth
+            {  4, new Int32[] { 15821, 512, 40181, 90, 111      } },    // Burial Chambers
+            //{  6, new Int32[] { 17439, 21064, 45006, 14, 255    } },    // KV5 (need to re-examine this one)
+        };
+
+        private readonly Dictionary<byte, Int32[]> secret5CoordinatesTR4 = new Dictionary<byte, Int32[]>
+        {
+            {  1, new Int32[] { 28917, -1920, 29431, 134, 91    } },    // Angkor Wat
+            {  3, new Int32[] { 3992, -1314, 26487, 270, 13     } },    // The Tomb of Seth
+            {  4, new Int32[] { 7117, -768, 43639, 115, 54      } },    // Burial Chambers
+        };
+
+        private readonly Dictionary<byte, Int32[]> secret6CoordinatesTR4 = new Dictionary<byte, Int32[]>
+        {
+            {  1, new Int32[] { 44294, 384, 30474, 101, 158     } },    // Angkor Wat
+        };
+
+        private readonly Dictionary<byte, Int32[]> secret7CoordinatesTR4 = new Dictionary<byte, Int32[]>
+        {
+            {  1, new Int32[] { 48359, 384, 31992, 89, 170      } },    // Angkor Wat
+        };
+
+        private readonly Dictionary<byte, Int32[]> secret8CoordinatesTR4 = new Dictionary<byte, Int32[]>
+        {
+            {  1, new Int32[] { 38029, -256, 19192, 97, 42      } },    // Angkor Wat
         };
 
         private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR5 = new Dictionary<byte, Int32[]>
