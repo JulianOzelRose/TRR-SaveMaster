@@ -637,11 +637,11 @@ namespace TRR_SaveMaster
             else if (levelIndex == 5)   // Valley of the Kings
             {
                 MIN_HEALTH_OFFSET = 0x5F0;
-                MAX_HEALTH_OFFSET = 0x657;
+                MAX_HEALTH_OFFSET = 0x1627;
             }
             else if (levelIndex == 6)   // KV5
             {
-                MIN_HEALTH_OFFSET = 0xEC4;
+                MIN_HEALTH_OFFSET = 0xE3C;
                 MAX_HEALTH_OFFSET = 0xF34;
             }
             else if (levelIndex == 7)   // Temple of Karnak
