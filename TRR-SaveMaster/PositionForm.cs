@@ -605,7 +605,9 @@ namespace TRR_SaveMaster
             { 7,  new Int32[] { 30968, 627, 25549, 1, 7         } },    // Temple of Karnak
             { 8,  new Int32[] { 37454, -256, 24018, 2, 151      } },    // The Great Hypostyle Hall
             { 9,  new Int32[] { 24774, 3589, 27169, 0, 87       } },    // Sacred Lake
+            { 11, new Int32[] { 23345, 8192, 18150, 40, 44      } },    // Tomb of Semerkhet
             { 12, new Int32[] { 14513, -416, 20941, 4, 24       } },    // Guardian of Semerkhet
+            //{ 13, new Int32[] { 8795, -384, 25880, 0, 43        } },    // Desert Railroad
             { 14, new Int32[] { 26353, -2944, 16679, 178, 76    } },    // Alexandria
             { 15, new Int32[] { 23811, -3712, 10524, 176, 154   } },    // Coastal Ruins
             { 18, new Int32[] { 11971, 0, 24454, 177, 79        } },    // Catacombs
@@ -876,6 +878,11 @@ namespace TRR_SaveMaster
             {  3, new Int32[] { 33123, -2790, 18381, 4, 34      } },    // The Tomb of Seth
             {  5, new Int32[] { 46734, -640, 16946, 173, 2      } },    // Valley of the Kings
             {  6, new Int32[] { 5924, -640, 11314, 179, 63      } },    // KV5
+            {  7, new Int32[] { 40397, 0, 18257, 90, 16         } },    // Temple of Karnak
+            {  9, new Int32[] { 27900, 3140, 6404, 90, 46       } },    // Sacred Lake
+            { 11, new Int32[] { 31282, -1408, 26932, 270, 18    } },    // Tomb of Semerkhet
+            { 12, new Int32[] { 33650, -1024, 16846, 180, 63    } },    // Guardian of Semerkhet
+            { 13, new Int32[] { 44494, -768, 26384, 270, 146    } },    // Desert Railroad
         };
 
         private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR4 = new Dictionary<byte, Int32[]>
@@ -884,6 +891,10 @@ namespace TRR_SaveMaster
             {  3, new Int32[] { 20639, 3072, 20212, 270, 58     } },    // The Tomb of Seth
             //{  4, new Int32[] { 737, -1280, 21965, 33, 21       } },    // Burial Chambers
             {  6, new Int32[] { 21553, -4224, 14575, 90, 33     } },    // KV5
+            {  7, new Int32[] { 29107, 3200, 30158, 180, 91     } },    // Temple of Karnak
+            { 11, new Int32[] { 40398, -2560, 36009, 270, 51    } },    // Tomb of Semerkhet
+            { 12, new Int32[] { 38321, 512, 23245, 87, 57       } },    // Guardian of Semerkhet
+            //{ 13, new Int32[] { 32726, -384, 26685, 157, 94     } },    // Desert Railroad
         };
 
         private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR4 = new Dictionary<byte, Int32[]>
@@ -893,6 +904,10 @@ namespace TRR_SaveMaster
             {  4, new Int32[] { 16053, 128, 37837, 180, 89      } },    // Burial Chambers
             {  5, new Int32[] { 14898, 2432, 17100, 90, 38      } },    // Valley of the Kings
             {  6, new Int32[] { 28360, -256, 2982, 180, 87      } },    // KV5
+            {  7, new Int32[] { 29854, 3256, 32659, 270, 75     } },    // Temple of Karnak
+            { 11, new Int32[] { 33681, 5504, 25506, 170, 26     } },    // Tomb of Semerkhet
+            //{ 12, new Int32[] { 22480, -1920, 13939, 90, 33     } },    // Guardian of Semerkhet (need to fix)
+            //{ 13, new Int32[] { 9277, -384, 26736, 86, 1        } },    // Desert Railroad
         };
 
         private readonly Dictionary<byte, Int32[]> secret4CoordinatesTR4 = new Dictionary<byte, Int32[]>
@@ -901,6 +916,8 @@ namespace TRR_SaveMaster
             {  3, new Int32[] { 15267, -1024, 17503, 175, 1     } },    // The Tomb of Seth
             {  4, new Int32[] { 15821, 512, 40181, 90, 111      } },    // Burial Chambers
             //{  6, new Int32[] { 17439, 21064, 45006, 14, 255    } },    // KV5 (need to re-examine this one)
+            {  7, new Int32[] { 33742, -1024, 35099, 0, 71      } },    // Temple of Karnak
+            { 11, new Int32[] { 31281, 11776, 28126, 90, 111    } },    // Tomb of Semerkhet
         };
 
         private readonly Dictionary<byte, Int32[]> secret5CoordinatesTR4 = new Dictionary<byte, Int32[]>
@@ -908,16 +925,19 @@ namespace TRR_SaveMaster
             {  1, new Int32[] { 28917, -1920, 29431, 134, 91    } },    // Angkor Wat
             {  3, new Int32[] { 3992, -1314, 26487, 270, 13     } },    // The Tomb of Seth
             {  4, new Int32[] { 7117, -768, 43639, 115, 54      } },    // Burial Chambers
+            { 11, new Int32[] { 24332, 11008, 17695, 178, 128   } },    // Tomb of Semerkhet
         };
 
         private readonly Dictionary<byte, Int32[]> secret6CoordinatesTR4 = new Dictionary<byte, Int32[]>
         {
             {  1, new Int32[] { 44294, 384, 30474, 101, 158     } },    // Angkor Wat
+            { 11, new Int32[] { 27832, 14848, 16719, 270, 194   } },    // Tomb of Semerkhet
         };
 
         private readonly Dictionary<byte, Int32[]> secret7CoordinatesTR4 = new Dictionary<byte, Int32[]>
         {
             {  1, new Int32[] { 48359, 384, 31992, 89, 170      } },    // Angkor Wat
+            //{ 11, new Int32[] { 26573, 7552, 19127, 87, 133     } },    // Tomb of Semerkhet (need to fix)
         };
 
         private readonly Dictionary<byte, Int32[]> secret8CoordinatesTR4 = new Dictionary<byte, Int32[]>
