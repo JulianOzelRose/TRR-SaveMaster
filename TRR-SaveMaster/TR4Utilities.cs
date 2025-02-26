@@ -647,7 +647,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 7)   // Temple of Karnak
             {
                 MIN_HEALTH_OFFSET = 0x612;
-                MAX_HEALTH_OFFSET = 0x100A;
+                MAX_HEALTH_OFFSET = 0x109F;
             }
             else if (levelIndex == 8)   // The Great Hypostyle Wall
             {
@@ -722,12 +722,12 @@ namespace TRR_SaveMaster
             else if (levelIndex == 23)  // Trenches
             {
                 MIN_HEALTH_OFFSET = 0xB74;
-                MAX_HEALTH_OFFSET = 0xB74;
+                MAX_HEALTH_OFFSET = 0x2645;
             }
             else if (levelIndex == 24)  // Chambers of Tulun
             {
                 MIN_HEALTH_OFFSET = 0xDAC;
-                MAX_HEALTH_OFFSET = 0xDAC;
+                MAX_HEALTH_OFFSET = 0x107F;
             }
             else if (levelIndex == 25)  // Street Bazaar
             {
@@ -737,27 +737,27 @@ namespace TRR_SaveMaster
             else if (levelIndex == 26)  // Citadel Gate
             {
                 MIN_HEALTH_OFFSET = 0x1565;
-                MAX_HEALTH_OFFSET = 0x1565;
+                MAX_HEALTH_OFFSET = 0x18C8;
             }
             else if (levelIndex == 27)  // Citadel
             {
                 MIN_HEALTH_OFFSET = 0x8EA;
-                MAX_HEALTH_OFFSET = 0x8EA;
+                MAX_HEALTH_OFFSET = 0x1070;
             }
             else if (levelIndex == 28)  // The Sphinx Complex
             {
                 MIN_HEALTH_OFFSET = 0x64B;
-                MAX_HEALTH_OFFSET = 0x64B;
+                MAX_HEALTH_OFFSET = 0x6E3;
             }
             else if (levelIndex == 30)  // Underneath the Sphinx
             {
                 MIN_HEALTH_OFFSET = 0x9C4;
-                MAX_HEALTH_OFFSET = 0x9C4;
+                MAX_HEALTH_OFFSET = 0x1199;
             }
             else if (levelIndex == 31)  // Menkaure's Pyramid
             {
                 MIN_HEALTH_OFFSET = 0x10BA;
-                MAX_HEALTH_OFFSET = 0x10BA;
+                MAX_HEALTH_OFFSET = 0x226D;
             }
             else if (levelIndex == 32)  // Inside Menkaure's Pyramid
             {
@@ -792,12 +792,12 @@ namespace TRR_SaveMaster
             else if (levelIndex == 38)  // Temple of Horus (Part 2)
             {
                 MIN_HEALTH_OFFSET = 0x4323;
-                MAX_HEALTH_OFFSET = 0x4325;
+                MAX_HEALTH_OFFSET = 0x89AE;
             }
             else if (levelIndex == 40)  // The Times Exclusive
             {
                 MIN_HEALTH_OFFSET = 0x9F2;
-                MAX_HEALTH_OFFSET = 0xAB1;
+                MAX_HEALTH_OFFSET = 0xFCD;
             }
         }
 
@@ -980,7 +980,6 @@ namespace TRR_SaveMaster
 
                 if (savegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                 {
-                    //Console.WriteLine($"OFFSET=0x{currentSavegameOffset:X}, saveNumber={saveNumber}, levelIndex={levelIndex}, savegamePresent={savegamePresent}");
                     string levelName = levelNames[levelIndex];
                     int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR4) / SAVEGAME_ITERATOR;
                     GameMode gameMode = GetGameMode();
