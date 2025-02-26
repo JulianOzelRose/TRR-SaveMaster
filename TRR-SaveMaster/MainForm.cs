@@ -1855,8 +1855,8 @@ namespace TRR_SaveMaster
 
                 if (healthOffset == -1)
                 {
-                    string errorMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
-                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    string warningMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
+                    MessageBox.Show(warningMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -1879,8 +1879,8 @@ namespace TRR_SaveMaster
 
                 if (healthOffset == -1)
                 {
-                    string errorMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
-                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    string warningMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
+                    MessageBox.Show(warningMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -1903,8 +1903,8 @@ namespace TRR_SaveMaster
 
                 if (healthOffset == -1)
                 {
-                    string errorMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
-                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    string warningMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
+                    MessageBox.Show(warningMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -1927,8 +1927,8 @@ namespace TRR_SaveMaster
 
                 if (healthOffset == -1)
                 {
-                    string errorMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
-                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    string warningMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
+                    MessageBox.Show(warningMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -1951,8 +1951,8 @@ namespace TRR_SaveMaster
 
                 if (healthOffset == -1)
                 {
-                    string errorMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
-                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    string warningMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
+                    MessageBox.Show(warningMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
