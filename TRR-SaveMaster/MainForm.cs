@@ -396,6 +396,24 @@ namespace TRR_SaveMaster
             {
                 DisplayGameInfoTR3(cmbSavegamesTR3.SelectedItem as Savegame);
             }
+
+            ValidatePlatformSelection();
+        }
+
+        private void ValidatePlatformSelection()
+        {
+            if ((tabGame.SelectedIndex == TAB_TR4 || tabGame.SelectedIndex == TAB_TR5) && platform != Platform.PC)
+            {
+                string gameString = tabGame.SelectedIndex == TAB_TR4 ? "Tomb Raider IV" : "Tomb Raider V";
+                string warningMessage = $"{platform.ToFriendlyString()} is not currently supported for {gameString}.";
+                MessageBox.Show(warningMessage, "Platform Not Supported", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                tsmiPC.Checked = true;
+                tsmiPlayStation4.Checked = false;
+                tsmiNintendoSwitch.Checked = false;
+                this.platform = Platform.PC;
+                this.Text = $"Tomb Raider Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(Platform.PC)})";
+            }
         }
 
         private void GetSavegamePaths()
@@ -1582,6 +1600,8 @@ namespace TRR_SaveMaster
 
         private void tabGame_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ValidatePlatformSelection();
+
             if (tabGame.SelectedIndex == TAB_TR1)
             {
                 btnRefreshTR1.Enabled = !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX);
