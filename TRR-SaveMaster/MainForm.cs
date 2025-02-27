@@ -251,6 +251,21 @@ namespace TRR_SaveMaster
             btnCancelTR4.Enabled = false;
         }
 
+        private void ClearControlsTR5()
+        {
+            ClearControlsInGroupBox(grpItemsTR5);
+            ClearControlsInGroupBox(grpWeaponsTR5);
+            ClearControlsInGroupBox(grpHealthTR5);
+
+            nudSaveNumberTR5.Value = nudSaveNumberTR5.Minimum;
+            lblHealthErrorTR5.Visible = false;
+            lblHealthTR5.Text = "0.1%";
+            lblHealthTR5.Visible = true;
+
+            btnSaveTR5.Enabled = false;
+            btnCancelTR5.Enabled = false;
+        }
+
         private bool IsValidSavegameFile(string path)
         {
             FileInfo fileInfo = new FileInfo(path);
@@ -342,6 +357,7 @@ namespace TRR_SaveMaster
                     savegamePathTRX2 = fileBrowserDialog.FileName;
 
                     ClearControlsTR4();
+                    ClearControlsTR5();
 
                     cmbSavegamesTR4.Items.Clear();
                     cmbSavegamesTR5.Items.Clear();
