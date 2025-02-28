@@ -266,10 +266,28 @@ namespace TRR_SaveMaster
             btnCancelTR5.Enabled = false;
         }
 
-        private bool IsValidSavegameFile(string path)
+        private bool IsValidSavegameFileTRX(string path)
         {
             FileInfo fileInfo = new FileInfo(path);
-            return fileInfo.Length >= 0x152004;
+
+            if (fileInfo.Extension.ToLower() != ".dat")
+            {
+                return false;
+            }
+
+            return fileInfo.Length >= SAVEGAME_FILE_SIZE_TRX;
+        }
+
+        private bool IsValidSavegameFileTRX2(string path)
+        {
+            FileInfo fileInfo = new FileInfo(path);
+
+            if (fileInfo.Extension.ToLower() != ".dat")
+            {
+                return false;
+            }
+
+            return fileInfo.Length >= SAVEGAME_FILE_SIZE_TRX2;
         }
 
         private void PromptBrowseSavegamePathTRX()
@@ -304,7 +322,7 @@ namespace TRR_SaveMaster
 
                 if (fileBrowserDialog.ShowDialog() == DialogResult.OK)
                 {
-                    if (!IsValidSavegameFile(fileBrowserDialog.FileName))
+                    if (!IsValidSavegameFileTRX(fileBrowserDialog.FileName))
                     {
                         MessageBox.Show("Invalid savegame file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
@@ -348,7 +366,7 @@ namespace TRR_SaveMaster
 
                 if (fileBrowserDialog.ShowDialog() == DialogResult.OK)
                 {
-                    if (!IsValidSavegameFile(fileBrowserDialog.FileName))
+                    if (!IsValidSavegameFileTRX2(fileBrowserDialog.FileName))
                     {
                         MessageBox.Show("Invalid savegame file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
