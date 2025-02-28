@@ -787,12 +787,12 @@ namespace TRR_SaveMaster
             else if (levelIndex == 37)  // Temple of Horus
             {
                 MIN_HEALTH_OFFSET = 0x384C;
-                MAX_HEALTH_OFFSET = 0x384E;
+                MAX_HEALTH_OFFSET = 0x79CF;
             }
             else if (levelIndex == 38)  // Temple of Horus (Part 2)
             {
                 MIN_HEALTH_OFFSET = 0x4323;
-                MAX_HEALTH_OFFSET = 0x89AE;
+                MAX_HEALTH_OFFSET = 0x8B04;
             }
             else if (levelIndex == 40)  // The Times Exclusive
             {
