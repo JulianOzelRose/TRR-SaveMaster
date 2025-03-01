@@ -771,7 +771,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 34)  // The Great Pyramid
             {
                 MIN_HEALTH_OFFSET = 0x2289;
-                MAX_HEALTH_OFFSET = 0x2289;
+                MAX_HEALTH_OFFSET = 0x4FAC;
             }
             else if (levelIndex == 35)  // Khufu's Queens Pyramids
             {
