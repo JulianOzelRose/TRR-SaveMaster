@@ -615,6 +615,8 @@ namespace TRR_SaveMaster
             { 18, new Int32[] { 11971, 0, 24454, 177, 79        } },    // Catacombs
             { 20, new Int32[] { 33295, -640, 25167, 87, 15      } },    // The Lost Library
             { 21, new Int32[] { 35011, -1280, 31945, 87, 10     } },    // Hall of Demetrius
+            { 24, new Int32[] { 17812, -1152, 26793, 270, 138   } },    // Chambers of Tulun
+            { 26, new Int32[] { 26843, -1920, 36441, 180, 98    } },    // Citadel Gate
         };
 
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR5 = new Dictionary<byte, Int32[]>
@@ -892,6 +894,11 @@ namespace TRR_SaveMaster
             { 18, new Int32[] { 16665, -2560, 21760, 0, 64      } },    // Catacombs
             { 19, new Int32[] { 42175, 1280, 30770, 162, 80     } },    // Temple of Poseidon
             { 20, new Int32[] { 22738, 4992, 27614, 177, 46     } },    // The Lost Library
+            //{ 22, new Int32[] { 23286, 1920, 17042, 179, 137    } },    // City of the Dead
+            { 24, new Int32[] { 29489, -1024, 35113, 82, 57     } },    // Chambers of Tulun
+            { 25, new Int32[] { 33625, -2432, 26460, 174, 3     } },    // Street Bazaar
+            { 26, new Int32[] { 26051, -2176, 26128, 0, 57      } },    // Citadel Gate
+            { 27, new Int32[] { 23321, 512, 26011, 180, 19      } },    // Citadel
         };
 
         private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR4 = new Dictionary<byte, Int32[]>
@@ -906,6 +913,8 @@ namespace TRR_SaveMaster
             //{ 13, new Int32[] { 32726, -384, 26685, 157, 94     } },    // Desert Railroad
             { 18, new Int32[] { 23349, -6656, 32446, 81, 86     } },    // Catacombs
             { 20, new Int32[] { 8403, 3200, 18783, 176, 180     } },    // The Lost Library
+            { 24, new Int32[] { 27707, -1024, 25709, 110, 88    } },    // Chambers of Tulun
+            { 27, new Int32[] { 27598, 2944, 44841, 270, 72     } },    // Citadel
         };
 
         private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR4 = new Dictionary<byte, Int32[]>
