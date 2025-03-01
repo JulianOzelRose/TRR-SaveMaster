@@ -766,7 +766,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 33)  // The Mastabas
             {
                 MIN_HEALTH_OFFSET = 0x1F11;
-                MAX_HEALTH_OFFSET = 0x1F11;
+                MAX_HEALTH_OFFSET = 0x44AE;
             }
             else if (levelIndex == 34)  // The Great Pyramid
             {
