@@ -761,7 +761,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 32)  // Inside Menkaure's Pyramid
             {
                 MIN_HEALTH_OFFSET = 0x157C;
-                MAX_HEALTH_OFFSET = 0x157C;
+                MAX_HEALTH_OFFSET = 0x2AE9;
             }
             else if (levelIndex == 33)  // The Mastabas
             {
