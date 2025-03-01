@@ -781,7 +781,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 36)  // Inside the Great Pyramid
             {
                 MIN_HEALTH_OFFSET = 0x2E59;
-                MAX_HEALTH_OFFSET = 0x2E59;
+                MAX_HEALTH_OFFSET = 0x5D36;
             }
             else if (levelIndex == 37)  // Temple of Horus
             {
