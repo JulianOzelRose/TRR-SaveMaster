@@ -25,7 +25,7 @@ namespace TRR_SaveMaster
         private const int SAVEGAME_SIZE_TRX = 0x3800;
         private const int SAVEGAME_SIZE_TRX2 = 0xA470;
         private const int SAVEGAME_FILE_SIZE_TRX = 0x152004;
-        private const int SAVEGAME_FILE_SIZE_TRX2 = 0x3DCA04;
+        //private const int SAVEGAME_FILE_SIZE_TRX2 = 0x3DCA04;
 
         // Utils
         readonly TR1Utilities TR1 = new TR1Utilities();
@@ -266,7 +266,7 @@ namespace TRR_SaveMaster
             btnCancelTR5.Enabled = false;
         }
 
-        private bool IsValidSavegameFileTRX(string path)
+        private bool IsValidSavegameFile(string path)
         {
             FileInfo fileInfo = new FileInfo(path);
 
@@ -276,18 +276,6 @@ namespace TRR_SaveMaster
             }
 
             return fileInfo.Length >= SAVEGAME_FILE_SIZE_TRX;
-        }
-
-        private bool IsValidSavegameFileTRX2(string path)
-        {
-            FileInfo fileInfo = new FileInfo(path);
-
-            if (fileInfo.Extension.ToLower() != ".dat")
-            {
-                return false;
-            }
-
-            return fileInfo.Length >= SAVEGAME_FILE_SIZE_TRX2;
         }
 
         private void PromptBrowseSavegamePathTRX()
@@ -322,7 +310,7 @@ namespace TRR_SaveMaster
 
                 if (fileBrowserDialog.ShowDialog() == DialogResult.OK)
                 {
-                    if (!IsValidSavegameFileTRX(fileBrowserDialog.FileName))
+                    if (!IsValidSavegameFile(fileBrowserDialog.FileName))
                     {
                         MessageBox.Show("Invalid savegame file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
@@ -366,7 +354,7 @@ namespace TRR_SaveMaster
 
                 if (fileBrowserDialog.ShowDialog() == DialogResult.OK)
                 {
-                    if (!IsValidSavegameFileTRX2(fileBrowserDialog.FileName))
+                    if (!IsValidSavegameFile(fileBrowserDialog.FileName))
                     {
                         MessageBox.Show("Invalid savegame file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
