@@ -756,7 +756,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 31)  // Menkaure's Pyramid
             {
                 MIN_HEALTH_OFFSET = 0x10BA;
-                MAX_HEALTH_OFFSET = 0x226D;
+                MAX_HEALTH_OFFSET = 0x2307;
             }
             else if (levelIndex == 32)  // Inside Menkaure's Pyramid
             {
