@@ -711,7 +711,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 21)  // Hall of Demetrius
             {
                 MIN_HEALTH_OFFSET = 0x2BE3;
-                MAX_HEALTH_OFFSET = 0x2BE3;
+                MAX_HEALTH_OFFSET = 0x3E94;
             }
             else if (levelIndex == 22)  // City of the Dead
             {
