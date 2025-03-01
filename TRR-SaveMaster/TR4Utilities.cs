@@ -726,7 +726,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 24)  // Chambers of Tulun
             {
                 MIN_HEALTH_OFFSET = 0xDAC;
-                MAX_HEALTH_OFFSET = 0x107F;
+                MAX_HEALTH_OFFSET = 0x11C0;
             }
             else if (levelIndex == 25)  // Street Bazaar
             {
