@@ -731,7 +731,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 25)  // Street Bazaar
             {
                 MIN_HEALTH_OFFSET = 0x11B6;
-                MAX_HEALTH_OFFSET = 0x11B6;
+                MAX_HEALTH_OFFSET = 0x2736;
             }
             else if (levelIndex == 26)  // Citadel Gate
             {
