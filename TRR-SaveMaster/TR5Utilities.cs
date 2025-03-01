@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace TRR_SaveMaster
@@ -12,10 +11,10 @@ namespace TRR_SaveMaster
         private const int SLOT_STATUS_OFFSET = 0x004;
         private const int SAVE_NUMBER_OFFSET = 0x008;
         private const int GAME_MODE_OFFSET = 0x01C;
-        private const int SAVEGAME_ITERATOR = 0xA470;
+        private const int LEVEL_INDEX_OFFSET = 0x26F;
         private const int BASE_SAVEGAME_OFFSET_TR5 = 0x14AE00;
         private const int MAX_SAVEGAME_OFFSET_TR5 = 0x33BB10;
-        private const int LEVEL_INDEX_OFFSET = 0x26F;
+        private const int SAVEGAME_SIZE = 0xA470;
         private const int MAX_SAVEGAMES = 32;
 
         // Item offsets
@@ -47,7 +46,7 @@ namespace TRR_SaveMaster
         private const int WEAPON_PRESENT_WITH_SIGHT = 0xD;
 
         // Platform
-        private Platform platform;
+        //private Platform platform;
 
         // Strings
         private string savegamePath;
@@ -174,7 +173,7 @@ namespace TRR_SaveMaster
 
             for (int i = cmbSavegames.Items.Count; i < MAX_SAVEGAMES; i++)
             {
-                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR5 + (i * SAVEGAME_ITERATOR);
+                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR5 + (i * SAVEGAME_SIZE);
 
                 if (currentSavegameOffset < MAX_SAVEGAME_OFFSET_TR5)
                 {
@@ -184,7 +183,7 @@ namespace TRR_SaveMaster
 
                     if (savegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                     {
-                        int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR5) / SAVEGAME_ITERATOR;
+                        int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR5) / SAVEGAME_SIZE;
 
                         bool savegameExists = false;
 
@@ -996,7 +995,7 @@ namespace TRR_SaveMaster
 
             for (int i = 0; i < MAX_SAVEGAMES; i++)
             {
-                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR5 + (i * SAVEGAME_ITERATOR);
+                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR5 + (i * SAVEGAME_SIZE);
                 SetSavegameOffset(currentSavegameOffset);
 
                 Int32 saveNumber = GetSaveNumber();
@@ -1006,9 +1005,8 @@ namespace TRR_SaveMaster
 
                 if (savegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                 {
-                    //Console.WriteLine($"OFFSET=0x{currentSavegameOffset:X}, saveNumber={saveNumber}, levelIndex={levelIndex}, savegamePresent={savegamePresent}");
                     string levelName = levelNames[levelIndex];
-                    int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR5) / SAVEGAME_ITERATOR;
+                    int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR5) / SAVEGAME_SIZE;
                     GameMode gameMode = GetGameMode();
 
                     Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode);

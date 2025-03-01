@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace TRR_SaveMaster
@@ -15,7 +14,7 @@ namespace TRR_SaveMaster
         private const int LEVEL_INDEX_OFFSET = 0x26F;
         private const int BASE_SAVEGAME_OFFSET_TR4 = 0x2000;
         private const int MAX_SAVEGAME_OFFSET_TR4 = 0x14AE00;
-        private const int SAVEGAME_ITERATOR = 0xA470;
+        private const int SAVEGAME_SIZE = 0xA470;
         private const int MAX_SAVEGAMES = 32;
 
         // Item offsets
@@ -49,7 +48,7 @@ namespace TRR_SaveMaster
         private const int WEAPON_PRESENT_WITH_SIGHT = 0xD;
 
         // Platform
-        private Platform platform;
+        //private Platform platform;
 
         // Strings
         private string savegamePath;
@@ -517,7 +516,7 @@ namespace TRR_SaveMaster
 
             for (int i = cmbSavegames.Items.Count; i < MAX_SAVEGAMES; i++)
             {
-                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR4 + (i * SAVEGAME_ITERATOR);
+                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR4 + (i * SAVEGAME_SIZE);
 
                 if (currentSavegameOffset < MAX_SAVEGAME_OFFSET_TR4)
                 {
@@ -527,7 +526,7 @@ namespace TRR_SaveMaster
 
                     if (savegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                     {
-                        int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR4) / SAVEGAME_ITERATOR;
+                        int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR4) / SAVEGAME_SIZE;
 
                         bool savegameExists = false;
 
@@ -857,7 +856,7 @@ namespace TRR_SaveMaster
 
         private void ShiftBytesRight(int healthOffset)
         {
-            int boundary = savegameOffset + SAVEGAME_ITERATOR;
+            int boundary = savegameOffset + SAVEGAME_SIZE;
             byte[] saveData = File.ReadAllBytes(savegamePath);
 
             Array.Resize(ref saveData, saveData.Length + 2);
@@ -872,7 +871,7 @@ namespace TRR_SaveMaster
 
         private void ShiftBytesLeft(int healthOffset)
         {
-            int boundary = savegameOffset + SAVEGAME_ITERATOR;
+            int boundary = savegameOffset + SAVEGAME_SIZE;
             byte[] saveData = File.ReadAllBytes(savegamePath);
 
             for (int i = healthOffset + 2; i < boundary - 2; i++)
@@ -971,7 +970,7 @@ namespace TRR_SaveMaster
 
             for (int i = 0; i < MAX_SAVEGAMES; i++)
             {
-                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR4 + (i * SAVEGAME_ITERATOR);
+                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR4 + (i * SAVEGAME_SIZE);
                 SetSavegameOffset(currentSavegameOffset);
 
                 Int32 saveNumber = GetSaveNumber();
@@ -981,7 +980,7 @@ namespace TRR_SaveMaster
                 if (savegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                 {
                     string levelName = levelNames[levelIndex];
-                    int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR4) / SAVEGAME_ITERATOR;
+                    int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR4) / SAVEGAME_SIZE;
                     GameMode gameMode = GetGameMode();
 
                     Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode);
