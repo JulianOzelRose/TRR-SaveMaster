@@ -736,7 +736,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 26)  // Citadel Gate
             {
                 MIN_HEALTH_OFFSET = 0x1565;
-                MAX_HEALTH_OFFSET = 0x18C8;
+                MAX_HEALTH_OFFSET = 0x19CA;
             }
             else if (levelIndex == 27)  // Citadel
             {
