@@ -617,6 +617,15 @@ namespace TRR_SaveMaster
             { 21, new Int32[] { 35011, -1280, 31945, 87, 10     } },    // Hall of Demetrius
             { 24, new Int32[] { 17812, -1152, 26793, 270, 138   } },    // Chambers of Tulun
             { 26, new Int32[] { 26843, -1920, 36441, 180, 98    } },    // Citadel Gate
+            { 28, new Int32[] { 25554, 1008, 26047, 0, 95       } },    // The Sphinx Complex
+            { 30, new Int32[] { 20089, -512, 27821, 270, 132    } },    // Underneath the Sphinx
+            { 31, new Int32[] { 25998, -6669, 35357, 1, 110     } },    // Menkaure's Pyramid
+            { 32, new Int32[] { 43658, 640, 13339, 178, 13      } },    // Inside Menkaure's Pyramid
+            { 33, new Int32[] { 26383, -2296, 21790, 270, 128   } },    // The Mastabas
+            { 34, new Int32[] { 18512, -7044, 40835, 270, 89    } },    // The Great Pyramid
+            { 35, new Int32[] { 17370, -6969, 45209, 89, 168    } },    // Khufu's Queens Pyramids
+            { 36, new Int32[] { 5137, 1024, 21236, 270, 119     } },    // Inside the Great Pyramid
+            { 38, new Int32[] { 27513, 4547, 7903, 84, 13       } },    // Temple of Horus (Part 2)
         };
 
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR5 = new Dictionary<byte, Int32[]>
@@ -899,6 +908,14 @@ namespace TRR_SaveMaster
             { 25, new Int32[] { 33625, -2432, 26460, 174, 3     } },    // Street Bazaar
             { 26, new Int32[] { 26051, -2176, 26128, 0, 57      } },    // Citadel Gate
             { 27, new Int32[] { 23321, 512, 26011, 180, 19      } },    // Citadel
+            //{ 28, new Int32[] { 35285, 384, 34890, 115, 10      } },    // The Sphinx Complex
+            { 30, new Int32[] { 36594, -512, 23073, 177, 61     } },    // Underneath the Sphinx
+            { 31, new Int32[] { 25367, -8192, 34051, 71, 118    } },    // Menkaure's Pyramid
+            { 32, new Int32[] { 43181, -896, 16118, 180, 116    } },    // Inside Menkaure's Pyramid
+            { 33, new Int32[] { 11314, -1664, 5888, 90, 29      } },    // The Mastabas
+            { 34, new Int32[] { 23152, -1664, 26883, 270, 43    } },    // The Great Pyramid
+            { 35, new Int32[] { 12032, -2688, 18784, 180, 129   } },    // Khufu's Queens Pyramids
+            { 36, new Int32[] { 7414, -3328, 14093, 175, 4      } },    // Inside the Great Pyramid
         };
 
         private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR4 = new Dictionary<byte, Int32[]>
