@@ -746,7 +746,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 28)  // The Sphinx Complex
             {
                 MIN_HEALTH_OFFSET = 0x64B;
-                MAX_HEALTH_OFFSET = 0x6E3;
+                MAX_HEALTH_OFFSET = 0x6E4;
             }
             else if (levelIndex == 30)  // Underneath the Sphinx
             {
