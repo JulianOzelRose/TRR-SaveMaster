@@ -610,7 +610,11 @@ namespace TRR_SaveMaster
             //{ 13, new Int32[] { 8795, -384, 25880, 0, 43        } },    // Desert Railroad
             { 14, new Int32[] { 26353, -2944, 16679, 178, 76    } },    // Alexandria
             { 15, new Int32[] { 23811, -3712, 10524, 176, 154   } },    // Coastal Ruins
+            { 16, new Int32[] { 18282, -2688, 27283, 270, 39    } },    // Pharos, Temple of Isis
+            { 17, new Int32[] { 36308, -4352, 28192, 175, 10    } },    // Cleopatra's Palaces
             { 18, new Int32[] { 11971, 0, 24454, 177, 79        } },    // Catacombs
+            { 20, new Int32[] { 33295, -640, 25167, 87, 15      } },    // The Lost Library
+            { 21, new Int32[] { 35011, -1280, 31945, 87, 10     } },    // Hall of Demetrius
         };
 
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR5 = new Dictionary<byte, Int32[]>
@@ -883,6 +887,11 @@ namespace TRR_SaveMaster
             { 11, new Int32[] { 31282, -1408, 26932, 270, 18    } },    // Tomb of Semerkhet
             { 12, new Int32[] { 33650, -1024, 16846, 180, 63    } },    // Guardian of Semerkhet
             { 13, new Int32[] { 44494, -768, 26384, 270, 146    } },    // Desert Railroad
+            { 14, new Int32[] { 22276, -3072, 18641, 176, 20    } },    // Alexandria
+            { 17, new Int32[] { 31465, -2560, 38132, 0, 1       } },    // Cleopatra's Palaces
+            { 18, new Int32[] { 16665, -2560, 21760, 0, 64      } },    // Catacombs
+            { 19, new Int32[] { 42175, 1280, 30770, 162, 80     } },    // Temple of Poseidon
+            { 20, new Int32[] { 22738, 4992, 27614, 177, 46     } },    // The Lost Library
         };
 
         private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR4 = new Dictionary<byte, Int32[]>
@@ -895,6 +904,8 @@ namespace TRR_SaveMaster
             { 11, new Int32[] { 40398, -2560, 36009, 270, 51    } },    // Tomb of Semerkhet
             { 12, new Int32[] { 38321, 512, 23245, 87, 57       } },    // Guardian of Semerkhet
             //{ 13, new Int32[] { 32726, -384, 26685, 157, 94     } },    // Desert Railroad
+            { 18, new Int32[] { 23349, -6656, 32446, 81, 86     } },    // Catacombs
+            { 20, new Int32[] { 8403, 3200, 18783, 176, 180     } },    // The Lost Library
         };
 
         private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR4 = new Dictionary<byte, Int32[]>
@@ -908,6 +919,8 @@ namespace TRR_SaveMaster
             { 11, new Int32[] { 33681, 5504, 25506, 170, 26     } },    // Tomb of Semerkhet
             //{ 12, new Int32[] { 22480, -1920, 13939, 90, 33     } },    // Guardian of Semerkhet (need to fix)
             //{ 13, new Int32[] { 9277, -384, 26736, 86, 1        } },    // Desert Railroad
+            { 18, new Int32[] { 22735, -6144, 32972, 81, 56     } },    // Catacombs
+            { 20, new Int32[] { 26455, 512, 17719, 0, 37        } },    // The Lost Library
         };
 
         private readonly Dictionary<byte, Int32[]> secret4CoordinatesTR4 = new Dictionary<byte, Int32[]>
@@ -918,6 +931,7 @@ namespace TRR_SaveMaster
             //{  6, new Int32[] { 17439, 21064, 45006, 14, 255    } },    // KV5 (need to re-examine this one)
             {  7, new Int32[] { 33742, -1024, 35099, 0, 71      } },    // Temple of Karnak
             { 11, new Int32[] { 31281, 11776, 28126, 90, 111    } },    // Tomb of Semerkhet
+            { 18, new Int32[] { 20132, -2048, 37603, 270, 37    } },    // Catacombs
         };
 
         private readonly Dictionary<byte, Int32[]> secret5CoordinatesTR4 = new Dictionary<byte, Int32[]>
