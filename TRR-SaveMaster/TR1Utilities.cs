@@ -39,7 +39,7 @@ namespace TRR_SaveMaster
         // Health
         private const UInt16 MAX_HEALTH_VALUE = 1000;
         private const UInt16 MIN_HEALTH_VALUE = 1;
-        private List<int> healthOffsets = new List<int>();
+        private int HEALTH_OFFSET = -1;
 
         // Platform
         private Platform platform;
@@ -165,20 +165,13 @@ namespace TRR_SaveMaster
 
         public int GetHealthOffset()
         {
-            for (int i = 0; i < healthOffsets.Count; i++)
+            if (HEALTH_OFFSET != -1)
             {
-                UInt16 value = ReadUInt16(savegameOffset + healthOffsets[i]);
+                UInt16 value = ReadUInt16(savegameOffset + HEALTH_OFFSET);
 
                 if (value >= MIN_HEALTH_VALUE && value <= MAX_HEALTH_VALUE)
                 {
-                    byte byteFlag1 = ReadByte(savegameOffset + healthOffsets[i] - 10);
-                    byte byteFlag2 = ReadByte(savegameOffset + healthOffsets[i] - 9);
-                    byte byteFlag3 = ReadByte(savegameOffset + healthOffsets[i] - 8);
-
-                    if (IsKnownByteFlagPattern(byteFlag1, byteFlag2, byteFlag3))
-                    {
-                        return (savegameOffset + healthOffsets[i]);
-                    }
+                    return (savegameOffset + HEALTH_OFFSET);
                 }
             }
 
@@ -262,21 +255,6 @@ namespace TRR_SaveMaster
             }
         }
 
-        private bool IsKnownByteFlagPattern(byte byteFlag1, byte byteFlag2, byte byteFlag3)
-        {
-            if (byteFlag1 == 0x02 && byteFlag2 == 0x00 && byteFlag3 == 0x02) return true;       // Standing
-            if (byteFlag1 == 0x13 && byteFlag2 == 0x00 && byteFlag3 == 0x13) return true;       // Climbing
-            if (byteFlag1 == 0x21 && byteFlag2 == 0x00 && byteFlag3 == 0x21) return true;       // On water
-            if (byteFlag1 == 0x0D && byteFlag2 == 0x00 && byteFlag3 == 0x0D) return true;       // Underwater
-            if (byteFlag1 == 0x17 && byteFlag2 == 0x00 && byteFlag3 == 0x02) return true;       // Rolling
-            if (byteFlag1 == 0x41 && byteFlag2 == 0x00 && byteFlag3 == 0x02) return true;       // Walking on top of water
-            if (byteFlag1 == 0x41 && byteFlag2 == 0x00 && byteFlag3 == 0x41) return true;       // Walking on top of water 2
-            if (byteFlag1 == 0x03 && byteFlag2 == 0x00 && byteFlag3 == 0x03) return true;       // Sliding forward
-            if (byteFlag1 == 0x20 && byteFlag2 == 0x00 && byteFlag3 == 0x20) return true;       // Sliding backward
-
-            return false;
-        }
-
         private readonly Dictionary<byte, string> levelNames = new Dictionary<byte, string>()
         {
             { 1,  "Caves"                   },
@@ -300,21 +278,14 @@ namespace TRR_SaveMaster
             { 19, "The Hive"                },
         };
 
-        private void SetHealthOffsets(params int[] offsets)
+        private void SetHealthOffset(int offset)
         {
-            healthOffsets.Clear();
-
-            for (int i = 0; i < offsets.Length; i++)
-            {
-                healthOffsets.Add(offsets[i]);
-            }
+            HEALTH_OFFSET = offset;
         }
 
         private void DetermineOffsets()
         {
             byte levelIndex = GetLevelIndex();
-
-            healthOffsets.Clear();
 
             if (levelIndex == 1)        // Caves
             {
@@ -322,7 +293,7 @@ namespace TRR_SaveMaster
                 uziAmmoOffset2 = 0x1081;
                 shotgunAmmoOffset2 = 0x1089;
 
-                SetHealthOffsets(0x825);
+                SetHealthOffset(0x825);
             }
             else if (levelIndex == 2)   // City of Vilacamba
             {
@@ -330,7 +301,7 @@ namespace TRR_SaveMaster
                 uziAmmoOffset2 = 0x19A1;
                 shotgunAmmoOffset2 = 0x19A9;
 
-                SetHealthOffsets(0x181D);
+                SetHealthOffset(0x181D);
             }
             else if (levelIndex == 3)   // Lost Valley
             {
@@ -338,7 +309,7 @@ namespace TRR_SaveMaster
                 uziAmmoOffset2 = 0x105F;
                 shotgunAmmoOffset2 = 0x1067;
 
-                SetHealthOffsets(0x82D);
+                SetHealthOffset(0x82D);
             }
             else if (levelIndex == 4)   // Tomb of Qualopec
             {
@@ -346,7 +317,7 @@ namespace TRR_SaveMaster
                 uziAmmoOffset2 = 0x1383;
                 shotgunAmmoOffset2 = 0x138B;
 
-                SetHealthOffsets(0xC41);
+                SetHealthOffset(0xC41);
             }
             else if (levelIndex == 5)   // St. Francis' Folly
             {
@@ -354,7 +325,7 @@ namespace TRR_SaveMaster
                 uziAmmoOffset2 = 0x1C5D;
                 shotgunAmmoOffset2 = 0x1C65;
 
-                SetHealthOffsets(0x1A39);
+                SetHealthOffset(0x1A39);
             }
             else if (levelIndex == 6)   // Colosseum
             {
@@ -362,7 +333,7 @@ namespace TRR_SaveMaster
                 uziAmmoOffset2 = 0x174F;
                 shotgunAmmoOffset2 = 0x1757;
 
-                SetHealthOffsets(0xF4F);
+                SetHealthOffset(0xF4F);
             }
             else if (levelIndex == 7)   // Palace Midas
             {
@@ -370,7 +341,7 @@ namespace TRR_SaveMaster
                 uziAmmoOffset2 = 0x1C29;
                 shotgunAmmoOffset2 = 0x1C31;
 
-                SetHealthOffsets(0x82F);
+                SetHealthOffset(0x82F);
             }
             else if (levelIndex == 8)   // The Cistern
             {
@@ -378,7 +349,7 @@ namespace TRR_SaveMaster
                 uziAmmoOffset2 = 0x1B95;
                 shotgunAmmoOffset2 = 0x1B9D;
 
-                SetHealthOffsets(0x197B);
+                SetHealthOffset(0x197B);
             }
             else if (levelIndex == 9)   // Tomb of Tihocan
             {
@@ -386,7 +357,7 @@ namespace TRR_SaveMaster
                 uziAmmoOffset2 = 0x1697;
                 shotgunAmmoOffset2 = 0x169F;
 
-                SetHealthOffsets(0xA29);
+                SetHealthOffset(0xA29);
             }
             else if (levelIndex == 10)  // City of Khamoon
             {
@@ -394,7 +365,7 @@ namespace TRR_SaveMaster
                 uziAmmoOffset2 = 0x155F;
                 shotgunAmmoOffset2 = 0x1567;
 
-                SetHealthOffsets(0x827);
+                SetHealthOffset(0x827);
             }
             else if (levelIndex == 11)  // Obelisk of Khamoon
             {
@@ -402,7 +373,7 @@ namespace TRR_SaveMaster
                 uziAmmoOffset2 = 0x1667;
                 shotgunAmmoOffset2 = 0x166F;
 
-                SetHealthOffsets(0xA8F);
+                SetHealthOffset(0xA8F);
             }
             else if (levelIndex == 12)  // Sanctuary of the Scion
             {
@@ -410,7 +381,7 @@ namespace TRR_SaveMaster
                 uziAmmoOffset2 = 0x130F;
                 shotgunAmmoOffset2 = 0x1317;
 
-                SetHealthOffsets(0x114F);
+                SetHealthOffset(0x114F);
             }
             else if (levelIndex == 13)  // Natla's Mines
             {
@@ -418,7 +389,7 @@ namespace TRR_SaveMaster
                 uziAmmoOffset2 = 0x1665;
                 shotgunAmmoOffset2 = 0x166D;
 
-                SetHealthOffsets(0x12D3);
+                SetHealthOffset(0x12D3);
             }
             else if (levelIndex == 14)  // Atlantis
             {
@@ -426,7 +397,7 @@ namespace TRR_SaveMaster
                 uziAmmoOffset2 = 0x2463;
                 shotgunAmmoOffset2 = 0x246B;
 
-                SetHealthOffsets(0xD0F);
+                SetHealthOffset(0xD0F);
             }
             else if (levelIndex == 15)  // The Great Pyramid
             {
@@ -434,7 +405,7 @@ namespace TRR_SaveMaster
                 uziAmmoOffset2 = 0x17A9;
                 shotgunAmmoOffset2 = 0x17B1;
 
-                SetHealthOffsets(0x10FD);
+                SetHealthOffset(0x10FD);
             }
             else if (levelIndex == 16)   // Return to Egypt
             {
@@ -442,7 +413,7 @@ namespace TRR_SaveMaster
                 uziAmmoOffset2 = 0x1F15;
                 shotgunAmmoOffset2 = 0x1F1D;
 
-                SetHealthOffsets(0x8F3);
+                SetHealthOffset(0x8F3);
             }
             else if (levelIndex == 17)   // Temple of the Cat
             {
@@ -450,7 +421,7 @@ namespace TRR_SaveMaster
                 uziAmmoOffset2 = 0x25B1;
                 shotgunAmmoOffset2 = 0x25B9;
 
-                SetHealthOffsets(0xE1D);
+                SetHealthOffset(0xE1D);
             }
             else if (levelIndex == 18)  // Atlantean Stronghold
             {
@@ -458,7 +429,7 @@ namespace TRR_SaveMaster
                 uziAmmoOffset2 = 0x1EE3;
                 shotgunAmmoOffset2 = 0x1EEB;
 
-                SetHealthOffsets(0xE35);
+                SetHealthOffset(0xE35);
             }
             else if (levelIndex == 19)  // The Hive
             {
@@ -466,15 +437,12 @@ namespace TRR_SaveMaster
                 uziAmmoOffset2 = 0x272B;
                 shotgunAmmoOffset2 = 0x2733;
 
-                SetHealthOffsets(0x10DF);
+                SetHealthOffset(0x10DF);
             }
 
             if (platform != Platform.PC)
             {
-                for (int i = 0; i < healthOffsets.Count; i++)
-                {
-                    healthOffsets[i] -= 4;
-                }
+                HEALTH_OFFSET -= 4;
 
                 magnumAmmoOffset2 -= 4;
                 uziAmmoOffset2 -= 4;
@@ -601,7 +569,7 @@ namespace TRR_SaveMaster
 
         public void PopulateEmptySlots(ComboBox cmbSavegames)
         {
-            if (cmbSavegames.Items.Count == 32)
+            if (cmbSavegames.Items.Count == MAX_SAVEGAMES)
             {
                 return;
             }
