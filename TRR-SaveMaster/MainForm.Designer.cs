@@ -52,7 +52,7 @@ namespace TRR_SaveMaster
             this.grpWeaponsTR1 = new System.Windows.Forms.GroupBox();
             this.lblPresentTR1 = new System.Windows.Forms.Label();
             this.lblPistolAmmoTR1 = new System.Windows.Forms.Label();
-            this.lblAmmo1TR1 = new System.Windows.Forms.Label();
+            this.lblAmmoTR1 = new System.Windows.Forms.Label();
             this.nudShotgunAmmoTR1 = new System.Windows.Forms.NumericUpDown();
             this.nudMagnumAmmoTR1 = new System.Windows.Forms.NumericUpDown();
             this.nudUziAmmoTR1 = new System.Windows.Forms.NumericUpDown();
@@ -71,7 +71,7 @@ namespace TRR_SaveMaster
             this.cmbSavegamesTR2 = new System.Windows.Forms.ComboBox();
             this.grpWeaponsTR2 = new System.Windows.Forms.GroupBox();
             this.lblPresentTR2 = new System.Windows.Forms.Label();
-            this.lblAmmo1TR2 = new System.Windows.Forms.Label();
+            this.lblAmmoTR2 = new System.Windows.Forms.Label();
             this.lblPistolAmmoTR2 = new System.Windows.Forms.Label();
             this.nudShotgunAmmoTR2 = new System.Windows.Forms.NumericUpDown();
             this.chkHarpoonGunTR2 = new System.Windows.Forms.CheckBox();
@@ -108,7 +108,7 @@ namespace TRR_SaveMaster
             this.cmbSavegamesTR3 = new System.Windows.Forms.ComboBox();
             this.grpWeaponsTR3 = new System.Windows.Forms.GroupBox();
             this.lblPresentTR3 = new System.Windows.Forms.Label();
-            this.lblAmmo1TR3 = new System.Windows.Forms.Label();
+            this.lblAmmoTR3 = new System.Windows.Forms.Label();
             this.lblPistolAmmoTR3 = new System.Windows.Forms.Label();
             this.nudShotgunAmmoTR3 = new System.Windows.Forms.NumericUpDown();
             this.chkHarpoonGunTR3 = new System.Windows.Forms.CheckBox();
@@ -573,7 +573,7 @@ namespace TRR_SaveMaster
             // 
             this.grpWeaponsTR1.Controls.Add(this.lblPresentTR1);
             this.grpWeaponsTR1.Controls.Add(this.lblPistolAmmoTR1);
-            this.grpWeaponsTR1.Controls.Add(this.lblAmmo1TR1);
+            this.grpWeaponsTR1.Controls.Add(this.lblAmmoTR1);
             this.grpWeaponsTR1.Controls.Add(this.nudShotgunAmmoTR1);
             this.grpWeaponsTR1.Controls.Add(this.nudMagnumAmmoTR1);
             this.grpWeaponsTR1.Controls.Add(this.nudUziAmmoTR1);
@@ -607,15 +607,15 @@ namespace TRR_SaveMaster
             this.lblPistolAmmoTR1.TabIndex = 14;
             this.lblPistolAmmoTR1.Text = "Unlimited";
             // 
-            // lblAmmo1TR1
+            // lblAmmoTR1
             // 
-            this.lblAmmo1TR1.AutoSize = true;
-            this.lblAmmo1TR1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmmo1TR1.Location = new System.Drawing.Point(164, 33);
-            this.lblAmmo1TR1.Name = "lblAmmo1TR1";
-            this.lblAmmo1TR1.Size = new System.Drawing.Size(45, 13);
-            this.lblAmmo1TR1.TabIndex = 42;
-            this.lblAmmo1TR1.Text = "Ammo 1";
+            this.lblAmmoTR1.AutoSize = true;
+            this.lblAmmoTR1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAmmoTR1.Location = new System.Drawing.Point(164, 33);
+            this.lblAmmoTR1.Name = "lblAmmoTR1";
+            this.lblAmmoTR1.Size = new System.Drawing.Size(36, 13);
+            this.lblAmmoTR1.TabIndex = 42;
+            this.lblAmmoTR1.Text = "Ammo";
             // 
             // nudShotgunAmmoTR1
             // 
@@ -812,7 +812,7 @@ namespace TRR_SaveMaster
             // grpWeaponsTR2
             // 
             this.grpWeaponsTR2.Controls.Add(this.lblPresentTR2);
-            this.grpWeaponsTR2.Controls.Add(this.lblAmmo1TR2);
+            this.grpWeaponsTR2.Controls.Add(this.lblAmmoTR2);
             this.grpWeaponsTR2.Controls.Add(this.lblPistolAmmoTR2);
             this.grpWeaponsTR2.Controls.Add(this.nudShotgunAmmoTR2);
             this.grpWeaponsTR2.Controls.Add(this.chkHarpoonGunTR2);
@@ -844,15 +844,15 @@ namespace TRR_SaveMaster
             this.lblPresentTR2.TabIndex = 45;
             this.lblPresentTR2.Text = "Present";
             // 
-            // lblAmmo1TR2
+            // lblAmmoTR2
             // 
-            this.lblAmmo1TR2.AutoSize = true;
-            this.lblAmmo1TR2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmmo1TR2.Location = new System.Drawing.Point(164, 33);
-            this.lblAmmo1TR2.Name = "lblAmmo1TR2";
-            this.lblAmmo1TR2.Size = new System.Drawing.Size(45, 13);
-            this.lblAmmo1TR2.TabIndex = 44;
-            this.lblAmmo1TR2.Text = "Ammo 1";
+            this.lblAmmoTR2.AutoSize = true;
+            this.lblAmmoTR2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAmmoTR2.Location = new System.Drawing.Point(164, 33);
+            this.lblAmmoTR2.Name = "lblAmmoTR2";
+            this.lblAmmoTR2.Size = new System.Drawing.Size(36, 13);
+            this.lblAmmoTR2.TabIndex = 44;
+            this.lblAmmoTR2.Text = "Ammo";
             // 
             // lblPistolAmmoTR2
             // 
@@ -1261,7 +1261,7 @@ namespace TRR_SaveMaster
             // grpWeaponsTR3
             // 
             this.grpWeaponsTR3.Controls.Add(this.lblPresentTR3);
-            this.grpWeaponsTR3.Controls.Add(this.lblAmmo1TR3);
+            this.grpWeaponsTR3.Controls.Add(this.lblAmmoTR3);
             this.grpWeaponsTR3.Controls.Add(this.lblPistolAmmoTR3);
             this.grpWeaponsTR3.Controls.Add(this.nudShotgunAmmoTR3);
             this.grpWeaponsTR3.Controls.Add(this.chkHarpoonGunTR3);
@@ -1295,15 +1295,15 @@ namespace TRR_SaveMaster
             this.lblPresentTR3.TabIndex = 47;
             this.lblPresentTR3.Text = "Present";
             // 
-            // lblAmmo1TR3
+            // lblAmmoTR3
             // 
-            this.lblAmmo1TR3.AutoSize = true;
-            this.lblAmmo1TR3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmmo1TR3.Location = new System.Drawing.Point(164, 33);
-            this.lblAmmo1TR3.Name = "lblAmmo1TR3";
-            this.lblAmmo1TR3.Size = new System.Drawing.Size(45, 13);
-            this.lblAmmo1TR3.TabIndex = 46;
-            this.lblAmmo1TR3.Text = "Ammo 1";
+            this.lblAmmoTR3.AutoSize = true;
+            this.lblAmmoTR3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAmmoTR3.Location = new System.Drawing.Point(164, 33);
+            this.lblAmmoTR3.Name = "lblAmmoTR3";
+            this.lblAmmoTR3.Size = new System.Drawing.Size(36, 13);
+            this.lblAmmoTR3.TabIndex = 46;
+            this.lblAmmoTR3.Text = "Ammo";
             // 
             // lblPistolAmmoTR3
             // 
@@ -3302,11 +3302,11 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.Label lblAmmo2TR4;
         private System.Windows.Forms.Label lblAmmo1TR4;
         private System.Windows.Forms.Label lblPresentTR1;
-        private System.Windows.Forms.Label lblAmmo1TR1;
+        private System.Windows.Forms.Label lblAmmoTR1;
         private System.Windows.Forms.Label lblPresentTR2;
-        private System.Windows.Forms.Label lblAmmo1TR2;
+        private System.Windows.Forms.Label lblAmmoTR2;
         private System.Windows.Forms.Label lblPresentTR3;
-        private System.Windows.Forms.Label lblAmmo1TR3;
+        private System.Windows.Forms.Label lblAmmoTR3;
         private System.Windows.Forms.TabPage tpTR5;
         private System.Windows.Forms.Button btnExitTR5;
         private System.Windows.Forms.Button btnCancelTR5;
