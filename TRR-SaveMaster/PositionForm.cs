@@ -49,6 +49,7 @@ namespace TRR_SaveMaster
         {
             DetermineOffsets();
             DisplayCoordinates();
+            EnableStartOfLevelButtonConditionally();
             EnableEndOfLevelButtonConditionally();
             EnableSecretButtonsConditionally();
             SetNUDRanges();
@@ -174,6 +175,39 @@ namespace TRR_SaveMaster
 
                 File.Copy(savegamePath, backupFilePath, true);
             }
+        }
+
+        private void btnStartOfLevel_Click(object sender, EventArgs e)
+        {
+            byte levelIndex = GetLevelIndex();
+            Int32[] startOfLevelCoordinates = new Int32[4];
+
+            if (SELECTED_TAB == TAB_TR1 && startOfLevelCoordinatesTR1.ContainsKey(levelIndex))
+            {
+                startOfLevelCoordinates = startOfLevelCoordinatesTR1[levelIndex];
+            }
+            else if (SELECTED_TAB == TAB_TR2 && startOfLevelCoordinatesTR2.ContainsKey(levelIndex))
+            {
+                startOfLevelCoordinates = startOfLevelCoordinatesTR2[levelIndex];
+            }
+            else if (SELECTED_TAB == TAB_TR3 && startOfLevelCoordinatesTR3.ContainsKey(levelIndex))
+            {
+                startOfLevelCoordinates = startOfLevelCoordinatesTR3[levelIndex];
+            }
+            else if (SELECTED_TAB == TAB_TR4 && startOfLevelCoordinatesTR4.ContainsKey(levelIndex))
+            {
+                startOfLevelCoordinates = startOfLevelCoordinatesTR4[levelIndex];
+            }
+            else if (SELECTED_TAB == TAB_TR5 && startOfLevelCoordinatesTR5.ContainsKey(levelIndex))
+            {
+                startOfLevelCoordinates = startOfLevelCoordinatesTR5[levelIndex];
+            }
+
+            nudXCoordinate.Value = startOfLevelCoordinates[0];
+            nudYCoordinate.Value = startOfLevelCoordinates[1];
+            nudZCoordinate.Value = startOfLevelCoordinates[2];
+            nudOrientation.Value = (Int16)startOfLevelCoordinates[3];
+            nudRoom.Value = (byte)startOfLevelCoordinates[4];
         }
 
         private void btnEndOfLevel_Click(object sender, EventArgs e)
@@ -439,6 +473,32 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void EnableStartOfLevelButtonConditionally()
+        {
+            byte levelIndex = GetLevelIndex();
+
+            if (SELECTED_TAB == TAB_TR1)
+            {
+                btnStartOfLevel.Enabled = startOfLevelCoordinatesTR1.ContainsKey(levelIndex);
+            }
+            else if (SELECTED_TAB == TAB_TR2)
+            {
+                btnStartOfLevel.Enabled = startOfLevelCoordinatesTR2.ContainsKey(levelIndex);
+            }
+            else if (SELECTED_TAB == TAB_TR3)
+            {
+                btnStartOfLevel.Enabled = startOfLevelCoordinatesTR3.ContainsKey(levelIndex);
+            }
+            else if (SELECTED_TAB == TAB_TR4)
+            {
+                btnStartOfLevel.Enabled = startOfLevelCoordinatesTR4.ContainsKey(levelIndex);
+            }
+            else if (SELECTED_TAB == TAB_TR5)
+            {
+                btnStartOfLevel.Enabled = startOfLevelCoordinatesTR5.ContainsKey(levelIndex);
+            }
+        }
+
         private void EnableSecretButtonsConditionally()
         {
             byte levelIndex = GetLevelIndex();
@@ -513,6 +573,49 @@ namespace TRR_SaveMaster
                 }
             }
         }
+
+        private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR1 = new Dictionary<byte, Int32[]>
+        {
+            { 1,  new Int32[] { 75264, 3072, 3584, 0, 0         } },    // Caves
+            { 2,  new Int32[] { 78336, -1024, 12800, 0, 90      } },    // City of Vilcabamba
+            { 3,  new Int32[] { 27136, -256, 77312, 180, 0      } },    // Lost Valley
+            { 4,  new Int32[] { 46592, 6272, 64000, 90, 19      } },    // Tomb of Qualopec
+            { 5,  new Int32[] { 17920, 0, 40448, 90, 55         } },    // St. Francis' Folly
+            { 6,  new Int32[] { 79360, 0, 34304, 0, 59          } },    // Colosseum
+            { 7,  new Int32[] { 50688, -2304, 42084, 0, 11      } },    // Palace Midas
+            { 8,  new Int32[] { 46592, -8448, 76288, 180, 137   } },    // The Cistern
+            { 9,  new Int32[] { 57856, -3328, 1536, 0, 19       } },    // Tomb of Tihocan
+            { 10, new Int32[] { 27136, 0, 6656, 0, 0            } },    // City of Khamoon
+            { 11, new Int32[] { 45568, 0, 37376, 0, 24          } },    // Obelisk of Khamoon
+            { 12, new Int32[] { 9728, -512, 49664, 90, 60       } },    // Sanctuary of the Scion
+            { 13, new Int32[] { 49664, -4096, 3168, 0, 86       } },    // Natla's Mines
+            { 14, new Int32[] { 57856, 10240, 11776, 0, 12      } },    // Atlantis
+            { 15, new Int32[] { 58880, -15616, 11776, 90, 36    } },    // The Great Pyramid
+            { 16, new Int32[] { 38400, -12460, 9728, 0, 0       } },    // Return to Egypt
+            { 17, new Int32[] { 96768, 0, 57856, 90, 26         } },    // Temple of the Cat
+            { 18, new Int32[] { 51812, -30773, 64000, 90, 15    } },    // Atlantean Stronghold
+            { 19, new Int32[] { 32256, -3584, 44544, 180, 17    } },    // The Hive
+        };
+
+        private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR2 = new Dictionary<byte, Int32[]>
+        {
+
+        };
+
+        private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR3 = new Dictionary<byte, Int32[]>
+        {
+
+        };
+
+        private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR4 = new Dictionary<byte, Int32[]>
+        {
+
+        };
+
+        private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR5 = new Dictionary<byte, Int32[]>
+        {
+
+        };
 
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR1 = new Dictionary<byte, Int32[]>
         {

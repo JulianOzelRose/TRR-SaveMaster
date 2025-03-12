@@ -32,6 +32,8 @@ namespace TRR_SaveMaster
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PositionForm));
             this.grpSavegameCoordinates = new System.Windows.Forms.GroupBox();
+            this.btnSecret8 = new System.Windows.Forms.Button();
+            this.btnSecret7 = new System.Windows.Forms.Button();
             this.lblSeparator = new System.Windows.Forms.Label();
             this.btnSecret6 = new System.Windows.Forms.Button();
             this.btnSecret5 = new System.Windows.Forms.Button();
@@ -59,8 +61,7 @@ namespace TRR_SaveMaster
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.tipPosition = new System.Windows.Forms.ToolTip(this.components);
-            this.btnSecret7 = new System.Windows.Forms.Button();
-            this.btnSecret8 = new System.Windows.Forms.Button();
+            this.btnStartOfLevel = new System.Windows.Forms.Button();
             this.grpSavegameCoordinates.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoOrientation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOrientation)).BeginInit();
@@ -76,6 +77,7 @@ namespace TRR_SaveMaster
             // 
             // grpSavegameCoordinates
             // 
+            this.grpSavegameCoordinates.Controls.Add(this.btnStartOfLevel);
             this.grpSavegameCoordinates.Controls.Add(this.btnSecret8);
             this.grpSavegameCoordinates.Controls.Add(this.btnSecret7);
             this.grpSavegameCoordinates.Controls.Add(this.lblSeparator);
@@ -106,6 +108,28 @@ namespace TRR_SaveMaster
             this.grpSavegameCoordinates.Size = new System.Drawing.Size(333, 271);
             this.grpSavegameCoordinates.TabIndex = 0;
             this.grpSavegameCoordinates.TabStop = false;
+            // 
+            // btnSecret8
+            // 
+            this.btnSecret8.Enabled = false;
+            this.btnSecret8.Location = new System.Drawing.Point(247, 236);
+            this.btnSecret8.Name = "btnSecret8";
+            this.btnSecret8.Size = new System.Drawing.Size(73, 23);
+            this.btnSecret8.TabIndex = 23;
+            this.btnSecret8.Text = "Secret 8";
+            this.btnSecret8.UseVisualStyleBackColor = true;
+            this.btnSecret8.Click += new System.EventHandler(this.btnSecret8_Click);
+            // 
+            // btnSecret7
+            // 
+            this.btnSecret7.Enabled = false;
+            this.btnSecret7.Location = new System.Drawing.Point(169, 236);
+            this.btnSecret7.Name = "btnSecret7";
+            this.btnSecret7.Size = new System.Drawing.Size(73, 23);
+            this.btnSecret7.TabIndex = 22;
+            this.btnSecret7.Text = "Secret 7";
+            this.btnSecret7.UseVisualStyleBackColor = true;
+            this.btnSecret7.Click += new System.EventHandler(this.btnSecret7_Click);
             // 
             // lblSeparator
             // 
@@ -260,7 +284,7 @@ namespace TRR_SaveMaster
             // btnEndOfLevel
             // 
             this.btnEndOfLevel.Enabled = false;
-            this.btnEndOfLevel.Location = new System.Drawing.Point(117, 178);
+            this.btnEndOfLevel.Location = new System.Drawing.Point(169, 178);
             this.btnEndOfLevel.Name = "btnEndOfLevel";
             this.btnEndOfLevel.Size = new System.Drawing.Size(100, 23);
             this.btnEndOfLevel.TabIndex = 5;
@@ -428,27 +452,16 @@ namespace TRR_SaveMaster
             this.tipPosition.InitialDelay = 500;
             this.tipPosition.ReshowDelay = 100;
             // 
-            // btnSecret7
+            // btnStartOfLevel
             // 
-            this.btnSecret7.Enabled = false;
-            this.btnSecret7.Location = new System.Drawing.Point(169, 236);
-            this.btnSecret7.Name = "btnSecret7";
-            this.btnSecret7.Size = new System.Drawing.Size(73, 23);
-            this.btnSecret7.TabIndex = 22;
-            this.btnSecret7.Text = "Secret 7";
-            this.btnSecret7.UseVisualStyleBackColor = true;
-            this.btnSecret7.Click += new System.EventHandler(this.btnSecret7_Click);
-            // 
-            // btnSecret8
-            // 
-            this.btnSecret8.Enabled = false;
-            this.btnSecret8.Location = new System.Drawing.Point(247, 236);
-            this.btnSecret8.Name = "btnSecret8";
-            this.btnSecret8.Size = new System.Drawing.Size(73, 23);
-            this.btnSecret8.TabIndex = 23;
-            this.btnSecret8.Text = "Secret 8";
-            this.btnSecret8.UseVisualStyleBackColor = true;
-            this.btnSecret8.Click += new System.EventHandler(this.btnSecret8_Click);
+            this.btnStartOfLevel.Enabled = false;
+            this.btnStartOfLevel.Location = new System.Drawing.Point(63, 178);
+            this.btnStartOfLevel.Name = "btnStartOfLevel";
+            this.btnStartOfLevel.Size = new System.Drawing.Size(100, 23);
+            this.btnStartOfLevel.TabIndex = 24;
+            this.btnStartOfLevel.Text = "Start of Level";
+            this.btnStartOfLevel.UseVisualStyleBackColor = true;
+            this.btnStartOfLevel.Click += new System.EventHandler(this.btnStartOfLevel_Click);
             // 
             // PositionForm
             // 
@@ -517,5 +530,6 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.Label lblSeparator;
         private System.Windows.Forms.Button btnSecret8;
         private System.Windows.Forms.Button btnSecret7;
+        private System.Windows.Forms.Button btnStartOfLevel;
     }
 }
