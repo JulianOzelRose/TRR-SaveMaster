@@ -32,6 +32,7 @@ namespace TRR_SaveMaster
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PositionForm));
             this.grpSavegameCoordinates = new System.Windows.Forms.GroupBox();
+            this.btnStartOfLevel = new System.Windows.Forms.Button();
             this.btnSecret8 = new System.Windows.Forms.Button();
             this.btnSecret7 = new System.Windows.Forms.Button();
             this.lblSeparator = new System.Windows.Forms.Label();
@@ -61,7 +62,6 @@ namespace TRR_SaveMaster
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.tipPosition = new System.Windows.Forms.ToolTip(this.components);
-            this.btnStartOfLevel = new System.Windows.Forms.Button();
             this.grpSavegameCoordinates.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoOrientation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOrientation)).BeginInit();
@@ -108,6 +108,17 @@ namespace TRR_SaveMaster
             this.grpSavegameCoordinates.Size = new System.Drawing.Size(333, 271);
             this.grpSavegameCoordinates.TabIndex = 0;
             this.grpSavegameCoordinates.TabStop = false;
+            // 
+            // btnStartOfLevel
+            // 
+            this.btnStartOfLevel.Enabled = false;
+            this.btnStartOfLevel.Location = new System.Drawing.Point(63, 178);
+            this.btnStartOfLevel.Name = "btnStartOfLevel";
+            this.btnStartOfLevel.Size = new System.Drawing.Size(100, 23);
+            this.btnStartOfLevel.TabIndex = 24;
+            this.btnStartOfLevel.Text = "Start of Level";
+            this.btnStartOfLevel.UseVisualStyleBackColor = true;
+            this.btnStartOfLevel.Click += new System.EventHandler(this.btnStartOfLevel_Click);
             // 
             // btnSecret8
             // 
@@ -226,14 +237,14 @@ namespace TRR_SaveMaster
             // 
             // nudOrientation
             // 
-            this.nudOrientation.Location = new System.Drawing.Point(201, 103);
+            this.nudOrientation.Location = new System.Drawing.Point(219, 103);
             this.nudOrientation.Maximum = new decimal(new int[] {
             359,
             0,
             0,
             0});
             this.nudOrientation.Name = "nudOrientation";
-            this.nudOrientation.Size = new System.Drawing.Size(88, 20);
+            this.nudOrientation.Size = new System.Drawing.Size(70, 20);
             this.nudOrientation.TabIndex = 12;
             this.nudOrientation.ValueChanged += new System.EventHandler(this.nudOrientation_ValueChanged);
             this.nudOrientation.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudOrientation_KeyPress);
@@ -294,14 +305,14 @@ namespace TRR_SaveMaster
             // 
             // nudRoom
             // 
-            this.nudRoom.Location = new System.Drawing.Point(201, 129);
+            this.nudRoom.Location = new System.Drawing.Point(219, 129);
             this.nudRoom.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.nudRoom.Name = "nudRoom";
-            this.nudRoom.Size = new System.Drawing.Size(88, 20);
+            this.nudRoom.Size = new System.Drawing.Size(70, 20);
             this.nudRoom.TabIndex = 7;
             this.nudRoom.ValueChanged += new System.EventHandler(this.nudRoom_ValueChanged);
             this.nudRoom.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudRoom_KeyPress);
@@ -349,7 +360,7 @@ namespace TRR_SaveMaster
             0,
             0,
             0});
-            this.nudZCoordinate.Location = new System.Drawing.Point(201, 77);
+            this.nudZCoordinate.Location = new System.Drawing.Point(219, 77);
             this.nudZCoordinate.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -361,7 +372,7 @@ namespace TRR_SaveMaster
             0,
             -2147483648});
             this.nudZCoordinate.Name = "nudZCoordinate";
-            this.nudZCoordinate.Size = new System.Drawing.Size(88, 20);
+            this.nudZCoordinate.Size = new System.Drawing.Size(70, 20);
             this.nudZCoordinate.TabIndex = 2;
             this.nudZCoordinate.ValueChanged += new System.EventHandler(this.nudZCoordinate_ValueChanged);
             this.nudZCoordinate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudZCoordinate_KeyPress);
@@ -373,7 +384,7 @@ namespace TRR_SaveMaster
             0,
             0,
             0});
-            this.nudYCoordinate.Location = new System.Drawing.Point(201, 51);
+            this.nudYCoordinate.Location = new System.Drawing.Point(219, 51);
             this.nudYCoordinate.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -385,7 +396,7 @@ namespace TRR_SaveMaster
             0,
             -2147483648});
             this.nudYCoordinate.Name = "nudYCoordinate";
-            this.nudYCoordinate.Size = new System.Drawing.Size(88, 20);
+            this.nudYCoordinate.Size = new System.Drawing.Size(70, 20);
             this.nudYCoordinate.TabIndex = 1;
             this.nudYCoordinate.ValueChanged += new System.EventHandler(this.nudYCoordinate_ValueChanged);
             this.nudYCoordinate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudYCoordinate_KeyPress);
@@ -397,7 +408,7 @@ namespace TRR_SaveMaster
             0,
             0,
             0});
-            this.nudXCoordinate.Location = new System.Drawing.Point(201, 25);
+            this.nudXCoordinate.Location = new System.Drawing.Point(219, 25);
             this.nudXCoordinate.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -409,7 +420,7 @@ namespace TRR_SaveMaster
             0,
             -2147483648});
             this.nudXCoordinate.Name = "nudXCoordinate";
-            this.nudXCoordinate.Size = new System.Drawing.Size(88, 20);
+            this.nudXCoordinate.Size = new System.Drawing.Size(70, 20);
             this.nudXCoordinate.TabIndex = 0;
             this.nudXCoordinate.ValueChanged += new System.EventHandler(this.nudXCoordinate_ValueChanged);
             this.nudXCoordinate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudXCoordinate_KeyPress);
@@ -451,17 +462,6 @@ namespace TRR_SaveMaster
             this.tipPosition.AutoPopDelay = 10000;
             this.tipPosition.InitialDelay = 500;
             this.tipPosition.ReshowDelay = 100;
-            // 
-            // btnStartOfLevel
-            // 
-            this.btnStartOfLevel.Enabled = false;
-            this.btnStartOfLevel.Location = new System.Drawing.Point(63, 178);
-            this.btnStartOfLevel.Name = "btnStartOfLevel";
-            this.btnStartOfLevel.Size = new System.Drawing.Size(100, 23);
-            this.btnStartOfLevel.TabIndex = 24;
-            this.btnStartOfLevel.Text = "Start of Level";
-            this.btnStartOfLevel.UseVisualStyleBackColor = true;
-            this.btnStartOfLevel.Click += new System.EventHandler(this.btnStartOfLevel_Click);
             // 
             // PositionForm
             // 

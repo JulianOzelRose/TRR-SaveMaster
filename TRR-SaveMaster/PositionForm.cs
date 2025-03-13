@@ -8,13 +8,13 @@ namespace TRR_SaveMaster
     public partial class PositionForm : Form
     {
         // Offsets
-        private const int slotStatusOffset = 0x004;
-        private int levelIndexOffset;
-        private int xCoordinateOffset;
-        private int yCoordinateOffset;
-        private int zCoordinateOffset;
-        private int orientationOffset;
-        private int roomOffset;
+        private const int SLOT_STATUS_OFFSET = 0x004;
+        private int LEVEL_INDEX_OFFSET;
+        private int X_COORDINATE_OFFSET;
+        private int Y_COORDINATE_OFFSET;
+        private int Z_COORDINATE_OFFSET;
+        private int ORIENTATION_OFFSET;
+        private int ROOM_OFFSET;
 
         // Tabs
         private const int TAB_TR1 = 0;
@@ -150,12 +150,12 @@ namespace TRR_SaveMaster
 
         private bool IsSavegamePresent()
         {
-            return ReadByte(savegameOffset + slotStatusOffset) != 0;
+            return ReadByte(savegameOffset + SLOT_STATUS_OFFSET) != 0;
         }
 
         private byte GetLevelIndex()
         {
-            return ReadByte(savegameOffset + levelIndexOffset);
+            return ReadByte(savegameOffset + LEVEL_INDEX_OFFSET);
         }
 
         private void CreateBackup()
@@ -599,7 +599,29 @@ namespace TRR_SaveMaster
 
         private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR2 = new Dictionary<byte, Int32[]>
         {
-
+            { 1,  new Int32[] { 64176, 5376, 26090, 0, 35       } },    // The Great Wall
+            { 2,  new Int32[] { 58880, 0, 23188, 0, 0           } },    // Venice
+            { 3,  new Int32[] { 72523, 4608, 41024, 270, 106    } },    // Bartoli's Hideout
+            { 4,  new Int32[] { 79360, 2816, 31212, 0, 35       } },    // Opera House
+            { 5,  new Int32[] { 46592, -1536, 90624, 90, 4      } },    // Offshore Rig
+            { 6,  new Int32[] { 49664, -256, 57856, 180, 37     } },    // Diving Area
+            { 7,  new Int32[] { 28160, -4096, 41472, 90, 0      } },    // 40 Fathoms
+            { 8,  new Int32[] { 66048, -4352, 29184, 0, 113     } },    // Wreck of the Maria Doria
+            { 9,  new Int32[] { 92672, 5376, 79360, 270, 4      } },    // Living Quarters
+            { 10, new Int32[] { 48640, -2048, 52736, 90, 40     } },    // The Deck
+            { 11, new Int32[] { 95322, -256, 17920, 90, 76      } },    // Tibetan Foothills
+            { 12, new Int32[] { 96768, 3455, 16896, 270, 128    } },    // Barkhang Monastery
+            { 13, new Int32[] { 3584, -5632, 36352, 90, 0       } },    // Catacombs of the Talion
+            { 14, new Int32[] { 61952, 7936, 66048, 0, 42       } },    // Ice Palace
+            { 15, new Int32[] { 7680, -22784, 81408, 180, 190   } },    // Temple of Xian
+            { 16, new Int32[] { 82432, -9216, 55808, 270, 8     } },    // Floating Islands
+            { 17, new Int32[] { 73216, -9472, 78336, 180, 17    } },    // The Dragon's Lair
+            { 18, new Int32[] { 34304, 256, 62976, 180, 52      } },    // Home Sweet Home
+            { 19, new Int32[] { 88576, -3828, 57856, 270, 32    } },    // The Cold War
+            { 20, new Int32[] { 80384, 5888, 54784, 270, 53     } },    // Fool's Gold
+            { 21, new Int32[] { 68096, -10166, 24064, 180, 65   } },    // Furnace of the Gods
+            { 22, new Int32[] { 38400, 0, 48640, 270, 0         } },    // Kingdom
+            { 23, new Int32[] { 66048, -256, 50688, 90, 28      } },    // Nightmare in Vegas
         };
 
         private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR3 = new Dictionary<byte, Int32[]>
@@ -1140,40 +1162,40 @@ namespace TRR_SaveMaster
         {
             if (SELECTED_TAB == TAB_TR1)
             {
-                levelIndexOffset = 0x62C;
+                LEVEL_INDEX_OFFSET = 0x62C;
             }
             else if (SELECTED_TAB == TAB_TR2)
             {
-                levelIndexOffset = 0x628;
+                LEVEL_INDEX_OFFSET = 0x628;
             }
             else if (SELECTED_TAB == TAB_TR3)
             {
-                levelIndexOffset = 0x8D6;
+                LEVEL_INDEX_OFFSET = 0x8D6;
             }
             else if (SELECTED_TAB == TAB_TR4)
             {
-                levelIndexOffset = 0x26F;
+                LEVEL_INDEX_OFFSET = 0x26F;
             }
             else if (SELECTED_TAB == TAB_TR5)
             {
-                levelIndexOffset = 0x26F;
+                LEVEL_INDEX_OFFSET = 0x26F;
             }
 
             if (SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR2 || SELECTED_TAB == TAB_TR3)
             {
-                xCoordinateOffset = healthOffset - 0x24;
-                yCoordinateOffset = healthOffset - 0x20;
-                zCoordinateOffset = healthOffset - 0x1C;
-                orientationOffset = healthOffset - 0x16;
-                roomOffset = healthOffset - 0x10;
+                X_COORDINATE_OFFSET = healthOffset - 0x24;
+                Y_COORDINATE_OFFSET = healthOffset - 0x20;
+                Z_COORDINATE_OFFSET = healthOffset - 0x1C;
+                ORIENTATION_OFFSET = healthOffset - 0x16;
+                ROOM_OFFSET = healthOffset - 0x10;
             }
             else if (SELECTED_TAB == TAB_TR4 || SELECTED_TAB == TAB_TR5)
             {
-                xCoordinateOffset = healthOffset - 0x10;
-                yCoordinateOffset = healthOffset - 0xE;
-                zCoordinateOffset = healthOffset - 0xC;
-                orientationOffset = healthOffset - 0x9;
-                roomOffset = healthOffset - 0xA;
+                X_COORDINATE_OFFSET = healthOffset - 0x10;
+                Y_COORDINATE_OFFSET = healthOffset - 0xE;
+                Z_COORDINATE_OFFSET = healthOffset - 0xC;
+                ORIENTATION_OFFSET = healthOffset - 0x9;
+                ROOM_OFFSET = healthOffset - 0xA;
             }
         }
 
@@ -1205,47 +1227,37 @@ namespace TRR_SaveMaster
 
         private Int32 GetXCoordinateI32()
         {
-            return ReadInt32(savegameOffset + xCoordinateOffset);
+            return ReadInt32(savegameOffset + X_COORDINATE_OFFSET);
         }
 
         private Int32 GetYCoordinateI32()
         {
-            return ReadInt32(savegameOffset + yCoordinateOffset);
+            return ReadInt32(savegameOffset + Y_COORDINATE_OFFSET);
         }
 
         private Int32 GetZCoordinateI32()
         {
-            return ReadInt32(savegameOffset + zCoordinateOffset);
-        }
-
-        private Int16 GetXCoordinateI16()
-        {
-            return ReadInt16(savegameOffset + xCoordinateOffset);
+            return ReadInt32(savegameOffset + Z_COORDINATE_OFFSET);
         }
 
         private UInt16 GetXCoordinateU16()
         {
-            return ReadUInt16(savegameOffset + xCoordinateOffset);
+            return ReadUInt16(savegameOffset + X_COORDINATE_OFFSET);
         }
 
         private Int32 GetYCoordinateI16()
         {
-            return ReadInt16(savegameOffset + yCoordinateOffset);
-        }
-
-        private Int32 GetZCoordinateI16()
-        {
-            return ReadInt16(savegameOffset + zCoordinateOffset);
+            return ReadInt16(savegameOffset + Y_COORDINATE_OFFSET);
         }
 
         private UInt16 GetZCoordinateU16()
         {
-            return ReadUInt16(savegameOffset + zCoordinateOffset);
+            return ReadUInt16(savegameOffset + Z_COORDINATE_OFFSET);
         }
 
         private Int16 GetOrientation()
         {
-            Int16 rawValue = ReadInt16(savegameOffset + orientationOffset);
+            Int16 rawValue = ReadInt16(savegameOffset + ORIENTATION_OFFSET);
             double degrees = rawValue * 180.0 / Int16.MaxValue;
 
             return (degrees >= 0) ? (Int16)degrees : (Int16)(-degrees);
@@ -1253,58 +1265,48 @@ namespace TRR_SaveMaster
 
         private byte GetRoom()
         {
-            return ReadByte(savegameOffset + roomOffset);
+            return ReadByte(savegameOffset + ROOM_OFFSET);
         }
 
         private void WriteXCoordinateI32(Int32 value)
         {
-            WriteInt32(savegameOffset + xCoordinateOffset, value);
+            WriteInt32(savegameOffset + X_COORDINATE_OFFSET, value);
         }
 
         private void WriteYCoordinateI32(Int32 value)
         {
-            WriteInt32(savegameOffset + yCoordinateOffset, value);
+            WriteInt32(savegameOffset + Y_COORDINATE_OFFSET, value);
         }
 
         private void WriteZCoordinateI32(Int32 value)
         {
-            WriteInt32(savegameOffset + zCoordinateOffset, value);
-        }
-
-        private void WriteXCoordinateI16(Int16 value)
-        {
-            WriteInt16(savegameOffset + xCoordinateOffset, value);
+            WriteInt32(savegameOffset + Z_COORDINATE_OFFSET, value);
         }
 
         private void WriteYCoordinateI16(Int16 value)
         {
-            WriteInt16(savegameOffset + yCoordinateOffset, value);
-        }
-
-        private void WriteZCoordinateI16(Int16 value)
-        {
-            WriteInt16(savegameOffset + zCoordinateOffset, value);
+            WriteInt16(savegameOffset + Y_COORDINATE_OFFSET, value);
         }
 
         private void WriteXCoordinateU16(UInt16 value)
         {
-            WriteUInt16(savegameOffset + xCoordinateOffset, value);
+            WriteUInt16(savegameOffset + X_COORDINATE_OFFSET, value);
         }
 
         private void WriteZCoordinateU16(UInt16 value)
         {
-            WriteUInt16(savegameOffset + zCoordinateOffset, value);
+            WriteUInt16(savegameOffset + Z_COORDINATE_OFFSET, value);
         }
 
         private void WriteOrientation(Int16 value)
         {
             Int16 rawValue = (Int16)(value * Int16.MaxValue / 180.0);
-            WriteInt16(savegameOffset + orientationOffset, rawValue);
+            WriteInt16(savegameOffset + ORIENTATION_OFFSET, rawValue);
         }
 
         private void WriteRoom(byte value)
         {
-            WriteByte(savegameOffset + roomOffset, value);
+            WriteByte(savegameOffset + ROOM_OFFSET, value);
         }
 
         private void DisplayCoordinates()
