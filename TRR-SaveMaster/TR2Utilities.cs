@@ -196,19 +196,45 @@ namespace TRR_SaveMaster
 
         public int GetHealthOffset()
         {
+            byte[] savegameData;
+
+            using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                savegameData = new byte[fs.Length];
+                fs.Read(savegameData, 0, savegameData.Length);
+            }
+
             for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset += 0xC)
             {
-                UInt16 value = ReadUInt16(savegameOffset + offset);
+                int valueIndex = savegameOffset + offset;
+
+                if (valueIndex + 2 >= savegameData.Length)
+                {
+                    break;
+                }
+
+                UInt16 value = BitConverter.ToUInt16(savegameData, valueIndex);
 
                 if (value >= MIN_HEALTH_VALUE && value <= MAX_HEALTH_VALUE)
                 {
-                    byte byteFlag1 = ReadByte(savegameOffset + offset - 10);
-                    byte byteFlag2 = ReadByte(savegameOffset + offset - 9);
-                    byte byteFlag3 = ReadByte(savegameOffset + offset - 8);
+                    int flagIndex1 = savegameOffset + offset - 10;
+                    int flagIndex2 = savegameOffset + offset - 9;
+                    int flagIndex3 = savegameOffset + offset - 8;
+                    int flagIndex4 = savegameOffset + offset - 7;
 
-                    if (IsKnownByteFlagPattern(byteFlag1, byteFlag2, byteFlag3))
+                    if (flagIndex1 < 0 || flagIndex2 < 0 || flagIndex3 < 0 || flagIndex4 < 0 || flagIndex4 >= savegameData.Length)
                     {
-                        return (savegameOffset + offset);
+                        continue;
+                    }
+
+                    byte byteFlag1 = savegameData[flagIndex1];
+                    byte byteFlag2 = savegameData[flagIndex2];
+                    byte byteFlag3 = savegameData[flagIndex3];
+                    byte byteFlag4 = savegameData[flagIndex4];
+
+                    if (IsKnownByteFlagPattern(byteFlag1, byteFlag2, byteFlag3, byteFlag4))
+                    {
+                        return savegameOffset + offset;
                     }
                 }
             }
@@ -329,17 +355,20 @@ namespace TRR_SaveMaster
             return baseOffset + (secondaryAmmoIndex * 0xC);
         }
 
-        private bool IsKnownByteFlagPattern(byte byteFlag1, byte byteFlag2, byte byteFlag3)
+        private bool IsKnownByteFlagPattern(byte byteFlag1, byte byteFlag2, byte byteFlag3, byte byteFlag4)
         {
-            if (byteFlag1 == 0x02 && byteFlag2 == 0x00 && byteFlag3 == 0x02) return true;       // Standing
-            if (byteFlag1 == 0x13 && byteFlag2 == 0x00 && byteFlag3 == 0x13) return true;       // Climbing
-            if (byteFlag1 == 0x21 && byteFlag2 == 0x00 && byteFlag3 == 0x21) return true;       // On water
-            if (byteFlag1 == 0x0D && byteFlag2 == 0x00 && byteFlag3 == 0x0D) return true;       // Underwater
-            if (byteFlag1 == 0x17 && byteFlag2 == 0x00 && byteFlag3 == 0x02) return true;       // Rolling
-            if (byteFlag1 == 0x41 && byteFlag2 == 0x00 && byteFlag3 == 0x02) return true;       // Walking on top of water
-            if (byteFlag1 == 0x41 && byteFlag2 == 0x00 && byteFlag3 == 0x41) return true;       // Walking on top of water 2
-            if (byteFlag1 == 0x03 && byteFlag2 == 0x00 && byteFlag3 == 0x03) return true;       // Sliding forward
-            if (byteFlag1 == 0x20 && byteFlag2 == 0x00 && byteFlag3 == 0x20) return true;       // Sliding backward
+            if (byteFlag1 == 0x02 && byteFlag2 == 0x00 && byteFlag3 == 0x02 && byteFlag4 == 0x00) return true;  // Standing
+            if (byteFlag1 == 0x13 && byteFlag2 == 0x00 && byteFlag3 == 0x13 && byteFlag4 == 0x00) return true;  // Climbing
+            if (byteFlag1 == 0x21 && byteFlag2 == 0x00 && byteFlag3 == 0x21 && byteFlag4 == 0x00) return true;  // On water
+            if (byteFlag1 == 0x0D && byteFlag2 == 0x00 && byteFlag3 == 0x0D && byteFlag4 == 0x00) return true;  // Underwater
+            if (byteFlag1 == 0x12 && byteFlag2 == 0x00 && byteFlag3 == 0x12 && byteFlag4 == 0x00) return true;  // Swimming
+            if (byteFlag1 == 0x17 && byteFlag2 == 0x00 && byteFlag3 == 0x02 && byteFlag4 == 0x00) return true;  // Rolling
+            if (byteFlag1 == 0x41 && byteFlag2 == 0x00 && byteFlag3 == 0x02 && byteFlag4 == 0x00) return true;  // Walking through water
+            if (byteFlag1 == 0x22 && byteFlag2 == 0x00 && byteFlag3 == 0x22 && byteFlag4 == 0x00) return true;  // Wading through water
+            if (byteFlag1 == 0x01 && byteFlag2 == 0x00 && byteFlag3 == 0x02 && byteFlag4 == 0x00) return true;  // Walking forward
+            if (byteFlag1 == 0x03 && byteFlag2 == 0x00 && byteFlag3 == 0x03 && byteFlag4 == 0x00) return true;  // Jumping forward
+            if (byteFlag1 == 0x20 && byteFlag2 == 0x00 && byteFlag3 == 0x20 && byteFlag4 == 0x00) return true;  // Sliding backward
+            if (byteFlag1 == 0x18 && byteFlag2 == 0x00 && byteFlag3 == 0x18 && byteFlag4 == 0x00) return true;  // Sliding downhill
 
             return false;
         }
@@ -884,7 +913,7 @@ namespace TRR_SaveMaster
 
         public void PopulateEmptySlots(ComboBox cmbSavegames)
         {
-            if (cmbSavegames.Items.Count == 32)
+            if (cmbSavegames.Items.Count == MAX_SAVEGAMES)
             {
                 return;
             }
