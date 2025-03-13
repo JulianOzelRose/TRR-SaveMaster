@@ -1818,17 +1818,13 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == TAB_TR4 && cmbSavegamesTR4.SelectedIndex != -1)
             {
-                string errorMessage = $"This feature is still under construction.";
-                MessageBox.Show(errorMessage, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                return;
+                selectedSavegame = cmbSavegamesTR4.Items[cmbSavegamesTR4.SelectedIndex] as Savegame;
+                savegamePresent = TR4.IsSavegamePresent();
             }
             else if (tabGame.SelectedIndex == TAB_TR5 && cmbSavegamesTR5.SelectedIndex != -1)
             {
-                string errorMessage = $"This feature is still under construction.";
-                MessageBox.Show(errorMessage, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                return;
+                selectedSavegame = cmbSavegamesTR5.Items[cmbSavegamesTR5.SelectedIndex] as Savegame;
+                savegamePresent = TR5.IsSavegamePresent();
             }
 
             if (!savegamePresent)

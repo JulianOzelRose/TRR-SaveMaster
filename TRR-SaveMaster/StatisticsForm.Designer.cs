@@ -31,6 +31,8 @@ namespace TRR_SaveMaster
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StatisticsForm));
             this.grpSavegameStatistics = new System.Windows.Forms.GroupBox();
+            this.lblVesselsBroken = new System.Windows.Forms.Label();
+            this.nudVesselsBroken = new System.Windows.Forms.NumericUpDown();
             this.lblCrystalsUsed = new System.Windows.Forms.Label();
             this.nudCrystalsUsed = new System.Windows.Forms.NumericUpDown();
             this.lblColon2 = new System.Windows.Forms.Label();
@@ -64,6 +66,7 @@ namespace TRR_SaveMaster
             this.btnClose = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.grpSavegameStatistics.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudVesselsBroken)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrystalsUsed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSeconds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMinutes)).BeginInit();
@@ -82,6 +85,8 @@ namespace TRR_SaveMaster
             // 
             // grpSavegameStatistics
             // 
+            this.grpSavegameStatistics.Controls.Add(this.lblVesselsBroken);
+            this.grpSavegameStatistics.Controls.Add(this.nudVesselsBroken);
             this.grpSavegameStatistics.Controls.Add(this.lblCrystalsUsed);
             this.grpSavegameStatistics.Controls.Add(this.nudCrystalsUsed);
             this.grpSavegameStatistics.Controls.Add(this.lblColon2);
@@ -111,11 +116,35 @@ namespace TRR_SaveMaster
             this.grpSavegameStatistics.Controls.Add(this.lblAmmoUsedHits);
             this.grpSavegameStatistics.Controls.Add(this.lblPickups);
             this.grpSavegameStatistics.Controls.Add(this.lblKills);
-            this.grpSavegameStatistics.Location = new System.Drawing.Point(10, 4);
+            this.grpSavegameStatistics.Location = new System.Drawing.Point(12, 5);
             this.grpSavegameStatistics.Name = "grpSavegameStatistics";
-            this.grpSavegameStatistics.Size = new System.Drawing.Size(363, 267);
+            this.grpSavegameStatistics.Size = new System.Drawing.Size(365, 293);
             this.grpSavegameStatistics.TabIndex = 8;
             this.grpSavegameStatistics.TabStop = false;
+            // 
+            // lblVesselsBroken
+            // 
+            this.lblVesselsBroken.AutoSize = true;
+            this.lblVesselsBroken.Location = new System.Drawing.Point(11, 257);
+            this.lblVesselsBroken.Name = "lblVesselsBroken";
+            this.lblVesselsBroken.Size = new System.Drawing.Size(83, 13);
+            this.lblVesselsBroken.TabIndex = 42;
+            this.lblVesselsBroken.Text = "Vessels Broken:";
+            // 
+            // nudVesselsBroken
+            // 
+            this.nudVesselsBroken.Enabled = false;
+            this.nudVesselsBroken.Location = new System.Drawing.Point(150, 257);
+            this.nudVesselsBroken.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudVesselsBroken.Name = "nudVesselsBroken";
+            this.nudVesselsBroken.Size = new System.Drawing.Size(51, 20);
+            this.nudVesselsBroken.TabIndex = 41;
+            this.nudVesselsBroken.ValueChanged += new System.EventHandler(this.nudVesselsBroken_ValueChanged);
+            this.nudVesselsBroken.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudVesselsBroken_KeyPress);
             // 
             // lblCrystalsUsed
             // 
@@ -465,7 +494,7 @@ namespace TRR_SaveMaster
             // btnSave
             // 
             this.btnSave.Enabled = false;
-            this.btnSave.Location = new System.Drawing.Point(298, 277);
+            this.btnSave.Location = new System.Drawing.Point(302, 304);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 9;
@@ -475,7 +504,7 @@ namespace TRR_SaveMaster
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(136, 277);
+            this.btnClose.Location = new System.Drawing.Point(140, 304);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 11;
@@ -486,7 +515,7 @@ namespace TRR_SaveMaster
             // btnCancel
             // 
             this.btnCancel.Enabled = false;
-            this.btnCancel.Location = new System.Drawing.Point(217, 277);
+            this.btnCancel.Location = new System.Drawing.Point(221, 304);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 12;
@@ -498,7 +527,7 @@ namespace TRR_SaveMaster
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(382, 308);
+            this.ClientSize = new System.Drawing.Size(389, 335);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnSave);
@@ -515,6 +544,7 @@ namespace TRR_SaveMaster
             this.Load += new System.EventHandler(this.StatisticsForm_Load);
             this.grpSavegameStatistics.ResumeLayout(false);
             this.grpSavegameStatistics.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudVesselsBroken)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrystalsUsed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSeconds)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMinutes)).EndInit();
@@ -568,5 +598,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label lblCrystalsUsed;
         private System.Windows.Forms.NumericUpDown nudCrystalsUsed;
+        private System.Windows.Forms.Label lblVesselsBroken;
+        private System.Windows.Forms.NumericUpDown nudVesselsBroken;
     }
 }
