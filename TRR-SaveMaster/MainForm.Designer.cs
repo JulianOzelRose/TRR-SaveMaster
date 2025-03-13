@@ -592,7 +592,7 @@ namespace TRR_SaveMaster
             // 
             this.lblPresentTR1.AutoSize = true;
             this.lblPresentTR1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPresentTR1.Location = new System.Drawing.Point(24, 33);
+            this.lblPresentTR1.Location = new System.Drawing.Point(24, 29);
             this.lblPresentTR1.Name = "lblPresentTR1";
             this.lblPresentTR1.Size = new System.Drawing.Size(43, 13);
             this.lblPresentTR1.TabIndex = 43;
@@ -601,7 +601,7 @@ namespace TRR_SaveMaster
             // lblPistolAmmoTR1
             // 
             this.lblPistolAmmoTR1.AutoSize = true;
-            this.lblPistolAmmoTR1.Location = new System.Drawing.Point(162, 63);
+            this.lblPistolAmmoTR1.Location = new System.Drawing.Point(162, 59);
             this.lblPistolAmmoTR1.Name = "lblPistolAmmoTR1";
             this.lblPistolAmmoTR1.Size = new System.Drawing.Size(50, 13);
             this.lblPistolAmmoTR1.TabIndex = 14;
@@ -611,7 +611,7 @@ namespace TRR_SaveMaster
             // 
             this.lblAmmoTR1.AutoSize = true;
             this.lblAmmoTR1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmmoTR1.Location = new System.Drawing.Point(164, 33);
+            this.lblAmmoTR1.Location = new System.Drawing.Point(164, 29);
             this.lblAmmoTR1.Name = "lblAmmoTR1";
             this.lblAmmoTR1.Size = new System.Drawing.Size(36, 13);
             this.lblAmmoTR1.TabIndex = 42;
@@ -619,7 +619,7 @@ namespace TRR_SaveMaster
             // 
             // nudShotgunAmmoTR1
             // 
-            this.nudShotgunAmmoTR1.Location = new System.Drawing.Point(162, 85);
+            this.nudShotgunAmmoTR1.Location = new System.Drawing.Point(162, 81);
             this.nudShotgunAmmoTR1.Maximum = new decimal(new int[] {
             10922,
             0,
@@ -633,7 +633,7 @@ namespace TRR_SaveMaster
             // 
             // nudMagnumAmmoTR1
             // 
-            this.nudMagnumAmmoTR1.Location = new System.Drawing.Point(162, 111);
+            this.nudMagnumAmmoTR1.Location = new System.Drawing.Point(162, 107);
             this.nudMagnumAmmoTR1.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -647,7 +647,7 @@ namespace TRR_SaveMaster
             // 
             // nudUziAmmoTR1
             // 
-            this.nudUziAmmoTR1.Location = new System.Drawing.Point(162, 137);
+            this.nudUziAmmoTR1.Location = new System.Drawing.Point(162, 133);
             this.nudUziAmmoTR1.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -662,7 +662,7 @@ namespace TRR_SaveMaster
             // chkShotgunTR1
             // 
             this.chkShotgunTR1.AutoSize = true;
-            this.chkShotgunTR1.Location = new System.Drawing.Point(22, 85);
+            this.chkShotgunTR1.Location = new System.Drawing.Point(22, 81);
             this.chkShotgunTR1.Name = "chkShotgunTR1";
             this.chkShotgunTR1.Size = new System.Drawing.Size(69, 17);
             this.chkShotgunTR1.TabIndex = 5;
@@ -673,7 +673,7 @@ namespace TRR_SaveMaster
             // chkMagnumsTR1
             // 
             this.chkMagnumsTR1.AutoSize = true;
-            this.chkMagnumsTR1.Location = new System.Drawing.Point(22, 111);
+            this.chkMagnumsTR1.Location = new System.Drawing.Point(22, 107);
             this.chkMagnumsTR1.Name = "chkMagnumsTR1";
             this.chkMagnumsTR1.Size = new System.Drawing.Size(75, 17);
             this.chkMagnumsTR1.TabIndex = 4;
@@ -684,7 +684,7 @@ namespace TRR_SaveMaster
             // chkUzisTR1
             // 
             this.chkUzisTR1.AutoSize = true;
-            this.chkUzisTR1.Location = new System.Drawing.Point(22, 137);
+            this.chkUzisTR1.Location = new System.Drawing.Point(22, 133);
             this.chkUzisTR1.Name = "chkUzisTR1";
             this.chkUzisTR1.Size = new System.Drawing.Size(49, 17);
             this.chkUzisTR1.TabIndex = 2;
@@ -695,7 +695,7 @@ namespace TRR_SaveMaster
             // chkPistolsTR1
             // 
             this.chkPistolsTR1.AutoSize = true;
-            this.chkPistolsTR1.Location = new System.Drawing.Point(22, 59);
+            this.chkPistolsTR1.Location = new System.Drawing.Point(22, 55);
             this.chkPistolsTR1.Name = "chkPistolsTR1";
             this.chkPistolsTR1.Size = new System.Drawing.Size(59, 17);
             this.chkPistolsTR1.TabIndex = 0;
@@ -838,7 +838,7 @@ namespace TRR_SaveMaster
             // 
             this.lblPresentTR2.AutoSize = true;
             this.lblPresentTR2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPresentTR2.Location = new System.Drawing.Point(24, 33);
+            this.lblPresentTR2.Location = new System.Drawing.Point(24, 29);
             this.lblPresentTR2.Name = "lblPresentTR2";
             this.lblPresentTR2.Size = new System.Drawing.Size(43, 13);
             this.lblPresentTR2.TabIndex = 45;
@@ -848,7 +848,7 @@ namespace TRR_SaveMaster
             // 
             this.lblAmmoTR2.AutoSize = true;
             this.lblAmmoTR2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmmoTR2.Location = new System.Drawing.Point(164, 33);
+            this.lblAmmoTR2.Location = new System.Drawing.Point(164, 29);
             this.lblAmmoTR2.Name = "lblAmmoTR2";
             this.lblAmmoTR2.Size = new System.Drawing.Size(36, 13);
             this.lblAmmoTR2.TabIndex = 44;
@@ -857,7 +857,7 @@ namespace TRR_SaveMaster
             // lblPistolAmmoTR2
             // 
             this.lblPistolAmmoTR2.AutoSize = true;
-            this.lblPistolAmmoTR2.Location = new System.Drawing.Point(162, 63);
+            this.lblPistolAmmoTR2.Location = new System.Drawing.Point(162, 59);
             this.lblPistolAmmoTR2.Name = "lblPistolAmmoTR2";
             this.lblPistolAmmoTR2.Size = new System.Drawing.Size(50, 13);
             this.lblPistolAmmoTR2.TabIndex = 18;
@@ -865,7 +865,7 @@ namespace TRR_SaveMaster
             // 
             // nudShotgunAmmoTR2
             // 
-            this.nudShotgunAmmoTR2.Location = new System.Drawing.Point(162, 85);
+            this.nudShotgunAmmoTR2.Location = new System.Drawing.Point(162, 81);
             this.nudShotgunAmmoTR2.Maximum = new decimal(new int[] {
             10922,
             0,
@@ -880,7 +880,7 @@ namespace TRR_SaveMaster
             // chkHarpoonGunTR2
             // 
             this.chkHarpoonGunTR2.AutoSize = true;
-            this.chkHarpoonGunTR2.Location = new System.Drawing.Point(22, 215);
+            this.chkHarpoonGunTR2.Location = new System.Drawing.Point(22, 211);
             this.chkHarpoonGunTR2.Name = "chkHarpoonGunTR2";
             this.chkHarpoonGunTR2.Size = new System.Drawing.Size(93, 17);
             this.chkHarpoonGunTR2.TabIndex = 16;
@@ -891,7 +891,7 @@ namespace TRR_SaveMaster
             // chkGrenadeLauncherTR2
             // 
             this.chkGrenadeLauncherTR2.AutoSize = true;
-            this.chkGrenadeLauncherTR2.Location = new System.Drawing.Point(22, 189);
+            this.chkGrenadeLauncherTR2.Location = new System.Drawing.Point(22, 185);
             this.chkGrenadeLauncherTR2.Name = "chkGrenadeLauncherTR2";
             this.chkGrenadeLauncherTR2.Size = new System.Drawing.Size(118, 17);
             this.chkGrenadeLauncherTR2.TabIndex = 15;
@@ -901,7 +901,7 @@ namespace TRR_SaveMaster
             // 
             // nudUziAmmoTR2
             // 
-            this.nudUziAmmoTR2.Location = new System.Drawing.Point(162, 137);
+            this.nudUziAmmoTR2.Location = new System.Drawing.Point(162, 133);
             this.nudUziAmmoTR2.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -915,7 +915,7 @@ namespace TRR_SaveMaster
             // 
             // nudM16AmmoTR2
             // 
-            this.nudM16AmmoTR2.Location = new System.Drawing.Point(162, 163);
+            this.nudM16AmmoTR2.Location = new System.Drawing.Point(162, 159);
             this.nudM16AmmoTR2.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -929,7 +929,7 @@ namespace TRR_SaveMaster
             // 
             // nudGrenadeLauncherAmmoTR2
             // 
-            this.nudGrenadeLauncherAmmoTR2.Location = new System.Drawing.Point(162, 189);
+            this.nudGrenadeLauncherAmmoTR2.Location = new System.Drawing.Point(162, 185);
             this.nudGrenadeLauncherAmmoTR2.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -943,7 +943,7 @@ namespace TRR_SaveMaster
             // 
             // nudHarpoonGunAmmoTR2
             // 
-            this.nudHarpoonGunAmmoTR2.Location = new System.Drawing.Point(162, 215);
+            this.nudHarpoonGunAmmoTR2.Location = new System.Drawing.Point(162, 211);
             this.nudHarpoonGunAmmoTR2.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -957,7 +957,7 @@ namespace TRR_SaveMaster
             // 
             // nudAutomaticPistolsAmmoTR2
             // 
-            this.nudAutomaticPistolsAmmoTR2.Location = new System.Drawing.Point(162, 111);
+            this.nudAutomaticPistolsAmmoTR2.Location = new System.Drawing.Point(162, 107);
             this.nudAutomaticPistolsAmmoTR2.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -972,7 +972,7 @@ namespace TRR_SaveMaster
             // chkShotgunTR2
             // 
             this.chkShotgunTR2.AutoSize = true;
-            this.chkShotgunTR2.Location = new System.Drawing.Point(22, 85);
+            this.chkShotgunTR2.Location = new System.Drawing.Point(22, 81);
             this.chkShotgunTR2.Name = "chkShotgunTR2";
             this.chkShotgunTR2.Size = new System.Drawing.Size(69, 17);
             this.chkShotgunTR2.TabIndex = 5;
@@ -983,7 +983,7 @@ namespace TRR_SaveMaster
             // chkM16TR2
             // 
             this.chkM16TR2.AutoSize = true;
-            this.chkM16TR2.Location = new System.Drawing.Point(22, 163);
+            this.chkM16TR2.Location = new System.Drawing.Point(22, 159);
             this.chkM16TR2.Name = "chkM16TR2";
             this.chkM16TR2.Size = new System.Drawing.Size(50, 17);
             this.chkM16TR2.TabIndex = 3;
@@ -994,7 +994,7 @@ namespace TRR_SaveMaster
             // chkUzisTR2
             // 
             this.chkUzisTR2.AutoSize = true;
-            this.chkUzisTR2.Location = new System.Drawing.Point(22, 137);
+            this.chkUzisTR2.Location = new System.Drawing.Point(22, 133);
             this.chkUzisTR2.Name = "chkUzisTR2";
             this.chkUzisTR2.Size = new System.Drawing.Size(49, 17);
             this.chkUzisTR2.TabIndex = 2;
@@ -1005,7 +1005,7 @@ namespace TRR_SaveMaster
             // chkAutomaticPistolsTR2
             // 
             this.chkAutomaticPistolsTR2.AutoSize = true;
-            this.chkAutomaticPistolsTR2.Location = new System.Drawing.Point(22, 111);
+            this.chkAutomaticPistolsTR2.Location = new System.Drawing.Point(22, 107);
             this.chkAutomaticPistolsTR2.Name = "chkAutomaticPistolsTR2";
             this.chkAutomaticPistolsTR2.Size = new System.Drawing.Size(109, 17);
             this.chkAutomaticPistolsTR2.TabIndex = 1;
@@ -1016,7 +1016,7 @@ namespace TRR_SaveMaster
             // chkPistolsTR2
             // 
             this.chkPistolsTR2.AutoSize = true;
-            this.chkPistolsTR2.Location = new System.Drawing.Point(22, 59);
+            this.chkPistolsTR2.Location = new System.Drawing.Point(22, 55);
             this.chkPistolsTR2.Name = "chkPistolsTR2";
             this.chkPistolsTR2.Size = new System.Drawing.Size(59, 17);
             this.chkPistolsTR2.TabIndex = 0;
@@ -1289,7 +1289,7 @@ namespace TRR_SaveMaster
             // 
             this.lblPresentTR3.AutoSize = true;
             this.lblPresentTR3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPresentTR3.Location = new System.Drawing.Point(24, 33);
+            this.lblPresentTR3.Location = new System.Drawing.Point(24, 29);
             this.lblPresentTR3.Name = "lblPresentTR3";
             this.lblPresentTR3.Size = new System.Drawing.Size(43, 13);
             this.lblPresentTR3.TabIndex = 47;
@@ -1299,7 +1299,7 @@ namespace TRR_SaveMaster
             // 
             this.lblAmmoTR3.AutoSize = true;
             this.lblAmmoTR3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmmoTR3.Location = new System.Drawing.Point(164, 33);
+            this.lblAmmoTR3.Location = new System.Drawing.Point(164, 29);
             this.lblAmmoTR3.Name = "lblAmmoTR3";
             this.lblAmmoTR3.Size = new System.Drawing.Size(36, 13);
             this.lblAmmoTR3.TabIndex = 46;
@@ -1308,7 +1308,7 @@ namespace TRR_SaveMaster
             // lblPistolAmmoTR3
             // 
             this.lblPistolAmmoTR3.AutoSize = true;
-            this.lblPistolAmmoTR3.Location = new System.Drawing.Point(162, 63);
+            this.lblPistolAmmoTR3.Location = new System.Drawing.Point(162, 59);
             this.lblPistolAmmoTR3.Name = "lblPistolAmmoTR3";
             this.lblPistolAmmoTR3.Size = new System.Drawing.Size(50, 13);
             this.lblPistolAmmoTR3.TabIndex = 18;
@@ -1316,7 +1316,7 @@ namespace TRR_SaveMaster
             // 
             // nudShotgunAmmoTR3
             // 
-            this.nudShotgunAmmoTR3.Location = new System.Drawing.Point(162, 85);
+            this.nudShotgunAmmoTR3.Location = new System.Drawing.Point(162, 81);
             this.nudShotgunAmmoTR3.Maximum = new decimal(new int[] {
             10922,
             0,
@@ -1331,7 +1331,7 @@ namespace TRR_SaveMaster
             // chkHarpoonGunTR3
             // 
             this.chkHarpoonGunTR3.AutoSize = true;
-            this.chkHarpoonGunTR3.Location = new System.Drawing.Point(22, 241);
+            this.chkHarpoonGunTR3.Location = new System.Drawing.Point(22, 237);
             this.chkHarpoonGunTR3.Name = "chkHarpoonGunTR3";
             this.chkHarpoonGunTR3.Size = new System.Drawing.Size(93, 17);
             this.chkHarpoonGunTR3.TabIndex = 16;
@@ -1342,7 +1342,7 @@ namespace TRR_SaveMaster
             // chkGrenadeLauncherTR3
             // 
             this.chkGrenadeLauncherTR3.AutoSize = true;
-            this.chkGrenadeLauncherTR3.Location = new System.Drawing.Point(22, 215);
+            this.chkGrenadeLauncherTR3.Location = new System.Drawing.Point(22, 211);
             this.chkGrenadeLauncherTR3.Name = "chkGrenadeLauncherTR3";
             this.chkGrenadeLauncherTR3.Size = new System.Drawing.Size(118, 17);
             this.chkGrenadeLauncherTR3.TabIndex = 15;
@@ -1352,7 +1352,7 @@ namespace TRR_SaveMaster
             // 
             // nudUziAmmoTR3
             // 
-            this.nudUziAmmoTR3.Location = new System.Drawing.Point(162, 137);
+            this.nudUziAmmoTR3.Location = new System.Drawing.Point(162, 133);
             this.nudUziAmmoTR3.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -1366,7 +1366,7 @@ namespace TRR_SaveMaster
             // 
             // nudMP5AmmoTR3
             // 
-            this.nudMP5AmmoTR3.Location = new System.Drawing.Point(162, 163);
+            this.nudMP5AmmoTR3.Location = new System.Drawing.Point(162, 159);
             this.nudMP5AmmoTR3.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -1380,7 +1380,7 @@ namespace TRR_SaveMaster
             // 
             // nudRocketLauncherAmmoTR3
             // 
-            this.nudRocketLauncherAmmoTR3.Location = new System.Drawing.Point(162, 189);
+            this.nudRocketLauncherAmmoTR3.Location = new System.Drawing.Point(162, 185);
             this.nudRocketLauncherAmmoTR3.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -1394,7 +1394,7 @@ namespace TRR_SaveMaster
             // 
             // nudGrenadeLauncherAmmoTR3
             // 
-            this.nudGrenadeLauncherAmmoTR3.Location = new System.Drawing.Point(162, 215);
+            this.nudGrenadeLauncherAmmoTR3.Location = new System.Drawing.Point(162, 211);
             this.nudGrenadeLauncherAmmoTR3.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -1408,7 +1408,7 @@ namespace TRR_SaveMaster
             // 
             // nudHarpoonGunAmmoTR3
             // 
-            this.nudHarpoonGunAmmoTR3.Location = new System.Drawing.Point(162, 241);
+            this.nudHarpoonGunAmmoTR3.Location = new System.Drawing.Point(162, 237);
             this.nudHarpoonGunAmmoTR3.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -1422,7 +1422,7 @@ namespace TRR_SaveMaster
             // 
             // nudDeagleAmmoTR3
             // 
-            this.nudDeagleAmmoTR3.Location = new System.Drawing.Point(162, 111);
+            this.nudDeagleAmmoTR3.Location = new System.Drawing.Point(162, 107);
             this.nudDeagleAmmoTR3.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -1437,7 +1437,7 @@ namespace TRR_SaveMaster
             // chkRocketLauncherTR3
             // 
             this.chkRocketLauncherTR3.AutoSize = true;
-            this.chkRocketLauncherTR3.Location = new System.Drawing.Point(22, 189);
+            this.chkRocketLauncherTR3.Location = new System.Drawing.Point(22, 185);
             this.chkRocketLauncherTR3.Name = "chkRocketLauncherTR3";
             this.chkRocketLauncherTR3.Size = new System.Drawing.Size(112, 17);
             this.chkRocketLauncherTR3.TabIndex = 4;
@@ -1448,7 +1448,7 @@ namespace TRR_SaveMaster
             // chkUzisTR3
             // 
             this.chkUzisTR3.AutoSize = true;
-            this.chkUzisTR3.Location = new System.Drawing.Point(22, 137);
+            this.chkUzisTR3.Location = new System.Drawing.Point(22, 133);
             this.chkUzisTR3.Name = "chkUzisTR3";
             this.chkUzisTR3.Size = new System.Drawing.Size(49, 17);
             this.chkUzisTR3.TabIndex = 2;
@@ -1459,7 +1459,7 @@ namespace TRR_SaveMaster
             // chkShotgunTR3
             // 
             this.chkShotgunTR3.AutoSize = true;
-            this.chkShotgunTR3.Location = new System.Drawing.Point(22, 85);
+            this.chkShotgunTR3.Location = new System.Drawing.Point(22, 81);
             this.chkShotgunTR3.Name = "chkShotgunTR3";
             this.chkShotgunTR3.Size = new System.Drawing.Size(69, 17);
             this.chkShotgunTR3.TabIndex = 5;
@@ -1470,7 +1470,7 @@ namespace TRR_SaveMaster
             // chkMP5TR3
             // 
             this.chkMP5TR3.AutoSize = true;
-            this.chkMP5TR3.Location = new System.Drawing.Point(22, 163);
+            this.chkMP5TR3.Location = new System.Drawing.Point(22, 159);
             this.chkMP5TR3.Name = "chkMP5TR3";
             this.chkMP5TR3.Size = new System.Drawing.Size(51, 17);
             this.chkMP5TR3.TabIndex = 3;
@@ -1481,7 +1481,7 @@ namespace TRR_SaveMaster
             // chkDeagleTR3
             // 
             this.chkDeagleTR3.AutoSize = true;
-            this.chkDeagleTR3.Location = new System.Drawing.Point(22, 111);
+            this.chkDeagleTR3.Location = new System.Drawing.Point(22, 107);
             this.chkDeagleTR3.Name = "chkDeagleTR3";
             this.chkDeagleTR3.Size = new System.Drawing.Size(90, 17);
             this.chkDeagleTR3.TabIndex = 1;
@@ -1492,7 +1492,7 @@ namespace TRR_SaveMaster
             // chkPistolsTR3
             // 
             this.chkPistolsTR3.AutoSize = true;
-            this.chkPistolsTR3.Location = new System.Drawing.Point(22, 59);
+            this.chkPistolsTR3.Location = new System.Drawing.Point(22, 55);
             this.chkPistolsTR3.Name = "chkPistolsTR3";
             this.chkPistolsTR3.Size = new System.Drawing.Size(59, 17);
             this.chkPistolsTR3.TabIndex = 0;
@@ -1946,7 +1946,7 @@ namespace TRR_SaveMaster
             // 
             this.lblPresentTR4.AutoSize = true;
             this.lblPresentTR4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPresentTR4.Location = new System.Drawing.Point(24, 33);
+            this.lblPresentTR4.Location = new System.Drawing.Point(24, 29);
             this.lblPresentTR4.Name = "lblPresentTR4";
             this.lblPresentTR4.Size = new System.Drawing.Size(43, 13);
             this.lblPresentTR4.TabIndex = 41;
@@ -1956,7 +1956,7 @@ namespace TRR_SaveMaster
             // 
             this.lblAmmo3TR4.AutoSize = true;
             this.lblAmmo3TR4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmmo3TR4.Location = new System.Drawing.Point(288, 33);
+            this.lblAmmo3TR4.Location = new System.Drawing.Point(288, 29);
             this.lblAmmo3TR4.Name = "lblAmmo3TR4";
             this.lblAmmo3TR4.Size = new System.Drawing.Size(45, 13);
             this.lblAmmo3TR4.TabIndex = 40;
@@ -1966,7 +1966,7 @@ namespace TRR_SaveMaster
             // 
             this.lblAmmo2TR4.AutoSize = true;
             this.lblAmmo2TR4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmmo2TR4.Location = new System.Drawing.Point(226, 33);
+            this.lblAmmo2TR4.Location = new System.Drawing.Point(226, 29);
             this.lblAmmo2TR4.Name = "lblAmmo2TR4";
             this.lblAmmo2TR4.Size = new System.Drawing.Size(45, 13);
             this.lblAmmo2TR4.TabIndex = 39;
@@ -1976,7 +1976,7 @@ namespace TRR_SaveMaster
             // 
             this.lblAmmo1TR4.AutoSize = true;
             this.lblAmmo1TR4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmmo1TR4.Location = new System.Drawing.Point(164, 33);
+            this.lblAmmo1TR4.Location = new System.Drawing.Point(164, 29);
             this.lblAmmo1TR4.Name = "lblAmmo1TR4";
             this.lblAmmo1TR4.Size = new System.Drawing.Size(45, 13);
             this.lblAmmo1TR4.TabIndex = 38;
@@ -1984,7 +1984,7 @@ namespace TRR_SaveMaster
             // 
             // nudGrenadeGunFlashAmmoTR4
             // 
-            this.nudGrenadeGunFlashAmmoTR4.Location = new System.Drawing.Point(288, 163);
+            this.nudGrenadeGunFlashAmmoTR4.Location = new System.Drawing.Point(288, 159);
             this.nudGrenadeGunFlashAmmoTR4.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -1998,7 +1998,7 @@ namespace TRR_SaveMaster
             // 
             // nudGrenadeGunSuperAmmoTR4
             // 
-            this.nudGrenadeGunSuperAmmoTR4.Location = new System.Drawing.Point(225, 163);
+            this.nudGrenadeGunSuperAmmoTR4.Location = new System.Drawing.Point(225, 159);
             this.nudGrenadeGunSuperAmmoTR4.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -2012,7 +2012,7 @@ namespace TRR_SaveMaster
             // 
             // nudCrossbowExplosiveAmmoTR4
             // 
-            this.nudCrossbowExplosiveAmmoTR4.Location = new System.Drawing.Point(288, 189);
+            this.nudCrossbowExplosiveAmmoTR4.Location = new System.Drawing.Point(288, 185);
             this.nudCrossbowExplosiveAmmoTR4.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -2026,7 +2026,7 @@ namespace TRR_SaveMaster
             // 
             // nudCrossbowPoisonAmmoTR4
             // 
-            this.nudCrossbowPoisonAmmoTR4.Location = new System.Drawing.Point(226, 189);
+            this.nudCrossbowPoisonAmmoTR4.Location = new System.Drawing.Point(225, 185);
             this.nudCrossbowPoisonAmmoTR4.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -2040,7 +2040,7 @@ namespace TRR_SaveMaster
             // 
             // nudShotgunWideshotAmmoTR4
             // 
-            this.nudShotgunWideshotAmmoTR4.Location = new System.Drawing.Point(225, 137);
+            this.nudShotgunWideshotAmmoTR4.Location = new System.Drawing.Point(225, 133);
             this.nudShotgunWideshotAmmoTR4.Maximum = new decimal(new int[] {
             10922,
             0,
@@ -2054,7 +2054,7 @@ namespace TRR_SaveMaster
             // 
             // nudShotgunNormalAmmoTR4
             // 
-            this.nudShotgunNormalAmmoTR4.Location = new System.Drawing.Point(162, 137);
+            this.nudShotgunNormalAmmoTR4.Location = new System.Drawing.Point(162, 133);
             this.nudShotgunNormalAmmoTR4.Maximum = new decimal(new int[] {
             10922,
             0,
@@ -2069,7 +2069,7 @@ namespace TRR_SaveMaster
             // chkGrenadeGunTR4
             // 
             this.chkGrenadeGunTR4.AutoSize = true;
-            this.chkGrenadeGunTR4.Location = new System.Drawing.Point(22, 163);
+            this.chkGrenadeGunTR4.Location = new System.Drawing.Point(22, 159);
             this.chkGrenadeGunTR4.Name = "chkGrenadeGunTR4";
             this.chkGrenadeGunTR4.Size = new System.Drawing.Size(93, 17);
             this.chkGrenadeGunTR4.TabIndex = 31;
@@ -2079,7 +2079,7 @@ namespace TRR_SaveMaster
             // 
             // nudUziAmmoTR4
             // 
-            this.nudUziAmmoTR4.Location = new System.Drawing.Point(162, 85);
+            this.nudUziAmmoTR4.Location = new System.Drawing.Point(162, 81);
             this.nudUziAmmoTR4.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -2093,7 +2093,7 @@ namespace TRR_SaveMaster
             // 
             // nudRevolverAmmoTR4
             // 
-            this.nudRevolverAmmoTR4.Location = new System.Drawing.Point(162, 111);
+            this.nudRevolverAmmoTR4.Location = new System.Drawing.Point(162, 107);
             this.nudRevolverAmmoTR4.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -2107,7 +2107,7 @@ namespace TRR_SaveMaster
             // 
             // nudGrenadeGunNormalAmmoTR4
             // 
-            this.nudGrenadeGunNormalAmmoTR4.Location = new System.Drawing.Point(162, 163);
+            this.nudGrenadeGunNormalAmmoTR4.Location = new System.Drawing.Point(162, 159);
             this.nudGrenadeGunNormalAmmoTR4.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -2121,7 +2121,7 @@ namespace TRR_SaveMaster
             // 
             // nudCrossbowNormalAmmoTR4
             // 
-            this.nudCrossbowNormalAmmoTR4.Location = new System.Drawing.Point(162, 189);
+            this.nudCrossbowNormalAmmoTR4.Location = new System.Drawing.Point(162, 185);
             this.nudCrossbowNormalAmmoTR4.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -2136,7 +2136,7 @@ namespace TRR_SaveMaster
             // chkShotgunTR4
             // 
             this.chkShotgunTR4.AutoSize = true;
-            this.chkShotgunTR4.Location = new System.Drawing.Point(22, 137);
+            this.chkShotgunTR4.Location = new System.Drawing.Point(22, 133);
             this.chkShotgunTR4.Name = "chkShotgunTR4";
             this.chkShotgunTR4.Size = new System.Drawing.Size(69, 17);
             this.chkShotgunTR4.TabIndex = 26;
@@ -2147,7 +2147,7 @@ namespace TRR_SaveMaster
             // chkRevolverTR4
             // 
             this.chkRevolverTR4.AutoSize = true;
-            this.chkRevolverTR4.Location = new System.Drawing.Point(22, 111);
+            this.chkRevolverTR4.Location = new System.Drawing.Point(22, 107);
             this.chkRevolverTR4.Name = "chkRevolverTR4";
             this.chkRevolverTR4.Size = new System.Drawing.Size(72, 17);
             this.chkRevolverTR4.TabIndex = 25;
@@ -2158,7 +2158,7 @@ namespace TRR_SaveMaster
             // chkUziTR4
             // 
             this.chkUziTR4.AutoSize = true;
-            this.chkUziTR4.Location = new System.Drawing.Point(22, 85);
+            this.chkUziTR4.Location = new System.Drawing.Point(22, 81);
             this.chkUziTR4.Name = "chkUziTR4";
             this.chkUziTR4.Size = new System.Drawing.Size(44, 17);
             this.chkUziTR4.TabIndex = 24;
@@ -2169,7 +2169,7 @@ namespace TRR_SaveMaster
             // chkCrossbowTR4
             // 
             this.chkCrossbowTR4.AutoSize = true;
-            this.chkCrossbowTR4.Location = new System.Drawing.Point(22, 189);
+            this.chkCrossbowTR4.Location = new System.Drawing.Point(22, 185);
             this.chkCrossbowTR4.Name = "chkCrossbowTR4";
             this.chkCrossbowTR4.Size = new System.Drawing.Size(75, 17);
             this.chkCrossbowTR4.TabIndex = 23;
@@ -2180,7 +2180,7 @@ namespace TRR_SaveMaster
             // lblPistolAmmoTR4
             // 
             this.lblPistolAmmoTR4.AutoSize = true;
-            this.lblPistolAmmoTR4.Location = new System.Drawing.Point(162, 63);
+            this.lblPistolAmmoTR4.Location = new System.Drawing.Point(162, 59);
             this.lblPistolAmmoTR4.Name = "lblPistolAmmoTR4";
             this.lblPistolAmmoTR4.Size = new System.Drawing.Size(50, 13);
             this.lblPistolAmmoTR4.TabIndex = 14;
@@ -2189,7 +2189,7 @@ namespace TRR_SaveMaster
             // chkPistolsTR4
             // 
             this.chkPistolsTR4.AutoSize = true;
-            this.chkPistolsTR4.Location = new System.Drawing.Point(22, 59);
+            this.chkPistolsTR4.Location = new System.Drawing.Point(22, 55);
             this.chkPistolsTR4.Name = "chkPistolsTR4";
             this.chkPistolsTR4.Size = new System.Drawing.Size(59, 17);
             this.chkPistolsTR4.TabIndex = 0;
@@ -2485,7 +2485,7 @@ namespace TRR_SaveMaster
             // 
             // nudShotgunNormalAmmoTR5
             // 
-            this.nudShotgunNormalAmmoTR5.Location = new System.Drawing.Point(162, 215);
+            this.nudShotgunNormalAmmoTR5.Location = new System.Drawing.Point(162, 211);
             this.nudShotgunNormalAmmoTR5.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -2500,7 +2500,7 @@ namespace TRR_SaveMaster
             // chkShotgunTR5
             // 
             this.chkShotgunTR5.AutoSize = true;
-            this.chkShotgunTR5.Location = new System.Drawing.Point(22, 215);
+            this.chkShotgunTR5.Location = new System.Drawing.Point(22, 211);
             this.chkShotgunTR5.Name = "chkShotgunTR5";
             this.chkShotgunTR5.Size = new System.Drawing.Size(69, 17);
             this.chkShotgunTR5.TabIndex = 42;
@@ -2512,7 +2512,7 @@ namespace TRR_SaveMaster
             // 
             this.lblPresentTR5.AutoSize = true;
             this.lblPresentTR5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPresentTR5.Location = new System.Drawing.Point(24, 33);
+            this.lblPresentTR5.Location = new System.Drawing.Point(24, 29);
             this.lblPresentTR5.Name = "lblPresentTR5";
             this.lblPresentTR5.Size = new System.Drawing.Size(43, 13);
             this.lblPresentTR5.TabIndex = 41;
@@ -2522,7 +2522,7 @@ namespace TRR_SaveMaster
             // 
             this.lblAmmo2TR5.AutoSize = true;
             this.lblAmmo2TR5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmmo2TR5.Location = new System.Drawing.Point(226, 33);
+            this.lblAmmo2TR5.Location = new System.Drawing.Point(226, 29);
             this.lblAmmo2TR5.Name = "lblAmmo2TR5";
             this.lblAmmo2TR5.Size = new System.Drawing.Size(45, 13);
             this.lblAmmo2TR5.TabIndex = 39;
@@ -2532,7 +2532,7 @@ namespace TRR_SaveMaster
             // 
             this.lblAmmo1TR5.AutoSize = true;
             this.lblAmmo1TR5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmmo1TR5.Location = new System.Drawing.Point(164, 33);
+            this.lblAmmo1TR5.Location = new System.Drawing.Point(164, 29);
             this.lblAmmo1TR5.Name = "lblAmmo1TR5";
             this.lblAmmo1TR5.Size = new System.Drawing.Size(45, 13);
             this.lblAmmo1TR5.TabIndex = 38;
@@ -2540,7 +2540,7 @@ namespace TRR_SaveMaster
             // 
             // nudShotgunWideshotAmmoTR5
             // 
-            this.nudShotgunWideshotAmmoTR5.Location = new System.Drawing.Point(225, 215);
+            this.nudShotgunWideshotAmmoTR5.Location = new System.Drawing.Point(225, 211);
             this.nudShotgunWideshotAmmoTR5.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -2554,7 +2554,7 @@ namespace TRR_SaveMaster
             // 
             // nudUziAmmoTR5
             // 
-            this.nudUziAmmoTR5.Location = new System.Drawing.Point(162, 137);
+            this.nudUziAmmoTR5.Location = new System.Drawing.Point(162, 133);
             this.nudUziAmmoTR5.Maximum = new decimal(new int[] {
             10922,
             0,
@@ -2569,7 +2569,7 @@ namespace TRR_SaveMaster
             // chkHKGunTR5
             // 
             this.chkHKGunTR5.AutoSize = true;
-            this.chkHKGunTR5.Location = new System.Drawing.Point(22, 163);
+            this.chkHKGunTR5.Location = new System.Drawing.Point(22, 159);
             this.chkHKGunTR5.Name = "chkHKGunTR5";
             this.chkHKGunTR5.Size = new System.Drawing.Size(67, 17);
             this.chkHKGunTR5.TabIndex = 31;
@@ -2579,7 +2579,7 @@ namespace TRR_SaveMaster
             // 
             // nudRevolverAmmoTR5
             // 
-            this.nudRevolverAmmoTR5.Location = new System.Drawing.Point(162, 85);
+            this.nudRevolverAmmoTR5.Location = new System.Drawing.Point(162, 81);
             this.nudRevolverAmmoTR5.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -2593,7 +2593,7 @@ namespace TRR_SaveMaster
             // 
             // nudDeagleAmmoTR5
             // 
-            this.nudDeagleAmmoTR5.Location = new System.Drawing.Point(162, 111);
+            this.nudDeagleAmmoTR5.Location = new System.Drawing.Point(162, 107);
             this.nudDeagleAmmoTR5.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -2607,7 +2607,7 @@ namespace TRR_SaveMaster
             // 
             // nudHKGunAmmoTR5
             // 
-            this.nudHKGunAmmoTR5.Location = new System.Drawing.Point(162, 163);
+            this.nudHKGunAmmoTR5.Location = new System.Drawing.Point(162, 159);
             this.nudHKGunAmmoTR5.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -2621,7 +2621,7 @@ namespace TRR_SaveMaster
             // 
             // nudGrapplingGunAmmoTR5
             // 
-            this.nudGrapplingGunAmmoTR5.Location = new System.Drawing.Point(162, 189);
+            this.nudGrapplingGunAmmoTR5.Location = new System.Drawing.Point(162, 185);
             this.nudGrapplingGunAmmoTR5.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -2636,7 +2636,7 @@ namespace TRR_SaveMaster
             // chkUziTR5
             // 
             this.chkUziTR5.AutoSize = true;
-            this.chkUziTR5.Location = new System.Drawing.Point(22, 137);
+            this.chkUziTR5.Location = new System.Drawing.Point(22, 133);
             this.chkUziTR5.Name = "chkUziTR5";
             this.chkUziTR5.Size = new System.Drawing.Size(44, 17);
             this.chkUziTR5.TabIndex = 26;
@@ -2647,7 +2647,7 @@ namespace TRR_SaveMaster
             // chkDeagleTR5
             // 
             this.chkDeagleTR5.AutoSize = true;
-            this.chkDeagleTR5.Location = new System.Drawing.Point(22, 111);
+            this.chkDeagleTR5.Location = new System.Drawing.Point(22, 107);
             this.chkDeagleTR5.Name = "chkDeagleTR5";
             this.chkDeagleTR5.Size = new System.Drawing.Size(90, 17);
             this.chkDeagleTR5.TabIndex = 25;
@@ -2658,7 +2658,7 @@ namespace TRR_SaveMaster
             // chkRevolverTR5
             // 
             this.chkRevolverTR5.AutoSize = true;
-            this.chkRevolverTR5.Location = new System.Drawing.Point(22, 85);
+            this.chkRevolverTR5.Location = new System.Drawing.Point(22, 81);
             this.chkRevolverTR5.Name = "chkRevolverTR5";
             this.chkRevolverTR5.Size = new System.Drawing.Size(72, 17);
             this.chkRevolverTR5.TabIndex = 24;
@@ -2669,7 +2669,7 @@ namespace TRR_SaveMaster
             // chkGrapplingGunTR5
             // 
             this.chkGrapplingGunTR5.AutoSize = true;
-            this.chkGrapplingGunTR5.Location = new System.Drawing.Point(22, 189);
+            this.chkGrapplingGunTR5.Location = new System.Drawing.Point(22, 185);
             this.chkGrapplingGunTR5.Name = "chkGrapplingGunTR5";
             this.chkGrapplingGunTR5.Size = new System.Drawing.Size(97, 17);
             this.chkGrapplingGunTR5.TabIndex = 23;
@@ -2680,7 +2680,7 @@ namespace TRR_SaveMaster
             // lblPistolAmmoTR5
             // 
             this.lblPistolAmmoTR5.AutoSize = true;
-            this.lblPistolAmmoTR5.Location = new System.Drawing.Point(162, 63);
+            this.lblPistolAmmoTR5.Location = new System.Drawing.Point(162, 59);
             this.lblPistolAmmoTR5.Name = "lblPistolAmmoTR5";
             this.lblPistolAmmoTR5.Size = new System.Drawing.Size(50, 13);
             this.lblPistolAmmoTR5.TabIndex = 14;
@@ -2689,7 +2689,7 @@ namespace TRR_SaveMaster
             // chkPistolsTR5
             // 
             this.chkPistolsTR5.AutoSize = true;
-            this.chkPistolsTR5.Location = new System.Drawing.Point(22, 59);
+            this.chkPistolsTR5.Location = new System.Drawing.Point(22, 55);
             this.chkPistolsTR5.Name = "chkPistolsTR5";
             this.chkPistolsTR5.Size = new System.Drawing.Size(59, 17);
             this.chkPistolsTR5.TabIndex = 0;
