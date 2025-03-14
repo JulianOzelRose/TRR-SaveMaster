@@ -644,7 +644,7 @@ namespace TRR_SaveMaster
             }
             else if (levelIndex == 6)   // KV5
             {
-                MIN_HEALTH_OFFSET = 0xE3C;
+                MIN_HEALTH_OFFSET = 0xD52;
                 MAX_HEALTH_OFFSET = 0xF34;
             }
             else if (levelIndex == 7)   // Temple of Karnak
@@ -685,7 +685,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 15)  // Coastal Ruins
             {
                 MIN_HEALTH_OFFSET = 0x978;
-                MAX_HEALTH_OFFSET = 0x1E9D;
+                MAX_HEALTH_OFFSET = 0x2244;
             }
             else if (levelIndex == 16)  // Pharos, Temple of Isis
             {
@@ -699,22 +699,22 @@ namespace TRR_SaveMaster
             }
             else if (levelIndex == 18)  // Catacombs
             {
-                MIN_HEALTH_OFFSET = 0x1355;
+                MIN_HEALTH_OFFSET = 0xE2B;
                 MAX_HEALTH_OFFSET = 0x1507;
             }
             else if (levelIndex == 19)  // Temple of Poseidon
             {
-                MIN_HEALTH_OFFSET = 0x1FDB;
+                MIN_HEALTH_OFFSET = 0x196E;
                 MAX_HEALTH_OFFSET = 0x2A18;
             }
             else if (levelIndex == 20)  // The Lost Library
             {
-                MIN_HEALTH_OFFSET = 0x2A45;
+                MIN_HEALTH_OFFSET = 0x2369;
                 MAX_HEALTH_OFFSET = 0x3FE7;
             }
             else if (levelIndex == 21)  // Hall of Demetrius
             {
-                MIN_HEALTH_OFFSET = 0x2BE3;
+                MIN_HEALTH_OFFSET = 0x2507;
                 MAX_HEALTH_OFFSET = 0x3E94;
             }
             else if (levelIndex == 22)  // City of the Dead
