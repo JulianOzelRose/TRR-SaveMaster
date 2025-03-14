@@ -746,6 +746,7 @@ namespace TRR_SaveMaster
             if (byteFlag1 == 0x47 && byteFlag2 == 0x00 && byteFlag3 == 0x47 && byteFlag4 == 0x00) return true;  // Crouching
             if (byteFlag1 == 0x50 && byteFlag2 == 0x00 && byteFlag3 == 0x50 && byteFlag4 == 0x00) return true;  // Kneeling
             if (byteFlag1 == 0x51 && byteFlag2 == 0x00 && byteFlag3 == 0x50 && byteFlag4 == 0x00) return true;  // Crawling forward
+            if (byteFlag1 == 0x2A && byteFlag2 == 0x00 && byteFlag3 == 0x02 && byteFlag4 == 0x00) return true;  // Using puzzle item
 
             return false;
         }
