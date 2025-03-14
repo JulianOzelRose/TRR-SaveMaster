@@ -203,6 +203,11 @@ namespace TRR_SaveMaster
                 startOfLevelCoordinates = startOfLevelCoordinatesTR5[levelIndex];
             }
 
+            if (startOfLevelCoordinates.Length < 5)
+            {
+                return;
+            }
+
             nudXCoordinate.Value = startOfLevelCoordinates[0];
             nudYCoordinate.Value = startOfLevelCoordinates[1];
             nudZCoordinate.Value = startOfLevelCoordinates[2];
@@ -234,6 +239,11 @@ namespace TRR_SaveMaster
             else if (SELECTED_TAB == TAB_TR5 && endOfLevelCoordinatesTR5.ContainsKey(levelIndex))
             {
                 endOfLevelCoordinates = endOfLevelCoordinatesTR5[levelIndex];
+            }
+
+            if (endOfLevelCoordinates.Length < 5)
+            {
+                return;
             }
 
             nudXCoordinate.Value = endOfLevelCoordinates[0];
@@ -269,6 +279,11 @@ namespace TRR_SaveMaster
                 secret1Coordinates = secret1CoordinatesTR5[levelIndex];
             }
 
+            if (secret1Coordinates.Length < 5)
+            {
+                return;
+            }
+
             nudXCoordinate.Value = secret1Coordinates[0];
             nudYCoordinate.Value = secret1Coordinates[1];
             nudZCoordinate.Value = secret1Coordinates[2];
@@ -300,6 +315,11 @@ namespace TRR_SaveMaster
             else if (SELECTED_TAB == TAB_TR5 && secret2CoordinatesTR5.ContainsKey(levelIndex))
             {
                 secret2Coordinates = secret2CoordinatesTR5[levelIndex];
+            }
+
+            if (secret2Coordinates.Length < 5)
+            {
+                return;
             }
 
             nudXCoordinate.Value = secret2Coordinates[0];
@@ -335,6 +355,11 @@ namespace TRR_SaveMaster
                 secret3Coordinates = secret3CoordinatesTR5[levelIndex];
             }
 
+            if (secret3Coordinates.Length < 5)
+            {
+                return;
+            }
+
             nudXCoordinate.Value = secret3Coordinates[0];
             nudYCoordinate.Value = secret3Coordinates[1];
             nudZCoordinate.Value = secret3Coordinates[2];
@@ -358,6 +383,11 @@ namespace TRR_SaveMaster
             else if (SELECTED_TAB == TAB_TR4 && secret4CoordinatesTR4.ContainsKey(levelIndex))
             {
                 secret4Coordinates = secret4CoordinatesTR4[levelIndex];
+            }
+
+            if (secret4Coordinates.Length < 5)
+            {
+                return;
             }
 
             nudXCoordinate.Value = secret4Coordinates[0];
@@ -385,6 +415,11 @@ namespace TRR_SaveMaster
                 secret5Coordinates = secret5CoordinatesTR4[levelIndex];
             }
 
+            if (secret5Coordinates.Length < 5)
+            {
+                return;
+            }
+
             nudXCoordinate.Value = secret5Coordinates[0];
             nudYCoordinate.Value = secret5Coordinates[1];
             nudZCoordinate.Value = secret5Coordinates[2];
@@ -406,6 +441,11 @@ namespace TRR_SaveMaster
                 secret6Coordinates = secret6CoordinatesTR4[levelIndex];
             }
 
+            if (secret6Coordinates.Length < 5)
+            {
+                return;
+            }
+
             nudXCoordinate.Value = secret6Coordinates[0];
             nudYCoordinate.Value = secret6Coordinates[1];
             nudZCoordinate.Value = secret6Coordinates[2];
@@ -423,6 +463,11 @@ namespace TRR_SaveMaster
                 secret7Coordinates = secret7CoordinatesTR4[levelIndex];
             }
 
+            if (secret7Coordinates.Length < 5)
+            {
+                return;
+            }
+
             nudXCoordinate.Value = secret7Coordinates[0];
             nudYCoordinate.Value = secret7Coordinates[1];
             nudZCoordinate.Value = secret7Coordinates[2];
@@ -438,6 +483,11 @@ namespace TRR_SaveMaster
             if (SELECTED_TAB == TAB_TR4 && secret8CoordinatesTR4.ContainsKey(levelIndex))
             {
                 secret8Coordinates = secret8CoordinatesTR4[levelIndex];
+            }
+
+            if (secret8Coordinates.Length < 5)
+            {
+                return;
             }
 
             nudXCoordinate.Value = secret8Coordinates[0];
