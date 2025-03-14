@@ -544,11 +544,15 @@ namespace TRR_SaveMaster
             if (savegamePresent)
             {
                 byte levelIndex = ReadByte(savegame.Offset + LEVEL_INDEX_OFFSET);
-                string levelName = levelNames[levelIndex];
-                Int32 saveNumber = ReadInt32(savegame.Offset + SAVE_NUMBER_OFFSET);
-                GameMode gameMode = ReadByte(savegame.Offset + GAME_MODE_OFFSET) == 0 ? GameMode.Normal : GameMode.Plus;
 
-                savegame.UpdateDisplayName(levelName, saveNumber, gameMode);
+                if (levelNames.ContainsKey(levelIndex))
+                {
+                    string levelName = levelNames[levelIndex];
+                    Int32 saveNumber = ReadInt32(savegame.Offset + SAVE_NUMBER_OFFSET);
+                    GameMode gameMode = ReadByte(savegame.Offset + GAME_MODE_OFFSET) == 0 ? GameMode.Normal : GameMode.Plus;
+
+                    savegame.UpdateDisplayName(levelName, saveNumber, gameMode);
+                }
             }
         }
 
