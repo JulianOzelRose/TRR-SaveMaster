@@ -775,7 +775,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 34)  // The Great Pyramid
             {
                 MIN_HEALTH_OFFSET = 0x2289;
-                MAX_HEALTH_OFFSET = 0x4FAC;
+                MAX_HEALTH_OFFSET = 0x500C;
             }
             else if (levelIndex == 35)  // Khufu's Queens Pyramids
             {
@@ -861,30 +861,30 @@ namespace TRR_SaveMaster
         private void ShiftBytesRight(int healthOffset)
         {
             int boundary = savegameOffset + SAVEGAME_SIZE;
-            byte[] saveData = File.ReadAllBytes(savegamePath);
+            byte[] savegameData = File.ReadAllBytes(savegamePath);
 
-            Array.Resize(ref saveData, saveData.Length + 2);
+            Array.Resize(ref savegameData, savegameData.Length + 2);
 
             for (int i = boundary - 1; i >= healthOffset + 2; i--)
             {
-                saveData[i + 2] = saveData[i];
+                savegameData[i + 2] = savegameData[i];
             }
 
-            File.WriteAllBytes(savegamePath, saveData);
+            File.WriteAllBytes(savegamePath, savegameData);
         }
 
         private void ShiftBytesLeft(int healthOffset)
         {
             int boundary = savegameOffset + SAVEGAME_SIZE;
-            byte[] saveData = File.ReadAllBytes(savegamePath);
+            byte[] savegameData = File.ReadAllBytes(savegamePath);
 
             for (int i = healthOffset + 2; i < boundary - 2; i++)
             {
-                saveData[i] = saveData[i + 2];
+                savegameData[i] = savegameData[i + 2];
             }
 
-            Array.Resize(ref saveData, saveData.Length - 2);
-            File.WriteAllBytes(savegamePath, saveData);
+            Array.Resize(ref savegameData, savegameData.Length - 2);
+            File.WriteAllBytes(savegamePath, savegameData);
         }
 
         public int GetHealthOffset()
@@ -958,12 +958,26 @@ namespace TRR_SaveMaster
 
         private bool IsKnownByteFlagPattern(byte byteFlag1, byte byteFlag2, byte byteFlag3, byte byteFlag4)
         {
-            if (byteFlag1 == 0x02 && byteFlag2 == 0x02 && byteFlag3 == 0x00 && byteFlag4 == 0x52) return true;
-            if (byteFlag1 == 0x02 && byteFlag2 == 0x02 && byteFlag3 == 0x00 && byteFlag4 == 0x67) return true;
-            if (byteFlag1 == 0x02 && byteFlag2 == 0x02 && byteFlag3 == 0x47 && byteFlag4 == 0x67) return true;
-            if (byteFlag1 == 0x50 && byteFlag2 == 0x50 && byteFlag3 == 0x00 && byteFlag4 == 0x07) return true;
-            if (byteFlag1 == 0x50 && byteFlag2 == 0x50 && byteFlag3 == 0x47 && byteFlag4 == 0x07) return true;
-            if (byteFlag1 == 0x47 && byteFlag2 == 0x47 && byteFlag3 == 0x00 && byteFlag4 == 0xDE) return true;
+            if (byteFlag1 == 0x02 && byteFlag2 == 0x02 && byteFlag3 == 0x00 && byteFlag4 == 0x52) return true;  // Standing
+            if (byteFlag1 == 0x02 && byteFlag2 == 0x02 && byteFlag3 == 0x00 && byteFlag4 == 0x67) return true;  // Standing
+            if (byteFlag1 == 0x02 && byteFlag2 == 0x02 && byteFlag3 == 0x47 && byteFlag4 == 0x67) return true;  // Standing
+            if (byteFlag1 == 0x50 && byteFlag2 == 0x50 && byteFlag3 == 0x00 && byteFlag4 == 0x07) return true;  // Crawling
+            if (byteFlag1 == 0x50 && byteFlag2 == 0x50 && byteFlag3 == 0x47 && byteFlag4 == 0x07) return true;  // Crawling
+            if (byteFlag1 == 0x47 && byteFlag2 == 0x47 && byteFlag3 == 0x00 && byteFlag4 == 0xDE) return true;  // Crouching
+            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x06) return true;  // Running forward
+            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0xF4) return true;  // Sprinting
+            if (byteFlag1 == 0x03 && byteFlag2 == 0x03 && byteFlag3 == 0x00 && byteFlag4 == 0x4D) return true;  // Jumping forward
+            if (byteFlag1 == 0x17 && byteFlag2 == 0x02 && byteFlag3 == 0x00 && byteFlag4 == 0x93) return true;  // Rolling
+            if (byteFlag1 == 0x13 && byteFlag2 == 0x13 && byteFlag3 == 0x00 && byteFlag4 == 0x61) return true;  // Climbing
+            if (byteFlag1 == 0x2A && byteFlag2 == 0x00 && byteFlag3 == 0x00 && byteFlag4 == 0x83) return true;  // Using puzzle item
+            if (byteFlag1 == 0x2B && byteFlag2 == 0x00 && byteFlag3 == 0x00 && byteFlag4 == 0x86) return true;  // Using puzzle item
+            if (byteFlag1 == 0x21 && byteFlag2 == 0x21 && byteFlag3 == 0x00 && byteFlag4 == 0x6E) return true;  // On water
+            if (byteFlag1 == 0x21 && byteFlag2 == 0x21 && byteFlag3 == 0x00 && byteFlag4 == 0x75) return true;  // Wading through water
+            if (byteFlag1 == 0x0D && byteFlag2 == 0x0D && byteFlag3 == 0x00 && byteFlag4 == 0x6C) return true;  // Underwater
+            if (byteFlag1 == 0x0D && byteFlag2 == 0x12 && byteFlag3 == 0x00 && byteFlag4 == 0x6C) return true;  // Underwater
+            if (byteFlag1 == 0x12 && byteFlag2 == 0x12 && byteFlag3 == 0x00 && byteFlag4 == 0xC6) return true;  // Swimming forward
+            if (byteFlag1 == 0x12 && byteFlag2 == 0x0D && byteFlag3 == 0x00 && byteFlag4 == 0xC8) return true;  // Swimming forward
+            if (byteFlag1 == 0x18 && byteFlag2 == 0x18 && byteFlag3 == 0x00 && byteFlag4 == 0x46) return true;  // Sliding downhill
 
             return false;
         }
