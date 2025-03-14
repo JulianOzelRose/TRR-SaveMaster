@@ -676,7 +676,32 @@ namespace TRR_SaveMaster
 
         private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR3 = new Dictionary<byte, Int32[]>
         {
-
+            { 1,  new Int32[] { 28160, -256, 28160, 0, 4        } },    // Jungle
+            { 2,  new Int32[] { 94720, -512, 26112, 270, 18     } },    // Temple Ruins
+            { 3,  new Int32[] { 84480, -256, 58880, 0, 1        } },    // The River Ganges
+            { 4,  new Int32[] { 3584, -15360, 47616, 90, 20     } },    // Caves of Kaliya
+            { 5,  new Int32[] { 18944, 1280, 18603, 0, 7        } },    // Costal Village
+            { 6,  new Int32[] { 11776, -5376, 74240, 135, 90    } },    // Crash Site
+            { 7,  new Int32[] { 73216, -25984, 55808, 180, 50   } },    // Madubu Gorge
+            { 8,  new Int32[] { 46592, -8839, 59928, 180, 0     } },    // Temple of Puna
+            { 9,  new Int32[] { 41472, -21504, 41472, 90, 52    } },    // Thames Wharf
+            { 10, new Int32[] { 71587, -10309, 98816, 90, 157   } },    // Aldwych
+            { 11, new Int32[] { 81408, -17920, 39424, 270, 36   } },    // Lud's Gate
+            { 12, new Int32[] { 51712, 0, 50688, 270, 4         } },    // City
+            { 13, new Int32[] { 23040, -1183, 5858, 0, 0        } },    // Nevada Desert
+            { 14, new Int32[] { 17334, 0, 23294, 270, 2         } },    // High Security Compound
+            { 15, new Int32[] { 64000, 3072, 52736, 0, 31       } },    // Area 51
+            { 16, new Int32[] { 32256, -3713, 4608, 0, 12       } },    // Antarctica
+            { 17, new Int32[] { 59904, 1024, 25088, 90, 40      } },    // RX-Tech Mines
+            { 18, new Int32[] { 98816, 0, 69120, 270, 9         } },    // Lost City of Tinnos
+            { 19, new Int32[] { 61952, -512, 62976, 270, 5      } },    // Meteorite Cavern
+            { 20, new Int32[] { 57306, -17125, 55808, 270, 40   } },    // All Hallows
+            { 21, new Int32[] { 92672, -3072, 41472, 290, 107   } },    // Highland Fling
+            { 22, new Int32[] { 25088, -5120, 61952, 0, 77      } },    // Willard's Lair
+            { 23, new Int32[] { 41472, 6912, 73216, 135, 24     } },    // Shakespeare Cliff
+            { 24, new Int32[] { 61952, 128, 25088, 270, 1       } },    // Sleeping with the Fishes
+            { 25, new Int32[] { 78261, 6363, 47471, 180, 27     } },    // It's a Madhouse!
+            { 26, new Int32[] { 44544, 4864, 51101, 180, 68     } },    // Reunion
         };
 
         private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR4 = new Dictionary<byte, Int32[]>
