@@ -747,7 +747,19 @@ namespace TRR_SaveMaster
 
         private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR5 = new Dictionary<byte, Int32[]>
         {
-
+            { 1,  new Int32[] { 23296, 0, 15616, 0, 0           } },    // Streets of Rome
+            { 2,  new Int32[] { 45824, 0, 21248, 270, 50        } },    // Trajan's Markets
+            { 3,  new Int32[] { 45334, 2304, 26368, 270, 20     } },    // The Colosseum
+            { 4,  new Int32[] { 17664, -2048, 14798, 0, 99      } },    // The Base
+            { 5,  new Int32[] { 28975, 4480, 26880, 90, 23      } },    // The Submarine
+            { 6,  new Int32[] { 7805, 27411, 60283, 0, 11       } },    // Deepsea Dive
+            { 7,  new Int32[] { 29440, 2560, 38144, 0, 37       } },    // Sinking Submarine
+            { 8,  new Int32[] { 29440, 64, 16128, 0, 70         } },    // Gallows Tree
+            { 9,  new Int32[] { 24320, 3840, 14080, 0, 5        } },    // Labyrinth
+            { 10, new Int32[] { 39168, 2751, 20829, 0, 18       } },    // Old Mill
+            { 11, new Int32[] { 19735, 0, 19200, 270, 3         } },    // The 13th Floor
+            { 12, new Int32[] { 14592, -12032, 23296, 90, 129   } },    // Escape with the Iris
+            { 14, new Int32[] { 26880, 4992, 38656, 180, 8      } },    // Red Alert!
         };
 
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR1 = new Dictionary<byte, Int32[]>
