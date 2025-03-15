@@ -742,6 +742,7 @@ namespace TRR_SaveMaster
             { 36, new Int32[] { 6912, -9408, 4864, 0, 0         } },    // Inside the Great Pyramid
             { 37, new Int32[] { 5888, 1024, 7936, 270, 33       } },    // Temple of Horus
             { 38, new Int32[] { 10496, 15232, 7936, 270, 85     } },    // Temple of Horus (Part 2)
+            { 40, new Int32[] { 50406, -1152, 13077, 180, 26    } },    // The Times Exclusive
         };
 
         private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR5 = new Dictionary<byte, Int32[]>
@@ -861,6 +862,7 @@ namespace TRR_SaveMaster
             { 35, new Int32[] { 17370, -6969, 45209, 89, 168    } },    // Khufu's Queens Pyramids
             { 36, new Int32[] { 5137, 1024, 21236, 270, 119     } },    // Inside the Great Pyramid
             { 38, new Int32[] { 27513, 4547, 7903, 84, 13       } },    // Temple of Horus (Part 2)
+            { 40, new Int32[] { 14088, -4992, 12337, 0, 47      } },    // The Times Exclusive
         };
 
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR5 = new Dictionary<byte, Int32[]>
@@ -1151,6 +1153,7 @@ namespace TRR_SaveMaster
             { 34, new Int32[] { 23152, -1664, 26883, 270, 43    } },    // The Great Pyramid
             { 35, new Int32[] { 12032, -2688, 18784, 180, 129   } },    // Khufu's Queens Pyramids
             { 36, new Int32[] { 7414, -3328, 14093, 175, 4      } },    // Inside the Great Pyramid
+            { 40, new Int32[] { 49381, -4263, 11622, 270, 44    } },    // The Times Exclusive
         };
 
         private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR4 = new Dictionary<byte, Int32[]>
@@ -1167,6 +1170,7 @@ namespace TRR_SaveMaster
             { 20, new Int32[] { 8403, 3200, 18783, 176, 180     } },    // The Lost Library
             { 24, new Int32[] { 27707, -1024, 25709, 110, 88    } },    // Chambers of Tulun
             { 27, new Int32[] { 27598, 2944, 44841, 270, 72     } },    // Citadel
+            { 40, new Int32[] { 31286, -1280, 22784, 90, 50     } },    // The Times Exclusive
         };
 
         private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR4 = new Dictionary<byte, Int32[]>
