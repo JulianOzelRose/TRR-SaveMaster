@@ -417,7 +417,7 @@ namespace TRR_SaveMaster
         }
 
         public void DisplayGameInfo(NumericUpDown nudSaveNumber, NumericUpDown nudSmallMedipacks, NumericUpDown nudLargeMedipacks,
-            NumericUpDown nudFlares, NumericUpDown nudGoldenSkulls, CheckBox chkPistols, CheckBox chkShotgun, CheckBox chkUzi,
+            NumericUpDown nudFlares, NumericUpDown nudGoldenSkulls, Label lblGoldenSkulls, CheckBox chkPistols, CheckBox chkShotgun, CheckBox chkUzi,
             CheckBox chkRevolver, CheckBox chkGrenadeGun, CheckBox chkCrossbow, TrackBar trbHealth, Label lblHealth,
             Label lblHealthError, NumericUpDown nudShotgunNormalAmmo, NumericUpDown nudShotgunWideshotAmmo, NumericUpDown nudUziAmmo,
             NumericUpDown nudRevolverAmmo, NumericUpDown nudCrossbowNormalAmmo, NumericUpDown nudGrenadeGunFlashAmmo,
@@ -428,7 +428,6 @@ namespace TRR_SaveMaster
             nudSmallMedipacks.Value = GetNumSmallMedipacks();
             nudLargeMedipacks.Value = GetNumLargeMedipacks();
             nudFlares.Value = GetNumFlares();
-            nudGoldenSkulls.Value = GetNumGoldenSkulls();
 
             chkPistols.Checked = IsPistolsPresent();
             chkUzi.Checked = IsUziPresent();
@@ -447,6 +446,23 @@ namespace TRR_SaveMaster
             nudGrenadeGunNormalAmmo.Value = GetGrenadeGunNormalAmmo();
             nudGrenadeGunSuperAmmo.Value = GetGrenadeGunSuperAmmo();
             nudGrenadeGunFlashAmmo.Value = GetGrenadeGunFlashAmmo();
+
+            byte levelIndex = GetLevelIndex();
+
+            if (levelIndex == 1 || levelIndex == 2) // Angkor Wat and Race for the Iris
+            {
+                lblGoldenSkulls.Visible = true;
+                nudGoldenSkulls.Visible = true;
+                nudGoldenSkulls.Enabled = true;
+                nudGoldenSkulls.Value = GetNumGoldenSkulls();
+            }
+            else
+            {
+                lblGoldenSkulls.Visible = false;
+                nudGoldenSkulls.Visible = false;
+                nudGoldenSkulls.Enabled = false;
+                nudGoldenSkulls.Value = 0;
+            }
 
             int healthOffset = GetHealthOffset();
 
@@ -481,7 +497,6 @@ namespace TRR_SaveMaster
             WriteNumSmallMedipacks((UInt16)nudSmallMedipacks.Value);
             WriteNumLargeMedipacks((UInt16)nudLargeMedipacks.Value);
             WriteNumFlares((UInt16)nudFlares.Value);
-            WriteNumGoldenSkulls((sbyte)nudGoldenSkulls.Value);
 
             WritePistolsPresent(chkPistols.Checked);
             WriteUziPresent(chkUzi.Checked);
@@ -500,6 +515,11 @@ namespace TRR_SaveMaster
             WriteGrenadeGunNormalAmmo((UInt16)nudGrenadeGunNormalAmmo.Value);
             WriteGrenadeGunSuperAmmo((UInt16)nudGrenadeGunSuperAmmo.Value);
             WriteGrenadeGunFlashAmmo((UInt16)nudGrenadeGunFlashAmmo.Value);
+
+            if (nudGoldenSkulls.Enabled)
+            {
+                WriteNumGoldenSkulls((sbyte)nudGoldenSkulls.Value);
+            }
 
             if (trbHealth.Enabled)
             {

@@ -1556,7 +1556,7 @@ namespace TRR_SaveMaster
 
                     TR4.DetermineOffsets();
                     TR4.DisplayGameInfo(nudSaveNumberTR4, nudSmallMedipacksTR4, nudLargeMedipacksTR4,
-                        nudFlaresTR4, nudGoldenSkullsTR4, chkPistolsTR4, chkShotgunTR4, chkUziTR4, chkRevolverTR4,
+                        nudFlaresTR4, nudGoldenSkullsTR4, lblGoldenSkullsTR4, chkPistolsTR4, chkShotgunTR4, chkUziTR4, chkRevolverTR4,
                         chkGrenadeGunTR4, chkCrossbowTR4, trbHealthTR4, lblHealthTR4, lblHealthErrorTR4,
                         nudShotgunNormalAmmoTR4, nudShotgunWideshotAmmoTR4, nudUziAmmoTR4, nudRevolverAmmoTR4,
                         nudCrossbowNormalAmmoTR4, nudGrenadeGunFlashAmmoTR4, nudGrenadeGunNormalAmmoTR4,
