@@ -1,12 +1,12 @@
 # Tomb Raider Remastered Savegame Editor
 This is a savegame editor for Tomb Raider Remastered. For the second trilogy, Tomb Raider IV and V are currently supported.
-Tomb Raider VI support is in progress. You can edit items, health, weapons, ammunition, statistics, and coordinates.
-Compatible with PC, PS4, and Nintendo Switch savegames. For instructions on how to download and use this savegame editor, scroll down to
+Tomb Raider VI support is in progress. You can edit items, health, weapons, ammunition, statistics, and position.
+The Tomb Raider I-III portion of this editor is compatible with PC, PS4, and Nintendo Switch savegames. For instructions on how to download and use this savegame editor, scroll down to
 the section below. Additionally, technical details on reverse engineering the Tomb Raider I-III Remastered trilogy are included on later on in this README.
 For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder or delete savegames,
 check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
-![TRR-SaveMaster-UI](https://github.com/user-attachments/assets/65e9a546-b939-49b4-b84c-bfe1087e3097)
+![TRR-SaveMaster-UI](https://github.com/user-attachments/assets/8e26be69-73ef-44e7-9212-722ee1729503)
 
 
 ## Installation and use
@@ -38,9 +38,9 @@ Regular backups can safeguard your progress in the event of unforeseen issues or
 you can also do this by clicking "File" then "Create backup".
 
 ## Using the Position Editor
-![PositionEditor-UI](https://github.com/user-attachments/assets/ddeb3235-57f1-435e-9745-a04c00d364d9)
+![PositionEditor-UI](https://github.com/user-attachments/assets/27e61f83-6a77-42a7-9c28-e2709cf1f60d)
 
-This savegame editor includes a Position Editor feature. To use it, click "Edit," then select "Position." For Lara's coordinates to be correctly parsed, the health bytes must be located. If the health bytes cannot be found, try saving the game while Lara is standing. Once in the Position Editor menu, you can teleport to pre-determined coordinates, such as the end of the level or secret locations.  
+This savegame editor includes a Position Editor feature. To use it, click "Edit," then select "Position." For Lara's coordinates to be correctly parsed, the health bytes must be located. If the health bytes cannot be found, try saving the game while Lara is standing. Once in the Position Editor menu, you can teleport to pre-determined coordinates, such as the start of the level, end of the level or secret locations.  
 
 - The **X-coordinate** represents Lara's horizontal position in the game. Decreasing its value moves her to the left, while increasing it moves her to the right.  
 - The **Y-coordinate** represents Lara's vertical position in the game. Decreasing it moves her up, while increasing it moves her down.  
@@ -50,6 +50,12 @@ This savegame editor includes a Position Editor feature. To use it, click "Edit,
 
 It's essential that the Room number matches Lara's current coordinates; otherwise, the game will not interpret her position correctly. Click "Save" in this menu to apply changes, or "Cancel" to retain Lara's current
 position.
+
+## Using the Statistics Editor
+![StatisticsEditor-UI](https://github.com/user-attachments/assets/f3018d32-c736-4302-aaa6-779df3bde02a)
+
+This savegame editor also includes a Statistics Editor feature. To use it, click "Edit," then select "Statistics." For Tomb Raider I-III, the statistics displayed are level-specific, meaning each level has its own separate stats such as time taken,
+enemies killed, and secrets found. For Tomb Raider IV-V, the statistics are global, meaning they track cumulative progress across all levels, including total playtime, total kills, and total pickups.
 
 ## Tomb Raider I-III Remastered Savegame Format
 This section details the technical aspects of reverse engineering the savegames of the Tomb Raider I-III Remastered trilogy. All savegames are stored in the `savegame.dat` file.
@@ -67,9 +73,9 @@ When a savegame slot is occupied, the value at offset `0x004` is set to 1. When 
 the value is 0. See the code below.
 
 ```
-for (int i = 0; i < 32; i++)
+for (int i = 0; i < MAX_SAVEGAMES; i++)
 {
-    int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR1 + (i * SAVEGAME_ITERATOR);
+    int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR3 + (i * SAVEGAME_SIZE);
     SetSavegameOffset(currentSavegameOffset);
 
     Int32 saveNumber = GetSaveNumber();
@@ -79,7 +85,7 @@ for (int i = 0; i < 32; i++)
     if (savegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
     {
         string levelName = levelNames[levelIndex];
-        int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR1) / SAVEGAME_ITERATOR;
+        int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR3) / SAVEGAME_SIZE;
         GameMode gameMode = GetGameMode();
 
         Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode);
@@ -170,19 +176,45 @@ byte flags coincide with null padding or other unrelated data.
 ```
 public int GetHealthOffset()
 {
+    byte[] savegameData;
+
+    using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+    {
+        savegameData = new byte[fs.Length];
+        fs.Read(savegameData, 0, savegameData.Length);
+    }
+
     for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset += 0x1A)
     {
-        UInt16 value = ReadUInt16(savegameOffset + offset);
+        int valueIndex = savegameOffset + offset;
+
+        if (valueIndex + 2 >= savegameData.Length)
+        {
+            break;
+        }
+
+        UInt16 value = BitConverter.ToUInt16(savegameData, valueIndex);
 
         if (value >= MIN_HEALTH_VALUE && value <= MAX_HEALTH_VALUE)
         {
-            byte byteFlag1 = ReadByte(savegameOffset + offset - 10);
-            byte byteFlag2 = ReadByte(savegameOffset + offset - 9);
-            byte byteFlag3 = ReadByte(savegameOffset + offset - 8);
+            int flagIndex1 = savegameOffset + offset - 10;
+            int flagIndex2 = savegameOffset + offset - 9;
+            int flagIndex3 = savegameOffset + offset - 8;
+            int flagIndex4 = savegameOffset + offset - 7;
 
-            if (IsKnownByteFlagPattern(byteFlag1, byteFlag2, byteFlag3))
+            if (flagIndex4 >= savegameData.Length)
             {
-                return (savegameOffset + offset);
+                continue;
+            }
+
+            byte byteFlag1 = savegameData[flagIndex1];
+            byte byteFlag2 = savegameData[flagIndex2];
+            byte byteFlag3 = savegameData[flagIndex3];
+            byte byteFlag4 = savegameData[flagIndex4];
+
+            if (IsKnownByteFlagPattern(byteFlag1, byteFlag2, byteFlag3, byteFlag4))
+            {
+                return savegameOffset + offset;
             }
         }
     }
