@@ -685,7 +685,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 15)  // Coastal Ruins
             {
                 MIN_HEALTH_OFFSET = 0x978;
-                MAX_HEALTH_OFFSET = 0x2244;
+                MAX_HEALTH_OFFSET = 0x2510;
             }
             else if (levelIndex == 16)  // Pharos, Temple of Isis
             {
