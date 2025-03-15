@@ -700,12 +700,12 @@ namespace TRR_SaveMaster
             else if (levelIndex == 18)  // Catacombs
             {
                 MIN_HEALTH_OFFSET = 0xE2B;
-                MAX_HEALTH_OFFSET = 0x1507;
+                MAX_HEALTH_OFFSET = 0x24F5;
             }
             else if (levelIndex == 19)  // Temple of Poseidon
             {
                 MIN_HEALTH_OFFSET = 0x196E;
-                MAX_HEALTH_OFFSET = 0x2A18;
+                MAX_HEALTH_OFFSET = 0x2B2E;
             }
             else if (levelIndex == 20)  // The Lost Library
             {
