@@ -706,7 +706,42 @@ namespace TRR_SaveMaster
 
         private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR4 = new Dictionary<byte, Int32[]>
         {
-
+            { 1,  new Int32[] { 2816, 640, 43264, 159, 20       } },    // Angkor Wat
+            { 2,  new Int32[] { 44297, -256, 9984, 270, 33      } },    // Race for the Iris
+            { 3,  new Int32[] { 45312, -7296, 12544, 270, 36    } },    // The Tomb of Seth
+            { 4,  new Int32[] { 1384, -2176, 17664, 270, 7      } },    // Burial Chambers
+            { 5,  new Int32[] { 46336, -448, 20224, 270, 2      } },    // Valley of the Kings
+            { 6,  new Int32[] { 9483, 2816, 46336, 270, 23      } },    // KV5
+            { 7,  new Int32[] { 44764, 0, 23276, 0, 0           } },    // Temple of Karnak
+            { 8,  new Int32[] { 46336, 1024, 11419, 0, 48       } },    // The Great Hypostyle Hall
+            { 9,  new Int32[] { 35072, 1152, 24231, 0, 86       } },    // Sacred Lake
+            { 11, new Int32[] { 40192, -7680, 14080, 0, 166     } },    // Tomb of Semerkhet
+            { 12, new Int32[] { 25344, -8192, 3328, 45, 45      } },    // Guardian of Semerkhet
+            { 13, new Int32[] { 10496, -384, 26880, 90, 1       } },    // Desert Railroad
+            { 14, new Int32[] { 14080, -2560, 16128, 45, 0      } },    // Alexandria
+            { 15, new Int32[] { 12032, -2944, 22784, 88, 110    } },    // Coastal Ruins
+            { 16, new Int32[] { 34291, -3456, 22845, 270, 13    } },    // Pharos, Temple of Isis
+            { 17, new Int32[] { 19712, -2688, 19200, 270, 17    } },    // Cleopatra's Palaces
+            { 18, new Int32[] { 33536, -7040, 25344, 180, 6     } },    // Catacombs
+            { 19, new Int32[] { 42752, -384, 28928, 180, 106    } },    // Temple of Poseidon
+            { 20, new Int32[] { 22272, -1024, 24320, 0, 160     } },    // The Lost Library
+            { 21, new Int32[] { 28928, -512, 28416, 90, 16      } },    // Hall of Demetrius
+            { 22, new Int32[] { 25856, 512, 15616, 270, 25      } },    // City of the Dead
+            { 23, new Int32[] { 22272, 768, 15080, 0, 107       } },    // Trenches
+            { 24, new Int32[] { 25320, 0, 16640, 90, 70         } },    // Chambers of Tulun
+            { 25, new Int32[] { 25856, -1792, 24832, 90, 44     } },    // Street Bazaar
+            { 26, new Int32[] { 26880, -1920, 36608, 0, 98      } },    // Citadel Gate
+            { 27, new Int32[] { 35072, 128, 19712, 0, 141       } },    // Citadel
+            { 28, new Int32[] { 42240, 63, 21760, 270, 32       } },    // The Sphinx Complex
+            { 30, new Int32[] { 35584, -448, 6912, 0, 14        } },    // Underneath the Sphinx
+            { 31, new Int32[] { 27392, -1152, 24320, 180, 63    } },    // Menkaure's Pyramid
+            { 32, new Int32[] { 25344, -5568, 32512, 0, 61      } },    // Inside Menkaure's Pyramid
+            { 33, new Int32[] { 6400, -4225, 5888, 90, 114      } },    // The Mastabas
+            { 34, new Int32[] { 27904, -2560, 25344, 270, 106   } },    // The Great Pyramid
+            { 35, new Int32[] { 18688, -3969, 28928, 180, 50    } },    // Khufu's Queens Pyramids
+            { 36, new Int32[] { 6912, -9408, 4864, 0, 0         } },    // Inside the Great Pyramid
+            { 37, new Int32[] { 5888, 1024, 7936, 270, 33       } },    // Temple of Horus
+            { 38, new Int32[] { 10496, 15232, 7936, 270, 85     } },    // Temple of Horus (Part 2)
         };
 
         private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR5 = new Dictionary<byte, Int32[]>
