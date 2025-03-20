@@ -684,7 +684,7 @@ namespace TRR_SaveMaster
             }
             else if (levelIndex == 11)  // Tomb of Semerkhet
             {
-                MIN_HEALTH_OFFSET = 0x1F7D;
+                MIN_HEALTH_OFFSET = 0x1D1F;
                 MAX_HEALTH_OFFSET = 0x3116;
             }
             else if (levelIndex == 12)  // Guardian of Semerkhet
@@ -705,7 +705,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 15)  // Coastal Ruins
             {
                 MIN_HEALTH_OFFSET = 0x978;
-                MAX_HEALTH_OFFSET = 0x2510;
+                MAX_HEALTH_OFFSET = 0x386D;
             }
             else if (levelIndex == 16)  // Pharos, Temple of Isis
             {
@@ -724,17 +724,17 @@ namespace TRR_SaveMaster
             }
             else if (levelIndex == 19)  // Temple of Poseidon
             {
-                MIN_HEALTH_OFFSET = 0x196E;
+                MIN_HEALTH_OFFSET = 0x185A;
                 MAX_HEALTH_OFFSET = 0x2B2E;
             }
             else if (levelIndex == 20)  // The Lost Library
             {
-                MIN_HEALTH_OFFSET = 0x2369;
+                MIN_HEALTH_OFFSET = 0x2255;
                 MAX_HEALTH_OFFSET = 0x3FE7;
             }
             else if (levelIndex == 21)  // Hall of Demetrius
             {
-                MIN_HEALTH_OFFSET = 0x2507;
+                MIN_HEALTH_OFFSET = 0x23DD;
                 MAX_HEALTH_OFFSET = 0x3E94;
             }
             else if (levelIndex == 22)  // City of the Dead
