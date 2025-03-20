@@ -134,7 +134,7 @@ namespace TRR_SaveMaster
             // nudVesselsBroken
             // 
             this.nudVesselsBroken.Enabled = false;
-            this.nudVesselsBroken.Location = new System.Drawing.Point(150, 257);
+            this.nudVesselsBroken.Location = new System.Drawing.Point(149, 257);
             this.nudVesselsBroken.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -157,7 +157,7 @@ namespace TRR_SaveMaster
             // 
             // nudCrystalsUsed
             // 
-            this.nudCrystalsUsed.Location = new System.Drawing.Point(150, 101);
+            this.nudCrystalsUsed.Location = new System.Drawing.Point(149, 101);
             this.nudCrystalsUsed.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -172,7 +172,7 @@ namespace TRR_SaveMaster
             // lblColon2
             // 
             this.lblColon2.AutoSize = true;
-            this.lblColon2.Location = new System.Drawing.Point(282, 27);
+            this.lblColon2.Location = new System.Drawing.Point(281, 27);
             this.lblColon2.Name = "lblColon2";
             this.lblColon2.Size = new System.Drawing.Size(10, 13);
             this.lblColon2.TabIndex = 38;
@@ -181,7 +181,7 @@ namespace TRR_SaveMaster
             // lblColon
             // 
             this.lblColon.AutoSize = true;
-            this.lblColon.Location = new System.Drawing.Point(207, 27);
+            this.lblColon.Location = new System.Drawing.Point(206, 27);
             this.lblColon.Name = "lblColon";
             this.lblColon.Size = new System.Drawing.Size(10, 13);
             this.lblColon.TabIndex = 37;
@@ -189,7 +189,7 @@ namespace TRR_SaveMaster
             // 
             // nudSeconds
             // 
-            this.nudSeconds.Location = new System.Drawing.Point(300, 23);
+            this.nudSeconds.Location = new System.Drawing.Point(299, 23);
             this.nudSeconds.Maximum = new decimal(new int[] {
             59,
             0,
@@ -203,7 +203,7 @@ namespace TRR_SaveMaster
             // 
             // nudMinutes
             // 
-            this.nudMinutes.Location = new System.Drawing.Point(225, 23);
+            this.nudMinutes.Location = new System.Drawing.Point(224, 23);
             this.nudMinutes.Maximum = new decimal(new int[] {
             59,
             0,
@@ -217,7 +217,7 @@ namespace TRR_SaveMaster
             // 
             // nudHours
             // 
-            this.nudHours.Location = new System.Drawing.Point(150, 23);
+            this.nudHours.Location = new System.Drawing.Point(149, 23);
             this.nudHours.Maximum = new decimal(new int[] {
             19884,
             0,
@@ -241,7 +241,7 @@ namespace TRR_SaveMaster
             // lblDistanceTravelledUnit
             // 
             this.lblDistanceTravelledUnit.AutoSize = true;
-            this.lblDistanceTravelledUnit.Location = new System.Drawing.Point(208, 235);
+            this.lblDistanceTravelledUnit.Location = new System.Drawing.Point(207, 235);
             this.lblDistanceTravelledUnit.Name = "lblDistanceTravelledUnit";
             this.lblDistanceTravelledUnit.Size = new System.Drawing.Size(15, 13);
             this.lblDistanceTravelledUnit.TabIndex = 32;
@@ -264,7 +264,7 @@ namespace TRR_SaveMaster
             0,
             0,
             131072});
-            this.nudDistanceTravelled.Location = new System.Drawing.Point(150, 231);
+            this.nudDistanceTravelled.Location = new System.Drawing.Point(149, 231);
             this.nudDistanceTravelled.Maximum = new decimal(new int[] {
             -1,
             0,
@@ -279,7 +279,7 @@ namespace TRR_SaveMaster
             // lblSlash
             // 
             this.lblSlash.AutoSize = true;
-            this.lblSlash.Location = new System.Drawing.Point(208, 183);
+            this.lblSlash.Location = new System.Drawing.Point(207, 183);
             this.lblSlash.Name = "lblSlash";
             this.lblSlash.Size = new System.Drawing.Size(12, 13);
             this.lblSlash.TabIndex = 29;
@@ -287,7 +287,7 @@ namespace TRR_SaveMaster
             // 
             // nudHits
             // 
-            this.nudHits.Location = new System.Drawing.Point(225, 179);
+            this.nudHits.Location = new System.Drawing.Point(224, 179);
             this.nudHits.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -302,7 +302,7 @@ namespace TRR_SaveMaster
             // nudPickupsMax
             // 
             this.nudPickupsMax.Enabled = false;
-            this.nudPickupsMax.Location = new System.Drawing.Point(225, 127);
+            this.nudPickupsMax.Location = new System.Drawing.Point(224, 127);
             this.nudPickupsMax.Maximum = new decimal(new int[] {
             255,
             0,
@@ -317,7 +317,7 @@ namespace TRR_SaveMaster
             // lblOf2
             // 
             this.lblOf2.AutoSize = true;
-            this.lblOf2.Location = new System.Drawing.Point(206, 131);
+            this.lblOf2.Location = new System.Drawing.Point(205, 131);
             this.lblOf2.Name = "lblOf2";
             this.lblOf2.Size = new System.Drawing.Size(16, 13);
             this.lblOf2.TabIndex = 26;
@@ -326,7 +326,7 @@ namespace TRR_SaveMaster
             // nudSecretsFoundMax
             // 
             this.nudSecretsFoundMax.Enabled = false;
-            this.nudSecretsFoundMax.Location = new System.Drawing.Point(225, 49);
+            this.nudSecretsFoundMax.Location = new System.Drawing.Point(224, 49);
             this.nudSecretsFoundMax.Maximum = new decimal(new int[] {
             255,
             0,
@@ -341,7 +341,7 @@ namespace TRR_SaveMaster
             // lblOf
             // 
             this.lblOf.AutoSize = true;
-            this.lblOf.Location = new System.Drawing.Point(206, 53);
+            this.lblOf.Location = new System.Drawing.Point(205, 53);
             this.lblOf.Name = "lblOf";
             this.lblOf.Size = new System.Drawing.Size(16, 13);
             this.lblOf.TabIndex = 24;
@@ -355,7 +355,7 @@ namespace TRR_SaveMaster
             0,
             0,
             65536});
-            this.nudMedipacksUsed.Location = new System.Drawing.Point(150, 205);
+            this.nudMedipacksUsed.Location = new System.Drawing.Point(149, 205);
             this.nudMedipacksUsed.Maximum = new decimal(new int[] {
             635,
             0,
@@ -369,7 +369,7 @@ namespace TRR_SaveMaster
             // 
             // nudAmmoUsed
             // 
-            this.nudAmmoUsed.Location = new System.Drawing.Point(150, 179);
+            this.nudAmmoUsed.Location = new System.Drawing.Point(149, 179);
             this.nudAmmoUsed.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -383,7 +383,7 @@ namespace TRR_SaveMaster
             // 
             // nudKills
             // 
-            this.nudKills.Location = new System.Drawing.Point(150, 153);
+            this.nudKills.Location = new System.Drawing.Point(149, 153);
             this.nudKills.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -397,7 +397,7 @@ namespace TRR_SaveMaster
             // 
             // nudPickups
             // 
-            this.nudPickups.Location = new System.Drawing.Point(150, 127);
+            this.nudPickups.Location = new System.Drawing.Point(149, 127);
             this.nudPickups.Maximum = new decimal(new int[] {
             127,
             0,
@@ -411,7 +411,7 @@ namespace TRR_SaveMaster
             // 
             // nudCrystalsFound
             // 
-            this.nudCrystalsFound.Location = new System.Drawing.Point(150, 75);
+            this.nudCrystalsFound.Location = new System.Drawing.Point(149, 75);
             this.nudCrystalsFound.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -425,7 +425,7 @@ namespace TRR_SaveMaster
             // 
             // nudSecretsFound
             // 
-            this.nudSecretsFound.Location = new System.Drawing.Point(150, 49);
+            this.nudSecretsFound.Location = new System.Drawing.Point(149, 49);
             this.nudSecretsFound.Maximum = new decimal(new int[] {
             16,
             0,
