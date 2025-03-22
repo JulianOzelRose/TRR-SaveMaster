@@ -848,7 +848,7 @@ namespace TRR_SaveMaster
             { 2,  new Int32[] { 26312, -1664, 15834, 3, 115     } },    // Race for the Iris
             { 3,  new Int32[] { 3828, 1920, 25657, 0, 57        } },    // The Tomb of Seth
             { 4,  new Int32[] { 4235, -1885, 49922, 260, 125    } },    // Burial Chambers
-            //{ 5,  new Int32[] { 19153, 256, 10823, 166, 3       } },    // Valley of the Kings
+            { 5,  new Int32[] { 18664, -514, 8188, 70, 4        } },    // Valley of the Kings
             //{ 6,  new Int32[] { 29637, -911, 18061, 95, 22      } },    // KV5
             { 7,  new Int32[] { 30968, 627, 25549, 1, 7         } },    // Temple of Karnak
             { 8,  new Int32[] { 37454, -256, 24018, 2, 151      } },    // The Great Hypostyle Hall
