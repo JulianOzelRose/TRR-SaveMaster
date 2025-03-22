@@ -998,6 +998,41 @@ namespace TRR_SaveMaster
             if (byteFlag1 == 0x12 && byteFlag2 == 0x12 && byteFlag3 == 0x00 && byteFlag4 == 0xC6) return true;  // Swimming forward
             if (byteFlag1 == 0x12 && byteFlag2 == 0x0D && byteFlag3 == 0x00 && byteFlag4 == 0xC8) return true;  // Swimming forward
             if (byteFlag1 == 0x18 && byteFlag2 == 0x18 && byteFlag3 == 0x00 && byteFlag4 == 0x46) return true;  // Sliding downhill
+            if (byteFlag1 == 0x00 && byteFlag2 == 0x00 && byteFlag3 == 0x00 && byteFlag4 == 0x40) return true;  // Jeep
+            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x34) return true;  // Jeep
+            if (byteFlag1 == 0x0B && byteFlag2 == 0x0B && byteFlag3 == 0x00 && byteFlag4 == 0x38) return true;  // Jeep
+            if (byteFlag1 == 0x0B && byteFlag2 == 0x0C && byteFlag3 == 0x00 && byteFlag4 == 0x38) return true;  // Jeep
+            if (byteFlag1 == 0x0C && byteFlag2 == 0x0C && byteFlag3 == 0x47 && byteFlag4 == 0x3A) return true;  // Jeep
+            if (byteFlag1 == 0x00 && byteFlag2 == 0x47 && byteFlag3 == 0x47 && byteFlag4 == 0x40) return true;  // Jeep
+            if (byteFlag1 == 0x0F && byteFlag2 == 0x0F && byteFlag3 == 0x00 && byteFlag4 == 0x34) return true;  // Motorbike
+            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x24) return true;  // Motorbike
+            if (byteFlag1 == 0x08 && byteFlag2 == 0x08 && byteFlag3 == 0x00 && byteFlag4 == 0x38) return true;  // Motorbike
+            if (byteFlag1 == 0x08 && byteFlag2 == 0x08 && byteFlag3 == 0x00 && byteFlag4 == 0x39) return true;  // Motorbike
+            if (byteFlag1 == 0x11 && byteFlag2 == 0x11 && byteFlag3 == 0x00 && byteFlag4 == 0x3A) return true;  // Motorbike
+            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x27) return true;  // Motorbike
+
+            return false;
+        }
+
+        public bool IsLaraInVehicle(int healthOffset)
+        {
+            byte byteFlag1 = ReadByte(healthOffset - 7);
+            byte byteFlag2 = ReadByte(healthOffset - 6);
+            byte byteFlag3 = ReadByte(healthOffset - 5);
+            byte byteFlag4 = ReadByte(healthOffset - 4);
+
+            if (byteFlag1 == 0x00 && byteFlag2 == 0x00 && byteFlag3 == 0x00 && byteFlag4 == 0x40) return true;  // Jeep
+            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x34) return true;  // Jeep
+            if (byteFlag1 == 0x0B && byteFlag2 == 0x0B && byteFlag3 == 0x00 && byteFlag4 == 0x38) return true;  // Jeep
+            if (byteFlag1 == 0x0B && byteFlag2 == 0x0C && byteFlag3 == 0x00 && byteFlag4 == 0x38) return true;  // Jeep
+            if (byteFlag1 == 0x0C && byteFlag2 == 0x0C && byteFlag3 == 0x47 && byteFlag4 == 0x3A) return true;  // Jeep
+            if (byteFlag1 == 0x00 && byteFlag2 == 0x47 && byteFlag3 == 0x47 && byteFlag4 == 0x40) return true;  // Jeep
+            if (byteFlag1 == 0x0F && byteFlag2 == 0x0F && byteFlag3 == 0x00 && byteFlag4 == 0x34) return true;  // Motorbike
+            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x24) return true;  // Motorbike
+            if (byteFlag1 == 0x08 && byteFlag2 == 0x08 && byteFlag3 == 0x00 && byteFlag4 == 0x38) return true;  // Motorbike
+            if (byteFlag1 == 0x08 && byteFlag2 == 0x08 && byteFlag3 == 0x00 && byteFlag4 == 0x39) return true;  // Motorbike
+            if (byteFlag1 == 0x11 && byteFlag2 == 0x11 && byteFlag3 == 0x00 && byteFlag4 == 0x3A) return true;  // Motorbike
+            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x27) return true;  // Motorbike
 
             return false;
         }

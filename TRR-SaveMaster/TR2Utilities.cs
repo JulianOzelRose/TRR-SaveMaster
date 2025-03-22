@@ -370,6 +370,25 @@ namespace TRR_SaveMaster
             if (byteFlag1 == 0x20 && byteFlag2 == 0x00 && byteFlag3 == 0x20 && byteFlag4 == 0x00) return true;  // Sliding backward
             if (byteFlag1 == 0x18 && byteFlag2 == 0x00 && byteFlag3 == 0x18 && byteFlag4 == 0x00) return true;  // Sliding downhill
             if (byteFlag1 == 0x2A && byteFlag2 == 0x00 && byteFlag3 == 0x02 && byteFlag4 == 0x00) return true;  // Using puzzle item
+            if (byteFlag1 == 0x01 && byteFlag2 == 0x00 && byteFlag3 == 0x01 && byteFlag4 == 0x00) return true;  // Motorboat
+            if (byteFlag1 == 0x05 && byteFlag2 == 0x00 && byteFlag3 == 0x05 && byteFlag4 == 0x00) return true;  // Motorboat
+            if (byteFlag1 == 0x08 && byteFlag2 == 0x00 && byteFlag3 == 0x08 && byteFlag4 == 0x00) return true;  // Snowmobile
+            if (byteFlag1 == 0x04 && byteFlag2 == 0x00 && byteFlag3 == 0x04 && byteFlag4 == 0x00) return true;  // Snowmobile
+
+            return false;
+        }
+
+        public bool IsLaraInVehicle(int healthOffset)
+        {
+            byte byteFlag1 = ReadByte(healthOffset - 10);
+            byte byteFlag2 = ReadByte(healthOffset - 9);
+            byte byteFlag3 = ReadByte(healthOffset - 8);
+            byte byteFlag4 = ReadByte(healthOffset - 7);
+
+            if (byteFlag1 == 0x01 && byteFlag2 == 0x00 && byteFlag3 == 0x01 && byteFlag4 == 0x00) return true;  // Motorboat
+            if (byteFlag1 == 0x05 && byteFlag2 == 0x00 && byteFlag3 == 0x05 && byteFlag4 == 0x00) return true;  // Motorboat
+            if (byteFlag1 == 0x08 && byteFlag2 == 0x00 && byteFlag3 == 0x08 && byteFlag4 == 0x00) return true;  // Snowmobile
+            if (byteFlag1 == 0x04 && byteFlag2 == 0x00 && byteFlag3 == 0x04 && byteFlag4 == 0x00) return true;  // Snowmobile
 
             return false;
         }

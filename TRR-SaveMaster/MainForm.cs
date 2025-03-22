@@ -1922,6 +1922,13 @@ namespace TRR_SaveMaster
                     return;
                 }
 
+                if (TR2.IsLaraInVehicle(healthOffset))
+                {
+                    string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
+                    MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 selectedSavegame = cmbSavegamesTR2.Items[cmbSavegamesTR2.SelectedIndex] as Savegame;
                 positionForm.SetHealthOffset(healthOffset - selectedSavegame.Offset);
             }
@@ -1946,6 +1953,13 @@ namespace TRR_SaveMaster
                     return;
                 }
 
+                if (TR3.IsLaraInVehicle(healthOffset))
+                {
+                    string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
+                    MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 selectedSavegame = cmbSavegamesTR3.Items[cmbSavegamesTR3.SelectedIndex] as Savegame;
                 positionForm.SetHealthOffset(healthOffset - selectedSavegame.Offset);
             }
@@ -1967,6 +1981,13 @@ namespace TRR_SaveMaster
                 {
                     string warningMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
                     MessageBox.Show(warningMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (TR4.IsLaraInVehicle(healthOffset))
+                {
+                    string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
+                    MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
