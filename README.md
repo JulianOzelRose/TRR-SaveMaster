@@ -52,7 +52,8 @@ It's essential that the Room number matches Lara's current coordinates; otherwis
 position.
 
 ## Using the Statistics Editor
-![StatisticsEditor-UI](https://github.com/user-attachments/assets/f3018d32-c736-4302-aaa6-779df3bde02a)
+![StatisticsEditor-UI](https://github.com/user-attachments/assets/23e17317-257e-4ad1-a88d-a8ad0cb752a7)
+
 
 This savegame editor also includes a Statistics Editor feature. To use it, click "Edit," then select "Statistics." For Tomb Raider I-III, the statistics displayed are level-specific, meaning each level has its own separate stats such as time taken,
 enemies killed, and secrets found. For Tomb Raider IV-V, the statistics are global, meaning they track cumulative progress across all levels, including total playtime, total kills, and total pickups.
