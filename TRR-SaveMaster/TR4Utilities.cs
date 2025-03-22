@@ -645,7 +645,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 2)   // Race for the Iris
             {
                 MIN_HEALTH_OFFSET = 0xE5C;
-                MAX_HEALTH_OFFSET = 0x18C2;
+                MAX_HEALTH_OFFSET = 0x192A;
             }
             else if (levelIndex == 3)   // Tomb of Seth
             {
