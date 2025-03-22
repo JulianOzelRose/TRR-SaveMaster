@@ -849,7 +849,7 @@ namespace TRR_SaveMaster
             { 3,  new Int32[] { 3828, 1920, 25657, 0, 57        } },    // The Tomb of Seth
             { 4,  new Int32[] { 4235, -1885, 49922, 260, 125    } },    // Burial Chambers
             { 5,  new Int32[] { 18664, -514, 8188, 70, 4        } },    // Valley of the Kings
-            //{ 6,  new Int32[] { 29637, -911, 18061, 95, 22      } },    // KV5
+            { 6,  new Int32[] { 28153, -1797, 18299, 0, 22      } },    // KV5
             { 7,  new Int32[] { 30968, 627, 25549, 1, 7         } },    // Temple of Karnak
             { 8,  new Int32[] { 37454, -256, 24018, 2, 151      } },    // The Great Hypostyle Hall
             { 9,  new Int32[] { 24774, 3589, 27169, 0, 87       } },    // Sacred Lake
