@@ -819,7 +819,6 @@ namespace TRR_SaveMaster
             nudSaveNumber.Value = GetSaveNumber();
             nudSmallMedipacks.Value = GetNumSmallMedipacks();
             nudLargeMedipacks.Value = GetNumLargeMedipacks();
-            nudFlares.Value = GetNumFlares();
             nudSecrets.Value = GetNumSecrets();
 
             nudUziAmmo.Value = GetUziAmmo();
@@ -834,6 +833,15 @@ namespace TRR_SaveMaster
             chkUzi.Checked = IsUziPresent();
             chkHKGun.Checked = IsHKGunPresent();
             chkGrapplingGun.Checked = IsGrapplingGunPresent();
+
+            if (nudFlares.Enabled)
+            {
+                nudFlares.Value = GetNumFlares();
+            }
+            else
+            {
+                nudFlares.Value = 0;
+            }
 
             if (chkRevolver.Enabled)
             {
@@ -893,7 +901,6 @@ namespace TRR_SaveMaster
             WriteSaveNumber((Int32)nudSaveNumber.Value);
             WriteNumSmallMedipacks((UInt16)nudSmallMedipacks.Value);
             WriteNumLargeMedipacks((UInt16)nudLargeMedipacks.Value);
-            WriteNumFlares((UInt16)nudFlares.Value);
             WriteNumSecrets((byte)nudSecrets.Value);
 
             WritePistolsPresent(chkPistols.Checked);
@@ -907,6 +914,11 @@ namespace TRR_SaveMaster
             WriteGrapplingGunAmmo((UInt16)nudGrapplingGunAmmo.Value);
             WriteShotgunNormalAmmo((UInt16)(nudShotgunNormalAmmo.Value * 6));
             WriteShotgunWideshotAmmo((UInt16)(nudShotgunWideshotAmmo.Value * 6));
+
+            if (nudFlares.Enabled)
+            {
+                WriteNumFlares((UInt16)nudFlares.Value);
+            }
 
             if (chkRevolver.Enabled)
             {
