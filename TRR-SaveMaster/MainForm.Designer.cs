@@ -2487,7 +2487,7 @@ namespace TRR_SaveMaster
             // 
             this.nudShotgunNormalAmmoTR5.Location = new System.Drawing.Point(162, 211);
             this.nudShotgunNormalAmmoTR5.Maximum = new decimal(new int[] {
-            65535,
+            10922,
             0,
             0,
             0});
@@ -2542,7 +2542,7 @@ namespace TRR_SaveMaster
             // 
             this.nudShotgunWideshotAmmoTR5.Location = new System.Drawing.Point(225, 211);
             this.nudShotgunWideshotAmmoTR5.Maximum = new decimal(new int[] {
-            65535,
+            10922,
             0,
             0,
             0});
@@ -2556,7 +2556,7 @@ namespace TRR_SaveMaster
             // 
             this.nudUziAmmoTR5.Location = new System.Drawing.Point(162, 133);
             this.nudUziAmmoTR5.Maximum = new decimal(new int[] {
-            10922,
+            65535,
             0,
             0,
             0});
