@@ -223,6 +223,65 @@ namespace TRR_SaveMaster
             this.chkGrapplingGunTR5 = new System.Windows.Forms.CheckBox();
             this.lblPistolAmmoTR5 = new System.Windows.Forms.Label();
             this.chkPistolsTR5 = new System.Windows.Forms.CheckBox();
+            this.tpTR6 = new System.Windows.Forms.TabPage();
+            this.cmbInventoryTR6 = new System.Windows.Forms.ComboBox();
+            this.lblInventoryTR6 = new System.Windows.Forms.Label();
+            this.btnRefreshTR6 = new System.Windows.Forms.Button();
+            this.btnExitTR6 = new System.Windows.Forms.Button();
+            this.btnSaveTR6 = new System.Windows.Forms.Button();
+            this.btnCancelTR6 = new System.Windows.Forms.Button();
+            this.lblSavegameTR6 = new System.Windows.Forms.Label();
+            this.cmbSavegamesTR6 = new System.Windows.Forms.ComboBox();
+            this.grpWeaponsTR6 = new System.Windows.Forms.GroupBox();
+            this.lblChirugaiBladeAmmoTR6 = new System.Windows.Forms.Label();
+            this.lblVectorR35PairAmmoTR6 = new System.Windows.Forms.Label();
+            this.lblScorpionXPairAmmoTR6 = new System.Windows.Forms.Label();
+            this.chkChirugaiBladeTR6 = new System.Windows.Forms.CheckBox();
+            this.chkBoranXTR6 = new System.Windows.Forms.CheckBox();
+            this.nudBoranXAmmoTR6 = new System.Windows.Forms.NumericUpDown();
+            this.chkViperSMGTR6 = new System.Windows.Forms.CheckBox();
+            this.nudViperSMGAmmoTR6 = new System.Windows.Forms.NumericUpDown();
+            this.chkRigg09TR6 = new System.Windows.Forms.CheckBox();
+            this.nudRigg09AmmoTR6 = new System.Windows.Forms.NumericUpDown();
+            this.chkDartSSTR6 = new System.Windows.Forms.CheckBox();
+            this.nudDartSSAmmoTR6 = new System.Windows.Forms.NumericUpDown();
+            this.chkMagVegaTR6 = new System.Windows.Forms.CheckBox();
+            this.nudMagVegaAmmoTR6 = new System.Windows.Forms.NumericUpDown();
+            this.nudMV9AmmoTR6 = new System.Windows.Forms.NumericUpDown();
+            this.lblPresentTR6 = new System.Windows.Forms.Label();
+            this.lblAmmo1TR6 = new System.Windows.Forms.Label();
+            this.nudVPackerAmmoTR6 = new System.Windows.Forms.NumericUpDown();
+            this.chkDesertRangerTR6 = new System.Windows.Forms.CheckBox();
+            this.chkVectorR35PairTR6 = new System.Windows.Forms.CheckBox();
+            this.nudK2ImpactorAmmoTR6 = new System.Windows.Forms.NumericUpDown();
+            this.nudVectorR35AmmoTR6 = new System.Windows.Forms.NumericUpDown();
+            this.nudDesertRangerAmmoTR6 = new System.Windows.Forms.NumericUpDown();
+            this.nudScorpionXAmmoTR6 = new System.Windows.Forms.NumericUpDown();
+            this.chkVectorR35TR6 = new System.Windows.Forms.CheckBox();
+            this.chkScorpionXPairTR6 = new System.Windows.Forms.CheckBox();
+            this.chkVPackerTR6 = new System.Windows.Forms.CheckBox();
+            this.chkK2ImpactorTR6 = new System.Windows.Forms.CheckBox();
+            this.chkScorpionXTR6 = new System.Windows.Forms.CheckBox();
+            this.chkMV9TR6 = new System.Windows.Forms.CheckBox();
+            this.grpHealthTR6 = new System.Windows.Forms.GroupBox();
+            this.lblHealthErrorTR6 = new System.Windows.Forms.Label();
+            this.lblHealthTR6 = new System.Windows.Forms.Label();
+            this.trbHealthTR6 = new System.Windows.Forms.TrackBar();
+            this.grpItemsTR6 = new System.Windows.Forms.GroupBox();
+            this.lblPoisonAntidoteTR6 = new System.Windows.Forms.Label();
+            this.nudPoisonAntidoteTR6 = new System.Windows.Forms.NumericUpDown();
+            this.lblChocolateBarTR6 = new System.Windows.Forms.Label();
+            this.lblHealthPillsTR6 = new System.Windows.Forms.Label();
+            this.nudChocolateBarTR6 = new System.Windows.Forms.NumericUpDown();
+            this.nudHealthPillsTR6 = new System.Windows.Forms.NumericUpDown();
+            this.lblHealthBandagesTR6 = new System.Windows.Forms.Label();
+            this.nudHealthBandagesTR6 = new System.Windows.Forms.NumericUpDown();
+            this.lblSmallMedipackTR6 = new System.Windows.Forms.Label();
+            this.lblLargeHealthPackTR6 = new System.Windows.Forms.Label();
+            this.lblCashTR6 = new System.Windows.Forms.Label();
+            this.nudSmallMedipackTR6 = new System.Windows.Forms.NumericUpDown();
+            this.nudLargeHealthPackTR6 = new System.Windows.Forms.NumericUpDown();
+            this.nudCashTR6 = new System.Windows.Forms.NumericUpDown();
             this.ssrStatusStrip = new System.Windows.Forms.StatusStrip();
             this.slblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsrToolStrip = new System.Windows.Forms.ToolStrip();
@@ -337,6 +396,29 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudDeagleAmmoTR5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHKGunAmmoTR5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGrapplingGunAmmoTR5)).BeginInit();
+            this.tpTR6.SuspendLayout();
+            this.grpWeaponsTR6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudBoranXAmmoTR6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudViperSMGAmmoTR6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRigg09AmmoTR6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDartSSAmmoTR6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMagVegaAmmoTR6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMV9AmmoTR6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudVPackerAmmoTR6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudK2ImpactorAmmoTR6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudVectorR35AmmoTR6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDesertRangerAmmoTR6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudScorpionXAmmoTR6)).BeginInit();
+            this.grpHealthTR6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trbHealthTR6)).BeginInit();
+            this.grpItemsTR6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPoisonAntidoteTR6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudChocolateBarTR6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHealthPillsTR6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHealthBandagesTR6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSmallMedipackTR6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudLargeHealthPackTR6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCashTR6)).BeginInit();
             this.ssrStatusStrip.SuspendLayout();
             this.tsrToolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -348,12 +430,13 @@ namespace TRR_SaveMaster
             this.tabGame.Controls.Add(this.tpTR3);
             this.tabGame.Controls.Add(this.tpTR4);
             this.tabGame.Controls.Add(this.tpTR5);
-            this.tabGame.ItemSize = new System.Drawing.Size(238, 20);
+            this.tabGame.Controls.Add(this.tpTR6);
+            this.tabGame.ItemSize = new System.Drawing.Size(238, 22);
             this.tabGame.Location = new System.Drawing.Point(1, 28);
             this.tabGame.Multiline = true;
             this.tabGame.Name = "tabGame";
             this.tabGame.SelectedIndex = 0;
-            this.tabGame.Size = new System.Drawing.Size(721, 405);
+            this.tabGame.Size = new System.Drawing.Size(721, 560);
             this.tabGame.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabGame.TabIndex = 6;
             this.tabGame.SelectedIndexChanged += new System.EventHandler(this.tabGame_SelectedIndexChanged);
@@ -373,10 +456,10 @@ namespace TRR_SaveMaster
             this.tpTR1.Controls.Add(this.grpItemsTR1);
             this.tpTR1.Controls.Add(this.btnSaveTR1);
             this.tpTR1.Controls.Add(this.grpWeaponsTR1);
-            this.tpTR1.Location = new System.Drawing.Point(4, 44);
+            this.tpTR1.Location = new System.Drawing.Point(4, 48);
             this.tpTR1.Name = "tpTR1";
             this.tpTR1.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTR1.Size = new System.Drawing.Size(713, 357);
+            this.tpTR1.Size = new System.Drawing.Size(713, 508);
             this.tpTR1.TabIndex = 0;
             this.tpTR1.Text = "Tomb Raider I";
             // 
@@ -425,7 +508,7 @@ namespace TRR_SaveMaster
             // 
             // btnExitTR1
             // 
-            this.btnExitTR1.Location = new System.Drawing.Point(456, 326);
+            this.btnExitTR1.Location = new System.Drawing.Point(456, 479);
             this.btnExitTR1.Name = "btnExitTR1";
             this.btnExitTR1.Size = new System.Drawing.Size(80, 25);
             this.btnExitTR1.TabIndex = 25;
@@ -438,7 +521,7 @@ namespace TRR_SaveMaster
             this.grpHealthTR1.Controls.Add(this.lblHealthErrorTR1);
             this.grpHealthTR1.Controls.Add(this.lblHealthTR1);
             this.grpHealthTR1.Controls.Add(this.trbHealthTR1);
-            this.grpHealthTR1.Location = new System.Drawing.Point(4, 244);
+            this.grpHealthTR1.Location = new System.Drawing.Point(4, 399);
             this.grpHealthTR1.Name = "grpHealthTR1";
             this.grpHealthTR1.Size = new System.Drawing.Size(335, 76);
             this.grpHealthTR1.TabIndex = 29;
@@ -491,7 +574,7 @@ namespace TRR_SaveMaster
             // btnCancelTR1
             // 
             this.btnCancelTR1.Enabled = false;
-            this.btnCancelTR1.Location = new System.Drawing.Point(542, 326);
+            this.btnCancelTR1.Location = new System.Drawing.Point(542, 479);
             this.btnCancelTR1.Name = "btnCancelTR1";
             this.btnCancelTR1.Size = new System.Drawing.Size(80, 25);
             this.btnCancelTR1.TabIndex = 24;
@@ -507,7 +590,7 @@ namespace TRR_SaveMaster
             this.grpItemsTR1.Controls.Add(this.nudSmallMedipacksTR1);
             this.grpItemsTR1.Location = new System.Drawing.Point(4, 44);
             this.grpItemsTR1.Name = "grpItemsTR1";
-            this.grpItemsTR1.Size = new System.Drawing.Size(335, 194);
+            this.grpItemsTR1.Size = new System.Drawing.Size(335, 349);
             this.grpItemsTR1.TabIndex = 28;
             this.grpItemsTR1.TabStop = false;
             this.grpItemsTR1.Text = "Items";
@@ -561,7 +644,7 @@ namespace TRR_SaveMaster
             // btnSaveTR1
             // 
             this.btnSaveTR1.Enabled = false;
-            this.btnSaveTR1.Location = new System.Drawing.Point(628, 326);
+            this.btnSaveTR1.Location = new System.Drawing.Point(628, 479);
             this.btnSaveTR1.Name = "btnSaveTR1";
             this.btnSaveTR1.Size = new System.Drawing.Size(80, 25);
             this.btnSaveTR1.TabIndex = 23;
@@ -583,7 +666,7 @@ namespace TRR_SaveMaster
             this.grpWeaponsTR1.Controls.Add(this.chkPistolsTR1);
             this.grpWeaponsTR1.Location = new System.Drawing.Point(348, 44);
             this.grpWeaponsTR1.Name = "grpWeaponsTR1";
-            this.grpWeaponsTR1.Size = new System.Drawing.Size(360, 276);
+            this.grpWeaponsTR1.Size = new System.Drawing.Size(360, 431);
             this.grpWeaponsTR1.TabIndex = 27;
             this.grpWeaponsTR1.TabStop = false;
             this.grpWeaponsTR1.Text = "Weapons";
@@ -717,9 +800,9 @@ namespace TRR_SaveMaster
             this.tpTR2.Controls.Add(this.grpWeaponsTR2);
             this.tpTR2.Controls.Add(this.grpHealthTR2);
             this.tpTR2.Controls.Add(this.grpItemsTR2);
-            this.tpTR2.Location = new System.Drawing.Point(4, 44);
+            this.tpTR2.Location = new System.Drawing.Point(4, 48);
             this.tpTR2.Name = "tpTR2";
-            this.tpTR2.Size = new System.Drawing.Size(713, 357);
+            this.tpTR2.Size = new System.Drawing.Size(713, 508);
             this.tpTR2.TabIndex = 2;
             this.tpTR2.Text = "Tomb Raider II";
             // 
@@ -748,7 +831,7 @@ namespace TRR_SaveMaster
             // 
             // btnExitTR2
             // 
-            this.btnExitTR2.Location = new System.Drawing.Point(456, 326);
+            this.btnExitTR2.Location = new System.Drawing.Point(456, 479);
             this.btnExitTR2.Name = "btnExitTR2";
             this.btnExitTR2.Size = new System.Drawing.Size(80, 25);
             this.btnExitTR2.TabIndex = 38;
@@ -759,7 +842,7 @@ namespace TRR_SaveMaster
             // btnSaveTR2
             // 
             this.btnSaveTR2.Enabled = false;
-            this.btnSaveTR2.Location = new System.Drawing.Point(628, 326);
+            this.btnSaveTR2.Location = new System.Drawing.Point(628, 479);
             this.btnSaveTR2.Name = "btnSaveTR2";
             this.btnSaveTR2.Size = new System.Drawing.Size(80, 25);
             this.btnSaveTR2.TabIndex = 36;
@@ -770,7 +853,7 @@ namespace TRR_SaveMaster
             // btnCancelTR2
             // 
             this.btnCancelTR2.Enabled = false;
-            this.btnCancelTR2.Location = new System.Drawing.Point(542, 326);
+            this.btnCancelTR2.Location = new System.Drawing.Point(542, 479);
             this.btnCancelTR2.Name = "btnCancelTR2";
             this.btnCancelTR2.Size = new System.Drawing.Size(80, 25);
             this.btnCancelTR2.TabIndex = 37;
@@ -829,7 +912,7 @@ namespace TRR_SaveMaster
             this.grpWeaponsTR2.Controls.Add(this.chkPistolsTR2);
             this.grpWeaponsTR2.Location = new System.Drawing.Point(348, 44);
             this.grpWeaponsTR2.Name = "grpWeaponsTR2";
-            this.grpWeaponsTR2.Size = new System.Drawing.Size(360, 276);
+            this.grpWeaponsTR2.Size = new System.Drawing.Size(360, 431);
             this.grpWeaponsTR2.TabIndex = 28;
             this.grpWeaponsTR2.TabStop = false;
             this.grpWeaponsTR2.Text = "Weapons";
@@ -1029,7 +1112,7 @@ namespace TRR_SaveMaster
             this.grpHealthTR2.Controls.Add(this.lblHealthErrorTR2);
             this.grpHealthTR2.Controls.Add(this.lblHealthTR2);
             this.grpHealthTR2.Controls.Add(this.trbHealthTR2);
-            this.grpHealthTR2.Location = new System.Drawing.Point(4, 244);
+            this.grpHealthTR2.Location = new System.Drawing.Point(4, 399);
             this.grpHealthTR2.Name = "grpHealthTR2";
             this.grpHealthTR2.Size = new System.Drawing.Size(335, 76);
             this.grpHealthTR2.TabIndex = 30;
@@ -1078,7 +1161,7 @@ namespace TRR_SaveMaster
             this.grpItemsTR2.Controls.Add(this.nudSmallMedipacksTR2);
             this.grpItemsTR2.Location = new System.Drawing.Point(4, 44);
             this.grpItemsTR2.Name = "grpItemsTR2";
-            this.grpItemsTR2.Size = new System.Drawing.Size(335, 194);
+            this.grpItemsTR2.Size = new System.Drawing.Size(335, 349);
             this.grpItemsTR2.TabIndex = 29;
             this.grpItemsTR2.TabStop = false;
             this.grpItemsTR2.Text = "Items";
@@ -1166,9 +1249,9 @@ namespace TRR_SaveMaster
             this.tpTR3.Controls.Add(this.grpWeaponsTR3);
             this.tpTR3.Controls.Add(this.grpHealthTR3);
             this.tpTR3.Controls.Add(this.grpItemsTR3);
-            this.tpTR3.Location = new System.Drawing.Point(4, 44);
+            this.tpTR3.Location = new System.Drawing.Point(4, 48);
             this.tpTR3.Name = "tpTR3";
-            this.tpTR3.Size = new System.Drawing.Size(713, 357);
+            this.tpTR3.Size = new System.Drawing.Size(713, 508);
             this.tpTR3.TabIndex = 4;
             this.tpTR3.Text = "Tomb Raider III";
             // 
@@ -1208,7 +1291,7 @@ namespace TRR_SaveMaster
             // 
             // btnExitTR3
             // 
-            this.btnExitTR3.Location = new System.Drawing.Point(456, 326);
+            this.btnExitTR3.Location = new System.Drawing.Point(456, 479);
             this.btnExitTR3.Name = "btnExitTR3";
             this.btnExitTR3.Size = new System.Drawing.Size(80, 25);
             this.btnExitTR3.TabIndex = 25;
@@ -1219,7 +1302,7 @@ namespace TRR_SaveMaster
             // btnSaveTR3
             // 
             this.btnSaveTR3.Enabled = false;
-            this.btnSaveTR3.Location = new System.Drawing.Point(628, 326);
+            this.btnSaveTR3.Location = new System.Drawing.Point(628, 479);
             this.btnSaveTR3.Name = "btnSaveTR3";
             this.btnSaveTR3.Size = new System.Drawing.Size(80, 25);
             this.btnSaveTR3.TabIndex = 23;
@@ -1230,7 +1313,7 @@ namespace TRR_SaveMaster
             // btnCancelTR3
             // 
             this.btnCancelTR3.Enabled = false;
-            this.btnCancelTR3.Location = new System.Drawing.Point(542, 326);
+            this.btnCancelTR3.Location = new System.Drawing.Point(542, 479);
             this.btnCancelTR3.Name = "btnCancelTR3";
             this.btnCancelTR3.Size = new System.Drawing.Size(80, 25);
             this.btnCancelTR3.TabIndex = 24;
@@ -1280,7 +1363,7 @@ namespace TRR_SaveMaster
             this.grpWeaponsTR3.Controls.Add(this.chkPistolsTR3);
             this.grpWeaponsTR3.Location = new System.Drawing.Point(348, 44);
             this.grpWeaponsTR3.Name = "grpWeaponsTR3";
-            this.grpWeaponsTR3.Size = new System.Drawing.Size(360, 276);
+            this.grpWeaponsTR3.Size = new System.Drawing.Size(360, 431);
             this.grpWeaponsTR3.TabIndex = 20;
             this.grpWeaponsTR3.TabStop = false;
             this.grpWeaponsTR3.Text = "Weapons";
@@ -1505,7 +1588,7 @@ namespace TRR_SaveMaster
             this.grpHealthTR3.Controls.Add(this.lblHealthErrorTR3);
             this.grpHealthTR3.Controls.Add(this.lblHealthTR3);
             this.grpHealthTR3.Controls.Add(this.trbHealthTR3);
-            this.grpHealthTR3.Location = new System.Drawing.Point(4, 244);
+            this.grpHealthTR3.Location = new System.Drawing.Point(4, 399);
             this.grpHealthTR3.Name = "grpHealthTR3";
             this.grpHealthTR3.Size = new System.Drawing.Size(335, 76);
             this.grpHealthTR3.TabIndex = 22;
@@ -1556,7 +1639,7 @@ namespace TRR_SaveMaster
             this.grpItemsTR3.Controls.Add(this.nudSmallMedipacksTR3);
             this.grpItemsTR3.Location = new System.Drawing.Point(4, 44);
             this.grpItemsTR3.Name = "grpItemsTR3";
-            this.grpItemsTR3.Size = new System.Drawing.Size(335, 194);
+            this.grpItemsTR3.Size = new System.Drawing.Size(335, 349);
             this.grpItemsTR3.TabIndex = 21;
             this.grpItemsTR3.TabStop = false;
             this.grpItemsTR3.Text = "Items";
@@ -1666,16 +1749,16 @@ namespace TRR_SaveMaster
             this.tpTR4.Controls.Add(this.cmbSavegamesTR4);
             this.tpTR4.Controls.Add(this.grpItemsTR4);
             this.tpTR4.Controls.Add(this.grpWeaponsTR4);
-            this.tpTR4.Location = new System.Drawing.Point(4, 44);
+            this.tpTR4.Location = new System.Drawing.Point(4, 48);
             this.tpTR4.Name = "tpTR4";
-            this.tpTR4.Size = new System.Drawing.Size(713, 357);
+            this.tpTR4.Size = new System.Drawing.Size(713, 508);
             this.tpTR4.TabIndex = 5;
             this.tpTR4.Text = "Tomb Raider IV";
             this.tpTR4.UseVisualStyleBackColor = true;
             // 
             // btnExitTR4
             // 
-            this.btnExitTR4.Location = new System.Drawing.Point(456, 326);
+            this.btnExitTR4.Location = new System.Drawing.Point(456, 479);
             this.btnExitTR4.Name = "btnExitTR4";
             this.btnExitTR4.Size = new System.Drawing.Size(80, 25);
             this.btnExitTR4.TabIndex = 41;
@@ -1686,7 +1769,7 @@ namespace TRR_SaveMaster
             // btnCancelTR4
             // 
             this.btnCancelTR4.Enabled = false;
-            this.btnCancelTR4.Location = new System.Drawing.Point(542, 326);
+            this.btnCancelTR4.Location = new System.Drawing.Point(542, 479);
             this.btnCancelTR4.Name = "btnCancelTR4";
             this.btnCancelTR4.Size = new System.Drawing.Size(80, 25);
             this.btnCancelTR4.TabIndex = 40;
@@ -1697,7 +1780,7 @@ namespace TRR_SaveMaster
             // btnSaveTR4
             // 
             this.btnSaveTR4.Enabled = false;
-            this.btnSaveTR4.Location = new System.Drawing.Point(628, 326);
+            this.btnSaveTR4.Location = new System.Drawing.Point(628, 479);
             this.btnSaveTR4.Name = "btnSaveTR4";
             this.btnSaveTR4.Size = new System.Drawing.Size(80, 25);
             this.btnSaveTR4.TabIndex = 39;
@@ -1753,7 +1836,7 @@ namespace TRR_SaveMaster
             this.grpHealthTR4.Controls.Add(this.lblHealthErrorTR4);
             this.grpHealthTR4.Controls.Add(this.lblHealthTR4);
             this.grpHealthTR4.Controls.Add(this.trbHealthTR4);
-            this.grpHealthTR4.Location = new System.Drawing.Point(4, 244);
+            this.grpHealthTR4.Location = new System.Drawing.Point(4, 399);
             this.grpHealthTR4.Name = "grpHealthTR4";
             this.grpHealthTR4.Size = new System.Drawing.Size(335, 76);
             this.grpHealthTR4.TabIndex = 37;
@@ -1815,7 +1898,7 @@ namespace TRR_SaveMaster
             this.grpItemsTR4.Controls.Add(this.nudSmallMedipacksTR4);
             this.grpItemsTR4.Location = new System.Drawing.Point(4, 44);
             this.grpItemsTR4.Name = "grpItemsTR4";
-            this.grpItemsTR4.Size = new System.Drawing.Size(335, 194);
+            this.grpItemsTR4.Size = new System.Drawing.Size(335, 349);
             this.grpItemsTR4.TabIndex = 36;
             this.grpItemsTR4.TabStop = false;
             this.grpItemsTR4.Text = "Items";
@@ -1937,7 +2020,7 @@ namespace TRR_SaveMaster
             this.grpWeaponsTR4.Controls.Add(this.chkPistolsTR4);
             this.grpWeaponsTR4.Location = new System.Drawing.Point(348, 44);
             this.grpWeaponsTR4.Name = "grpWeaponsTR4";
-            this.grpWeaponsTR4.Size = new System.Drawing.Size(360, 276);
+            this.grpWeaponsTR4.Size = new System.Drawing.Size(360, 431);
             this.grpWeaponsTR4.TabIndex = 35;
             this.grpWeaponsTR4.TabStop = false;
             this.grpWeaponsTR4.Text = "Weapons";
@@ -2210,16 +2293,16 @@ namespace TRR_SaveMaster
             this.tpTR5.Controls.Add(this.cmbSavegamesTR5);
             this.tpTR5.Controls.Add(this.grpItemsTR5);
             this.tpTR5.Controls.Add(this.grpWeaponsTR5);
-            this.tpTR5.Location = new System.Drawing.Point(4, 44);
+            this.tpTR5.Location = new System.Drawing.Point(4, 48);
             this.tpTR5.Name = "tpTR5";
-            this.tpTR5.Size = new System.Drawing.Size(713, 357);
+            this.tpTR5.Size = new System.Drawing.Size(713, 508);
             this.tpTR5.TabIndex = 6;
             this.tpTR5.Text = "Tomb Raider V";
             this.tpTR5.UseVisualStyleBackColor = true;
             // 
             // btnExitTR5
             // 
-            this.btnExitTR5.Location = new System.Drawing.Point(456, 326);
+            this.btnExitTR5.Location = new System.Drawing.Point(456, 479);
             this.btnExitTR5.Name = "btnExitTR5";
             this.btnExitTR5.Size = new System.Drawing.Size(80, 25);
             this.btnExitTR5.TabIndex = 52;
@@ -2230,7 +2313,7 @@ namespace TRR_SaveMaster
             // btnCancelTR5
             // 
             this.btnCancelTR5.Enabled = false;
-            this.btnCancelTR5.Location = new System.Drawing.Point(542, 326);
+            this.btnCancelTR5.Location = new System.Drawing.Point(542, 479);
             this.btnCancelTR5.Name = "btnCancelTR5";
             this.btnCancelTR5.Size = new System.Drawing.Size(80, 25);
             this.btnCancelTR5.TabIndex = 51;
@@ -2241,7 +2324,7 @@ namespace TRR_SaveMaster
             // btnSaveTR5
             // 
             this.btnSaveTR5.Enabled = false;
-            this.btnSaveTR5.Location = new System.Drawing.Point(628, 326);
+            this.btnSaveTR5.Location = new System.Drawing.Point(628, 479);
             this.btnSaveTR5.Name = "btnSaveTR5";
             this.btnSaveTR5.Size = new System.Drawing.Size(80, 25);
             this.btnSaveTR5.TabIndex = 50;
@@ -2297,7 +2380,7 @@ namespace TRR_SaveMaster
             this.grpHealthTR5.Controls.Add(this.lblHealthErrorTR5);
             this.grpHealthTR5.Controls.Add(this.lblHealthTR5);
             this.grpHealthTR5.Controls.Add(this.trbHealthTR5);
-            this.grpHealthTR5.Location = new System.Drawing.Point(4, 244);
+            this.grpHealthTR5.Location = new System.Drawing.Point(4, 399);
             this.grpHealthTR5.Name = "grpHealthTR5";
             this.grpHealthTR5.Size = new System.Drawing.Size(335, 76);
             this.grpHealthTR5.TabIndex = 48;
@@ -2359,7 +2442,7 @@ namespace TRR_SaveMaster
             this.grpItemsTR5.Controls.Add(this.nudSmallMedipacksTR5);
             this.grpItemsTR5.Location = new System.Drawing.Point(4, 44);
             this.grpItemsTR5.Name = "grpItemsTR5";
-            this.grpItemsTR5.Size = new System.Drawing.Size(335, 194);
+            this.grpItemsTR5.Size = new System.Drawing.Size(335, 349);
             this.grpItemsTR5.TabIndex = 47;
             this.grpItemsTR5.TabStop = false;
             this.grpItemsTR5.Text = "Items";
@@ -2478,7 +2561,7 @@ namespace TRR_SaveMaster
             this.grpWeaponsTR5.Controls.Add(this.chkPistolsTR5);
             this.grpWeaponsTR5.Location = new System.Drawing.Point(348, 44);
             this.grpWeaponsTR5.Name = "grpWeaponsTR5";
-            this.grpWeaponsTR5.Size = new System.Drawing.Size(360, 276);
+            this.grpWeaponsTR5.Size = new System.Drawing.Size(360, 431);
             this.grpWeaponsTR5.TabIndex = 46;
             this.grpWeaponsTR5.TabStop = false;
             this.grpWeaponsTR5.Text = "Weapons";
@@ -2697,11 +2780,738 @@ namespace TRR_SaveMaster
             this.chkPistolsTR5.UseVisualStyleBackColor = true;
             this.chkPistolsTR5.CheckedChanged += new System.EventHandler(this.chkPistolsTR5_CheckedChanged);
             // 
+            // tpTR6
+            // 
+            this.tpTR6.Controls.Add(this.cmbInventoryTR6);
+            this.tpTR6.Controls.Add(this.lblInventoryTR6);
+            this.tpTR6.Controls.Add(this.btnRefreshTR6);
+            this.tpTR6.Controls.Add(this.btnExitTR6);
+            this.tpTR6.Controls.Add(this.btnSaveTR6);
+            this.tpTR6.Controls.Add(this.btnCancelTR6);
+            this.tpTR6.Controls.Add(this.lblSavegameTR6);
+            this.tpTR6.Controls.Add(this.cmbSavegamesTR6);
+            this.tpTR6.Controls.Add(this.grpWeaponsTR6);
+            this.tpTR6.Controls.Add(this.grpHealthTR6);
+            this.tpTR6.Controls.Add(this.grpItemsTR6);
+            this.tpTR6.Location = new System.Drawing.Point(4, 48);
+            this.tpTR6.Name = "tpTR6";
+            this.tpTR6.Size = new System.Drawing.Size(713, 508);
+            this.tpTR6.TabIndex = 7;
+            this.tpTR6.Text = "Tomb Raider VI";
+            this.tpTR6.UseVisualStyleBackColor = true;
+            // 
+            // cmbInventoryTR6
+            // 
+            this.cmbInventoryTR6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbInventoryTR6.FormattingEnabled = true;
+            this.cmbInventoryTR6.Items.AddRange(new object[] {
+            "Lara Croft",
+            "Kurtis Trent"});
+            this.cmbInventoryTR6.Location = new System.Drawing.Point(101, 14);
+            this.cmbInventoryTR6.Name = "cmbInventoryTR6";
+            this.cmbInventoryTR6.Size = new System.Drawing.Size(128, 21);
+            this.cmbInventoryTR6.TabIndex = 47;
+            this.cmbInventoryTR6.SelectedIndexChanged += new System.EventHandler(this.cmbInventoryTR6_SelectedIndexChanged);
+            // 
+            // lblInventoryTR6
+            // 
+            this.lblInventoryTR6.AutoSize = true;
+            this.lblInventoryTR6.Location = new System.Drawing.Point(41, 18);
+            this.lblInventoryTR6.Name = "lblInventoryTR6";
+            this.lblInventoryTR6.Size = new System.Drawing.Size(54, 13);
+            this.lblInventoryTR6.TabIndex = 46;
+            this.lblInventoryTR6.Text = "Inventory:";
+            // 
+            // btnRefreshTR6
+            // 
+            this.btnRefreshTR6.Enabled = false;
+            this.btnRefreshTR6.Location = new System.Drawing.Point(628, 13);
+            this.btnRefreshTR6.Name = "btnRefreshTR6";
+            this.btnRefreshTR6.Size = new System.Drawing.Size(80, 23);
+            this.btnRefreshTR6.TabIndex = 45;
+            this.btnRefreshTR6.Text = "Refresh";
+            this.btnRefreshTR6.UseVisualStyleBackColor = true;
+            this.btnRefreshTR6.Click += new System.EventHandler(this.btnRefreshTR6_Click);
+            // 
+            // btnExitTR6
+            // 
+            this.btnExitTR6.Location = new System.Drawing.Point(456, 479);
+            this.btnExitTR6.Name = "btnExitTR6";
+            this.btnExitTR6.Size = new System.Drawing.Size(80, 25);
+            this.btnExitTR6.TabIndex = 44;
+            this.btnExitTR6.Text = "Exit";
+            this.btnExitTR6.UseVisualStyleBackColor = true;
+            this.btnExitTR6.Click += new System.EventHandler(this.btnExitTR6_Click);
+            // 
+            // btnSaveTR6
+            // 
+            this.btnSaveTR6.Enabled = false;
+            this.btnSaveTR6.Location = new System.Drawing.Point(628, 479);
+            this.btnSaveTR6.Name = "btnSaveTR6";
+            this.btnSaveTR6.Size = new System.Drawing.Size(80, 25);
+            this.btnSaveTR6.TabIndex = 42;
+            this.btnSaveTR6.Text = "Save";
+            this.btnSaveTR6.UseVisualStyleBackColor = true;
+            this.btnSaveTR6.Click += new System.EventHandler(this.btnSaveTR6_Click);
+            // 
+            // btnCancelTR6
+            // 
+            this.btnCancelTR6.Enabled = false;
+            this.btnCancelTR6.Location = new System.Drawing.Point(542, 479);
+            this.btnCancelTR6.Name = "btnCancelTR6";
+            this.btnCancelTR6.Size = new System.Drawing.Size(80, 25);
+            this.btnCancelTR6.TabIndex = 43;
+            this.btnCancelTR6.Text = "Cancel";
+            this.btnCancelTR6.UseVisualStyleBackColor = true;
+            this.btnCancelTR6.Click += new System.EventHandler(this.btnCancelTR6_Click);
+            // 
+            // lblSavegameTR6
+            // 
+            this.lblSavegameTR6.AutoSize = true;
+            this.lblSavegameTR6.Location = new System.Drawing.Point(376, 18);
+            this.lblSavegameTR6.Name = "lblSavegameTR6";
+            this.lblSavegameTR6.Size = new System.Drawing.Size(61, 13);
+            this.lblSavegameTR6.TabIndex = 38;
+            this.lblSavegameTR6.Text = "Savegame:";
+            // 
+            // cmbSavegamesTR6
+            // 
+            this.cmbSavegamesTR6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSavegamesTR6.FormattingEnabled = true;
+            this.cmbSavegamesTR6.Location = new System.Drawing.Point(441, 14);
+            this.cmbSavegamesTR6.Name = "cmbSavegamesTR6";
+            this.cmbSavegamesTR6.Size = new System.Drawing.Size(182, 21);
+            this.cmbSavegamesTR6.TabIndex = 37;
+            this.cmbSavegamesTR6.SelectedIndexChanged += new System.EventHandler(this.cmbSavegamesTR6_SelectedIndexChanged);
+            this.cmbSavegamesTR6.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cmbSavegamesTR6_MouseDown);
+            // 
+            // grpWeaponsTR6
+            // 
+            this.grpWeaponsTR6.Controls.Add(this.lblChirugaiBladeAmmoTR6);
+            this.grpWeaponsTR6.Controls.Add(this.lblVectorR35PairAmmoTR6);
+            this.grpWeaponsTR6.Controls.Add(this.lblScorpionXPairAmmoTR6);
+            this.grpWeaponsTR6.Controls.Add(this.chkChirugaiBladeTR6);
+            this.grpWeaponsTR6.Controls.Add(this.chkBoranXTR6);
+            this.grpWeaponsTR6.Controls.Add(this.nudBoranXAmmoTR6);
+            this.grpWeaponsTR6.Controls.Add(this.chkViperSMGTR6);
+            this.grpWeaponsTR6.Controls.Add(this.nudViperSMGAmmoTR6);
+            this.grpWeaponsTR6.Controls.Add(this.chkRigg09TR6);
+            this.grpWeaponsTR6.Controls.Add(this.nudRigg09AmmoTR6);
+            this.grpWeaponsTR6.Controls.Add(this.chkDartSSTR6);
+            this.grpWeaponsTR6.Controls.Add(this.nudDartSSAmmoTR6);
+            this.grpWeaponsTR6.Controls.Add(this.chkMagVegaTR6);
+            this.grpWeaponsTR6.Controls.Add(this.nudMagVegaAmmoTR6);
+            this.grpWeaponsTR6.Controls.Add(this.nudMV9AmmoTR6);
+            this.grpWeaponsTR6.Controls.Add(this.lblPresentTR6);
+            this.grpWeaponsTR6.Controls.Add(this.lblAmmo1TR6);
+            this.grpWeaponsTR6.Controls.Add(this.nudVPackerAmmoTR6);
+            this.grpWeaponsTR6.Controls.Add(this.chkDesertRangerTR6);
+            this.grpWeaponsTR6.Controls.Add(this.chkVectorR35PairTR6);
+            this.grpWeaponsTR6.Controls.Add(this.nudK2ImpactorAmmoTR6);
+            this.grpWeaponsTR6.Controls.Add(this.nudVectorR35AmmoTR6);
+            this.grpWeaponsTR6.Controls.Add(this.nudDesertRangerAmmoTR6);
+            this.grpWeaponsTR6.Controls.Add(this.nudScorpionXAmmoTR6);
+            this.grpWeaponsTR6.Controls.Add(this.chkVectorR35TR6);
+            this.grpWeaponsTR6.Controls.Add(this.chkScorpionXPairTR6);
+            this.grpWeaponsTR6.Controls.Add(this.chkVPackerTR6);
+            this.grpWeaponsTR6.Controls.Add(this.chkK2ImpactorTR6);
+            this.grpWeaponsTR6.Controls.Add(this.chkScorpionXTR6);
+            this.grpWeaponsTR6.Controls.Add(this.chkMV9TR6);
+            this.grpWeaponsTR6.Location = new System.Drawing.Point(348, 44);
+            this.grpWeaponsTR6.Name = "grpWeaponsTR6";
+            this.grpWeaponsTR6.Size = new System.Drawing.Size(360, 431);
+            this.grpWeaponsTR6.TabIndex = 39;
+            this.grpWeaponsTR6.TabStop = false;
+            this.grpWeaponsTR6.Text = "Weapons";
+            // 
+            // lblChirugaiBladeAmmoTR6
+            // 
+            this.lblChirugaiBladeAmmoTR6.AutoSize = true;
+            this.lblChirugaiBladeAmmoTR6.Location = new System.Drawing.Point(162, 371);
+            this.lblChirugaiBladeAmmoTR6.Name = "lblChirugaiBladeAmmoTR6";
+            this.lblChirugaiBladeAmmoTR6.Size = new System.Drawing.Size(50, 13);
+            this.lblChirugaiBladeAmmoTR6.TabIndex = 63;
+            this.lblChirugaiBladeAmmoTR6.Text = "Unlimited";
+            // 
+            // lblVectorR35PairAmmoTR6
+            // 
+            this.lblVectorR35PairAmmoTR6.AutoSize = true;
+            this.lblVectorR35PairAmmoTR6.Location = new System.Drawing.Point(162, 215);
+            this.lblVectorR35PairAmmoTR6.Name = "lblVectorR35PairAmmoTR6";
+            this.lblVectorR35PairAmmoTR6.Size = new System.Drawing.Size(41, 13);
+            this.lblVectorR35PairAmmoTR6.TabIndex = 62;
+            this.lblVectorR35PairAmmoTR6.Text = "Shared";
+            // 
+            // lblScorpionXPairAmmoTR6
+            // 
+            this.lblScorpionXPairAmmoTR6.AutoSize = true;
+            this.lblScorpionXPairAmmoTR6.Location = new System.Drawing.Point(162, 137);
+            this.lblScorpionXPairAmmoTR6.Name = "lblScorpionXPairAmmoTR6";
+            this.lblScorpionXPairAmmoTR6.Size = new System.Drawing.Size(41, 13);
+            this.lblScorpionXPairAmmoTR6.TabIndex = 61;
+            this.lblScorpionXPairAmmoTR6.Text = "Shared";
+            // 
+            // chkChirugaiBladeTR6
+            // 
+            this.chkChirugaiBladeTR6.AutoSize = true;
+            this.chkChirugaiBladeTR6.Location = new System.Drawing.Point(22, 367);
+            this.chkChirugaiBladeTR6.Name = "chkChirugaiBladeTR6";
+            this.chkChirugaiBladeTR6.Size = new System.Drawing.Size(97, 17);
+            this.chkChirugaiBladeTR6.TabIndex = 60;
+            this.chkChirugaiBladeTR6.Text = "Chirugai Blade:";
+            this.chkChirugaiBladeTR6.UseVisualStyleBackColor = true;
+            this.chkChirugaiBladeTR6.CheckedChanged += new System.EventHandler(this.chkChirugaiBladeTR6_CheckedChanged);
+            // 
+            // chkBoranXTR6
+            // 
+            this.chkBoranXTR6.AutoSize = true;
+            this.chkBoranXTR6.Location = new System.Drawing.Point(22, 393);
+            this.chkBoranXTR6.Name = "chkBoranXTR6";
+            this.chkBoranXTR6.Size = new System.Drawing.Size(67, 17);
+            this.chkBoranXTR6.TabIndex = 58;
+            this.chkBoranXTR6.Text = "Boran-X:";
+            this.chkBoranXTR6.UseVisualStyleBackColor = true;
+            this.chkBoranXTR6.CheckedChanged += new System.EventHandler(this.chkBoranXTR6_CheckedChanged);
+            // 
+            // nudBoranXAmmoTR6
+            // 
+            this.nudBoranXAmmoTR6.Location = new System.Drawing.Point(162, 393);
+            this.nudBoranXAmmoTR6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudBoranXAmmoTR6.Name = "nudBoranXAmmoTR6";
+            this.nudBoranXAmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudBoranXAmmoTR6.TabIndex = 57;
+            this.nudBoranXAmmoTR6.ValueChanged += new System.EventHandler(this.nudBoranXAmmoTR6_ValueChanged);
+            this.nudBoranXAmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudBoranXAmmoTR6_KeyPress);
+            // 
+            // chkViperSMGTR6
+            // 
+            this.chkViperSMGTR6.AutoSize = true;
+            this.chkViperSMGTR6.Location = new System.Drawing.Point(22, 341);
+            this.chkViperSMGTR6.Name = "chkViperSMGTR6";
+            this.chkViperSMGTR6.Size = new System.Drawing.Size(80, 17);
+            this.chkViperSMGTR6.TabIndex = 56;
+            this.chkViperSMGTR6.Text = "Viper SMG:";
+            this.chkViperSMGTR6.UseVisualStyleBackColor = true;
+            this.chkViperSMGTR6.CheckedChanged += new System.EventHandler(this.chkViperSMGTR6_CheckedChanged);
+            // 
+            // nudViperSMGAmmoTR6
+            // 
+            this.nudViperSMGAmmoTR6.Location = new System.Drawing.Point(162, 341);
+            this.nudViperSMGAmmoTR6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudViperSMGAmmoTR6.Name = "nudViperSMGAmmoTR6";
+            this.nudViperSMGAmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudViperSMGAmmoTR6.TabIndex = 55;
+            this.nudViperSMGAmmoTR6.ValueChanged += new System.EventHandler(this.nudViperSMGAmmoTR6_ValueChanged);
+            this.nudViperSMGAmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudViperSMGAmmoTR6_KeyPress);
+            // 
+            // chkRigg09TR6
+            // 
+            this.chkRigg09TR6.AutoSize = true;
+            this.chkRigg09TR6.Location = new System.Drawing.Point(22, 315);
+            this.chkRigg09TR6.Name = "chkRigg09TR6";
+            this.chkRigg09TR6.Size = new System.Drawing.Size(66, 17);
+            this.chkRigg09TR6.TabIndex = 54;
+            this.chkRigg09TR6.Text = "Rigg 09:";
+            this.chkRigg09TR6.UseVisualStyleBackColor = true;
+            this.chkRigg09TR6.CheckedChanged += new System.EventHandler(this.chkRigg09TR6_CheckedChanged);
+            // 
+            // nudRigg09AmmoTR6
+            // 
+            this.nudRigg09AmmoTR6.Location = new System.Drawing.Point(162, 315);
+            this.nudRigg09AmmoTR6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudRigg09AmmoTR6.Name = "nudRigg09AmmoTR6";
+            this.nudRigg09AmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudRigg09AmmoTR6.TabIndex = 53;
+            this.nudRigg09AmmoTR6.ValueChanged += new System.EventHandler(this.nudRigg09AmmoTR6_ValueChanged);
+            this.nudRigg09AmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudRigg09AmmoTR6_KeyPress);
+            // 
+            // chkDartSSTR6
+            // 
+            this.chkDartSSTR6.AutoSize = true;
+            this.chkDartSSTR6.Location = new System.Drawing.Point(22, 289);
+            this.chkDartSSTR6.Name = "chkDartSSTR6";
+            this.chkDartSSTR6.Size = new System.Drawing.Size(66, 17);
+            this.chkDartSSTR6.TabIndex = 52;
+            this.chkDartSSTR6.Text = "Dart SS:";
+            this.chkDartSSTR6.UseVisualStyleBackColor = true;
+            this.chkDartSSTR6.CheckedChanged += new System.EventHandler(this.chkDartSSTR6_CheckedChanged);
+            // 
+            // nudDartSSAmmoTR6
+            // 
+            this.nudDartSSAmmoTR6.Location = new System.Drawing.Point(162, 289);
+            this.nudDartSSAmmoTR6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudDartSSAmmoTR6.Name = "nudDartSSAmmoTR6";
+            this.nudDartSSAmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudDartSSAmmoTR6.TabIndex = 51;
+            this.nudDartSSAmmoTR6.ValueChanged += new System.EventHandler(this.nudDartSSAmmoTR6_ValueChanged);
+            this.nudDartSSAmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudDartSSAmmoTR6_KeyPress);
+            // 
+            // chkMagVegaTR6
+            // 
+            this.chkMagVegaTR6.AutoSize = true;
+            this.chkMagVegaTR6.Location = new System.Drawing.Point(22, 263);
+            this.chkMagVegaTR6.Name = "chkMagVegaTR6";
+            this.chkMagVegaTR6.Size = new System.Drawing.Size(78, 17);
+            this.chkMagVegaTR6.TabIndex = 50;
+            this.chkMagVegaTR6.Text = "Mag Vega:";
+            this.chkMagVegaTR6.UseVisualStyleBackColor = true;
+            this.chkMagVegaTR6.CheckedChanged += new System.EventHandler(this.chkMagVegaTR6_CheckedChanged);
+            // 
+            // nudMagVegaAmmoTR6
+            // 
+            this.nudMagVegaAmmoTR6.Location = new System.Drawing.Point(162, 263);
+            this.nudMagVegaAmmoTR6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudMagVegaAmmoTR6.Name = "nudMagVegaAmmoTR6";
+            this.nudMagVegaAmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudMagVegaAmmoTR6.TabIndex = 49;
+            this.nudMagVegaAmmoTR6.ValueChanged += new System.EventHandler(this.nudMagVegaAmmoTR6_ValueChanged);
+            this.nudMagVegaAmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudMagVegaAmmoTR6_KeyPress);
+            // 
+            // nudMV9AmmoTR6
+            // 
+            this.nudMV9AmmoTR6.Location = new System.Drawing.Point(162, 55);
+            this.nudMV9AmmoTR6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudMV9AmmoTR6.Name = "nudMV9AmmoTR6";
+            this.nudMV9AmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudMV9AmmoTR6.TabIndex = 48;
+            this.nudMV9AmmoTR6.ValueChanged += new System.EventHandler(this.nudMV9AmmoTR6_ValueChanged);
+            this.nudMV9AmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudMV9AmmoTR6_KeyPress);
+            // 
+            // lblPresentTR6
+            // 
+            this.lblPresentTR6.AutoSize = true;
+            this.lblPresentTR6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPresentTR6.Location = new System.Drawing.Point(24, 29);
+            this.lblPresentTR6.Name = "lblPresentTR6";
+            this.lblPresentTR6.Size = new System.Drawing.Size(43, 13);
+            this.lblPresentTR6.TabIndex = 47;
+            this.lblPresentTR6.Text = "Present";
+            // 
+            // lblAmmo1TR6
+            // 
+            this.lblAmmo1TR6.AutoSize = true;
+            this.lblAmmo1TR6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAmmo1TR6.Location = new System.Drawing.Point(164, 29);
+            this.lblAmmo1TR6.Name = "lblAmmo1TR6";
+            this.lblAmmo1TR6.Size = new System.Drawing.Size(36, 13);
+            this.lblAmmo1TR6.TabIndex = 46;
+            this.lblAmmo1TR6.Text = "Ammo";
+            // 
+            // nudVPackerAmmoTR6
+            // 
+            this.nudVPackerAmmoTR6.Location = new System.Drawing.Point(162, 81);
+            this.nudVPackerAmmoTR6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudVPackerAmmoTR6.Name = "nudVPackerAmmoTR6";
+            this.nudVPackerAmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudVPackerAmmoTR6.TabIndex = 17;
+            this.nudVPackerAmmoTR6.ValueChanged += new System.EventHandler(this.nudVPackerAmmoTR6_ValueChanged);
+            this.nudVPackerAmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudVPackerAmmoTR6_KeyPress);
+            // 
+            // chkDesertRangerTR6
+            // 
+            this.chkDesertRangerTR6.AutoSize = true;
+            this.chkDesertRangerTR6.Location = new System.Drawing.Point(22, 237);
+            this.chkDesertRangerTR6.Name = "chkDesertRangerTR6";
+            this.chkDesertRangerTR6.Size = new System.Drawing.Size(98, 17);
+            this.chkDesertRangerTR6.TabIndex = 16;
+            this.chkDesertRangerTR6.Text = "Desert Ranger:";
+            this.chkDesertRangerTR6.UseVisualStyleBackColor = true;
+            this.chkDesertRangerTR6.CheckedChanged += new System.EventHandler(this.chkDesertRangerTR6_CheckedChanged);
+            // 
+            // chkVectorR35PairTR6
+            // 
+            this.chkVectorR35PairTR6.AutoSize = true;
+            this.chkVectorR35PairTR6.Location = new System.Drawing.Point(22, 211);
+            this.chkVectorR35PairTR6.Name = "chkVectorR35PairTR6";
+            this.chkVectorR35PairTR6.Size = new System.Drawing.Size(116, 17);
+            this.chkVectorR35PairTR6.TabIndex = 15;
+            this.chkVectorR35PairTR6.Text = "Vector - R35 (Pair):";
+            this.chkVectorR35PairTR6.UseVisualStyleBackColor = true;
+            this.chkVectorR35PairTR6.CheckedChanged += new System.EventHandler(this.chkVectorR35PairTR6_CheckedChanged);
+            // 
+            // nudK2ImpactorAmmoTR6
+            // 
+            this.nudK2ImpactorAmmoTR6.Location = new System.Drawing.Point(162, 159);
+            this.nudK2ImpactorAmmoTR6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudK2ImpactorAmmoTR6.Name = "nudK2ImpactorAmmoTR6";
+            this.nudK2ImpactorAmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudK2ImpactorAmmoTR6.TabIndex = 13;
+            this.nudK2ImpactorAmmoTR6.ValueChanged += new System.EventHandler(this.nudK2ImpactorAmmoTR6_ValueChanged);
+            this.nudK2ImpactorAmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudK2ImpactorAmmoTR6_KeyPress);
+            // 
+            // nudVectorR35AmmoTR6
+            // 
+            this.nudVectorR35AmmoTR6.Location = new System.Drawing.Point(162, 185);
+            this.nudVectorR35AmmoTR6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudVectorR35AmmoTR6.Name = "nudVectorR35AmmoTR6";
+            this.nudVectorR35AmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudVectorR35AmmoTR6.TabIndex = 11;
+            this.nudVectorR35AmmoTR6.ValueChanged += new System.EventHandler(this.nudVectorR35AmmoTR6_ValueChanged);
+            this.nudVectorR35AmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudVectorR35AmmoTR6_KeyPress);
+            // 
+            // nudDesertRangerAmmoTR6
+            // 
+            this.nudDesertRangerAmmoTR6.Location = new System.Drawing.Point(162, 237);
+            this.nudDesertRangerAmmoTR6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudDesertRangerAmmoTR6.Name = "nudDesertRangerAmmoTR6";
+            this.nudDesertRangerAmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudDesertRangerAmmoTR6.TabIndex = 12;
+            this.nudDesertRangerAmmoTR6.ValueChanged += new System.EventHandler(this.nudDesertRangerAmmoTR6_ValueChanged);
+            this.nudDesertRangerAmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudDesertRangerAmmoTR6_KeyPress);
+            // 
+            // nudScorpionXAmmoTR6
+            // 
+            this.nudScorpionXAmmoTR6.Location = new System.Drawing.Point(162, 107);
+            this.nudScorpionXAmmoTR6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudScorpionXAmmoTR6.Name = "nudScorpionXAmmoTR6";
+            this.nudScorpionXAmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudScorpionXAmmoTR6.TabIndex = 9;
+            this.nudScorpionXAmmoTR6.ValueChanged += new System.EventHandler(this.nudScorpionXAmmoTR6_ValueChanged);
+            this.nudScorpionXAmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudScorpionXAmmoTR6_KeyPress);
+            // 
+            // chkVectorR35TR6
+            // 
+            this.chkVectorR35TR6.AutoSize = true;
+            this.chkVectorR35TR6.Location = new System.Drawing.Point(22, 185);
+            this.chkVectorR35TR6.Name = "chkVectorR35TR6";
+            this.chkVectorR35TR6.Size = new System.Drawing.Size(89, 17);
+            this.chkVectorR35TR6.TabIndex = 4;
+            this.chkVectorR35TR6.Text = "Vector - R35:";
+            this.chkVectorR35TR6.UseVisualStyleBackColor = true;
+            this.chkVectorR35TR6.CheckedChanged += new System.EventHandler(this.chkVectorR35TR6_CheckedChanged);
+            // 
+            // chkScorpionXPairTR6
+            // 
+            this.chkScorpionXPairTR6.AutoSize = true;
+            this.chkScorpionXPairTR6.Location = new System.Drawing.Point(22, 133);
+            this.chkScorpionXPairTR6.Name = "chkScorpionXPairTR6";
+            this.chkScorpionXPairTR6.Size = new System.Drawing.Size(108, 17);
+            this.chkScorpionXPairTR6.TabIndex = 2;
+            this.chkScorpionXPairTR6.Text = "Scorpion X (Pair):";
+            this.chkScorpionXPairTR6.UseVisualStyleBackColor = true;
+            this.chkScorpionXPairTR6.CheckedChanged += new System.EventHandler(this.chkScorpionXPairTR6_CheckedChanged);
+            // 
+            // chkVPackerTR6
+            // 
+            this.chkVPackerTR6.AutoSize = true;
+            this.chkVPackerTR6.Location = new System.Drawing.Point(22, 81);
+            this.chkVPackerTR6.Name = "chkVPackerTR6";
+            this.chkVPackerTR6.Size = new System.Drawing.Size(73, 17);
+            this.chkVPackerTR6.TabIndex = 5;
+            this.chkVPackerTR6.Text = "V-Packer:";
+            this.chkVPackerTR6.UseVisualStyleBackColor = true;
+            this.chkVPackerTR6.CheckedChanged += new System.EventHandler(this.chkVPackerTR6_CheckedChanged);
+            // 
+            // chkK2ImpactorTR6
+            // 
+            this.chkK2ImpactorTR6.AutoSize = true;
+            this.chkK2ImpactorTR6.Location = new System.Drawing.Point(22, 159);
+            this.chkK2ImpactorTR6.Name = "chkK2ImpactorTR6";
+            this.chkK2ImpactorTR6.Size = new System.Drawing.Size(86, 17);
+            this.chkK2ImpactorTR6.TabIndex = 3;
+            this.chkK2ImpactorTR6.Text = "K2 Impactor:";
+            this.chkK2ImpactorTR6.UseVisualStyleBackColor = true;
+            this.chkK2ImpactorTR6.CheckedChanged += new System.EventHandler(this.chkK2ImpactorTR6_CheckedChanged);
+            // 
+            // chkScorpionXTR6
+            // 
+            this.chkScorpionXTR6.AutoSize = true;
+            this.chkScorpionXTR6.Location = new System.Drawing.Point(22, 107);
+            this.chkScorpionXTR6.Name = "chkScorpionXTR6";
+            this.chkScorpionXTR6.Size = new System.Drawing.Size(81, 17);
+            this.chkScorpionXTR6.TabIndex = 1;
+            this.chkScorpionXTR6.Text = "Scorpion X:";
+            this.chkScorpionXTR6.UseVisualStyleBackColor = true;
+            this.chkScorpionXTR6.CheckedChanged += new System.EventHandler(this.chkScorpionXTR6_CheckedChanged);
+            // 
+            // chkMV9TR6
+            // 
+            this.chkMV9TR6.AutoSize = true;
+            this.chkMV9TR6.Location = new System.Drawing.Point(22, 55);
+            this.chkMV9TR6.Name = "chkMV9TR6";
+            this.chkMV9TR6.Size = new System.Drawing.Size(54, 17);
+            this.chkMV9TR6.TabIndex = 0;
+            this.chkMV9TR6.Text = "M-V9:";
+            this.chkMV9TR6.UseVisualStyleBackColor = true;
+            this.chkMV9TR6.CheckedChanged += new System.EventHandler(this.chkMV9TR6_CheckedChanged);
+            // 
+            // grpHealthTR6
+            // 
+            this.grpHealthTR6.Controls.Add(this.lblHealthErrorTR6);
+            this.grpHealthTR6.Controls.Add(this.lblHealthTR6);
+            this.grpHealthTR6.Controls.Add(this.trbHealthTR6);
+            this.grpHealthTR6.Location = new System.Drawing.Point(4, 399);
+            this.grpHealthTR6.Name = "grpHealthTR6";
+            this.grpHealthTR6.Size = new System.Drawing.Size(335, 76);
+            this.grpHealthTR6.TabIndex = 41;
+            this.grpHealthTR6.TabStop = false;
+            this.grpHealthTR6.Text = "Health";
+            // 
+            // lblHealthErrorTR6
+            // 
+            this.lblHealthErrorTR6.AutoSize = true;
+            this.lblHealthErrorTR6.Location = new System.Drawing.Point(93, 51);
+            this.lblHealthErrorTR6.Name = "lblHealthErrorTR6";
+            this.lblHealthErrorTR6.Size = new System.Drawing.Size(136, 13);
+            this.lblHealthErrorTR6.TabIndex = 20;
+            this.lblHealthErrorTR6.Text = "Unable to find health bytes.";
+            this.lblHealthErrorTR6.Visible = false;
+            // 
+            // lblHealthTR6
+            // 
+            this.lblHealthTR6.AutoSize = true;
+            this.lblHealthTR6.Location = new System.Drawing.Point(292, 27);
+            this.lblHealthTR6.Name = "lblHealthTR6";
+            this.lblHealthTR6.Size = new System.Drawing.Size(30, 13);
+            this.lblHealthTR6.TabIndex = 1;
+            this.lblHealthTR6.Text = "0.1%";
+            // 
+            // trbHealthTR6
+            // 
+            this.trbHealthTR6.BackColor = System.Drawing.Color.White;
+            this.trbHealthTR6.Location = new System.Drawing.Point(16, 23);
+            this.trbHealthTR6.Maximum = 100;
+            this.trbHealthTR6.Minimum = 1;
+            this.trbHealthTR6.Name = "trbHealthTR6";
+            this.trbHealthTR6.Size = new System.Drawing.Size(272, 45);
+            this.trbHealthTR6.TabIndex = 0;
+            this.trbHealthTR6.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trbHealthTR6.Value = 1;
+            this.trbHealthTR6.Scroll += new System.EventHandler(this.trbHealthTR6_Scroll);
+            // 
+            // grpItemsTR6
+            // 
+            this.grpItemsTR6.Controls.Add(this.lblPoisonAntidoteTR6);
+            this.grpItemsTR6.Controls.Add(this.nudPoisonAntidoteTR6);
+            this.grpItemsTR6.Controls.Add(this.lblChocolateBarTR6);
+            this.grpItemsTR6.Controls.Add(this.lblHealthPillsTR6);
+            this.grpItemsTR6.Controls.Add(this.nudChocolateBarTR6);
+            this.grpItemsTR6.Controls.Add(this.nudHealthPillsTR6);
+            this.grpItemsTR6.Controls.Add(this.lblHealthBandagesTR6);
+            this.grpItemsTR6.Controls.Add(this.nudHealthBandagesTR6);
+            this.grpItemsTR6.Controls.Add(this.lblSmallMedipackTR6);
+            this.grpItemsTR6.Controls.Add(this.lblLargeHealthPackTR6);
+            this.grpItemsTR6.Controls.Add(this.lblCashTR6);
+            this.grpItemsTR6.Controls.Add(this.nudSmallMedipackTR6);
+            this.grpItemsTR6.Controls.Add(this.nudLargeHealthPackTR6);
+            this.grpItemsTR6.Controls.Add(this.nudCashTR6);
+            this.grpItemsTR6.Location = new System.Drawing.Point(4, 44);
+            this.grpItemsTR6.Name = "grpItemsTR6";
+            this.grpItemsTR6.Size = new System.Drawing.Size(335, 349);
+            this.grpItemsTR6.TabIndex = 40;
+            this.grpItemsTR6.TabStop = false;
+            this.grpItemsTR6.Text = "Items";
+            // 
+            // lblPoisonAntidoteTR6
+            // 
+            this.lblPoisonAntidoteTR6.AutoSize = true;
+            this.lblPoisonAntidoteTR6.Location = new System.Drawing.Point(18, 187);
+            this.lblPoisonAntidoteTR6.Name = "lblPoisonAntidoteTR6";
+            this.lblPoisonAntidoteTR6.Size = new System.Drawing.Size(84, 13);
+            this.lblPoisonAntidoteTR6.TabIndex = 27;
+            this.lblPoisonAntidoteTR6.Text = "Poison Antidote:";
+            // 
+            // nudPoisonAntidoteTR6
+            // 
+            this.nudPoisonAntidoteTR6.Location = new System.Drawing.Point(265, 185);
+            this.nudPoisonAntidoteTR6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudPoisonAntidoteTR6.Name = "nudPoisonAntidoteTR6";
+            this.nudPoisonAntidoteTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudPoisonAntidoteTR6.TabIndex = 26;
+            this.nudPoisonAntidoteTR6.ValueChanged += new System.EventHandler(this.nudPoisonAntidoteTR6_ValueChanged);
+            this.nudPoisonAntidoteTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudPoisonAntidoteTR6_KeyPress);
+            // 
+            // lblChocolateBarTR6
+            // 
+            this.lblChocolateBarTR6.AutoSize = true;
+            this.lblChocolateBarTR6.Location = new System.Drawing.Point(18, 161);
+            this.lblChocolateBarTR6.Name = "lblChocolateBarTR6";
+            this.lblChocolateBarTR6.Size = new System.Drawing.Size(77, 13);
+            this.lblChocolateBarTR6.TabIndex = 25;
+            this.lblChocolateBarTR6.Text = "Chocolate Bar:";
+            // 
+            // lblHealthPillsTR6
+            // 
+            this.lblHealthPillsTR6.AutoSize = true;
+            this.lblHealthPillsTR6.Location = new System.Drawing.Point(18, 135);
+            this.lblHealthPillsTR6.Name = "lblHealthPillsTR6";
+            this.lblHealthPillsTR6.Size = new System.Drawing.Size(62, 13);
+            this.lblHealthPillsTR6.TabIndex = 24;
+            this.lblHealthPillsTR6.Text = "Health Pills:";
+            // 
+            // nudChocolateBarTR6
+            // 
+            this.nudChocolateBarTR6.Location = new System.Drawing.Point(265, 159);
+            this.nudChocolateBarTR6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudChocolateBarTR6.Name = "nudChocolateBarTR6";
+            this.nudChocolateBarTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudChocolateBarTR6.TabIndex = 23;
+            this.nudChocolateBarTR6.ValueChanged += new System.EventHandler(this.nudChocolateBarTR6_ValueChanged);
+            this.nudChocolateBarTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudChocolateBarTR6_KeyPress);
+            // 
+            // nudHealthPillsTR6
+            // 
+            this.nudHealthPillsTR6.Location = new System.Drawing.Point(265, 133);
+            this.nudHealthPillsTR6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudHealthPillsTR6.Name = "nudHealthPillsTR6";
+            this.nudHealthPillsTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudHealthPillsTR6.TabIndex = 22;
+            this.nudHealthPillsTR6.ValueChanged += new System.EventHandler(this.nudHealthPillsTR6_ValueChanged);
+            this.nudHealthPillsTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudHealthPillsTR6_KeyPress);
+            // 
+            // lblHealthBandagesTR6
+            // 
+            this.lblHealthBandagesTR6.AutoSize = true;
+            this.lblHealthBandagesTR6.Location = new System.Drawing.Point(18, 109);
+            this.lblHealthBandagesTR6.Name = "lblHealthBandagesTR6";
+            this.lblHealthBandagesTR6.Size = new System.Drawing.Size(92, 13);
+            this.lblHealthBandagesTR6.TabIndex = 21;
+            this.lblHealthBandagesTR6.Text = "Health Bandages:";
+            // 
+            // nudHealthBandagesTR6
+            // 
+            this.nudHealthBandagesTR6.Location = new System.Drawing.Point(265, 107);
+            this.nudHealthBandagesTR6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudHealthBandagesTR6.Name = "nudHealthBandagesTR6";
+            this.nudHealthBandagesTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudHealthBandagesTR6.TabIndex = 20;
+            this.nudHealthBandagesTR6.ValueChanged += new System.EventHandler(this.nudHealthBandagesTR6_ValueChanged);
+            this.nudHealthBandagesTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudHealthBandagesTR6_KeyPress);
+            // 
+            // lblSmallMedipackTR6
+            // 
+            this.lblSmallMedipackTR6.AutoSize = true;
+            this.lblSmallMedipackTR6.Location = new System.Drawing.Point(18, 83);
+            this.lblSmallMedipackTR6.Name = "lblSmallMedipackTR6";
+            this.lblSmallMedipackTR6.Size = new System.Drawing.Size(85, 13);
+            this.lblSmallMedipackTR6.TabIndex = 19;
+            this.lblSmallMedipackTR6.Text = "Small Medipack:";
+            // 
+            // lblLargeHealthPackTR6
+            // 
+            this.lblLargeHealthPackTR6.AutoSize = true;
+            this.lblLargeHealthPackTR6.Location = new System.Drawing.Point(18, 57);
+            this.lblLargeHealthPackTR6.Name = "lblLargeHealthPackTR6";
+            this.lblLargeHealthPackTR6.Size = new System.Drawing.Size(99, 13);
+            this.lblLargeHealthPackTR6.TabIndex = 18;
+            this.lblLargeHealthPackTR6.Text = "Large Health Pack:";
+            // 
+            // lblCashTR6
+            // 
+            this.lblCashTR6.AutoSize = true;
+            this.lblCashTR6.Location = new System.Drawing.Point(18, 31);
+            this.lblCashTR6.Name = "lblCashTR6";
+            this.lblCashTR6.Size = new System.Drawing.Size(34, 13);
+            this.lblCashTR6.TabIndex = 9;
+            this.lblCashTR6.Text = "Cash:";
+            // 
+            // nudSmallMedipackTR6
+            // 
+            this.nudSmallMedipackTR6.Location = new System.Drawing.Point(265, 81);
+            this.nudSmallMedipackTR6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudSmallMedipackTR6.Name = "nudSmallMedipackTR6";
+            this.nudSmallMedipackTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudSmallMedipackTR6.TabIndex = 17;
+            this.nudSmallMedipackTR6.ValueChanged += new System.EventHandler(this.nudSmallMedipackTR6_ValueChanged);
+            this.nudSmallMedipackTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSmallMedipackTR6_KeyPress);
+            // 
+            // nudLargeHealthPackTR6
+            // 
+            this.nudLargeHealthPackTR6.Location = new System.Drawing.Point(265, 55);
+            this.nudLargeHealthPackTR6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudLargeHealthPackTR6.Name = "nudLargeHealthPackTR6";
+            this.nudLargeHealthPackTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudLargeHealthPackTR6.TabIndex = 16;
+            this.nudLargeHealthPackTR6.ValueChanged += new System.EventHandler(this.nudLargeHealthPackTR6_ValueChanged);
+            this.nudLargeHealthPackTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudLargeHealthPackTR6_KeyPress);
+            // 
+            // nudCashTR6
+            // 
+            this.nudCashTR6.Location = new System.Drawing.Point(265, 29);
+            this.nudCashTR6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudCashTR6.Name = "nudCashTR6";
+            this.nudCashTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudCashTR6.TabIndex = 15;
+            this.nudCashTR6.ValueChanged += new System.EventHandler(this.nudCashTR6_ValueChanged);
+            this.nudCashTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudCashTR6_KeyPress);
+            // 
             // ssrStatusStrip
             // 
             this.ssrStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.slblStatus});
-            this.ssrStatusStrip.Location = new System.Drawing.Point(0, 432);
+            this.ssrStatusStrip.Location = new System.Drawing.Point(0, 586);
             this.ssrStatusStrip.Name = "ssrStatusStrip";
             this.ssrStatusStrip.Size = new System.Drawing.Size(721, 22);
             this.ssrStatusStrip.SizingGrip = false;
@@ -2996,7 +3806,7 @@ namespace TRR_SaveMaster
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(721, 454);
+            this.ClientSize = new System.Drawing.Size(721, 608);
             this.Controls.Add(this.tabGame);
             this.Controls.Add(this.ssrStatusStrip);
             this.Controls.Add(this.tsrToolStrip);
@@ -3111,6 +3921,33 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudDeagleAmmoTR5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHKGunAmmoTR5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGrapplingGunAmmoTR5)).EndInit();
+            this.tpTR6.ResumeLayout(false);
+            this.tpTR6.PerformLayout();
+            this.grpWeaponsTR6.ResumeLayout(false);
+            this.grpWeaponsTR6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudBoranXAmmoTR6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudViperSMGAmmoTR6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRigg09AmmoTR6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDartSSAmmoTR6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMagVegaAmmoTR6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMV9AmmoTR6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudVPackerAmmoTR6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudK2ImpactorAmmoTR6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudVectorR35AmmoTR6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDesertRangerAmmoTR6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudScorpionXAmmoTR6)).EndInit();
+            this.grpHealthTR6.ResumeLayout(false);
+            this.grpHealthTR6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trbHealthTR6)).EndInit();
+            this.grpItemsTR6.ResumeLayout(false);
+            this.grpItemsTR6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPoisonAntidoteTR6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudChocolateBarTR6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHealthPillsTR6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHealthBandagesTR6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSmallMedipackTR6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudLargeHealthPackTR6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCashTR6)).EndInit();
             this.ssrStatusStrip.ResumeLayout(false);
             this.ssrStatusStrip.PerformLayout();
             this.tsrToolStrip.ResumeLayout(false);
@@ -3348,6 +4185,65 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.CheckBox chkPistolsTR5;
         private System.Windows.Forms.NumericUpDown nudShotgunNormalAmmoTR5;
         private System.Windows.Forms.CheckBox chkShotgunTR5;
+        private System.Windows.Forms.TabPage tpTR6;
+        private System.Windows.Forms.Button btnRefreshTR6;
+        private System.Windows.Forms.Button btnExitTR6;
+        private System.Windows.Forms.Button btnSaveTR6;
+        private System.Windows.Forms.Button btnCancelTR6;
+        private System.Windows.Forms.Label lblSavegameTR6;
+        private System.Windows.Forms.ComboBox cmbSavegamesTR6;
+        private System.Windows.Forms.GroupBox grpWeaponsTR6;
+        private System.Windows.Forms.Label lblPresentTR6;
+        private System.Windows.Forms.Label lblAmmo1TR6;
+        private System.Windows.Forms.NumericUpDown nudVPackerAmmoTR6;
+        private System.Windows.Forms.CheckBox chkDesertRangerTR6;
+        private System.Windows.Forms.CheckBox chkVectorR35PairTR6;
+        private System.Windows.Forms.NumericUpDown nudK2ImpactorAmmoTR6;
+        private System.Windows.Forms.NumericUpDown nudVectorR35AmmoTR6;
+        private System.Windows.Forms.NumericUpDown nudDesertRangerAmmoTR6;
+        private System.Windows.Forms.NumericUpDown nudScorpionXAmmoTR6;
+        private System.Windows.Forms.CheckBox chkVectorR35TR6;
+        private System.Windows.Forms.CheckBox chkScorpionXPairTR6;
+        private System.Windows.Forms.CheckBox chkVPackerTR6;
+        private System.Windows.Forms.CheckBox chkK2ImpactorTR6;
+        private System.Windows.Forms.CheckBox chkScorpionXTR6;
+        private System.Windows.Forms.CheckBox chkMV9TR6;
+        private System.Windows.Forms.GroupBox grpHealthTR6;
+        private System.Windows.Forms.Label lblHealthErrorTR6;
+        private System.Windows.Forms.Label lblHealthTR6;
+        private System.Windows.Forms.TrackBar trbHealthTR6;
+        private System.Windows.Forms.GroupBox grpItemsTR6;
+        private System.Windows.Forms.Label lblHealthBandagesTR6;
+        private System.Windows.Forms.NumericUpDown nudHealthBandagesTR6;
+        private System.Windows.Forms.Label lblSmallMedipackTR6;
+        private System.Windows.Forms.Label lblLargeHealthPackTR6;
+        private System.Windows.Forms.Label lblCashTR6;
+        private System.Windows.Forms.NumericUpDown nudSmallMedipackTR6;
+        private System.Windows.Forms.NumericUpDown nudLargeHealthPackTR6;
+        private System.Windows.Forms.NumericUpDown nudCashTR6;
+        private System.Windows.Forms.NumericUpDown nudMV9AmmoTR6;
+        private System.Windows.Forms.CheckBox chkDartSSTR6;
+        private System.Windows.Forms.NumericUpDown nudDartSSAmmoTR6;
+        private System.Windows.Forms.CheckBox chkMagVegaTR6;
+        private System.Windows.Forms.NumericUpDown nudMagVegaAmmoTR6;
+        private System.Windows.Forms.CheckBox chkChirugaiBladeTR6;
+        private System.Windows.Forms.CheckBox chkBoranXTR6;
+        private System.Windows.Forms.NumericUpDown nudBoranXAmmoTR6;
+        private System.Windows.Forms.CheckBox chkViperSMGTR6;
+        private System.Windows.Forms.NumericUpDown nudViperSMGAmmoTR6;
+        private System.Windows.Forms.CheckBox chkRigg09TR6;
+        private System.Windows.Forms.NumericUpDown nudRigg09AmmoTR6;
+        private System.Windows.Forms.Label lblPoisonAntidoteTR6;
+        private System.Windows.Forms.NumericUpDown nudPoisonAntidoteTR6;
+        private System.Windows.Forms.Label lblChocolateBarTR6;
+        private System.Windows.Forms.Label lblHealthPillsTR6;
+        private System.Windows.Forms.NumericUpDown nudChocolateBarTR6;
+        private System.Windows.Forms.NumericUpDown nudHealthPillsTR6;
+        private System.Windows.Forms.Label lblChirugaiBladeAmmoTR6;
+        private System.Windows.Forms.Label lblVectorR35PairAmmoTR6;
+        private System.Windows.Forms.Label lblScorpionXPairAmmoTR6;
+        private System.Windows.Forms.ComboBox cmbInventoryTR6;
+        private System.Windows.Forms.Label lblInventoryTR6;
     }
 }
 

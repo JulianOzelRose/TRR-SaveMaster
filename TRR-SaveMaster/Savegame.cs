@@ -40,14 +40,16 @@ namespace TRR_SaveMaster
         public int Slot { get; set; }
         public string Name { get; set; }
         public GameMode Mode { get; set; }
+        public bool SaveNumberFirst { get; set; }
 
-        public Savegame(int savegameOffset, int slot, Int32 saveNumber, string levelName, GameMode gameMode)
+        public Savegame(int savegameOffset, int slot, Int32 saveNumber, string levelName, GameMode gameMode, bool saveNumberFirst = false)
         {
             Number = saveNumber;
             Name = levelName;
             Offset = savegameOffset;
             Slot = slot;
             Mode = gameMode;
+            SaveNumberFirst = saveNumberFirst;
         }
 
         public void UpdateDisplayName(string levelName, Int32 saveNumber, GameMode gameMode)
@@ -60,6 +62,12 @@ namespace TRR_SaveMaster
         public override string ToString()
         {
             string modeSuffix = Mode == GameMode.Plus ? "+" : "";
+
+            if (SaveNumberFirst)
+            {
+                return $"{Number} - {Name}{modeSuffix}";
+            }
+
             return $"{Name}{modeSuffix} - {Number}";
         }
     }
