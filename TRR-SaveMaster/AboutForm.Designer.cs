@@ -47,19 +47,19 @@ namespace TRR_SaveMaster
             this.lblVersion.AutoSize = true;
             this.lblVersion.BackColor = System.Drawing.Color.Transparent;
             this.lblVersion.Font = new System.Drawing.Font("Impact", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVersion.ForeColor = System.Drawing.Color.Yellow;
+            this.lblVersion.ForeColor = System.Drawing.Color.White;
             this.lblVersion.Location = new System.Drawing.Point(185, 74);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(116, 26);
+            this.lblVersion.Size = new System.Drawing.Size(119, 26);
             this.lblVersion.TabIndex = 22;
-            this.lblVersion.Text = "Version 1.92";
+            this.lblVersion.Text = "Version 2.00";
             // 
             // lblAuthor
             // 
             this.lblAuthor.AutoSize = true;
             this.lblAuthor.BackColor = System.Drawing.Color.Transparent;
             this.lblAuthor.Font = new System.Drawing.Font("Impact", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAuthor.ForeColor = System.Drawing.Color.Yellow;
+            this.lblAuthor.ForeColor = System.Drawing.Color.White;
             this.lblAuthor.Location = new System.Drawing.Point(148, 106);
             this.lblAuthor.Name = "lblAuthor";
             this.lblAuthor.Size = new System.Drawing.Size(188, 28);
