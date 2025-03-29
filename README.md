@@ -1,17 +1,18 @@
 # Tomb Raider Remastered Savegame Editor
-This is a savegame editor for Tomb Raider Remastered. For the second trilogy, Tomb Raider IV and V are currently supported.
-Tomb Raider VI support is in progress. You can edit items, health, weapons, ammunition, statistics, and position.
+This is a savegame editor for Tomb Raider Remastered. For the second trilogy, Tomb Raider IV and V are fully supported.
+Tomb Raider VI support is currently in BETA, you can find more information in the section below. You can edit items, health, weapons, ammunition, statistics, and position.
 The Tomb Raider I-III portion of this editor is compatible with PC, PS4, and Nintendo Switch savegames. For instructions on how to download and use this savegame editor, scroll down to
 the section below. Additionally, technical details on reverse engineering the Tomb Raider I-III Remastered trilogy are included on later on in this README.
 For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder or delete savegames,
 check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
-![TRR-SaveMaster-UI](https://github.com/user-attachments/assets/8e26be69-73ef-44e7-9212-722ee1729503)
+![TRR-SaveMaster-UI](https://github.com/user-attachments/assets/01363880-ddbf-4390-8b53-e129571169d4)
 
 
 ## Installation and use
 To download and use this savegame editor, simply navigate to the [Releases](https://github.com/JulianOzelRose/TRR-SaveMaster/releases) page,
-then download the .exe file of the latest version under "Assets". You can save it anywhere on your computer. Once downloaded, open the file.
+then download the .exe file of the latest stable version under "Assets". If you would like to beta test Tomb Raider VI savegame editing, download
+the .exe suffixed with "BETA" — but be sure to backup your savegame file before editing. You can save it anywhere on your computer. Once downloaded, open the file.
 The editor will then prompt you to select your savegame path, click "Yes". Your savegame path should be as follows:
 
 #### Tomb Raider I-III Remastered:
