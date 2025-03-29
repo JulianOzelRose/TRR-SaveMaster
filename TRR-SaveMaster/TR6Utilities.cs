@@ -54,6 +54,7 @@ namespace TRR_SaveMaster
         private const int CASH_OFFSET = 0x9;
         private int PLAYER_BASE_OFFSET;
         private int PLAYER_HEALTH_OFFSET;
+        private int PLAYER_HEALTH_OFFSET_2;
 
         // Buffer-related
         private int INVENTORY_START_OFFSET;
@@ -92,7 +93,6 @@ namespace TRR_SaveMaster
         int sgBufferCursor = 0;
 
         // Vars to read
-        Int32 gGameCash = 0;
         byte sgCurrentLevel = 0;
         float playerHealth = 0;
 
@@ -163,7 +163,20 @@ namespace TRR_SaveMaster
         public void DisplayGameInfo(TrackBar trbHealth, Label lblHealth, Label lblHealthError, NumericUpDown nudCash)
         {
             ParseInventory();
-            nudCash.Value = gGameCash;
+
+            // Load cash and health directly from buffer
+            using (MemoryStream ms = new MemoryStream(decompressedBuffer))
+            using (BinaryReader reader = new BinaryReader(ms))
+            {
+                // Read cash (Int32)
+                ms.Seek(CASH_OFFSET, SeekOrigin.Begin);
+                Int32 cashValue = reader.ReadInt32();
+                nudCash.Value = cashValue;
+
+                // Read health (Float)
+                ms.Seek(PLAYER_HEALTH_OFFSET_2, SeekOrigin.Begin);
+                playerHealth = reader.ReadSingle();
+            }
 
             if (playerHealth > 0 && playerHealth <= 100)
             {
@@ -258,6 +271,9 @@ namespace TRR_SaveMaster
                     } while (characterIndex < 2);
 
                     INVENTORY_END_OFFSET = sgBufferCursor;
+                    PLAYER_HEALTH_OFFSET_2 = sgBufferCursor;
+
+                    Debug.WriteLine($"INVENTORY_END_OFFSET = 0x{sgBufferCursor:X}");
 
                     //======================================================//
                     //  Post-inventory data
@@ -420,8 +436,6 @@ namespace TRR_SaveMaster
             //Debug.WriteLine($"InvLoad() was called. Current offset: 0x{sgBufferCursor:X}");
 
             // Read gGameCash (4 bytes)
-            reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-            gGameCash = reader.ReadInt32();
             sgBufferCursor += 0x4;
 
             sgBufferCursor += 0x12B;
@@ -572,8 +586,12 @@ namespace TRR_SaveMaster
             if (isPlayer)
             {
                 PLAYER_BASE_OFFSET = sgBufferCursor;
-                //Debug.WriteLine($"Player base: 0x{PLAYER_BASE_OFFSET:X}");
+                Debug.WriteLine($"Player base: 0x{PLAYER_BASE_OFFSET:X}");
                 //DisplayPlayerCoordinates(reader);
+            }
+            else
+            {
+                Debug.WriteLine($"Entity {actorIndex + 1} base: 0x{sgBufferCursor:X}");
             }
 
             MapLoadBaseNode();
@@ -588,17 +606,7 @@ namespace TRR_SaveMaster
 
                 PLAYER_HEALTH_OFFSET = sgBufferCursor;
 
-                reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-                float health = reader.ReadSingle();
                 sgBufferCursor += 0x4;
-
-                playerHealth = health;
-                //Debug.WriteLine($"PLAYER HEALTH: {health} at offset 0x{PLAYER_HEALTH_OFFSET:X}");
-
-                if (health > 0 && health <= 100)
-                {
-                    playerHealth = (int)health; // Ensure UI reflects health accurately
-                }
             }
             else
             {
@@ -1196,7 +1204,7 @@ namespace TRR_SaveMaster
             var nodeOffsets = GatherNodesForEntityType(baseOffset, 11);
             var finalArray = BuildEntityArray(nodeOffsets);
             NUM_AUDIO_LOCATORS = finalArray.Count;
-            Console.WriteLine($"******************** AUDIO LOCATORS: = {NUM_AUDIO_LOCATORS}");
+            //Console.WriteLine($"******************** AUDIO LOCATORS: = {NUM_AUDIO_LOCATORS}");
         }
 
         private int FindSecondMagicHeader(List<byte> data)
@@ -1250,7 +1258,7 @@ namespace TRR_SaveMaster
             var nodeOffsets = GatherNodesForEntityType(baseOffset, 2);
             var finalArray = BuildEntityArray(nodeOffsets);
 
-            Console.WriteLine($"\n=== Parsing {finalArray.Count} Actors ===\n");
+            //Console.WriteLine($"\n=== Parsing {finalArray.Count} Actors ===\n");
             actors.Clear();
 
             foreach (var kvp in finalArray)
@@ -2382,11 +2390,9 @@ namespace TRR_SaveMaster
                     ms.Seek(CASH_OFFSET, SeekOrigin.Begin);
                     writer.Write((int)nudCash.Value);
 
-                    // Write health value (Float)
+                    // Write first health value (Float)
                     ms.Seek(PLAYER_HEALTH_OFFSET, SeekOrigin.Begin);
-                    float healthValue = trbHealth.Value;
-                    byte[] healthBytes = BitConverter.GetBytes(healthValue);
-                    writer.Write(healthBytes);
+                    writer.Write((float)trbHealth.Value);
 
                     //Debug.WriteLine($"Writing Health: {healthValue} (Raw Bytes: {BitConverter.ToString(healthBytes)})");
                 }
@@ -2417,6 +2423,14 @@ namespace TRR_SaveMaster
                     newInventoryBlock = inventoryStream.ToArray();
                 }
 
+                // Modify post-inventory block (second health value)
+                using (MemoryStream ms = new MemoryStream(postInventoryBlock))
+                using (BinaryWriter writer = new BinaryWriter(ms))
+                {
+                    writer.Seek(0, SeekOrigin.Begin); // First byte
+                    writer.Write((float)trbHealth.Value);
+                }
+
                 //Debug.WriteLine($"New Inventory Block Size: 0x{newInventoryBlock.Length:X}");
 
                 // Update Offsets AFTER New Inventory Block is Created
@@ -2426,6 +2440,7 @@ namespace TRR_SaveMaster
 
                 INVENTORY_END_OFFSET += inventorySizeDelta;
                 POST_INVENTORY_END_OFFSET += inventorySizeDelta;
+                PLAYER_HEALTH_OFFSET_2 += inventorySizeDelta;
 
                 //Debug.WriteLine($"Updated INVENTORY_END_OFFSET: 0x{INVENTORY_END_OFFSET:X}");
                 //Debug.WriteLine($"Updated POST_INVENTORY_END_OFFSET: 0x{POST_INVENTORY_END_OFFSET:X}");

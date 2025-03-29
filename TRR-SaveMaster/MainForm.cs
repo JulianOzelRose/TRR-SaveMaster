@@ -52,9 +52,8 @@ namespace TRR_SaveMaster
 
         // Misc
         private const string GAME_PATH_TR6 = @"C:\Program Files (x86)\Steam\steamapps\common\Tomb Raider IV-VI Remastered\6\DATA\MAPS\";
-        private const int SLOT_NUMBER_OFFSET_TR6 = 0x15;
         private const string EMPTY_SLOT_STRING_TR6 = " < Empty Slot >";
-        private const int TR6_DISPLAY_NAME_OFFSET = 0x124;
+        private const int DISPLAY_NAME_OFFSET_TR6 = 0x124;
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -2608,7 +2607,7 @@ namespace TRR_SaveMaster
 
                     using (FileStream saveFile = new FileStream(savegamePath, FileMode.Open, FileAccess.Write, FileShare.ReadWrite))
                     {
-                        saveFile.Seek(savegame.Offset + TR6_DISPLAY_NAME_OFFSET, SeekOrigin.Begin);
+                        saveFile.Seek(savegame.Offset + DISPLAY_NAME_OFFSET_TR6, SeekOrigin.Begin);
                         saveFile.Write(emptySlotBytes, 0, emptySlotBytes.Length);
                         saveFile.WriteByte(0); // Null terminator
                     }
