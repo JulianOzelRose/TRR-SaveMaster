@@ -201,6 +201,27 @@ namespace TRR_SaveMaster
         private void btnStartOfLevel_Click(object sender, EventArgs e)
         {
             byte levelIndex = GetLevelIndex();
+
+            if (SELECTED_TAB == TAB_TR6)
+            {
+                if (startOfLevelCoordinatesTR6.ContainsKey(levelIndex))
+                {
+                    float[] startOfLevelCoordinatesFloat = startOfLevelCoordinatesTR6[levelIndex];
+
+                    if (startOfLevelCoordinatesFloat.Length < 4)
+                    {
+                        return;
+                    }
+
+                    nudXCoordinate.Value = (decimal)startOfLevelCoordinatesFloat[0];
+                    nudYCoordinate.Value = (decimal)startOfLevelCoordinatesFloat[1];
+                    nudZCoordinate.Value = (decimal)startOfLevelCoordinatesFloat[2];
+                    nudOrientation.Value = (decimal)startOfLevelCoordinatesFloat[3];
+                }
+
+                return;
+            }
+
             Int32[] startOfLevelCoordinates = new Int32[4];
 
             if (SELECTED_TAB == TAB_TR1 && startOfLevelCoordinatesTR1.ContainsKey(levelIndex))
@@ -239,6 +260,27 @@ namespace TRR_SaveMaster
         private void btnEndOfLevel_Click(object sender, EventArgs e)
         {
             byte levelIndex = GetLevelIndex();
+
+            if (SELECTED_TAB == TAB_TR6)
+            {
+                if (endOfLevelCoordinatesTR6.ContainsKey(levelIndex))
+                {
+                    float[] endOfLevelCoordinatesFloat = endOfLevelCoordinatesTR6[levelIndex];
+
+                    if (endOfLevelCoordinatesFloat.Length < 4)
+                    {
+                        return;
+                    }
+
+                    nudXCoordinate.Value = (decimal)endOfLevelCoordinatesFloat[0];
+                    nudYCoordinate.Value = (decimal)endOfLevelCoordinatesFloat[1];
+                    nudZCoordinate.Value = (decimal)endOfLevelCoordinatesFloat[2];
+                    nudOrientation.Value = (decimal)endOfLevelCoordinatesFloat[3];
+                }
+
+                return;
+            }
+
             Int32[] endOfLevelCoordinates = new Int32[4];
 
             if (SELECTED_TAB == TAB_TR1 && endOfLevelCoordinatesTR1.ContainsKey(levelIndex))
@@ -542,6 +584,10 @@ namespace TRR_SaveMaster
             {
                 btnEndOfLevel.Enabled = endOfLevelCoordinatesTR5.ContainsKey(levelIndex);
             }
+            else if (SELECTED_TAB == TAB_TR6)
+            {
+                btnEndOfLevel.Enabled = endOfLevelCoordinatesTR6.ContainsKey(levelIndex);
+            }
         }
 
         private void EnableStartOfLevelButtonConditionally()
@@ -567,6 +613,10 @@ namespace TRR_SaveMaster
             else if (SELECTED_TAB == TAB_TR5)
             {
                 btnStartOfLevel.Enabled = startOfLevelCoordinatesTR5.ContainsKey(levelIndex);
+            }
+            else if (SELECTED_TAB == TAB_TR6)
+            {
+                btnStartOfLevel.Enabled = startOfLevelCoordinatesTR6.ContainsKey(levelIndex);
             }
         }
 
@@ -783,6 +833,15 @@ namespace TRR_SaveMaster
             { 14, new Int32[] { 26880, 4992, 38656, 180, 8      } },    // Red Alert!
         };
 
+        private readonly Dictionary<byte, float[]> startOfLevelCoordinatesTR6 = new Dictionary<byte, float[]>
+        {
+            { 0,  new float[] { -6487.60f, -124.20f, -8200.97f, -90.75f     } },   // Parisian Back Streets
+            { 1,  new float[] { -17204.62f, 1814.50f, -8654.09f, 85.50f     } },   // Derelict Apartment Block
+            { 2,  new float[] { -242.39f, 48.22f, 491.99f, 0.00f            } },   // Margot Carvier's Apartment
+            { 3,  new float[] { -19820.33f, 8984.57f, -11851.46f, 0.00f     } },   // Industrial Roof Tops
+            //{ 4,  new float[] { 2960.18f, -3191.87f, 20464.27f, 83.25f      } },   // Parisian Ghetto (Part 1)
+        };
+
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR1 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 42911, 7168, 81358, 0, 11       } },    // Caves
@@ -906,6 +965,14 @@ namespace TRR_SaveMaster
             { 9,  new Int32[] { 21710, 4736, 17666, 90, 169     } },    // Labyrinth
             { 11, new Int32[] { 17121, -384, 18961, 176, 154    } },    // The 13th Floor
             { 14, new Int32[] { 25801, -1111, 19027, 178, 198   } },    // Red Alert!
+        };
+
+        private readonly Dictionary<byte, float[]> endOfLevelCoordinatesTR6 = new Dictionary<byte, float[]>
+        {
+            { 0,  new float[] { -13477.68f, 5245.79f, -7118.42f, 174.76f    } },   // Parisian Back Streets
+            { 1,  new float[] { -19369.14f, 8968.57f, -10987.17f, 0.00f     } },   // Derelict Apartment Block
+            { 3,  new float[] { -9418.49f, 8232.75f, -23535.01f, 0.00f      } },   // Industrial Roof Tops
+            //{ 4,  new float[] { 9081.20f, 8.06f, 23726.29f, 176.14f         } },   // Parisian Ghetto (Part 1)
         };
 
         private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR1 = new Dictionary<byte, Int32[]>
@@ -1327,6 +1394,10 @@ namespace TRR_SaveMaster
             {
                 LEVEL_INDEX_OFFSET = 0x26F;
             }
+            else if (SELECTED_TAB == TAB_TR6)
+            {
+                LEVEL_INDEX_OFFSET = 0x14;
+            }
 
             if (SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR2 || SELECTED_TAB == TAB_TR3)
             {
@@ -1343,6 +1414,13 @@ namespace TRR_SaveMaster
                 Z_COORDINATE_OFFSET = healthOffset - 0xC;
                 ORIENTATION_OFFSET = healthOffset - 0x9;
                 ROOM_OFFSET = healthOffset - 0xA;
+            }
+            else if (SELECTED_TAB == TAB_TR6)
+            {
+                X_COORDINATE_OFFSET = playerBaseOffset;
+                Y_COORDINATE_OFFSET = playerBaseOffset + 0x8;
+                Z_COORDINATE_OFFSET = playerBaseOffset + 0x4;
+                ORIENTATION_OFFSET = playerBaseOffset + 0x18;
             }
         }
 
@@ -1533,16 +1611,16 @@ namespace TRR_SaveMaster
                     using (MemoryStream ms = new MemoryStream(decompressedBuffer))
                     using (BinaryReader reader = new BinaryReader(ms))
                     {
-                        ms.Seek(playerBaseOffset, SeekOrigin.Begin);
+                        ms.Seek(X_COORDINATE_OFFSET, SeekOrigin.Begin);
                         float xCoordinate = reader.ReadSingle();
 
-                        ms.Seek(playerBaseOffset + 0x4, SeekOrigin.Begin);
+                        ms.Seek(Z_COORDINATE_OFFSET, SeekOrigin.Begin);
                         float zCoordinate = reader.ReadSingle();
 
-                        ms.Seek(playerBaseOffset + 0x8, SeekOrigin.Begin);
+                        ms.Seek(Y_COORDINATE_OFFSET, SeekOrigin.Begin);
                         float yCoordinate = reader.ReadSingle();
 
-                        ms.Seek(playerBaseOffset + 0x18, SeekOrigin.Begin);
+                        ms.Seek(ORIENTATION_OFFSET, SeekOrigin.Begin);
                         float orientation = reader.ReadSingle();
 
                         decimal orientationDecimal = (decimal)orientation;
@@ -1628,16 +1706,16 @@ namespace TRR_SaveMaster
                     using (MemoryStream ms = new MemoryStream(decompressedBuffer))
                     using (BinaryWriter writer = new BinaryWriter(ms))
                     {
-                        ms.Seek(playerBaseOffset, SeekOrigin.Begin);
+                        ms.Seek(X_COORDINATE_OFFSET, SeekOrigin.Begin);
                         writer.Write((float)nudXCoordinate.Value);
 
-                        ms.Seek(playerBaseOffset + 0x4, SeekOrigin.Begin);
+                        ms.Seek(Z_COORDINATE_OFFSET, SeekOrigin.Begin);
                         writer.Write((float)nudZCoordinate.Value);
 
-                        ms.Seek(playerBaseOffset + 0x8, SeekOrigin.Begin);
+                        ms.Seek(Y_COORDINATE_OFFSET, SeekOrigin.Begin);
                         writer.Write((float)nudYCoordinate.Value);
 
-                        ms.Seek(playerBaseOffset + 0x18, SeekOrigin.Begin);
+                        ms.Seek(ORIENTATION_OFFSET, SeekOrigin.Begin);
                         writer.Write((float)nudOrientation.Value);
                     }
 
