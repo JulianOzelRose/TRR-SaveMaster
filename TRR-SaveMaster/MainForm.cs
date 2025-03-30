@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TRR_SaveMaster
@@ -51,7 +49,6 @@ namespace TRR_SaveMaster
         private const UInt16 MAX_HEALTH_VALUE = 1000;
 
         // Misc
-        private const string GAME_PATH_TR6 = @"C:\Program Files (x86)\Steam\steamapps\common\Tomb Raider IV-VI Remastered\6\DATA\MAPS\";
         private const string EMPTY_SLOT_STRING_TR6 = " < Empty Slot >";
         private const int DISPLAY_NAME_OFFSET_TR6 = 0x124;
 
@@ -82,7 +79,7 @@ namespace TRR_SaveMaster
             this.Text = $"Tomb Raider Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(platform)})";
 
             // BETA only
-            tabGame.TabPages.Remove(tpTR6);
+            //tabGame.TabPages.Remove(tpTR6);
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
@@ -160,7 +157,6 @@ namespace TRR_SaveMaster
 
             if (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
             {
-                TR6.SetGameDirectory(GAME_PATH_TR6);
                 TR6.SetSavegamePath(savegamePathTRX2);
                 TR6.PopulateSavegames(cmbSavegamesTR6);
             }
@@ -1883,44 +1879,36 @@ namespace TRR_SaveMaster
 
                 try
                 {
-                    Task.Run(() =>
+                    TR6.SetSavegamePath(savegamePathTRX2);
+                    TR6.SetSavegameOffset(selectedSavegame.Offset);
+
+                    if (!TR6.IsSavegamePresent())
                     {
-                        slblStatus.Text = $"Loading...";
-
-                        TR6.SetSavegamePath(savegamePathTRX2);
-                        TR6.SetGameDirectory(GAME_PATH_TR6);
-                        TR6.SetSavegameOffset(selectedSavegame.Offset);
-                        TR6.DetermineOffsets(selectedSavegame);
-
-                        if (!TR6.IsSavegamePresent())
-                        {
-                            string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
-                            MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                            DisableButtonsTR6();
-                            PopulateSavegamesTR6();
-                            return;
-                        }
-
-                        TR6.UpdateDisplayName(selectedSavegame);
-                        UpdateSavegameDisplayNameTR6(cmbSavegamesTR6, selectedSavegame);
-
-                        TR6.DisplayGameInfo(trbHealthTR6, lblHealthTR6, lblHealthErrorTR6, nudCashTR6);
-
-                        // Default to Lara's inventory
-                        cmbInventoryTR6.SelectedIndex = 0;
-
-                        TR6.UpdateInventoryUI(cmbInventoryTR6, nudChocolateBarTR6, nudHealthPillsTR6, chkMV9TR6, chkVPackerTR6, nudMV9AmmoTR6,
-                            nudVPackerAmmoTR6, chkBoranXTR6, nudBoranXAmmoTR6, nudSmallMedipackTR6, nudHealthBandagesTR6, chkK2ImpactorTR6,
-                            nudK2ImpactorAmmoTR6, nudLargeHealthPackTR6, chkScorpionXTR6, nudScorpionXAmmoTR6, chkVectorR35TR6, nudVectorR35AmmoTR6,
-                            chkDesertRangerTR6, nudDesertRangerAmmoTR6, chkDartSSTR6, nudDartSSAmmoTR6, chkRigg09TR6, nudRigg09AmmoTR6,
-                            chkViperSMGTR6, nudViperSMGAmmoTR6, chkMagVegaTR6, nudMagVegaAmmoTR6, chkVectorR35PairTR6, chkScorpionXPairTR6,
-                            nudPoisonAntidoteTR6, chkChirugaiBladeTR6);
+                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
+                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                         DisableButtonsTR6();
+                        PopulateSavegamesTR6();
+                        return;
+                    }
 
-                        slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame}'";
-                    });
+                    TR6.UpdateDisplayName(selectedSavegame);
+                    UpdateSavegameDisplayNameTR6(cmbSavegamesTR6, selectedSavegame);
+
+                    TR6.DetermineOffsets(selectedSavegame);
+                    TR6.DisplayGameInfo(trbHealthTR6, lblHealthTR6, lblHealthErrorTR6, nudCashTR6);
+
+                    // Default to Lara's inventory
+                    cmbInventoryTR6.SelectedIndex = 0;
+
+                    TR6.UpdateInventoryUI(cmbInventoryTR6, nudChocolateBarTR6, nudHealthPillsTR6, chkMV9TR6, chkVPackerTR6, nudMV9AmmoTR6,
+                        nudVPackerAmmoTR6, chkBoranXTR6, nudBoranXAmmoTR6, nudSmallMedipackTR6, nudHealthBandagesTR6, chkK2ImpactorTR6,
+                        nudK2ImpactorAmmoTR6, nudLargeHealthPackTR6, chkScorpionXTR6, nudScorpionXAmmoTR6, chkVectorR35TR6, nudVectorR35AmmoTR6,
+                        chkDesertRangerTR6, nudDesertRangerAmmoTR6, chkDartSSTR6, nudDartSSAmmoTR6, chkRigg09TR6, nudRigg09AmmoTR6,
+                        chkViperSMGTR6, nudViperSMGAmmoTR6, chkMagVegaTR6, nudMagVegaAmmoTR6, chkVectorR35PairTR6, chkScorpionXPairTR6,
+                        nudPoisonAntidoteTR6, chkChirugaiBladeTR6);
+
+                    slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame}'";
                 }
                 catch (Exception ex)
                 {
@@ -2526,7 +2514,7 @@ namespace TRR_SaveMaster
             else if (tabGame.SelectedIndex == TAB_TR6 && trbHealthTR6.Enabled)
             {
                 trbHealthTR6.Value = trbHealthTR6.Maximum;
-                lblHealthTR6.Text = "100.0%";
+                lblHealthTR6.Text = "100%";
             }
         }
 

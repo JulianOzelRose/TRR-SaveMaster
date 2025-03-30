@@ -101,6 +101,7 @@
     <Compile Include="TR3Utilities.cs" />
     <Compile Include="TR4Utilities.cs" />
     <Compile Include="TR5Utilities.cs" />
+    <Compile Include="TR6EntityCache.cs" />
     <Compile Include="TR6EntityMock.cs" />
     <Compile Include="TR6Inventory.cs" />
     <Compile Include="TR6Utilities.cs" />

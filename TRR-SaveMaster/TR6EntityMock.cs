@@ -6,10 +6,11 @@ namespace TRR_SaveMaster
     {
         public int BaseOffset { get; set; }
         public Dictionary<int, int> Substructures { get; set; } = new Dictionary<int, int>();
-        public int? APB_Loop_Counter { get; set; }
-        public int? EntityType { get; set; }
+        public int APB_Loop_Counter { get; set; }
+        public int Second_APB_Value { get; set; }
+        public int EntityType { get; set; }
 
-        // New properties
+
         public int ID { get; set; }
         public bool IsPlayable { get; set; }
         public string Name { get; set; }

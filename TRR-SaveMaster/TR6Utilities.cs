@@ -13,7 +13,6 @@ namespace TRR_SaveMaster
     {
         // Paths
         private string savegamePath = "";
-        private string gameDirectory = "";
 
         // Offsets
         private const int SLOT_STATUS_OFFSET = 0x004;
@@ -32,18 +31,10 @@ namespace TRR_SaveMaster
         private const int COMPRESSED_BLOCK_SIZE_OFFSET = 0x364;
         private const int COMPRESSED_BLOCK_MAX_SIZE = 0xFFFFFF;
 
-        // Mocks
+        // Entity Mocks
         List<EntityMock> actors = new List<EntityMock>();
         List<EntityMock> objects = new List<EntityMock>();
         List<EntityMock> rooms = new List<EntityMock>();
-        List<EntityMock.GmxObjectInfo> gmxObjects = new List<EntityMock.GmxObjectInfo>();
-
-        // Actor DB
-        private Dictionary<int, Actor> ActorDB = new Dictionary<int, Actor>();
-
-        // GMX
-        List<byte> gmxFileData = new List<byte>();
-        string mapName = "";
 
         // Entity counts
         int NUM_AUDIO_LOCATORS = 0;
@@ -189,7 +180,7 @@ namespace TRR_SaveMaster
             }
             else
             {
-                trbHealth.Value = 0;
+                trbHealth.Value = trbHealth.Minimum;
                 trbHealth.Enabled = false;
                 lblHealth.Visible = false;
                 lblHealthError.Visible = true;
@@ -319,9 +310,6 @@ namespace TRR_SaveMaster
 
             sgBufferCursor = 0x4;    // Skip past "TOMB" signature
 
-            string actorDbPath = @"C:\Program Files (x86)\Steam\steamapps\common\Tomb Raider IV-VI Remastered\6\DATA\ACTOR.DB";
-            ParseActorDB(actorDbPath);
-
             using (MemoryStream ms = new MemoryStream(decompressedBuffer))
             {
                 using (BinaryReader reader = new BinaryReader(ms))
@@ -332,14 +320,7 @@ namespace TRR_SaveMaster
 
                     sgBufferCursor += 0x4;
 
-                    if (!mapNames.ContainsKey(sgCurrentLevel))
-                    {
-                        string errorMessage = $"Unrecognized level ({sgCurrentLevel}).";
-                        throw new Exception(errorMessage);
-                    }
-
-                    mapName = mapNames[sgCurrentLevel];
-                    MapLoadGMX();
+                    LoadCachedEntities();
 
                     InvLoad(reader);
                     MapLoad(reader);
@@ -356,6 +337,23 @@ namespace TRR_SaveMaster
                 }
             }
         }
+
+        private void LoadCachedEntities()
+        {
+            NUM_AUDIO_LOCATORS = TR6EntityCache.GetNumAudioLocators(sgCurrentLevel);
+            NUM_EMITTERS = TR6EntityCache.GetNumEmitters(sgCurrentLevel);
+            NUM_TRIGGERS = TR6EntityCache.GetNumTriggers(sgCurrentLevel);
+
+            actors.Clear();
+            actors = TR6EntityCache.GetActorArray(sgCurrentLevel);
+
+            rooms.Clear();
+            rooms = TR6EntityCache.GetRoomArray(sgCurrentLevel);
+
+            objects.Clear();
+            objects = TR6EntityCache.GetObjectArray(sgCurrentLevel);
+        }
+
 
         private void MapPickupLoad(BinaryReader reader)
         {
@@ -581,7 +579,7 @@ namespace TRR_SaveMaster
                 return;
             }
 
-            bool isPlayer = IsActorPlayable(actor);
+            bool isPlayer = actor.IsPlayable;
 
             if (isPlayer)
             {
@@ -693,8 +691,7 @@ namespace TRR_SaveMaster
             if (condByte != 0)
             {
                 //Debug.WriteLine("APB_Load for Object");
-
-                int apbLoopCounter = GetObjectAPBLoopCounter(obj.ObjTypeID);
+                int apbLoopCounter = obj.APB_Loop_Counter;
 
                 APB_Load(reader, null, apbLoopCounter);
             }
@@ -735,7 +732,7 @@ namespace TRR_SaveMaster
 
                 if (entity != null)
                 {
-                    apbLoopCounter = GetActorAPBLoopCounter(entity.ID);
+                    apbLoopCounter = entity.APB_Loop_Counter;
                 }
                 else
                 {
@@ -787,7 +784,7 @@ namespace TRR_SaveMaster
 
                 if ((param_1 & 0x80000) == 0)
                 {
-                    int secondApbValue = entity.EntityType == ENTITY_TYPE_ACTOR ? GetSecondAPBValue(entity.ID) : 0;
+                    int secondApbValue = entity != null ? entity.Second_APB_Value : 0;
 
                     reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
                     reader.ReadBytes((secondApbValue * 0x20) / 0x8);
@@ -809,239 +806,6 @@ namespace TRR_SaveMaster
             }
 
             return;
-        }
-
-        private int GetActorAPBLoopCounter(int actorId)
-        {
-            // Query ActorDB using actorId
-            if (!ActorDB.TryGetValue(actorId, out Actor actor) || string.IsNullOrEmpty(actor.Name))
-            {
-                string errorMessage = $"Actor ID {actorId}'s name not found in ActorDB.";
-                throw new Exception(errorMessage);
-            }
-
-            // Hardcoded exception
-            if (actor.ID == 0x3A && sgCurrentLevel == 4)    // COP_A on Parisian Ghetto
-            {
-                return 0x16;
-            }
-
-            string chrFileName = $"{actor.Name}.CHR";
-            uint hashValue = ComputeHash(chrFileName);
-
-            byte[] hashBytes = BitConverter.GetBytes(hashValue);
-
-            int hashOffset = FindByteSequence(gmxFileData, hashBytes);
-            if (hashOffset == -1)
-            {
-                string errorMessage = $"Unable to find hash for actor '{actor.Name}' in GMX file for '{mapName}'.";
-                throw new Exception(errorMessage);
-            }
-
-            int nextDwordOffset = hashOffset + 4;
-            if (nextDwordOffset + 4 > gmxFileData.Count)
-            {
-                string errorMessage = $"Next DWORD offset 0x{nextDwordOffset:X} is out of bounds.";
-                throw new Exception(errorMessage);
-            }
-            uint nextDword = BitConverter.ToUInt32(gmxFileData.GetRange(nextDwordOffset, 4).ToArray(), 0);
-
-            uint apbDataOffset = nextDword + 0x800;
-
-            uint loopCounterOffset = apbDataOffset + 0x14;
-            if (loopCounterOffset + 4 > gmxFileData.Count)
-            {
-                Debug.WriteLine($"[DEBUG] APB Loop Counter offset 0x{loopCounterOffset:X} is out of bounds.");
-                return 0;
-            }
-
-            int apbLoopCounter = BitConverter.ToInt32(gmxFileData.GetRange((int)loopCounterOffset, 4).ToArray(), 0);
-
-            return apbLoopCounter;
-        }
-
-        private int GetSecondAPBValue(int actorId)
-        {
-            // Step 1: Look up actor name in ActorDB.
-            if (!ActorDB.TryGetValue(actorId, out Actor actor) || string.IsNullOrEmpty(actor.Name))
-            {
-                string errorMessage = $"Actor ID {actorId}'s name not found in ActorDB.";
-                throw new Exception(errorMessage);
-            }
-
-            // Hardcoded exceptions for runtime adjustments
-            if (actor.ID == 0x3A && sgCurrentLevel == 4)    // COP_A in Parisian Ghetto
-            {
-                return 0xE;
-            }
-            if (actor.ID == 0x83 && sgCurrentLevel == 26)   // LARAS in The Vault of Trophies
-            {
-                return 0x3B;
-            }
-            if (actor.ID == 0x4F && sgCurrentLevel == 22)   // MULLER in The Bio-Research Facility
-            {
-                return 0x18;
-            }
-
-            // Step 2: Compute the GMX hash for actor's .CHR file.
-            string chrFileName = $"{actor.Name}.CHR";
-            uint hashValue = ComputeHash(chrFileName);
-            byte[] hashBytes = BitConverter.GetBytes(hashValue);
-
-            // Step 3: Locate the hash in the decompressed GMX data.
-            int hashOffset = FindByteSequence(gmxFileData, hashBytes);
-            if (hashOffset == -1)
-            {
-                string errorMessage = $"Unable to find hash for actor '{actor.Name}' in GMX file for '{mapName}'.";
-                throw new Exception(errorMessage);
-            }
-
-            // Step 4: Read the DWORD immediately after the hash.
-            int nextDwordOffset = hashOffset + 4;
-            if (nextDwordOffset + 4 > gmxFileData.Count)
-            {
-                string errorMessage = $"Next DWORD offset 0x{nextDwordOffset:X} is out of bounds.";
-                throw new Exception(errorMessage);
-            }
-            uint nextDword = BitConverter.ToUInt32(gmxFileData.GetRange(nextDwordOffset, 4).ToArray(), 0);
-
-            uint apbDataOffset = nextDword + 0x800;
-
-            if (apbDataOffset >= gmxFileData.Count)
-            {
-                string errorMessage = $"APB Data offset is out of bounds.";
-                throw new Exception(errorMessage);
-            }
-
-            byte[] apbData = gmxFileData.Skip((int)apbDataOffset).ToArray();
-
-            int offset = 0;  // offset into apbData
-
-            if (apbData.Length < 0x10 + 4)
-            {
-                string errorMessage = $"APB data too short for first loop base value.";
-                throw new Exception(errorMessage);
-            }
-
-            uint baseVal = BitConverter.ToUInt32(apbData, 0x10);
-            int loopCountOffset = (int)(baseVal + 0xC);
-            if (loopCountOffset + 4 > apbData.Length)
-            {
-                string errorMessage = $"APB data too short for first loop count.";
-                throw new Exception(errorMessage);
-            }
-
-            uint firstLoopCount = BitConverter.ToUInt32(apbData, loopCountOffset);
-            int recordAreaOffset = loopCountOffset + 4;
-            offset = recordAreaOffset + (int)(firstLoopCount * 0x26);
-
-            if (offset + 4 > apbData.Length)
-            {
-                string errorMessage = $"APB data too short for second loop.";
-                throw new Exception(errorMessage);
-            }
-
-            uint secondLoopCount = BitConverter.ToUInt32(apbData, offset);
-            offset += 4 + (int)(secondLoopCount * 2);
-
-            if (offset + 4 > apbData.Length)
-            {
-                string errorMessage = $"APB data too short for third loop.";
-                throw new Exception(errorMessage);
-            }
-
-            uint thirdLoopCount = BitConverter.ToUInt32(apbData, offset);
-            offset += 4 + (int)(thirdLoopCount * 12);
-
-            // --- Finally, read the second APB value ---
-            if (offset + 4 > apbData.Length)
-            {
-                string errorMessage = $"Second APB value offset 0x{offset:X} is out of bounds.";
-                throw new Exception(errorMessage);
-            }
-
-            int secondApbValue = BitConverter.ToInt32(apbData, offset);
-            //Debug.WriteLine($"[DEBUG] Second APB Value for {chrFileName}: 0x{secondApbValue:X}");
-
-            return secondApbValue;
-        }
-
-        private int GetObjectAPBLoopCounter(int objectId)
-        {
-            // Ensure GMX objects were successfully parsed.
-            if (gmxObjects.Count == 0)
-            {
-                string errorMessage = $"GMX object list is empty.";
-                throw new Exception(errorMessage);
-            }
-
-            // Validate the Object ID.
-            if (objectId < 0 || objectId >= objects.Count)
-            {
-                string errorMessage = $"Object ID {objectId} is out of bounds (Max: {objects.Count - 1}).";
-                throw new Exception(errorMessage);
-            }
-
-            var runtimeObject = objects[objectId];
-
-            // Compute GMX Object Index
-            int gmxIndex = objectId;
-
-            if (gmxIndex < 0 || gmxIndex >= gmxObjects.Count)
-            {
-                string errorMessage = $"Computed GMX index {gmxIndex} is out of bounds.";
-                throw new Exception(errorMessage);
-            }
-
-            var gmxObject = gmxObjects[gmxIndex];
-
-            // Ignore NULL objects.
-            if (gmxObject.Name == "__NULL__")
-            {
-                string errorMessage = $"Object ID {objectId} maps to null GMX object (Index = {gmxIndex}).";
-                throw new Exception(errorMessage);
-            }
-
-            // Compute the hash for "{ObjectName}.CHR".
-            string chrFileName = $"{gmxObject.Name}.CHR".ToUpper();
-            uint hashValue = ComputeHash(chrFileName);
-
-            // Convert hash value to little endian.
-            byte[] hashBytes = BitConverter.GetBytes(hashValue);
-
-            // Search for the hash in the GMX file.
-            int hashOffset = FindByteSequence(gmxFileData, hashBytes);
-            if (hashOffset == -1)
-            {
-                string errorMessage = $"Object hash 0x{hashValue:X} not found in GMX file.";
-                throw new Exception(errorMessage);
-            }
-
-            // Read next DWORD (pointer offset)
-            int nextDwordOffset = hashOffset + 4;
-            if (nextDwordOffset + 4 > gmxFileData.Count)
-            {
-                string errorMessage = $"Next DWORD offset 0x{nextDwordOffset:X} is out of bounds.";
-                throw new Exception(errorMessage);
-            }
-
-            uint nextDword = BitConverter.ToUInt32(gmxFileData.GetRange(nextDwordOffset, 4).ToArray(), 0);
-
-            // Compute APB Data Offset
-            uint apbDataOffset = nextDword + 0x800;
-            if (apbDataOffset + 0x8 + 4 > gmxFileData.Count)  // Ensure 4 bytes can be read at apbDataOffset + 0x8
-            {
-                string errorMessage = $"APB Data Offset 0x{apbDataOffset:X} is out of bounds.";
-                throw new Exception(errorMessage);
-            }
-
-            // Read loop counter
-            uint loopCounterOffset = apbDataOffset + 0x8;
-            int loopCounter = BitConverter.ToInt32(gmxFileData.GetRange((int)loopCounterOffset, 4).ToArray(), 0);
-
-            //Debug.WriteLine($"[INFO] APB Loop Counter for Object ID {objectId} (GMX Index {gmxIndex}, {gmxObject.Name}) = 0x{loopCounter:X}");
-
-            return loopCounter;
         }
 
         private void APB_LoadAnimationControl(BinaryReader reader, int param_2)
@@ -1136,589 +900,6 @@ namespace TRR_SaveMaster
         {
             sgBufferCursor += 0x6C;
         }
-
-        private void MapLoadGMX()
-        {
-            string gmxPath = Path.Combine(gameDirectory, $"{mapName}.GMX");
-
-            gmxFileData.Clear();
-
-            if (string.IsNullOrEmpty(gameDirectory) || !Directory.Exists(gameDirectory) || !File.Exists(gmxPath))
-            {
-                string errorMessage = $"Could not find GMX file.";
-                throw new Exception(errorMessage);
-            }
-
-
-            //Debug.WriteLine("GMX File Found!" + Environment.NewLine);
-            //Debug.WriteLine($"MAP: {mapName}.GMX");
-
-            try
-            {
-                // Directly read the GMX file
-                gmxFileData = File.ReadAllBytes(gmxPath).ToList();
-
-                int baseOffset = FindSecondMagicHeader(gmxFileData);
-                if (baseOffset < 0)
-                {
-                    string errorMessage = $"Could not find second occurrence of magic header.";
-                    throw new Exception(errorMessage);
-                }
-
-                ParseActors(baseOffset);
-                ParseObjects(baseOffset);
-                ParseTriggers(baseOffset);
-                ParseEmitters(baseOffset);
-                ParseAudioLocators(baseOffset);
-            }
-            catch (Exception ex)
-            {
-                string errorMessage = $"Error loading GMX file: {ex.Message}";
-                throw new Exception(errorMessage);
-            }
-        }
-
-        private void ParseTriggers(int baseOffset)
-        {
-            var nodeOffsets = GatherNodesForEntityType(baseOffset, 3);
-            var finalArray = BuildEntityArray(nodeOffsets);
-            NUM_TRIGGERS = finalArray.Count;
-            //Debug.WriteLine($"******************** TRIGGERS: = {NUM_TRIGGERS}");
-        }
-
-        private void ParseEmitters(int baseOffset)
-        {
-            var nodeOffsets = GatherNodesForEntityType(baseOffset, 8);
-            var finalArray = BuildEntityArray(nodeOffsets);
-            NUM_EMITTERS = finalArray.Count;
-            //Debug.WriteLine($"******************** EMITTERS: = {NUM_EMITTERS}");
-        }
-
-        private void ParseAudioLocators(int baseOffset)
-        {
-            var nodeOffsets = GatherNodesForEntityType(baseOffset, 11);
-            var finalArray = BuildEntityArray(nodeOffsets);
-            NUM_AUDIO_LOCATORS = finalArray.Count;
-            //Console.WriteLine($"******************** AUDIO LOCATORS: = {NUM_AUDIO_LOCATORS}");
-        }
-
-        private int FindSecondMagicHeader(List<byte> data)
-        {
-            byte[] pattern = { 0x66, 0x66, 0x66, 0x40 };
-            int foundCount = 0;
-
-            for (int i = 0; i <= data.Count - pattern.Length; i++)
-            {
-                if (data[i] == pattern[0] &&
-                    data[i + 1] == pattern[1] &&
-                    data[i + 2] == pattern[2] &&
-                    data[i + 3] == pattern[3])
-                {
-                    foundCount++;
-
-                    if (foundCount == 2)
-                    {
-                        return i;  // second occurrence
-                    }
-                }
-            }
-
-            return -1;
-        }
-
-        private List<KeyValuePair<uint, int>> BuildEntityArray(List<int> nodeOffsets)
-        {
-            Dictionary<uint, int> dedup = new Dictionary<uint, int>();
-
-            foreach (int nodeOff in nodeOffsets)
-            {
-                if (nodeOff + 104 > gmxFileData.Count)
-                {
-                    continue;
-                }
-
-                // Read the 4-byte hash at nodeOff+100 as an unsigned value.
-                uint hashVal = ReadUInt32FromGMX(nodeOff + 100);
-                if (!dedup.ContainsKey(hashVal))
-                {
-                    dedup[hashVal] = nodeOff;
-                }
-            }
-
-            return dedup.OrderBy(kvp => kvp.Key).ToList();
-        }
-
-        private void ParseActors(int baseOffset)
-        {
-            var nodeOffsets = GatherNodesForEntityType(baseOffset, 2);
-            var finalArray = BuildEntityArray(nodeOffsets);
-
-            //Console.WriteLine($"\n=== Parsing {finalArray.Count} Actors ===\n");
-            actors.Clear();
-
-            foreach (var kvp in finalArray)
-            {
-                int nodeOffset = kvp.Value;
-                EntityMock actor = new EntityMock(nodeOffset);
-
-                actor.ID = ReadInt32FromGMX(nodeOffset + 0x170);
-                actor.ActiveFlag = ReadInt32FromGMX(nodeOffset + 0x184);
-                actor.EntityType = ENTITY_TYPE_ACTOR;
-
-                actors.Add(actor);
-            }
-
-            //PrintActors();
-            //Debug.WriteLine($"Total Actors Parsed: {actors.Count}");
-        }
-
-        private void ParseObjects(int baseOffset)
-        {
-            var nodeOffsets = GatherNodesForEntityType(baseOffset, 0);
-            var finalArray = BuildEntityArray(nodeOffsets);
-
-            objects.Clear();
-
-            foreach (var kvp in finalArray)
-            {
-                int nodeOffset = kvp.Value;
-                EntityMock obj = new EntityMock(nodeOffset);
-
-                ushort objTypeID = BitConverter.ToUInt16(gmxFileData.GetRange(nodeOffset + 0x172, 2).ToArray(), 0);
-                obj.ObjTypeID = objTypeID;
-                obj.EntityType = ENTITY_TYPE_OBJECT;
-
-                objects.Add(obj);
-            }
-
-            ParseGMXObjects();
-
-            // Validate each object has an ID and set entity type.
-            //for (int i = 0; i < objects.Count; i++)
-            //{
-            //    if (objects[i].ObjTypeID == 0)
-            //    {
-            //        Debug.WriteLine($"[ERROR] Object ID {objects[i]} has no ID.");
-            //    }
-
-            //    objects[i].EntityType = ENTITY_TYPE_OBJECT;
-            //}
-
-            //Debug.WriteLine($"******************** numObjects: {objects.Count}");
-
-            // Retain the original call.
-            //ParseGMXObjects();
-
-            // Print the parsed records.
-            //foreach (var obj in gmxObjects)
-            //{
-            //    Debug.WriteLine($"Record {obj.Index}: {obj.Name}");
-            //}
-        }
-
-        private uint ComputeHash(string input)
-        {
-            // Encode the string to bytes (ASCII encoding)
-            byte[] data = Encoding.ASCII.GetBytes(input);
-
-            // Find the first null byte (0x00) if present and truncate the string
-            int nullIndex = Array.IndexOf(data, (byte)0);
-            if (nullIndex != -1)
-            {
-                Array.Resize(ref data, nullIndex);
-            }
-
-            // Compute the length of the string up to the first null byte
-            int length = data.Length;
-            uint uVar2 = (uint)length;
-            uint iVar5 = (uint)(length >> 6); // floor division by 64
-            uint uVar3 = (uint)length;
-
-            // Initialize the index to traverse the byte array
-            int index = 0;
-
-            // Loop until uVar3 is greater than 0 and index is within bounds
-            while (uVar3 > 0 && index < length)
-            {
-                // Retrieve the current byte value
-                byte byte_val = data[index];
-                int signedHash = unchecked((int)uVar2); // Interpret uVar2 as signed
-                int shifted = signedHash >> 2; // Arithmetic right shift
-                uint shiftedU = unchecked((uint)shifted); // Cast back to unsigned
-
-                // Compute the addition: byte_val + (uVar2 * 32) + shiftedU
-                uint addition = byte_val + (uVar2 * 32) + shiftedU;
-
-                // Update uVar2 with XOR, ensuring it stays within 32 bits
-                uVar2 = uVar2 ^ addition;
-                uVar2 &= 0xFFFFFFFF; // Mask to 32 bits
-
-                // Move to the next byte
-                index += 1;
-
-                // Decrement uVar3 by (iVar5 + 1)
-                uVar3 -= (iVar5 + 1);
-            }
-
-            return uVar2;
-        }
-
-        private int FindByteSequence(List<byte> data, byte[] sequence)
-        {
-            if (sequence.Length == 0 || data.Count < sequence.Length)
-            {
-                return -1;
-            }
-
-            for (int i = 0; i <= data.Count - sequence.Length; i++)
-            {
-                bool match = true;
-
-                for (int j = 0; j < sequence.Length; j++)
-                {
-                    if (data[i + j] != sequence[j])
-                    {
-                        match = false;
-                        break;
-                    }
-                }
-
-                if (match)
-                {
-                    return i;
-                }
-            }
-            return -1;
-        }
-
-        private void ParseGMXObjects()
-        {
-            // Clear any previously stored objects.
-            gmxObjects.Clear();
-
-            // Compute the hash for the map name + ".EVX"
-            string evxFileName = $"{mapName}.EVX";
-            uint hashValue = ComputeHash(evxFileName);
-
-            byte[] hashBytes = BitConverter.GetBytes(hashValue);
-
-
-            int hashOffset = FindByteSequence(gmxFileData, hashBytes);
-            if (hashOffset == -1)
-            {
-                string errorMessage = $"Hash 0x{hashValue:X} not found in GMX file.";
-                throw new Exception(errorMessage);
-            }
-
-            int nextDwordOffset = hashOffset + 4;
-            if (nextDwordOffset + 4 > gmxFileData.Count)
-            {
-                string errorMessage = $"Next DWORD offset 0x{nextDwordOffset:X} is out of bounds.";
-                throw new Exception(errorMessage);
-            }
-            uint nextDword = BitConverter.ToUInt32(gmxFileData.GetRange(nextDwordOffset, 4).ToArray(), 0);
-
-            uint baseOffset = nextDword + 0x800;
-
-            uint ptOffset = BitConverter.ToUInt32(gmxFileData.GetRange((int)baseOffset, 4).ToArray(), 0);
-            uint secondSectionOffset = BitConverter.ToUInt32(gmxFileData.GetRange((int)baseOffset + 4, 4).ToArray(), 0);
-            uint thirdValue = BitConverter.ToUInt32(gmxFileData.GetRange((int)baseOffset + 8, 4).ToArray(), 0);
-
-            uint ptHeaderOffset = baseOffset + ptOffset;
-            uint ptCount = BitConverter.ToUInt32(gmxFileData.GetRange((int)ptHeaderOffset, 4).ToArray(), 0);
-
-            uint secondSectionHeaderOffset = baseOffset + secondSectionOffset;
-            uint recordCount = BitConverter.ToUInt32(gmxFileData.GetRange((int)secondSectionHeaderOffset, 4).ToArray(), 0);
-            uint secondSectionFlag = BitConverter.ToUInt32(gmxFileData.GetRange((int)secondSectionHeaderOffset + 4, 4).ToArray(), 0);
-
-            // The records begin 0x10 bytes after the second section header.
-            uint recordsOffset = baseOffset + secondSectionOffset + 0x10;
-            int recordSize = 0x60; // Each record is 0x60 bytes.
-
-            // Loop through each record.
-            for (int i = 0; i < recordCount; i++)
-            {
-                int recOffset = (int)recordsOffset + i * recordSize;
-                if (recOffset + recordSize > gmxFileData.Count)
-                {
-                    string errorMessage = $"GMX record {i} is out of bounds.";
-                    throw new Exception(errorMessage);
-                }
-
-                // Read the entire record.
-                List<byte> recordBytes = gmxFileData.GetRange(recOffset, recordSize);
-
-                // The record string is located at offset 0x40 within the record.
-                int strOffset = 0x40;
-                int strLength = recordSize - strOffset; // Up to 0x20 bytes.
-                byte[] rawStrBytes = recordBytes.GetRange(strOffset, strLength).ToArray();
-
-                // Look for a null terminator.
-                int nullIndex = Array.IndexOf(rawStrBytes, (byte)0);
-                string recordStr = (nullIndex != -1)
-                    ? System.Text.Encoding.ASCII.GetString(rawStrBytes, 0, nullIndex)
-                    : System.Text.Encoding.ASCII.GetString(rawStrBytes);
-
-                // Create a new GmxObjectInfo and add it to the list.
-                EntityMock.GmxObjectInfo objInfo = new EntityMock.GmxObjectInfo()
-                {
-                    Index = i,
-                    Name = recordStr
-                };
-                gmxObjects.Add(objInfo);
-            }
-        }
-
-        private void PrintActors()
-        {
-            //Debug.WriteLine("\n=== Actor Properties ===\n");
-            for (int i = 0; i < actors.Count; i++)
-            {
-                EntityMock actor = actors[i];
-                //Debug.WriteLine($"Actor #{i + 1} at Base Offset: 0x{actor.BaseOffset:X8}, ID: 0x{actor.ID:X8}");
-                foreach (var substructure in actor.Substructures)
-                {
-                    //Debug.WriteLine($"Offset 0x{substructure.Key:X}: Value = 0x{substructure.Value:X8}");
-                }
-                //Debug.WriteLine("");
-            }
-        }
-
-        private List<int> GatherNodesForEntityType(int baseOffset, int entityType, int maxRooms = int.MaxValue)
-        {
-            if (baseOffset + 0x10 + 4 > gmxFileData.Count)
-            {
-                return new List<int>();
-            }
-
-            int roomCount = ReadInt32FromGMX(baseOffset + 0x10);
-
-            int pointerListOffset = baseOffset + 0x14;
-            List<int> roomPointers = new List<int>(roomCount);
-            for (int i = 0; i < roomCount; i++)
-            {
-                int offset = pointerListOffset + i * 4;
-                if (offset + 4 > gmxFileData.Count)
-                {
-                    break;
-                }
-
-                roomPointers.Add(ReadInt32FromGMX(offset));
-            }
-
-            List<int> allNodeOffsets = new List<int>();
-            int roomsToProcess = Math.Min(roomCount, maxRooms);
-
-            rooms.Clear();
-
-            for (int i = 0; i < roomsToProcess; i++)
-            {
-                int roomBase = baseOffset + roomPointers[i];
-                EntityMock roomEntity = new EntityMock(roomBase);
-
-                int roomMetaOffset = roomBase + 0x15C;
-                if (roomMetaOffset + 4 <= gmxFileData.Count)
-                {
-                    int roomMeta = ReadInt32FromGMX(roomMetaOffset);
-                    roomEntity.RoomMeta = roomMeta;
-
-                    if (roomMeta != 0)
-                    {
-                        int extraDataOffset = roomMeta;
-                        if (extraDataOffset + 4 <= gmxFileData.Count)
-                        {
-                            int extraData = ReadInt32FromGMX(extraDataOffset);
-                            roomEntity.ExtraRoomData = extraData;
-                        }
-                    }
-                }
-
-                rooms.Add(roomEntity);
-
-                int headPointerOffset = roomBase + 0xB8 + entityType * 8;
-                if (headPointerOffset + 4 > gmxFileData.Count)
-                {
-                    continue;
-                }
-
-                int headPointer = ReadInt32FromGMX(headPointerOffset);
-                if (headPointer != 0)
-                {
-                    var nodeOffsets = ExtractLinkedListNodeOffsets(headPointer, roomBase);
-                    allNodeOffsets.AddRange(nodeOffsets);
-                }
-            }
-
-            return allNodeOffsets;
-        }
-
-        private List<int> ExtractLinkedListNodeOffsets(int firstRelativePtr, int roomBase)
-        {
-            List<int> nodeOffsets = new List<int>();
-            int current = firstRelativePtr;
-
-            while (current != 0)
-            {
-                int absoluteOffset = roomBase + current;
-                if (absoluteOffset + 8 > gmxFileData.Count)
-                {
-                    break;
-                }
-
-                nodeOffsets.Add(absoluteOffset);
-                current = ReadInt32FromGMX(absoluteOffset + 4);
-            }
-
-            return nodeOffsets;
-        }
-
-        private int ReadInt32FromGMX(int offset)
-        {
-            if (offset < 0 || offset + 4 > gmxFileData.Count)
-            {
-                return 0;
-            }
-
-            return BitConverter.ToInt32(gmxFileData.GetRange(offset, 4).ToArray(), 0);
-        }
-
-        private uint ReadUInt32FromGMX(int offset)
-        {
-            if (offset < 0 || offset + 4 > gmxFileData.Count)
-            {
-                return 0;
-            }
-
-            return BitConverter.ToUInt32(gmxFileData.GetRange(offset, 4).ToArray(), 0);
-        }
-
-        private bool IsActorPlayable(EntityMock actor)
-        {
-            if (actor.ID == null)
-            {
-                string errorMessage = $"Actor ID is null. Cannot query ActorDB.";
-                throw new Exception(errorMessage);
-            }
-
-            // Query ActorDB for the actor's playability
-            if (ActorDB.TryGetValue((int)actor.ID, out Actor actorData))
-            {
-                return actorData.IsPlayable;
-            }
-            else
-            {
-                string errorMessage = $"Actor ID {actor.ID} not found in ActorDB.";
-                throw new Exception(errorMessage);
-            }
-        }
-
-        private void ParseActorDB(string actorDbPath)
-        {
-            try
-            {
-                using (var reader = new BinaryReader(File.Open(actorDbPath, FileMode.Open, FileAccess.Read)))
-                {
-                    reader.BaseStream.Seek(0x4, SeekOrigin.Begin); // Skip header
-
-                    int recordSize = 0x24;
-                    while (reader.BaseStream.Position + recordSize <= reader.BaseStream.Length)
-                    {
-                        try
-                        {
-                            long recordStart = reader.BaseStream.Position;
-
-                            // Read Actor ID (4 bytes)
-                            int actorId = reader.ReadInt32();
-
-                            // Skip 4 unknown bytes
-                            reader.BaseStream.Seek(0x4, SeekOrigin.Current);
-
-                            // Read Actor Type (4 bytes)
-                            int actorType = reader.ReadInt32();
-
-                            // Skip 4 unknown bytes
-                            reader.BaseStream.Seek(0x4, SeekOrigin.Current);
-
-                            // Read Actor Name (16 bytes, null-terminated string)
-                            byte[] nameBytes = reader.ReadBytes(16);
-                            string actorName = System.Text.Encoding.ASCII.GetString(nameBytes).Split('\0')[0];
-
-                            // Determine if actor is playable
-                            bool isPlayable = actorType == 1;
-
-                            // Create Actor object
-                            Actor actor = new Actor(actorId, actorName, isPlayable);
-
-                            // Add actor to global ActorDB dictionary
-                            if (!ActorDB.ContainsKey(actorId))
-                            {
-                                ActorDB[actorId] = actor;
-                            }
-                            else
-                            {
-                                Console.WriteLine($"Warning: Duplicate Actor ID 0x{actorId:X} found in ACTOR.db. Skipping entry.");
-                            }
-
-                            // Debug output
-                            //Debug.WriteLine($"Parsed Actor -> ID: 0x{actorId:X}, Name: {actorName}, IsPlayable: {isPlayable}");
-
-                            // Manually move to the next record start
-                            reader.BaseStream.Seek(recordStart + recordSize, SeekOrigin.Begin);
-                        }
-                        catch (EndOfStreamException)
-                        {
-                            break; // Reached the end of the file
-                        }
-                    }
-                }
-
-                //Debug.WriteLine($"Parsed {ActorDB.Count} unique actors from ACTOR.db.");
-            }
-            catch (Exception ex)
-            {
-                string errorMessage = $"Error parsing ACTOR.db: {ex.Message}";
-                throw new Exception(errorMessage);
-            }
-        }
-
-        private readonly Dictionary<byte, string> mapNames = new Dictionary<byte, string>()
-        {
-            {  0, "PARIS1"                      },  // Parisian Back Streets
-            {  1, "PARIS1A"                     },  // Derelict Apartment Block
-            {  2, "PARIS1B"                     },  // Margot Carvier's Apartment
-            {  3, "PARIS1C"                     },  // Industrial Roof Tops
-            {  4, "PARIS2_1"                    },  // Parisian Ghetto
-            {  5, "PARIS2_2"                    },  // Parisian Ghetto
-            {  6, "PARIS2_3"                    },  // Parisian Ghetto
-            {  7, "PARIS2B"                     },  // The Serpent Rouge
-            {  8, "PARIS2C"                     },  // Rennes' Pawnshop
-            {  9, "PARIS2D"                     },  // Willowtree Herbalist
-            { 10, "PARIS2E"                     },  // St. Aicard's Church
-            { 11, "PARIS2F"                     },  // Café Metro
-            { 12, "PARIS2G"                     },  // St. Aicard's Graveyard
-            { 13, "PARIS2H"                     },  // Bouchard's Hideout
-            { 14, "PARIS3"                      },  // Louvre Storm Drains
-            { 15, "PARIS4"                      },  // Louvre Galleries
-            { 16, "PARIS4A"                     },  // Galleries Under Siege
-            { 17, "PARIS5"                      },  // Tomb of Ancients
-            { 18, "PARIS5A"                     },  // The Archaeological Dig
-            { 19, "PARIS6"                      },  // Von Croy's Apartment
-            { 20, "PRAGUE1"                     },  // The Monstrum Crimescene
-            { 21, "PRAGUE2"                     },  // The Strahov Fortress
-            { 22, "PRAGUE3"                     },  // The Bio-Research Facility
-            { 23, "PRAGUE3A"                    },  // Aquatic Research Area
-            { 24, "PRAGUE4"                     },  // The Sanitarium
-            { 25, "PRAGUE4A"                    },  // Maximum Containment Area
-            { 26, "PRAGUE5"                     },  // The Vault of Trophies
-            { 27, "PRAGUE5A"                    },  // Boaz Returns
-            { 28, "PRAGUE6"                     },  // Eckhardt's Lab
-            { 29, "PRAGUE6A"                    },  // The Lost Domain
-            { 30, "PARIS5_1"                    },  // The Hall of Seasons
-            { 31, "PARIS5_2"                    },  // Neptune's Hall
-            { 32, "PARIS5_3"                    },  // Wrath of the Beast
-            { 33, "PARIS5_4"                    },  // The Sanctuary of Flame
-            { 34, "PARIS5_5"                    },  // The Breath of Hades
-        };
 
         private readonly Dictionary<byte, string> levelNames = new Dictionary<byte, string>()
         {
@@ -2484,11 +1665,6 @@ namespace TRR_SaveMaster
         public void SetSavegamePath(string path)
         {
             savegamePath = path;
-        }
-
-        public void SetGameDirectory(string path)
-        {
-            gameDirectory = path;
         }
 
         public int GetPlayerBaseOffset()
