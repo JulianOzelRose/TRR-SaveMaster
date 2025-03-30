@@ -586,12 +586,7 @@ namespace TRR_SaveMaster
             if (isPlayer)
             {
                 PLAYER_BASE_OFFSET = sgBufferCursor;
-                Debug.WriteLine($"Player base: 0x{PLAYER_BASE_OFFSET:X}");
-                //DisplayPlayerCoordinates(reader);
-            }
-            else
-            {
-                Debug.WriteLine($"Entity {actorIndex + 1} base: 0x{sgBufferCursor:X}");
+                //Debug.WriteLine($"Player base: 0x{PLAYER_BASE_OFFSET:X}");
             }
 
             MapLoadBaseNode();
@@ -1764,7 +1759,7 @@ namespace TRR_SaveMaster
             { 34, "The Breath of Hades"         }
         };
 
-        private byte[] Unpack(byte[] compressedData)
+        public byte[] Unpack(byte[] compressedData)
         {
             // The skip table from DAT_00240d80:
             byte[] offsetTable = new byte[8] { 0x00, 0x3C, 0x18, 0x54, 0x30, 0x0C, 0x48, 0x24 };
@@ -1916,7 +1911,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        static byte[] Pack(byte[] rawData)
+        public byte[] Pack(byte[] rawData)
         {
             const int MAX_BITS = 12;
             const int INIT_BITS = 9;
@@ -2494,6 +2489,11 @@ namespace TRR_SaveMaster
         public void SetGameDirectory(string path)
         {
             gameDirectory = path;
+        }
+
+        public int GetPlayerBaseOffset()
+        {
+            return PLAYER_BASE_OFFSET;
         }
 
         public void UpdateDisplayName(Savegame savegame)

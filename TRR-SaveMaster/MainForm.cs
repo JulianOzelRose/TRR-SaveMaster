@@ -2360,9 +2360,19 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == TAB_TR6 && cmbSavegamesTR6.SelectedIndex != -1)
             {
-                string warningMessage = $"This feature is currently under construction.";
-                MessageBox.Show(warningMessage, "Feature Under Construction", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                if (!TR6.IsSavegamePresent())
+                {
+                    string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
+                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    DisableButtonsTR6();
+                    PopulateSavegamesTR6();
+                    return;
+                }
+
+                selectedSavegame = cmbSavegamesTR6.Items[cmbSavegamesTR6.SelectedIndex] as Savegame;
+                int PLAYER_BASE_OFFSET = TR6.GetPlayerBaseOffset();
+                positionForm.SetPlayerBaseOffset(PLAYER_BASE_OFFSET);
             }
 
             if (selectedSavegame != null)

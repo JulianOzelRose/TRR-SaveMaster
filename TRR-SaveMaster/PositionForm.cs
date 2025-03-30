@@ -16,18 +16,24 @@ namespace TRR_SaveMaster
         private int ORIENTATION_OFFSET;
         private int ROOM_OFFSET;
 
+        // Compressed block offsets/constants
+        private const int COMPRESSED_BLOCK_START_OFFSET = 0x36C;
+        private const int COMPRESSED_BLOCK_SIZE_OFFSET = 0x364;
+
         // Tabs
         private const int TAB_TR1 = 0;
         private const int TAB_TR2 = 1;
         private const int TAB_TR3 = 2;
         private const int TAB_TR4 = 3;
         private const int TAB_TR5 = 4;
+        private const int TAB_TR6 = 5;
 
         // Savegame
         private Savegame selectedSavegame;
         private string savegamePath;
         private int savegameOffset;
         private int healthOffset;
+        private int playerBaseOffset;
 
         // Misc
         private ToolStripStatusLabel slblStatus;
@@ -70,6 +76,11 @@ namespace TRR_SaveMaster
         public void SetHealthOffset(int offset)
         {
             healthOffset = offset;
+        }
+
+        public void SetPlayerBaseOffset(int offset)
+        {
+            playerBaseOffset = offset;
         }
 
         private byte ReadByte(int offset)
@@ -115,6 +126,16 @@ namespace TRR_SaveMaster
             byte byte4 = ReadByte(offset + 3);
 
             return (Int32)(byte1 + (byte2 << 8) + (byte3 << 16) + (byte4 << 24));
+        }
+
+        private byte[] ReadBytes(string filePath, long offset, int length)
+        {
+            using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            using (BinaryReader br = new BinaryReader(fs))
+            {
+                fs.Seek(offset, SeekOrigin.Begin);
+                return br.ReadBytes(length);
+            }
         }
 
         private void WriteInt16(int offset, Int16 value)
@@ -1349,6 +1370,35 @@ namespace TRR_SaveMaster
                 nudZCoordinate.Maximum = UInt16.MaxValue;
                 nudZCoordinate.Minimum = UInt16.MinValue;
             }
+            else if (SELECTED_TAB == TAB_TR6)
+            {
+                nudXCoordinate.DecimalPlaces = 2;
+                nudXCoordinate.Increment = 10;
+                nudXCoordinate.Maximum = 9999999;
+                nudXCoordinate.Minimum = -9999999;
+
+                nudYCoordinate.DecimalPlaces = 2;
+                nudYCoordinate.Increment = 10;
+                nudYCoordinate.Maximum = 9999999;
+                nudYCoordinate.Minimum = -9999999;
+
+                nudZCoordinate.DecimalPlaces = 2;
+                nudZCoordinate.Increment = 10;
+                nudZCoordinate.Maximum = 9999999;
+                nudZCoordinate.Minimum = -9999999;
+
+                nudOrientation.DecimalPlaces = 2;
+                nudOrientation.Maximum = 180;
+                nudOrientation.Minimum = -180;
+
+                nudRoom.Enabled = false;
+                nudRoom.Visible = false;
+                lblRoom.Visible = false;
+                picInfoRoom.Visible = false;
+
+                tipPosition.SetToolTip(picInfoYCoordinate, "Represents vertical position in game. Increasing moves Lara up, decreasing moves her down.");
+                tipPosition.SetToolTip(picInfoOrientation, "Represents the direction Lara is facing in degrees. Valid range is -180 to 180.");
+            }
         }
 
         private Int32 GetXCoordinateI32()
@@ -1467,6 +1517,53 @@ namespace TRR_SaveMaster
                     nudOrientation.Value = GetOrientation();
                     nudRoom.Value = GetRoom();
                 }
+                else if (SELECTED_TAB == TAB_TR6)
+                {
+                    TR6Utilities TR6 = new TR6Utilities();
+                    TR6.SetSavegamePath(savegamePath);
+                    TR6.SetSavegameOffset(savegameOffset);
+
+                    UInt16 compressedBlockSize = ReadUInt16(savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
+
+                    // Read the compressed block from the savegame file
+                    byte[] compressedBlockData = ReadBytes(savegamePath, savegameOffset + COMPRESSED_BLOCK_START_OFFSET, compressedBlockSize);
+                    byte[] decompressedBuffer = new byte[0];   // Clear buffer
+                    decompressedBuffer = TR6.Unpack(compressedBlockData);
+
+                    using (MemoryStream ms = new MemoryStream(decompressedBuffer))
+                    using (BinaryReader reader = new BinaryReader(ms))
+                    {
+                        ms.Seek(playerBaseOffset, SeekOrigin.Begin);
+                        float xCoordinate = reader.ReadSingle();
+
+                        ms.Seek(playerBaseOffset + 0x4, SeekOrigin.Begin);
+                        float zCoordinate = reader.ReadSingle();
+
+                        ms.Seek(playerBaseOffset + 0x8, SeekOrigin.Begin);
+                        float yCoordinate = reader.ReadSingle();
+
+                        ms.Seek(playerBaseOffset + 0x18, SeekOrigin.Begin);
+                        float orientation = reader.ReadSingle();
+
+                        decimal orientationDecimal = (decimal)orientation;
+                        orientationDecimal = Math.Round(orientationDecimal, 2);
+
+                        // Clamp manually
+                        if (orientationDecimal < nudOrientation.Minimum)
+                        {
+                            orientationDecimal = nudOrientation.Minimum;
+                        }
+                        else if (orientationDecimal > nudOrientation.Maximum)
+                        {
+                            orientationDecimal = nudOrientation.Maximum;
+                        }    
+
+                        nudXCoordinate.Value = (decimal)xCoordinate;
+                        nudYCoordinate.Value = (decimal)yCoordinate;
+                        nudZCoordinate.Value = (decimal)zCoordinate;
+                        nudOrientation.Value = orientationDecimal;
+                    }
+                }
 
             }
             catch (Exception ex)
@@ -1515,6 +1612,49 @@ namespace TRR_SaveMaster
                     WriteZCoordinateU16((UInt16)nudZCoordinate.Value);
                     WriteOrientation((Int16)nudOrientation.Value);
                     WriteRoom((byte)nudRoom.Value);
+                }
+                else if (SELECTED_TAB == TAB_TR6)
+                {
+                    TR6Utilities TR6 = new TR6Utilities();
+                    TR6.SetSavegamePath(savegamePath);
+                    TR6.SetSavegameOffset(savegameOffset);
+
+                    UInt16 compressedBlockSize = ReadUInt16(savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
+
+                    byte[] compressedBlockData = ReadBytes(savegamePath, savegameOffset + COMPRESSED_BLOCK_START_OFFSET, compressedBlockSize);
+                    byte[] decompressedBuffer = new byte[0];
+                    decompressedBuffer = TR6.Unpack(compressedBlockData);
+
+                    using (MemoryStream ms = new MemoryStream(decompressedBuffer))
+                    using (BinaryWriter writer = new BinaryWriter(ms))
+                    {
+                        ms.Seek(playerBaseOffset, SeekOrigin.Begin);
+                        writer.Write((float)nudXCoordinate.Value);
+
+                        ms.Seek(playerBaseOffset + 0x4, SeekOrigin.Begin);
+                        writer.Write((float)nudZCoordinate.Value);
+
+                        ms.Seek(playerBaseOffset + 0x8, SeekOrigin.Begin);
+                        writer.Write((float)nudYCoordinate.Value);
+
+                        ms.Seek(playerBaseOffset + 0x18, SeekOrigin.Begin);
+                        writer.Write((float)nudOrientation.Value);
+                    }
+
+                    byte[] compressedBuffer = TR6.Pack(decompressedBuffer);
+                    int compressedBufferSize = compressedBuffer.Length;
+
+                    using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Write))
+                    using (BinaryWriter writer = new BinaryWriter(fs))
+                    {
+                        // Write compressed block size
+                        fs.Seek(savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET, SeekOrigin.Begin);
+                        writer.Write(compressedBufferSize);
+
+                        // Write the compressed buffer to the savegame
+                        fs.Seek(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, SeekOrigin.Begin);
+                        writer.Write(compressedBuffer);
+                    }
                 }
 
                 DisableButtons();
