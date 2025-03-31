@@ -57,8 +57,9 @@ namespace TRR_SaveMaster
         List<InventoryItem> invKurtis = new List<InventoryItem>();
 
         // Inventory types
+        private const int INVENTORY_TYPE_ITEM = 2;
         private const int INVENTORY_TYPE_WEAPON = 3;
-        private const int INVENTORY_TYPE_ITEM = 4;
+        private const int INVENTORY_TYPE_HEALTH_ITEM = 4;
         private const int INVENTORY_TYPE_AMMO = 7;
 
         // Actor DB
@@ -217,7 +218,7 @@ namespace TRR_SaveMaster
                         itemCount = reader.ReadByte();
                         sgBufferCursor += 0x1;
 
-                        //Debug.WriteLine($"{(characterIndex == 0 ? "Lara" : "Kurtis")} Inventory Item Count = {itemCount}");
+                        Debug.WriteLine($"{(characterIndex == 0 ? "Lara" : "Kurtis")} Inventory Item Count = {itemCount}");
 
                         // If there are items for this character, process each one
                         if (itemCount != 0)
@@ -241,7 +242,7 @@ namespace TRR_SaveMaster
                                 itemQuantity = reader.ReadInt32();
                                 sgBufferCursor += 0x4;
 
-                                //Debug.WriteLine($"Item: ClassID=0x{itemClassID:X}, Type={itemType}, Quantity={itemQuantity}, Quantity_Offset=0x{(sgBufferCursor - 4):X}");
+                                Debug.WriteLine($"Item: ClassID=0x{itemClassID:X}, Type={itemType}, Quantity={itemQuantity}, Quantity_Offset=0x{(sgBufferCursor - 4):X}");
 
                                 InventoryItem inventoryItem = new InventoryItem(itemClassID, itemType, itemQuantity);
 
@@ -1236,70 +1237,53 @@ namespace TRR_SaveMaster
             NumericUpDown nudDesertRangerAmmo, CheckBox chkDartSS, NumericUpDown nudDartSSAmmo,
             CheckBox chkRigg09, NumericUpDown nudRigg09Ammo, CheckBox chkViperSMG, NumericUpDown nudViperSMGAmmo,
             CheckBox chkMagVega, NumericUpDown nudMagVegaAmmo, CheckBox chkVectorR35Pair, CheckBox chkScorpionXPair,
-            NumericUpDown nudPoisonAntidote, CheckBox chkChirugaiBlade)
+            NumericUpDown nudPoisonAntidote, CheckBox chkChirugaiBlade, NumericUpDown nudGPSSaveGame)
         {
             // Determine whose inventory to update
             List<InventoryItem> selectedInventory = cmbInventory.SelectedIndex == 1 ? invKurtis : invLara;
 
             // Weapons (checkboxes)
-            UpdateWeapon(selectedInventory, Inventory.MV9, chkMV9.Checked);
-            UpdateWeapon(selectedInventory, Inventory.VPACKER, chkVPacker.Checked);
-            UpdateWeapon(selectedInventory, Inventory.BORAN_X, chkBoranX.Checked);
-            UpdateWeapon(selectedInventory, Inventory.K2_IMPACTOR, chkK2Impactor.Checked);
-            UpdateWeapon(selectedInventory, Inventory.SCORPION_X, chkScorpionX.Checked);
-            UpdateWeapon(selectedInventory, Inventory.VECTOR_R35, chkVectorR35.Checked);
-            UpdateWeapon(selectedInventory, Inventory.DESERT_RANGER, chkDesertRanger.Checked);
-            UpdateWeapon(selectedInventory, Inventory.DART_SS, chkDartSS.Checked);
-            UpdateWeapon(selectedInventory, Inventory.RIGG_09, chkRigg09.Checked);
-            UpdateWeapon(selectedInventory, Inventory.VIPER_SMG, chkViperSMG.Checked);
-            UpdateWeapon(selectedInventory, Inventory.MAG_VEGA, chkMagVega.Checked);
-            UpdateWeapon(selectedInventory, Inventory.SCORPION_X_PAIR, chkScorpionXPair.Checked);
-            UpdateWeapon(selectedInventory, Inventory.VECTOR_R35_PAIR, chkVectorR35Pair.Checked);
-            UpdateWeapon(selectedInventory, Inventory.CHIRUGAI_BLADE, chkChirugaiBlade.Checked);
+            UpdateInventoryWeapon(selectedInventory, Inventory.MV9, chkMV9.Checked);
+            UpdateInventoryWeapon(selectedInventory, Inventory.VPACKER, chkVPacker.Checked);
+            UpdateInventoryWeapon(selectedInventory, Inventory.BORAN_X, chkBoranX.Checked);
+            UpdateInventoryWeapon(selectedInventory, Inventory.K2_IMPACTOR, chkK2Impactor.Checked);
+            UpdateInventoryWeapon(selectedInventory, Inventory.SCORPION_X, chkScorpionX.Checked);
+            UpdateInventoryWeapon(selectedInventory, Inventory.VECTOR_R35, chkVectorR35.Checked);
+            UpdateInventoryWeapon(selectedInventory, Inventory.DESERT_RANGER, chkDesertRanger.Checked);
+            UpdateInventoryWeapon(selectedInventory, Inventory.DART_SS, chkDartSS.Checked);
+            UpdateInventoryWeapon(selectedInventory, Inventory.RIGG_09, chkRigg09.Checked);
+            UpdateInventoryWeapon(selectedInventory, Inventory.VIPER_SMG, chkViperSMG.Checked);
+            UpdateInventoryWeapon(selectedInventory, Inventory.MAG_VEGA, chkMagVega.Checked);
+            UpdateInventoryWeapon(selectedInventory, Inventory.SCORPION_X_PAIR, chkScorpionXPair.Checked);
+            UpdateInventoryWeapon(selectedInventory, Inventory.VECTOR_R35_PAIR, chkVectorR35Pair.Checked);
+            UpdateInventoryWeapon(selectedInventory, Inventory.CHIRUGAI_BLADE, chkChirugaiBlade.Checked);
 
-            // Items (quantifiable, can be removed when 0)
-            UpdateItem(selectedInventory, Inventory.CHOCOLATE_BAR, (Int32)nudChocolateBar.Value);
-            UpdateItem(selectedInventory, Inventory.SMALL_MEDIPACK, (Int32)nudSmallMedipack.Value);
-            UpdateItem(selectedInventory, Inventory.HEALTH_BANDAGES, (Int32)nudHealthBandages.Value);
-            UpdateItem(selectedInventory, Inventory.HEALTH_PILLS, (Int32)nudHealthPills.Value);
-            UpdateItem(selectedInventory, Inventory.LARGE_HEALTH_PACK, (Int32)nudLargeHealthPack.Value);
-            UpdateItem(selectedInventory, Inventory.POISON_ANTIDOTE, (Int32)nudPoisonAntidote.Value);
+            // Health Items (quantifiable, can be removed when 0)
+            UpdateInventoryHealthItem(selectedInventory, Inventory.CHOCOLATE_BAR, (Int32)nudChocolateBar.Value);
+            UpdateInventoryHealthItem(selectedInventory, Inventory.SMALL_MEDIPACK, (Int32)nudSmallMedipack.Value);
+            UpdateInventoryHealthItem(selectedInventory, Inventory.HEALTH_BANDAGES, (Int32)nudHealthBandages.Value);
+            UpdateInventoryHealthItem(selectedInventory, Inventory.HEALTH_PILLS, (Int32)nudHealthPills.Value);
+            UpdateInventoryHealthItem(selectedInventory, Inventory.LARGE_HEALTH_PACK, (Int32)nudLargeHealthPack.Value);
+            UpdateInventoryHealthItem(selectedInventory, Inventory.POISON_ANTIDOTE, (Int32)nudPoisonAntidote.Value);
 
             // Ammo (separate handling)
-            UpdateAmmo(selectedInventory, Inventory.MV9_AMMO, (Int32)nudMV9Ammo.Value);
-            UpdateAmmo(selectedInventory, Inventory.VPACKER_AMMO, (Int32)nudVPackerAmmo.Value);
-            UpdateAmmo(selectedInventory, Inventory.BORAN_X_AMMO, (Int32)nudBoranXAmmo.Value);
-            UpdateAmmo(selectedInventory, Inventory.K2_IMPACTOR_AMMO, (Int32)nudK2ImpactorAmmo.Value);
-            UpdateAmmo(selectedInventory, Inventory.SCORPION_X_AMMO, (Int32)nudScorpionXAmmo.Value);
-            UpdateAmmo(selectedInventory, Inventory.VECTOR_R35_AMMO, (Int32)nudVectorR35Ammo.Value);
-            UpdateAmmo(selectedInventory, Inventory.DESERT_RANGER_AMMO, (Int32)nudDesertRangerAmmo.Value);
-            UpdateAmmo(selectedInventory, Inventory.DART_SS_AMMO, (Int32)nudDartSSAmmo.Value);
-            UpdateAmmo(selectedInventory, Inventory.RIGG_09_AMMO, (Int32)nudRigg09Ammo.Value);
-            UpdateAmmo(selectedInventory, Inventory.VIPER_SMG_AMMO, (Int32)nudViperSMGAmmo.Value);
-            UpdateAmmo(selectedInventory, Inventory.MAG_VEGA_AMMO, (Int32)nudMagVegaAmmo.Value);
+            UpdateInventoryAmmo(selectedInventory, Inventory.MV9_AMMO, (Int32)nudMV9Ammo.Value);
+            UpdateInventoryAmmo(selectedInventory, Inventory.VPACKER_AMMO, (Int32)nudVPackerAmmo.Value);
+            UpdateInventoryAmmo(selectedInventory, Inventory.BORAN_X_AMMO, (Int32)nudBoranXAmmo.Value);
+            UpdateInventoryAmmo(selectedInventory, Inventory.K2_IMPACTOR_AMMO, (Int32)nudK2ImpactorAmmo.Value);
+            UpdateInventoryAmmo(selectedInventory, Inventory.SCORPION_X_AMMO, (Int32)nudScorpionXAmmo.Value);
+            UpdateInventoryAmmo(selectedInventory, Inventory.VECTOR_R35_AMMO, (Int32)nudVectorR35Ammo.Value);
+            UpdateInventoryAmmo(selectedInventory, Inventory.DESERT_RANGER_AMMO, (Int32)nudDesertRangerAmmo.Value);
+            UpdateInventoryAmmo(selectedInventory, Inventory.DART_SS_AMMO, (Int32)nudDartSSAmmo.Value);
+            UpdateInventoryAmmo(selectedInventory, Inventory.RIGG_09_AMMO, (Int32)nudRigg09Ammo.Value);
+            UpdateInventoryAmmo(selectedInventory, Inventory.VIPER_SMG_AMMO, (Int32)nudViperSMGAmmo.Value);
+            UpdateInventoryAmmo(selectedInventory, Inventory.MAG_VEGA_AMMO, (Int32)nudMagVegaAmmo.Value);
+
+            // Items (quantifiable, can be removed when 0)
+            UpdateInventoryItem(selectedInventory, Inventory.GPS_SAVE_GAME, (Int32)nudGPSSaveGame.Value);
         }
 
-        private void UpdateWeapon(List<InventoryItem> inventory, ushort classId, bool isChecked)
-        {
-            int index = inventory.FindIndex(i => i.ClassId == classId);
-
-            if (isChecked)
-            {
-                if (index == -1) // Weapon does not exist, add it
-                {
-                    inventory.Add(new InventoryItem(classId, INVENTORY_TYPE_WEAPON, 1));
-                }
-            }
-            else
-            {
-                if (index != -1) // Weapon exists, remove it
-                {
-                    inventory.RemoveAt(index);
-                }
-            }
-        }
-
-        private void UpdateItem(List<InventoryItem> inventory, ushort classId, int quantity)
+        private void UpdateInventoryItem(List<InventoryItem> inventory, ushort classId, int quantity)
         {
             // Find existing item
             int index = inventory.FindIndex(i => i.ClassId == classId);
@@ -1324,7 +1308,52 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void UpdateAmmo(List<InventoryItem> inventory, ushort classId, int quantity)
+        private void UpdateInventoryWeapon(List<InventoryItem> inventory, ushort classId, bool isChecked)
+        {
+            int index = inventory.FindIndex(i => i.ClassId == classId);
+
+            if (isChecked)
+            {
+                if (index == -1) // Weapon does not exist, add it
+                {
+                    inventory.Add(new InventoryItem(classId, INVENTORY_TYPE_WEAPON, 1));
+                }
+            }
+            else
+            {
+                if (index != -1) // Weapon exists, remove it
+                {
+                    inventory.RemoveAt(index);
+                }
+            }
+        }
+
+        private void UpdateInventoryHealthItem(List<InventoryItem> inventory, ushort classId, int quantity)
+        {
+            // Find existing item
+            int index = inventory.FindIndex(i => i.ClassId == classId);
+
+            if (quantity > 0)
+            {
+                if (index != -1)
+                {
+                    inventory[index] = new InventoryItem(classId, INVENTORY_TYPE_HEALTH_ITEM, quantity); // Update existing health item
+                }
+                else
+                {
+                    inventory.Add(new InventoryItem(classId, INVENTORY_TYPE_HEALTH_ITEM, quantity)); // Add new health item
+                }
+            }
+            else
+            {
+                if (index != -1)
+                {
+                    inventory.RemoveAt(index); // Remove if quantity is 0
+                }
+            }
+        }
+
+        private void UpdateInventoryAmmo(List<InventoryItem> inventory, ushort classId, int quantity)
         {
             // Find existing ammo item
             int index = inventory.FindIndex(i => i.ClassId == classId);
@@ -1358,13 +1387,16 @@ namespace TRR_SaveMaster
             NumericUpDown nudDesertRangerAmmo, CheckBox chkDartSS, NumericUpDown nudDartSSAmmo,
             CheckBox chkRigg09, NumericUpDown nudRigg09Ammo, CheckBox chkViperSMG, NumericUpDown nudViperSMGAmmo,
             CheckBox chkMagVega, NumericUpDown nudMagVegaAmmo, CheckBox chkVectorR35Pair, CheckBox chkScorpionXPair,
-            NumericUpDown nudPoisonAntidote, CheckBox chkChirugaiBlade)
+            NumericUpDown nudPoisonAntidote, CheckBox chkChirugaiBlade, NumericUpDown nudGPSSaveGame, Label lblGPSSaveGame)
         {
             // Determine whose inventory to update
             List<InventoryItem> selectedInventory = cmbInventory.SelectedIndex == 1 ? invKurtis : invLara;
 
             // Copy list to safely iterate without modifying it
             List<InventoryItem> inventoryCopy = selectedInventory.ToList();
+
+            // Get game mode
+            GameMode gameMode = GetGameMode();
 
             // Reset UI fields
             nudChocolateBar.Value = 0;
@@ -1425,6 +1457,11 @@ namespace TRR_SaveMaster
             nudBoranXAmmo.Enabled = cmbInventory.SelectedIndex == 1;
             chkBoranX.Enabled = cmbInventory.SelectedIndex == 1;
             chkChirugaiBlade.Enabled = cmbInventory.SelectedIndex == 1;
+
+            nudGPSSaveGame.Enabled = gameMode == GameMode.Plus;
+            nudGPSSaveGame.Visible = gameMode == GameMode.Plus;
+            lblGPSSaveGame.Enabled = gameMode == GameMode.Plus;
+            lblGPSSaveGame.Visible = gameMode == GameMode.Plus;
 
             // Update UI based on inventory contents
             foreach (var item in inventoryCopy)
@@ -1523,6 +1560,9 @@ namespace TRR_SaveMaster
                         break;
                     case Inventory.POISON_ANTIDOTE:
                         nudPoisonAntidote.Value = item.Quantity;
+                        break;
+                    case Inventory.GPS_SAVE_GAME:
+                        nudGPSSaveGame.Value = item.Quantity;
                         break;
                 }
             }

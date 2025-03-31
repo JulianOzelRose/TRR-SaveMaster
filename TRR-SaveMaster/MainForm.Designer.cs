@@ -311,12 +311,14 @@ namespace TRR_SaveMaster
             this.tsmiSettingsSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiStatusBar = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAdvanced = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAllowUnsafeMaxValues = new System.Windows.Forms.ToolStripMenuItem();
             this.tsddbHelp = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiReportBug = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiAdvanced = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiAllowUnsafeMaxValues = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblGPSSaveGame = new System.Windows.Forms.Label();
+            this.nudGPSSaveGame = new System.Windows.Forms.NumericUpDown();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR1)).BeginInit();
@@ -423,6 +425,7 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudCashTR6)).BeginInit();
             this.ssrStatusStrip.SuspendLayout();
             this.tsrToolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGPSSaveGame)).BeginInit();
             this.SuspendLayout();
             // 
             // tabGame
@@ -3327,6 +3330,8 @@ namespace TRR_SaveMaster
             // 
             // grpItemsTR6
             // 
+            this.grpItemsTR6.Controls.Add(this.lblGPSSaveGame);
+            this.grpItemsTR6.Controls.Add(this.nudGPSSaveGame);
             this.grpItemsTR6.Controls.Add(this.lblPoisonAntidoteTR6);
             this.grpItemsTR6.Controls.Add(this.nudPoisonAntidoteTR6);
             this.grpItemsTR6.Controls.Add(this.lblChocolateBarTR6);
@@ -3717,7 +3722,7 @@ namespace TRR_SaveMaster
             this.tsmiPlayStation4,
             this.tsmiNintendoSwitch});
             this.tsmiPlatform.Name = "tsmiPlatform";
-            this.tsmiPlatform.Size = new System.Drawing.Size(180, 22);
+            this.tsmiPlatform.Size = new System.Drawing.Size(149, 22);
             this.tsmiPlatform.Text = "Platform";
             // 
             // tsmiPC
@@ -3749,13 +3754,13 @@ namespace TRR_SaveMaster
             // tsmiSettingsSeparator
             // 
             this.tsmiSettingsSeparator.Name = "tsmiSettingsSeparator";
-            this.tsmiSettingsSeparator.Size = new System.Drawing.Size(177, 6);
+            this.tsmiSettingsSeparator.Size = new System.Drawing.Size(146, 6);
             // 
             // tsmiAlwaysOnTop
             // 
             this.tsmiAlwaysOnTop.CheckOnClick = true;
             this.tsmiAlwaysOnTop.Name = "tsmiAlwaysOnTop";
-            this.tsmiAlwaysOnTop.Size = new System.Drawing.Size(180, 22);
+            this.tsmiAlwaysOnTop.Size = new System.Drawing.Size(149, 22);
             this.tsmiAlwaysOnTop.Text = "Always on top";
             this.tsmiAlwaysOnTop.Click += new System.EventHandler(this.tsmiAlwaysOnTop_Click);
             // 
@@ -3765,9 +3770,25 @@ namespace TRR_SaveMaster
             this.tsmiStatusBar.CheckOnClick = true;
             this.tsmiStatusBar.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiStatusBar.Name = "tsmiStatusBar";
-            this.tsmiStatusBar.Size = new System.Drawing.Size(180, 22);
+            this.tsmiStatusBar.Size = new System.Drawing.Size(149, 22);
             this.tsmiStatusBar.Text = "Status Bar";
             this.tsmiStatusBar.Click += new System.EventHandler(this.tsmiStatusBar_Click);
+            // 
+            // tsmiAdvanced
+            // 
+            this.tsmiAdvanced.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiAllowUnsafeMaxValues});
+            this.tsmiAdvanced.Name = "tsmiAdvanced";
+            this.tsmiAdvanced.Size = new System.Drawing.Size(149, 22);
+            this.tsmiAdvanced.Text = "Advanced";
+            // 
+            // tsmiAllowUnsafeMaxValues
+            // 
+            this.tsmiAllowUnsafeMaxValues.CheckOnClick = true;
+            this.tsmiAllowUnsafeMaxValues.Name = "tsmiAllowUnsafeMaxValues";
+            this.tsmiAllowUnsafeMaxValues.Size = new System.Drawing.Size(302, 22);
+            this.tsmiAllowUnsafeMaxValues.Text = "Allow unsafe max values (may crash game)";
+            this.tsmiAllowUnsafeMaxValues.Click += new System.EventHandler(this.tsmiAllowUnsafeMaxValues_Click);
             // 
             // tsddbHelp
             // 
@@ -3805,21 +3826,28 @@ namespace TRR_SaveMaster
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
             // 
-            // tsmiAdvanced
+            // lblGPSSaveGame
             // 
-            this.tsmiAdvanced.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiAllowUnsafeMaxValues});
-            this.tsmiAdvanced.Name = "tsmiAdvanced";
-            this.tsmiAdvanced.Size = new System.Drawing.Size(180, 22);
-            this.tsmiAdvanced.Text = "Advanced";
+            this.lblGPSSaveGame.AutoSize = true;
+            this.lblGPSSaveGame.Location = new System.Drawing.Point(18, 213);
+            this.lblGPSSaveGame.Name = "lblGPSSaveGame";
+            this.lblGPSSaveGame.Size = new System.Drawing.Size(91, 13);
+            this.lblGPSSaveGame.TabIndex = 29;
+            this.lblGPSSaveGame.Text = "GPS Save Game:";
             // 
-            // tsmiAllowUnsafeMaxValues
+            // nudGPSSaveGame
             // 
-            this.tsmiAllowUnsafeMaxValues.CheckOnClick = true;
-            this.tsmiAllowUnsafeMaxValues.Name = "tsmiAllowUnsafeMaxValues";
-            this.tsmiAllowUnsafeMaxValues.Size = new System.Drawing.Size(302, 22);
-            this.tsmiAllowUnsafeMaxValues.Text = "Allow unsafe max values (may crash game)";
-            this.tsmiAllowUnsafeMaxValues.Click += new System.EventHandler(this.tsmiAllowUnsafeMaxValues_Click);
+            this.nudGPSSaveGame.Location = new System.Drawing.Point(265, 211);
+            this.nudGPSSaveGame.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.nudGPSSaveGame.Name = "nudGPSSaveGame";
+            this.nudGPSSaveGame.Size = new System.Drawing.Size(53, 20);
+            this.nudGPSSaveGame.TabIndex = 28;
+            this.nudGPSSaveGame.ValueChanged += new System.EventHandler(this.nudGPSSaveGame_ValueChanged);
+            this.nudGPSSaveGame.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudGPSSaveGame_KeyPress);
             // 
             // MainForm
             // 
@@ -3971,6 +3999,7 @@ namespace TRR_SaveMaster
             this.ssrStatusStrip.PerformLayout();
             this.tsrToolStrip.ResumeLayout(false);
             this.tsrToolStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGPSSaveGame)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -4265,6 +4294,8 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.Label lblInventoryTR6;
         private System.Windows.Forms.ToolStripMenuItem tsmiAdvanced;
         private System.Windows.Forms.ToolStripMenuItem tsmiAllowUnsafeMaxValues;
+        private System.Windows.Forms.Label lblGPSSaveGame;
+        private System.Windows.Forms.NumericUpDown nudGPSSaveGame;
     }
 }
 

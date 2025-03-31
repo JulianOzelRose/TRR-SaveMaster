@@ -975,7 +975,7 @@ namespace TRR_SaveMaster
                     nudK2ImpactorAmmoTR6, nudLargeHealthPackTR6, chkScorpionXTR6, nudScorpionXAmmoTR6, chkVectorR35TR6, nudVectorR35AmmoTR6,
                     chkDesertRangerTR6, nudDesertRangerAmmoTR6, chkDartSSTR6, nudDartSSAmmoTR6, chkRigg09TR6, nudRigg09AmmoTR6,
                     chkViperSMGTR6, nudViperSMGAmmoTR6, chkMagVegaTR6, nudMagVegaAmmoTR6, chkVectorR35PairTR6, chkScorpionXPairTR6, nudPoisonAntidoteTR6,
-                    chkChirugaiBladeTR6);
+                    chkChirugaiBladeTR6, nudGPSSaveGame, lblGPSSaveGame);
             }
 
             isInventoryLoading = false;
@@ -1649,7 +1649,7 @@ namespace TRR_SaveMaster
                     nudK2ImpactorAmmoTR6, nudLargeHealthPackTR6, chkScorpionXTR6, nudScorpionXAmmoTR6, chkVectorR35TR6, nudVectorR35AmmoTR6,
                     chkDesertRangerTR6, nudDesertRangerAmmoTR6, chkDartSSTR6, nudDartSSAmmoTR6, chkRigg09TR6, nudRigg09AmmoTR6,
                     chkViperSMGTR6, nudViperSMGAmmoTR6, chkMagVegaTR6, nudMagVegaAmmoTR6, chkVectorR35PairTR6, chkScorpionXPairTR6,
-                    nudPoisonAntidoteTR6, chkChirugaiBladeTR6);
+                    nudPoisonAntidoteTR6, chkChirugaiBladeTR6, nudGPSSaveGame);
             }
         }
 
@@ -1906,7 +1906,7 @@ namespace TRR_SaveMaster
                         nudK2ImpactorAmmoTR6, nudLargeHealthPackTR6, chkScorpionXTR6, nudScorpionXAmmoTR6, chkVectorR35TR6, nudVectorR35AmmoTR6,
                         chkDesertRangerTR6, nudDesertRangerAmmoTR6, chkDartSSTR6, nudDartSSAmmoTR6, chkRigg09TR6, nudRigg09AmmoTR6,
                         chkViperSMGTR6, nudViperSMGAmmoTR6, chkMagVegaTR6, nudMagVegaAmmoTR6, chkVectorR35PairTR6, chkScorpionXPairTR6,
-                        nudPoisonAntidoteTR6, chkChirugaiBladeTR6);
+                        nudPoisonAntidoteTR6, chkChirugaiBladeTR6, nudGPSSaveGame, lblGPSSaveGame);
 
                     slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame}'";
                 }
@@ -4236,6 +4236,15 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void nudGPSSaveGame_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && !isInventoryLoading && cmbSavegamesTR6.SelectedIndex != -1)
+            {
+                EnableButtonsTR6();
+                UpdateInventoryFromUI();
+            }
+        }
+
         private void nudCashTR6_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (char.IsDigit(e.KeyChar) && cmbSavegamesTR6.SelectedIndex != -1)
@@ -4390,6 +4399,15 @@ namespace TRR_SaveMaster
         }
 
         private void nudBoranXAmmoTR6_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar) && !isInventoryLoading && cmbSavegamesTR6.SelectedIndex != -1)
+            {
+                EnableButtonsTR6();
+                UpdateInventoryFromUI();
+            }
+        }
+
+        private void nudGPSSaveGame_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (char.IsDigit(e.KeyChar) && !isInventoryLoading && cmbSavegamesTR6.SelectedIndex != -1)
             {

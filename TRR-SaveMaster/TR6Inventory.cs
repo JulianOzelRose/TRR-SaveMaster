@@ -5,6 +5,7 @@ namespace TRR_SaveMaster
     public class Inventory
     {
         // Items
+        public const ushort GPS_SAVE_GAME = 0x49;
         public const ushort POISON_ANTIDOTE = 0x91;
         public const ushort CHOCOLATE_BAR = 0x94;
         public const ushort HEALTH_BANDAGES = 0x96;
