@@ -1430,6 +1430,7 @@ namespace TRR_SaveMaster
             chkMagVega.Checked = false;
             nudMagVegaAmmo.Value = 0;
             chkChirugaiBlade.Checked = false;
+            nudGPSSaveGame.Value = 0;
 
             // Conditionally enable weapons
             chkMV9.Enabled = cmbInventory.SelectedIndex == 0;
