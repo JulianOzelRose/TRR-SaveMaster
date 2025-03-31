@@ -2518,6 +2518,27 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void tsmiAllowUnsafeMaxValues_Click(object sender, EventArgs e)
+        {
+            int maxValue = tsmiAllowUnsafeMaxValues.Checked ? Int32.MaxValue : 999999;
+
+            foreach (Control control in grpItemsTR6.Controls)
+            {
+                if (control is NumericUpDown nud)
+                {
+                    nud.Maximum = maxValue;
+                }
+            }
+
+            foreach (Control control in grpWeaponsTR6.Controls)
+            {
+                if (control is NumericUpDown nud)
+                {
+                    nud.Maximum = maxValue;
+                }
+            }
+        }
+
         private void tsmiDeleteSavegame_Click(object sender, EventArgs e)
         {
             Savegame savegameToDelete = null;

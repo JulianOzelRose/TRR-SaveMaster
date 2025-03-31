@@ -315,6 +315,8 @@ namespace TRR_SaveMaster
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiReportBug = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAdvanced = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAllowUnsafeMaxValues = new System.Windows.Forms.ToolStripMenuItem();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR1)).BeginInit();
@@ -2977,7 +2979,7 @@ namespace TRR_SaveMaster
             // 
             this.nudBoranXAmmoTR6.Location = new System.Drawing.Point(162, 393);
             this.nudBoranXAmmoTR6.Maximum = new decimal(new int[] {
-            2147483647,
+            999999,
             0,
             0,
             0});
@@ -3002,7 +3004,7 @@ namespace TRR_SaveMaster
             // 
             this.nudViperSMGAmmoTR6.Location = new System.Drawing.Point(162, 341);
             this.nudViperSMGAmmoTR6.Maximum = new decimal(new int[] {
-            2147483647,
+            999999,
             0,
             0,
             0});
@@ -3027,7 +3029,7 @@ namespace TRR_SaveMaster
             // 
             this.nudRigg09AmmoTR6.Location = new System.Drawing.Point(162, 315);
             this.nudRigg09AmmoTR6.Maximum = new decimal(new int[] {
-            2147483647,
+            999999,
             0,
             0,
             0});
@@ -3052,7 +3054,7 @@ namespace TRR_SaveMaster
             // 
             this.nudDartSSAmmoTR6.Location = new System.Drawing.Point(162, 289);
             this.nudDartSSAmmoTR6.Maximum = new decimal(new int[] {
-            2147483647,
+            999999,
             0,
             0,
             0});
@@ -3077,7 +3079,7 @@ namespace TRR_SaveMaster
             // 
             this.nudMagVegaAmmoTR6.Location = new System.Drawing.Point(162, 263);
             this.nudMagVegaAmmoTR6.Maximum = new decimal(new int[] {
-            2147483647,
+            999999,
             0,
             0,
             0});
@@ -3091,7 +3093,7 @@ namespace TRR_SaveMaster
             // 
             this.nudMV9AmmoTR6.Location = new System.Drawing.Point(162, 55);
             this.nudMV9AmmoTR6.Maximum = new decimal(new int[] {
-            2147483647,
+            999999,
             0,
             0,
             0});
@@ -3125,7 +3127,7 @@ namespace TRR_SaveMaster
             // 
             this.nudVPackerAmmoTR6.Location = new System.Drawing.Point(162, 81);
             this.nudVPackerAmmoTR6.Maximum = new decimal(new int[] {
-            2147483647,
+            999999,
             0,
             0,
             0});
@@ -3161,7 +3163,7 @@ namespace TRR_SaveMaster
             // 
             this.nudK2ImpactorAmmoTR6.Location = new System.Drawing.Point(162, 159);
             this.nudK2ImpactorAmmoTR6.Maximum = new decimal(new int[] {
-            2147483647,
+            999999,
             0,
             0,
             0});
@@ -3175,7 +3177,7 @@ namespace TRR_SaveMaster
             // 
             this.nudVectorR35AmmoTR6.Location = new System.Drawing.Point(162, 185);
             this.nudVectorR35AmmoTR6.Maximum = new decimal(new int[] {
-            2147483647,
+            999999,
             0,
             0,
             0});
@@ -3189,7 +3191,7 @@ namespace TRR_SaveMaster
             // 
             this.nudDesertRangerAmmoTR6.Location = new System.Drawing.Point(162, 237);
             this.nudDesertRangerAmmoTR6.Maximum = new decimal(new int[] {
-            2147483647,
+            999999,
             0,
             0,
             0});
@@ -3203,7 +3205,7 @@ namespace TRR_SaveMaster
             // 
             this.nudScorpionXAmmoTR6.Location = new System.Drawing.Point(162, 107);
             this.nudScorpionXAmmoTR6.Maximum = new decimal(new int[] {
-            2147483647,
+            999999,
             0,
             0,
             0});
@@ -3359,7 +3361,7 @@ namespace TRR_SaveMaster
             // 
             this.nudPoisonAntidoteTR6.Location = new System.Drawing.Point(265, 185);
             this.nudPoisonAntidoteTR6.Maximum = new decimal(new int[] {
-            2147483647,
+            999999,
             0,
             0,
             0});
@@ -3391,7 +3393,7 @@ namespace TRR_SaveMaster
             // 
             this.nudChocolateBarTR6.Location = new System.Drawing.Point(265, 159);
             this.nudChocolateBarTR6.Maximum = new decimal(new int[] {
-            2147483647,
+            999999,
             0,
             0,
             0});
@@ -3405,7 +3407,7 @@ namespace TRR_SaveMaster
             // 
             this.nudHealthPillsTR6.Location = new System.Drawing.Point(265, 133);
             this.nudHealthPillsTR6.Maximum = new decimal(new int[] {
-            2147483647,
+            999999,
             0,
             0,
             0});
@@ -3428,7 +3430,7 @@ namespace TRR_SaveMaster
             // 
             this.nudHealthBandagesTR6.Location = new System.Drawing.Point(265, 107);
             this.nudHealthBandagesTR6.Maximum = new decimal(new int[] {
-            2147483647,
+            999999,
             0,
             0,
             0});
@@ -3469,7 +3471,7 @@ namespace TRR_SaveMaster
             // 
             this.nudSmallMedipackTR6.Location = new System.Drawing.Point(265, 81);
             this.nudSmallMedipackTR6.Maximum = new decimal(new int[] {
-            2147483647,
+            999999,
             0,
             0,
             0});
@@ -3483,7 +3485,7 @@ namespace TRR_SaveMaster
             // 
             this.nudLargeHealthPackTR6.Location = new System.Drawing.Point(265, 55);
             this.nudLargeHealthPackTR6.Maximum = new decimal(new int[] {
-            2147483647,
+            999999,
             0,
             0,
             0});
@@ -3497,7 +3499,7 @@ namespace TRR_SaveMaster
             // 
             this.nudCashTR6.Location = new System.Drawing.Point(265, 29);
             this.nudCashTR6.Maximum = new decimal(new int[] {
-            2147483647,
+            999999,
             0,
             0,
             0});
@@ -3699,7 +3701,8 @@ namespace TRR_SaveMaster
             this.tsmiPlatform,
             this.tsmiSettingsSeparator,
             this.tsmiAlwaysOnTop,
-            this.tsmiStatusBar});
+            this.tsmiStatusBar,
+            this.tsmiAdvanced});
             this.tsddbSettings.Image = ((System.Drawing.Image)(resources.GetObject("tsddbSettings.Image")));
             this.tsddbSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsddbSettings.Name = "tsddbSettings";
@@ -3714,7 +3717,7 @@ namespace TRR_SaveMaster
             this.tsmiPlayStation4,
             this.tsmiNintendoSwitch});
             this.tsmiPlatform.Name = "tsmiPlatform";
-            this.tsmiPlatform.Size = new System.Drawing.Size(149, 22);
+            this.tsmiPlatform.Size = new System.Drawing.Size(180, 22);
             this.tsmiPlatform.Text = "Platform";
             // 
             // tsmiPC
@@ -3746,13 +3749,13 @@ namespace TRR_SaveMaster
             // tsmiSettingsSeparator
             // 
             this.tsmiSettingsSeparator.Name = "tsmiSettingsSeparator";
-            this.tsmiSettingsSeparator.Size = new System.Drawing.Size(146, 6);
+            this.tsmiSettingsSeparator.Size = new System.Drawing.Size(177, 6);
             // 
             // tsmiAlwaysOnTop
             // 
             this.tsmiAlwaysOnTop.CheckOnClick = true;
             this.tsmiAlwaysOnTop.Name = "tsmiAlwaysOnTop";
-            this.tsmiAlwaysOnTop.Size = new System.Drawing.Size(149, 22);
+            this.tsmiAlwaysOnTop.Size = new System.Drawing.Size(180, 22);
             this.tsmiAlwaysOnTop.Text = "Always on top";
             this.tsmiAlwaysOnTop.Click += new System.EventHandler(this.tsmiAlwaysOnTop_Click);
             // 
@@ -3762,7 +3765,7 @@ namespace TRR_SaveMaster
             this.tsmiStatusBar.CheckOnClick = true;
             this.tsmiStatusBar.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiStatusBar.Name = "tsmiStatusBar";
-            this.tsmiStatusBar.Size = new System.Drawing.Size(149, 22);
+            this.tsmiStatusBar.Size = new System.Drawing.Size(180, 22);
             this.tsmiStatusBar.Text = "Status Bar";
             this.tsmiStatusBar.Click += new System.EventHandler(this.tsmiStatusBar_Click);
             // 
@@ -3801,6 +3804,22 @@ namespace TRR_SaveMaster
             this.tsmiAbout.Size = new System.Drawing.Size(148, 22);
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
+            // 
+            // tsmiAdvanced
+            // 
+            this.tsmiAdvanced.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiAllowUnsafeMaxValues});
+            this.tsmiAdvanced.Name = "tsmiAdvanced";
+            this.tsmiAdvanced.Size = new System.Drawing.Size(180, 22);
+            this.tsmiAdvanced.Text = "Advanced";
+            // 
+            // tsmiAllowUnsafeMaxValues
+            // 
+            this.tsmiAllowUnsafeMaxValues.CheckOnClick = true;
+            this.tsmiAllowUnsafeMaxValues.Name = "tsmiAllowUnsafeMaxValues";
+            this.tsmiAllowUnsafeMaxValues.Size = new System.Drawing.Size(302, 22);
+            this.tsmiAllowUnsafeMaxValues.Text = "Allow unsafe max values (may crash game)";
+            this.tsmiAllowUnsafeMaxValues.Click += new System.EventHandler(this.tsmiAllowUnsafeMaxValues_Click);
             // 
             // MainForm
             // 
@@ -4244,6 +4263,8 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.Label lblScorpionXPairAmmoTR6;
         private System.Windows.Forms.ComboBox cmbInventoryTR6;
         private System.Windows.Forms.Label lblInventoryTR6;
+        private System.Windows.Forms.ToolStripMenuItem tsmiAdvanced;
+        private System.Windows.Forms.ToolStripMenuItem tsmiAllowUnsafeMaxValues;
     }
 }
 
