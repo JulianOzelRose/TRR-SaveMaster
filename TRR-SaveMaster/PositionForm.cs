@@ -54,11 +54,11 @@ namespace TRR_SaveMaster
         private void PositionForm_Load(object sender, EventArgs e)
         {
             DetermineOffsets();
+            SetNUDRanges();
             DisplayCoordinates();
             EnableStartOfLevelButtonConditionally();
             EnableEndOfLevelButtonConditionally();
             EnableSecretButtonsConditionally();
-            SetNUDRanges();
         }
 
         private void PositionForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -1623,23 +1623,10 @@ namespace TRR_SaveMaster
                         ms.Seek(ORIENTATION_OFFSET, SeekOrigin.Begin);
                         float orientation = reader.ReadSingle();
 
-                        decimal orientationDecimal = (decimal)orientation;
-                        orientationDecimal = Math.Round(orientationDecimal, 2);
-
-                        // Clamp manually
-                        if (orientationDecimal < nudOrientation.Minimum)
-                        {
-                            orientationDecimal = nudOrientation.Minimum;
-                        }
-                        else if (orientationDecimal > nudOrientation.Maximum)
-                        {
-                            orientationDecimal = nudOrientation.Maximum;
-                        }    
-
                         nudXCoordinate.Value = (decimal)xCoordinate;
                         nudYCoordinate.Value = (decimal)yCoordinate;
                         nudZCoordinate.Value = (decimal)zCoordinate;
-                        nudOrientation.Value = orientationDecimal;
+                        nudOrientation.Value = (decimal)orientation;
                     }
                 }
 
