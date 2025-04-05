@@ -208,7 +208,7 @@ namespace TRR_SaveMaster
                 {
                     float[] startOfLevelCoordinatesFloat = startOfLevelCoordinatesTR6[levelIndex];
 
-                    if (startOfLevelCoordinatesFloat.Length < 4)
+                    if (startOfLevelCoordinatesFloat.Length < 5)
                     {
                         return;
                     }
@@ -217,6 +217,7 @@ namespace TRR_SaveMaster
                     nudYCoordinate.Value = (decimal)startOfLevelCoordinatesFloat[1];
                     nudZCoordinate.Value = (decimal)startOfLevelCoordinatesFloat[2];
                     nudOrientation.Value = (decimal)startOfLevelCoordinatesFloat[3];
+                    nudRoom.Value = (Int32)startOfLevelCoordinatesFloat[4];
                 }
 
                 return;
@@ -267,7 +268,7 @@ namespace TRR_SaveMaster
                 {
                     float[] endOfLevelCoordinatesFloat = endOfLevelCoordinatesTR6[levelIndex];
 
-                    if (endOfLevelCoordinatesFloat.Length < 4)
+                    if (endOfLevelCoordinatesFloat.Length < 5)
                     {
                         return;
                     }
@@ -276,6 +277,7 @@ namespace TRR_SaveMaster
                     nudYCoordinate.Value = (decimal)endOfLevelCoordinatesFloat[1];
                     nudZCoordinate.Value = (decimal)endOfLevelCoordinatesFloat[2];
                     nudOrientation.Value = (decimal)endOfLevelCoordinatesFloat[3];
+                    nudRoom.Value = (Int32)endOfLevelCoordinatesFloat[4];
                 }
 
                 return;
@@ -835,11 +837,11 @@ namespace TRR_SaveMaster
 
         private readonly Dictionary<byte, float[]> startOfLevelCoordinatesTR6 = new Dictionary<byte, float[]>
         {
-            { 0,  new float[] { -6487.60f, -124.20f, -8200.97f, -90.75f     } },   // Parisian Back Streets
-            { 1,  new float[] { -17204.62f, 1814.50f, -8654.09f, 85.50f     } },   // Derelict Apartment Block
-            { 2,  new float[] { -242.39f, 48.22f, 491.99f, 0.00f            } },   // Margot Carvier's Apartment
-            { 3,  new float[] { -19820.33f, 8984.57f, -11851.46f, 0.00f     } },   // Industrial Roof Tops
-            //{ 4,  new float[] { 2960.18f, -3191.87f, 20464.27f, 83.25f      } },   // Parisian Ghetto (Part 1)
+            { 0,  new float[] { -6487.60f, -124.20f, -8200.97f, -90.75f, 0      } },   // Parisian Back Streets
+            { 1,  new float[] { -17204.62f, 1814.50f, -8654.09f, 85.50f, 0      } },   // Derelict Apartment Block
+            { 2,  new float[] { -242.39f, 48.22f, 491.99f, 0.00f, 0             } },   // Margot Carvier's Apartment
+            { 3,  new float[] { -19820.33f, 8984.57f, -11851.46f, -93.75f, 0    } },   // Industrial Roof Tops
+            { 4,  new float[] { 2960.18f, -3191.87f, 20464.27f, 83.25f, 1       } },   // Parisian Ghetto (Part 1)
         };
 
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR1 = new Dictionary<byte, Int32[]>
@@ -969,10 +971,9 @@ namespace TRR_SaveMaster
 
         private readonly Dictionary<byte, float[]> endOfLevelCoordinatesTR6 = new Dictionary<byte, float[]>
         {
-            { 0,  new float[] { -13477.68f, 5245.79f, -7118.42f, 174.76f    } },   // Parisian Back Streets
-            { 1,  new float[] { -19369.14f, 8968.57f, -10987.17f, 0.00f     } },   // Derelict Apartment Block
-            { 3,  new float[] { -9418.49f, 8232.75f, -23535.01f, 0.00f      } },   // Industrial Roof Tops
-            //{ 4,  new float[] { 9081.20f, 8.06f, 23726.29f, 176.14f         } },   // Parisian Ghetto (Part 1)
+            { 0,  new float[] { -13477.68f, 5245.79f, -7118.42f, 174.76f, 0 } },   // Parisian Back Streets
+            { 1,  new float[] { -19369.14f, 8968.57f, -10987.17f, 0.00f, 0  } },   // Derelict Apartment Block
+            { 3,  new float[] { -9418.49f, 8232.75f, -23535.01f, 0.00f, 0   } },   // Industrial Roof Tops
         };
 
         private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR1 = new Dictionary<byte, Int32[]>
@@ -1421,6 +1422,7 @@ namespace TRR_SaveMaster
                 Y_COORDINATE_OFFSET = playerBaseOffset + 0x8;
                 Z_COORDINATE_OFFSET = playerBaseOffset + 0x4;
                 ORIENTATION_OFFSET = playerBaseOffset + 0x18;
+                ROOM_OFFSET = 0x5;
             }
         }
 
@@ -1469,13 +1471,13 @@ namespace TRR_SaveMaster
                 nudOrientation.Maximum = 180;
                 nudOrientation.Minimum = -180;
 
-                nudRoom.Enabled = false;
-                nudRoom.Visible = false;
-                lblRoom.Visible = false;
-                picInfoRoom.Visible = false;
+                nudRoom.Maximum = Int32.MaxValue;
+                nudRoom.Minimum = 0;
 
+                lblRoom.Text = "Zone:";
                 tipPosition.SetToolTip(picInfoYCoordinate, "Represents vertical position in game. Increasing moves Lara up, decreasing moves her down.");
                 tipPosition.SetToolTip(picInfoOrientation, "Represents the direction Lara is facing in degrees. Valid range is -180 to 180.");
+                tipPosition.SetToolTip(picInfoRoom, "Represents the active zone Lara is in. Zones control which parts of the level are loaded and rendered.");
             }
         }
 
@@ -1602,15 +1604,17 @@ namespace TRR_SaveMaster
                     TR6.SetSavegameOffset(savegameOffset);
 
                     UInt16 compressedBlockSize = ReadUInt16(savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
-
-                    // Read the compressed block from the savegame file
                     byte[] compressedBlockData = ReadBytes(savegamePath, savegameOffset + COMPRESSED_BLOCK_START_OFFSET, compressedBlockSize);
+                    
                     byte[] decompressedBuffer = new byte[0];   // Clear buffer
                     decompressedBuffer = TR6.Unpack(compressedBlockData);
 
                     using (MemoryStream ms = new MemoryStream(decompressedBuffer))
                     using (BinaryReader reader = new BinaryReader(ms))
                     {
+                        ms.Seek(ROOM_OFFSET, SeekOrigin.Begin);
+                        Int32 zone = reader.ReadInt32();
+
                         ms.Seek(X_COORDINATE_OFFSET, SeekOrigin.Begin);
                         float xCoordinate = reader.ReadSingle();
 
@@ -1627,6 +1631,7 @@ namespace TRR_SaveMaster
                         nudYCoordinate.Value = (decimal)yCoordinate;
                         nudZCoordinate.Value = (decimal)zCoordinate;
                         nudOrientation.Value = (decimal)orientation;
+                        nudRoom.Value = zone;
                     }
                 }
 
@@ -1685,14 +1690,17 @@ namespace TRR_SaveMaster
                     TR6.SetSavegameOffset(savegameOffset);
 
                     UInt16 compressedBlockSize = ReadUInt16(savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
-
                     byte[] compressedBlockData = ReadBytes(savegamePath, savegameOffset + COMPRESSED_BLOCK_START_OFFSET, compressedBlockSize);
+                    
                     byte[] decompressedBuffer = new byte[0];
                     decompressedBuffer = TR6.Unpack(compressedBlockData);
 
                     using (MemoryStream ms = new MemoryStream(decompressedBuffer))
                     using (BinaryWriter writer = new BinaryWriter(ms))
                     {
+                        ms.Seek(ROOM_OFFSET, SeekOrigin.Begin);
+                        writer.Write((Int32)nudRoom.Value);
+
                         ms.Seek(X_COORDINATE_OFFSET, SeekOrigin.Begin);
                         writer.Write((float)nudXCoordinate.Value);
 
