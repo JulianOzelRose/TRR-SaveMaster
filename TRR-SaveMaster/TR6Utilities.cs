@@ -1506,8 +1506,11 @@ namespace TRR_SaveMaster
                     writer.Write((int)nudCash.Value);
 
                     // Write first health value (Float)
-                    ms.Seek(PLAYER_HEALTH_OFFSET, SeekOrigin.Begin);
-                    writer.Write((float)trbHealth.Value);
+                    if (trbHealth.Enabled)
+                    {
+                        ms.Seek(PLAYER_HEALTH_OFFSET, SeekOrigin.Begin);
+                        writer.Write((float)trbHealth.Value);
+                    }
                 }
 
                 // Construct the new inventory block
@@ -1540,8 +1543,11 @@ namespace TRR_SaveMaster
                 using (MemoryStream ms = new MemoryStream(postInventoryBlock))
                 using (BinaryWriter writer = new BinaryWriter(ms))
                 {
-                    writer.Seek(0, SeekOrigin.Begin); // First byte
-                    writer.Write((float)trbHealth.Value);
+                    if (trbHealth.Enabled)
+                    {
+                        writer.Seek(0, SeekOrigin.Begin); // First byte
+                        writer.Write((float)trbHealth.Value);
+                    }
                 }
 
                 // Update Offsets AFTER New Inventory Block is Created
