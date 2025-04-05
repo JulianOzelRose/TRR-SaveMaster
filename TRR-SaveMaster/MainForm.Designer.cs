@@ -268,6 +268,8 @@ namespace TRR_SaveMaster
             this.lblHealthTR6 = new System.Windows.Forms.Label();
             this.trbHealthTR6 = new System.Windows.Forms.TrackBar();
             this.grpItemsTR6 = new System.Windows.Forms.GroupBox();
+            this.lblGPSSaveGame = new System.Windows.Forms.Label();
+            this.nudGPSSaveGame = new System.Windows.Forms.NumericUpDown();
             this.lblPoisonAntidoteTR6 = new System.Windows.Forms.Label();
             this.nudPoisonAntidoteTR6 = new System.Windows.Forms.NumericUpDown();
             this.lblChocolateBarTR6 = new System.Windows.Forms.Label();
@@ -317,8 +319,6 @@ namespace TRR_SaveMaster
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiReportBug = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblGPSSaveGame = new System.Windows.Forms.Label();
-            this.nudGPSSaveGame = new System.Windows.Forms.NumericUpDown();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR1)).BeginInit();
@@ -416,6 +416,7 @@ namespace TRR_SaveMaster
             this.grpHealthTR6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trbHealthTR6)).BeginInit();
             this.grpItemsTR6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGPSSaveGame)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPoisonAntidoteTR6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudChocolateBarTR6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHealthPillsTR6)).BeginInit();
@@ -425,7 +426,6 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudCashTR6)).BeginInit();
             this.ssrStatusStrip.SuspendLayout();
             this.tsrToolStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudGPSSaveGame)).BeginInit();
             this.SuspendLayout();
             // 
             // tabGame
@@ -526,9 +526,9 @@ namespace TRR_SaveMaster
             this.grpHealthTR1.Controls.Add(this.lblHealthErrorTR1);
             this.grpHealthTR1.Controls.Add(this.lblHealthTR1);
             this.grpHealthTR1.Controls.Add(this.trbHealthTR1);
-            this.grpHealthTR1.Location = new System.Drawing.Point(4, 399);
+            this.grpHealthTR1.Location = new System.Drawing.Point(4, 391);
             this.grpHealthTR1.Name = "grpHealthTR1";
-            this.grpHealthTR1.Size = new System.Drawing.Size(335, 76);
+            this.grpHealthTR1.Size = new System.Drawing.Size(335, 84);
             this.grpHealthTR1.TabIndex = 29;
             this.grpHealthTR1.TabStop = false;
             this.grpHealthTR1.Text = "Health";
@@ -536,17 +536,17 @@ namespace TRR_SaveMaster
             // lblHealthErrorTR1
             // 
             this.lblHealthErrorTR1.AutoSize = true;
-            this.lblHealthErrorTR1.Location = new System.Drawing.Point(93, 51);
+            this.lblHealthErrorTR1.Location = new System.Drawing.Point(93, 55);
             this.lblHealthErrorTR1.Name = "lblHealthErrorTR1";
-            this.lblHealthErrorTR1.Size = new System.Drawing.Size(136, 13);
+            this.lblHealthErrorTR1.Size = new System.Drawing.Size(133, 13);
             this.lblHealthErrorTR1.TabIndex = 2;
-            this.lblHealthErrorTR1.Text = "Unable to find health bytes.";
+            this.lblHealthErrorTR1.Text = "Unable to find health bytes";
             this.lblHealthErrorTR1.Visible = false;
             // 
             // lblHealthTR1
             // 
             this.lblHealthTR1.AutoSize = true;
-            this.lblHealthTR1.Location = new System.Drawing.Point(292, 27);
+            this.lblHealthTR1.Location = new System.Drawing.Point(292, 33);
             this.lblHealthTR1.Name = "lblHealthTR1";
             this.lblHealthTR1.Size = new System.Drawing.Size(30, 13);
             this.lblHealthTR1.TabIndex = 1;
@@ -555,7 +555,7 @@ namespace TRR_SaveMaster
             // trbHealthTR1
             // 
             this.trbHealthTR1.BackColor = System.Drawing.Color.White;
-            this.trbHealthTR1.Location = new System.Drawing.Point(16, 23);
+            this.trbHealthTR1.Location = new System.Drawing.Point(16, 29);
             this.trbHealthTR1.Maximum = 1000;
             this.trbHealthTR1.Minimum = 1;
             this.trbHealthTR1.Name = "trbHealthTR1";
@@ -595,7 +595,7 @@ namespace TRR_SaveMaster
             this.grpItemsTR1.Controls.Add(this.nudSmallMedipacksTR1);
             this.grpItemsTR1.Location = new System.Drawing.Point(4, 44);
             this.grpItemsTR1.Name = "grpItemsTR1";
-            this.grpItemsTR1.Size = new System.Drawing.Size(335, 349);
+            this.grpItemsTR1.Size = new System.Drawing.Size(335, 341);
             this.grpItemsTR1.TabIndex = 28;
             this.grpItemsTR1.TabStop = false;
             this.grpItemsTR1.Text = "Items";
@@ -669,9 +669,9 @@ namespace TRR_SaveMaster
             this.grpWeaponsTR1.Controls.Add(this.chkMagnumsTR1);
             this.grpWeaponsTR1.Controls.Add(this.chkUzisTR1);
             this.grpWeaponsTR1.Controls.Add(this.chkPistolsTR1);
-            this.grpWeaponsTR1.Location = new System.Drawing.Point(348, 44);
+            this.grpWeaponsTR1.Location = new System.Drawing.Point(351, 44);
             this.grpWeaponsTR1.Name = "grpWeaponsTR1";
-            this.grpWeaponsTR1.Size = new System.Drawing.Size(360, 431);
+            this.grpWeaponsTR1.Size = new System.Drawing.Size(357, 431);
             this.grpWeaponsTR1.TabIndex = 27;
             this.grpWeaponsTR1.TabStop = false;
             this.grpWeaponsTR1.Text = "Weapons";
@@ -915,9 +915,9 @@ namespace TRR_SaveMaster
             this.grpWeaponsTR2.Controls.Add(this.chkUzisTR2);
             this.grpWeaponsTR2.Controls.Add(this.chkAutomaticPistolsTR2);
             this.grpWeaponsTR2.Controls.Add(this.chkPistolsTR2);
-            this.grpWeaponsTR2.Location = new System.Drawing.Point(348, 44);
+            this.grpWeaponsTR2.Location = new System.Drawing.Point(351, 44);
             this.grpWeaponsTR2.Name = "grpWeaponsTR2";
-            this.grpWeaponsTR2.Size = new System.Drawing.Size(360, 431);
+            this.grpWeaponsTR2.Size = new System.Drawing.Size(357, 431);
             this.grpWeaponsTR2.TabIndex = 28;
             this.grpWeaponsTR2.TabStop = false;
             this.grpWeaponsTR2.Text = "Weapons";
@@ -1117,9 +1117,9 @@ namespace TRR_SaveMaster
             this.grpHealthTR2.Controls.Add(this.lblHealthErrorTR2);
             this.grpHealthTR2.Controls.Add(this.lblHealthTR2);
             this.grpHealthTR2.Controls.Add(this.trbHealthTR2);
-            this.grpHealthTR2.Location = new System.Drawing.Point(4, 399);
+            this.grpHealthTR2.Location = new System.Drawing.Point(4, 391);
             this.grpHealthTR2.Name = "grpHealthTR2";
-            this.grpHealthTR2.Size = new System.Drawing.Size(335, 76);
+            this.grpHealthTR2.Size = new System.Drawing.Size(335, 84);
             this.grpHealthTR2.TabIndex = 30;
             this.grpHealthTR2.TabStop = false;
             this.grpHealthTR2.Text = "Health";
@@ -1127,17 +1127,17 @@ namespace TRR_SaveMaster
             // lblHealthErrorTR2
             // 
             this.lblHealthErrorTR2.AutoSize = true;
-            this.lblHealthErrorTR2.Location = new System.Drawing.Point(93, 51);
+            this.lblHealthErrorTR2.Location = new System.Drawing.Point(93, 55);
             this.lblHealthErrorTR2.Name = "lblHealthErrorTR2";
-            this.lblHealthErrorTR2.Size = new System.Drawing.Size(136, 13);
+            this.lblHealthErrorTR2.Size = new System.Drawing.Size(133, 13);
             this.lblHealthErrorTR2.TabIndex = 20;
-            this.lblHealthErrorTR2.Text = "Unable to find health bytes.";
+            this.lblHealthErrorTR2.Text = "Unable to find health bytes";
             this.lblHealthErrorTR2.Visible = false;
             // 
             // lblHealthTR2
             // 
             this.lblHealthTR2.AutoSize = true;
-            this.lblHealthTR2.Location = new System.Drawing.Point(292, 27);
+            this.lblHealthTR2.Location = new System.Drawing.Point(292, 33);
             this.lblHealthTR2.Name = "lblHealthTR2";
             this.lblHealthTR2.Size = new System.Drawing.Size(30, 13);
             this.lblHealthTR2.TabIndex = 1;
@@ -1146,7 +1146,7 @@ namespace TRR_SaveMaster
             // trbHealthTR2
             // 
             this.trbHealthTR2.BackColor = System.Drawing.Color.White;
-            this.trbHealthTR2.Location = new System.Drawing.Point(16, 23);
+            this.trbHealthTR2.Location = new System.Drawing.Point(16, 29);
             this.trbHealthTR2.Maximum = 1000;
             this.trbHealthTR2.Minimum = 1;
             this.trbHealthTR2.Name = "trbHealthTR2";
@@ -1166,7 +1166,7 @@ namespace TRR_SaveMaster
             this.grpItemsTR2.Controls.Add(this.nudSmallMedipacksTR2);
             this.grpItemsTR2.Location = new System.Drawing.Point(4, 44);
             this.grpItemsTR2.Name = "grpItemsTR2";
-            this.grpItemsTR2.Size = new System.Drawing.Size(335, 349);
+            this.grpItemsTR2.Size = new System.Drawing.Size(335, 341);
             this.grpItemsTR2.TabIndex = 29;
             this.grpItemsTR2.TabStop = false;
             this.grpItemsTR2.Text = "Items";
@@ -1366,9 +1366,9 @@ namespace TRR_SaveMaster
             this.grpWeaponsTR3.Controls.Add(this.chkMP5TR3);
             this.grpWeaponsTR3.Controls.Add(this.chkDeagleTR3);
             this.grpWeaponsTR3.Controls.Add(this.chkPistolsTR3);
-            this.grpWeaponsTR3.Location = new System.Drawing.Point(348, 44);
+            this.grpWeaponsTR3.Location = new System.Drawing.Point(351, 44);
             this.grpWeaponsTR3.Name = "grpWeaponsTR3";
-            this.grpWeaponsTR3.Size = new System.Drawing.Size(360, 431);
+            this.grpWeaponsTR3.Size = new System.Drawing.Size(357, 431);
             this.grpWeaponsTR3.TabIndex = 20;
             this.grpWeaponsTR3.TabStop = false;
             this.grpWeaponsTR3.Text = "Weapons";
@@ -1593,9 +1593,9 @@ namespace TRR_SaveMaster
             this.grpHealthTR3.Controls.Add(this.lblHealthErrorTR3);
             this.grpHealthTR3.Controls.Add(this.lblHealthTR3);
             this.grpHealthTR3.Controls.Add(this.trbHealthTR3);
-            this.grpHealthTR3.Location = new System.Drawing.Point(4, 399);
+            this.grpHealthTR3.Location = new System.Drawing.Point(4, 391);
             this.grpHealthTR3.Name = "grpHealthTR3";
-            this.grpHealthTR3.Size = new System.Drawing.Size(335, 76);
+            this.grpHealthTR3.Size = new System.Drawing.Size(335, 84);
             this.grpHealthTR3.TabIndex = 22;
             this.grpHealthTR3.TabStop = false;
             this.grpHealthTR3.Text = "Health";
@@ -1603,17 +1603,17 @@ namespace TRR_SaveMaster
             // lblHealthErrorTR3
             // 
             this.lblHealthErrorTR3.AutoSize = true;
-            this.lblHealthErrorTR3.Location = new System.Drawing.Point(93, 51);
+            this.lblHealthErrorTR3.Location = new System.Drawing.Point(93, 55);
             this.lblHealthErrorTR3.Name = "lblHealthErrorTR3";
-            this.lblHealthErrorTR3.Size = new System.Drawing.Size(136, 13);
+            this.lblHealthErrorTR3.Size = new System.Drawing.Size(133, 13);
             this.lblHealthErrorTR3.TabIndex = 20;
-            this.lblHealthErrorTR3.Text = "Unable to find health bytes.";
+            this.lblHealthErrorTR3.Text = "Unable to find health bytes";
             this.lblHealthErrorTR3.Visible = false;
             // 
             // lblHealthTR3
             // 
             this.lblHealthTR3.AutoSize = true;
-            this.lblHealthTR3.Location = new System.Drawing.Point(292, 27);
+            this.lblHealthTR3.Location = new System.Drawing.Point(292, 33);
             this.lblHealthTR3.Name = "lblHealthTR3";
             this.lblHealthTR3.Size = new System.Drawing.Size(30, 13);
             this.lblHealthTR3.TabIndex = 1;
@@ -1622,7 +1622,7 @@ namespace TRR_SaveMaster
             // trbHealthTR3
             // 
             this.trbHealthTR3.BackColor = System.Drawing.Color.White;
-            this.trbHealthTR3.Location = new System.Drawing.Point(16, 23);
+            this.trbHealthTR3.Location = new System.Drawing.Point(16, 29);
             this.trbHealthTR3.Maximum = 1000;
             this.trbHealthTR3.Minimum = 1;
             this.trbHealthTR3.Name = "trbHealthTR3";
@@ -1644,7 +1644,7 @@ namespace TRR_SaveMaster
             this.grpItemsTR3.Controls.Add(this.nudSmallMedipacksTR3);
             this.grpItemsTR3.Location = new System.Drawing.Point(4, 44);
             this.grpItemsTR3.Name = "grpItemsTR3";
-            this.grpItemsTR3.Size = new System.Drawing.Size(335, 349);
+            this.grpItemsTR3.Size = new System.Drawing.Size(335, 341);
             this.grpItemsTR3.TabIndex = 21;
             this.grpItemsTR3.TabStop = false;
             this.grpItemsTR3.Text = "Items";
@@ -1841,9 +1841,9 @@ namespace TRR_SaveMaster
             this.grpHealthTR4.Controls.Add(this.lblHealthErrorTR4);
             this.grpHealthTR4.Controls.Add(this.lblHealthTR4);
             this.grpHealthTR4.Controls.Add(this.trbHealthTR4);
-            this.grpHealthTR4.Location = new System.Drawing.Point(4, 399);
+            this.grpHealthTR4.Location = new System.Drawing.Point(4, 391);
             this.grpHealthTR4.Name = "grpHealthTR4";
-            this.grpHealthTR4.Size = new System.Drawing.Size(335, 76);
+            this.grpHealthTR4.Size = new System.Drawing.Size(335, 84);
             this.grpHealthTR4.TabIndex = 37;
             this.grpHealthTR4.TabStop = false;
             this.grpHealthTR4.Text = "Health";
@@ -1851,17 +1851,17 @@ namespace TRR_SaveMaster
             // lblHealthErrorTR4
             // 
             this.lblHealthErrorTR4.AutoSize = true;
-            this.lblHealthErrorTR4.Location = new System.Drawing.Point(93, 51);
+            this.lblHealthErrorTR4.Location = new System.Drawing.Point(93, 55);
             this.lblHealthErrorTR4.Name = "lblHealthErrorTR4";
-            this.lblHealthErrorTR4.Size = new System.Drawing.Size(136, 13);
+            this.lblHealthErrorTR4.Size = new System.Drawing.Size(133, 13);
             this.lblHealthErrorTR4.TabIndex = 2;
-            this.lblHealthErrorTR4.Text = "Unable to find health bytes.";
+            this.lblHealthErrorTR4.Text = "Unable to find health bytes";
             this.lblHealthErrorTR4.Visible = false;
             // 
             // lblHealthTR4
             // 
             this.lblHealthTR4.AutoSize = true;
-            this.lblHealthTR4.Location = new System.Drawing.Point(292, 27);
+            this.lblHealthTR4.Location = new System.Drawing.Point(292, 33);
             this.lblHealthTR4.Name = "lblHealthTR4";
             this.lblHealthTR4.Size = new System.Drawing.Size(30, 13);
             this.lblHealthTR4.TabIndex = 1;
@@ -1870,7 +1870,7 @@ namespace TRR_SaveMaster
             // trbHealthTR4
             // 
             this.trbHealthTR4.BackColor = System.Drawing.Color.White;
-            this.trbHealthTR4.Location = new System.Drawing.Point(16, 23);
+            this.trbHealthTR4.Location = new System.Drawing.Point(16, 29);
             this.trbHealthTR4.Maximum = 1000;
             this.trbHealthTR4.Minimum = 1;
             this.trbHealthTR4.Name = "trbHealthTR4";
@@ -1903,7 +1903,7 @@ namespace TRR_SaveMaster
             this.grpItemsTR4.Controls.Add(this.nudSmallMedipacksTR4);
             this.grpItemsTR4.Location = new System.Drawing.Point(4, 44);
             this.grpItemsTR4.Name = "grpItemsTR4";
-            this.grpItemsTR4.Size = new System.Drawing.Size(335, 349);
+            this.grpItemsTR4.Size = new System.Drawing.Size(335, 341);
             this.grpItemsTR4.TabIndex = 36;
             this.grpItemsTR4.TabStop = false;
             this.grpItemsTR4.Text = "Items";
@@ -2023,9 +2023,9 @@ namespace TRR_SaveMaster
             this.grpWeaponsTR4.Controls.Add(this.chkCrossbowTR4);
             this.grpWeaponsTR4.Controls.Add(this.lblPistolAmmoTR4);
             this.grpWeaponsTR4.Controls.Add(this.chkPistolsTR4);
-            this.grpWeaponsTR4.Location = new System.Drawing.Point(348, 44);
+            this.grpWeaponsTR4.Location = new System.Drawing.Point(351, 44);
             this.grpWeaponsTR4.Name = "grpWeaponsTR4";
-            this.grpWeaponsTR4.Size = new System.Drawing.Size(360, 431);
+            this.grpWeaponsTR4.Size = new System.Drawing.Size(357, 431);
             this.grpWeaponsTR4.TabIndex = 35;
             this.grpWeaponsTR4.TabStop = false;
             this.grpWeaponsTR4.Text = "Weapons";
@@ -2385,9 +2385,9 @@ namespace TRR_SaveMaster
             this.grpHealthTR5.Controls.Add(this.lblHealthErrorTR5);
             this.grpHealthTR5.Controls.Add(this.lblHealthTR5);
             this.grpHealthTR5.Controls.Add(this.trbHealthTR5);
-            this.grpHealthTR5.Location = new System.Drawing.Point(4, 399);
+            this.grpHealthTR5.Location = new System.Drawing.Point(4, 391);
             this.grpHealthTR5.Name = "grpHealthTR5";
-            this.grpHealthTR5.Size = new System.Drawing.Size(335, 76);
+            this.grpHealthTR5.Size = new System.Drawing.Size(335, 84);
             this.grpHealthTR5.TabIndex = 48;
             this.grpHealthTR5.TabStop = false;
             this.grpHealthTR5.Text = "Health";
@@ -2395,17 +2395,17 @@ namespace TRR_SaveMaster
             // lblHealthErrorTR5
             // 
             this.lblHealthErrorTR5.AutoSize = true;
-            this.lblHealthErrorTR5.Location = new System.Drawing.Point(93, 51);
+            this.lblHealthErrorTR5.Location = new System.Drawing.Point(93, 55);
             this.lblHealthErrorTR5.Name = "lblHealthErrorTR5";
-            this.lblHealthErrorTR5.Size = new System.Drawing.Size(136, 13);
+            this.lblHealthErrorTR5.Size = new System.Drawing.Size(133, 13);
             this.lblHealthErrorTR5.TabIndex = 2;
-            this.lblHealthErrorTR5.Text = "Unable to find health bytes.";
+            this.lblHealthErrorTR5.Text = "Unable to find health bytes";
             this.lblHealthErrorTR5.Visible = false;
             // 
             // lblHealthTR5
             // 
             this.lblHealthTR5.AutoSize = true;
-            this.lblHealthTR5.Location = new System.Drawing.Point(292, 27);
+            this.lblHealthTR5.Location = new System.Drawing.Point(292, 33);
             this.lblHealthTR5.Name = "lblHealthTR5";
             this.lblHealthTR5.Size = new System.Drawing.Size(30, 13);
             this.lblHealthTR5.TabIndex = 1;
@@ -2414,7 +2414,7 @@ namespace TRR_SaveMaster
             // trbHealthTR5
             // 
             this.trbHealthTR5.BackColor = System.Drawing.Color.White;
-            this.trbHealthTR5.Location = new System.Drawing.Point(16, 23);
+            this.trbHealthTR5.Location = new System.Drawing.Point(16, 29);
             this.trbHealthTR5.Maximum = 1000;
             this.trbHealthTR5.Minimum = 1;
             this.trbHealthTR5.Name = "trbHealthTR5";
@@ -2447,7 +2447,7 @@ namespace TRR_SaveMaster
             this.grpItemsTR5.Controls.Add(this.nudSmallMedipacksTR5);
             this.grpItemsTR5.Location = new System.Drawing.Point(4, 44);
             this.grpItemsTR5.Name = "grpItemsTR5";
-            this.grpItemsTR5.Size = new System.Drawing.Size(335, 349);
+            this.grpItemsTR5.Size = new System.Drawing.Size(335, 341);
             this.grpItemsTR5.TabIndex = 47;
             this.grpItemsTR5.TabStop = false;
             this.grpItemsTR5.Text = "Items";
@@ -2564,9 +2564,9 @@ namespace TRR_SaveMaster
             this.grpWeaponsTR5.Controls.Add(this.chkGrapplingGunTR5);
             this.grpWeaponsTR5.Controls.Add(this.lblPistolAmmoTR5);
             this.grpWeaponsTR5.Controls.Add(this.chkPistolsTR5);
-            this.grpWeaponsTR5.Location = new System.Drawing.Point(348, 44);
+            this.grpWeaponsTR5.Location = new System.Drawing.Point(351, 44);
             this.grpWeaponsTR5.Name = "grpWeaponsTR5";
-            this.grpWeaponsTR5.Size = new System.Drawing.Size(360, 431);
+            this.grpWeaponsTR5.Size = new System.Drawing.Size(357, 431);
             this.grpWeaponsTR5.TabIndex = 46;
             this.grpWeaponsTR5.TabStop = false;
             this.grpWeaponsTR5.Text = "Weapons";
@@ -2922,9 +2922,9 @@ namespace TRR_SaveMaster
             this.grpWeaponsTR6.Controls.Add(this.chkK2ImpactorTR6);
             this.grpWeaponsTR6.Controls.Add(this.chkScorpionXTR6);
             this.grpWeaponsTR6.Controls.Add(this.chkMV9TR6);
-            this.grpWeaponsTR6.Location = new System.Drawing.Point(348, 44);
+            this.grpWeaponsTR6.Location = new System.Drawing.Point(351, 44);
             this.grpWeaponsTR6.Name = "grpWeaponsTR6";
-            this.grpWeaponsTR6.Size = new System.Drawing.Size(360, 431);
+            this.grpWeaponsTR6.Size = new System.Drawing.Size(357, 431);
             this.grpWeaponsTR6.TabIndex = 39;
             this.grpWeaponsTR6.TabStop = false;
             this.grpWeaponsTR6.Text = "Weapons";
@@ -3289,9 +3289,9 @@ namespace TRR_SaveMaster
             this.grpHealthTR6.Controls.Add(this.lblHealthErrorTR6);
             this.grpHealthTR6.Controls.Add(this.lblHealthTR6);
             this.grpHealthTR6.Controls.Add(this.trbHealthTR6);
-            this.grpHealthTR6.Location = new System.Drawing.Point(4, 399);
+            this.grpHealthTR6.Location = new System.Drawing.Point(4, 391);
             this.grpHealthTR6.Name = "grpHealthTR6";
-            this.grpHealthTR6.Size = new System.Drawing.Size(335, 76);
+            this.grpHealthTR6.Size = new System.Drawing.Size(335, 84);
             this.grpHealthTR6.TabIndex = 41;
             this.grpHealthTR6.TabStop = false;
             this.grpHealthTR6.Text = "Health";
@@ -3299,17 +3299,17 @@ namespace TRR_SaveMaster
             // lblHealthErrorTR6
             // 
             this.lblHealthErrorTR6.AutoSize = true;
-            this.lblHealthErrorTR6.Location = new System.Drawing.Point(93, 51);
+            this.lblHealthErrorTR6.Location = new System.Drawing.Point(93, 55);
             this.lblHealthErrorTR6.Name = "lblHealthErrorTR6";
-            this.lblHealthErrorTR6.Size = new System.Drawing.Size(136, 13);
+            this.lblHealthErrorTR6.Size = new System.Drawing.Size(133, 13);
             this.lblHealthErrorTR6.TabIndex = 20;
-            this.lblHealthErrorTR6.Text = "Unable to find health bytes.";
+            this.lblHealthErrorTR6.Text = "Unable to find health bytes";
             this.lblHealthErrorTR6.Visible = false;
             // 
             // lblHealthTR6
             // 
             this.lblHealthTR6.AutoSize = true;
-            this.lblHealthTR6.Location = new System.Drawing.Point(292, 27);
+            this.lblHealthTR6.Location = new System.Drawing.Point(292, 33);
             this.lblHealthTR6.Name = "lblHealthTR6";
             this.lblHealthTR6.Size = new System.Drawing.Size(30, 13);
             this.lblHealthTR6.TabIndex = 1;
@@ -3318,7 +3318,7 @@ namespace TRR_SaveMaster
             // trbHealthTR6
             // 
             this.trbHealthTR6.BackColor = System.Drawing.Color.White;
-            this.trbHealthTR6.Location = new System.Drawing.Point(16, 23);
+            this.trbHealthTR6.Location = new System.Drawing.Point(16, 29);
             this.trbHealthTR6.Maximum = 100;
             this.trbHealthTR6.Minimum = 1;
             this.trbHealthTR6.Name = "trbHealthTR6";
@@ -3348,10 +3348,33 @@ namespace TRR_SaveMaster
             this.grpItemsTR6.Controls.Add(this.nudCashTR6);
             this.grpItemsTR6.Location = new System.Drawing.Point(4, 44);
             this.grpItemsTR6.Name = "grpItemsTR6";
-            this.grpItemsTR6.Size = new System.Drawing.Size(335, 349);
+            this.grpItemsTR6.Size = new System.Drawing.Size(335, 341);
             this.grpItemsTR6.TabIndex = 40;
             this.grpItemsTR6.TabStop = false;
             this.grpItemsTR6.Text = "Items";
+            // 
+            // lblGPSSaveGame
+            // 
+            this.lblGPSSaveGame.AutoSize = true;
+            this.lblGPSSaveGame.Location = new System.Drawing.Point(18, 213);
+            this.lblGPSSaveGame.Name = "lblGPSSaveGame";
+            this.lblGPSSaveGame.Size = new System.Drawing.Size(91, 13);
+            this.lblGPSSaveGame.TabIndex = 29;
+            this.lblGPSSaveGame.Text = "GPS Save Game:";
+            // 
+            // nudGPSSaveGame
+            // 
+            this.nudGPSSaveGame.Location = new System.Drawing.Point(265, 211);
+            this.nudGPSSaveGame.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.nudGPSSaveGame.Name = "nudGPSSaveGame";
+            this.nudGPSSaveGame.Size = new System.Drawing.Size(53, 20);
+            this.nudGPSSaveGame.TabIndex = 28;
+            this.nudGPSSaveGame.ValueChanged += new System.EventHandler(this.nudGPSSaveGame_ValueChanged);
+            this.nudGPSSaveGame.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudGPSSaveGame_KeyPress);
             // 
             // lblPoisonAntidoteTR6
             // 
@@ -3826,29 +3849,6 @@ namespace TRR_SaveMaster
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
             // 
-            // lblGPSSaveGame
-            // 
-            this.lblGPSSaveGame.AutoSize = true;
-            this.lblGPSSaveGame.Location = new System.Drawing.Point(18, 213);
-            this.lblGPSSaveGame.Name = "lblGPSSaveGame";
-            this.lblGPSSaveGame.Size = new System.Drawing.Size(91, 13);
-            this.lblGPSSaveGame.TabIndex = 29;
-            this.lblGPSSaveGame.Text = "GPS Save Game:";
-            // 
-            // nudGPSSaveGame
-            // 
-            this.nudGPSSaveGame.Location = new System.Drawing.Point(265, 211);
-            this.nudGPSSaveGame.Maximum = new decimal(new int[] {
-            999999,
-            0,
-            0,
-            0});
-            this.nudGPSSaveGame.Name = "nudGPSSaveGame";
-            this.nudGPSSaveGame.Size = new System.Drawing.Size(53, 20);
-            this.nudGPSSaveGame.TabIndex = 28;
-            this.nudGPSSaveGame.ValueChanged += new System.EventHandler(this.nudGPSSaveGame_ValueChanged);
-            this.nudGPSSaveGame.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudGPSSaveGame_KeyPress);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3988,6 +3988,7 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.trbHealthTR6)).EndInit();
             this.grpItemsTR6.ResumeLayout(false);
             this.grpItemsTR6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGPSSaveGame)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPoisonAntidoteTR6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudChocolateBarTR6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHealthPillsTR6)).EndInit();
@@ -3999,7 +4000,6 @@ namespace TRR_SaveMaster
             this.ssrStatusStrip.PerformLayout();
             this.tsrToolStrip.ResumeLayout(false);
             this.tsrToolStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudGPSSaveGame)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
