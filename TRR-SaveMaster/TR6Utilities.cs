@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-//using static TRR_SaveMaster.TR6Utilities;
 
 namespace TRR_SaveMaster
 {
@@ -197,8 +195,6 @@ namespace TRR_SaveMaster
                     invLara.Clear();
                     invKurtis.Clear();
 
-                    Console.WriteLine();
-
                     Int32 itemType;
                     ushort itemClassID;
                     Int32 itemCount;
@@ -242,7 +238,7 @@ namespace TRR_SaveMaster
                                 itemQuantity = reader.ReadInt32();
                                 sgBufferCursor += 0x4;
 
-                                Debug.WriteLine($"Item: ClassID=0x{itemClassID:X}, Type={itemType}, Quantity={itemQuantity}, Quantity_Offset=0x{(sgBufferCursor - 4):X}");
+                                //Debug.WriteLine($"Item: ClassID=0x{itemClassID:X}, Type={itemType}, Quantity={itemQuantity}, Quantity_Offset=0x{(sgBufferCursor - 4):X}");
 
                                 InventoryItem inventoryItem = new InventoryItem(itemClassID, itemType, itemQuantity);
 
@@ -271,24 +267,20 @@ namespace TRR_SaveMaster
                     //  Post-inventory data
                     //======================================================//
 
-                    // Starting at the beginning of the block
-                    sgBufferCursor += 0x3A;   // pbVar7 = base + 0x3A
+                    sgBufferCursor += 0x3A;
 
-                    // Loop 3 times: each iteration should add exactly 1 byte
                     int count = 3;
                     while (count-- > 0)
                     {
                         sgBufferCursor += 0x1;
                     }
 
-                    // Loop 8 times: each iteration adds 4 bytes
                     count = 8;
                     while (count-- > 0)
                     {
                         sgBufferCursor += 0x4;
                     }
 
-                    // Finally, add 5 bytes to match the final pointer assignment:
                     sgBufferCursor += 0x5;
 
                     POST_INVENTORY_END_OFFSET = sgBufferCursor;
@@ -298,14 +290,9 @@ namespace TRR_SaveMaster
 
         public void DetermineOffsets(Savegame savegame)
         {
-            //Debug.WriteLine($"Savegame offset: 0x{savegame.Offset:X}");
-
-            // Read the compressed block size (UInt16)
             UInt16 compressedBlockSize = ReadUInt16(savegame.Offset + COMPRESSED_BLOCK_SIZE_OFFSET);
-            //Debug.WriteLine($"Compressed block size: 0x{compressedBlockSize:X}");
-
-            // Read the compressed block from the savegame file
             byte[] compressedBlockData = ReadBytes(savegamePath, savegame.Offset + COMPRESSED_BLOCK_START_OFFSET, compressedBlockSize);
+
             decompressedBuffer = new byte[0];   // Clear buffer
             decompressedBuffer = Unpack(compressedBlockData);
 
@@ -358,8 +345,6 @@ namespace TRR_SaveMaster
 
         private void MapPickupLoad(BinaryReader reader)
         {
-            //Debug.WriteLine($"MapPickupLoad Start: 0x{sgBufferCursor:X}");
-
             if (sgCurrentLevel == 4 || sgCurrentLevel == 5 || sgCurrentLevel == 6 ||
                 sgCurrentLevel == 7 || sgCurrentLevel == 8 || sgCurrentLevel == 9 ||
                 sgCurrentLevel == 10 || sgCurrentLevel == 0xB || sgCurrentLevel == 0xD ||
@@ -384,38 +369,25 @@ namespace TRR_SaveMaster
             }
 
             INVENTORY_START_OFFSET = sgBufferCursor;
-
-            //Debug.WriteLine($"MapPickupLoad End: 0x{sgBufferCursor:X}");
         }
 
         private void AudioLoad(BinaryReader reader)
         {
-            //Debug.WriteLine($"AudioLoad Start: 0x{sgBufferCursor:X}");
-
-            // Revised
             reader.BaseStream.Seek(sgBufferCursor + 0x14, SeekOrigin.Begin);
-            //Debug.WriteLine($"AudioLoop counter offset = 0x{(sgBufferCursor + 0x14):X}");
             int loopCount = reader.ReadUInt16();
 
-            // Advance pointer by 6 bytes.
             sgBufferCursor += 0x6;
 
-            // Loop: for each of loopCount iterations, advance by 1.
             if ((uint)(loopCount - 1) < 0x2800)
             {
-                //Debug.WriteLine($"AudioLoad: Looping 0x{loopCount:X} times");
                 sgBufferCursor += loopCount;
             }
 
-            sgBufferCursor += 0x12;  // Manual correction
-
-            //Debug.WriteLine($"AudioLoad End = 0x{sgBufferCursor:X}");
+            sgBufferCursor += 0x12;
         }
 
         private void FxLoad(BinaryReader reader)
         {
-            //Debug.WriteLine($"FxLoad Start: 0x{sgBufferCursor:X}");
-
             reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
             byte condByte = reader.ReadByte();
             sgBufferCursor += 0x1;
@@ -426,27 +398,18 @@ namespace TRR_SaveMaster
             }
 
             sgBufferCursor += 0x8;
-
-            //Debug.WriteLine($"FxLoad End: 0x{sgBufferCursor:X}");
         }
 
         private void InvLoad(BinaryReader reader)
         {
-            //Debug.WriteLine($"InvLoad() was called. Current offset: 0x{sgBufferCursor:X}");
-
-            // Read gGameCash (4 bytes)
             sgBufferCursor += 0x4;
 
             sgBufferCursor += 0x12B;
-
-            //Debug.WriteLine($"End of InvLoad(). Current offset: 0x{sgBufferCursor:X}");
         }
 
         private void MapLoad(BinaryReader reader)
         {
             MapLoadGlobals(reader);
-
-            //Debug.WriteLine($"MapLoad offset after loading globals: 0x{sgBufferCursor:X}");
 
             // Load Actors
             for (int i = 0; i < actors.Count; i++)
@@ -454,18 +417,11 @@ namespace TRR_SaveMaster
                 MapActorLoad(reader, actors[i], i);
             }
 
-            //Console.WriteLine();
-            //Debug.WriteLine($"Map Offset AFTER loading Actors: 0x{sgBufferCursor:X}");
-
-
-            //Debug.WriteLine($"{objects.Count} objects for current map.");
+            // Load Objects
             for (int i = 0; i < objects.Count; i++)
             {
                 MapObjLoad(reader, objects[i]);
             }
-
-            //Debug.WriteLine($"Map Offset AFTER loading Objects: 0x{sgBufferCursor.ToString("X")}");
-
 
             // Load Triggers
             for (int i = 0; i < NUM_TRIGGERS; i++)
@@ -473,24 +429,18 @@ namespace TRR_SaveMaster
                 MapTrigLoad(reader);
             }
 
-            //Debug.WriteLine($"Map Offset AFTER loading Triggers: 0x{sgBufferCursor:X}");
-
-
             // Load Emitters
             for (int i = 0; i < NUM_EMITTERS; i++)
             {
                 MapEmitterLoad(reader);
             }
 
-            //Debug.WriteLine($"Map Offset AFTER loading Emitters: 0x{sgBufferCursor:X}");
-
-            // Load Water
+            // Condition for loading Water
             reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
             Int16 puVar11 = reader.ReadInt16();
             sgBufferCursor += 0x2;
 
-            //Debug.WriteLine($"Water load condition var = 0x{puVar11:X}");
-
+            // Load Water
             if (puVar11 != 0)
             {
                 int index = 0;
@@ -507,16 +457,11 @@ namespace TRR_SaveMaster
                 } while (index < puVar11);
             }
 
-            //Debug.WriteLine($"Map Offset AFTER loading Water: 0x{sgBufferCursor.ToString("X")}");
-
-
             // Load Audio Locators
             for (int i = 0; i < NUM_AUDIO_LOCATORS; i++)
             {
                 MapLoadBaseNode();
             }
-
-            //Debug.WriteLine($"Map Offset AFTER loading Audio Locators: 0x{sgBufferCursor.ToString("X")}");
 
             // Flip rooms
             for (int i = 0; i < rooms.Count; i++)
@@ -527,7 +472,6 @@ namespace TRR_SaveMaster
                 }
             }
 
-            //Debug.WriteLine($"Map Block End = 0x{sgBufferCursor:X}");
             return;
         }
 
@@ -538,18 +482,12 @@ namespace TRR_SaveMaster
 
         private void CamLoad()
         {
-            //Debug.WriteLine($"CamLoad start: 0x{sgBufferCursor:X}");
-
             sgBufferCursor += 0x44;
         }
 
         private void BossLoad(BinaryReader reader)
         {
-            //Debug.WriteLine($"BossLoad start: 0x{sgBufferCursor:X}");
-
             sgBufferCursor += 0x23C0;
-
-            //Debug.WriteLine($"BossLoad end: 0x{sgBufferCursor:X}");
         }
 
         private bool ShouldLoadBoss(int actorIndex)
@@ -576,7 +514,6 @@ namespace TRR_SaveMaster
             // Early exit check using the Active Flag
             if ((actor.ActiveFlag & 0x400000) != 0)
             {
-                //Debug.WriteLine($"Active Flag has the 0x400000 bit set (0x{actor.ActiveFlag:X}). Returning early.");
                 return;
             }
 
@@ -585,13 +522,10 @@ namespace TRR_SaveMaster
             if (isPlayer)
             {
                 PLAYER_BASE_OFFSET = sgBufferCursor;
-                //Debug.WriteLine($"Player base: 0x{PLAYER_BASE_OFFSET:X}");
             }
 
             MapLoadBaseNode();
 
-
-            // Advance 4 bytes for actor flags (pActor+0x1FC to +0x1FF)
             sgBufferCursor += 0x4;
 
             if (isPlayer)
@@ -606,21 +540,15 @@ namespace TRR_SaveMaster
             {
                 if (!ShouldLoadBoss(actorIndex))
                 {
-                    //Debug.WriteLine($"Offset before running actorLoad: 0x{sgBufferCursor:X}");
-
-                    // Read 12 bytes, extracting the first 2 as a conditional value
                     reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-                    int offset35CValue = reader.ReadInt16(); // Read first 2 bytes
-                    //Debug.WriteLine($"PathLoad condition value: 0x{offset35CValue:X} on offset: 0x{sgBufferCursor:X}");
+                    int offset35CValue = reader.ReadInt16();
                     sgBufferCursor += 0x2;
 
-
-                    sgBufferCursor += 0xA; // Skip remaining 10 bytes (total 12 bytes consumed)
+                    sgBufferCursor += 0xA;
 
                     // Conditional PathLoad execution
                     if (((ushort)(offset35CValue - 300) < 200) || (sgCurrentLevel == 0x13))
                     {
-                        //Debug.WriteLine("Executing PathLoad...");
                         PathLoad(reader);
                     }
 
@@ -629,38 +557,30 @@ namespace TRR_SaveMaster
                     BoneControlLoad(reader);
                     BoneControlLoad(reader);
                     BoneControlLoad(reader);
-                    //Debug.WriteLine($"Offset after loading BoneControlLoad four times: 0x{sgBufferCursor:X}");
 
                     // Read NPC health
                     reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
                     float health = reader.ReadSingle();
                     sgBufferCursor += 0x4;
 
-                    //Debug.WriteLine($"NPC HEALTH: {health} at Offset 0x{(sgBufferCursor - 4):X}");
-
-
                     sgBufferCursor += 0x1; // <--- Needed for the APB condition to load properly
                 }
                 else
                 {
-                    //Debug.WriteLine($"LOADING BOSS (ID: 0x{actor.ID:X})");
                     BossLoad(reader);
                 }
             }
 
-            // Advance 4 bytes (matching assembly’s progression)
             sgBufferCursor += 0x4;
 
             // Read one byte for APB_Load condition
-            //Debug.WriteLine($"Offset for reading APB_Load condition: 0x{sgBufferCursor:X}");
             reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-            byte pcVar13 = reader.ReadByte();
+            byte condByte = reader.ReadByte();
             sgBufferCursor += 0x1;
 
-            // If pcVar13 is nonzero, call APB_Load
-            if (pcVar13 != 0)
+            // If condition byte is nonzero, call APB_Load
+            if (condByte != 0)
             {
-                //Debug.WriteLine($"APB_Load being called, offset: 0x{sgBufferCursor:X}");
                 APB_Load(reader, actor);
 
                 if ((actor.ActiveFlag & 0x8000000) != 0)
@@ -672,28 +592,20 @@ namespace TRR_SaveMaster
 
         private void MapObjLoad(BinaryReader reader, EntityMock obj)
         {
-            // Start by calling MapLoadBaseNode, which advances the pointer by 328 bytes.
             MapLoadBaseNode();
-            //Debug.WriteLine($"Offset after MapLoadBaseNode = 0x{currentOffset:X}");
 
-            long groupStart = sgBufferCursor;  // Store the base position before struct assignments.
+            long groupStart = sgBufferCursor;
 
-            // Read 10 bytes (skipping individual struct assignments for now).
             sgBufferCursor += 0xA;
 
-            // Read condition byte at sgBufferCursor[10] BEFORE advancing sgBufferCursor.
             reader.BaseStream.Seek(groupStart + 0xA, SeekOrigin.Begin);  // Adjust to correct offset.
             byte condByte = reader.ReadByte();
-
-            // Advance the cursor AFTER reading condByte (simulating sgBufferCursor += 1).
             sgBufferCursor += 0x1;
 
             // If the condition byte is not zero, then execute the APB_Load branch.
             if (condByte != 0)
             {
-                //Debug.WriteLine("APB_Load for Object");
                 int apbLoopCounter = obj.APB_Loop_Counter;
-
                 APB_Load(reader, null, apbLoopCounter);
             }
         }
@@ -793,7 +705,7 @@ namespace TRR_SaveMaster
                 }
                 else
                 {
-                    if (apbLoopCounter > 0) // TODO: Need to evaluate how to handle this case more gracefully...
+                    if (apbLoopCounter > 0)
                     {
                         reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
                         reader.ReadBytes((apbLoopCounter * 0x20) / 0x8);
@@ -834,13 +746,11 @@ namespace TRR_SaveMaster
 
         private void PathLoad(BinaryReader reader)
         {
-            // Read first 3 blocks (48 bytes total)
             for (int i = 0; i < 3; i++)
             {
                 sgBufferCursor += 0x10;
             }
 
-            // Read three 16-bit values
             sgBufferCursor += 0x2;
 
             sgBufferCursor += 0x2;
@@ -862,34 +772,27 @@ namespace TRR_SaveMaster
             byte[] eightByteBlock = reader.ReadBytes(8);
             sgBufferCursor += 0x8;
 
-            short offset44Value = BitConverter.ToInt16(eightByteBlock, 0x4); // from puVar3[0x44]
+            short offset44Value = BitConverter.ToInt16(eightByteBlock, 0x4);
             int varLength = (offset44Value * 0x2) + 0x4;
 
             reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
             byte[] variableData = reader.ReadBytes(varLength);
             sgBufferCursor += varLength;
-
-            Console.WriteLine($"PathLoad End = 0x{sgBufferCursor:X}");
         }
 
 
         private void PlayLoad(BinaryReader reader)
         {
-            //Debug.WriteLine($"PlayLoad Start = 0x{sgBufferCursor:X}");
-
             sgBufferCursor += 0x8C;
 
-            sgBufferCursor += (0x17E - 0x8C);  // (382 - 140) = 242 bytes
+            sgBufferCursor += (0x17E - 0x8C);
 
-            // Manual correction
             sgBufferCursor += 0x10D;
 
             for (int i = 0; i < 5; i++)
             {
                 BoneControlLoad(reader);
             }
-
-            //Debug.WriteLine($"PlayLoad End = 0x{sgBufferCursor:X}");
         }
 
         private void BoneControlLoad(BinaryReader reader)
@@ -943,7 +846,7 @@ namespace TRR_SaveMaster
 
         public byte[] Unpack(byte[] compressedData)
         {
-            // The skip table from DAT_00240d80:
+            // The skip table
             byte[] offsetTable = new byte[8] { 0x00, 0x3C, 0x18, 0x54, 0x30, 0x0C, 0x48, 0x24 };
 
             // Constants
@@ -989,7 +892,7 @@ namespace TRR_SaveMaster
 
                     if (byte_offset + 4 > compressedData.Length)
                     {
-                        Debug.WriteLine($"Byte offset 0x{byte_offset:X} is out of bounds!");
+                        Debug.WriteLine($"[UNPACK] Byte offset 0x{byte_offset:X} is out of bounds!");
                         break;
                     }
 
@@ -1001,7 +904,7 @@ namespace TRR_SaveMaster
                         int next_offset = byte_offset + 4;
                         if (next_offset + 4 > compressedData.Length)
                         {
-                            Debug.WriteLine($"Next offset 0x{next_offset:X} is out of bounds!");
+                            Debug.WriteLine($"[UNPACK] Next offset 0x{next_offset:X} is out of bounds!");
                             break;
                         }
                         uVar3 = (uVar3 >> sVar4)
@@ -1033,7 +936,7 @@ namespace TRR_SaveMaster
                         // Direct literal byte
                         if (output_pos >= output_buffer.Length)
                         {
-                            Console.WriteLine("Output position exceeds buffer size!");
+                            Debug.WriteLine("[UNPACK] Output position exceeds buffer size!");
                             break;
                         }
                         output_buffer[output_pos++] = (byte)uVar3;
@@ -1047,7 +950,7 @@ namespace TRR_SaveMaster
 
                         if (idx1 >= LZW_BUFFER.Length || idx2 >= LZW_BUFFER.Length)
                         {
-                            Console.WriteLine("LZW buffer index out of bounds!");
+                            Debug.WriteLine("[UNPACK] LZW buffer index out of bounds!");
                             break;
                         }
                         int puVar1 = LZW_BUFFER[idx1];
@@ -1055,12 +958,12 @@ namespace TRR_SaveMaster
 
                         if (puVar1 >= output_buffer.Length || puVar2 >= output_buffer.Length)
                         {
-                            Console.WriteLine($"Invalid access to output buffer: puVar1={puVar1}, puVar2={puVar2}");
+                            Debug.WriteLine($"[UNPACK] Invalid access to output buffer: puVar1={puVar1}, puVar2={puVar2}");
                             break;
                         }
                         if (output_pos >= output_buffer.Length)
                         {
-                            Console.WriteLine("Output position exceeds buffer size!");
+                            Debug.WriteLine("[UNPACK] Output position exceeds buffer size!");
                             break;
                         }
 
@@ -1072,7 +975,7 @@ namespace TRR_SaveMaster
                         {
                             if (output_pos >= output_buffer.Length)
                             {
-                                Console.WriteLine("Output position exceeds buffer size!");
+                                Debug.WriteLine("[UNPACK] Output position exceeds buffer size!");
                                 break;
                             }
                             output_buffer[output_pos++] = output_buffer[puVar1++];
@@ -1088,8 +991,8 @@ namespace TRR_SaveMaster
             }
             else
             {
-                Console.WriteLine("Invalid header in compressed data");
-                return null;
+                string errorMessage = $"Invalid LZW header. Savegame is possibly corrupt.";
+                throw new Exception(errorMessage);
             }
         }
 
@@ -1567,8 +1470,6 @@ namespace TRR_SaveMaster
                         break;
                 }
             }
-
-            //Debug.WriteLine($"Inventory UI Updated for {(cmbInventory.SelectedIndex == 1 ? "Kurtis" : "Lara")}.");
         }
 
         public void WriteChanges(NumericUpDown nudCash, TrackBar trbHealth)
@@ -1581,12 +1482,9 @@ namespace TRR_SaveMaster
 
             try
             {
-                // Extract the post-inventory block BEFORE modifying offsets
-                //Debug.WriteLine($"Extracting Post-Inventory Block: 0x{INVENTORY_END_OFFSET:X} - 0x{POST_INVENTORY_END_OFFSET:X}");
-
                 if (POST_INVENTORY_END_OFFSET > decompressedBuffer.Length)
                 {
-                    Debug.WriteLine($"Warning: POST_INVENTORY_END_OFFSET ({POST_INVENTORY_END_OFFSET:X}) exceeds buffer size ({decompressedBuffer.Length:X}). Clamping...");
+                    Debug.WriteLine($"Warning: POST_INVENTORY_END_OFFSET (0x{POST_INVENTORY_END_OFFSET:X}) exceeds buffer size (0x{decompressedBuffer.Length:X}). Clamping...");
                     POST_INVENTORY_END_OFFSET = decompressedBuffer.Length;
                 }
 
@@ -1610,8 +1508,6 @@ namespace TRR_SaveMaster
                     // Write first health value (Float)
                     ms.Seek(PLAYER_HEALTH_OFFSET, SeekOrigin.Begin);
                     writer.Write((float)trbHealth.Value);
-
-                    //Debug.WriteLine($"Writing Health: {healthValue} (Raw Bytes: {BitConverter.ToString(healthBytes)})");
                 }
 
                 // Construct the new inventory block
@@ -1648,8 +1544,6 @@ namespace TRR_SaveMaster
                     writer.Write((float)trbHealth.Value);
                 }
 
-                //Debug.WriteLine($"New Inventory Block Size: 0x{newInventoryBlock.Length:X}");
-
                 // Update Offsets AFTER New Inventory Block is Created
                 int originalInventorySize = INVENTORY_END_OFFSET - INVENTORY_START_OFFSET;
                 int newInventorySize = newInventoryBlock.Length;
@@ -1659,16 +1553,11 @@ namespace TRR_SaveMaster
                 POST_INVENTORY_END_OFFSET += inventorySizeDelta;
                 PLAYER_HEALTH_OFFSET_2 += inventorySizeDelta;
 
-                //Debug.WriteLine($"Updated INVENTORY_END_OFFSET: 0x{INVENTORY_END_OFFSET:X}");
-                //Debug.WriteLine($"Updated POST_INVENTORY_END_OFFSET: 0x{POST_INVENTORY_END_OFFSET:X}");
-
                 // Merge the three parts back together
                 byte[] modifiedBuffer = preInventoryBlock
                     .Concat(newInventoryBlock)
                     .Concat(postInventoryBlock)
                     .ToArray();
-
-                //Debug.WriteLine($"Modified Buffer Size: 0x{modifiedBuffer.Length:X}");
 
                 // Compress the modified buffer
                 byte[] compressedBuffer = Pack(modifiedBuffer);
@@ -1682,13 +1571,9 @@ namespace TRR_SaveMaster
                     fs.Seek(savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET, SeekOrigin.Begin);
                     writer.Write(compressedBufferSize);
 
-                    Debug.WriteLine($"Wrote compressed buffer size: 0x{compressedBufferSize:X} at offset 0x{savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET:X}");
-
                     // Write the compressed buffer to the savegame
                     fs.Seek(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, SeekOrigin.Begin);
                     writer.Write(compressedBuffer);
-
-                    //Debug.WriteLine($"Wrote compressed buffer data at offset 0x{(savegameOffset + COMPRESSED_BLOCK_START_OFFSET):X}, size 0x{compressedBufferSize:X} bytes.");
                 }
             }
             catch (Exception ex)
