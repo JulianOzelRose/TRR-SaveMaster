@@ -840,7 +840,7 @@ namespace TRR_SaveMaster
                     new EntityMock(0) { ObjTypeID = 0x9, EntityType = 0, APB_Loop_Counter = 0x0, Second_APB_Value = 0x0 },
                     new EntityMock(0) { ObjTypeID = 0xF, EntityType = 0, APB_Loop_Counter = 0x0, Second_APB_Value = 0x0 },
                     new EntityMock(0) { ObjTypeID = 0x6, EntityType = 0, APB_Loop_Counter = 0x0, Second_APB_Value = 0x0 },
-                    new EntityMock(0) { ObjTypeID = 0x8, EntityType = 0, APB_Loop_Counter = 0x0, Second_APB_Value = 0x0 },
+                    new EntityMock(0) { ObjTypeID = 0x8, EntityType = 0, APB_Loop_Counter = 0x1, Second_APB_Value = 0x0 },
                     new EntityMock(0) { ObjTypeID = 0x2, EntityType = 0, APB_Loop_Counter = 0x2, Second_APB_Value = 0x0 },
                     new EntityMock(0) { ObjTypeID = 0xE, EntityType = 0, APB_Loop_Counter = 0x0, Second_APB_Value = 0x0 },
                     new EntityMock(0) { ObjTypeID = 0x4, EntityType = 0, APB_Loop_Counter = 0x15, Second_APB_Value = 0x0 },
