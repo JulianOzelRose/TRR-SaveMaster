@@ -1,15 +1,12 @@
 # Tomb Raider Remastered Savegame Editor
 This is a savegame editor for Tomb Raider Remastered. For the second trilogy, Tomb Raider IV and V are fully supported.
-Tomb Raider VI support is currently in BETA, you can find more information in the section below. You can edit items, health, weapons, ammunition, statistics, and position.
+Tomb Raider VI support is currently in BETA, you can find more information in the section below. With this editor, you can edit items, health, weapons, ammunition, statistics, and position.
 The Tomb Raider I-III portion of this editor is compatible with PC, PS4, and Nintendo Switch savegames. For instructions on how to download and use this savegame editor, scroll down to
-the section below. Additionally, technical details on reverse engineering the Tomb Raider I-III Remastered trilogy are included on later on in this README.
+the section below. Additionally, technical details on reverse engineering both trilogies are included later on in this README.
 For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder or delete savegames,
 check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
-🚀 **First savegame editor to support Tomb Raider VI**
-
 ![TRR-SaveMaster-UI](https://github.com/user-attachments/assets/01363880-ddbf-4390-8b53-e129571169d4)
-
 
 ## Installation and use
 To download and use this savegame editor, simply navigate to the [Releases](https://github.com/JulianOzelRose/TRR-SaveMaster/releases) page,
@@ -546,3 +543,73 @@ private void WriteRocketLauncherAmmo(bool isPresent, UInt16 ammo)
 }
 ```
 
+## Tomb Raider IV-VI Remastered Savegame Format
+This section details the technical aspects of reverse engineering the savegames of the Tomb Raider IV-VI Remastered trilogy. Like the first trilogy, all savegames are stored in the `savegame.dat` file.
+Each savegame slot for each game begins at a specific offset in the file, with a maximum of 32 slots per game. Each savegame has a fixed size of 0xA470 bytes. See the table below.
+
+| Game                               | Offset   |
+|:-----------------------------------|:---------|
+| Tomb Raider IV                     | 0x002000 |
+| Tomb Raider V                      | 0x14AE00 |
+| Tomb Raider VI                     | 0x293C00 |
+
+Below are the offset tables for Tomb Raider IV-VI. With the exception of health, most of the offsets are static. For Tomb Raider VI, the table only shows the header offsets, as the savegame data is very dynamic.
+
+#### Tomb Raider IV
+| Offset    | Type    | Description             |
+|:----------|:--------|:------------------------|
+| 0x004     | Int32   | Slot Status             |
+| 0x008     | Int32   | Save Number             |
+| 0x01C     | Int32   | Game Mode               |
+| 0x26F     | UInt8   | Level Index             |
+| 0x1BE     | UInt16  | Small Medipack          |
+| 0x1C0     | UInt16  | Large Medipack          |
+| 0x1C2     | UInt16  | Flares                  |
+| 0x194     | UInt8   | Pistols                 |
+| 0x195     | UInt8   | Uzi                     |
+| 0x196     | UInt8   | Shotgun                 |
+| 0x197     | UInt8   | Crossbow                |
+| 0x199     | UInt8   | Grenade Gun             |
+| 0x19A     | UInt8   | Revolver                |
+| 0x1C6     | UInt16  | Uzi Ammo                |
+| 0x1C8     | UInt16  | Revolver Ammo           |
+| 0x1CA     | UInt16  | Shotgun Normal Ammo     |
+| 0x1CC     | UInt16  | Shotgun Wideshot Ammo   |
+| 0x1D0     | UInt16  | Grenade Gun Normal Ammo |
+| 0x1D2     | UInt16  | Grenade Gun Super Ammo  |
+| 0x1D4     | UInt16  | Grenade Gun Flash Ammo  |
+| 0x1D6     | UInt16  | Crossbow Normal Ammo    |
+| 0x1D8     | UInt16  | Crossbow Poison Ammo    |
+| 0x1DA     | UInt16  | Crossbow Explosive Ammo |
+
+#### Tomb Raider V
+| Offset    | Type    | Description                  |
+|:----------|:--------|:-----------------------------|
+| 0x004     | Int32   | Slot Status                  |
+| 0x008     | Int32   | Save Number                  |
+| 0x01C     | Int32   | Game Mode                    |
+| 0x26F     | UInt8   | Level Index                  |
+| 0x1BE     | UInt16  | Small Medipack               |
+| 0x1C0     | UInt16  | Large Medipack               |
+| 0x1C2     | UInt16  | Flares                       |
+| 0x194     | UInt8   | Pistols                      |
+| 0x195     | UInt8   | Uzi                          |
+| 0x196     | UInt8   | Shotgun                      |
+| 0x197     | UInt8   | Grappling Gun                |
+| 0x198     | UInt8   | HK Gun                       |
+| 0x19A     | UInt8   | Revolver / Desert Eagle      |
+| 0x1C6     | UInt16  | Uzi Ammo                     |
+| 0x1C8     | UInt16  | Revolver / Desert Eagle Ammo |
+| 0x1CA     | UInt16  | Shotgun Normal Ammo          |
+| 0x1CC     | UInt16  | Shotgun Wideshot Ammo        |
+| 0x1CE     | UInt16  | HK Gun Ammo                  |
+| 0x1D6     | UInt16  | Grappling Gun Ammo           |
+
+#### Tomb Raider VI
+| Offset    | Type    | Description                  |
+|:----------|:--------|:-----------------------------|
+| 0x004     | Int32   | Slot Status                  |
+| 0x014     | UInt8   | Level Index                  |
+| 0x11C     | Int32   | Save Number                  |
+| 0x35C     | Int32   | Game Mode                    |
+| 0x364     | UInt16  | Compressed Block Size        |
