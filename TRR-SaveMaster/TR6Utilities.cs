@@ -1289,8 +1289,8 @@ namespace TRR_SaveMaster
             CheckBox chkVectorR35, NumericUpDown nudVectorR35Ammo, CheckBox chkDesertRanger,
             NumericUpDown nudDesertRangerAmmo, CheckBox chkDartSS, NumericUpDown nudDartSSAmmo,
             CheckBox chkRigg09, NumericUpDown nudRigg09Ammo, CheckBox chkViperSMG, NumericUpDown nudViperSMGAmmo,
-            CheckBox chkMagVega, NumericUpDown nudMagVegaAmmo, CheckBox chkVectorR35Pair, CheckBox chkScorpionXPair,
-            NumericUpDown nudPoisonAntidote, CheckBox chkChirugaiBlade, NumericUpDown nudGPSSaveGame, Label lblGPSSaveGame)
+            CheckBox chkMagVega, NumericUpDown nudMagVegaAmmo, CheckBox chkVectorR35Pair, Label lblVectorR35PairAmmo, CheckBox chkScorpionXPair, Label lblScorpionXPairAmmo,
+            NumericUpDown nudPoisonAntidote, CheckBox chkChirugaiBlade, Label lblChirugaiBladeAmmo, NumericUpDown nudGPSSaveGame, Label lblGPSSaveGame)
         {
             // Determine whose inventory to update
             List<InventoryItem> selectedInventory = cmbInventory.SelectedIndex == 1 ? invKurtis : invLara;
@@ -1335,18 +1335,20 @@ namespace TRR_SaveMaster
             chkChirugaiBlade.Checked = false;
             nudGPSSaveGame.Value = 0;
 
-            // Conditionally enable weapons
+            // Conditionally enable weapons/ammo
             chkMV9.Enabled = cmbInventory.SelectedIndex == 0;
             nudMV9Ammo.Enabled = cmbInventory.SelectedIndex == 0;
             chkVPacker.Enabled = cmbInventory.SelectedIndex == 0;
             nudVPackerAmmo.Enabled = cmbInventory.SelectedIndex == 0;
             chkScorpionX.Enabled = cmbInventory.SelectedIndex == 0;
             chkScorpionXPair.Enabled = cmbInventory.SelectedIndex == 0;
+            lblScorpionXPairAmmo.Enabled = cmbInventory.SelectedIndex == 0;
             nudScorpionXAmmo.Enabled = cmbInventory.SelectedIndex == 0;
             chkK2Impactor.Enabled = cmbInventory.SelectedIndex == 0;
             nudK2ImpactorAmmo.Enabled = cmbInventory.SelectedIndex == 0;
             chkVectorR35.Enabled = cmbInventory.SelectedIndex == 0;
             chkVectorR35Pair.Enabled = cmbInventory.SelectedIndex == 0;
+            lblVectorR35PairAmmo.Enabled = cmbInventory.SelectedIndex == 0;
             nudVectorR35Ammo.Enabled = cmbInventory.SelectedIndex == 0;
             chkDesertRanger.Enabled = cmbInventory.SelectedIndex == 0;
             nudDesertRangerAmmo.Enabled = cmbInventory.SelectedIndex == 0;
@@ -1361,6 +1363,7 @@ namespace TRR_SaveMaster
             nudBoranXAmmo.Enabled = cmbInventory.SelectedIndex == 1;
             chkBoranX.Enabled = cmbInventory.SelectedIndex == 1;
             chkChirugaiBlade.Enabled = cmbInventory.SelectedIndex == 1;
+            lblChirugaiBladeAmmo.Enabled = cmbInventory.SelectedIndex == 1;
 
             nudGPSSaveGame.Enabled = gameMode == GameMode.Plus;
             nudGPSSaveGame.Visible = gameMode == GameMode.Plus;

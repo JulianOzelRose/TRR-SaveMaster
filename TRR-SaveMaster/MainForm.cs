@@ -303,6 +303,10 @@ namespace TRR_SaveMaster
             lblHealthTR6.Text = "0.1%";
             lblHealthTR6.Visible = true;
 
+            lblChirugaiBladeAmmoTR6.Enabled = true;
+            lblScorpionXPairAmmoTR6.Enabled = true;
+            lblVectorR35PairAmmoTR6.Enabled = true;
+
             btnSaveTR6.Enabled = false;
             btnCancelTR6.Enabled = false;
         }
@@ -974,8 +978,8 @@ namespace TRR_SaveMaster
                     nudVPackerAmmoTR6, chkBoranXTR6, nudBoranXAmmoTR6, nudSmallMedipackTR6, nudHealthBandagesTR6, chkK2ImpactorTR6,
                     nudK2ImpactorAmmoTR6, nudLargeHealthPackTR6, chkScorpionXTR6, nudScorpionXAmmoTR6, chkVectorR35TR6, nudVectorR35AmmoTR6,
                     chkDesertRangerTR6, nudDesertRangerAmmoTR6, chkDartSSTR6, nudDartSSAmmoTR6, chkRigg09TR6, nudRigg09AmmoTR6,
-                    chkViperSMGTR6, nudViperSMGAmmoTR6, chkMagVegaTR6, nudMagVegaAmmoTR6, chkVectorR35PairTR6, chkScorpionXPairTR6, nudPoisonAntidoteTR6,
-                    chkChirugaiBladeTR6, nudGPSSaveGame, lblGPSSaveGame);
+                    chkViperSMGTR6, nudViperSMGAmmoTR6, chkMagVegaTR6, nudMagVegaAmmoTR6, chkVectorR35PairTR6, lblVectorR35PairAmmoTR6, chkScorpionXPairTR6, lblScorpionXPairAmmoTR6,
+                    nudPoisonAntidoteTR6, chkChirugaiBladeTR6, lblChirugaiBladeAmmoTR6, nudGPSSaveGame, lblGPSSaveGame);
             }
 
             isInventoryLoading = false;
@@ -1905,8 +1909,8 @@ namespace TRR_SaveMaster
                         nudVPackerAmmoTR6, chkBoranXTR6, nudBoranXAmmoTR6, nudSmallMedipackTR6, nudHealthBandagesTR6, chkK2ImpactorTR6,
                         nudK2ImpactorAmmoTR6, nudLargeHealthPackTR6, chkScorpionXTR6, nudScorpionXAmmoTR6, chkVectorR35TR6, nudVectorR35AmmoTR6,
                         chkDesertRangerTR6, nudDesertRangerAmmoTR6, chkDartSSTR6, nudDartSSAmmoTR6, chkRigg09TR6, nudRigg09AmmoTR6,
-                        chkViperSMGTR6, nudViperSMGAmmoTR6, chkMagVegaTR6, nudMagVegaAmmoTR6, chkVectorR35PairTR6, chkScorpionXPairTR6,
-                        nudPoisonAntidoteTR6, chkChirugaiBladeTR6, nudGPSSaveGame, lblGPSSaveGame);
+                        chkViperSMGTR6, nudViperSMGAmmoTR6, chkMagVegaTR6, nudMagVegaAmmoTR6, chkVectorR35PairTR6, lblVectorR35PairAmmoTR6, chkScorpionXPairTR6, lblScorpionXPairAmmoTR6,
+                        nudPoisonAntidoteTR6, chkChirugaiBladeTR6, lblChirugaiBladeAmmoTR6, nudGPSSaveGame, lblGPSSaveGame);
 
                     slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame}'";
                 }
