@@ -6,7 +6,7 @@ the section below. Additionally, technical details on reverse engineering both t
 For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder or delete savegames,
 check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
-![TRR-SaveMaster-UI](https://github.com/user-attachments/assets/01363880-ddbf-4390-8b53-e129571169d4)
+![TRR-SaveMaster-UI](https://github.com/user-attachments/assets/7de7b46a-fcf2-4756-95f0-4df7940d1531)
 
 ## Installation and use
 To download and use this savegame editor, simply navigate to the [Releases](https://github.com/JulianOzelRose/TRR-SaveMaster/releases) page,
