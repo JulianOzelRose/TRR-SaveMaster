@@ -842,6 +842,15 @@ namespace TRR_SaveMaster
             { 2,  new float[] { -242.39f, 48.22f, 491.99f, 0.00f, 0             } },   // Margot Carvier's Apartment
             { 3,  new float[] { -19820.33f, 8984.57f, -11851.46f, -93.75f, 0    } },   // Industrial Roof Tops
             { 4,  new float[] { 2960.18f, -3191.87f, 20464.27f, 83.25f, 1       } },   // Parisian Ghetto (Part 1)
+            { 5,  new float[] { 15448.87f, 2026.54f, 43265.87f, -90.00f, 0      } },   // Parisian Ghetto (Part 2)
+            { 6,  new float[] { 32284.55f, 48.32f, 32076.68f, -180.00f, 0       } },   // Parisian Ghetto (Part 3)
+            { 7,  new float[] { 21988.03f, 0.00f, 23519.79f, 0.00f, 1           } },   // The Serpent Rouge
+
+            { 9,  new float[] { 36273.83f, 998.62f, 37711.30f, 0.00f, 0         } },   // Willowtree Herbalist
+            { 10, new float[] { 28336.36f, 2176.00f, 48226.48f, -179.75f, 0     } },   // St. Aicard's Church
+
+            { 12, new float[] { 21180.02f, 2055.11f, 49738.52f, -179.00f, 0     } },   // St. Aicard's Graveyard
+            { 13, new float[] { 14550.25f, -2633.78f, 27642.66f, 98.00f, 0      } },   // Bouchard's Hideout
         };
 
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR1 = new Dictionary<byte, Int32[]>
@@ -974,6 +983,7 @@ namespace TRR_SaveMaster
             { 0,  new float[] { -13477.68f, 5245.79f, -7118.42f, 174.76f, 0 } },   // Parisian Back Streets
             { 1,  new float[] { -19369.14f, 8968.57f, -10987.17f, 0.00f, 0  } },   // Derelict Apartment Block
             { 3,  new float[] { -9418.49f, 8232.75f, -23535.01f, 0.00f, 0   } },   // Industrial Roof Tops
+            { 12, new float[] { 31129.59f, 2592.12f, 67953.78f, -88.28f, 0  } },   // St. Aicard's Graveyard
         };
 
         private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR1 = new Dictionary<byte, Int32[]>
