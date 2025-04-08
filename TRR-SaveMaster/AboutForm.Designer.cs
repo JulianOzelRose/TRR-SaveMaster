@@ -50,9 +50,9 @@ namespace TRR_SaveMaster
             this.lblVersion.ForeColor = System.Drawing.Color.White;
             this.lblVersion.Location = new System.Drawing.Point(185, 74);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(116, 26);
+            this.lblVersion.Size = new System.Drawing.Size(113, 26);
             this.lblVersion.TabIndex = 22;
-            this.lblVersion.Text = "Version 2.15";
+            this.lblVersion.Text = "Version 2.17";
             // 
             // lblAuthor
             // 
