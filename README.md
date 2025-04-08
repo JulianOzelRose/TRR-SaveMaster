@@ -6,7 +6,7 @@ the section below. Additionally, technical details on reverse engineering both t
 For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder or delete savegames,
 check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
-**👉 Hello Nexusmods Support. I am the owner of this mod (4/8/2025).**
+**👉 Hello Nexusmods Support. I am the owner of this mod (Reference #: 169159, Username: 0xCAFEB0BA).**
 
 ![TRR-SaveMaster-UI](https://github.com/user-attachments/assets/7de7b46a-fcf2-4756-95f0-4df7940d1531)
 
