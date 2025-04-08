@@ -1590,6 +1590,9 @@ namespace TRR_SaveMaster
                     fs.Seek(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, SeekOrigin.Begin);
                     writer.Write(compressedBuffer);
                 }
+
+                // Ensure any rewrites are done to the new buffer
+                decompressedBuffer = modifiedBuffer;
             }
             catch (Exception ex)
             {
