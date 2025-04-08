@@ -856,8 +856,22 @@ namespace TRR_SaveMaster
             { 16, new float[] { 415.71f, -108.02f, -2019.23f, 108.75f, 0        } },   // Von Croy's Apartment
             { 17, new float[] { -1581.19f, 28701.71f, -25261.96f, -100.00f, 0   } },   // Tomb of Ancients
             { 18, new float[] { 9494.10f, 6091.68f, 9509.15f, -71.25f, 0        } },   // The Archaeological Dig
-
+            { 19, new float[] { 415.71f, -108.02f, -2019.23f, 108.75f, 0        } },   // Von Croy's Apartment
+            { 20, new float[] { -2671.21f, 14.59f, -5987.53f, 171.75f, 0        } },   // The Monstrum Crimescene
+            { 21, new float[] { 7168.00f, 0.00f, 8847.85f, -90.00f, 0           } },   // The Strahov Fortress
+            { 22, new float[] { -1800.57f, -2821.93f, -1600.82f, 90.00f, 0      } },   // The Bio-Research Facility
+            { 23, new float[] { 72819.80f, -8593.76f, -2483.95f, 167.75f, 1     } },   // Aquatic Research Area
+            { 24, new float[] { 141.87f, 10434.03f, -59.99f, -86.50f, 2         } },   // The Sanitarium
+            { 25, new float[] { 38978.09f, -9805.43f, 4991.16f, 1.50f, 0        } },   // Maximum Containment Area
+            { 26, new float[] { 31733.38f, 3062.94f, 10625.22f, -86.50f, 0      } },   // The Vault of Trophies
+            { 27, new float[] { 1222.37f, -3970.61f, 4576.84f, 0.00f, 0         } },   // Boaz Returns
+            { 28, new float[] { 35892.87f, 10070.46f, 31785.31f, -58.75f, 0     } },   // Eckhardt's Lab
+            { 29, new float[] { 72379.94f, 11985.67f, 33589.54f, -128.65f, 0    } },   // The Lost Domain
             { 30, new float[] { -4412.95f, -1940.10f, 6671.06f, -126.25f, 0     } },   // The Hall of Seasons
+            { 31, new float[] { -13101.34f, -1932.22f, -513.44f, -1.00f, 0      } },   // Neptune's Hall
+            { 32, new float[] { -28139.66f, -2315.10f, 12925.36f, -90.00f, 0    } },   // Wrath of the Beast
+            { 33, new float[] { -12984.64f, -1960.28f, 28417.73f, -179.75f, 0   } },   // The Sanctuary of Flame
+            { 34, new float[] { 2704.91f, -1931.75f, 12701.28f, 87.25f, 0       } },   // The Breath of Hades
         };
 
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR1 = new Dictionary<byte, Int32[]>
@@ -1627,7 +1641,7 @@ namespace TRR_SaveMaster
 
                     UInt16 compressedBlockSize = ReadUInt16(savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
                     byte[] compressedBlockData = ReadBytes(savegamePath, savegameOffset + COMPRESSED_BLOCK_START_OFFSET, compressedBlockSize);
-                    
+
                     byte[] decompressedBuffer = new byte[0];   // Clear buffer
                     decompressedBuffer = TR6.Unpack(compressedBlockData);
 
@@ -1713,7 +1727,7 @@ namespace TRR_SaveMaster
 
                     UInt16 compressedBlockSize = ReadUInt16(savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
                     byte[] compressedBlockData = ReadBytes(savegamePath, savegameOffset + COMPRESSED_BLOCK_START_OFFSET, compressedBlockSize);
-                    
+
                     byte[] decompressedBuffer = new byte[0];
                     decompressedBuffer = TR6.Unpack(compressedBlockData);
 
