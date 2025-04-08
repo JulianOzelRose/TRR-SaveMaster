@@ -195,13 +195,13 @@ namespace TRR_SaveMaster
                     invLara.Clear();
                     invKurtis.Clear();
 
-                    Int32 itemType;
+                    byte itemCount;
+
                     ushort itemClassID;
-                    Int32 itemCount;
+                    Int32 itemType;
                     Int32 itemQuantity;
 
                     int invActive;
-
                     int characterIndex = 0;
 
                     // Loop through inventory for Lara and Kent
@@ -214,7 +214,7 @@ namespace TRR_SaveMaster
                         itemCount = reader.ReadByte();
                         sgBufferCursor += 0x1;
 
-                        Debug.WriteLine($"{(characterIndex == 0 ? "Lara" : "Kurtis")} Inventory Item Count = {itemCount}");
+                        //Debug.WriteLine($"{(characterIndex == 0 ? "Lara" : "Kurtis")} Inventory Item Count = {itemCount}");
 
                         // If there are items for this character, process each one
                         if (itemCount != 0)
@@ -261,7 +261,7 @@ namespace TRR_SaveMaster
                     INVENTORY_END_OFFSET = sgBufferCursor;
                     PLAYER_HEALTH_OFFSET_2 = sgBufferCursor;
 
-                    Debug.WriteLine($"INVENTORY_END_OFFSET = 0x{sgBufferCursor:X}");
+                    //Debug.WriteLine($"INVENTORY_END_OFFSET = 0x{sgBufferCursor:X}");
 
                     //======================================================//
                     //  Post-inventory data
@@ -341,7 +341,6 @@ namespace TRR_SaveMaster
             objects.Clear();
             objects = TR6EntityCache.GetObjectArray(sgCurrentLevel);
         }
-
 
         private void MapPickupLoad(BinaryReader reader)
         {
@@ -673,7 +672,6 @@ namespace TRR_SaveMaster
 
                 APB_LoadAnimationControl(reader, (bVar2 & 2));
 
-
                 if ((bVar2 & 4) != 0)
                 {
                     APB_LoadAnimationControl(reader, (bVar2 & 4));
@@ -779,7 +777,6 @@ namespace TRR_SaveMaster
             byte[] variableData = reader.ReadBytes(varLength);
             sgBufferCursor += varLength;
         }
-
 
         private void PlayLoad(BinaryReader reader)
         {
@@ -953,6 +950,7 @@ namespace TRR_SaveMaster
                             Debug.WriteLine("[UNPACK] LZW buffer index out of bounds!");
                             break;
                         }
+
                         int puVar1 = LZW_BUFFER[idx1];
                         int puVar2 = LZW_BUFFER[idx2];
 
@@ -978,8 +976,10 @@ namespace TRR_SaveMaster
                                 Debug.WriteLine("[UNPACK] Output position exceeds buffer size!");
                                 break;
                             }
+
                             output_buffer[output_pos++] = output_buffer[puVar1++];
                         }
+
                         uVar7++;
                     }
                 }
@@ -1024,7 +1024,9 @@ namespace TRR_SaveMaster
             int blockBase = bitTotal;
 
             if (rawData.Length == 0)
+            {
                 return destBuffer.ToArray();
+            }
 
             uint currentCode = rawData[0];
             int inputPos = 1;
@@ -1053,6 +1055,7 @@ namespace TRR_SaveMaster
                 {
                     byte finalByte = (byte)(bitBuffer & 0xFF);
                     destBuffer.Add(finalByte);
+
                     bitBuffer = 0;
                     bitCount = 0;
                 }
@@ -1083,7 +1086,10 @@ namespace TRR_SaveMaster
                     // Apply probe arithmetic
                     int tempIndex = (int)hashIndex - (int)step;
                     if (tempIndex < 0)
+                    {
                         tempIndex += 0x13FF; // wraparound
+                    }
+
                     hashIndex = (uint)tempIndex;
                 }
 
