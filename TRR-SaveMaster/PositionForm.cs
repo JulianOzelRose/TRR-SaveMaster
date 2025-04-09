@@ -1001,15 +1001,20 @@ namespace TRR_SaveMaster
 
         private readonly Dictionary<byte, float[]> endOfLevelCoordinatesTR6 = new Dictionary<byte, float[]>
         {
-            { 0,  new float[] { -13477.68f, 5245.79f, -7118.42f, 174.76f, 0 } },   // Parisian Back Streets
-            { 1,  new float[] { -19369.14f, 8968.57f, -10987.17f, 0.00f, 0  } },   // Derelict Apartment Block
-            { 3,  new float[] { -9418.49f, 8232.75f, -23535.01f, 0.00f, 0   } },   // Industrial Roof Tops
-            { 8,  new float[] { 9631.30f, 632.33f, 33626.03f, -78.98f, 0    } },   // Rennes' Pawnshop
-            { 12, new float[] { 31129.59f, 2592.12f, 67953.78f, -88.28f, 0  } },   // St. Aicard's Graveyard
-            { 14, new float[] { 29220.79f, 1354.01f, 33338.64f, 69.45f, 1   } },   // Louvre Storm Drains
-            { 15, new float[] { 70621.10f, -106.19f, 75969.54f, 92.13f, 3   } },   // Louvre Galleries
-            { 17, new float[] { 631.05f, -2016.59f, 3017.42f, -130.63f, 1   } },   // Tomb of Ancients
-            { 18, new float[] { -327.16f, 5671.09f, 170.96f, -45.00f, 0     } },   // The Archaeological Dig
+            { 0,  new float[] { -13477.68f, 5245.79f, -7118.42f, 174.76f, 0     } },   // Parisian Back Streets
+            { 1,  new float[] { -19369.14f, 8968.57f, -10987.17f, 0.00f, 0      } },   // Derelict Apartment Block
+            { 3,  new float[] { -9418.49f, 8232.75f, -23535.01f, 0.00f, 0       } },   // Industrial Roof Tops
+            { 8,  new float[] { 9631.30f, 632.33f, 33626.03f, -78.98f, 0        } },   // Rennes' Pawnshop
+            { 9,  new float[] { 36630.91f, 998.62f, 38747.72f, -176.76f, 0      } },   // Willowtree Herbalist
+            { 10, new float[] { 28308.45f, 2176.00f, 47745.44f, 2.42f, 0        } },   // St. Aicard's Church
+            { 11, new float[] { -3237.51f, 2112.95f, 46578.45f, -8.46f, 0       } },   // Cafe Metro
+            { 12, new float[] { 31129.59f, 2592.12f, 67953.78f, -88.28f, 0      } },   // St. Aicard's Graveyard
+            { 14, new float[] { 29220.79f, 1354.01f, 33338.64f, 69.45f, 1       } },   // Louvre Storm Drains
+            { 15, new float[] { 70621.10f, -106.19f, 75969.54f, 92.13f, 3       } },   // Louvre Galleries
+            { 17, new float[] { 631.05f, -2016.59f, 3017.42f, -130.63f, 1       } },   // Tomb of Ancients
+            { 18, new float[] { -327.16f, 5671.09f, 170.96f, -45.00f, 0         } },   // The Archaeological Dig
+            { 22, new float[] { 76213.44f, -6633.47f, 9273.43f, -98.29f, 3      } },   // The Bio-Research Facility
+            { 24, new float[] { 40940.62f, -6736.23f, 3623.77f, 84.11f, 1       } },   // The Sanitarium
         };
 
         private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR1 = new Dictionary<byte, Int32[]>
