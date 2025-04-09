@@ -1611,6 +1611,12 @@ namespace TRR_SaveMaster
             savegamePath = path;
         }
 
+        public bool IsPlayerKurtis()
+        {
+            // The Sanitarium, Maximum Containment Area, Boaz Returns
+            return sgCurrentLevel == 24 || sgCurrentLevel == 25 || sgCurrentLevel == 27;
+        }
+
         public int GetPlayerBaseOffset()
         {
             return PLAYER_BASE_OFFSET;

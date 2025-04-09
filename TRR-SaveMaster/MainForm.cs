@@ -1902,8 +1902,8 @@ namespace TRR_SaveMaster
                     TR6.DetermineOffsets(selectedSavegame);
                     TR6.DisplayGameInfo(trbHealthTR6, lblHealthTR6, lblHealthErrorTR6, nudCashTR6);
 
-                    // Default to Lara's inventory
-                    cmbInventoryTR6.SelectedIndex = 0;
+                    // Default to inventory of active player
+                    cmbInventoryTR6.SelectedIndex = TR6.IsPlayerKurtis() ? 1 : 0;
 
                     TR6.UpdateInventoryUI(cmbInventoryTR6, nudChocolateBarTR6, nudHealthPillsTR6, chkMV9TR6, chkVPackerTR6, nudMV9AmmoTR6,
                         nudVPackerAmmoTR6, chkBoranXTR6, nudBoranXAmmoTR6, nudSmallMedipackTR6, nudHealthBandagesTR6, chkK2ImpactorTR6,
