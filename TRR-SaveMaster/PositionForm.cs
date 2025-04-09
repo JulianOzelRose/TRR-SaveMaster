@@ -1517,6 +1517,7 @@ namespace TRR_SaveMaster
 
                 lblRoom.Text = "Zone:";
                 tipPosition.SetToolTip(picInfoYCoordinate, "Represents vertical position in game. Increasing moves Lara up, decreasing moves her down.");
+                tipPosition.SetToolTip(picInfoZCoordinate, "Represents depth position in game. Increasing moves Lara backwards, decreasing moves her forwards.");
                 tipPosition.SetToolTip(picInfoOrientation, "Represents the direction Lara is facing in degrees. Valid range is -180 to 180.");
                 tipPosition.SetToolTip(picInfoRoom, "Represents the active zone Lara is in. Zones control which parts of the level are loaded and rendered.");
             }
