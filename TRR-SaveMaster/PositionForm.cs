@@ -1515,12 +1515,30 @@ namespace TRR_SaveMaster
                 nudRoom.Maximum = Int32.MaxValue;
                 nudRoom.Minimum = 0;
 
-                lblRoom.Text = "Zone:";
-                tipPosition.SetToolTip(picInfoYCoordinate, "Represents vertical position in game. Increasing moves Lara up, decreasing moves her down.");
-                tipPosition.SetToolTip(picInfoZCoordinate, "Represents depth position in game. Increasing moves Lara backwards, decreasing moves her forwards.");
-                tipPosition.SetToolTip(picInfoOrientation, "Represents the direction Lara is facing in degrees. Valid range is -180 to 180.");
-                tipPosition.SetToolTip(picInfoRoom, "Represents the active zone Lara is in. Zones control which parts of the level are loaded and rendered.");
+                bool isPlayerKurtis = IsPlayerKurtis();
+
+                string xCoordinateToolTipText = $"Represents horizontal position in game. Decreasing moves {(isPlayerKurtis ? "Kurtis" : "Lara")} to the left, increasing moves {(isPlayerKurtis ? "him" : "her")} to the right.";
+                string yCoordinateToolTipText = $"Represents vertical position in game. Increasing moves {(isPlayerKurtis ? "Kurtis" : "Lara")} up, decreasing moves {(isPlayerKurtis ? "him" : "her")} down.";
+                string zCoordinateToolTipText = $"Represents depth position in game. Increasing moves {(isPlayerKurtis ? "Kurtis" : "Lara")} backwards, decreasing moves {(isPlayerKurtis ? "him" : "her")} forwards.";
+                string orientationToolTipText = $"Represents the direction {(isPlayerKurtis ? "Kurtis" : "Lara")} is facing in degrees. Valid range is -180 to 180.";
+                string roomToolTipText = $"Represents the active zone {(isPlayerKurtis ? "Kurtis" : "Lara")} is in. Zones control which parts of the level are loaded and rendered.";
+                string roomLabelText = $"Zone:";
+
+                tipPosition.SetToolTip(picInfoXCoordinate, xCoordinateToolTipText);
+                tipPosition.SetToolTip(picInfoYCoordinate, yCoordinateToolTipText);
+                tipPosition.SetToolTip(picInfoZCoordinate, zCoordinateToolTipText);
+                tipPosition.SetToolTip(picInfoOrientation, orientationToolTipText);
+                tipPosition.SetToolTip(picInfoRoom, roomToolTipText);
+                lblRoom.Text = roomLabelText;
             }
+        }
+
+        private bool IsPlayerKurtis()
+        {
+            byte levelIndex = GetLevelIndex();
+
+            // The Sanitarium, Maximum Containment Area, Boaz Returns
+            return levelIndex == 24 || levelIndex == 25 || levelIndex == 27;
         }
 
         private Int32 GetXCoordinateI32()
