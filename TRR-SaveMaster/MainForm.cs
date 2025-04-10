@@ -2524,7 +2524,7 @@ namespace TRR_SaveMaster
 
         private void tsmiAllowUnsafeMaxValues_Click(object sender, EventArgs e)
         {
-            int maxValue = tsmiAllowUnsafeMaxValues.Checked ? Int32.MaxValue : 999999;
+            int maxValue = tsmiAllowUnsafeMaxValues.Checked ? Int32.MaxValue : 99999;
 
             foreach (Control control in grpItemsTR6.Controls)
             {
