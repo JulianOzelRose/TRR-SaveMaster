@@ -1015,6 +1015,10 @@ namespace TRR_SaveMaster
             { 18, new float[] { -327.16f, 5671.09f, 170.96f, -45.00f, 0         } },   // The Archaeological Dig
             { 22, new float[] { 76213.44f, -6633.47f, 9273.43f, -98.29f, 3      } },   // The Bio-Research Facility
             { 24, new float[] { 40940.62f, -6736.23f, 3623.77f, 84.11f, 1       } },   // The Sanitarium
+            { 26, new float[] { -7826.16f, -1578.75f, -14227.08f, -179.94f, 1   } },   // The Vault of Trophies
+            { 28, new float[] { 11986.98f, -4705.54f, 6343.56f, -62.40f, 1      } },   // Eckhardt's Lab
+            { 29, new float[] { 31036.75f, 13068.36f, 32205.11f, -80.47f, 0     } },   // The Lost Domain
+            { 30, new float[] { -16249.76f, 13378.75f, 14435.91f, 178.17f, 1    } },   // The Hall of Seasons
         };
 
         private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR1 = new Dictionary<byte, Int32[]>
