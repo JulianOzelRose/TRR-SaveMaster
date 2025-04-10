@@ -189,102 +189,100 @@ namespace TRR_SaveMaster
         public void ParseInventory()
         {
             using (MemoryStream ms = new MemoryStream(decompressedBuffer))
+            using (BinaryReader reader = new BinaryReader(ms))
             {
-                using (BinaryReader reader = new BinaryReader(ms))
+                invLara.Clear();
+                invKurtis.Clear();
+
+                byte itemCount;
+
+                ushort itemClassID;
+                Int32 itemType;
+                Int32 itemQuantity;
+
+                int invActive;
+                int characterIndex = 0;
+
+                // Loop through inventory for Lara and Kent
+                do
                 {
-                    invLara.Clear();
-                    invKurtis.Clear();
+                    invActive = characterIndex;
 
-                    byte itemCount;
+                    // Read the number of items in the current category
+                    reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
+                    itemCount = reader.ReadByte();
+                    sgBufferCursor += 0x1;
 
-                    ushort itemClassID;
-                    Int32 itemType;
-                    Int32 itemQuantity;
+                    //Debug.WriteLine($"{(characterIndex == 0 ? "Lara" : "Kurtis")} Inventory Item Count = {itemCount}");
 
-                    int invActive;
-                    int characterIndex = 0;
-
-                    // Loop through inventory for Lara and Kent
-                    do
+                    // If there are items for this character, process each one
+                    if (itemCount != 0)
                     {
-                        invActive = characterIndex;
+                        int currentItemIndex = 0;
 
-                        // Read the number of items in the current category
-                        reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-                        itemCount = reader.ReadByte();
-                        sgBufferCursor += 0x1;
-
-                        //Debug.WriteLine($"{(characterIndex == 0 ? "Lara" : "Kurtis")} Inventory Item Count = {itemCount}");
-
-                        // If there are items for this character, process each one
-                        if (itemCount != 0)
+                        do
                         {
-                            int currentItemIndex = 0;
+                            // Read item class ID
+                            reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
+                            itemClassID = reader.ReadUInt16();
+                            sgBufferCursor += 0x2;
 
-                            do
+                            // Read item type
+                            reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
+                            itemType = reader.ReadInt32();
+                            sgBufferCursor += 0x4;
+
+                            // Read item quantity
+                            reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
+                            itemQuantity = reader.ReadInt32();
+                            sgBufferCursor += 0x4;
+
+                            //Debug.WriteLine($"Item: ClassID=0x{itemClassID:X}, Type={itemType}, Quantity={itemQuantity}, Quantity_Offset=0x{(sgBufferCursor - 4):X}");
+
+                            InventoryItem inventoryItem = new InventoryItem(itemClassID, itemType, itemQuantity);
+
+                            if (characterIndex == 0)
                             {
-                                // Read item class ID
-                                reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-                                itemClassID = reader.ReadUInt16();
-                                sgBufferCursor += 0x2;
+                                invLara.Add(inventoryItem);
+                            }
+                            else
+                            {
+                                invKurtis.Add(inventoryItem);
+                            }
 
-                                // Read item type
-                                reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-                                itemType = reader.ReadInt32();
-                                sgBufferCursor += 0x4;
-
-                                // Read item quantity
-                                reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-                                itemQuantity = reader.ReadInt32();
-                                sgBufferCursor += 0x4;
-
-                                //Debug.WriteLine($"Item: ClassID=0x{itemClassID:X}, Type={itemType}, Quantity={itemQuantity}, Quantity_Offset=0x{(sgBufferCursor - 4):X}");
-
-                                InventoryItem inventoryItem = new InventoryItem(itemClassID, itemType, itemQuantity);
-
-                                if (characterIndex == 0)
-                                {
-                                    invLara.Add(inventoryItem);
-                                }
-                                else
-                                {
-                                    invKurtis.Add(inventoryItem);
-                                }
-
-                                currentItemIndex++;
-                            } while (currentItemIndex < itemCount);
-                        }
-
-                        characterIndex++;
-                    } while (characterIndex < 2);
-
-                    INVENTORY_END_OFFSET = sgBufferCursor;
-                    PLAYER_HEALTH_OFFSET_2 = sgBufferCursor;
-
-                    //Debug.WriteLine($"INVENTORY_END_OFFSET = 0x{sgBufferCursor:X}");
-
-                    //======================================================//
-                    //  Post-inventory data
-                    //======================================================//
-
-                    sgBufferCursor += 0x3A;
-
-                    int count = 3;
-                    while (count-- > 0)
-                    {
-                        sgBufferCursor += 0x1;
+                            currentItemIndex++;
+                        } while (currentItemIndex < itemCount);
                     }
 
-                    count = 8;
-                    while (count-- > 0)
-                    {
-                        sgBufferCursor += 0x4;
-                    }
+                    characterIndex++;
+                } while (characterIndex < 2);
 
-                    sgBufferCursor += 0x5;
+                INVENTORY_END_OFFSET = sgBufferCursor;
+                PLAYER_HEALTH_OFFSET_2 = sgBufferCursor;
 
-                    POST_INVENTORY_END_OFFSET = sgBufferCursor;
+                //Debug.WriteLine($"INVENTORY_END_OFFSET = 0x{sgBufferCursor:X}");
+
+                //======================================================//
+                //  Post-inventory data
+                //======================================================//
+
+                sgBufferCursor += 0x3A;
+
+                int count = 3;
+                while (count-- > 0)
+                {
+                    sgBufferCursor += 0x1;
                 }
+
+                count = 8;
+                while (count-- > 0)
+                {
+                    sgBufferCursor += 0x4;
+                }
+
+                sgBufferCursor += 0x5;
+
+                POST_INVENTORY_END_OFFSET = sgBufferCursor;
             }
         }
 
@@ -299,30 +297,28 @@ namespace TRR_SaveMaster
             sgBufferCursor = 0x4;    // Skip past "TOMB" signature
 
             using (MemoryStream ms = new MemoryStream(decompressedBuffer))
+            using (BinaryReader reader = new BinaryReader(ms))
             {
-                using (BinaryReader reader = new BinaryReader(ms))
-                {
-                    reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-                    sgCurrentLevel = reader.ReadByte();
-                    sgBufferCursor += 0x1;
+                reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
+                sgCurrentLevel = reader.ReadByte();
+                sgBufferCursor += 0x1;
 
-                    sgBufferCursor += 0x4;
+                sgBufferCursor += 0x4;
 
-                    LoadCachedEntities();
+                LoadCachedEntities();
 
-                    InvLoad(reader);
-                    MapLoad(reader);
-                    CamLoad();
-                    CamLoad();
-                    CamLoad();
+                InvLoad(reader);
+                MapLoad(reader);
+                CamLoad();
+                CamLoad();
+                CamLoad();
 
-                    sgBufferCursor += 0x8;
+                sgBufferCursor += 0x8;
 
-                    FxLoad(reader);
+                FxLoad(reader);
 
-                    AudioLoad(reader);
-                    MapPickupLoad(reader);
-                }
+                AudioLoad(reader);
+                MapPickupLoad(reader);
             }
         }
 
@@ -899,11 +895,13 @@ namespace TRR_SaveMaster
                     {
                         int sVar4 = shift_amt;
                         int next_offset = byte_offset + 4;
+
                         if (next_offset + 4 > compressedData.Length)
                         {
                             Debug.WriteLine($"[UNPACK] Next offset 0x{next_offset:X} is out of bounds!");
                             break;
                         }
+
                         uVar3 = (uVar3 >> sVar4)
                             | (BitConverter.ToUInt32(compressedData, next_offset)
                                << ((32 - sVar4) & 0x1F));
@@ -936,6 +934,7 @@ namespace TRR_SaveMaster
                             Debug.WriteLine("[UNPACK] Output position exceeds buffer size!");
                             break;
                         }
+
                         output_buffer[output_pos++] = (byte)uVar3;
                         uVar7++;
                     }
@@ -1151,7 +1150,7 @@ namespace TRR_SaveMaster
             // Determine whose inventory to update
             List<InventoryItem> selectedInventory = cmbInventory.SelectedIndex == 1 ? invKurtis : invLara;
 
-            // Weapons (checkboxes)
+            // Weapons
             UpdateInventoryWeapon(selectedInventory, Inventory.MV9, chkMV9.Checked);
             UpdateInventoryWeapon(selectedInventory, Inventory.VPACKER, chkVPacker.Checked);
             UpdateInventoryWeapon(selectedInventory, Inventory.BORAN_X, chkBoranX.Checked);
@@ -1167,7 +1166,7 @@ namespace TRR_SaveMaster
             UpdateInventoryWeapon(selectedInventory, Inventory.VECTOR_R35_PAIR, chkVectorR35Pair.Checked);
             UpdateInventoryWeapon(selectedInventory, Inventory.CHIRUGAI_BLADE, chkChirugaiBlade.Checked);
 
-            // Health Items (quantifiable, can be removed when 0)
+            // Health Items
             UpdateInventoryHealthItem(selectedInventory, Inventory.CHOCOLATE_BAR, (Int32)nudChocolateBar.Value);
             UpdateInventoryHealthItem(selectedInventory, Inventory.SMALL_MEDIPACK, (Int32)nudSmallMedipack.Value);
             UpdateInventoryHealthItem(selectedInventory, Inventory.HEALTH_BANDAGES, (Int32)nudHealthBandages.Value);
@@ -1175,7 +1174,7 @@ namespace TRR_SaveMaster
             UpdateInventoryHealthItem(selectedInventory, Inventory.LARGE_HEALTH_PACK, (Int32)nudLargeHealthPack.Value);
             UpdateInventoryHealthItem(selectedInventory, Inventory.POISON_ANTIDOTE, (Int32)nudPoisonAntidote.Value);
 
-            // Ammo (separate handling)
+            // Ammo
             UpdateInventoryAmmo(selectedInventory, Inventory.MV9_AMMO, (Int32)nudMV9Ammo.Value);
             UpdateInventoryAmmo(selectedInventory, Inventory.VPACKER_AMMO, (Int32)nudVPackerAmmo.Value);
             UpdateInventoryAmmo(selectedInventory, Inventory.BORAN_X_AMMO, (Int32)nudBoranXAmmo.Value);
@@ -1188,7 +1187,7 @@ namespace TRR_SaveMaster
             UpdateInventoryAmmo(selectedInventory, Inventory.VIPER_SMG_AMMO, (Int32)nudViperSMGAmmo.Value);
             UpdateInventoryAmmo(selectedInventory, Inventory.MAG_VEGA_AMMO, (Int32)nudMagVegaAmmo.Value);
 
-            // Items (quantifiable, can be removed when 0)
+            // Items
             UpdateInventoryItem(selectedInventory, Inventory.GPS_SAVE_GAME, (Int32)nudGPSSaveGame.Value);
         }
 
