@@ -3745,7 +3745,7 @@ namespace TRR_SaveMaster
             this.tsmiPlayStation4,
             this.tsmiNintendoSwitch});
             this.tsmiPlatform.Name = "tsmiPlatform";
-            this.tsmiPlatform.Size = new System.Drawing.Size(149, 22);
+            this.tsmiPlatform.Size = new System.Drawing.Size(180, 22);
             this.tsmiPlatform.Text = "Platform";
             // 
             // tsmiPC
@@ -3777,13 +3777,13 @@ namespace TRR_SaveMaster
             // tsmiSettingsSeparator
             // 
             this.tsmiSettingsSeparator.Name = "tsmiSettingsSeparator";
-            this.tsmiSettingsSeparator.Size = new System.Drawing.Size(146, 6);
+            this.tsmiSettingsSeparator.Size = new System.Drawing.Size(177, 6);
             // 
             // tsmiAlwaysOnTop
             // 
             this.tsmiAlwaysOnTop.CheckOnClick = true;
             this.tsmiAlwaysOnTop.Name = "tsmiAlwaysOnTop";
-            this.tsmiAlwaysOnTop.Size = new System.Drawing.Size(149, 22);
+            this.tsmiAlwaysOnTop.Size = new System.Drawing.Size(180, 22);
             this.tsmiAlwaysOnTop.Text = "Always on top";
             this.tsmiAlwaysOnTop.Click += new System.EventHandler(this.tsmiAlwaysOnTop_Click);
             // 
@@ -3793,7 +3793,7 @@ namespace TRR_SaveMaster
             this.tsmiStatusBar.CheckOnClick = true;
             this.tsmiStatusBar.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiStatusBar.Name = "tsmiStatusBar";
-            this.tsmiStatusBar.Size = new System.Drawing.Size(149, 22);
+            this.tsmiStatusBar.Size = new System.Drawing.Size(180, 22);
             this.tsmiStatusBar.Text = "Status Bar";
             this.tsmiStatusBar.Click += new System.EventHandler(this.tsmiStatusBar_Click);
             // 
@@ -3802,15 +3802,15 @@ namespace TRR_SaveMaster
             this.tsmiAdvanced.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiAllowUnsafeMaxValues});
             this.tsmiAdvanced.Name = "tsmiAdvanced";
-            this.tsmiAdvanced.Size = new System.Drawing.Size(149, 22);
+            this.tsmiAdvanced.Size = new System.Drawing.Size(180, 22);
             this.tsmiAdvanced.Text = "Advanced";
             // 
             // tsmiAllowUnsafeMaxValues
             // 
             this.tsmiAllowUnsafeMaxValues.CheckOnClick = true;
             this.tsmiAllowUnsafeMaxValues.Name = "tsmiAllowUnsafeMaxValues";
-            this.tsmiAllowUnsafeMaxValues.Size = new System.Drawing.Size(302, 22);
-            this.tsmiAllowUnsafeMaxValues.Text = "Allow unsafe max values (may crash game)";
+            this.tsmiAllowUnsafeMaxValues.Size = new System.Drawing.Size(402, 22);
+            this.tsmiAllowUnsafeMaxValues.Text = "Allow unsafe max values for Tomb Raider VI (may crash game)";
             this.tsmiAllowUnsafeMaxValues.Click += new System.EventHandler(this.tsmiAllowUnsafeMaxValues_Click);
             // 
             // tsddbHelp
