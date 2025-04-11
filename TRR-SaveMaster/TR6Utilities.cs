@@ -60,21 +60,6 @@ namespace TRR_SaveMaster
         private const int INVENTORY_TYPE_HEALTH_ITEM = 4;
         private const int INVENTORY_TYPE_AMMO = 7;
 
-        // Actor DB
-        public class Actor
-        {
-            public int ID { get; set; }
-            public string Name { get; set; }
-            public bool IsPlayable { get; set; }
-
-            public Actor(int id, string name, bool isPlayable)
-            {
-                ID = id;
-                Name = name;
-                IsPlayable = isPlayable;
-            }
-        }
-
         // Entity types
         private const int ENTITY_TYPE_ACTOR = 2;
         private const int ENTITY_TYPE_OBJECT = 0;
