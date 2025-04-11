@@ -41,6 +41,9 @@ namespace TRR_SaveMaster
         private bool backupBeforeSaving = false;
         private int SELECTED_TAB;
 
+        // Buffer
+        private byte[] decompressedBuffer = null;
+
         public PositionForm(ToolStripStatusLabel slblStatus, bool backupBeforeSaving, string savegamePath, int SELECTED_TAB)
         {
             InitializeComponent();
@@ -1670,7 +1673,6 @@ namespace TRR_SaveMaster
                     UInt16 compressedBlockSize = ReadUInt16(savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
                     byte[] compressedBlockData = ReadBytes(savegamePath, savegameOffset + COMPRESSED_BLOCK_START_OFFSET, compressedBlockSize);
 
-                    byte[] decompressedBuffer = new byte[0];   // Clear buffer
                     decompressedBuffer = TR6.Unpack(compressedBlockData);
 
                     using (MemoryStream ms = new MemoryStream(decompressedBuffer))
@@ -1755,9 +1757,6 @@ namespace TRR_SaveMaster
 
                     UInt16 compressedBlockSize = ReadUInt16(savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
                     byte[] compressedBlockData = ReadBytes(savegamePath, savegameOffset + COMPRESSED_BLOCK_START_OFFSET, compressedBlockSize);
-
-                    byte[] decompressedBuffer = new byte[0];
-                    decompressedBuffer = TR6.Unpack(compressedBlockData);
 
                     using (MemoryStream ms = new MemoryStream(decompressedBuffer))
                     using (BinaryWriter writer = new BinaryWriter(ms))
