@@ -78,9 +78,6 @@ namespace TRR_SaveMaster
             TR3.SetPlatform(platform);
 
             this.Text = $"Tomb Raider Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(platform)})";
-
-            // BETA only
-            //tabGame.TabPages.Remove(tpTR6);
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
