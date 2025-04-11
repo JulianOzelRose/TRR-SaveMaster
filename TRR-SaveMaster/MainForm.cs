@@ -2154,9 +2154,8 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == TAB_TR6 && cmbSavegamesTR6.SelectedIndex != -1)
             {
-                string warningMessage = $"This feature is currently under construction.";
-                MessageBox.Show(warningMessage, "Feature Under Construction", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                selectedSavegame = cmbSavegamesTR6.Items[cmbSavegamesTR6.SelectedIndex] as Savegame;
+                savegamePresent = TR6.IsSavegamePresent();
             }
 
             if (!savegamePresent)

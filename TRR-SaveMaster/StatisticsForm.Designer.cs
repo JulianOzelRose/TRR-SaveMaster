@@ -31,19 +31,27 @@ namespace TRR_SaveMaster
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StatisticsForm));
             this.grpSavegameStatistics = new System.Windows.Forms.GroupBox();
+            this.lblSlash3 = new System.Windows.Forms.Label();
+            this.nudChocobarsFoundMax = new System.Windows.Forms.NumericUpDown();
+            this.lblSlash2 = new System.Windows.Forms.Label();
+            this.nudHealthItemsFoundMax = new System.Windows.Forms.NumericUpDown();
+            this.lblChocobarsFound = new System.Windows.Forms.Label();
+            this.lblHealthItemsFound = new System.Windows.Forms.Label();
+            this.nudChocobarsFound = new System.Windows.Forms.NumericUpDown();
+            this.nudHealthItemsFound = new System.Windows.Forms.NumericUpDown();
             this.lblVesselsBroken = new System.Windows.Forms.Label();
-            this.nudVesselsBroken = new System.Windows.Forms.NumericUpDown();
             this.lblCrystalsUsed = new System.Windows.Forms.Label();
+            this.lblDistanceTravelled = new System.Windows.Forms.Label();
             this.nudCrystalsUsed = new System.Windows.Forms.NumericUpDown();
+            this.nudVesselsBroken = new System.Windows.Forms.NumericUpDown();
             this.lblColon2 = new System.Windows.Forms.Label();
+            this.nudDistanceTravelled = new System.Windows.Forms.NumericUpDown();
+            this.lblDistanceTravelledUnit = new System.Windows.Forms.Label();
             this.lblColon = new System.Windows.Forms.Label();
             this.nudSeconds = new System.Windows.Forms.NumericUpDown();
             this.nudMinutes = new System.Windows.Forms.NumericUpDown();
             this.nudHours = new System.Windows.Forms.NumericUpDown();
             this.lblTimeTaken = new System.Windows.Forms.Label();
-            this.lblDistanceTravelledUnit = new System.Windows.Forms.Label();
-            this.lblDistanceTravelled = new System.Windows.Forms.Label();
-            this.nudDistanceTravelled = new System.Windows.Forms.NumericUpDown();
             this.lblSlash = new System.Windows.Forms.Label();
             this.nudHits = new System.Windows.Forms.NumericUpDown();
             this.nudPickupsMax = new System.Windows.Forms.NumericUpDown();
@@ -66,12 +74,16 @@ namespace TRR_SaveMaster
             this.btnClose = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.grpSavegameStatistics.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudVesselsBroken)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudChocobarsFoundMax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHealthItemsFoundMax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudChocobarsFound)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHealthItemsFound)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrystalsUsed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudVesselsBroken)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDistanceTravelled)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSeconds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMinutes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHours)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudDistanceTravelled)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHits)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPickupsMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSecretsFoundMax)).BeginInit();
@@ -85,19 +97,27 @@ namespace TRR_SaveMaster
             // 
             // grpSavegameStatistics
             // 
+            this.grpSavegameStatistics.Controls.Add(this.lblSlash3);
+            this.grpSavegameStatistics.Controls.Add(this.nudChocobarsFoundMax);
+            this.grpSavegameStatistics.Controls.Add(this.lblSlash2);
+            this.grpSavegameStatistics.Controls.Add(this.nudHealthItemsFoundMax);
+            this.grpSavegameStatistics.Controls.Add(this.lblChocobarsFound);
+            this.grpSavegameStatistics.Controls.Add(this.lblHealthItemsFound);
+            this.grpSavegameStatistics.Controls.Add(this.nudChocobarsFound);
+            this.grpSavegameStatistics.Controls.Add(this.nudHealthItemsFound);
             this.grpSavegameStatistics.Controls.Add(this.lblVesselsBroken);
-            this.grpSavegameStatistics.Controls.Add(this.nudVesselsBroken);
             this.grpSavegameStatistics.Controls.Add(this.lblCrystalsUsed);
+            this.grpSavegameStatistics.Controls.Add(this.lblDistanceTravelled);
             this.grpSavegameStatistics.Controls.Add(this.nudCrystalsUsed);
+            this.grpSavegameStatistics.Controls.Add(this.nudVesselsBroken);
             this.grpSavegameStatistics.Controls.Add(this.lblColon2);
+            this.grpSavegameStatistics.Controls.Add(this.nudDistanceTravelled);
+            this.grpSavegameStatistics.Controls.Add(this.lblDistanceTravelledUnit);
             this.grpSavegameStatistics.Controls.Add(this.lblColon);
             this.grpSavegameStatistics.Controls.Add(this.nudSeconds);
             this.grpSavegameStatistics.Controls.Add(this.nudMinutes);
             this.grpSavegameStatistics.Controls.Add(this.nudHours);
             this.grpSavegameStatistics.Controls.Add(this.lblTimeTaken);
-            this.grpSavegameStatistics.Controls.Add(this.lblDistanceTravelledUnit);
-            this.grpSavegameStatistics.Controls.Add(this.lblDistanceTravelled);
-            this.grpSavegameStatistics.Controls.Add(this.nudDistanceTravelled);
             this.grpSavegameStatistics.Controls.Add(this.lblSlash);
             this.grpSavegameStatistics.Controls.Add(this.nudHits);
             this.grpSavegameStatistics.Controls.Add(this.nudPickupsMax);
@@ -118,33 +138,110 @@ namespace TRR_SaveMaster
             this.grpSavegameStatistics.Controls.Add(this.lblKills);
             this.grpSavegameStatistics.Location = new System.Drawing.Point(12, 5);
             this.grpSavegameStatistics.Name = "grpSavegameStatistics";
-            this.grpSavegameStatistics.Size = new System.Drawing.Size(365, 293);
+            this.grpSavegameStatistics.Size = new System.Drawing.Size(365, 346);
             this.grpSavegameStatistics.TabIndex = 8;
             this.grpSavegameStatistics.TabStop = false;
+            // 
+            // lblSlash3
+            // 
+            this.lblSlash3.AutoSize = true;
+            this.lblSlash3.Location = new System.Drawing.Point(207, 261);
+            this.lblSlash3.Name = "lblSlash3";
+            this.lblSlash3.Size = new System.Drawing.Size(12, 13);
+            this.lblSlash3.TabIndex = 50;
+            this.lblSlash3.Text = "/";
+            // 
+            // nudChocobarsFoundMax
+            // 
+            this.nudChocobarsFoundMax.Enabled = false;
+            this.nudChocobarsFoundMax.Location = new System.Drawing.Point(224, 257);
+            this.nudChocobarsFoundMax.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.nudChocobarsFoundMax.Name = "nudChocobarsFoundMax";
+            this.nudChocobarsFoundMax.Size = new System.Drawing.Size(51, 20);
+            this.nudChocobarsFoundMax.TabIndex = 49;
+            // 
+            // lblSlash2
+            // 
+            this.lblSlash2.AutoSize = true;
+            this.lblSlash2.Location = new System.Drawing.Point(207, 235);
+            this.lblSlash2.Name = "lblSlash2";
+            this.lblSlash2.Size = new System.Drawing.Size(12, 13);
+            this.lblSlash2.TabIndex = 48;
+            this.lblSlash2.Text = "/";
+            // 
+            // nudHealthItemsFoundMax
+            // 
+            this.nudHealthItemsFoundMax.Enabled = false;
+            this.nudHealthItemsFoundMax.Location = new System.Drawing.Point(224, 231);
+            this.nudHealthItemsFoundMax.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.nudHealthItemsFoundMax.Name = "nudHealthItemsFoundMax";
+            this.nudHealthItemsFoundMax.Size = new System.Drawing.Size(51, 20);
+            this.nudHealthItemsFoundMax.TabIndex = 47;
+            // 
+            // lblChocobarsFound
+            // 
+            this.lblChocobarsFound.AutoSize = true;
+            this.lblChocobarsFound.Location = new System.Drawing.Point(11, 257);
+            this.lblChocobarsFound.Name = "lblChocobarsFound";
+            this.lblChocobarsFound.Size = new System.Drawing.Size(94, 13);
+            this.lblChocobarsFound.TabIndex = 46;
+            this.lblChocobarsFound.Text = "Chocobars Found:";
+            // 
+            // lblHealthItemsFound
+            // 
+            this.lblHealthItemsFound.AutoSize = true;
+            this.lblHealthItemsFound.Location = new System.Drawing.Point(11, 231);
+            this.lblHealthItemsFound.Name = "lblHealthItemsFound";
+            this.lblHealthItemsFound.Size = new System.Drawing.Size(102, 13);
+            this.lblHealthItemsFound.TabIndex = 45;
+            this.lblHealthItemsFound.Text = "Health Items Found:";
+            // 
+            // nudChocobarsFound
+            // 
+            this.nudChocobarsFound.Enabled = false;
+            this.nudChocobarsFound.Location = new System.Drawing.Point(149, 257);
+            this.nudChocobarsFound.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.nudChocobarsFound.Name = "nudChocobarsFound";
+            this.nudChocobarsFound.Size = new System.Drawing.Size(51, 20);
+            this.nudChocobarsFound.TabIndex = 44;
+            this.nudChocobarsFound.ValueChanged += new System.EventHandler(this.nudChocobarsFound_ValueChanged);
+            this.nudChocobarsFound.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudChocobarsFound_KeyPress);
+            // 
+            // nudHealthItemsFound
+            // 
+            this.nudHealthItemsFound.Enabled = false;
+            this.nudHealthItemsFound.Location = new System.Drawing.Point(149, 231);
+            this.nudHealthItemsFound.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.nudHealthItemsFound.Name = "nudHealthItemsFound";
+            this.nudHealthItemsFound.Size = new System.Drawing.Size(51, 20);
+            this.nudHealthItemsFound.TabIndex = 43;
+            this.nudHealthItemsFound.ValueChanged += new System.EventHandler(this.nudHealthItemsFound_ValueChanged);
+            this.nudHealthItemsFound.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudHealthItemsFound_KeyPress);
             // 
             // lblVesselsBroken
             // 
             this.lblVesselsBroken.AutoSize = true;
-            this.lblVesselsBroken.Location = new System.Drawing.Point(11, 257);
+            this.lblVesselsBroken.Location = new System.Drawing.Point(11, 309);
             this.lblVesselsBroken.Name = "lblVesselsBroken";
             this.lblVesselsBroken.Size = new System.Drawing.Size(83, 13);
             this.lblVesselsBroken.TabIndex = 42;
             this.lblVesselsBroken.Text = "Vessels Broken:";
-            // 
-            // nudVesselsBroken
-            // 
-            this.nudVesselsBroken.Enabled = false;
-            this.nudVesselsBroken.Location = new System.Drawing.Point(149, 257);
-            this.nudVesselsBroken.Maximum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            0});
-            this.nudVesselsBroken.Name = "nudVesselsBroken";
-            this.nudVesselsBroken.Size = new System.Drawing.Size(51, 20);
-            this.nudVesselsBroken.TabIndex = 41;
-            this.nudVesselsBroken.ValueChanged += new System.EventHandler(this.nudVesselsBroken_ValueChanged);
-            this.nudVesselsBroken.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudVesselsBroken_KeyPress);
             // 
             // lblCrystalsUsed
             // 
@@ -154,6 +251,15 @@ namespace TRR_SaveMaster
             this.lblCrystalsUsed.Size = new System.Drawing.Size(74, 13);
             this.lblCrystalsUsed.TabIndex = 40;
             this.lblCrystalsUsed.Text = "Crystals Used:";
+            // 
+            // lblDistanceTravelled
+            // 
+            this.lblDistanceTravelled.AutoSize = true;
+            this.lblDistanceTravelled.Location = new System.Drawing.Point(11, 283);
+            this.lblDistanceTravelled.Name = "lblDistanceTravelled";
+            this.lblDistanceTravelled.Size = new System.Drawing.Size(99, 13);
+            this.lblDistanceTravelled.TabIndex = 31;
+            this.lblDistanceTravelled.Text = "Distance Travelled:";
             // 
             // nudCrystalsUsed
             // 
@@ -169,6 +275,21 @@ namespace TRR_SaveMaster
             this.nudCrystalsUsed.ValueChanged += new System.EventHandler(this.nudCrystalsUsed_ValueChanged);
             this.nudCrystalsUsed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudCrystalsUsed_KeyPress);
             // 
+            // nudVesselsBroken
+            // 
+            this.nudVesselsBroken.Enabled = false;
+            this.nudVesselsBroken.Location = new System.Drawing.Point(149, 309);
+            this.nudVesselsBroken.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudVesselsBroken.Name = "nudVesselsBroken";
+            this.nudVesselsBroken.Size = new System.Drawing.Size(51, 20);
+            this.nudVesselsBroken.TabIndex = 41;
+            this.nudVesselsBroken.ValueChanged += new System.EventHandler(this.nudVesselsBroken_ValueChanged);
+            this.nudVesselsBroken.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudVesselsBroken_KeyPress);
+            // 
             // lblColon2
             // 
             this.lblColon2.AutoSize = true;
@@ -177,6 +298,35 @@ namespace TRR_SaveMaster
             this.lblColon2.Size = new System.Drawing.Size(10, 13);
             this.lblColon2.TabIndex = 38;
             this.lblColon2.Text = ":";
+            // 
+            // nudDistanceTravelled
+            // 
+            this.nudDistanceTravelled.DecimalPlaces = 2;
+            this.nudDistanceTravelled.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.nudDistanceTravelled.Location = new System.Drawing.Point(149, 283);
+            this.nudDistanceTravelled.Maximum = new decimal(new int[] {
+            -1,
+            0,
+            0,
+            0});
+            this.nudDistanceTravelled.Name = "nudDistanceTravelled";
+            this.nudDistanceTravelled.Size = new System.Drawing.Size(51, 20);
+            this.nudDistanceTravelled.TabIndex = 30;
+            this.nudDistanceTravelled.ValueChanged += new System.EventHandler(this.nudDistanceTravelled_ValueChanged);
+            this.nudDistanceTravelled.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudDistanceTravelled_KeyPress);
+            // 
+            // lblDistanceTravelledUnit
+            // 
+            this.lblDistanceTravelledUnit.AutoSize = true;
+            this.lblDistanceTravelledUnit.Location = new System.Drawing.Point(207, 287);
+            this.lblDistanceTravelledUnit.Name = "lblDistanceTravelledUnit";
+            this.lblDistanceTravelledUnit.Size = new System.Drawing.Size(15, 13);
+            this.lblDistanceTravelledUnit.TabIndex = 32;
+            this.lblDistanceTravelledUnit.Text = "m";
             // 
             // lblColon
             // 
@@ -237,44 +387,6 @@ namespace TRR_SaveMaster
             this.lblTimeTaken.Size = new System.Drawing.Size(67, 13);
             this.lblTimeTaken.TabIndex = 33;
             this.lblTimeTaken.Text = "Time Taken:";
-            // 
-            // lblDistanceTravelledUnit
-            // 
-            this.lblDistanceTravelledUnit.AutoSize = true;
-            this.lblDistanceTravelledUnit.Location = new System.Drawing.Point(207, 235);
-            this.lblDistanceTravelledUnit.Name = "lblDistanceTravelledUnit";
-            this.lblDistanceTravelledUnit.Size = new System.Drawing.Size(15, 13);
-            this.lblDistanceTravelledUnit.TabIndex = 32;
-            this.lblDistanceTravelledUnit.Text = "m";
-            // 
-            // lblDistanceTravelled
-            // 
-            this.lblDistanceTravelled.AutoSize = true;
-            this.lblDistanceTravelled.Location = new System.Drawing.Point(11, 231);
-            this.lblDistanceTravelled.Name = "lblDistanceTravelled";
-            this.lblDistanceTravelled.Size = new System.Drawing.Size(99, 13);
-            this.lblDistanceTravelled.TabIndex = 31;
-            this.lblDistanceTravelled.Text = "Distance Travelled:";
-            // 
-            // nudDistanceTravelled
-            // 
-            this.nudDistanceTravelled.DecimalPlaces = 2;
-            this.nudDistanceTravelled.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.nudDistanceTravelled.Location = new System.Drawing.Point(149, 231);
-            this.nudDistanceTravelled.Maximum = new decimal(new int[] {
-            -1,
-            0,
-            0,
-            0});
-            this.nudDistanceTravelled.Name = "nudDistanceTravelled";
-            this.nudDistanceTravelled.Size = new System.Drawing.Size(51, 20);
-            this.nudDistanceTravelled.TabIndex = 30;
-            this.nudDistanceTravelled.ValueChanged += new System.EventHandler(this.nudDistanceTravelled_ValueChanged);
-            this.nudDistanceTravelled.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudDistanceTravelled_KeyPress);
             // 
             // lblSlash
             // 
@@ -469,9 +581,9 @@ namespace TRR_SaveMaster
             this.lblAmmoUsedHits.AutoSize = true;
             this.lblAmmoUsedHits.Location = new System.Drawing.Point(11, 179);
             this.lblAmmoUsedHits.Name = "lblAmmoUsedHits";
-            this.lblAmmoUsedHits.Size = new System.Drawing.Size(90, 13);
+            this.lblAmmoUsedHits.Size = new System.Drawing.Size(96, 13);
             this.lblAmmoUsedHits.TabIndex = 12;
-            this.lblAmmoUsedHits.Text = "Ammo Used/Hits:";
+            this.lblAmmoUsedHits.Text = "Ammo Used / Hits:";
             // 
             // lblPickups
             // 
@@ -494,7 +606,7 @@ namespace TRR_SaveMaster
             // btnSave
             // 
             this.btnSave.Enabled = false;
-            this.btnSave.Location = new System.Drawing.Point(302, 304);
+            this.btnSave.Location = new System.Drawing.Point(302, 357);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 9;
@@ -504,7 +616,7 @@ namespace TRR_SaveMaster
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(140, 304);
+            this.btnClose.Location = new System.Drawing.Point(140, 357);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 11;
@@ -515,7 +627,7 @@ namespace TRR_SaveMaster
             // btnCancel
             // 
             this.btnCancel.Enabled = false;
-            this.btnCancel.Location = new System.Drawing.Point(221, 304);
+            this.btnCancel.Location = new System.Drawing.Point(221, 357);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 12;
@@ -527,7 +639,7 @@ namespace TRR_SaveMaster
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(389, 335);
+            this.ClientSize = new System.Drawing.Size(389, 387);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnSave);
@@ -544,12 +656,16 @@ namespace TRR_SaveMaster
             this.Load += new System.EventHandler(this.StatisticsForm_Load);
             this.grpSavegameStatistics.ResumeLayout(false);
             this.grpSavegameStatistics.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudVesselsBroken)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudChocobarsFoundMax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHealthItemsFoundMax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudChocobarsFound)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHealthItemsFound)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrystalsUsed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudVesselsBroken)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDistanceTravelled)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSeconds)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMinutes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHours)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudDistanceTravelled)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHits)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPickupsMax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSecretsFoundMax)).EndInit();
@@ -600,5 +716,13 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.NumericUpDown nudCrystalsUsed;
         private System.Windows.Forms.Label lblVesselsBroken;
         private System.Windows.Forms.NumericUpDown nudVesselsBroken;
+        private System.Windows.Forms.NumericUpDown nudHealthItemsFound;
+        private System.Windows.Forms.NumericUpDown nudChocobarsFound;
+        private System.Windows.Forms.Label lblChocobarsFound;
+        private System.Windows.Forms.Label lblHealthItemsFound;
+        private System.Windows.Forms.Label lblSlash3;
+        private System.Windows.Forms.NumericUpDown nudChocobarsFoundMax;
+        private System.Windows.Forms.Label lblSlash2;
+        private System.Windows.Forms.NumericUpDown nudHealthItemsFoundMax;
     }
 }

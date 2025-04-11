@@ -21,6 +21,8 @@ namespace TRR_SaveMaster
         private int DISTANCE_TRAVELLED_OFFSET;
         private int TIME_TAKEN_OFFSET;
         private int VESSELS_BROKEN_OFFSET;
+        private int HEALTH_ITEMS_FOUND_OFFSET;
+        private int CHOCOBARS_FOUND_OFFSET;
 
         // Tabs
         private const int TAB_TR1 = 0;
@@ -28,6 +30,7 @@ namespace TRR_SaveMaster
         private const int TAB_TR3 = 2;
         private const int TAB_TR4 = 3;
         private const int TAB_TR5 = 4;
+        private const int TAB_TR6 = 5;
 
         // Savegame
         private Savegame selectedSavegame;
@@ -137,6 +140,19 @@ namespace TRR_SaveMaster
                 SECRETS_FOUND_OFFSET = 0x246;
                 MEDIPACKS_USED_OFFSET = 0x247;
             }
+            else if (SELECTED_TAB == TAB_TR6)
+            {
+                LEVEL_INDEX_OFFSET = 0x14;
+                DISTANCE_TRAVELLED_OFFSET = 0x244;
+                TIME_TAKEN_OFFSET = 0x240;
+                AMMO_USED_OFFSET = 0x248;
+                HITS_OFFSET = 0x24C;
+                PICKUPS_OFFSET = 0x250;
+                HEALTH_ITEMS_FOUND_OFFSET = 0x252;
+                CHOCOBARS_FOUND_OFFSET = 0x254;
+                KILLS_OFFSET = 0x256;
+                MEDIPACKS_USED_OFFSET = 0x258;
+            }
         }
 
         private void SetParams()
@@ -244,6 +260,42 @@ namespace TRR_SaveMaster
                 lblOf2.Visible = false;
                 lblSlash.Visible = false;
             }
+            else if (SELECTED_TAB == TAB_TR6)
+            {
+                nudAmmoUsed.Maximum = Int32.MaxValue;
+                nudAmmoUsed.Minimum = 0;
+
+                nudHits.Maximum = Int32.MaxValue;
+                nudHits.Minimum = 0;
+
+                nudMedipacksUsed.Maximum = Byte.MaxValue;
+                nudMedipacksUsed.Minimum = 0;
+
+                nudKills.Maximum = UInt16.MaxValue;
+                nudKills.Minimum = 0;
+
+                nudSecretsFound.Enabled = false;
+                nudCrystalsFound.Enabled = false;
+                nudCrystalsUsed.Enabled = false;
+
+                lblMedipacksUsed.Text = "Health Restored:";
+                nudMedipacksUsed.Increment = 1;
+                nudMedipacksUsed.DecimalPlaces = 0;
+
+                nudChocobarsFound.Enabled = true;
+                nudHealthItemsFound.Enabled = true;
+
+                nudVesselsBroken.Enabled = false;
+
+                nudPickupsMax.Value = pickupsFoundMaxTR6[levelIndex];
+                nudPickups.Maximum = nudPickupsMax.Value;
+
+                nudHealthItemsFoundMax.Value = healthItemsFoundMaxTR6[levelIndex];
+                nudHealthItemsFound.Maximum = nudHealthItemsFoundMax.Value;
+
+                nudChocobarsFoundMax.Value = chocobarsFoundMaxTR6[levelIndex];
+                nudChocobarsFound.Maximum = nudChocobarsFoundMax.Value;
+            }
         }
 
         private bool IsTRXSavegame()
@@ -304,6 +356,19 @@ namespace TRR_SaveMaster
                         nudVesselsBroken.Value = GetNumVesselsBroken();
                     }
                 }
+                else if (SELECTED_TAB == TAB_TR6)
+                {
+                    nudAmmoUsed.Value = GetAmmoUsedTR6();
+                    nudMedipacksUsed.Value = GetHealthRestored();
+                    nudHits.Value = GetNumHits();
+                    nudKills.Value = GetNumKillsTR6();
+                    nudPickups.Value = GetNumPickupsTR6();
+                    nudHealthItemsFound.Value = GetNumHealthItemsFound();
+                    nudChocobarsFound.Value = GetNumChocobarsFound();
+
+                    DisplayDistanceTravelledTRX2();
+                    DisplayTimeTakenTR6();
+                }
             }
             catch (Exception ex)
             {
@@ -363,6 +428,20 @@ namespace TRR_SaveMaster
         {
             Int32 timeTakenRaw = GetTimeTaken();
             Int32 timeTakenSeconds = timeTakenRaw / 30;
+            Int32 remainingSeconds = timeTakenSeconds % 60;
+            Int32 totalMinutes = timeTakenSeconds / 60;
+            Int32 remainingMinutes = totalMinutes % 60;
+            Int32 totalHours = totalMinutes / 60;
+
+            nudHours.Value = totalHours;
+            nudMinutes.Value = remainingMinutes;
+            nudSeconds.Value = remainingSeconds;
+        }
+
+        private void DisplayTimeTakenTR6()
+        {
+            Int32 timeTakenRaw = GetTimeTaken();
+            Int32 timeTakenSeconds = timeTakenRaw / 60;
             Int32 remainingSeconds = timeTakenSeconds % 60;
             Int32 totalMinutes = timeTakenSeconds / 60;
             Int32 remainingMinutes = totalMinutes % 60;
@@ -533,6 +612,123 @@ namespace TRR_SaveMaster
             { 19, 60 },  // The Hive
         };
 
+        private readonly Dictionary<byte, int> pickupsFoundMaxTR6 = new Dictionary<byte, int>
+        {
+            {  0, 19  },  // Parisian Back Streets
+            {  1, 11  },  // Derelict Apartment Block
+            {  2, 5   },  // Margot Carvier's Apartment
+            {  3, 14  },  // Industrial Roof Tops
+            {  4, 2   },  // Parisian Ghetto (Part 1)
+            {  5, 0   },  // Parisian Ghetto (Part 2)
+            {  6, 4   },  // Parisian Ghetto (Part 3)
+            {  7, 35  },  // The Serpent Rouge
+            {  8, 9   },  // Rennes' Pawnshop
+            {  9, 0   },  // Willowtree Herbalist
+            { 10, 5   },  // St. Aicard's Church
+            { 11, 2   },  // Cafe Metro
+            { 12, 7   },  // St. Aicard's Graveyard
+            { 13, 8   },  // Bouchard's Hideout
+            { 14, 6   },  // Louvre Storm Drains
+            { 15, 12  },  // Louvre Galleries
+            { 16, 10  },  // Galleries Under Siege
+            { 17, 5   },  // Tomb of Ancients
+            { 18, 4   },  // The Archaeological Dig
+            { 19, 36  },  // Von Croy's Apartment
+            { 20, 8   },  // The Monstrum Crimescene
+            { 21, 20  },  // The Strahov Fortress
+            { 22, 26  },  // The Bio-Research Facility
+            { 23, 3   },  // Aquatic Research Area
+            { 24, 13  },  // The Sanitarium
+            { 25, 10  },  // Maximum Containment Area
+            { 26, 5   },  // The Vault of Trophies
+            { 27, 2   },  // Boaz Returns
+            { 28, 7   },  // Eckhardt's Lab
+            { 29, 1   },  // The Lost Domain
+            { 30, 17  },  // The Hall of Seasons
+            { 31, 8   },  // Neptune's Hall
+            { 32, 4   },  // Wrath of the Beast
+            { 33, 3   },  // The Sanctuary of Flame
+            { 34, 6   },  // The Breath of Hades
+        };
+
+        private readonly Dictionary<byte, int> healthItemsFoundMaxTR6 = new Dictionary<byte, int>
+        {
+            {  0, 5   },  // Parisian Back Streets
+            {  1, 3   },  // Derelict Apartment Block
+            {  2, 1   },  // Margot Carvier's Apartment
+            {  3, 5   },  // Industrial Roof Tops
+            {  4, 1   },  // Parisian Ghetto (Part 1)
+            {  5, 0   },  // Parisian Ghetto (Part 2)
+            {  6, 0   },  // Parisian Ghetto (Part 3)
+            {  7, 4   },  // The Serpent Rouge
+            {  8, 0   },  // Rennes' Pawnshop
+            {  9, 0   },  // Willowtree Herbalist
+            { 10, 1   },  // St. Aicard's Church
+            { 11, 0   },  // Cafe Metro
+            { 12, 3   },  // St. Aicard's Graveyard
+            { 13, 2   },  // Bouchard's Hideout
+            { 14, 1   },  // Louvre Storm Drains
+            { 15, 5   },  // Louvre Galleries
+            { 16, 1   },  // Galleries Under Siege
+            { 17, 2   },  // Tomb of Ancients
+            { 18, 0   },  // The Archaeological Dig
+            { 19, 6   },  // Von Croy's Apartment
+            { 20, 2   },  // The Monstrum Crimescene
+            { 21, 2   },  // The Strahov Fortress
+            { 22, 7   },  // The Bio-Research Facility
+            { 23, 1   },  // Aquatic Research Area
+            { 24, 2   },  // The Sanitarium
+            { 25, 1   },  // Maximum Containment Area
+            { 26, 2   },  // The Vault of Trophies
+            { 27, 0   },  // Boaz Returns
+            { 28, 2   },  // Eckhardt's Lab
+            { 29, 1   },  // The Lost Domain
+            { 30, 4   },  // The Hall of Seasons
+            { 31, 3   },  // Neptune's Hall
+            { 32, 1   },  // Wrath of the Beast
+            { 33, 1   },  // The Sanctuary of Flame
+            { 34, 1   },  // The Breath of Hades
+        };
+
+        private readonly Dictionary<byte, int> chocobarsFoundMaxTR6 = new Dictionary<byte, int>
+        {
+            {  0, 3   },  // Parisian Back Streets
+            {  1, 1   },  // Derelict Apartment Block
+            {  2, 0   },  // Margot Carvier's Apartment
+            {  3, 1   },  // Industrial Roof Tops
+            {  4, 1   },  // Parisian Ghetto (Part 1)
+            {  5, 0   },  // Parisian Ghetto (Part 2)
+            {  6, 0   },  // Parisian Ghetto (Part 3)
+            {  7, 4   },  // The Serpent Rouge
+            {  8, 0   },  // Rennes' Pawnshop
+            {  9, 0   },  // Willowtree Herbalist
+            { 10, 0   },  // St. Aicard's Church
+            { 11, 0   },  // Cafe Metro
+            { 12, 1   },  // St. Aicard's Graveyard
+            { 13, 0   },  // Bouchard's Hideout
+            { 14, 1   },  // Louvre Storm Drains
+            { 15, 0   },  // Louvre Galleries
+            { 16, 0   },  // Galleries Under Siege
+            { 17, 0   },  // Tomb of Ancients
+            { 18, 0   },  // The Archaeological Dig
+            { 19, 1   },  // Von Croy's Apartment
+            { 20, 0   },  // The Monstrum Crimescene
+            { 21, 1   },  // The Strahov Fortress
+            { 22, 0   },  // The Bio-Research Facility
+            { 23, 0   },  // Aquatic Research Area
+            { 24, 3   },  // The Sanitarium
+            { 25, 2   },  // Maximum Containment Area
+            { 26, 0   },  // The Vault of Trophies
+            { 27, 0   },  // Boaz Returns
+            { 28, 0   },  // Eckhardt's Lab
+            { 29, 0   },  // The Lost Domain
+            { 30, 0   },  // The Hall of Seasons
+            { 31, 0   },  // Neptune's Hall
+            { 32, 0   },  // Wrath of the Beast
+            { 33, 0   },  // The Sanctuary of Flame
+            { 34, 0   },  // The Breath of Hades
+        };
+
         private byte ReadByte(int offset)
         {
             using (FileStream saveFile = new FileStream(savegamePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
@@ -676,6 +872,11 @@ namespace TRR_SaveMaster
             return ReadInt16(savegameOffset + AMMO_USED_OFFSET);
         }
 
+        private Int32 GetAmmoUsedTR6()
+        {
+            return ReadInt32(savegameOffset + AMMO_USED_OFFSET);
+        }
+
         private Int32 GetNumHits()
         {
             return ReadInt32(savegameOffset + HITS_OFFSET);
@@ -687,6 +888,11 @@ namespace TRR_SaveMaster
         }
 
         private UInt16 GetNumKillsTRX2()
+        {
+            return ReadUInt16(savegameOffset + KILLS_OFFSET);
+        }
+
+        private UInt16 GetNumKillsTR6()
         {
             return ReadUInt16(savegameOffset + KILLS_OFFSET);
         }
@@ -735,6 +941,11 @@ namespace TRR_SaveMaster
             return ReadInt8(savegameOffset + PICKUPS_OFFSET);
         }
 
+        private UInt16 GetNumPickupsTR6()
+        {
+            return ReadUInt16(savegameOffset + PICKUPS_OFFSET);
+        }
+
         private Int32 GetNumPickupsTRX2()
         {
             return ReadInt32(savegameOffset + PICKUPS_OFFSET);
@@ -746,6 +957,21 @@ namespace TRR_SaveMaster
         }
 
         private byte GetNumMedipacksUsedTRX2()
+        {
+            return ReadByte(savegameOffset + MEDIPACKS_USED_OFFSET);
+        }
+
+        private UInt16 GetNumHealthItemsFound()
+        {
+            return ReadUInt16(savegameOffset + HEALTH_ITEMS_FOUND_OFFSET);
+        }
+
+        private byte GetNumChocobarsFound()
+        {
+            return ReadByte(savegameOffset + CHOCOBARS_FOUND_OFFSET);
+        }
+
+        private byte GetHealthRestored()
         {
             return ReadByte(savegameOffset + MEDIPACKS_USED_OFFSET);
         }
@@ -775,6 +1001,11 @@ namespace TRR_SaveMaster
             WriteInt16(savegameOffset + AMMO_USED_OFFSET, value);
         }
 
+        private void WriteAmmoUsedTR6(Int32 value)
+        {
+            WriteInt32(savegameOffset + AMMO_USED_OFFSET, value);
+        }
+
         private void WriteNumHits(Int32 value)
         {
             WriteInt32(savegameOffset + HITS_OFFSET, value);
@@ -788,6 +1019,16 @@ namespace TRR_SaveMaster
         private void WriteNumKillsTRX2(UInt16 value)
         {
             WriteUInt16(savegameOffset + KILLS_OFFSET, value);
+        }
+
+        private void WriteNumKillsTR6(UInt16 value)
+        {
+            WriteUInt16(savegameOffset + KILLS_OFFSET, value);
+        }
+
+        private void WriteHealthRestored(byte value)
+        {
+            WriteByte(savegameOffset + MEDIPACKS_USED_OFFSET, value);
         }
 
         private void WriteNumSecretsFoundTRX(UInt16 value)
@@ -815,6 +1056,11 @@ namespace TRR_SaveMaster
         private void WriteNumPickupsTRX2(Int32 value)
         {
             WriteInt32(savegameOffset + PICKUPS_OFFSET, value);
+        }
+
+        private void WriteNumPickupsTR6(UInt16 value)
+        {
+            WriteUInt16(savegameOffset + PICKUPS_OFFSET, value);
         }
 
         private void WriteNumMedipacksUsedTRX(sbyte value)
@@ -866,6 +1112,16 @@ namespace TRR_SaveMaster
         private void WriteVesselsBroken(Int32 value)
         {
             WriteInt32(savegameOffset + VESSELS_BROKEN_OFFSET, value);
+        }
+
+        private void WriteNumHealthItemsFound(UInt16 value)
+        {
+            WriteUInt16(savegameOffset + HEALTH_ITEMS_FOUND_OFFSET, value);
+        }
+
+        private void WriteNumChocobarsFound(byte value)
+        {
+            WriteByte(savegameOffset + CHOCOBARS_FOUND_OFFSET, value);
         }
 
         private void WriteChanges()
@@ -924,6 +1180,18 @@ namespace TRR_SaveMaster
                     {
                         WriteVesselsBroken((Int32)nudVesselsBroken.Value);
                     }
+                }
+                else if (SELECTED_TAB == TAB_TR6)
+                {
+                    WriteAmmoUsedTR6((Int16)nudAmmoUsed.Value);
+                    WriteHealthRestored((byte)nudMedipacksUsed.Value);
+                    WriteNumHits((Int32)nudHits.Value);
+                    WriteNumKillsTR6((UInt16)nudKills.Value);
+                    WriteNumPickupsTR6((UInt16)nudPickups.Value);
+                    WriteNumHealthItemsFound((UInt16)nudHealthItemsFound.Value);
+                    WriteNumChocobarsFound((byte)nudChocobarsFound.Value);
+                    WriteDistanceTravelledTRX((decimal)nudDistanceTravelled.Value);
+                    WriteTimeTaken((Int32)(nudHours.Value * 3600 + nudMinutes.Value * 60 + nudSeconds.Value) * 60);
                 }
 
                 DisableButtons();
@@ -1099,6 +1367,22 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void nudHealthItemsFound_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLoading)
+            {
+                EnableButtons();
+            }
+        }
+
+        private void nudChocobarsFound_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLoading)
+            {
+                EnableButtons();
+            }
+        }
+
         private void nudHours_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (char.IsDigit(e.KeyChar))
@@ -1212,6 +1496,22 @@ namespace TRR_SaveMaster
         }
 
         private void nudVesselsBroken_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar))
+            {
+                EnableButtons();
+            }
+        }
+
+        private void nudHealthItemsFound_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar))
+            {
+                EnableButtons();
+            }
+        }
+
+        private void nudChocobarsFound_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (char.IsDigit(e.KeyChar))
             {
