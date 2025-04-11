@@ -974,12 +974,19 @@ namespace TRR_SaveMaster
 
             if (cmbSavegamesTR6.SelectedIndex != -1 && !isLoading)
             {
-                TR6.UpdateInventoryUI(cmbInventoryTR6, nudChocolateBarTR6, nudHealthPillsTR6, chkMV9TR6, chkVPackerTR6, nudMV9AmmoTR6,
-                    nudVPackerAmmoTR6, chkBoranXTR6, nudBoranXAmmoTR6, nudSmallMedipackTR6, nudHealthBandagesTR6, chkK2ImpactorTR6,
-                    nudK2ImpactorAmmoTR6, nudLargeHealthPackTR6, chkScorpionXTR6, nudScorpionXAmmoTR6, chkVectorR35TR6, nudVectorR35AmmoTR6,
-                    chkDesertRangerTR6, nudDesertRangerAmmoTR6, chkDartSSTR6, nudDartSSAmmoTR6, chkRigg09TR6, nudRigg09AmmoTR6,
-                    chkViperSMGTR6, nudViperSMGAmmoTR6, chkMagVegaTR6, nudMagVegaAmmoTR6, chkVectorR35PairTR6, lblVectorR35PairAmmoTR6, chkScorpionXPairTR6, lblScorpionXPairAmmoTR6,
-                    nudPoisonAntidoteTR6, chkChirugaiBladeTR6, lblChirugaiBladeAmmoTR6, nudGPSSaveGame, lblGPSSaveGame);
+                try
+                {
+                    TR6.UpdateInventoryUI(cmbInventoryTR6, nudChocolateBarTR6, nudHealthPillsTR6, chkMV9TR6, chkVPackerTR6, nudMV9AmmoTR6,
+                        nudVPackerAmmoTR6, chkBoranXTR6, nudBoranXAmmoTR6, nudSmallMedipackTR6, nudHealthBandagesTR6, chkK2ImpactorTR6,
+                        nudK2ImpactorAmmoTR6, nudLargeHealthPackTR6, chkScorpionXTR6, nudScorpionXAmmoTR6, chkVectorR35TR6, nudVectorR35AmmoTR6,
+                        chkDesertRangerTR6, nudDesertRangerAmmoTR6, chkDartSSTR6, nudDartSSAmmoTR6, chkRigg09TR6, nudRigg09AmmoTR6,
+                        chkViperSMGTR6, nudViperSMGAmmoTR6, chkMagVegaTR6, nudMagVegaAmmoTR6, chkVectorR35PairTR6, lblVectorR35PairAmmoTR6, chkScorpionXPairTR6, lblScorpionXPairAmmoTR6,
+                        nudPoisonAntidoteTR6, chkChirugaiBladeTR6, lblChirugaiBladeAmmoTR6, nudGPSSaveGame, lblGPSSaveGame);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
 
             isInventoryLoading = false;
