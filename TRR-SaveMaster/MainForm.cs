@@ -24,6 +24,7 @@ namespace TRR_SaveMaster
         private bool isInventoryLoading = false;
         private bool userIndexChanged = true;
         private Platform platform;
+        private const string CONFIG_FILE_NAME = "TRR-SaveMaster.ini";
         private const int SAVEGAME_SIZE_TRX = 0x3800;
         private const int SAVEGAME_SIZE_TRX2 = 0xA470;
         private const int SAVEGAME_FILE_SIZE_TRX = 0x152004;
@@ -54,7 +55,7 @@ namespace TRR_SaveMaster
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            GetSavegamePaths();
+            ReadConfigFile();
             PopulateSavegamesTR1();
 
             btnRefreshTR1.Enabled = !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX);
@@ -93,7 +94,7 @@ namespace TRR_SaveMaster
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             ConfirmChanges();
-            SaveSavegamePath();
+            UpdateConfigFile();
         }
 
         private void PopulateSavegamesTR1()
@@ -500,10 +501,10 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void GetSavegamePaths()
+        private void ReadConfigFile()
         {
             string rootFolder = AppDomain.CurrentDomain.BaseDirectory;
-            string filePath = Path.Combine(rootFolder, "path.ini");
+            string filePath = Path.Combine(rootFolder, CONFIG_FILE_NAME);
 
             if (File.Exists(filePath))
             {
@@ -555,14 +556,14 @@ namespace TRR_SaveMaster
             }
             else
             {
-                SaveSavegamePath();
+                UpdateConfigFile();
             }
         }
 
-        private void SaveSavegamePath()
+        private void UpdateConfigFile()
         {
             string rootFolder = AppDomain.CurrentDomain.BaseDirectory;
-            string filePath = Path.Combine(rootFolder, "path.ini");
+            string filePath = Path.Combine(rootFolder, CONFIG_FILE_NAME);
 
             string content = $"TRXPath={savegamePathTRX}\n";
             content += $"TRX2Path={savegamePathTRX2}\n";
