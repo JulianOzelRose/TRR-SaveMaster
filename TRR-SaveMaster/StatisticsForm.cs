@@ -1190,7 +1190,7 @@ namespace TRR_SaveMaster
                     WriteNumPickupsTR6((UInt16)nudPickups.Value);
                     WriteNumHealthItemsFound((UInt16)nudHealthItemsFound.Value);
                     WriteNumChocobarsFound((byte)nudChocobarsFound.Value);
-                    WriteDistanceTravelledTRX((decimal)nudDistanceTravelled.Value);
+                    WriteDistanceTravelledTRX2((decimal)nudDistanceTravelled.Value);
                     WriteTimeTaken((Int32)(nudHours.Value * 3600 + nudMinutes.Value * 60 + nudSeconds.Value) * 60);
                 }
 
