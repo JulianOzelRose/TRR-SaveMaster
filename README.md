@@ -1,8 +1,8 @@
 # Tomb Raider Remastered Savegame Editor
-This is a savegame editor for Tomb Raider Remastered. For the second trilogy, Tomb Raider IV and V are fully supported.
-Tomb Raider VI support is currently in BETA, you can find more information in the section below. With this editor, you can edit items, health, weapons, ammunition, statistics, and position.
+This is a savegame editor for Tomb Raider I-III and IV-VI Remastered.
+With this editor, you can edit items, health, weapons, ammunition, statistics, and position.
 The Tomb Raider I-III portion of this editor is compatible with PC, PS4, and Nintendo Switch savegames. For instructions on how to download and use this savegame editor, scroll down to
-the section below. Additionally, technical details on reverse engineering both trilogies are included later on in this README.
+the section below. If you are interested in reverse engineering, there is a technical portion on the bottom section of this README.
 For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder or delete savegames,
 check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
@@ -10,8 +10,7 @@ check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
 ## Installation and use
 To download and use this savegame editor, simply navigate to the [Releases](https://github.com/JulianOzelRose/TRR-SaveMaster/releases) page,
-then download the .exe file of the latest stable version under "Assets". If you would like to beta test Tomb Raider VI savegame editing, download
-the .exe suffixed with "BETA" — but be sure to backup your savegame file before editing. You can save it anywhere on your computer. Once downloaded, open the file.
+then download the .exe file of the latest version under "Assets". You can save it anywhere on your computer. Once downloaded, open the file.
 The editor will then prompt you to select your savegame path, click "Yes". Your savegame path should be as follows:
 
 #### Tomb Raider I-III Remastered:
@@ -46,7 +45,7 @@ This savegame editor includes a Position Editor feature. To use it, click "Edit,
 - The **Y-coordinate** represents Lara's vertical position in the game. Decreasing it moves her up, while increasing it moves her down.  
 - The **Z-coordinate** represents Lara's depth position in the game. Increasing it moves her forward, while decreasing it moves her backward.  
 - The **Orientation** value determines the direction Lara is facing, measured in degrees.
-- The **Room** value represents the unique room number Lara is currently in.  
+- The **Room / Zone** value represents the unique room number / loaded zone that Lara/Kurtis is currently located in.
 
 It's essential that the Room number matches Lara's current coordinates; otherwise, the game will not interpret her position correctly. Click "Save" in this menu to apply changes, or "Cancel" to retain Lara's current
 position.
@@ -611,5 +610,14 @@ Below are the offset tables for Tomb Raider IV-VI. With the exception of health,
 | 0x004     | Int32   | Slot Status                  |
 | 0x014     | UInt8   | Level Index                  |
 | 0x11C     | Int32   | Save Number                  |
+| 0x240     | Int32   | Time Taken                   |
+| 0x244     | UInt32  | Distance Travelled           |
+| 0x248     | Int32   | Ammo Used                    |
+| 0x24C     | Int32   | Hits                         |
+| 0x250     | UInt16  | Pickups                      |
+| 0x252     | UInt16  | Health Items Found           |
+| 0x254     | UInt8   | Chocobars Found              |
+| 0x256     | UInt16  | Kills                        |
+| 0x258     | UInt8   | Health Restored              |
 | 0x35C     | Int32   | Game Mode                    |
 | 0x364     | UInt16  | Compressed Block Size        |
