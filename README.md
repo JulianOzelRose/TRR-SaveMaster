@@ -51,11 +51,11 @@ It's essential that the Room number matches Lara's current coordinates; otherwis
 position.
 
 ## Using the Statistics Editor
-![StatisticsEditor-UI](https://github.com/user-attachments/assets/23e17317-257e-4ad1-a88d-a8ad0cb752a7)
+![StatisticsEditor-UI](https://github.com/user-attachments/assets/6dc4b83e-80e6-46a1-bd4f-f7de86cca761)
 
 
-This savegame editor also includes a Statistics Editor feature. To use it, click "Edit," then select "Statistics." For Tomb Raider I-III, the statistics displayed are level-specific, meaning each level has its own separate stats such as time taken,
-enemies killed, and secrets found. For Tomb Raider IV-V, the statistics are global, meaning they track cumulative progress across all levels, including total playtime, total kills, and total pickups.
+This savegame editor also includes a Statistics Editor feature. To use it, click "Edit," then select "Statistics." For Tomb Raider I-III and VI, the statistics displayed are level-specific, meaning each level has its own separate stats such as time taken,
+enemies killed, and secrets found. For Tomb Raider IV and V, the statistics are global, meaning they track cumulative progress across all levels, including total playtime, total kills, and total pickups.
 
 ## Tomb Raider I-III Remastered Savegame Format
 This section details the technical aspects of reverse engineering the savegames of the Tomb Raider I-III Remastered trilogy. All savegames are stored in the `savegame.dat` file.
@@ -621,3 +621,131 @@ Below are the offset tables for Tomb Raider IV-VI. With the exception of health,
 | 0x258     | UInt8   | Health Restored              |
 | 0x35C     | Int32   | Game Mode                    |
 | 0x364     | UInt16  | Compressed Block Size        |
+
+## Tomb Raider IV savegame format
+Tomb Raider IV is based on a heavily modified version of the engine that the first three games use. There are some similarities, but since it contains
+less dynamic data, it is easier to decipher the data structures. Weapons are all stored on static offsets for Tomb Raider IV, in UInt8 format. `0x9` is
+the 'present' flag, and `0xD` is the 'present with sight' flag.
+
+Like Tomb Raider I-III, the health offset is always stored after the character animation data.
+However, Tomb Raider IV health is conditionally stored on the savegame, depending on whether or not it is full (or 'default') or partial. In other words,
+a full health value (1000) will never be stored on the savegame. Its presence is indicated by a byte flag which is stored 0x13 bytes before the health offset. 
+
+| Flag      | Meaning        |
+|:----------|:---------------|
+| 0x008     | Full health    |
+| 0x00C     | Partial health |
+
+Because of this, it is not enough to simply write the new health value and change the flag accordingly. If you are switching from partial health to full health,
+the game will no longer be expecting the health bytes to be stored on the buffer. Therefore, the bytes proceeding the health offset must be shifted accordingly.
+See the code below.
+
+```
+private void WriteHealthValue(UInt16 newHealth)
+{
+    int healthOffset = GetHealthOffset();
+
+    if (healthOffset != -1)
+    {
+        byte currentToggle = ReadByte(healthOffset - 0x13);
+
+        bool currentlyFull = (currentToggle == FULL_HEALTH_TOGGLE_BYTE);
+        bool currentlyPartial = (currentToggle == PARTIAL_HEALTH_TOGGLE_BYTE);
+        bool newIsPartial = newHealth < MAX_HEALTH_VALUE;
+
+        if (currentlyFull && newIsPartial)
+        {
+            // Full health -> Partial health
+            byte newToggle = (byte)(currentToggle + TOGGLE_DELTA);
+            WriteByte(healthOffset - 0x13, newToggle);
+            WriteUInt16(healthOffset, newHealth);
+            ShiftBytesRight(healthOffset);
+        }
+        else if (currentlyPartial && !newIsPartial)
+        {
+            // Partial health -> Full health
+            byte newToggle = (byte)(currentToggle - TOGGLE_DELTA);
+            WriteByte(healthOffset - 0x13, newToggle);
+            WriteUInt16(healthOffset, 0x0);  // Zero health bytes
+            ShiftBytesLeft(healthOffset);
+        }
+        else if (currentlyFull && !newIsPartial)
+        {
+            // Already full health
+            WriteUInt16(healthOffset, 0);
+        }
+        else
+        {
+            // Partial health -> Partial health
+            WriteUInt16(healthOffset, newHealth);
+        }
+    }
+}
+```
+
+## Tomb Raider V savegame format
+The engine used by Tomb Raider V is virtually identical to the Tomb Raider IV engine. This is reflected in the savegames, where almost everything is the
+same; weapons stored statically as UInt8, and ammo stored statically as UInt16. The only difference between the Tomb Raider IV and V savegame format is
+the manner in which health is stored. Tomb Raider V does not conditionally store health based on whether it is full or not. Health is instead stored regardless
+of its value. Like Tomb Raider IV and the previous titles, health is also stored proceeding the character animation data, so this can be used to detect the dynamic offset.
+
+## Tomb Raider VI savegame format
+Tomb Raider VI uses a markedly different engine than the previous five releases. The header mainly stores savegame metadata, such as the save number, level number, timestamp,
+and the statistics data. The rest of the savegame data is compressed using a customized variant of the lossless [LZW](https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Welch) compression algorithm.
+The compressed portion of the savegame data begins at offset `0x36C` of the header.
+
+The inventory block is typically the main block of interest. However, the inventory block is stored at the end of the buffer. There are no pointers that point to the inventory start offset.
+Therefore, the only way to accurately determine the inventory offset is to replicate every read operation that the game performs to reach the inventory block. The game does perform some conditional reads
+based on savegame data, so the conditional reads need to be properly replicated. The game also performs conditional reads based on entity data that is allocated at runtime. This is the most challenging aspect
+of reversing the Tomb Raider VI format. Below is a table of the compressed buffer structure.
+
+| Block           | Size             |
+|:----------------|:-----------------|
+| Header          | 0x009            |
+| Inv             | 0x12F            |
+| Map             | Dynamic          |
+| Camera 1        | 0x044            |
+| Camera 2        | 0x044            |
+| Camera 3        | 0x044            |
+| FX              | Dynamic          |
+| Audio           | Dynamic          |
+| Pickup          | Dynamic          |
+| Inv2            | Dynamic          |
+
+First is the header block (not to be confused with the savegame header outside the compressed buffer) which stores a static "TOMB" signature string, followed by the level (UInt8), and the loaded zone (Int32).
+Next is the `Inv` block, which stores more game state metadata such as cash and conversation flags. Next is the `Map` block, which is by far the largest and most dynamic. The bulleted list below depicts the hierarchy in
+which entities are stored/loaded in the Map block.
+
+1. **Actors**
+2. **Objects**
+3. **Triggers**
+4. **Emitters**
+5. **Water**
+6. **Audio Locators**
+7. **Rooms**
+
+With the exception of Water, all of these entities are allocated at runtime. Since the game performs conditional reads based on the properties of the runtime entities, it is also necessary to reverse engineer the
+game's WAD file format (GMX), specifically for the properties needed for the conditional reads. Namely, the APB values (animation post-bone?) for Actors and Objects, the 'active flag' for the Actors, and whether or
+not a specific Actor is the active player. For Triggers, Emitters, and Audio Locators, only the entity count is needed.
+
+The `Inv2` block stores the inventory data for both Lara and Kurtis, as well as the active player's health. The item counts are stored as UInt8 values. The actual inventory array of the respective player is stored
+immediately after the item count. Lara's inventory array is stored first, then Kurtis' inventory is stored after. Below is how the inventory item struct looks for Tomb Raider VI.
+
+```
+typedef struct InventoryItem {
+    uint16_t ClassId;
+    int Type;
+    int Quantity;
+} InventoryItem;
+```
+
+The `ClassId` field represents the unique ID associated with the specific item. The `Type` field represents which inventory field the item will be stored in (i.e. Health, Item, Weapons, Notebook). Below is a table
+that shows what `Type` corresponds to.
+
+| Type       | Description      |
+|:-----------|:-----------------|
+| -1         | Notebook item    |
+| 2          | Item             |
+| 3          | Weapon           |
+| 4          | Health Item      |
+| 7          | Ammo             |
