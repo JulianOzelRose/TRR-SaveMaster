@@ -23,6 +23,10 @@ namespace TRR_SaveMaster
         private int VESSELS_BROKEN_OFFSET;
         private int HEALTH_ITEMS_FOUND_OFFSET;
         private int CHOCOBARS_FOUND_OFFSET;
+        private int TIMESTAMP_DAYS_OFFSET;
+        private int TIMESTAMP_HOURS_OFFSET;
+        private int TIMESTAMP_MINUTES_OFFSET;
+        private int TIMESTAMP_SECONDS_OFFSET;
 
         // Tabs
         private const int TAB_TR1 = 0;
@@ -128,6 +132,10 @@ namespace TRR_SaveMaster
                 SECRETS_FOUND_OFFSET = 0x246;
                 MEDIPACKS_USED_OFFSET = 0x247;
                 VESSELS_BROKEN_OFFSET = 0x280;
+                TIMESTAMP_DAYS_OFFSET = 0x00C;
+                TIMESTAMP_HOURS_OFFSET = 0x010;
+                TIMESTAMP_MINUTES_OFFSET = 0x014;
+                TIMESTAMP_SECONDS_OFFSET = 0x018;
             }
             else if (SELECTED_TAB == TAB_TR5)
             {
@@ -139,6 +147,10 @@ namespace TRR_SaveMaster
                 KILLS_OFFSET = 0x244;
                 SECRETS_FOUND_OFFSET = 0x246;
                 MEDIPACKS_USED_OFFSET = 0x247;
+                TIMESTAMP_DAYS_OFFSET = 0x00C;
+                TIMESTAMP_HOURS_OFFSET = 0x010;
+                TIMESTAMP_MINUTES_OFFSET = 0x014;
+                TIMESTAMP_SECONDS_OFFSET = 0x018;
             }
             else if (SELECTED_TAB == TAB_TR6)
             {
@@ -1088,6 +1100,21 @@ namespace TRR_SaveMaster
             WriteInt32(savegameOffset + TIME_TAKEN_OFFSET, value);
         }
 
+        private void WriteTimeTakenToTimestamp(Int32 value)
+        {
+            Int32 totalSeconds = value / 30;
+
+            Int32 days = totalSeconds / 86400;                      // 86400 seconds in a day
+            Int32 hours = (totalSeconds % 86400) / 3600;            // Remaining hours
+            Int32 minutes = (totalSeconds % 3600) / 60;             // Remaining minutes
+            Int32 seconds = totalSeconds % 60;                      // Remaining seconds
+
+            WriteInt32(savegameOffset + TIMESTAMP_DAYS_OFFSET, days);
+            WriteInt32(savegameOffset + TIMESTAMP_HOURS_OFFSET, hours);
+            WriteInt32(savegameOffset + TIMESTAMP_MINUTES_OFFSET, minutes);
+            WriteInt32(savegameOffset + TIMESTAMP_SECONDS_OFFSET, seconds);
+        }
+
         private void WriteDistanceTravelledTRX(decimal value)
         {
             bool isMeter = lblDistanceTravelledUnit.Text == "m";
@@ -1174,6 +1201,7 @@ namespace TRR_SaveMaster
                     WriteNumMedipacksUsedTRX2((byte)nudMedipacksUsed.Value);
                     WriteNumSecretsFoundTRX2((byte)nudSecretsFound.Value);
                     WriteTimeTaken((Int32)(nudHours.Value * 3600 + nudMinutes.Value * 60 + nudSeconds.Value) * 30);
+                    WriteTimeTakenToTimestamp((Int32)(nudHours.Value * 3600 + nudMinutes.Value * 60 + nudSeconds.Value) * 30);
                     WriteDistanceTravelledTRX2((decimal)nudDistanceTravelled.Value);
 
                     if (nudVesselsBroken.Enabled)
