@@ -30,14 +30,14 @@ namespace TRR_SaveMaster
         private const int COMPRESSED_BLOCK_MAX_SIZE = 0xFFFFFF;
 
         // Entity Mocks
-        List<EntityMock> actors = new List<EntityMock>();
-        List<EntityMock> objects = new List<EntityMock>();
-        List<EntityMock> rooms = new List<EntityMock>();
+        private List<EntityMock> actors = new List<EntityMock>();
+        private List<EntityMock> objects = new List<EntityMock>();
+        private List<EntityMock> rooms = new List<EntityMock>();
 
         // Entity counts
-        int NUM_AUDIO_LOCATORS = 0;
-        int NUM_EMITTERS = 0;
-        int NUM_TRIGGERS = 0;
+        private int NUM_AUDIO_LOCATORS = 0;
+        private int NUM_EMITTERS = 0;
+        private int NUM_TRIGGERS = 0;
 
         // Offsets to save
         private const int CASH_OFFSET = 0x9;
@@ -51,8 +51,8 @@ namespace TRR_SaveMaster
         private int POST_INVENTORY_END_OFFSET;
 
         // Inventories
-        List<InventoryItem> invLara = new List<InventoryItem>();
-        List<InventoryItem> invKurtis = new List<InventoryItem>();
+        private List<InventoryItem> invLara = new List<InventoryItem>();
+        private List<InventoryItem> invKurtis = new List<InventoryItem>();
 
         // Inventory types
         private const int INVENTORY_TYPE_ITEM = 2;
@@ -65,11 +65,11 @@ namespace TRR_SaveMaster
         private const int ENTITY_TYPE_OBJECT = 0;
 
         // Offset tracking
-        int sgBufferCursor = 0;
+        private int sgBufferCursor = 0;
 
         // Vars to read
-        byte sgCurrentLevel = 0;
-        float playerHealth = 0;
+        private byte sgCurrentLevel = 0;
+        private float playerHealth = 0;
 
         // Buffer
         private byte[] decompressedBuffer = null;
@@ -135,8 +135,11 @@ namespace TRR_SaveMaster
             return gameMode == 0 ? GameMode.Normal : GameMode.Plus;
         }
 
-        public void DisplayGameInfo(TrackBar trbHealth, Label lblHealth, Label lblHealthError, NumericUpDown nudCash)
+        public void DisplayGameInfo(TrackBar trbHealth, Label lblHealth, Label lblHealthError, NumericUpDown nudCash, NumericUpDown nudSaveNumber)
         {
+            Int32 saveNumber = GetSaveNumber();
+            nudSaveNumber.Value = saveNumber;
+
             ParseInventory();
 
             // Load cash and health directly from buffer
@@ -1465,7 +1468,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        public void WriteChanges(NumericUpDown nudCash, TrackBar trbHealth)
+        public void WriteChanges(NumericUpDown nudCash, TrackBar trbHealth, NumericUpDown nudSaveNumber)
         {
             if (decompressedBuffer == null || decompressedBuffer.Length == 0)
             {
@@ -1475,6 +1478,14 @@ namespace TRR_SaveMaster
 
             try
             {
+                // Write save number to header
+                using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Write))
+                using (BinaryWriter writer = new BinaryWriter(fs))
+                {
+                    fs.Seek(savegameOffset + SAVE_NUMBER_OFFSET, SeekOrigin.Begin);
+                    writer.Write((int)nudSaveNumber.Value);
+                }
+
                 if (POST_INVENTORY_END_OFFSET > decompressedBuffer.Length)
                 {
                     Debug.WriteLine($"Warning: POST_INVENTORY_END_OFFSET (0x{POST_INVENTORY_END_OFFSET:X}) exceeds buffer size (0x{decompressedBuffer.Length:X}). Clamping...");

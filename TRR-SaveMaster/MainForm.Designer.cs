@@ -319,6 +319,8 @@ namespace TRR_SaveMaster
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiReportBug = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.nudSaveNumberTR6 = new System.Windows.Forms.NumericUpDown();
+            this.lblSaveNumberTR6 = new System.Windows.Forms.Label();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR1)).BeginInit();
@@ -426,6 +428,7 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudCashTR6)).BeginInit();
             this.ssrStatusStrip.SuspendLayout();
             this.tsrToolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR6)).BeginInit();
             this.SuspendLayout();
             // 
             // tabGame
@@ -2788,7 +2791,9 @@ namespace TRR_SaveMaster
             // tpTR6
             // 
             this.tpTR6.BackColor = System.Drawing.Color.White;
+            this.tpTR6.Controls.Add(this.nudSaveNumberTR6);
             this.tpTR6.Controls.Add(this.cmbInventoryTR6);
+            this.tpTR6.Controls.Add(this.lblSaveNumberTR6);
             this.tpTR6.Controls.Add(this.lblInventoryTR6);
             this.tpTR6.Controls.Add(this.btnRefreshTR6);
             this.tpTR6.Controls.Add(this.btnExitTR6);
@@ -2812,16 +2817,16 @@ namespace TRR_SaveMaster
             this.cmbInventoryTR6.Items.AddRange(new object[] {
             "Lara Croft",
             "Kurtis Trent"});
-            this.cmbInventoryTR6.Location = new System.Drawing.Point(101, 14);
+            this.cmbInventoryTR6.Location = new System.Drawing.Point(239, 14);
             this.cmbInventoryTR6.Name = "cmbInventoryTR6";
-            this.cmbInventoryTR6.Size = new System.Drawing.Size(128, 21);
+            this.cmbInventoryTR6.Size = new System.Drawing.Size(94, 21);
             this.cmbInventoryTR6.TabIndex = 47;
             this.cmbInventoryTR6.SelectedIndexChanged += new System.EventHandler(this.cmbInventoryTR6_SelectedIndexChanged);
             // 
             // lblInventoryTR6
             // 
             this.lblInventoryTR6.AutoSize = true;
-            this.lblInventoryTR6.Location = new System.Drawing.Point(41, 18);
+            this.lblInventoryTR6.Location = new System.Drawing.Point(179, 18);
             this.lblInventoryTR6.Name = "lblInventoryTR6";
             this.lblInventoryTR6.Size = new System.Drawing.Size(54, 13);
             this.lblInventoryTR6.TabIndex = 46;
@@ -3849,6 +3854,29 @@ namespace TRR_SaveMaster
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
             // 
+            // nudSaveNumberTR6
+            // 
+            this.nudSaveNumberTR6.Location = new System.Drawing.Point(101, 16);
+            this.nudSaveNumberTR6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudSaveNumberTR6.Name = "nudSaveNumberTR6";
+            this.nudSaveNumberTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudSaveNumberTR6.TabIndex = 44;
+            this.nudSaveNumberTR6.ValueChanged += new System.EventHandler(this.nudSaveNumberTR6_ValueChanged);
+            this.nudSaveNumberTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSaveNumberTR6_KeyPress);
+            // 
+            // lblSaveNumberTR6
+            // 
+            this.lblSaveNumberTR6.AutoSize = true;
+            this.lblSaveNumberTR6.Location = new System.Drawing.Point(22, 18);
+            this.lblSaveNumberTR6.Name = "lblSaveNumberTR6";
+            this.lblSaveNumberTR6.Size = new System.Drawing.Size(75, 13);
+            this.lblSaveNumberTR6.TabIndex = 45;
+            this.lblSaveNumberTR6.Text = "Save Number:";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -4000,6 +4028,7 @@ namespace TRR_SaveMaster
             this.ssrStatusStrip.PerformLayout();
             this.tsrToolStrip.ResumeLayout(false);
             this.tsrToolStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR6)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -4296,6 +4325,8 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.ToolStripMenuItem tsmiAllowUnsafeMaxValues;
         private System.Windows.Forms.Label lblGPSSaveGame;
         private System.Windows.Forms.NumericUpDown nudGPSSaveGame;
+        private System.Windows.Forms.NumericUpDown nudSaveNumberTR6;
+        private System.Windows.Forms.Label lblSaveNumberTR6;
     }
 }
 

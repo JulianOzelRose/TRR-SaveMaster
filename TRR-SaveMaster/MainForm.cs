@@ -49,10 +49,6 @@ namespace TRR_SaveMaster
         // Health
         private const UInt16 MAX_HEALTH_VALUE = 1000;
 
-        // Misc
-        private const string EMPTY_SLOT_STRING_TR6 = " < Empty Slot >";
-        private const int DISPLAY_NAME_OFFSET_TR6 = 0x124;
-
         private void MainForm_Load(object sender, EventArgs e)
         {
             ReadConfigFile();
@@ -1382,7 +1378,7 @@ namespace TRR_SaveMaster
 
                     File.SetAttributes(savegamePathTRX2, File.GetAttributes(savegamePathTRX2) & ~FileAttributes.ReadOnly);
 
-                    TR6.WriteChanges(nudCashTR6, trbHealthTR6);
+                    TR6.WriteChanges(nudCashTR6, trbHealthTR6, nudSaveNumberTR6);
 
                     TR6.UpdateDisplayName(savegame);
                     UpdateSavegameDisplayNameTR6(cmbSavegamesTR6, savegame);
@@ -1914,7 +1910,7 @@ namespace TRR_SaveMaster
                     UpdateSavegameDisplayNameTR6(cmbSavegamesTR6, selectedSavegame);
 
                     TR6.DetermineOffsets(selectedSavegame);
-                    TR6.DisplayGameInfo(trbHealthTR6, lblHealthTR6, lblHealthErrorTR6, nudCashTR6);
+                    TR6.DisplayGameInfo(trbHealthTR6, lblHealthTR6, lblHealthErrorTR6, nudCashTR6, nudSaveNumberTR6);
 
                     // Default to inventory of active player
                     cmbInventoryTR6.SelectedIndex = TR6.IsPlayerKurtis() ? 1 : 0;
@@ -2634,18 +2630,6 @@ namespace TRR_SaveMaster
                     {
                         saveFile.Seek(offset, SeekOrigin.Begin);
                         saveFile.WriteByte(0);
-                    }
-                }
-
-                if (tabGame.SelectedIndex == TAB_TR6)
-                {
-                    byte[] emptySlotBytes = System.Text.Encoding.ASCII.GetBytes(EMPTY_SLOT_STRING_TR6);
-
-                    using (FileStream saveFile = new FileStream(savegamePath, FileMode.Open, FileAccess.Write, FileShare.ReadWrite))
-                    {
-                        saveFile.Seek(savegame.Offset + DISPLAY_NAME_OFFSET_TR6, SeekOrigin.Begin);
-                        saveFile.Write(emptySlotBytes, 0, emptySlotBytes.Length);
-                        saveFile.WriteByte(0); // Null terminator
                     }
                 }
 
@@ -4100,6 +4084,14 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void nudSaveNumberTR6_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLoading && cmbSavegamesTR6.SelectedIndex != -1)
+            {
+                EnableButtonsTR6();
+            }
+        }
+
         private void nudLargeHealthPackTR6_ValueChanged(object sender, EventArgs e)
         {
             if (!isLoading && !isInventoryLoading && cmbSavegamesTR6.SelectedIndex != -1)
@@ -4267,7 +4259,14 @@ namespace TRR_SaveMaster
             if (char.IsDigit(e.KeyChar) && cmbSavegamesTR6.SelectedIndex != -1)
             {
                 EnableButtonsTR6();
-                UpdateInventoryFromUI();
+            }
+        }
+
+        private void nudSaveNumberTR6_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar) && cmbSavegamesTR6.SelectedIndex != -1)
+            {
+                EnableButtonsTR6();
             }
         }
 
