@@ -1743,6 +1743,7 @@ namespace TRR_SaveMaster
             // 
             // tpTR4
             // 
+            this.tpTR4.BackColor = System.Drawing.Color.White;
             this.tpTR4.Controls.Add(this.btnExitTR4);
             this.tpTR4.Controls.Add(this.btnCancelTR4);
             this.tpTR4.Controls.Add(this.btnSaveTR4);
@@ -1759,7 +1760,6 @@ namespace TRR_SaveMaster
             this.tpTR4.Size = new System.Drawing.Size(713, 508);
             this.tpTR4.TabIndex = 5;
             this.tpTR4.Text = "Tomb Raider IV";
-            this.tpTR4.UseVisualStyleBackColor = true;
             // 
             // btnExitTR4
             // 
@@ -2287,6 +2287,7 @@ namespace TRR_SaveMaster
             // 
             // tpTR5
             // 
+            this.tpTR5.BackColor = System.Drawing.Color.White;
             this.tpTR5.Controls.Add(this.btnExitTR5);
             this.tpTR5.Controls.Add(this.btnCancelTR5);
             this.tpTR5.Controls.Add(this.btnSaveTR5);
@@ -2303,7 +2304,6 @@ namespace TRR_SaveMaster
             this.tpTR5.Size = new System.Drawing.Size(713, 508);
             this.tpTR5.TabIndex = 6;
             this.tpTR5.Text = "Tomb Raider V";
-            this.tpTR5.UseVisualStyleBackColor = true;
             // 
             // btnExitTR5
             // 
@@ -2787,6 +2787,7 @@ namespace TRR_SaveMaster
             // 
             // tpTR6
             // 
+            this.tpTR6.BackColor = System.Drawing.Color.White;
             this.tpTR6.Controls.Add(this.cmbInventoryTR6);
             this.tpTR6.Controls.Add(this.lblInventoryTR6);
             this.tpTR6.Controls.Add(this.btnRefreshTR6);
@@ -2803,7 +2804,6 @@ namespace TRR_SaveMaster
             this.tpTR6.Size = new System.Drawing.Size(713, 508);
             this.tpTR6.TabIndex = 7;
             this.tpTR6.Text = "Tomb Raider VI";
-            this.tpTR6.UseVisualStyleBackColor = true;
             // 
             // cmbInventoryTR6
             // 
@@ -3745,7 +3745,7 @@ namespace TRR_SaveMaster
             this.tsmiPlayStation4,
             this.tsmiNintendoSwitch});
             this.tsmiPlatform.Name = "tsmiPlatform";
-            this.tsmiPlatform.Size = new System.Drawing.Size(180, 22);
+            this.tsmiPlatform.Size = new System.Drawing.Size(149, 22);
             this.tsmiPlatform.Text = "Platform";
             // 
             // tsmiPC
@@ -3777,13 +3777,13 @@ namespace TRR_SaveMaster
             // tsmiSettingsSeparator
             // 
             this.tsmiSettingsSeparator.Name = "tsmiSettingsSeparator";
-            this.tsmiSettingsSeparator.Size = new System.Drawing.Size(177, 6);
+            this.tsmiSettingsSeparator.Size = new System.Drawing.Size(146, 6);
             // 
             // tsmiAlwaysOnTop
             // 
             this.tsmiAlwaysOnTop.CheckOnClick = true;
             this.tsmiAlwaysOnTop.Name = "tsmiAlwaysOnTop";
-            this.tsmiAlwaysOnTop.Size = new System.Drawing.Size(180, 22);
+            this.tsmiAlwaysOnTop.Size = new System.Drawing.Size(149, 22);
             this.tsmiAlwaysOnTop.Text = "Always on top";
             this.tsmiAlwaysOnTop.Click += new System.EventHandler(this.tsmiAlwaysOnTop_Click);
             // 
@@ -3793,7 +3793,7 @@ namespace TRR_SaveMaster
             this.tsmiStatusBar.CheckOnClick = true;
             this.tsmiStatusBar.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiStatusBar.Name = "tsmiStatusBar";
-            this.tsmiStatusBar.Size = new System.Drawing.Size(180, 22);
+            this.tsmiStatusBar.Size = new System.Drawing.Size(149, 22);
             this.tsmiStatusBar.Text = "Status Bar";
             this.tsmiStatusBar.Click += new System.EventHandler(this.tsmiStatusBar_Click);
             // 
@@ -3802,7 +3802,7 @@ namespace TRR_SaveMaster
             this.tsmiAdvanced.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiAllowUnsafeMaxValues});
             this.tsmiAdvanced.Name = "tsmiAdvanced";
-            this.tsmiAdvanced.Size = new System.Drawing.Size(180, 22);
+            this.tsmiAdvanced.Size = new System.Drawing.Size(149, 22);
             this.tsmiAdvanced.Text = "Advanced";
             // 
             // tsmiAllowUnsafeMaxValues
