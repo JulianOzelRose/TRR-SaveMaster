@@ -6,7 +6,7 @@ the section below. If you are interested in reverse engineering, there is a tech
 For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder or delete savegames,
 check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
-![TRR-SaveMaster-UI](https://github.com/user-attachments/assets/7de7b46a-fcf2-4756-95f0-4df7940d1531)
+![TRR-SaveMaster-UI](https://github.com/user-attachments/assets/6a75add7-f6ee-49a1-9db8-6a0bc93cb674)
 
 ## Installation and use
 To download and use this savegame editor, simply navigate to the [Releases](https://github.com/JulianOzelRose/TRR-SaveMaster/releases) page,
@@ -45,9 +45,9 @@ This savegame editor includes a Position Editor feature. To use it, click "Edit,
 - The **Y-coordinate** represents Lara's vertical position in the game. Decreasing it moves her up, while increasing it moves her down.  
 - The **Z-coordinate** represents Lara's depth position in the game. Increasing it moves her forward, while decreasing it moves her backward.  
 - The **Orientation** value determines the direction Lara is facing, measured in degrees.
-- The **Room / Zone** value represents the unique room number / loaded zone that Lara/Kurtis is currently located in.
+- The **Room/Zone** value represents the unique room number/loaded zone that Lara or Kurtis is currently located in.
 
-It's essential that the Room number matches Lara's current coordinates; otherwise, the game will not interpret her position correctly. Click "Save" in this menu to apply changes, or "Cancel" to retain Lara's current
+It's essential that the Room/Zone number matches Lara's current coordinates; otherwise, the game will not interpret her position correctly. Click "Save" in this menu to apply changes, or "Cancel" to retain Lara's current
 position.
 
 ## Using the Statistics Editor
@@ -704,9 +704,9 @@ of reversing the Tomb Raider VI format. Below is a table of the compressed buffe
 | Header          | 0x009            |
 | Inv             | 0x12F            |
 | Map             | Dynamic          |
-| Camera 1        | 0x044            |
-| Camera 2        | 0x044            |
-| Camera 3        | 0x044            |
+| Cam 1           | 0x044            |
+| Cam 2           | 0x044            |
+| Cam 3           | 0x044            |
 | FX              | Dynamic          |
 | Audio           | Dynamic          |
 | Pickup          | Dynamic          |
@@ -732,11 +732,11 @@ The `Inv2` block stores the inventory data for both Lara and Kurtis, as well as 
 immediately after the item count. Lara's inventory array is stored first, then Kurtis' inventory is stored after. Below is how the inventory item struct looks for Tomb Raider VI.
 
 ```
-typedef struct InventoryItem {
+struct InventoryItem {
     uint16_t ClassId;
     int Type;
     int Quantity;
-} InventoryItem;
+};
 ```
 
 The `ClassId` field represents the unique ID associated with the specific item. The `Type` field represents which inventory field the item will be stored in (i.e. Health, Item, Weapons, Notebook). Below is a table
@@ -744,7 +744,7 @@ that shows what `Type` corresponds to.
 
 | Type       | Description      |
 |:-----------|:-----------------|
-| -1         | Notebook item    |
+| -1         | Notebook Item    |
 | 2          | Item             |
 | 3          | Weapon           |
 | 4          | Health Item      |
