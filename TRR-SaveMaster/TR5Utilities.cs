@@ -123,16 +123,6 @@ namespace TRR_SaveMaster
             WriteByte(offset + 3, (byte)(value >> 24));
         }
 
-        private sbyte ReadInt8(int offset)
-        {
-            return (sbyte)ReadByte(offset);
-        }
-
-        private void WriteInt8(int offset, sbyte value)
-        {
-            WriteByte(offset, (byte)value);
-        }
-
         private Int32 GetSaveNumber()
         {
             return ReadInt32(savegameOffset + SAVE_NUMBER_OFFSET);
@@ -162,51 +152,6 @@ namespace TRR_SaveMaster
         {
             int gameMode = ReadByte(savegameOffset + GAME_MODE_OFFSET);
             return gameMode == 0 ? GameMode.Normal : GameMode.Plus;
-        }
-
-        public void PopulateEmptySlots(ComboBox cmbSavegames)
-        {
-            if (cmbSavegames.Items.Count == MAX_SAVEGAMES)
-            {
-                return;
-            }
-
-            for (int i = cmbSavegames.Items.Count; i < MAX_SAVEGAMES; i++)
-            {
-                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR5 + (i * SAVEGAME_SIZE);
-
-                if (currentSavegameOffset < MAX_SAVEGAME_OFFSET_TR5)
-                {
-                    Int32 saveNumber = ReadInt32(currentSavegameOffset + SAVE_NUMBER_OFFSET);
-                    byte levelIndex = ReadByte(currentSavegameOffset + LEVEL_INDEX_OFFSET);
-                    bool savegamePresent = ReadByte(currentSavegameOffset + SLOT_STATUS_OFFSET) != 0;
-
-                    if (savegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
-                    {
-                        int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR5) / SAVEGAME_SIZE;
-
-                        bool savegameExists = false;
-
-                        foreach (Savegame existingSavegame in cmbSavegames.Items)
-                        {
-                            if (existingSavegame.Slot == slot)
-                            {
-                                savegameExists = true;
-                                break;
-                            }
-                        }
-
-                        if (!savegameExists)
-                        {
-                            string levelName = levelNames[levelIndex];
-                            GameMode gameMode = ReadByte(currentSavegameOffset + GAME_MODE_OFFSET) == 0 ? GameMode.Normal : GameMode.Plus;
-
-                            Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode);
-                            cmbSavegames.Items.Add(savegame);
-                        }
-                    }
-                }
-            }
         }
 
         public void UpdateDisplayName(Savegame savegame)
@@ -569,7 +514,7 @@ namespace TRR_SaveMaster
             NumericUpDown nudDeagleAmmo, CheckBox chkUzi, NumericUpDown nudUziAmmo, CheckBox chkShotgun,
             NumericUpDown nudShotgunNormalAmmo, NumericUpDown nudShotgunWideshotAmmo, CheckBox chkGrapplingGun,
             NumericUpDown nudGrapplingGunAmmo, CheckBox chkHKGun, NumericUpDown nudHKGunAmmo, CheckBox chkPistols,
-            NumericUpDown nudFlares)
+            NumericUpDown nudFlares, Label lblPistolAmmo)
         {
             byte levelIndex = GetLevelIndex();
 
@@ -589,6 +534,7 @@ namespace TRR_SaveMaster
                 chkHKGun.Enabled = false;
                 nudHKGunAmmo.Enabled = false;
                 chkPistols.Enabled = true;
+                lblPistolAmmo.Enabled = true;
                 nudFlares.Enabled = true;
             }
             else if (levelIndex == 2)   // Trajan's Markets
@@ -607,6 +553,7 @@ namespace TRR_SaveMaster
                 chkHKGun.Enabled = false;
                 nudHKGunAmmo.Enabled = false;
                 chkPistols.Enabled = true;
+                lblPistolAmmo.Enabled = true;
                 nudFlares.Enabled = true;
             }
             else if (levelIndex == 3)   // The Colosseum
@@ -625,6 +572,7 @@ namespace TRR_SaveMaster
                 chkHKGun.Enabled = false;
                 nudHKGunAmmo.Enabled = false;
                 chkPistols.Enabled = true;
+                lblPistolAmmo.Enabled = true;
                 nudFlares.Enabled = true;
             }
             else if (levelIndex == 4)   // The Base
@@ -643,6 +591,7 @@ namespace TRR_SaveMaster
                 chkHKGun.Enabled = false;
                 nudHKGunAmmo.Enabled = false;
                 chkPistols.Enabled = true;
+                lblPistolAmmo.Enabled = true;
                 nudFlares.Enabled = true;
             }
             else if (levelIndex == 5)   // The Submarine
@@ -661,6 +610,7 @@ namespace TRR_SaveMaster
                 chkHKGun.Enabled = false;
                 nudHKGunAmmo.Enabled = false;
                 chkPistols.Enabled = true;
+                lblPistolAmmo.Enabled = true;
                 nudFlares.Enabled = true;
             }
             else if (levelIndex == 6)   // Deepsea Dive
@@ -679,6 +629,7 @@ namespace TRR_SaveMaster
                 chkHKGun.Enabled = false;
                 nudHKGunAmmo.Enabled = false;
                 chkPistols.Enabled = true;
+                lblPistolAmmo.Enabled = true;
                 nudFlares.Enabled = true;
             }
             else if (levelIndex == 7)   // Sinking Submarine
@@ -697,6 +648,7 @@ namespace TRR_SaveMaster
                 chkHKGun.Enabled = false;
                 nudHKGunAmmo.Enabled = false;
                 chkPistols.Enabled = true;
+                lblPistolAmmo.Enabled = true;
                 nudFlares.Enabled = true;
             }
             else if (levelIndex == 8)   // Gallows Tree
@@ -715,6 +667,7 @@ namespace TRR_SaveMaster
                 chkHKGun.Enabled = false;
                 nudHKGunAmmo.Enabled = false;
                 chkPistols.Enabled = false;
+                lblPistolAmmo.Enabled = false;
                 nudFlares.Enabled = false;
             }
             else if (levelIndex == 9)   // Labyrinth
@@ -733,6 +686,7 @@ namespace TRR_SaveMaster
                 chkHKGun.Enabled = false;
                 nudHKGunAmmo.Enabled = false;
                 chkPistols.Enabled = false;
+                lblPistolAmmo.Enabled = false;
                 nudFlares.Enabled = false;
             }
             else if (levelIndex == 10)  // Old Mill
@@ -751,6 +705,7 @@ namespace TRR_SaveMaster
                 chkHKGun.Enabled = false;
                 nudHKGunAmmo.Enabled = false;
                 chkPistols.Enabled = false;
+                lblPistolAmmo.Enabled = false;
                 nudFlares.Enabled = false;
             }
             else if (levelIndex == 11)  // The 13th Floor
@@ -769,6 +724,7 @@ namespace TRR_SaveMaster
                 chkHKGun.Enabled = true;
                 nudHKGunAmmo.Enabled = true;
                 chkPistols.Enabled = false;
+                lblPistolAmmo.Enabled = false;
                 nudFlares.Enabled = false;
             }
             else if (levelIndex == 12)  // Escape with the Iris
@@ -787,6 +743,7 @@ namespace TRR_SaveMaster
                 chkHKGun.Enabled = true;
                 nudHKGunAmmo.Enabled = true;
                 chkPistols.Enabled = false;
+                lblPistolAmmo.Enabled = false;
                 nudFlares.Enabled = false;
             }
             else if (levelIndex == 14)  // Red Alert!
@@ -805,6 +762,7 @@ namespace TRR_SaveMaster
                 chkHKGun.Enabled = true;
                 nudHKGunAmmo.Enabled = true;
                 chkPistols.Enabled = false;
+                lblPistolAmmo.Enabled = false;
                 nudFlares.Enabled = false;
             }
         }
@@ -884,7 +842,7 @@ namespace TRR_SaveMaster
             else
             {
                 trbHealth.Enabled = false;
-                trbHealth.Value = 1;
+                trbHealth.Value = trbHealth.Minimum;
                 lblHealthError.Visible = true;
                 lblHealth.Visible = false;
             }
@@ -1016,6 +974,51 @@ namespace TRR_SaveMaster
             }
 
             return -1;
+        }
+
+        public void PopulateEmptySlots(ComboBox cmbSavegames)
+        {
+            if (cmbSavegames.Items.Count == MAX_SAVEGAMES)
+            {
+                return;
+            }
+
+            for (int i = cmbSavegames.Items.Count; i < MAX_SAVEGAMES; i++)
+            {
+                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR5 + (i * SAVEGAME_SIZE);
+
+                if (currentSavegameOffset < MAX_SAVEGAME_OFFSET_TR5)
+                {
+                    Int32 saveNumber = ReadInt32(currentSavegameOffset + SAVE_NUMBER_OFFSET);
+                    byte levelIndex = ReadByte(currentSavegameOffset + LEVEL_INDEX_OFFSET);
+                    bool savegamePresent = ReadByte(currentSavegameOffset + SLOT_STATUS_OFFSET) != 0;
+
+                    if (savegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
+                    {
+                        int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR5) / SAVEGAME_SIZE;
+
+                        bool savegameExists = false;
+
+                        foreach (Savegame existingSavegame in cmbSavegames.Items)
+                        {
+                            if (existingSavegame.Slot == slot)
+                            {
+                                savegameExists = true;
+                                break;
+                            }
+                        }
+
+                        if (!savegameExists)
+                        {
+                            string levelName = levelNames[levelIndex];
+                            GameMode gameMode = ReadByte(currentSavegameOffset + GAME_MODE_OFFSET) == 0 ? GameMode.Normal : GameMode.Plus;
+
+                            Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode);
+                            cmbSavegames.Items.Add(savegame);
+                        }
+                    }
+                }
+            }
         }
 
         public void PopulateSavegames(ComboBox cmbSavegames)

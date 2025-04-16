@@ -287,6 +287,8 @@ namespace TRR_SaveMaster
             lblHealthTR5.Text = "0.1%";
             lblHealthTR5.Visible = true;
 
+            lblPistolAmmoTR5.Enabled = true;
+
             btnSaveTR5.Enabled = false;
             btnCancelTR5.Enabled = false;
         }
@@ -1868,7 +1870,7 @@ namespace TRR_SaveMaster
                     TR5.DetermineOffsets();
                     TR5.SetLevelParams(chkRevolverTR5, chkDeagleTR5, nudRevolverAmmoTR5, nudDeagleAmmoTR5, chkUziTR5, nudUziAmmoTR5, chkShotgunTR5,
                         nudShotgunNormalAmmoTR5, nudShotgunWideshotAmmoTR5, chkGrapplingGunTR5, nudGrapplingGunAmmoTR5, chkHKGunTR5, nudHKGunAmmoTR5,
-                        chkPistolsTR5, nudFlaresTR5);
+                        chkPistolsTR5, nudFlaresTR5, lblPistolAmmoTR5);
 
                     TR5.DisplayGameInfo(nudSaveNumberTR5, nudSmallMedipacksTR5, nudLargeMedipacksTR5, nudFlaresTR5, nudSecretsTR5,
                         chkPistolsTR5, chkRevolverTR5, chkDeagleTR5, chkUziTR5, chkHKGunTR5, chkGrapplingGunTR5, chkShotgunTR5,
