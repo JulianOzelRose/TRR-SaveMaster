@@ -253,6 +253,8 @@ namespace TRR_SaveMaster
             lblHealthTR3.Text = "0.1%";
             lblHealthTR3.Visible = true;
 
+            lblPistolAmmoTR2.Enabled = true;
+
             btnSaveTR3.Enabled = false;
             btnCancelTR3.Enabled = false;
         }
@@ -1733,7 +1735,7 @@ namespace TRR_SaveMaster
 
                     TR2.SetLevelParams(chkPistolsTR2, chkShotgunTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkM16TR2,
                         chkGrenadeLauncherTR2, chkHarpoonGunTR2, nudShotgunAmmoTR2, nudAutomaticPistolsAmmoTR2, nudUziAmmoTR2,
-                        nudM16AmmoTR2, nudGrenadeLauncherAmmoTR2, nudHarpoonGunAmmoTR2);
+                        nudM16AmmoTR2, nudGrenadeLauncherAmmoTR2, nudHarpoonGunAmmoTR2, lblPistolAmmoTR2);
 
                     TR2.DisplayGameInfo(chkPistolsTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkM16TR2,
                         chkGrenadeLauncherTR2, chkHarpoonGunTR2, nudSaveNumberTR2, nudAutomaticPistolsAmmoTR2, chkShotgunTR2,

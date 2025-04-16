@@ -681,7 +681,7 @@ namespace TRR_SaveMaster
         public void SetLevelParams(CheckBox chkPistols, CheckBox chkShotgun, CheckBox chkAutomaticPistols, CheckBox chkUzis,
             CheckBox chkM16, CheckBox chkGrenadeLauncher, CheckBox chkHarpoonGun, NumericUpDown nudShotgunAmmo,
             NumericUpDown nudAutomaticPistolsAmmo, NumericUpDown nudUziAmmo, NumericUpDown nudM16Ammo,
-            NumericUpDown nudGrenadeLauncherAmmo, NumericUpDown nudHarpoonGunAmmo)
+            NumericUpDown nudGrenadeLauncherAmmo, NumericUpDown nudHarpoonGunAmmo, Label lblPistolAmmo)
         {
             byte levelIndex = GetLevelIndex();
 
@@ -701,6 +701,8 @@ namespace TRR_SaveMaster
                 nudM16Ammo.Enabled = false;
                 nudGrenadeLauncherAmmo.Enabled = false;
                 nudHarpoonGunAmmo.Enabled = false;
+
+                lblPistolAmmo.Enabled = false;
             }
             else if (levelIndex == 23)  // Nightmare in Vegas
             {
@@ -718,6 +720,8 @@ namespace TRR_SaveMaster
                 nudM16Ammo.Enabled = false;
                 nudGrenadeLauncherAmmo.Enabled = false;
                 nudHarpoonGunAmmo.Enabled = false;
+
+                lblPistolAmmo.Enabled = true;
             }
             else
             {
@@ -735,6 +739,8 @@ namespace TRR_SaveMaster
                 nudM16Ammo.Enabled = true;
                 nudGrenadeLauncherAmmo.Enabled = true;
                 nudHarpoonGunAmmo.Enabled = true;
+
+                lblPistolAmmo.Enabled = true;
             }
         }
 
