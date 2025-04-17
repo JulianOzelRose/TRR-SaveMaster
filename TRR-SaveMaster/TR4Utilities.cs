@@ -664,7 +664,7 @@ namespace TRR_SaveMaster
             }
             else if (levelIndex == 6)   // KV5
             {
-                MIN_HEALTH_OFFSET = 0xD52;
+                MIN_HEALTH_OFFSET = 0x94E;
                 MAX_HEALTH_OFFSET = 0xF34;
             }
             else if (levelIndex == 7)   // Temple of Karnak
@@ -679,12 +679,12 @@ namespace TRR_SaveMaster
             }
             else if (levelIndex == 9)   // Sacred Lake
             {
-                MIN_HEALTH_OFFSET = 0x1052;
+                MIN_HEALTH_OFFSET = 0x7EE;
                 MAX_HEALTH_OFFSET = 0x1D1C;
             }
             else if (levelIndex == 11)  // Tomb of Semerkhet
             {
-                MIN_HEALTH_OFFSET = 0x1D1F;
+                MIN_HEALTH_OFFSET = 0xDCD;
                 MAX_HEALTH_OFFSET = 0x3116;
             }
             else if (levelIndex == 12)  // Guardian of Semerkhet
@@ -709,12 +709,12 @@ namespace TRR_SaveMaster
             }
             else if (levelIndex == 16)  // Pharos, Temple of Isis
             {
-                MIN_HEALTH_OFFSET = 0xF07;
+                MIN_HEALTH_OFFSET = 0x73A;
                 MAX_HEALTH_OFFSET = 0x4BC2;
             }
             else if (levelIndex == 17)  // Cleopatra's Palaces
             {
-                MIN_HEALTH_OFFSET = 0x1537;
+                MIN_HEALTH_OFFSET = 0x688;
                 MAX_HEALTH_OFFSET = 0x5305;
             }
             else if (levelIndex == 18)  // Catacombs
@@ -724,17 +724,17 @@ namespace TRR_SaveMaster
             }
             else if (levelIndex == 19)  // Temple of Poseidon
             {
-                MIN_HEALTH_OFFSET = 0x185A;
+                MIN_HEALTH_OFFSET = 0x8F3;
                 MAX_HEALTH_OFFSET = 0x2B2E;
             }
             else if (levelIndex == 20)  // The Lost Library
             {
-                MIN_HEALTH_OFFSET = 0x2255;
+                MIN_HEALTH_OFFSET = 0xE7B;
                 MAX_HEALTH_OFFSET = 0x3FE7;
             }
             else if (levelIndex == 21)  // Hall of Demetrius
             {
-                MIN_HEALTH_OFFSET = 0x23DD;
+                MIN_HEALTH_OFFSET = 0x5FA;
                 MAX_HEALTH_OFFSET = 0x3E94;
             }
             else if (levelIndex == 22)  // City of the Dead
@@ -754,12 +754,12 @@ namespace TRR_SaveMaster
             }
             else if (levelIndex == 25)  // Street Bazaar
             {
-                MIN_HEALTH_OFFSET = 0x11B6;
+                MIN_HEALTH_OFFSET = 0x6DD;
                 MAX_HEALTH_OFFSET = 0x2736;
             }
             else if (levelIndex == 26)  // Citadel Gate
             {
-                MIN_HEALTH_OFFSET = 0x1322;
+                MIN_HEALTH_OFFSET = 0x77A;
                 MAX_HEALTH_OFFSET = 0x19CA;
             }
             else if (levelIndex == 27)  // Citadel
@@ -779,42 +779,42 @@ namespace TRR_SaveMaster
             }
             else if (levelIndex == 31)  // Menkaure's Pyramid
             {
-                MIN_HEALTH_OFFSET = 0x10BA;
+                MIN_HEALTH_OFFSET = 0x5FC;
                 MAX_HEALTH_OFFSET = 0x2307;
             }
             else if (levelIndex == 32)  // Inside Menkaure's Pyramid
             {
-                MIN_HEALTH_OFFSET = 0x157C;
+                MIN_HEALTH_OFFSET = 0x8BA;
                 MAX_HEALTH_OFFSET = 0x2AE9;
             }
             else if (levelIndex == 33)  // The Mastabas
             {
-                MIN_HEALTH_OFFSET = 0x1F11;
+                MIN_HEALTH_OFFSET = 0xA8C;
                 MAX_HEALTH_OFFSET = 0x44AE;
             }
             else if (levelIndex == 34)  // The Great Pyramid
             {
-                MIN_HEALTH_OFFSET = 0x2289;
+                MIN_HEALTH_OFFSET = 0x69A;
                 MAX_HEALTH_OFFSET = 0x500C;
             }
             else if (levelIndex == 35)  // Khufu's Queens Pyramids
             {
-                MIN_HEALTH_OFFSET = 0x2870;
+                MIN_HEALTH_OFFSET = 0xA6B;
                 MAX_HEALTH_OFFSET = 0x55F1;
             }
             else if (levelIndex == 36)  // Inside the Great Pyramid
             {
-                MIN_HEALTH_OFFSET = 0x2E59;
+                MIN_HEALTH_OFFSET = 0x612;
                 MAX_HEALTH_OFFSET = 0x5D36;
             }
             else if (levelIndex == 37)  // Temple of Horus
             {
-                MIN_HEALTH_OFFSET = 0x384C;
+                MIN_HEALTH_OFFSET = 0x88B;
                 MAX_HEALTH_OFFSET = 0x79CF;
             }
             else if (levelIndex == 38)  // Temple of Horus (Part 2)
             {
-                MIN_HEALTH_OFFSET = 0x4323;
+                MIN_HEALTH_OFFSET = 0x9ED;
                 MAX_HEALTH_OFFSET = 0x8B04;
             }
             else if (levelIndex == 40)  // The Times Exclusive
