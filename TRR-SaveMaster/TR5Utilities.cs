@@ -481,7 +481,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 8)   // Gallows Tree
             {
                 MIN_HEALTH_OFFSET = 0x63B;
-                MAX_HEALTH_OFFSET = 0x6DF;
+                MAX_HEALTH_OFFSET = 0x71C;
             }
             else if (levelIndex == 9)   // Labyrinth
             {
