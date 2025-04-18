@@ -549,6 +549,20 @@ namespace TRR_SaveMaster
                             SetPlatform(Platform.PC);
                         }
                     }
+                    else if (line.StartsWith("StatusBar"))
+                    {
+                        if (bool.TryParse(line.Substring("StatusBar=".Length), out bool statusBar))
+                        {
+                            tsmiStatusBar.Checked = statusBar;
+                            ssrStatusStrip.Visible = statusBar;
+                            slblStatus.Visible = statusBar;
+
+                            if (!statusBar)
+                            {
+                                this.Height -= ssrStatusStrip.Height;
+                            }
+                        }
+                    }
                 }
             }
             else
@@ -565,6 +579,7 @@ namespace TRR_SaveMaster
             string content = $"TRXPath={savegamePathTRX}\n";
             content += $"TRX2Path={savegamePathTRX2}\n";
             content += $"AutoBackup={tsmiBackupBeforeSaving.Checked}\n";
+            content += $"StatusBar={tsmiStatusBar.Checked}\n";
 
             string platform = "";
 
