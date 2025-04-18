@@ -466,7 +466,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 5)   // The Submarine
             {
                 MIN_HEALTH_OFFSET = 0x6E2;
-                MAX_HEALTH_OFFSET = 0x860;
+                MAX_HEALTH_OFFSET = 0x921;
             }
             else if (levelIndex == 6)   // Deepsea Dive
             {
