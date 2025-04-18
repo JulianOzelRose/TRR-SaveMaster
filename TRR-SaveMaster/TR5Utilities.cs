@@ -619,8 +619,8 @@ namespace TRR_SaveMaster
                 chkDeagle.Enabled = false;
                 nudRevolverAmmo.Enabled = false;
                 nudDeagleAmmo.Enabled = false;
-                chkUzi.Enabled = false;
-                nudUziAmmo.Enabled = false;
+                chkUzi.Enabled = true;
+                nudUziAmmo.Enabled = true;
                 chkShotgun.Enabled = true;
                 nudShotgunNormalAmmo.Enabled = true;
                 nudShotgunWideshotAmmo.Enabled = true;
