@@ -224,7 +224,9 @@ namespace TRR_SaveMaster
             this.lblPistolAmmoTR5 = new System.Windows.Forms.Label();
             this.chkPistolsTR5 = new System.Windows.Forms.CheckBox();
             this.tpTR6 = new System.Windows.Forms.TabPage();
+            this.nudSaveNumberTR6 = new System.Windows.Forms.NumericUpDown();
             this.cmbInventoryTR6 = new System.Windows.Forms.ComboBox();
+            this.lblSaveNumberTR6 = new System.Windows.Forms.Label();
             this.lblInventoryTR6 = new System.Windows.Forms.Label();
             this.btnRefreshTR6 = new System.Windows.Forms.Button();
             this.btnExitTR6 = new System.Windows.Forms.Button();
@@ -314,13 +316,12 @@ namespace TRR_SaveMaster
             this.tsmiAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiStatusBar = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAdvanced = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiAllowUnsafeMaxValues = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAllowUnsafeMaxValuesTR6 = new System.Windows.Forms.ToolStripMenuItem();
             this.tsddbHelp = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiReportBug = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.nudSaveNumberTR6 = new System.Windows.Forms.NumericUpDown();
-            this.lblSaveNumberTR6 = new System.Windows.Forms.Label();
+            this.tsmiShowInventoryToggleTR6 = new System.Windows.Forms.ToolStripMenuItem();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR1)).BeginInit();
@@ -403,6 +404,7 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudHKGunAmmoTR5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGrapplingGunAmmoTR5)).BeginInit();
             this.tpTR6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR6)).BeginInit();
             this.grpWeaponsTR6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudBoranXAmmoTR6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudViperSMGAmmoTR6)).BeginInit();
@@ -428,7 +430,6 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudCashTR6)).BeginInit();
             this.ssrStatusStrip.SuspendLayout();
             this.tsrToolStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR6)).BeginInit();
             this.SuspendLayout();
             // 
             // tabGame
@@ -2810,6 +2811,20 @@ namespace TRR_SaveMaster
             this.tpTR6.TabIndex = 7;
             this.tpTR6.Text = "Tomb Raider VI";
             // 
+            // nudSaveNumberTR6
+            // 
+            this.nudSaveNumberTR6.Location = new System.Drawing.Point(101, 16);
+            this.nudSaveNumberTR6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudSaveNumberTR6.Name = "nudSaveNumberTR6";
+            this.nudSaveNumberTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudSaveNumberTR6.TabIndex = 44;
+            this.nudSaveNumberTR6.ValueChanged += new System.EventHandler(this.nudSaveNumberTR6_ValueChanged);
+            this.nudSaveNumberTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSaveNumberTR6_KeyPress);
+            // 
             // cmbInventoryTR6
             // 
             this.cmbInventoryTR6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -2822,6 +2837,15 @@ namespace TRR_SaveMaster
             this.cmbInventoryTR6.Size = new System.Drawing.Size(94, 21);
             this.cmbInventoryTR6.TabIndex = 47;
             this.cmbInventoryTR6.SelectedIndexChanged += new System.EventHandler(this.cmbInventoryTR6_SelectedIndexChanged);
+            // 
+            // lblSaveNumberTR6
+            // 
+            this.lblSaveNumberTR6.AutoSize = true;
+            this.lblSaveNumberTR6.Location = new System.Drawing.Point(22, 18);
+            this.lblSaveNumberTR6.Name = "lblSaveNumberTR6";
+            this.lblSaveNumberTR6.Size = new System.Drawing.Size(75, 13);
+            this.lblSaveNumberTR6.TabIndex = 45;
+            this.lblSaveNumberTR6.Text = "Save Number:";
             // 
             // lblInventoryTR6
             // 
@@ -3750,7 +3774,7 @@ namespace TRR_SaveMaster
             this.tsmiPlayStation4,
             this.tsmiNintendoSwitch});
             this.tsmiPlatform.Name = "tsmiPlatform";
-            this.tsmiPlatform.Size = new System.Drawing.Size(149, 22);
+            this.tsmiPlatform.Size = new System.Drawing.Size(180, 22);
             this.tsmiPlatform.Text = "Platform";
             // 
             // tsmiPC
@@ -3782,13 +3806,13 @@ namespace TRR_SaveMaster
             // tsmiSettingsSeparator
             // 
             this.tsmiSettingsSeparator.Name = "tsmiSettingsSeparator";
-            this.tsmiSettingsSeparator.Size = new System.Drawing.Size(146, 6);
+            this.tsmiSettingsSeparator.Size = new System.Drawing.Size(177, 6);
             // 
             // tsmiAlwaysOnTop
             // 
             this.tsmiAlwaysOnTop.CheckOnClick = true;
             this.tsmiAlwaysOnTop.Name = "tsmiAlwaysOnTop";
-            this.tsmiAlwaysOnTop.Size = new System.Drawing.Size(149, 22);
+            this.tsmiAlwaysOnTop.Size = new System.Drawing.Size(180, 22);
             this.tsmiAlwaysOnTop.Text = "Always on top";
             this.tsmiAlwaysOnTop.Click += new System.EventHandler(this.tsmiAlwaysOnTop_Click);
             // 
@@ -3798,25 +3822,26 @@ namespace TRR_SaveMaster
             this.tsmiStatusBar.CheckOnClick = true;
             this.tsmiStatusBar.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiStatusBar.Name = "tsmiStatusBar";
-            this.tsmiStatusBar.Size = new System.Drawing.Size(149, 22);
+            this.tsmiStatusBar.Size = new System.Drawing.Size(180, 22);
             this.tsmiStatusBar.Text = "Status Bar";
             this.tsmiStatusBar.Click += new System.EventHandler(this.tsmiStatusBar_Click);
             // 
             // tsmiAdvanced
             // 
             this.tsmiAdvanced.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiAllowUnsafeMaxValues});
+            this.tsmiAllowUnsafeMaxValuesTR6,
+            this.tsmiShowInventoryToggleTR6});
             this.tsmiAdvanced.Name = "tsmiAdvanced";
-            this.tsmiAdvanced.Size = new System.Drawing.Size(149, 22);
+            this.tsmiAdvanced.Size = new System.Drawing.Size(180, 22);
             this.tsmiAdvanced.Text = "Advanced";
             // 
-            // tsmiAllowUnsafeMaxValues
+            // tsmiAllowUnsafeMaxValuesTR6
             // 
-            this.tsmiAllowUnsafeMaxValues.CheckOnClick = true;
-            this.tsmiAllowUnsafeMaxValues.Name = "tsmiAllowUnsafeMaxValues";
-            this.tsmiAllowUnsafeMaxValues.Size = new System.Drawing.Size(402, 22);
-            this.tsmiAllowUnsafeMaxValues.Text = "Allow unsafe max values for Tomb Raider VI (may crash game)";
-            this.tsmiAllowUnsafeMaxValues.Click += new System.EventHandler(this.tsmiAllowUnsafeMaxValues_Click);
+            this.tsmiAllowUnsafeMaxValuesTR6.CheckOnClick = true;
+            this.tsmiAllowUnsafeMaxValuesTR6.Name = "tsmiAllowUnsafeMaxValuesTR6";
+            this.tsmiAllowUnsafeMaxValuesTR6.Size = new System.Drawing.Size(402, 22);
+            this.tsmiAllowUnsafeMaxValuesTR6.Text = "Allow unsafe max values for Tomb Raider VI (may crash game)";
+            this.tsmiAllowUnsafeMaxValuesTR6.Click += new System.EventHandler(this.tsmiAllowUnsafeMaxValuesTR6_Click);
             // 
             // tsddbHelp
             // 
@@ -3854,28 +3879,15 @@ namespace TRR_SaveMaster
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
             // 
-            // nudSaveNumberTR6
+            // tsmiShowInventoryToggleTR6
             // 
-            this.nudSaveNumberTR6.Location = new System.Drawing.Point(101, 16);
-            this.nudSaveNumberTR6.Maximum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            0});
-            this.nudSaveNumberTR6.Name = "nudSaveNumberTR6";
-            this.nudSaveNumberTR6.Size = new System.Drawing.Size(53, 20);
-            this.nudSaveNumberTR6.TabIndex = 44;
-            this.nudSaveNumberTR6.ValueChanged += new System.EventHandler(this.nudSaveNumberTR6_ValueChanged);
-            this.nudSaveNumberTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSaveNumberTR6_KeyPress);
-            // 
-            // lblSaveNumberTR6
-            // 
-            this.lblSaveNumberTR6.AutoSize = true;
-            this.lblSaveNumberTR6.Location = new System.Drawing.Point(22, 18);
-            this.lblSaveNumberTR6.Name = "lblSaveNumberTR6";
-            this.lblSaveNumberTR6.Size = new System.Drawing.Size(75, 13);
-            this.lblSaveNumberTR6.TabIndex = 45;
-            this.lblSaveNumberTR6.Text = "Save Number:";
+            this.tsmiShowInventoryToggleTR6.Checked = true;
+            this.tsmiShowInventoryToggleTR6.CheckOnClick = true;
+            this.tsmiShowInventoryToggleTR6.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiShowInventoryToggleTR6.Name = "tsmiShowInventoryToggleTR6";
+            this.tsmiShowInventoryToggleTR6.Size = new System.Drawing.Size(402, 22);
+            this.tsmiShowInventoryToggleTR6.Text = "Show inventory toggle for Tomb Raider VI";
+            this.tsmiShowInventoryToggleTR6.Click += new System.EventHandler(this.tsmiShowInventoryToggleTR6_Click);
             // 
             // MainForm
             // 
@@ -3998,6 +4010,7 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudGrapplingGunAmmoTR5)).EndInit();
             this.tpTR6.ResumeLayout(false);
             this.tpTR6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR6)).EndInit();
             this.grpWeaponsTR6.ResumeLayout(false);
             this.grpWeaponsTR6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudBoranXAmmoTR6)).EndInit();
@@ -4028,7 +4041,6 @@ namespace TRR_SaveMaster
             this.ssrStatusStrip.PerformLayout();
             this.tsrToolStrip.ResumeLayout(false);
             this.tsrToolStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR6)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -4322,11 +4334,12 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.ComboBox cmbInventoryTR6;
         private System.Windows.Forms.Label lblInventoryTR6;
         private System.Windows.Forms.ToolStripMenuItem tsmiAdvanced;
-        private System.Windows.Forms.ToolStripMenuItem tsmiAllowUnsafeMaxValues;
+        private System.Windows.Forms.ToolStripMenuItem tsmiAllowUnsafeMaxValuesTR6;
         private System.Windows.Forms.Label lblGPSSaveGame;
         private System.Windows.Forms.NumericUpDown nudGPSSaveGame;
         private System.Windows.Forms.NumericUpDown nudSaveNumberTR6;
         private System.Windows.Forms.Label lblSaveNumberTR6;
+        private System.Windows.Forms.ToolStripMenuItem tsmiShowInventoryToggleTR6;
     }
 }
 

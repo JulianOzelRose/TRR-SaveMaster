@@ -563,6 +563,14 @@ namespace TRR_SaveMaster
                             }
                         }
                     }
+                    else if (line.StartsWith("ShowInventoryToggleTR6="))
+                    {
+                        if (bool.TryParse(line.Substring("ShowInventoryToggleTR6=".Length), out bool showToggle))
+                        {
+                            tsmiShowInventoryToggleTR6.Checked = showToggle;
+                            tsmiShowInventoryToggleTR6_Click(null, EventArgs.Empty);
+                        }
+                    }
                 }
             }
             else
@@ -580,6 +588,7 @@ namespace TRR_SaveMaster
             content += $"TRX2Path={savegamePathTRX2}\n";
             content += $"AutoBackup={tsmiBackupBeforeSaving.Checked}\n";
             content += $"StatusBar={tsmiStatusBar.Checked}\n";
+            content += $"ShowInventoryToggleTR6={tsmiShowInventoryToggleTR6.Checked}\n";
 
             string platform = "";
 
@@ -2548,9 +2557,9 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void tsmiAllowUnsafeMaxValues_Click(object sender, EventArgs e)
+        private void tsmiAllowUnsafeMaxValuesTR6_Click(object sender, EventArgs e)
         {
-            int maxValue = tsmiAllowUnsafeMaxValues.Checked ? Int32.MaxValue : 99999;
+            int maxValue = tsmiAllowUnsafeMaxValuesTR6.Checked ? Int32.MaxValue : 99999;
 
             foreach (Control control in grpItemsTR6.Controls)
             {
@@ -2567,6 +2576,12 @@ namespace TRR_SaveMaster
                     nud.Maximum = maxValue;
                 }
             }
+        }
+
+        private void tsmiShowInventoryToggleTR6_Click(object sender, EventArgs e)
+        {
+            lblInventoryTR6.Visible = tsmiShowInventoryToggleTR6.Checked;
+            cmbInventoryTR6.Visible = tsmiShowInventoryToggleTR6.Checked;
         }
 
         private void tsmiDeleteSavegame_Click(object sender, EventArgs e)
