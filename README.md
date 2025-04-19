@@ -6,7 +6,7 @@ the section below. If you are interested in reverse engineering, there is a tech
 For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder or delete savegames,
 check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
-![TRR-SaveMaster-UI](https://github.com/user-attachments/assets/6a75add7-f6ee-49a1-9db8-6a0bc93cb674)
+![TRR-SaveMaster-UI](https://github.com/user-attachments/assets/5177ad98-43af-42bf-b077-0e4f107e2edf)
 
 ## Installation and use
 To download and use this savegame editor, simply navigate to the [Releases](https://github.com/JulianOzelRose/TRR-SaveMaster/releases) page,
@@ -580,6 +580,15 @@ Below are the offset tables for Tomb Raider IV-VI. With the exception of health,
 | 0x1D6     | UInt16  | Crossbow Normal Ammo    |
 | 0x1D8     | UInt16  | Crossbow Poison Ammo    |
 | 0x1DA     | UInt16  | Crossbow Explosive Ammo |
+| 0x230     | Int32   | Time Taken              |
+| 0x234     | UInt32  | Distance Travelled      |
+| 0x238     | Int16   | Ammo Used               |
+| 0x240     | Int32   | Pickups                 |
+| 0x244     | UInt16  | Kills                   |
+| 0x246     | UInt8   | Secrets Found           |
+| 0x247     | UInt8   | Health Packs Used       |
+| 0x280     | Int32   | Vessels Broken          |
+
 
 #### Tomb Raider V
 | Offset    | Type    | Description                  |
@@ -603,6 +612,13 @@ Below are the offset tables for Tomb Raider IV-VI. With the exception of health,
 | 0x1CC     | UInt16  | Shotgun Wideshot Ammo        |
 | 0x1CE     | UInt16  | HK Gun Ammo                  |
 | 0x1D6     | UInt16  | Grappling Gun Ammo           |
+| 0x230     | Int32   | Time Taken                   |
+| 0x234     | UInt32  | Distance Travelled           |
+| 0x238     | Int16   | Ammo Used                    |
+| 0x240     | Int32   | Pickups                      |
+| 0x244     | UInt16  | Kills                        |
+| 0x246     | UInt8   | Secrets Found                |
+| 0x247     | UInt8   | Health Packs Used            |
 
 #### Tomb Raider VI
 | Offset    | Type    | Description                  |
@@ -704,9 +720,9 @@ of reversing the Tomb Raider VI format. Below is a table of the compressed buffe
 | Header          | 0x009            |
 | Inv             | 0x12F            |
 | Map             | Dynamic          |
-| Cam 1           | 0x044            |
-| Cam 2           | 0x044            |
-| Cam 3           | 0x044            |
+| Cam1            | 0x044            |
+| Cam2            | 0x044            |
+| Cam3            | 0x044            |
 | FX              | Dynamic          |
 | Audio           | Dynamic          |
 | Pickup          | Dynamic          |
@@ -732,7 +748,8 @@ The `Inv2` block stores the inventory data for both Lara and Kurtis, as well as 
 immediately after the item count. Lara's inventory array is stored first, then Kurtis' inventory is stored after. Below is how the inventory item struct looks for Tomb Raider VI.
 
 ```
-struct InventoryItem {
+struct InventoryItem
+{
     uint16_t ClassId;
     int Type;
     int Quantity;
