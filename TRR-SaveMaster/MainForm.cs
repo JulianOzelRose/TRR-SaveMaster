@@ -2666,9 +2666,6 @@ namespace TRR_SaveMaster
                 }
 
                 slblStatus.Text = $"Successfully deleted savegame: '{deletedSavegameString}'";
-
-                MessageBox.Show($"Successfully deleted '{deletedSavegameString}'.",
-                    "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
