@@ -39,6 +39,9 @@ namespace TRR_SaveMaster
         private int NUM_EMITTERS = 0;
         private int NUM_TRIGGERS = 0;
 
+        // Header offsets
+        private const int SAVEGAME_VERSION_OFFSET = 0x8;
+
         // Offsets to save
         private const int CASH_OFFSET = 0x9;
         private int PLAYER_BASE_OFFSET;
@@ -127,6 +130,11 @@ namespace TRR_SaveMaster
         private Int32 GetSaveNumber()
         {
             return ReadInt32(savegameOffset + SAVE_NUMBER_OFFSET);
+        }
+
+        private Int32 GetSavegameVersion()
+        {
+            return ReadInt32(savegameOffset + SAVEGAME_VERSION_OFFSET);
         }
 
         private GameMode GetGameMode()
@@ -328,26 +336,36 @@ namespace TRR_SaveMaster
 
         private void MapPickupLoad(BinaryReader reader)
         {
-            if (sgCurrentLevel == 4 || sgCurrentLevel == 5 || sgCurrentLevel == 6 ||
-                sgCurrentLevel == 7 || sgCurrentLevel == 8 || sgCurrentLevel == 9 ||
-                sgCurrentLevel == 10 || sgCurrentLevel == 0xB || sgCurrentLevel == 0xD ||
-                sgCurrentLevel == 0x11 || sgCurrentLevel == 0x1E || sgCurrentLevel == 0x1F ||
-                sgCurrentLevel == 0x20 || sgCurrentLevel == 0x21 || sgCurrentLevel == 0x22)
+            bool isPickupLevel =
+                sgCurrentLevel == 0x04 || sgCurrentLevel == 0x05 || sgCurrentLevel == 0x06 ||
+                sgCurrentLevel == 0x07 || sgCurrentLevel == 0x08 || sgCurrentLevel == 0x09 ||
+                sgCurrentLevel == 0x0A || sgCurrentLevel == 0x0B || sgCurrentLevel == 0x0C ||
+                sgCurrentLevel == 0x0D || sgCurrentLevel == 0x11 || sgCurrentLevel == 0x1E ||
+                sgCurrentLevel == 0x1F || sgCurrentLevel == 0x20 || sgCurrentLevel == 0x21 ||
+                sgCurrentLevel == 0x22;
+
+            if (isPickupLevel)
             {
-                int numPickupLevels = 0xF;  // 15 levels in TRR6
+                int savegameVersion = GetSavegameVersion();
 
-                for (int level = 0; level < numPickupLevels; level++)
+                // Do not run pickup load logic on pre-patch savegames of St. Aicard's Graveyard
+                if ((savegameVersion != 3 || sgCurrentLevel != 0x0C))
                 {
-                    // Read the 2-byte pickup count
-                    reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-                    ushort pickupCount = reader.ReadUInt16();
-                    sgBufferCursor += 0x2;
+                    int numPickupLevels = 0xF;
 
-                    // For each pickup, advance by 8 bytes
-                    sgBufferCursor += pickupCount * 8;
+                    for (int level = 0; level < numPickupLevels; level++)
+                    {
+                        // Read the 2-byte pickup count
+                        reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
+                        ushort pickupCount = reader.ReadUInt16();
+                        sgBufferCursor += 0x2;
 
-                    // Advance by 0x13 bytes (19 bytes) for the final adjustment.
-                    sgBufferCursor += 0x13;
+                        // For each pickup, advance by 8 bytes
+                        sgBufferCursor += pickupCount * 8;
+
+                        // Advance by 0x13 bytes for the final adjustment.
+                        sgBufferCursor += 0x13;
+                    }
                 }
             }
 
