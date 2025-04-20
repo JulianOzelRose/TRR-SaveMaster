@@ -43,6 +43,7 @@ namespace TRR_SaveMaster
 
         // Weapon byte flags
         private const int WEAPON_PRESENT = 0x9;
+        private const int WEAPON_PRESENT_WITH_SILENCER = 0xB;
         private const int WEAPON_PRESENT_WITH_SIGHT = 0xD;
 
         // Platform
@@ -183,9 +184,19 @@ namespace TRR_SaveMaster
             return ReadByte(savegameOffset + REVOLVER_OFFSET) != 0;
         }
 
+        private byte GetRevolverFlag()
+        {
+            return ReadByte(savegameOffset + REVOLVER_OFFSET);
+        }
+
         private bool IsDeaglePresent()
         {
             return ReadByte(savegameOffset + DEAGLE_OFFSET) != 0;
+        }
+
+        private byte GetDeagleFlag()
+        {
+            return ReadByte(savegameOffset + DEAGLE_OFFSET);
         }
 
         private bool IsShotgunPresent()
@@ -201,6 +212,11 @@ namespace TRR_SaveMaster
         private bool IsHKGunPresent()
         {
             return ReadByte(savegameOffset + HK_GUN_OFFSET) != 0;
+        }
+
+        private byte GetHKGunFlag()
+        {
+            return ReadByte(savegameOffset + HK_GUN_OFFSET);
         }
 
         private bool IsGrapplingGunPresent()
@@ -305,9 +321,13 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void WriteRevolverPresent(bool isPresent)
+        private void WriteRevolverPresent(bool isPresent, byte prevRevolverFlag)
         {
-            if (isPresent)
+            if (isPresent && prevRevolverFlag != 0)
+            {
+                WriteByte(savegameOffset + REVOLVER_OFFSET, prevRevolverFlag);
+            }
+            else if (isPresent)
             {
                 WriteByte(savegameOffset + REVOLVER_OFFSET, WEAPON_PRESENT_WITH_SIGHT);
             }
@@ -317,9 +337,13 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void WriteDeaglePresent(bool isPresent)
+        private void WriteDeaglePresent(bool isPresent, byte prevDeagleFlag)
         {
-            if (isPresent)
+            if (isPresent && prevDeagleFlag != 0)
+            {
+                WriteByte(savegameOffset + DEAGLE_OFFSET, prevDeagleFlag);
+            }
+            else if (isPresent)
             {
                 WriteByte(savegameOffset + DEAGLE_OFFSET, WEAPON_PRESENT_WITH_SIGHT);
             }
@@ -341,11 +365,15 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void WriteHKGunPresent(bool isPresent)
+        private void WriteHKGunPresent(bool isPresent, byte prevHKGunFlag)
         {
-            if (isPresent)
+            if (isPresent && prevHKGunFlag != 0)
             {
-                WriteByte(savegameOffset + HK_GUN_OFFSET, WEAPON_PRESENT);
+                WriteByte(savegameOffset + HK_GUN_OFFSET, prevHKGunFlag);
+            }
+            else if (isPresent)
+            {
+                WriteByte(savegameOffset + HK_GUN_OFFSET, WEAPON_PRESENT_WITH_SILENCER);
             }
             else
             {
@@ -856,6 +884,8 @@ namespace TRR_SaveMaster
         {
             DetermineOffsets();
 
+            byte prevHKGunFlag = GetHKGunFlag();
+
             WriteSaveNumber((Int32)nudSaveNumber.Value);
             WriteNumSmallMedipacks((UInt16)nudSmallMedipacks.Value);
             WriteNumLargeMedipacks((UInt16)nudLargeMedipacks.Value);
@@ -863,7 +893,7 @@ namespace TRR_SaveMaster
 
             WritePistolsPresent(chkPistols.Checked);
             WriteUziPresent(chkUzi.Checked);
-            WriteHKGunPresent(chkHKGun.Checked);
+            WriteHKGunPresent(chkHKGun.Checked, prevHKGunFlag);
             WriteGrapplingGunPresent(chkGrapplingGun.Checked);
             WriteShotgunPresent(chkShotgun.Checked);
 
@@ -880,11 +910,13 @@ namespace TRR_SaveMaster
 
             if (chkRevolver.Enabled)
             {
-                WriteRevolverPresent(chkRevolver.Checked);
+                byte prevRevolverFlag = GetRevolverFlag();
+                WriteRevolverPresent(chkRevolver.Checked, prevRevolverFlag);
             }
             else if (chkDeagle.Enabled)
             {
-                WriteDeaglePresent(chkDeagle.Checked);
+                byte prevDeagleFlag = GetDeagleFlag();
+                WriteDeaglePresent(chkDeagle.Checked, prevDeagleFlag);
             }
 
             if (nudRevolverAmmo.Enabled)
