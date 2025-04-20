@@ -243,9 +243,19 @@ namespace TRR_SaveMaster
             return ReadByte(savegameOffset + CROSSBOW_OFFSET) != 0;
         }
 
+        private byte GetCrossbowFlag()
+        {
+            return ReadByte(savegameOffset + CROSSBOW_OFFSET);
+        }
+
         private bool IsRevolverPresent()
         {
             return ReadByte(savegameOffset + REVOLVER_OFFSET) != 0;
+        }
+
+        private byte GetRevolverFlag()
+        {
+            return ReadByte(savegameOffset + REVOLVER_OFFSET);
         }
 
         public bool IsSavegamePresent()
@@ -342,9 +352,13 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void WriteCrossbowPresent(bool isPresent)
+        private void WriteCrossbowPresent(bool isPresent, byte prevCrossbowFlag)
         {
-            if (isPresent)
+            if (isPresent &&  prevCrossbowFlag != 0)
+            {
+                WriteByte(savegameOffset + CROSSBOW_OFFSET, prevCrossbowFlag);
+            }
+            else if (isPresent)
             {
                 WriteByte(savegameOffset + CROSSBOW_OFFSET, WEAPON_PRESENT_WITH_SIGHT);
             }
@@ -354,9 +368,13 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void WriteRevolverPresent(bool isPresent)
+        private void WriteRevolverPresent(bool isPresent, byte prevRevolverFlag)
         {
-            if (isPresent)
+            if (isPresent && prevRevolverFlag != 0)
+            {
+                WriteByte(savegameOffset + REVOLVER_OFFSET, prevRevolverFlag);
+            }
+            else if (isPresent)
             {
                 WriteByte(savegameOffset + REVOLVER_OFFSET, WEAPON_PRESENT_WITH_SIGHT);
             }
@@ -480,7 +498,7 @@ namespace TRR_SaveMaster
             else
             {
                 trbHealth.Enabled = false;
-                trbHealth.Value = 1;
+                trbHealth.Value = trbHealth.Minimum;
                 lblHealthError.Visible = true;
                 lblHealth.Visible = false;
             }
@@ -493,6 +511,9 @@ namespace TRR_SaveMaster
             NumericUpDown nudGrenadeGunFlashAmmo, NumericUpDown nudCrossbowNormalAmmo, NumericUpDown nudCrossbowPoisonAmmo, NumericUpDown nudCrossbowExplosiveAmmo,
             TrackBar trbHealth)
         {
+            byte prevCrossbowFlag = GetCrossbowFlag();
+            byte prevRevolverFlag = GetRevolverFlag();
+
             WriteSaveNumber((Int32)nudSaveNumber.Value);
             WriteNumSmallMedipacks((UInt16)nudSmallMedipacks.Value);
             WriteNumLargeMedipacks((UInt16)nudLargeMedipacks.Value);
@@ -502,8 +523,8 @@ namespace TRR_SaveMaster
             WriteUziPresent(chkUzi.Checked);
             WriteShotgunPresent(chkShotgun.Checked);
             WriteGrenadeGunPresent(chkGrenadeGun.Checked);
-            WriteCrossbowPresent(chkCrossbow.Checked);
-            WriteRevolverPresent(chkRevolver.Checked);
+            WriteCrossbowPresent(chkCrossbow.Checked, prevCrossbowFlag);
+            WriteRevolverPresent(chkRevolver.Checked, prevRevolverFlag);
 
             WriteUziAmmo((UInt16)nudUziAmmo.Value);
             WriteRevolverAmmo((UInt16)nudRevolverAmmo.Value);
@@ -524,51 +545,6 @@ namespace TRR_SaveMaster
             if (trbHealth.Enabled)
             {
                 WriteHealthValue((UInt16)trbHealth.Value);
-            }
-        }
-
-        public void PopulateEmptySlots(ComboBox cmbSavegames)
-        {
-            if (cmbSavegames.Items.Count == MAX_SAVEGAMES)
-            {
-                return;
-            }
-
-            for (int i = cmbSavegames.Items.Count; i < MAX_SAVEGAMES; i++)
-            {
-                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR4 + (i * SAVEGAME_SIZE);
-
-                if (currentSavegameOffset < MAX_SAVEGAME_OFFSET_TR4)
-                {
-                    Int32 saveNumber = ReadInt32(currentSavegameOffset + SAVE_NUMBER_OFFSET);
-                    byte levelIndex = ReadByte(currentSavegameOffset + LEVEL_INDEX_OFFSET);
-                    bool savegamePresent = ReadByte(currentSavegameOffset + SLOT_STATUS_OFFSET) != 0;
-
-                    if (savegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
-                    {
-                        int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR4) / SAVEGAME_SIZE;
-
-                        bool savegameExists = false;
-
-                        foreach (Savegame existingSavegame in cmbSavegames.Items)
-                        {
-                            if (existingSavegame.Slot == slot)
-                            {
-                                savegameExists = true;
-                                break;
-                            }
-                        }
-
-                        if (!savegameExists)
-                        {
-                            string levelName = levelNames[levelIndex];
-                            GameMode gameMode = ReadByte(currentSavegameOffset + GAME_MODE_OFFSET) == 0 ? GameMode.Normal : GameMode.Plus;
-
-                            Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode);
-                            cmbSavegames.Items.Add(savegame);
-                        }
-                    }
-                }
             }
         }
 
@@ -1035,6 +1011,51 @@ namespace TRR_SaveMaster
             if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x27) return true;  // Motorbike
 
             return false;
+        }
+
+        public void PopulateEmptySlots(ComboBox cmbSavegames)
+        {
+            if (cmbSavegames.Items.Count == MAX_SAVEGAMES)
+            {
+                return;
+            }
+
+            for (int i = cmbSavegames.Items.Count; i < MAX_SAVEGAMES; i++)
+            {
+                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR4 + (i * SAVEGAME_SIZE);
+
+                if (currentSavegameOffset < MAX_SAVEGAME_OFFSET_TR4)
+                {
+                    Int32 saveNumber = ReadInt32(currentSavegameOffset + SAVE_NUMBER_OFFSET);
+                    byte levelIndex = ReadByte(currentSavegameOffset + LEVEL_INDEX_OFFSET);
+                    bool savegamePresent = ReadByte(currentSavegameOffset + SLOT_STATUS_OFFSET) != 0;
+
+                    if (savegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
+                    {
+                        int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR4) / SAVEGAME_SIZE;
+
+                        bool savegameExists = false;
+
+                        foreach (Savegame existingSavegame in cmbSavegames.Items)
+                        {
+                            if (existingSavegame.Slot == slot)
+                            {
+                                savegameExists = true;
+                                break;
+                            }
+                        }
+
+                        if (!savegameExists)
+                        {
+                            string levelName = levelNames[levelIndex];
+                            GameMode gameMode = ReadByte(currentSavegameOffset + GAME_MODE_OFFSET) == 0 ? GameMode.Normal : GameMode.Plus;
+
+                            Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode);
+                            cmbSavegames.Items.Add(savegame);
+                        }
+                    }
+                }
+            }
         }
 
         public void PopulateSavegames(ComboBox cmbSavegames)
