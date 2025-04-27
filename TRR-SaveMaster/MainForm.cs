@@ -23,6 +23,7 @@ namespace TRR_SaveMaster
         private bool isLoading = false;
         private bool isInventoryLoading = false;
         private bool userIndexChanged = true;
+        private bool hasShownTRX2PathPrompt = false;
         private Platform platform;
         private const string CONFIG_FILE_NAME = "TRR-SaveMaster.ini";
         private const int SAVEGAME_SIZE_TRX = 0x3800;
@@ -341,6 +342,8 @@ namespace TRR_SaveMaster
             {
                 BrowseSavegamePathTRX2();
             }
+
+            hasShownTRX2PathPrompt = true;
         }
 
         private void BrowseSavegamePathTRX()
@@ -2014,7 +2017,7 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == TAB_TR4)
             {
-                if (string.IsNullOrEmpty(savegamePathTRX2))
+                if (string.IsNullOrEmpty(savegamePathTRX2) && !hasShownTRX2PathPrompt)
                 {
                     PromptBrowseSavegamePathTRX2();
                     return;
@@ -2036,7 +2039,7 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == TAB_TR5)
             {
-                if (string.IsNullOrEmpty(savegamePathTRX2))
+                if (string.IsNullOrEmpty(savegamePathTRX2) && !hasShownTRX2PathPrompt)
                 {
                     PromptBrowseSavegamePathTRX2();
                     return;
@@ -2058,7 +2061,7 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == TAB_TR6)
             {
-                if (string.IsNullOrEmpty(savegamePathTRX2))
+                if (string.IsNullOrEmpty(savegamePathTRX2) && !hasShownTRX2PathPrompt)
                 {
                     PromptBrowseSavegamePathTRX2();
                     return;
