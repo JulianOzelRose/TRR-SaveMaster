@@ -1,7 +1,6 @@
 # Tomb Raider Remastered Savegame Editor
-This is a savegame editor for Tomb Raider I-III and IV-VI Remastered.
-With this editor, you can edit items, health, weapons, ammunition, statistics, and position.
-The Tomb Raider I-III portion of this editor is compatible with PC, PS4, and Nintendo Switch savegames. For instructions on how to download and use this savegame editor, scroll down to
+This is a savegame editor for Tomb Raider I-VI Remastered. With this editor, you can edit items, health, weapons, ammunition, statistics, and position.
+The Tomb Raider I-III portion of this editor is compatible with PC, PS4, and Nintendo Switch savegames. For instructions on how to download and use this editor, scroll down to
 the section below. If you are interested in reverse engineering, there is a technical portion on the bottom section of this README.
 For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder or delete savegames,
 check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
