@@ -73,6 +73,8 @@ namespace TRR_SaveMaster
             this.btnSave = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.nudVesselsBrokenMax = new System.Windows.Forms.NumericUpDown();
+            this.lblSlash4 = new System.Windows.Forms.Label();
             this.grpSavegameStatistics.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudChocobarsFoundMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHealthItemsFoundMax)).BeginInit();
@@ -93,10 +95,13 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudPickups)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrystalsFound)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSecretsFound)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudVesselsBrokenMax)).BeginInit();
             this.SuspendLayout();
             // 
             // grpSavegameStatistics
             // 
+            this.grpSavegameStatistics.Controls.Add(this.lblSlash4);
+            this.grpSavegameStatistics.Controls.Add(this.nudVesselsBrokenMax);
             this.grpSavegameStatistics.Controls.Add(this.lblSlash3);
             this.grpSavegameStatistics.Controls.Add(this.nudChocobarsFoundMax);
             this.grpSavegameStatistics.Controls.Add(this.lblSlash2);
@@ -635,6 +640,28 @@ namespace TRR_SaveMaster
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // nudVesselsBrokenMax
+            // 
+            this.nudVesselsBrokenMax.Enabled = false;
+            this.nudVesselsBrokenMax.Location = new System.Drawing.Point(224, 309);
+            this.nudVesselsBrokenMax.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.nudVesselsBrokenMax.Name = "nudVesselsBrokenMax";
+            this.nudVesselsBrokenMax.Size = new System.Drawing.Size(51, 20);
+            this.nudVesselsBrokenMax.TabIndex = 51;
+            // 
+            // lblSlash4
+            // 
+            this.lblSlash4.AutoSize = true;
+            this.lblSlash4.Location = new System.Drawing.Point(207, 313);
+            this.lblSlash4.Name = "lblSlash4";
+            this.lblSlash4.Size = new System.Drawing.Size(12, 13);
+            this.lblSlash4.TabIndex = 52;
+            this.lblSlash4.Text = "/";
+            // 
             // StatisticsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -675,6 +702,7 @@ namespace TRR_SaveMaster
             ((System.ComponentModel.ISupportInitialize)(this.nudPickups)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrystalsFound)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSecretsFound)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudVesselsBrokenMax)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -724,5 +752,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.NumericUpDown nudChocobarsFoundMax;
         private System.Windows.Forms.Label lblSlash2;
         private System.Windows.Forms.NumericUpDown nudHealthItemsFoundMax;
+        private System.Windows.Forms.NumericUpDown nudVesselsBrokenMax;
+        private System.Windows.Forms.Label lblSlash4;
     }
 }

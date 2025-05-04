@@ -48,6 +48,8 @@ namespace TRR_SaveMaster
         private int SELECTED_TAB;
 
         // Maxes
+        private const int MAX_PICKUPS_TR4 = 568;
+        private const int MAX_VESSELS_BROKEN_TR4 = 170;
         private const int MAX_SECRETS_FOUND_TR4 = 70;
         private const int MAX_SECRETS_FOUND_TR5 = 36;
 
@@ -209,8 +211,8 @@ namespace TRR_SaveMaster
                 nudAmmoUsed.Maximum = Int16.MaxValue;
                 nudAmmoUsed.Minimum = Int16.MinValue;
 
-                nudPickups.Maximum = Int32.MaxValue;
-                nudPickups.Minimum = Int32.MinValue;
+                nudPickups.Maximum = MAX_PICKUPS_TR4;
+                nudPickups.Minimum = 0;
 
                 nudKills.Maximum = UInt16.MaxValue;
                 nudKills.Minimum = UInt16.MinValue;
@@ -218,16 +220,20 @@ namespace TRR_SaveMaster
                 nudMedipacksUsed.Maximum = Byte.MaxValue;
                 nudMedipacksUsed.Minimum = Byte.MinValue;
 
-                nudCrystalsFound.Enabled = false;
-                nudCrystalsUsed.Enabled = false;
-
-                nudVesselsBroken.Enabled = true;
-
                 nudSecretsFound.Maximum = MAX_SECRETS_FOUND_TR4;
                 nudSecretsFound.Minimum = Byte.MinValue;
 
+                nudVesselsBroken.Enabled = true;
+                nudVesselsBroken.Maximum = MAX_VESSELS_BROKEN_TR4;
+
+                nudPickupsMax.Maximum = MAX_PICKUPS_TR4;
                 nudSecretsFoundMax.Value = MAX_SECRETS_FOUND_TR4;
-                nudPickupsMax.Visible = false;
+                nudVesselsBrokenMax.Value = MAX_VESSELS_BROKEN_TR4;
+                nudPickupsMax.Value = MAX_PICKUPS_TR4;
+
+                nudCrystalsFound.Enabled = false;
+                nudCrystalsUsed.Enabled = false;
+
                 nudHits.Visible = false;
                 nudMedipacksUsed.Increment = 1;
                 nudMedipacksUsed.DecimalPlaces = 0;
@@ -236,7 +242,6 @@ namespace TRR_SaveMaster
                 lblMedipacksUsed.Text = "Health Packs Used:";
                 lblOf.Text = "/";
 
-                lblOf2.Visible = false;
                 lblSlash.Visible = false;
             }
             else if (SELECTED_TAB == TAB_TR5)
