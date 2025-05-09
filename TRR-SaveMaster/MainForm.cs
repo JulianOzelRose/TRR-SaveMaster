@@ -74,7 +74,7 @@ namespace TRR_SaveMaster
             TR2.SetPlatform(platform);
             TR3.SetPlatform(platform);
 
-            this.Text = $"Tomb Raider Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(platform)})";
+            this.Text = $"Tomb Raider I-VI Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(platform)})";
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
@@ -383,7 +383,7 @@ namespace TRR_SaveMaster
                     tsmiCreateBackup.Enabled = true;
                     tsmiBackupBeforeSaving.Enabled = true;
 
-                    this.Text = $"Tomb Raider Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(platform)})";
+                    this.Text = $"Tomb Raider I-VI Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(platform)})";
 
                     slblStatus.Text = $"Loaded savegame file: \"{savegamePathTRX}\"";
                 }
@@ -427,7 +427,7 @@ namespace TRR_SaveMaster
                     tsmiCreateBackup.Enabled = true;
                     tsmiBackupBeforeSaving.Enabled = true;
 
-                    this.Text = $"Tomb Raider Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(platform)})";
+                    this.Text = $"Tomb Raider I-VI Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(platform)})";
 
                     slblStatus.Text = $"Loaded savegame file: \"{savegamePathTRX2}\"";
                 }
@@ -449,7 +449,7 @@ namespace TRR_SaveMaster
             tsmiNintendoSwitch.CheckedChanged += tsmiNintendoSwitch_CheckedChanged;
 
             this.platform = platform;
-            this.Text = $"Tomb Raider Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(platform)})";
+            this.Text = $"Tomb Raider I-VI Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(platform)})";
 
             TR1.SetPlatform(platform);
             TR2.SetPlatform(platform);
@@ -497,7 +497,7 @@ namespace TRR_SaveMaster
                 tsmiPlayStation4.Checked = false;
                 tsmiNintendoSwitch.Checked = false;
                 this.platform = Platform.PC;
-                this.Text = $"Tomb Raider Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(Platform.PC)})";
+                this.Text = $"Tomb Raider I-VI Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(Platform.PC)})";
             }
         }
 

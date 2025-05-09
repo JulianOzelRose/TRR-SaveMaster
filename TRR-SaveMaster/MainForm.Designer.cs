@@ -3834,7 +3834,7 @@ namespace TRR_SaveMaster
             this.tsmiAllowUnsafeMaxValuesTR6,
             this.tsmiShowInventoryToggleTR6});
             this.tsmiAdvanced.Name = "tsmiAdvanced";
-            this.tsmiAdvanced.Size = new System.Drawing.Size(180, 22);
+            this.tsmiAdvanced.Size = new System.Drawing.Size(149, 22);
             this.tsmiAdvanced.Text = "Advanced";
             // 
             // tsmiAllowUnsafeMaxValuesTR6
@@ -3903,7 +3903,7 @@ namespace TRR_SaveMaster
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Tomb Raider Remastered Savegame Editor";
+            this.Text = "Tomb Raider I-VI Remastered Savegame Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
