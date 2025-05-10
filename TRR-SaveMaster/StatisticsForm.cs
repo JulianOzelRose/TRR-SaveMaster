@@ -52,6 +52,7 @@ namespace TRR_SaveMaster
         private const int MAX_VESSELS_BROKEN_TR4 = 170;
         private const int MAX_SECRETS_FOUND_TR4 = 70;
         private const int MAX_SECRETS_FOUND_TR5 = 36;
+        private const int MAX_PICKUPS_TR5 = 239;
 
         public StatisticsForm(ToolStripStatusLabel slblStatus, bool backupBeforeSaving, string savegamePath, int SELECTED_TAB)
         {
@@ -241,6 +242,7 @@ namespace TRR_SaveMaster
                 lblAmmoUsedHits.Text = "Ammo Used:";
                 lblMedipacksUsed.Text = "Health Packs Used:";
                 lblOf.Text = "/";
+                lblOf2.Text = "/";
 
                 lblSlash.Visible = false;
             }
@@ -248,9 +250,6 @@ namespace TRR_SaveMaster
             {
                 nudAmmoUsed.Maximum = Int16.MaxValue;
                 nudAmmoUsed.Minimum = Int16.MinValue;
-
-                nudPickups.Maximum = Int32.MaxValue;
-                nudPickups.Minimum = Int32.MinValue;
 
                 nudKills.Maximum = UInt16.MaxValue;
                 nudKills.Minimum = UInt16.MinValue;
@@ -263,18 +262,22 @@ namespace TRR_SaveMaster
 
                 nudSecretsFound.Maximum = MAX_SECRETS_FOUND_TR5;
                 nudSecretsFound.Minimum = Byte.MinValue;
-
                 nudSecretsFoundMax.Value = MAX_SECRETS_FOUND_TR5;
-                nudPickupsMax.Visible = false;
+
+                nudPickupsMax.Value = MAX_PICKUPS_TR5;
+                nudPickups.Maximum = MAX_PICKUPS_TR5;
+                nudPickups.Minimum = 0;
+
                 nudHits.Visible = false;
+
                 nudMedipacksUsed.Increment = 1;
                 nudMedipacksUsed.DecimalPlaces = 0;
 
                 lblAmmoUsedHits.Text = "Ammo Used:";
                 lblMedipacksUsed.Text = "Health Packs Used:";
                 lblOf.Text = "/";
+                lblOf2.Text = "/";
 
-                lblOf2.Visible = false;
                 lblSlash.Visible = false;
             }
             else if (SELECTED_TAB == TAB_TR6)
@@ -312,6 +315,8 @@ namespace TRR_SaveMaster
 
                 nudChocobarsFoundMax.Value = chocobarsFoundMaxTR6[levelIndex];
                 nudChocobarsFound.Maximum = nudChocobarsFoundMax.Value;
+
+                lblOf2.Text = "/";
             }
         }
 
