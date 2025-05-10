@@ -1,11 +1,11 @@
-# Tomb Raider Remastered Savegame Editor
+# Tomb Raider I-VI Remastered Savegame Editor
 This is a savegame editor for Tomb Raider I-VI Remastered. With this editor, you can edit items, health, weapons, ammunition, statistics, and position.
 The Tomb Raider I-III portion of this editor is compatible with PC, PS4, and Nintendo Switch savegames. For instructions on how to download and use this editor, scroll down to
 the section below. If you are interested in reverse engineering, there is a technical portion on the bottom section of this README.
 For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder or delete savegames,
 check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
-![TRR-SaveMaster-UI](https://github.com/user-attachments/assets/5177ad98-43af-42bf-b077-0e4f107e2edf)
+![TRR-SaveMaster-UI](https://github.com/user-attachments/assets/9e539805-69f6-4cc5-8132-cb3101497d6b)
 
 ## Installation and use
 To download and use this savegame editor, simply navigate to the [Releases](https://github.com/JulianOzelRose/TRR-SaveMaster/releases) page,
@@ -50,7 +50,7 @@ It's essential that the Room/Zone number matches Lara's current coordinates; oth
 position.
 
 ## Using the Statistics Editor
-![StatisticsEditor-UI](https://github.com/user-attachments/assets/6dc4b83e-80e6-46a1-bd4f-f7de86cca761)
+![StatisticsEditor-UI](https://github.com/user-attachments/assets/ac69fd84-bbaa-4699-beef-fcc491b72c15)
 
 
 This savegame editor also includes a Statistics Editor feature. To use it, click "Edit," then select "Statistics." For Tomb Raider I-III and VI, the statistics displayed are level-specific, meaning each level has its own separate stats such as time taken,
