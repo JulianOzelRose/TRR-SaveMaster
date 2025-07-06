@@ -1,9 +1,8 @@
 # Tomb Raider I-VI Remastered Savegame Editor
 This is a savegame editor for Tomb Raider I-VI Remastered. With this editor, you can edit items, health, weapons, ammunition, statistics, and position.
-This editor is compatible with PC, PS4, and Nintendo Switch savegames. However, the savegames must be decrypted first. You can find more information on how to do that [here](https://github.com/JulianOzelRose/TombExtract?tab=readme-ov-file#extracting-and-converting-savegames). For instructions on how to download and use this editor, scroll down to
-the section below. If you are interested in reverse engineering, there is a technical portion on the bottom section of this README.
-For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder or delete savegames,
-check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
+This editor is compatible with PC, PS4, and Nintendo Switch savegames. However, the savegames must be decrypted first. You can find more information on how to do that [here](https://github.com/JulianOzelRose/TombExtract/issues/1#issuecomment-1978837071).
+For instructions on how to download and use this editor, scroll down to the section below. If you are interested in reverse engineering, there is a technical portion on the bottom section of this README.
+For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder or delete savegames, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
 ![TRR-SaveMaster-UI](https://github.com/user-attachments/assets/9e539805-69f6-4cc5-8132-cb3101497d6b)
 
