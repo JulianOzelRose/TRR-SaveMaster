@@ -7,7 +7,7 @@ namespace TRR_SaveMaster
 {
     class TR4Utilities
     {
-        // Savegame constants
+        // Savegame constants & offsets
         private const int SLOT_STATUS_OFFSET = 0x004;
         private const int SAVE_NUMBER_OFFSET = 0x008;
         private const int GAME_MODE_OFFSET = 0x01C;
@@ -47,526 +47,20 @@ namespace TRR_SaveMaster
         private const int WEAPON_PRESENT = 0x9;
         private const int WEAPON_PRESENT_WITH_SIGHT = 0xD;
 
-        // Platform
-        //private Platform platform;
-
-        // Strings
-        private string savegamePath;
-
-        // Misc
-        private int savegameOffset;
-
         // Health
         private const UInt16 MAX_HEALTH_VALUE = 1000;
         private const UInt16 MIN_HEALTH_VALUE = 1;
+        private int MAX_HEALTH_OFFSET;
+        private int MIN_HEALTH_OFFSET;
         private const byte FULL_HEALTH_TOGGLE_BYTE = 0x08;          // Toggle byte when health is full (not stored)
         private const byte PARTIAL_HEALTH_TOGGLE_BYTE = 0x0C;       // Toggle byte when health is partial (stored)
         private const byte TOGGLE_DELTA = 0x04;                     // Difference between full and partial toggle bytes
 
-        private int MAX_HEALTH_OFFSET;
-        private int MIN_HEALTH_OFFSET;
-
-        private byte ReadByte(int offset)
-        {
-            using (FileStream fileStream = new FileStream(savegamePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            {
-                fileStream.Seek(offset, SeekOrigin.Begin);
-                return (byte)fileStream.ReadByte();
-            }
-        }
-
-        private void WriteByte(int offset, byte value)
-        {
-            using (FileStream fileStream = new FileStream(savegamePath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
-            {
-                fileStream.Seek(offset, SeekOrigin.Begin);
-                byte[] byteData = { value };
-                fileStream.Write(byteData, 0, byteData.Length);
-            }
-        }
-
-        private UInt16 ReadUInt16(int offset)
-        {
-            byte lowerByte = ReadByte(offset);
-            byte upperByte = ReadByte(offset + 1);
-
-            return (UInt16)(lowerByte + (upperByte << 8));
-        }
-
-        private void WriteUInt16(int offset, UInt16 value)
-        {
-            if (value > 255)
-            {
-                byte upperByte = (byte)(value / 256);
-                byte lowerByte = (byte)(value % 256);
-
-                WriteByte(offset + 1, upperByte);
-                WriteByte(offset, lowerByte);
-            }
-            else
-            {
-                WriteByte(offset + 1, 0);
-                WriteByte(offset, (byte)value);
-            }
-        }
-
-        private Int32 ReadInt32(int offset)
-        {
-            byte byte1 = ReadByte(offset);
-            byte byte2 = ReadByte(offset + 1);
-            byte byte3 = ReadByte(offset + 2);
-            byte byte4 = ReadByte(offset + 3);
-
-            return (Int32)(byte1 + (byte2 << 8) + (byte3 << 16) + (byte4 << 24));
-        }
-
-        private void WriteInt32(int offset, Int32 value)
-        {
-            WriteByte(offset, (byte)value);
-            WriteByte(offset + 1, (byte)(value >> 8));
-            WriteByte(offset + 2, (byte)(value >> 16));
-            WriteByte(offset + 3, (byte)(value >> 24));
-        }
-
-        private sbyte ReadInt8(int offset)
-        {
-            return (sbyte)ReadByte(offset);
-        }
-
-        private void WriteInt8(int offset, sbyte value)
-        {
-            WriteByte(offset, (byte)value);
-        }
-
-        private Int32 GetSaveNumber()
-        {
-            return ReadInt32(savegameOffset + SAVE_NUMBER_OFFSET);
-        }
-
-        private byte GetLevelIndex()
-        {
-            return ReadByte(savegameOffset + LEVEL_INDEX_OFFSET);
-        }
-
-        private UInt16 GetNumSmallMedipacks()
-        {
-            return ReadUInt16(savegameOffset + SMALL_MEDIPACK_OFFSET);
-        }
-
-        private UInt16 GetNumLargeMedipacks()
-        {
-            return ReadUInt16(savegameOffset + LARGE_MEDIPACK_OFFSET);
-        }
-
-        private UInt16 GetNumFlares()
-        {
-            return ReadUInt16(savegameOffset + FLARES_OFFSET);
-        }
-
-        private sbyte GetNumGoldenSkulls()
-        {
-            return ReadInt8(savegameOffset + GOLDEN_SKULLS_OFFSET);
-        }
-
-        private UInt16 GetShotgunNormalAmmo()
-        {
-            return (UInt16)(ReadUInt16(savegameOffset + SHOTGUN_NORMAL_AMMO_OFFSET) / 6);
-        }
-
-        private UInt16 GetShotgunWideshotAmmo()
-        {
-            return (UInt16)(ReadUInt16(savegameOffset + SHOTGUN_WIDESHOT_AMMO_OFFSET) / 6);
-        }
-
-        private UInt16 GetGrenadeGunNormalAmmo()
-        {
-            return ReadUInt16(savegameOffset + GRENADE_GUN_NORMAL_AMMO_OFFSET);
-        }
-
-        private UInt16 GetGrenadeGunSuperAmmo()
-        {
-            return ReadUInt16(savegameOffset + GRENADE_GUN_SUPER_AMMO_OFFSET);
-        }
-
-        private UInt16 GetGrenadeGunFlashAmmo()
-        {
-            return ReadUInt16(savegameOffset + GRENADE_GUN_FLASH_AMMO_OFFSET);
-        }
-
-        private UInt16 GetUziAmmo()
-        {
-            return ReadUInt16(savegameOffset + UZI_AMMO_OFFSET);
-        }
-
-        private UInt16 GetRevolverAmmo()
-        {
-            return ReadUInt16(savegameOffset + REVOLVER_AMMO_OFFSET);
-        }
-
-        private UInt16 GetCrossbowNormalAmmo()
-        {
-            return ReadUInt16(savegameOffset + CROSSBOW_NORMAL_AMMO_OFFSET);
-        }
-
-        private UInt16 GetCrossbowPoisonAmmo()
-        {
-            return ReadUInt16(savegameOffset + CROSSBOW_POISON_AMMO_OFFSET);
-        }
-
-        private UInt16 GetCrossbowExplosiveAmmo()
-        {
-            return ReadUInt16(savegameOffset + CROSSBOW_EXPLOSIVE_AMMO_OFFSET);
-        }
-
-        private bool IsShotgunPresent()
-        {
-            return ReadByte(savegameOffset + SHOTGUN_OFFSET) != 0;
-        }
-
-        private bool IsPistolsPresent()
-        {
-            return ReadByte(savegameOffset + PISTOLS_OFFSET) != 0;
-        }
-
-        private bool IsUziPresent()
-        {
-            return ReadByte(savegameOffset + UZI_OFFSET) != 0;
-        }
-
-        private bool IsGrenadeGunPresent()
-        {
-            return ReadByte(savegameOffset + GRENADE_GUN_OFFSET) != 0;
-        }
-
-        private bool IsCrossbowPresent()
-        {
-            return ReadByte(savegameOffset + CROSSBOW_OFFSET) != 0;
-        }
-
-        private byte GetCrossbowFlag()
-        {
-            return ReadByte(savegameOffset + CROSSBOW_OFFSET);
-        }
-
-        private bool IsRevolverPresent()
-        {
-            return ReadByte(savegameOffset + REVOLVER_OFFSET) != 0;
-        }
-
-        private byte GetRevolverFlag()
-        {
-            return ReadByte(savegameOffset + REVOLVER_OFFSET);
-        }
-
-        public bool IsSavegamePresent()
-        {
-            return ReadByte(savegameOffset + SLOT_STATUS_OFFSET) != 0;
-        }
-
-        private GameMode GetGameMode()
-        {
-            int gameMode = ReadByte(savegameOffset + GAME_MODE_OFFSET);
-            return gameMode == 0 ? GameMode.Normal : GameMode.Plus;
-        }
-
-        public void SetSavegamePath(string path)
-        {
-            savegamePath = path;
-        }
-
-        public void SetSavegameOffset(int offset)
-        {
-            savegameOffset = offset;
-        }
-
-        private void WriteSaveNumber(Int32 value)
-        {
-            WriteInt32(savegameOffset + SAVE_NUMBER_OFFSET, value);
-        }
-
-        private void WriteNumSmallMedipacks(UInt16 value)
-        {
-            WriteUInt16(savegameOffset + SMALL_MEDIPACK_OFFSET, value);
-        }
-
-        private void WriteNumLargeMedipacks(UInt16 value)
-        {
-            WriteUInt16(savegameOffset + LARGE_MEDIPACK_OFFSET, value);
-        }
-
-        private void WriteNumFlares(UInt16 value)
-        {
-            WriteUInt16(savegameOffset + FLARES_OFFSET, value);
-        }
-
-        private void WriteNumGoldenSkulls(sbyte value)
-        {
-            WriteInt8(savegameOffset + GOLDEN_SKULLS_OFFSET, value);
-        }
-
-        private void WritePistolsPresent(bool isPresent)
-        {
-            if (isPresent)
-            {
-                WriteByte(savegameOffset + PISTOLS_OFFSET, WEAPON_PRESENT);
-            }
-            else
-            {
-                WriteByte(savegameOffset + PISTOLS_OFFSET, 0);
-            }
-        }
-
-        private void WriteUziPresent(bool isPresent)
-        {
-            if (isPresent)
-            {
-                WriteByte(savegameOffset + UZI_OFFSET, WEAPON_PRESENT);
-            }
-            else
-            {
-                WriteByte(savegameOffset + UZI_OFFSET, 0);
-            }
-        }
-
-        private void WriteShotgunPresent(bool isPresent)
-        {
-            if (isPresent)
-            {
-                WriteByte(savegameOffset + SHOTGUN_OFFSET, WEAPON_PRESENT);
-            }
-            else
-            {
-                WriteByte(savegameOffset + SHOTGUN_OFFSET, 0);
-            }
-        }
-
-        private void WriteGrenadeGunPresent(bool isPresent)
-        {
-            if (isPresent)
-            {
-                WriteByte(savegameOffset + GRENADE_GUN_OFFSET, WEAPON_PRESENT);
-            }
-            else
-            {
-                WriteByte(savegameOffset + GRENADE_GUN_OFFSET, 0);
-            }
-        }
-
-        private void WriteCrossbowPresent(bool isPresent, byte prevCrossbowFlag)
-        {
-            if (isPresent &&  prevCrossbowFlag != 0)
-            {
-                WriteByte(savegameOffset + CROSSBOW_OFFSET, prevCrossbowFlag);
-            }
-            else if (isPresent)
-            {
-                WriteByte(savegameOffset + CROSSBOW_OFFSET, WEAPON_PRESENT_WITH_SIGHT);
-            }
-            else
-            {
-                WriteByte(savegameOffset + CROSSBOW_OFFSET, 0);
-            }
-        }
-
-        private void WriteRevolverPresent(bool isPresent, byte prevRevolverFlag)
-        {
-            if (isPresent && prevRevolverFlag != 0)
-            {
-                WriteByte(savegameOffset + REVOLVER_OFFSET, prevRevolverFlag);
-            }
-            else if (isPresent)
-            {
-                WriteByte(savegameOffset + REVOLVER_OFFSET, WEAPON_PRESENT_WITH_SIGHT);
-            }
-            else
-            {
-                WriteByte(savegameOffset + REVOLVER_OFFSET, 0);
-            }
-        }
-
-        private void WriteUziAmmo(UInt16 ammo)
-        {
-            WriteUInt16(savegameOffset + UZI_AMMO_OFFSET, ammo);
-        }
-
-        private void WriteRevolverAmmo(UInt16 ammo)
-        {
-            WriteUInt16(savegameOffset + REVOLVER_AMMO_OFFSET, ammo);
-        }
-
-        private void WriteShotgunNormalAmmo(UInt16 ammo)
-        {
-            WriteUInt16(savegameOffset + SHOTGUN_NORMAL_AMMO_OFFSET, ammo);
-        }
-
-        private void WriteShotgunWideshotAmmo(UInt16 ammo)
-        {
-            WriteUInt16(savegameOffset + SHOTGUN_WIDESHOT_AMMO_OFFSET, ammo);
-        }
-
-        private void WriteGrenadeGunNormalAmmo(UInt16 ammo)
-        {
-            WriteUInt16(savegameOffset + GRENADE_GUN_NORMAL_AMMO_OFFSET, ammo);
-        }
-
-        private void WriteGrenadeGunSuperAmmo(UInt16 ammo)
-        {
-            WriteUInt16(savegameOffset + GRENADE_GUN_SUPER_AMMO_OFFSET, ammo);
-        }
-
-        private void WriteGrenadeGunFlashAmmo(UInt16 ammo)
-        {
-            WriteUInt16(savegameOffset + GRENADE_GUN_FLASH_AMMO_OFFSET, ammo);
-        }
-
-        private void WriteCrossbowNormalAmmo(UInt16 ammo)
-        {
-            WriteUInt16(savegameOffset + CROSSBOW_NORMAL_AMMO_OFFSET, ammo);
-        }
-
-        private void WriteCrossbowPoisonAmmo(UInt16 ammo)
-        {
-            WriteUInt16(savegameOffset + CROSSBOW_POISON_AMMO_OFFSET, ammo);
-        }
-
-        private void WriteCrossbowExplosiveAmmo(UInt16 ammo)
-        {
-            WriteUInt16(savegameOffset + CROSSBOW_EXPLOSIVE_AMMO_OFFSET, ammo);
-        }
-
-        public void DisplayGameInfo(NumericUpDown nudSaveNumber, NumericUpDown nudSmallMedipacks, NumericUpDown nudLargeMedipacks,
-            NumericUpDown nudFlares, NumericUpDown nudGoldenSkulls, Label lblGoldenSkulls, CheckBox chkPistols, CheckBox chkShotgun, CheckBox chkUzi,
-            CheckBox chkRevolver, CheckBox chkGrenadeGun, CheckBox chkCrossbow, TrackBar trbHealth, Label lblHealth,
-            Label lblHealthError, NumericUpDown nudShotgunNormalAmmo, NumericUpDown nudShotgunWideshotAmmo, NumericUpDown nudUziAmmo,
-            NumericUpDown nudRevolverAmmo, NumericUpDown nudCrossbowNormalAmmo, NumericUpDown nudGrenadeGunFlashAmmo,
-            NumericUpDown nudGrenadeGunNormalAmmo, NumericUpDown nudGrenadeGunSuperAmmo, NumericUpDown nudCrossbowPoisonAmmo,
-            NumericUpDown nudCrossbowExplosiveAmmo)
-        {
-            nudSaveNumber.Value = GetSaveNumber();
-            nudSmallMedipacks.Value = GetNumSmallMedipacks();
-            nudLargeMedipacks.Value = GetNumLargeMedipacks();
-            nudFlares.Value = GetNumFlares();
-
-            chkPistols.Checked = IsPistolsPresent();
-            chkUzi.Checked = IsUziPresent();
-            chkShotgun.Checked = IsShotgunPresent();
-            chkGrenadeGun.Checked = IsGrenadeGunPresent();
-            chkCrossbow.Checked = IsCrossbowPresent();
-            chkRevolver.Checked = IsRevolverPresent();
-
-            nudUziAmmo.Value = GetUziAmmo();
-            nudRevolverAmmo.Value = GetRevolverAmmo();
-            nudShotgunNormalAmmo.Value = GetShotgunNormalAmmo();
-            nudShotgunWideshotAmmo.Value = GetShotgunWideshotAmmo();
-            nudCrossbowNormalAmmo.Value = GetCrossbowNormalAmmo();
-            nudCrossbowPoisonAmmo.Value = GetCrossbowPoisonAmmo();
-            nudCrossbowExplosiveAmmo.Value = GetCrossbowExplosiveAmmo();
-            nudGrenadeGunNormalAmmo.Value = GetGrenadeGunNormalAmmo();
-            nudGrenadeGunSuperAmmo.Value = GetGrenadeGunSuperAmmo();
-            nudGrenadeGunFlashAmmo.Value = GetGrenadeGunFlashAmmo();
-
-            byte levelIndex = GetLevelIndex();
-
-            if (levelIndex == 1 || levelIndex == 2) // Angkor Wat and Race for the Iris
-            {
-                lblGoldenSkulls.Visible = true;
-                nudGoldenSkulls.Visible = true;
-                nudGoldenSkulls.Enabled = true;
-                nudGoldenSkulls.Value = GetNumGoldenSkulls();
-            }
-            else
-            {
-                lblGoldenSkulls.Visible = false;
-                nudGoldenSkulls.Visible = false;
-                nudGoldenSkulls.Enabled = false;
-                nudGoldenSkulls.Value = 0;
-            }
-
-            int healthOffset = GetHealthOffset();
-
-            if (healthOffset != -1)
-            {
-                UInt16 health = GetHealthValue(healthOffset);
-                double healthPercentage = ((double)health / MAX_HEALTH_VALUE) * 100;
-                trbHealth.Value = health;
-                trbHealth.Enabled = true;
-
-                lblHealth.Text = healthPercentage.ToString("0.0") + "%";
-                lblHealthError.Visible = false;
-                lblHealth.Visible = true;
-            }
-            else
-            {
-                trbHealth.Enabled = false;
-                trbHealth.Value = trbHealth.Minimum;
-                lblHealthError.Visible = true;
-                lblHealth.Visible = false;
-            }
-        }
-
-        public void WriteChanges(NumericUpDown nudSaveNumber, NumericUpDown nudGoldenSkulls, NumericUpDown nudSmallMedipacks,
-            NumericUpDown nudLargeMedipacks, NumericUpDown nudFlares, CheckBox chkPistols, CheckBox chkUzi, CheckBox chkRevolver,
-            CheckBox chkShotgun, CheckBox chkGrenadeGun, CheckBox chkCrossbow, NumericUpDown nudUziAmmo, NumericUpDown nudRevolverAmmo,
-            NumericUpDown nudShotgunNormalAmmo, NumericUpDown nudShotgunWideshotAmmo, NumericUpDown nudGrenadeGunNormalAmmo, NumericUpDown nudGrenadeGunSuperAmmo,
-            NumericUpDown nudGrenadeGunFlashAmmo, NumericUpDown nudCrossbowNormalAmmo, NumericUpDown nudCrossbowPoisonAmmo, NumericUpDown nudCrossbowExplosiveAmmo,
-            TrackBar trbHealth)
-        {
-            byte prevCrossbowFlag = GetCrossbowFlag();
-            byte prevRevolverFlag = GetRevolverFlag();
-
-            WriteSaveNumber((Int32)nudSaveNumber.Value);
-            WriteNumSmallMedipacks((UInt16)nudSmallMedipacks.Value);
-            WriteNumLargeMedipacks((UInt16)nudLargeMedipacks.Value);
-            WriteNumFlares((UInt16)nudFlares.Value);
-
-            WritePistolsPresent(chkPistols.Checked);
-            WriteUziPresent(chkUzi.Checked);
-            WriteShotgunPresent(chkShotgun.Checked);
-            WriteGrenadeGunPresent(chkGrenadeGun.Checked);
-            WriteCrossbowPresent(chkCrossbow.Checked, prevCrossbowFlag);
-            WriteRevolverPresent(chkRevolver.Checked, prevRevolverFlag);
-
-            WriteUziAmmo((UInt16)nudUziAmmo.Value);
-            WriteRevolverAmmo((UInt16)nudRevolverAmmo.Value);
-            WriteShotgunNormalAmmo((UInt16)(nudShotgunNormalAmmo.Value * 6));
-            WriteShotgunWideshotAmmo((UInt16)(nudShotgunWideshotAmmo.Value * 6));
-            WriteCrossbowNormalAmmo((UInt16)nudCrossbowNormalAmmo.Value);
-            WriteCrossbowPoisonAmmo((UInt16)nudCrossbowPoisonAmmo.Value);
-            WriteCrossbowExplosiveAmmo((UInt16)nudCrossbowExplosiveAmmo.Value);
-            WriteGrenadeGunNormalAmmo((UInt16)nudGrenadeGunNormalAmmo.Value);
-            WriteGrenadeGunSuperAmmo((UInt16)nudGrenadeGunSuperAmmo.Value);
-            WriteGrenadeGunFlashAmmo((UInt16)nudGrenadeGunFlashAmmo.Value);
-
-            if (nudGoldenSkulls.Enabled)
-            {
-                WriteNumGoldenSkulls((sbyte)nudGoldenSkulls.Value);
-            }
-
-            if (trbHealth.Enabled)
-            {
-                WriteHealthValue((UInt16)trbHealth.Value);
-            }
-        }
-
-        public void UpdateDisplayName(Savegame savegame)
-        {
-            bool savegamePresent = ReadByte(savegame.Offset + SLOT_STATUS_OFFSET) != 0;
-
-            if (savegamePresent)
-            {
-                byte levelIndex = ReadByte(savegame.Offset + LEVEL_INDEX_OFFSET);
-                Int32 saveNumber = ReadInt32(savegame.Offset + SAVE_NUMBER_OFFSET);
-
-                if (levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
-                {
-                    string levelName = levelNames[levelIndex];
-                    GameMode gameMode = ReadByte(savegame.Offset + GAME_MODE_OFFSET) == 0 ? GameMode.Normal : GameMode.Plus;
-
-                    savegame.UpdateDisplayName(levelName, saveNumber, gameMode);
-                }
-            }
-        }
-
+        // Misc
+        private string savegamePath;
+        private int savegameOffset;
+
+        // Level names
         private readonly Dictionary<byte, string> levelNames = new Dictionary<byte, string>()
         {
             {  1, "Angkor Wat"                      },
@@ -609,9 +103,90 @@ namespace TRR_SaveMaster
             { 40, "The Times Exclusive"             },
         };
 
-        public void DetermineOffsets()
+        private void WriteInt32ToBuffer(byte[] buffer, int offset, int value)
         {
-            byte levelIndex = GetLevelIndex();
+            byte[] bytes = BitConverter.GetBytes(value);
+            Buffer.BlockCopy(bytes, 0, buffer, offset, 4);
+        }
+
+        private void WriteUInt16ToBuffer(byte[] buffer, int offset, UInt16 value)
+        {
+            byte[] bytes = BitConverter.GetBytes(value);
+            Buffer.BlockCopy(bytes, 0, buffer, offset, 2);
+        }
+
+        public int GetHealthOffset()
+        {
+            byte[] savegameData;
+
+            using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                savegameData = new byte[fs.Length];
+                fs.Read(savegameData, 0, savegameData.Length);
+            }
+
+            for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset++)
+            {
+                int valueIndex = savegameOffset + offset;
+
+                if (valueIndex + 1 >= savegameData.Length)
+                {
+                    break;
+                }
+
+                UInt16 value = BitConverter.ToUInt16(savegameData, valueIndex);
+
+                if ((value >= MIN_HEALTH_VALUE && value < MAX_HEALTH_VALUE) || value == 0)
+                {
+                    int flagIndex1 = savegameOffset + offset - 7;
+                    int flagIndex2 = savegameOffset + offset - 6;
+                    int flagIndex3 = savegameOffset + offset - 5;
+                    int flagIndex4 = savegameOffset + offset - 4;
+
+                    if (flagIndex4 >= savegameData.Length)
+                    {
+                        continue;
+                    }
+
+                    byte byteFlag1 = savegameData[flagIndex1];
+                    byte byteFlag2 = savegameData[flagIndex2];
+                    byte byteFlag3 = savegameData[flagIndex3];
+                    byte byteFlag4 = savegameData[flagIndex4];
+
+                    bool isKnownByteFlagPattern = IsKnownByteFlagPattern(byteFlag1, byteFlag2, byteFlag3, byteFlag4);
+
+                    if (isKnownByteFlagPattern)
+                    {
+                        if (value != 0)
+                        {
+                            return savegameOffset + offset;
+                        }
+                        else
+                        {
+                            int toggleIndex = savegameOffset + offset - 0x13;
+
+                            if (toggleIndex < 0 || toggleIndex >= savegameData.Length)
+                            {
+                                continue;
+                            }
+
+                            byte toggleByte = savegameData[toggleIndex];
+
+                            if (toggleByte == FULL_HEALTH_TOGGLE_BYTE)
+                            {
+                                return savegameOffset + offset;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return -1;
+        }
+
+        private void DetermineOffsets(byte[] fileData)
+        {
+            byte levelIndex = GetLevelIndex(fileData);
 
             if (levelIndex == 1)        // Angkor Wat
             {
@@ -800,9 +375,99 @@ namespace TRR_SaveMaster
             }
         }
 
-        private UInt16 GetHealthValue(int healthOffset)
+        private Int32 GetSaveNumber(byte[] fileData)
         {
-            UInt16 rawHealth = ReadUInt16(healthOffset);
+            return BitConverter.ToInt32(fileData, savegameOffset + SAVE_NUMBER_OFFSET);
+        }
+
+        private byte GetLevelIndex(byte[] fileData)
+        {
+            return fileData[savegameOffset + LEVEL_INDEX_OFFSET];
+        }
+
+        private UInt16 GetNumSmallMedipacks(byte[] fileData)
+        {
+            return BitConverter.ToUInt16(fileData, savegameOffset + SMALL_MEDIPACK_OFFSET);
+        }
+
+        private UInt16 GetNumLargeMedipacks(byte[] fileData)
+        {
+            return BitConverter.ToUInt16(fileData, savegameOffset + LARGE_MEDIPACK_OFFSET);
+        }
+
+        private UInt16 GetNumFlares(byte[] fileData)
+        {
+            return BitConverter.ToUInt16(fileData, savegameOffset + FLARES_OFFSET);
+        }
+
+        private sbyte GetNumGoldenSkulls(byte[] fileData)
+        {
+            return (sbyte)fileData[savegameOffset + GOLDEN_SKULLS_OFFSET];
+        }
+
+        private UInt16 GetUziAmmo(byte[] fileData)
+        {
+            return BitConverter.ToUInt16(fileData, savegameOffset + UZI_AMMO_OFFSET);
+        }
+
+        private UInt16 GetRevolverAmmo(byte[] fileData)
+        {
+            return BitConverter.ToUInt16(fileData, savegameOffset + REVOLVER_AMMO_OFFSET);
+        }
+
+        private UInt16 GetShotgunNormalAmmo(byte[] fileData)
+        {
+            return (UInt16)(BitConverter.ToUInt16(fileData, savegameOffset + SHOTGUN_NORMAL_AMMO_OFFSET) / 6);
+        }
+
+        private UInt16 GetShotgunWideshotAmmo(byte[] fileData)
+        {
+            return (UInt16)(BitConverter.ToUInt16(fileData, savegameOffset + SHOTGUN_WIDESHOT_AMMO_OFFSET) / 6);
+        }
+
+        private UInt16 GetGrenadeGunNormalAmmo(byte[] fileData)
+        {
+            return BitConverter.ToUInt16(fileData, savegameOffset + GRENADE_GUN_NORMAL_AMMO_OFFSET);
+        }
+
+        private UInt16 GetGrenadeGunSuperAmmo(byte[] fileData)
+        {
+            return BitConverter.ToUInt16(fileData, savegameOffset + GRENADE_GUN_SUPER_AMMO_OFFSET);
+        }
+
+        private UInt16 GetGrenadeGunFlashAmmo(byte[] fileData)
+        {
+            return BitConverter.ToUInt16(fileData, savegameOffset + GRENADE_GUN_FLASH_AMMO_OFFSET);
+        }
+
+        private UInt16 GetCrossbowNormalAmmo(byte[] fileData)
+        {
+            return BitConverter.ToUInt16(fileData, savegameOffset + CROSSBOW_NORMAL_AMMO_OFFSET);
+        }
+
+        private UInt16 GetCrossbowPoisonAmmo(byte[] fileData)
+        {
+            return BitConverter.ToUInt16(fileData, savegameOffset + CROSSBOW_POISON_AMMO_OFFSET);
+        }
+
+        private UInt16 GetCrossbowExplosiveAmmo(byte[] fileData)
+        {
+            return BitConverter.ToUInt16(fileData, savegameOffset + CROSSBOW_EXPLOSIVE_AMMO_OFFSET);
+        }
+
+        private byte GetRevolverFlag(byte[] fileData)
+        {
+            return fileData[savegameOffset + REVOLVER_OFFSET];
+        }
+
+        private byte GetCrossbowFlag(byte[] fileData)
+        {
+            return fileData[savegameOffset + CROSSBOW_OFFSET];
+        }
+
+        private UInt16 GetHealthValue(byte[] fileData, int healthOffset)
+        {
+            UInt16 rawHealth = BitConverter.ToUInt16(fileData, healthOffset);
 
             if (rawHealth != 0)
             {
@@ -812,13 +477,199 @@ namespace TRR_SaveMaster
             return MAX_HEALTH_VALUE;
         }
 
-        private void WriteHealthValue(UInt16 newHealth)
+        private bool IsPistolsPresent(byte[] fileData)
+        {
+            return fileData[savegameOffset + PISTOLS_OFFSET] != 0;
+        }
+
+        private bool IsUziPresent(byte[] fileData)
+        {
+            return fileData[savegameOffset + UZI_OFFSET] != 0;
+        }
+
+        private bool IsRevolverPresent(byte[] fileData)
+        {
+            return fileData[savegameOffset + REVOLVER_OFFSET] != 0;
+        }
+
+        private bool IsShotgunPresent(byte[] fileData)
+        {
+            return fileData[savegameOffset + SHOTGUN_OFFSET] != 0;
+        }
+
+        private bool IsGrenadeGunPresent(byte[] fileData)
+        {
+            return fileData[savegameOffset + GRENADE_GUN_OFFSET] != 0;
+        }
+
+        private bool IsCrossbowPresent(byte[] fileData)
+        {
+            return fileData[savegameOffset + CROSSBOW_OFFSET] != 0;
+        }
+
+        private void WriteSaveNumber(byte[] fileData, Int32 value)
+        {
+            WriteInt32ToBuffer(fileData, savegameOffset + SAVE_NUMBER_OFFSET, value);
+        }
+
+        private void WriteNumSmallMedipacks(byte[] fileData, UInt16 value)
+        {
+            WriteUInt16ToBuffer(fileData, savegameOffset + SMALL_MEDIPACK_OFFSET, value);
+        }
+
+        private void WriteNumLargeMedipacks(byte[] fileData, UInt16 value)
+        {
+            WriteUInt16ToBuffer(fileData, savegameOffset + LARGE_MEDIPACK_OFFSET, value);
+        }
+
+        private void WriteNumFlares(byte[] fileData, UInt16 value)
+        {
+            WriteUInt16ToBuffer(fileData, savegameOffset + FLARES_OFFSET, value);
+        }
+
+        private void WriteNumGoldenSkulls(byte[] fileData, sbyte value)
+        {
+            fileData[savegameOffset + GOLDEN_SKULLS_OFFSET] = (byte)value;
+        }
+
+        private void WritePistolsPresent(byte[] fileData, bool isPresent)
+        {
+            if (isPresent)
+            {
+                fileData[savegameOffset + PISTOLS_OFFSET] = WEAPON_PRESENT;
+            }
+            else
+            {
+                fileData[savegameOffset + PISTOLS_OFFSET] = 0;
+            }
+        }
+
+        private void WriteUziPresent(byte[] fileData, bool isPresent)
+        {
+            if (isPresent)
+            {
+                fileData[savegameOffset + UZI_OFFSET] = WEAPON_PRESENT;
+            }
+            else
+            {
+                fileData[savegameOffset + UZI_OFFSET] = 0;
+            }
+        }
+
+        private void WriteRevolverPresent(byte[] fileData, bool isPresent, byte prevRevolverFlag)
+        {
+            if (isPresent && prevRevolverFlag != 0)
+            {
+                fileData[savegameOffset + REVOLVER_OFFSET] = prevRevolverFlag;
+            }
+            else if (isPresent)
+            {
+                fileData[savegameOffset + REVOLVER_OFFSET] = WEAPON_PRESENT_WITH_SIGHT;
+            }
+            else
+            {
+                fileData[savegameOffset + REVOLVER_OFFSET] = 0;
+            }
+        }
+
+        private void WriteShotgunPresent(byte[] fileData, bool isPresent)
+        {
+            if (isPresent)
+            {
+                fileData[savegameOffset + SHOTGUN_OFFSET] = WEAPON_PRESENT;
+            }
+            else
+            {
+                fileData[savegameOffset + SHOTGUN_OFFSET] = 0;
+            }
+        }
+
+        private void WriteGrenadeGunPresent(byte[] fileData, bool isPresent)
+        {
+            if (isPresent)
+            {
+                fileData[savegameOffset + GRENADE_GUN_OFFSET] = WEAPON_PRESENT;
+            }
+            else
+            {
+                fileData[savegameOffset + GRENADE_GUN_OFFSET] = 0;
+            }
+        }
+
+        private void WriteCrossbowPresent(byte[] fileData, bool isPresent, byte prevCrossbowFlag)
+        {
+            if (isPresent && prevCrossbowFlag != 0)
+            {
+                fileData[savegameOffset + CROSSBOW_OFFSET] = prevCrossbowFlag;
+            }
+            else if (isPresent)
+            {
+                fileData[savegameOffset + CROSSBOW_OFFSET] = WEAPON_PRESENT_WITH_SIGHT;
+            }
+            else
+            {
+                fileData[savegameOffset + CROSSBOW_OFFSET] = 0;
+            }
+        }
+
+        private void WriteUziAmmo(byte[] fileData, UInt16 ammo)
+        {
+            WriteUInt16ToBuffer(fileData, savegameOffset + UZI_AMMO_OFFSET, ammo);
+        }
+
+        private void WriteRevolverAmmo(byte[] fileData, UInt16 ammo)
+        {
+            WriteUInt16ToBuffer(fileData, savegameOffset + REVOLVER_AMMO_OFFSET, ammo);
+        }
+
+        private void WriteShotgunNormalAmmo(byte[] fileData, UInt16 ammo)
+        {
+            WriteUInt16ToBuffer(fileData, savegameOffset + SHOTGUN_NORMAL_AMMO_OFFSET, ammo);
+        }
+
+        private void WriteShotgunWideshotAmmo(byte[] fileData, UInt16 ammo)
+        {
+            WriteUInt16ToBuffer(fileData, savegameOffset + SHOTGUN_WIDESHOT_AMMO_OFFSET, ammo);
+        }
+
+        private void WriteGrenadeGunNormalAmmo(byte[] fileData, UInt16 ammo)
+        {
+            WriteUInt16ToBuffer(fileData, savegameOffset + GRENADE_GUN_NORMAL_AMMO_OFFSET, ammo);
+        }
+
+        private void WriteGrenadeGunSuperAmmo(byte[] fileData, UInt16 ammo)
+        {
+            WriteUInt16ToBuffer(fileData, savegameOffset + GRENADE_GUN_SUPER_AMMO_OFFSET, ammo);
+        }
+
+        private void WriteGrenadeGunFlashAmmo(byte[] fileData, UInt16 ammo)
+        {
+            WriteUInt16ToBuffer(fileData, savegameOffset + GRENADE_GUN_FLASH_AMMO_OFFSET, ammo);
+        }
+
+        private void WriteCrossbowNormalAmmo(byte[] fileData, UInt16 ammo)
+        {
+            WriteUInt16ToBuffer(fileData, savegameOffset + CROSSBOW_NORMAL_AMMO_OFFSET, ammo);
+        }
+
+        private void WriteCrossbowPoisonAmmo(byte[] fileData, UInt16 ammo)
+        {
+            WriteUInt16ToBuffer(fileData, savegameOffset + CROSSBOW_POISON_AMMO_OFFSET, ammo);
+        }
+
+        private void WriteCrossbowExplosiveAmmo(byte[] fileData, UInt16 ammo)
+        {
+            WriteUInt16ToBuffer(fileData, savegameOffset + CROSSBOW_EXPLOSIVE_AMMO_OFFSET, ammo);
+        }
+
+        private void WriteHealthValue(byte[] fileData, UInt16 newHealth)
         {
             int healthOffset = GetHealthOffset();
 
             if (healthOffset != -1)
             {
-                byte currentToggle = ReadByte(healthOffset - 0x13);
+                int toggleOffset = healthOffset - 0x13;
+                byte currentToggle = fileData[toggleOffset];
 
                 bool currentlyFull = (currentToggle == FULL_HEALTH_TOGGLE_BYTE);
                 bool currentlyPartial = (currentToggle == PARTIAL_HEALTH_TOGGLE_BYTE);
@@ -828,128 +679,170 @@ namespace TRR_SaveMaster
                 if (currentlyFull && newIsPartial)
                 {
                     // Full health -> Partial health
-                    byte newToggle = (byte)(currentToggle + TOGGLE_DELTA);
-                    WriteByte(healthOffset - 0x13, newToggle);
-                    WriteUInt16(healthOffset, newHealth);
-                    ShiftBytesRight(healthOffset);
+                    fileData[toggleOffset] = (byte)(currentToggle + TOGGLE_DELTA);
+                    WriteUInt16ToBuffer(fileData, healthOffset, newHealth);
+                    ShiftBytesRight(ref fileData, healthOffset);
                 }
                 else if (currentlyPartial && !newIsPartial)
                 {
                     // Partial health -> Full health
-                    byte newToggle = (byte)(currentToggle - TOGGLE_DELTA);
-                    WriteByte(healthOffset - 0x13, newToggle);
-                    WriteUInt16(healthOffset, 0x0);  // Zero health bytes
-                    ShiftBytesLeft(healthOffset);
+                    fileData[toggleOffset] = (byte)(currentToggle - TOGGLE_DELTA);
+                    WriteUInt16ToBuffer(fileData, healthOffset, 0);
+                    ShiftBytesLeft(ref fileData, healthOffset);
                 }
                 else if (currentlyFull && !newIsPartial)
                 {
                     // Already full health
-                    WriteUInt16(healthOffset, 0);
+                    WriteUInt16ToBuffer(fileData, healthOffset, 0);
                 }
                 else
                 {
                     // Partial health -> Partial health
-                    WriteUInt16(healthOffset, newHealth);
+                    WriteUInt16ToBuffer(fileData, healthOffset, newHealth);
                 }
             }
         }
 
-        private void ShiftBytesRight(int healthOffset)
+        private void ShiftBytesRight(ref byte[] fileData, int healthOffset)
         {
             int boundary = savegameOffset + SAVEGAME_SIZE;
-            byte[] savegameData = File.ReadAllBytes(savegamePath);
 
-            Array.Resize(ref savegameData, savegameData.Length + 2);
+            Array.Resize(ref fileData, fileData.Length + 2);
 
             for (int i = boundary - 1; i >= healthOffset + 2; i--)
             {
-                savegameData[i + 2] = savegameData[i];
+                fileData[i + 2] = fileData[i];
             }
-
-            File.WriteAllBytes(savegamePath, savegameData);
         }
 
-        private void ShiftBytesLeft(int healthOffset)
+        private void ShiftBytesLeft(ref byte[] fileData, int healthOffset)
         {
             int boundary = savegameOffset + SAVEGAME_SIZE;
-            byte[] savegameData = File.ReadAllBytes(savegamePath);
 
             for (int i = healthOffset + 2; i < boundary - 2; i++)
             {
-                savegameData[i] = savegameData[i + 2];
+                fileData[i] = fileData[i + 2];
             }
 
-            Array.Resize(ref savegameData, savegameData.Length - 2);
-            File.WriteAllBytes(savegamePath, savegameData);
+            Array.Resize(ref fileData, fileData.Length - 2);
         }
 
-        public int GetHealthOffset()
+        public void DisplayGameInfo(byte[] fileData, NumericUpDown nudSaveNumber, NumericUpDown nudSmallMedipacks, NumericUpDown nudLargeMedipacks,
+            NumericUpDown nudFlares, NumericUpDown nudGoldenSkulls, Label lblGoldenSkulls, CheckBox chkPistols, CheckBox chkShotgun, CheckBox chkUzi,
+            CheckBox chkRevolver, CheckBox chkGrenadeGun, CheckBox chkCrossbow, TrackBar trbHealth, Label lblHealth,
+            Label lblHealthError, NumericUpDown nudShotgunNormalAmmo, NumericUpDown nudShotgunWideshotAmmo, NumericUpDown nudUziAmmo,
+            NumericUpDown nudRevolverAmmo, NumericUpDown nudCrossbowNormalAmmo, NumericUpDown nudGrenadeGunFlashAmmo,
+            NumericUpDown nudGrenadeGunNormalAmmo, NumericUpDown nudGrenadeGunSuperAmmo, NumericUpDown nudCrossbowPoisonAmmo,
+            NumericUpDown nudCrossbowExplosiveAmmo)
         {
-            byte[] savegameData;
+            DetermineOffsets(fileData);
 
-            using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            nudSaveNumber.Value = GetSaveNumber(fileData);
+            nudSmallMedipacks.Value = GetNumSmallMedipacks(fileData);
+            nudLargeMedipacks.Value = GetNumLargeMedipacks(fileData);
+            nudFlares.Value = GetNumFlares(fileData);
+
+            chkPistols.Checked = IsPistolsPresent(fileData);
+            chkUzi.Checked = IsUziPresent(fileData);
+            chkShotgun.Checked = IsShotgunPresent(fileData);
+            chkGrenadeGun.Checked = IsGrenadeGunPresent(fileData);
+            chkCrossbow.Checked = IsCrossbowPresent(fileData);
+            chkRevolver.Checked = IsRevolverPresent(fileData);
+
+            nudUziAmmo.Value = GetUziAmmo(fileData);
+            nudRevolverAmmo.Value = GetRevolverAmmo(fileData);
+            nudShotgunNormalAmmo.Value = GetShotgunNormalAmmo(fileData);
+            nudShotgunWideshotAmmo.Value = GetShotgunWideshotAmmo(fileData);
+            nudCrossbowNormalAmmo.Value = GetCrossbowNormalAmmo(fileData);
+            nudCrossbowPoisonAmmo.Value = GetCrossbowPoisonAmmo(fileData);
+            nudCrossbowExplosiveAmmo.Value = GetCrossbowExplosiveAmmo(fileData);
+            nudGrenadeGunNormalAmmo.Value = GetGrenadeGunNormalAmmo(fileData);
+            nudGrenadeGunSuperAmmo.Value = GetGrenadeGunSuperAmmo(fileData);
+            nudGrenadeGunFlashAmmo.Value = GetGrenadeGunFlashAmmo(fileData);
+
+            byte levelIndex = GetLevelIndex(fileData);
+
+            if (levelIndex == 1 || levelIndex == 2) // Angkor Wat and Race for the Iris
             {
-                savegameData = new byte[fs.Length];
-                fs.Read(savegameData, 0, savegameData.Length);
+                lblGoldenSkulls.Visible = true;
+                nudGoldenSkulls.Visible = true;
+                nudGoldenSkulls.Enabled = true;
+                nudGoldenSkulls.Value = GetNumGoldenSkulls(fileData);
+            }
+            else
+            {
+                lblGoldenSkulls.Visible = false;
+                nudGoldenSkulls.Visible = false;
+                nudGoldenSkulls.Enabled = false;
+                nudGoldenSkulls.Value = 0;
             }
 
-            for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset++)
+            int healthOffset = GetHealthOffset();
+
+            if (healthOffset != -1)
             {
-                int valueIndex = savegameOffset + offset;
+                UInt16 health = GetHealthValue(fileData, healthOffset);
+                double healthPercentage = ((double)health / MAX_HEALTH_VALUE) * 100;
+                trbHealth.Value = health;
+                trbHealth.Enabled = true;
 
-                if (valueIndex + 1 >= savegameData.Length)
-                {
-                    break;
-                }
+                lblHealth.Text = healthPercentage.ToString("0.0") + "%";
+                lblHealthError.Visible = false;
+                lblHealth.Visible = true;
+            }
+            else
+            {
+                trbHealth.Enabled = false;
+                trbHealth.Value = trbHealth.Minimum;
+                lblHealthError.Visible = true;
+                lblHealth.Visible = false;
+            }
+        }
 
-                UInt16 value = BitConverter.ToUInt16(savegameData, valueIndex);
+        public void WriteChanges(byte[] fileData, NumericUpDown nudSaveNumber, NumericUpDown nudGoldenSkulls, NumericUpDown nudSmallMedipacks,
+            NumericUpDown nudLargeMedipacks, NumericUpDown nudFlares, CheckBox chkPistols, CheckBox chkUzi, CheckBox chkRevolver,
+            CheckBox chkShotgun, CheckBox chkGrenadeGun, CheckBox chkCrossbow, NumericUpDown nudUziAmmo, NumericUpDown nudRevolverAmmo,
+            NumericUpDown nudShotgunNormalAmmo, NumericUpDown nudShotgunWideshotAmmo, NumericUpDown nudGrenadeGunNormalAmmo, NumericUpDown nudGrenadeGunSuperAmmo,
+            NumericUpDown nudGrenadeGunFlashAmmo, NumericUpDown nudCrossbowNormalAmmo, NumericUpDown nudCrossbowPoisonAmmo, NumericUpDown nudCrossbowExplosiveAmmo,
+            TrackBar trbHealth)
+        {
+            byte prevCrossbowFlag = GetCrossbowFlag(fileData);
+            byte prevRevolverFlag = GetRevolverFlag(fileData);
 
-                if ((value >= MIN_HEALTH_VALUE && value < MAX_HEALTH_VALUE) || value == 0)
-                {
-                    int flagIndex1 = savegameOffset + offset - 7;
-                    int flagIndex2 = savegameOffset + offset - 6;
-                    int flagIndex3 = savegameOffset + offset - 5;
-                    int flagIndex4 = savegameOffset + offset - 4;
+            WriteSaveNumber(fileData, (Int32)nudSaveNumber.Value);
+            WriteNumSmallMedipacks(fileData, (UInt16)nudSmallMedipacks.Value);
+            WriteNumLargeMedipacks(fileData, (UInt16)nudLargeMedipacks.Value);
+            WriteNumFlares(fileData, (UInt16)nudFlares.Value);
 
-                    if (flagIndex4 >= savegameData.Length)
-                    {
-                        continue;
-                    }
+            WritePistolsPresent(fileData, chkPistols.Checked);
+            WriteUziPresent(fileData, chkUzi.Checked);
+            WriteShotgunPresent(fileData, chkShotgun.Checked);
+            WriteGrenadeGunPresent(fileData, chkGrenadeGun.Checked);
+            WriteCrossbowPresent(fileData, chkCrossbow.Checked, prevCrossbowFlag);
+            WriteRevolverPresent(fileData, chkRevolver.Checked, prevRevolverFlag);
 
-                    byte byteFlag1 = savegameData[flagIndex1];
-                    byte byteFlag2 = savegameData[flagIndex2];
-                    byte byteFlag3 = savegameData[flagIndex3];
-                    byte byteFlag4 = savegameData[flagIndex4];
+            WriteUziAmmo(fileData, (UInt16)nudUziAmmo.Value);
+            WriteRevolverAmmo(fileData, (UInt16)nudRevolverAmmo.Value);
+            WriteShotgunNormalAmmo(fileData, (UInt16)(nudShotgunNormalAmmo.Value * 6));
+            WriteShotgunWideshotAmmo(fileData, (UInt16)(nudShotgunWideshotAmmo.Value * 6));
+            WriteCrossbowNormalAmmo(fileData, (UInt16)nudCrossbowNormalAmmo.Value);
+            WriteCrossbowPoisonAmmo(fileData, (UInt16)nudCrossbowPoisonAmmo.Value);
+            WriteCrossbowExplosiveAmmo(fileData, (UInt16)nudCrossbowExplosiveAmmo.Value);
+            WriteGrenadeGunNormalAmmo(fileData, (UInt16)nudGrenadeGunNormalAmmo.Value);
+            WriteGrenadeGunSuperAmmo(fileData, (UInt16)nudGrenadeGunSuperAmmo.Value);
+            WriteGrenadeGunFlashAmmo(fileData, (UInt16)nudGrenadeGunFlashAmmo.Value);
 
-                    bool isKnownByteFlagPattern = IsKnownByteFlagPattern(byteFlag1, byteFlag2, byteFlag3, byteFlag4);
-
-                    if (isKnownByteFlagPattern)
-                    {
-                        if (value != 0)
-                        {
-                            return savegameOffset + offset;
-                        }
-                        else
-                        {
-                            int toggleIndex = savegameOffset + offset - 0x13;
-
-                            if (toggleIndex < 0 || toggleIndex >= savegameData.Length)
-                            {
-                                continue;
-                            }
-
-                            byte toggleByte = savegameData[toggleIndex];
-
-                            if (toggleByte == FULL_HEALTH_TOGGLE_BYTE)
-                            {
-                                return savegameOffset + offset;
-                            }
-                        }
-                    }
-                }
+            if (nudGoldenSkulls.Enabled)
+            {
+                WriteNumGoldenSkulls(fileData, (sbyte)nudGoldenSkulls.Value);
             }
 
-            return -1;
+            if (trbHealth.Enabled)
+            {
+                WriteHealthValue(fileData, (UInt16)trbHealth.Value);
+            }
+
+            File.WriteAllBytes(savegamePath, fileData);
         }
 
         private bool IsKnownByteFlagPattern(byte byteFlag1, byte byteFlag2, byte byteFlag3, byte byteFlag4)
@@ -992,10 +885,12 @@ namespace TRR_SaveMaster
 
         public bool IsLaraInVehicle(int healthOffset)
         {
-            byte byteFlag1 = ReadByte(healthOffset - 7);
-            byte byteFlag2 = ReadByte(healthOffset - 6);
-            byte byteFlag3 = ReadByte(healthOffset - 5);
-            byte byteFlag4 = ReadByte(healthOffset - 4);
+            byte[] fileData = File.ReadAllBytes(savegamePath);
+
+            byte byteFlag1 = fileData[healthOffset - 7];
+            byte byteFlag2 = fileData[healthOffset - 6];
+            byte byteFlag3 = fileData[healthOffset - 5];
+            byte byteFlag4 = fileData[healthOffset - 4];
 
             if (byteFlag1 == 0x00 && byteFlag2 == 0x00 && byteFlag3 == 0x00 && byteFlag4 == 0x40) return true;  // Jeep
             if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x34) return true;  // Jeep
@@ -1013,6 +908,40 @@ namespace TRR_SaveMaster
             return false;
         }
 
+        public void SetSavegamePath(string path)
+        {
+            savegamePath = path;
+        }
+
+        public void SetSavegameOffset(int offset)
+        {
+            savegameOffset = offset;
+        }
+
+        public bool IsSavegamePresent(byte[] fileData)
+        {
+            return fileData[savegameOffset + SLOT_STATUS_OFFSET] != 0;
+        }
+
+        public void UpdateDisplayName(Savegame savegame, byte[] fileData)
+        {
+            bool savegamePresent = fileData[savegame.Offset + SLOT_STATUS_OFFSET] != 0;
+
+            if (savegamePresent)
+            {
+                byte levelIndex = fileData[savegame.Offset + LEVEL_INDEX_OFFSET];
+                Int32 saveNumber = BitConverter.ToInt32(fileData, savegame.Offset + SAVE_NUMBER_OFFSET);
+
+                if (levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
+                {
+                    string levelName = levelNames[levelIndex];
+                    GameMode gameMode = fileData[savegame.Offset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
+
+                    savegame.UpdateDisplayName(levelName, saveNumber, gameMode);
+                }
+            }
+        }
+
         public void PopulateEmptySlots(ComboBox cmbSavegames)
         {
             if (cmbSavegames.Items.Count == MAX_SAVEGAMES)
@@ -1020,15 +949,18 @@ namespace TRR_SaveMaster
                 return;
             }
 
+            byte[] fileData = File.ReadAllBytes(savegamePath);
+
             for (int i = cmbSavegames.Items.Count; i < MAX_SAVEGAMES; i++)
             {
                 int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR4 + (i * SAVEGAME_SIZE);
 
                 if (currentSavegameOffset < MAX_SAVEGAME_OFFSET_TR4)
                 {
-                    Int32 saveNumber = ReadInt32(currentSavegameOffset + SAVE_NUMBER_OFFSET);
-                    byte levelIndex = ReadByte(currentSavegameOffset + LEVEL_INDEX_OFFSET);
-                    bool savegamePresent = ReadByte(currentSavegameOffset + SLOT_STATUS_OFFSET) != 0;
+                    byte slotStatus = fileData[currentSavegameOffset + SLOT_STATUS_OFFSET];
+                    byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
+                    Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
+                    bool savegamePresent = slotStatus != 0;
 
                     if (savegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                     {
@@ -1048,7 +980,7 @@ namespace TRR_SaveMaster
                         if (!savegameExists)
                         {
                             string levelName = levelNames[levelIndex];
-                            GameMode gameMode = ReadByte(currentSavegameOffset + GAME_MODE_OFFSET) == 0 ? GameMode.Normal : GameMode.Plus;
+                            GameMode gameMode = fileData[currentSavegameOffset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
 
                             Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode);
                             cmbSavegames.Items.Add(savegame);
@@ -1060,22 +992,23 @@ namespace TRR_SaveMaster
 
         public void PopulateSavegames(ComboBox cmbSavegames)
         {
+            byte[] fileData = File.ReadAllBytes(savegamePath);
             int numSaves = 0;
 
             for (int i = 0; i < MAX_SAVEGAMES; i++)
             {
                 int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR4 + (i * SAVEGAME_SIZE);
-                SetSavegameOffset(currentSavegameOffset);
 
-                Int32 saveNumber = GetSaveNumber();
-                byte levelIndex = GetLevelIndex();
-                bool savegamePresent = IsSavegamePresent();
+                byte slotStatus = fileData[currentSavegameOffset + SLOT_STATUS_OFFSET];
+                byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
+                Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
+                bool savegamePresent = slotStatus != 0;
 
                 if (savegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                 {
                     string levelName = levelNames[levelIndex];
                     int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR4) / SAVEGAME_SIZE;
-                    GameMode gameMode = GetGameMode();
+                    GameMode gameMode = fileData[currentSavegameOffset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
 
                     Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode);
                     cmbSavegames.Items.Add(savegame);

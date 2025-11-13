@@ -9,22 +9,18 @@ namespace TRR_SaveMaster
 {
     internal class TR6Utilities
     {
-        // Paths
-        private string savegamePath = "";
-
-        // Offsets
+        // Savegame constants & offsets
         private const int SLOT_STATUS_OFFSET = 0x004;
-        private const int GAME_MODE_OFFSET = 0x35C;
-        private const int LEVEL_INDEX_OFFSET = 0x14;
+        private const int SAVEGAME_VERSION_OFFSET = 0x008;
+        private const int LEVEL_INDEX_OFFSET = 0x014;
         private const int SAVE_NUMBER_OFFSET = 0x11C;
-
-        // Savegame constants
+        private const int GAME_MODE_OFFSET = 0x35C;
         private const int BASE_SAVEGAME_OFFSET_TR6 = 0x293C00;
         private const int MAX_SAVEGAME_OFFSET_TR6 = 0x484910;
         private const int SAVEGAME_SIZE = 0xA470;
         private const int MAX_SAVEGAMES = 32;
 
-        // Compressed block offsets/constants
+        // Compressed block offsets & constants
         private const int COMPRESSED_BLOCK_START_OFFSET = 0x36C;
         private const int COMPRESSED_BLOCK_SIZE_OFFSET = 0x364;
         private const int COMPRESSED_BLOCK_MAX_SIZE = 0xFFFFFF;
@@ -39,16 +35,11 @@ namespace TRR_SaveMaster
         private int NUM_EMITTERS = 0;
         private int NUM_TRIGGERS = 0;
 
-        // Header offsets
-        private const int SAVEGAME_VERSION_OFFSET = 0x8;
-
-        // Offsets to save
-        private const int CASH_OFFSET = 0x9;
+        // Offsets (buffer only)
+        private const int CASH_OFFSET = 0x009;
         private int PLAYER_BASE_OFFSET;
         private int PLAYER_HEALTH_OFFSET;
         private int PLAYER_HEALTH_OFFSET_2;
-
-        // Buffer-related
         private int INVENTORY_START_OFFSET;
         private int INVENTORY_END_OFFSET;
         private int POST_INVENTORY_END_OFFSET;
@@ -63,53 +54,61 @@ namespace TRR_SaveMaster
         private const int INVENTORY_TYPE_HEALTH_ITEM = 4;
         private const int INVENTORY_TYPE_AMMO = 7;
 
-        // Entity types
-        private const int ENTITY_TYPE_ACTOR = 2;
-        private const int ENTITY_TYPE_OBJECT = 0;
-
-        // Offset tracking
-        private int sgBufferCursor = 0;
-
-        // Vars to read
-        private byte sgCurrentLevel = 0;
-        private float playerHealth = 0;
-
-        // Buffer
-        private byte[] decompressedBuffer = null;
+        // Health
+        private const float MAX_HEALTH_VALUE = 100f;
+        private const float MIN_HEALTH_VALUE = 1f;
+        private float playerHealth = 0f;
 
         // Misc
         private int savegameOffset;
+        private string savegamePath;
+        private int sgBufferCursor = 0;
+        private byte[] decompressedBuffer = null;
+        private byte sgCurrentLevel = 0;
 
-        private byte ReadByte(int offset)
+        // Level names
+        private readonly Dictionary<byte, string> levelNames = new Dictionary<byte, string>()
         {
-            using (FileStream saveFile = new FileStream(savegamePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            {
-                saveFile.Seek(offset, SeekOrigin.Begin);
-                return (byte)saveFile.ReadByte();
-            }
-        }
+            {  0, "Parisian Back Streets"       },
+            {  1, "Derelict Apartment Block"    },
+            {  2, "Margot Carvier's Apartment"  },
+            {  3, "Industrial Roof Tops"        },
+            {  4, "Parisian Ghetto"             },
+            {  5, "Parisian Ghetto"             },
+            {  6, "Parisian Ghetto"             },
+            {  7, "The Serpent Rouge"           },
+            {  8, "Rennes' Pawnshop"            },
+            {  9, "Willowtree Herbalist"        },
+            { 10, "St. Aicard's Church"         },
+            { 11, "Café Metro"                  },
+            { 12, "St. Aicard's Graveyard"      },
+            { 13, "Bouchard's Hideout"          },
+            { 14, "Louvre Storm Drains"         },
+            { 15, "Louvre Galleries"            },
+            { 16, "Galleries Under Siege"       },
+            { 17, "Tomb of Ancients"            },
+            { 18, "The Archaeological Dig"      },
+            { 19, "Von Croy's Apartment"        },
+            { 20, "The Monstrum Crimescene"     },
+            { 21, "The Strahov Fortress"        },
+            { 22, "The Bio-Research Facility"   },
+            { 23, "Aquatic Research Area"       },
+            { 24, "The Sanitarium"              },
+            { 25, "Maximum Containment Area"    },
+            { 26, "The Vault of Trophies"       },
+            { 27, "Boaz Returns"                },
+            { 28, "Eckhardt's Lab"              },
+            { 29, "The Lost Domain"             },
+            { 30, "The Hall of Seasons"         },
+            { 31, "Neptune's Hall"              },
+            { 32, "Wrath of the Beast"          },
+            { 33, "The Sanctuary of Flame"      },
+            { 34, "The Breath of Hades"         }
+        };
 
-        private Int32 ReadInt32(int offset)
+        private byte[] ReadBytes(long offset, int length)
         {
-            byte byte1 = ReadByte(offset);
-            byte byte2 = ReadByte(offset + 1);
-            byte byte3 = ReadByte(offset + 2);
-            byte byte4 = ReadByte(offset + 3);
-
-            return (Int32)(byte1 + (byte2 << 8) + (byte3 << 16) + (byte4 << 24));
-        }
-
-        private UInt16 ReadUInt16(int offset)
-        {
-            byte lowerByte = ReadByte(offset);
-            byte upperByte = ReadByte(offset + 1);
-
-            return (UInt16)(lowerByte + (upperByte << 8));
-        }
-
-        private byte[] ReadBytes(string filePath, long offset, int length)
-        {
-            using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Read))
             using (BinaryReader br = new BinaryReader(fs))
             {
                 fs.Seek(offset, SeekOrigin.Begin);
@@ -117,72 +116,59 @@ namespace TRR_SaveMaster
             }
         }
 
-        public bool IsSavegamePresent()
+        private void DetermineOffsets(byte[] fileData)
         {
-            return ReadByte(savegameOffset + SLOT_STATUS_OFFSET) != 0;
-        }
+            int savegameVersion = GetSavegameVersion(fileData);
+            int compressedBlockSize = GetCompressedBlockSize(fileData);
+            byte[] compressedBlockData = ReadBytes(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, compressedBlockSize);
 
-        private byte GetLevelIndex()
-        {
-            return ReadByte(savegameOffset + LEVEL_INDEX_OFFSET);
-        }
+            decompressedBuffer = new byte[0];   // Clear buffer
+            decompressedBuffer = Unpack(compressedBlockData);
 
-        private Int32 GetSaveNumber()
-        {
-            return ReadInt32(savegameOffset + SAVE_NUMBER_OFFSET);
-        }
+            sgBufferCursor = 0x4;    // Skip past "TOMB" signature
 
-        private Int32 GetSavegameVersion()
-        {
-            return ReadInt32(savegameOffset + SAVEGAME_VERSION_OFFSET);
-        }
-
-        private GameMode GetGameMode()
-        {
-            int gameMode = ReadByte(savegameOffset + GAME_MODE_OFFSET);
-            return gameMode == 0 ? GameMode.Normal : GameMode.Plus;
-        }
-
-        public void DisplayGameInfo(TrackBar trbHealth, Label lblHealth, Label lblHealthError, NumericUpDown nudCash, NumericUpDown nudSaveNumber)
-        {
-            Int32 saveNumber = GetSaveNumber();
-            nudSaveNumber.Value = saveNumber;
-
-            ParseInventory();
-
-            // Load cash and health directly from buffer
             using (MemoryStream ms = new MemoryStream(decompressedBuffer))
             using (BinaryReader reader = new BinaryReader(ms))
             {
-                // Read cash (Int32)
-                ms.Seek(CASH_OFFSET, SeekOrigin.Begin);
-                Int32 cashValue = reader.ReadInt32();
-                nudCash.Value = cashValue;
+                reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
+                sgCurrentLevel = reader.ReadByte();
+                sgBufferCursor += 0x1;
 
-                // Read health (Float)
-                ms.Seek(PLAYER_HEALTH_OFFSET_2, SeekOrigin.Begin);
-                playerHealth = reader.ReadSingle();
-            }
+                sgBufferCursor += 0x4;
 
-            if (playerHealth > 0 && playerHealth <= 100)
-            {
-                trbHealth.Enabled = true;
-                lblHealth.Visible = true;
-                lblHealthError.Visible = false;
-                trbHealth.Value = (int)playerHealth;
-                double healthPercentage = ((double)trbHealth.Value / (double)100) * 100;
-                lblHealth.Text = $"{healthPercentage}%";
-            }
-            else
-            {
-                trbHealth.Value = trbHealth.Minimum;
-                trbHealth.Enabled = false;
-                lblHealth.Visible = false;
-                lblHealthError.Visible = true;
+                LoadCachedEntities();
+
+                InvLoad(reader);
+                MapLoad(reader);
+                CamLoad();
+                CamLoad();
+                CamLoad();
+
+                sgBufferCursor += 0x8;
+
+                FxLoad(reader);
+
+                AudioLoad(reader);
+                MapPickupLoad(reader, savegameVersion);
             }
         }
 
-        public void ParseInventory()
+        private Int32 GetSavegameVersion(byte[] fileData)
+        {
+            return BitConverter.ToInt32(fileData, savegameOffset + SAVEGAME_VERSION_OFFSET);
+        }
+
+        private Int32 GetSaveNumber(byte[] fileData)
+        {
+            return BitConverter.ToInt32(fileData, savegameOffset + SAVE_NUMBER_OFFSET);
+        }
+
+        private int GetCompressedBlockSize(byte[] fileData)
+        {
+            return BitConverter.ToInt32(fileData, savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
+        }
+
+        private void ParseInventory()
         {
             using (MemoryStream ms = new MemoryStream(decompressedBuffer))
             using (BinaryReader reader = new BinaryReader(ms))
@@ -282,42 +268,6 @@ namespace TRR_SaveMaster
             }
         }
 
-        public void DetermineOffsets(Savegame savegame)
-        {
-            UInt16 compressedBlockSize = ReadUInt16(savegame.Offset + COMPRESSED_BLOCK_SIZE_OFFSET);
-            byte[] compressedBlockData = ReadBytes(savegamePath, savegame.Offset + COMPRESSED_BLOCK_START_OFFSET, compressedBlockSize);
-
-            decompressedBuffer = new byte[0];   // Clear buffer
-            decompressedBuffer = Unpack(compressedBlockData);
-
-            sgBufferCursor = 0x4;    // Skip past "TOMB" signature
-
-            using (MemoryStream ms = new MemoryStream(decompressedBuffer))
-            using (BinaryReader reader = new BinaryReader(ms))
-            {
-                reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-                sgCurrentLevel = reader.ReadByte();
-                sgBufferCursor += 0x1;
-
-                sgBufferCursor += 0x4;
-
-                LoadCachedEntities();
-
-                InvLoad(reader);
-                MapLoad(reader);
-                CamLoad();
-                CamLoad();
-                CamLoad();
-
-                sgBufferCursor += 0x8;
-
-                FxLoad(reader);
-
-                AudioLoad(reader);
-                MapPickupLoad(reader);
-            }
-        }
-
         private void LoadCachedEntities()
         {
             NUM_AUDIO_LOCATORS = TR6EntityCache.GetNumAudioLocators(sgCurrentLevel);
@@ -334,7 +284,7 @@ namespace TRR_SaveMaster
             objects = TR6EntityCache.GetObjectArray(sgCurrentLevel);
         }
 
-        private void MapPickupLoad(BinaryReader reader)
+        private void MapPickupLoad(BinaryReader reader, int savegameVersion)
         {
             bool isPickupLevel =
                 sgCurrentLevel == 0x04 || sgCurrentLevel == 0x05 || sgCurrentLevel == 0x06 ||
@@ -346,8 +296,6 @@ namespace TRR_SaveMaster
 
             if (isPickupLevel)
             {
-                int savegameVersion = GetSavegameVersion();
-
                 // Do not run pickup load logic on pre-patch savegames of St. Aicard's Graveyard
                 if ((savegameVersion != 3 || sgCurrentLevel != 0x0C))
                 {
@@ -404,7 +352,6 @@ namespace TRR_SaveMaster
         private void InvLoad(BinaryReader reader)
         {
             sgBufferCursor += 0x4;
-
             sgBufferCursor += 0x12B;
         }
 
@@ -639,7 +586,6 @@ namespace TRR_SaveMaster
                 sgBufferCursor += 0x4;
 
                 sgBufferCursor += 0x4;
-
                 sgBufferCursor += 0x10;
 
                 int apbLoopCounter = 0;
@@ -664,7 +610,6 @@ namespace TRR_SaveMaster
                         if (entity != null)
                         {
                             sgBufferCursor += 0x4;
-
                             sgBufferCursor += 0x4;
                         }
 
@@ -684,15 +629,10 @@ namespace TRR_SaveMaster
                 }
 
                 sgBufferCursor += 0x4;
-
                 sgBufferCursor += 0x4;
-
                 sgBufferCursor += 0x4;
-
                 sgBufferCursor += 0x4;
-
                 sgBufferCursor += 0x4;
-
                 sgBufferCursor += 0x90;
 
                 if ((param_1 & 0x80000) == 0)
@@ -752,9 +692,7 @@ namespace TRR_SaveMaster
             }
 
             sgBufferCursor += 0x2;
-
             sgBufferCursor += 0x2;
-
             sgBufferCursor += 0x2;
 
             // Read the flag at offset 0x3E
@@ -783,9 +721,7 @@ namespace TRR_SaveMaster
         private void PlayLoad(BinaryReader reader)
         {
             sgBufferCursor += 0x8C;
-
             sgBufferCursor += (0x17E - 0x8C);
-
             sgBufferCursor += 0x10D;
 
             for (int i = 0; i < 5; i++)
@@ -803,45 +739,6 @@ namespace TRR_SaveMaster
         {
             sgBufferCursor += 0x6C;
         }
-
-        private readonly Dictionary<byte, string> levelNames = new Dictionary<byte, string>()
-        {
-            {  0, "Parisian Back Streets"       },
-            {  1, "Derelict Apartment Block"    },
-            {  2, "Margot Carvier's Apartment"  },
-            {  3, "Industrial Roof Tops"        },
-            {  4, "Parisian Ghetto"             },
-            {  5, "Parisian Ghetto"             },
-            {  6, "Parisian Ghetto"             },
-            {  7, "The Serpent Rouge"           },
-            {  8, "Rennes' Pawnshop"            },
-            {  9, "Willowtree Herbalist"        },
-            { 10, "St. Aicard's Church"         },
-            { 11, "Café Metro"                  },
-            { 12, "St. Aicard's Graveyard"      },
-            { 13, "Bouchard's Hideout"          },
-            { 14, "Louvre Storm Drains"         },
-            { 15, "Louvre Galleries"            },
-            { 16, "Galleries Under Siege"       },
-            { 17, "Tomb of Ancients"            },
-            { 18, "The Archaeological Dig"      },
-            { 19, "Von Croy's Apartment"        },
-            { 20, "The Monstrum Crimescene"     },
-            { 21, "The Strahov Fortress"        },
-            { 22, "The Bio-Research Facility"   },
-            { 23, "Aquatic Research Area"       },
-            { 24, "The Sanitarium"              },
-            { 25, "Maximum Containment Area"    },
-            { 26, "The Vault of Trophies"       },
-            { 27, "Boaz Returns"                },
-            { 28, "Eckhardt's Lab"              },
-            { 29, "The Lost Domain"             },
-            { 30, "The Hall of Seasons"         },
-            { 31, "Neptune's Hall"              },
-            { 32, "Wrath of the Beast"          },
-            { 33, "The Sanctuary of Flame"      },
-            { 34, "The Breath of Hades"         }
-        };
 
         public byte[] Unpack(byte[] compressedData)
         {
@@ -908,9 +805,7 @@ namespace TRR_SaveMaster
                             break;
                         }
 
-                        uVar3 = (uVar3 >> sVar4)
-                            | (BitConverter.ToUInt32(compressedData, next_offset)
-                               << ((32 - sVar4) & 0x1F));
+                        uVar3 = (uVar3 >> sVar4) | (BitConverter.ToUInt32(compressedData, next_offset) << ((32 - sVar4) & 0x1F));
                     }
 
                     uVar3 &= uVar10;
@@ -1309,9 +1204,6 @@ namespace TRR_SaveMaster
             // Copy list to safely iterate without modifying it
             List<InventoryItem> inventoryCopy = selectedInventory.ToList();
 
-            // Get game mode
-            GameMode gameMode = GetGameMode();
-
             // Reset UI fields
             nudChocolateBar.Value = 0;
             nudSmallMedipack.Value = 0;
@@ -1375,11 +1267,6 @@ namespace TRR_SaveMaster
             chkBoranX.Enabled = cmbInventory.SelectedIndex == 1;
             chkChirugaiBlade.Enabled = cmbInventory.SelectedIndex == 1;
             lblChirugaiBladeAmmo.Enabled = cmbInventory.SelectedIndex == 1;
-
-            nudGPSSaveGame.Enabled = gameMode == GameMode.Plus;
-            nudGPSSaveGame.Visible = gameMode == GameMode.Plus;
-            lblGPSSaveGame.Enabled = gameMode == GameMode.Plus;
-            lblGPSSaveGame.Visible = gameMode == GameMode.Plus;
 
             // Update UI based on inventory contents
             foreach (var item in inventoryCopy)
@@ -1486,6 +1373,44 @@ namespace TRR_SaveMaster
             }
         }
 
+        public void DisplayGameInfo(byte[] fileData, TrackBar trbHealth, Label lblHealth, Label lblHealthError, NumericUpDown nudCash, NumericUpDown nudSaveNumber)
+        {
+            DetermineOffsets(fileData);
+
+            nudSaveNumber.Value = GetSaveNumber(fileData);
+
+            ParseInventory();
+
+            // Load cash and health directly from buffer
+            using (MemoryStream ms = new MemoryStream(decompressedBuffer))
+            using (BinaryReader reader = new BinaryReader(ms))
+            {
+                ms.Seek(CASH_OFFSET, SeekOrigin.Begin);
+                Int32 cashValue = reader.ReadInt32();
+                nudCash.Value = cashValue;
+
+                ms.Seek(PLAYER_HEALTH_OFFSET_2, SeekOrigin.Begin);
+                playerHealth = reader.ReadSingle();
+            }
+
+            if (playerHealth >= MIN_HEALTH_VALUE && playerHealth <= MAX_HEALTH_VALUE)
+            {
+                trbHealth.Enabled = true;
+                lblHealth.Visible = true;
+                lblHealthError.Visible = false;
+                trbHealth.Value = (int)playerHealth;
+                double healthPercentage = ((double)trbHealth.Value / (double)100) * 100;
+                lblHealth.Text = $"{healthPercentage}%";
+            }
+            else
+            {
+                trbHealth.Value = trbHealth.Minimum;
+                trbHealth.Enabled = false;
+                lblHealth.Visible = false;
+                lblHealthError.Visible = true;
+            }
+        }
+
         public void WriteChanges(NumericUpDown nudCash, TrackBar trbHealth, NumericUpDown nudSaveNumber)
         {
             if (decompressedBuffer == null || decompressedBuffer.Length == 0)
@@ -1520,14 +1445,13 @@ namespace TRR_SaveMaster
                     .Take(INVENTORY_START_OFFSET)
                     .ToArray();
 
+                // Write cash and health to pre-inventory block
                 using (MemoryStream ms = new MemoryStream(preInventoryBlock))
                 using (BinaryWriter writer = new BinaryWriter(ms))
                 {
-                    // Write cash value (Int32)
                     ms.Seek(CASH_OFFSET, SeekOrigin.Begin);
                     writer.Write((int)nudCash.Value);
 
-                    // Write first health value (Float)
                     if (trbHealth.Enabled)
                     {
                         ms.Seek(PLAYER_HEALTH_OFFSET, SeekOrigin.Begin);
@@ -1567,7 +1491,7 @@ namespace TRR_SaveMaster
                 {
                     if (trbHealth.Enabled)
                     {
-                        writer.Seek(0, SeekOrigin.Begin); // First byte
+                        writer.Seek(0, SeekOrigin.Begin);
                         writer.Write((float)trbHealth.Value);
                     }
                 }
@@ -1614,16 +1538,6 @@ namespace TRR_SaveMaster
             }
         }
 
-        public void SetSavegameOffset(int offset)
-        {
-            savegameOffset = offset;
-        }
-
-        public void SetSavegamePath(string path)
-        {
-            savegamePath = path;
-        }
-
         public bool IsPlayerKurtis()
         {
             // The Sanitarium, Maximum Containment Area, Boaz Returns
@@ -1635,19 +1549,34 @@ namespace TRR_SaveMaster
             return PLAYER_BASE_OFFSET;
         }
 
-        public void UpdateDisplayName(Savegame savegame)
+        public void SetSavegameOffset(int offset)
         {
-            bool savegamePresent = ReadByte(savegame.Offset + SLOT_STATUS_OFFSET) != 0;
+            savegameOffset = offset;
+        }
+
+        public void SetSavegamePath(string path)
+        {
+            savegamePath = path;
+        }
+
+        public bool IsSavegamePresent(byte[] fileData)
+        {
+            return fileData[savegameOffset + SLOT_STATUS_OFFSET] != 0;
+        }
+
+        public void UpdateDisplayName(Savegame savegame, byte[] fileData)
+        {
+            bool savegamePresent = fileData[savegame.Offset + SLOT_STATUS_OFFSET] != 0;
 
             if (savegamePresent)
             {
-                byte levelIndex = ReadByte(savegame.Offset + LEVEL_INDEX_OFFSET);
-                Int32 saveNumber = ReadInt32(savegame.Offset + SAVE_NUMBER_OFFSET);
+                byte levelIndex = fileData[savegame.Offset + LEVEL_INDEX_OFFSET];
+                Int32 saveNumber = BitConverter.ToInt32(fileData, savegame.Offset + SAVE_NUMBER_OFFSET);
 
                 if (levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                 {
                     string levelName = levelNames[levelIndex];
-                    GameMode gameMode = ReadByte(savegame.Offset + GAME_MODE_OFFSET) == 0 ? GameMode.Normal : GameMode.Plus;
+                    GameMode gameMode = fileData[savegame.Offset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
 
                     savegame.UpdateDisplayName(levelName, saveNumber, gameMode);
                 }
@@ -1661,15 +1590,18 @@ namespace TRR_SaveMaster
                 return;
             }
 
+            byte[] fileData = File.ReadAllBytes(savegamePath);
+
             for (int i = cmbSavegames.Items.Count; i < MAX_SAVEGAMES; i++)
             {
                 int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR6 + (i * SAVEGAME_SIZE);
 
                 if (currentSavegameOffset < MAX_SAVEGAME_OFFSET_TR6)
                 {
-                    Int32 saveNumber = ReadInt32(currentSavegameOffset + SAVE_NUMBER_OFFSET);
-                    byte levelIndex = ReadByte(currentSavegameOffset + LEVEL_INDEX_OFFSET);
-                    bool savegamePresent = ReadByte(currentSavegameOffset + SLOT_STATUS_OFFSET) != 0;
+                    byte slotStatus = fileData[currentSavegameOffset + SLOT_STATUS_OFFSET];
+                    byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
+                    Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
+                    bool savegamePresent = slotStatus != 0;
 
                     if (savegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                     {
@@ -1689,7 +1621,7 @@ namespace TRR_SaveMaster
                         if (!savegameExists)
                         {
                             string levelName = levelNames[levelIndex];
-                            GameMode gameMode = ReadByte(currentSavegameOffset + GAME_MODE_OFFSET) == 0 ? GameMode.Normal : GameMode.Plus;
+                            GameMode gameMode = fileData[currentSavegameOffset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
 
                             Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode, true);
                             cmbSavegames.Items.Add(savegame);
@@ -1701,22 +1633,24 @@ namespace TRR_SaveMaster
 
         public void PopulateSavegames(ComboBox cmbSavegames)
         {
+            byte[] fileData = File.ReadAllBytes(savegamePath);
             int numSaves = 0;
 
             for (int i = 0; i < MAX_SAVEGAMES; i++)
             {
                 int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR6 + (i * SAVEGAME_SIZE);
-                SetSavegameOffset(currentSavegameOffset);
 
-                Int32 saveNumber = GetSaveNumber();
-                byte levelIndex = GetLevelIndex();
-                bool savegamePresent = IsSavegamePresent();
+                byte slotStatus = fileData[currentSavegameOffset + SLOT_STATUS_OFFSET];
+                byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
+                Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
+
+                bool savegamePresent = slotStatus != 0;
 
                 if (savegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                 {
                     string levelName = levelNames[levelIndex];
                     int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR6) / SAVEGAME_SIZE;
-                    GameMode gameMode = GetGameMode();
+                    GameMode gameMode = fileData[currentSavegameOffset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
 
                     Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode, true);
                     cmbSavegames.Items.Add(savegame);

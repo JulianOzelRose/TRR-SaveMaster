@@ -29,15 +29,14 @@ namespace TRR_SaveMaster
         private const int SAVEGAME_SIZE_TRX = 0x3800;
         private const int SAVEGAME_SIZE_TRX2 = 0xA470;
         private const int SAVEGAME_FILE_SIZE_TRX = 0x152004;
-        //private const int SAVEGAME_FILE_SIZE_TRX2 = 0x3DCA04;
 
         // Utils
-        readonly TR1Utilities TR1 = new TR1Utilities();
-        readonly TR2Utilities TR2 = new TR2Utilities();
-        readonly TR3Utilities TR3 = new TR3Utilities();
-        readonly TR4Utilities TR4 = new TR4Utilities();
-        readonly TR5Utilities TR5 = new TR5Utilities();
-        readonly TR6Utilities TR6 = new TR6Utilities();
+        private readonly TR1Utilities TR1 = new TR1Utilities();
+        private readonly TR2Utilities TR2 = new TR2Utilities();
+        private readonly TR3Utilities TR3 = new TR3Utilities();
+        private readonly TR4Utilities TR4 = new TR4Utilities();
+        private readonly TR5Utilities TR5 = new TR5Utilities();
+        private readonly TR6Utilities TR6 = new TR6Utilities();
 
         // Tabs
         private const int TAB_TR1 = 0;
@@ -299,7 +298,7 @@ namespace TRR_SaveMaster
             ClearControlsInGroupBox(grpHealthTR6);
 
             lblHealthErrorTR6.Visible = false;
-            lblHealthTR6.Text = "0.1%";
+            lblHealthTR6.Text = "1%";
             lblHealthTR6.Visible = true;
 
             lblChirugaiBladeAmmoTR6.Enabled = true;
@@ -583,12 +582,12 @@ namespace TRR_SaveMaster
 
         public bool IsTRXTabSelected()
         {
-            return (tabGame.SelectedIndex == TAB_TR1 || tabGame.SelectedIndex == TAB_TR2 || tabGame.SelectedIndex == TAB_TR3);
+            return tabGame.SelectedIndex == TAB_TR1 || tabGame.SelectedIndex == TAB_TR2 || tabGame.SelectedIndex == TAB_TR3;
         }
 
         public bool IsTRX2TabSelected()
         {
-            return (tabGame.SelectedIndex == TAB_TR4 || tabGame.SelectedIndex == TAB_TR5 || tabGame.SelectedIndex == TAB_TR6);
+            return tabGame.SelectedIndex == TAB_TR4 || tabGame.SelectedIndex == TAB_TR5 || tabGame.SelectedIndex == TAB_TR6;
         }
 
         private void btnExitTR1_Click(object sender, EventArgs e)
@@ -703,12 +702,13 @@ namespace TRR_SaveMaster
 
             if (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX))
             {
+                byte[] fileData = File.ReadAllBytes(savegamePathTRX);
+
                 for (int i = 0; i < cmbSavegamesTR1.Items.Count; i++)
                 {
                     if (cmbSavegamesTR1.Items[i] is Savegame savegame)
                     {
-                        TR1.UpdateDisplayName(savegame);
-
+                        TR1.UpdateDisplayName(savegame, fileData);
                         cmbSavegamesTR1.Items[i] = savegame;
                     }
                 }
@@ -725,12 +725,13 @@ namespace TRR_SaveMaster
 
             if (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX))
             {
+                byte[] fileData = File.ReadAllBytes(savegamePathTRX);
+
                 for (int i = 0; i < cmbSavegamesTR2.Items.Count; i++)
                 {
                     if (cmbSavegamesTR2.Items[i] is Savegame savegame)
                     {
-                        TR2.UpdateDisplayName(savegame);
-
+                        TR2.UpdateDisplayName(savegame, fileData);
                         cmbSavegamesTR2.Items[i] = savegame;
                     }
                 }
@@ -747,12 +748,13 @@ namespace TRR_SaveMaster
 
             if (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX))
             {
+                byte[] fileData = File.ReadAllBytes(savegamePathTRX);
+
                 for (int i = 0; i < cmbSavegamesTR3.Items.Count; i++)
                 {
                     if (cmbSavegamesTR3.Items[i] is Savegame savegame)
                     {
-                        TR3.UpdateDisplayName(savegame);
-
+                        TR3.UpdateDisplayName(savegame, fileData);
                         cmbSavegamesTR3.Items[i] = savegame;
                     }
                 }
@@ -769,12 +771,13 @@ namespace TRR_SaveMaster
 
             if (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
             {
+                byte[] fileData = File.ReadAllBytes(savegamePathTRX2);
+
                 for (int i = 0; i < cmbSavegamesTR4.Items.Count; i++)
                 {
                     if (cmbSavegamesTR4.Items[i] is Savegame savegame)
                     {
-                        TR4.UpdateDisplayName(savegame);
-
+                        TR4.UpdateDisplayName(savegame, fileData);
                         cmbSavegamesTR4.Items[i] = savegame;
                     }
                 }
@@ -791,12 +794,13 @@ namespace TRR_SaveMaster
 
             if (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
             {
+                byte[] fileData = File.ReadAllBytes(savegamePathTRX2);
+
                 for (int i = 0; i < cmbSavegamesTR5.Items.Count; i++)
                 {
                     if (cmbSavegamesTR5.Items[i] is Savegame savegame)
                     {
-                        TR5.UpdateDisplayName(savegame);
-
+                        TR5.UpdateDisplayName(savegame, fileData);
                         cmbSavegamesTR5.Items[i] = savegame;
                     }
                 }
@@ -813,12 +817,13 @@ namespace TRR_SaveMaster
 
             if (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
             {
+                byte[] fileData = File.ReadAllBytes(savegamePathTRX2);
+
                 for (int i = 0; i < cmbSavegamesTR6.Items.Count; i++)
                 {
                     if (cmbSavegamesTR6.Items[i] is Savegame savegame)
                     {
-                        TR6.UpdateDisplayName(savegame);
-
+                        TR6.UpdateDisplayName(savegame, fileData);
                         cmbSavegamesTR6.Items[i] = savegame;
                     }
                 }
@@ -1089,16 +1094,7 @@ namespace TRR_SaveMaster
 
         private void CreateBackup()
         {
-            string savegamePath = "";
-
-            if (IsTRXTabSelected())
-            {
-                savegamePath = savegamePathTRX;
-            }
-            else if (IsTRX2TabSelected())
-            {
-                savegamePath = savegamePathTRX2;
-            }
+            string savegamePath = IsTRXTabSelected() ? savegamePathTRX : savegamePathTRX2;
 
             if (!string.IsNullOrEmpty(savegamePath) && File.Exists(savegamePath))
             {
@@ -1128,7 +1124,9 @@ namespace TRR_SaveMaster
                     TR1.SetSavegamePath(savegamePathTRX);
                     TR1.SetSavegameOffset(savegame.Offset);
 
-                    if (!TR1.IsSavegamePresent())
+                    byte[] fileData = File.ReadAllBytes(savegamePathTRX);
+
+                    if (!TR1.IsSavegamePresent(fileData))
                     {
                         string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
                         MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1145,10 +1143,10 @@ namespace TRR_SaveMaster
 
                     File.SetAttributes(savegamePathTRX, File.GetAttributes(savegamePathTRX) & ~FileAttributes.ReadOnly);
 
-                    TR1.WriteChanges(chkPistolsTR1, chkMagnumsTR1, chkUzisTR1, chkShotgunTR1, nudSaveNumberTR1,
+                    TR1.WriteChanges(fileData, chkPistolsTR1, chkMagnumsTR1, chkUzisTR1, chkShotgunTR1, nudSaveNumberTR1,
                         nudSmallMedipacksTR1, nudLargeMedipacksTR1, nudUziAmmoTR1, nudMagnumAmmoTR1, nudShotgunAmmoTR1, trbHealthTR1);
 
-                    TR1.UpdateDisplayName(savegame);
+                    TR1.UpdateDisplayName(savegame, fileData);
                     UpdateSavegameDisplayNameTR1(cmbSavegamesTR1, savegame);
 
                     DisableButtonsTR1();
@@ -1172,7 +1170,9 @@ namespace TRR_SaveMaster
                     TR2.SetSavegamePath(savegamePathTRX);
                     TR2.SetSavegameOffset(savegame.Offset);
 
-                    if (!TR2.IsSavegamePresent())
+                    byte[] fileData = File.ReadAllBytes(savegamePathTRX);
+
+                    if (!TR2.IsSavegamePresent(fileData))
                     {
                         string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
                         MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1189,13 +1189,13 @@ namespace TRR_SaveMaster
 
                     File.SetAttributes(savegamePathTRX, File.GetAttributes(savegamePathTRX) & ~FileAttributes.ReadOnly);
 
-                    TR2.WriteChanges(chkPistolsTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkShotgunTR2,
+                    TR2.WriteChanges(fileData, chkPistolsTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkShotgunTR2,
                         chkM16TR2, chkGrenadeLauncherTR2, chkHarpoonGunTR2, nudSaveNumberTR2, nudFlaresTR2,
                         nudSmallMedipacksTR2, nudLargeMedipacksTR2, nudAutomaticPistolsAmmoTR2,
                         nudUziAmmoTR2, nudM16AmmoTR2, nudGrenadeLauncherAmmoTR2, nudHarpoonGunAmmoTR2,
                         nudShotgunAmmoTR2, trbHealthTR2);
 
-                    TR2.UpdateDisplayName(savegame);
+                    TR2.UpdateDisplayName(savegame, fileData);
                     UpdateSavegameDisplayNameTR2(cmbSavegamesTR2, savegame);
 
                     DisableButtonsTR2();
@@ -1219,7 +1219,9 @@ namespace TRR_SaveMaster
                     TR3.SetSavegamePath(savegamePathTRX);
                     TR3.SetSavegameOffset(savegame.Offset);
 
-                    if (!TR3.IsSavegamePresent())
+                    byte[] fileData = File.ReadAllBytes(savegamePathTRX);
+
+                    if (!TR3.IsSavegamePresent(fileData))
                     {
                         string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
                         MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1236,12 +1238,12 @@ namespace TRR_SaveMaster
 
                     File.SetAttributes(savegamePathTRX, File.GetAttributes(savegamePathTRX) & ~FileAttributes.ReadOnly);
 
-                    TR3.WriteChanges(chkPistolsTR3, chkDeagleTR3, chkUzisTR3, chkShotgunTR3, chkMP5TR3, chkRocketLauncherTR3,
+                    TR3.WriteChanges(fileData, chkPistolsTR3, chkDeagleTR3, chkUzisTR3, chkShotgunTR3, chkMP5TR3, chkRocketLauncherTR3,
                         chkGrenadeLauncherTR3, chkHarpoonGunTR3, nudSaveNumberTR3, nudFlaresTR3, nudSmallMedipacksTR3,
                         nudLargeMedipacksTR3, nudShotgunAmmoTR3, nudDeagleAmmoTR3, nudGrenadeLauncherAmmoTR3, nudRocketLauncherAmmoTR3,
                         nudHarpoonGunAmmoTR3, nudMP5AmmoTR3, nudUziAmmoTR3, trbHealthTR3, nudCollectibleCrystalsTR3);
 
-                    TR3.UpdateDisplayName(savegame);
+                    TR3.UpdateDisplayName(savegame, fileData);
                     UpdateSavegameDisplayNameTR3(cmbSavegamesTR3, savegame);
 
                     DisableButtonsTR3();
@@ -1265,7 +1267,9 @@ namespace TRR_SaveMaster
                     TR4.SetSavegamePath(savegamePathTRX2);
                     TR4.SetSavegameOffset(savegame.Offset);
 
-                    if (!TR4.IsSavegamePresent())
+                    byte[] fileData = File.ReadAllBytes(savegamePathTRX2);
+
+                    if (!TR4.IsSavegamePresent(fileData))
                     {
                         string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
                         MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1282,13 +1286,13 @@ namespace TRR_SaveMaster
 
                     File.SetAttributes(savegamePathTRX2, File.GetAttributes(savegamePathTRX2) & ~FileAttributes.ReadOnly);
 
-                    TR4.WriteChanges(nudSaveNumberTR4, nudGoldenSkullsTR4, nudSmallMedipacksTR4, nudLargeMedipacksTR4,
+                    TR4.WriteChanges(fileData, nudSaveNumberTR4, nudGoldenSkullsTR4, nudSmallMedipacksTR4, nudLargeMedipacksTR4,
                         nudFlaresTR4, chkPistolsTR4, chkUziTR4, chkRevolverTR4, chkShotgunTR4, chkGrenadeGunTR4,
                         chkCrossbowTR4, nudUziAmmoTR4, nudRevolverAmmoTR4, nudShotgunNormalAmmoTR4, nudShotgunWideshotAmmoTR4,
                         nudGrenadeGunNormalAmmoTR4, nudGrenadeGunSuperAmmoTR4, nudGrenadeGunFlashAmmoTR4, nudCrossbowNormalAmmoTR4,
                         nudCrossbowPoisonAmmoTR4, nudCrossbowExplosiveAmmoTR4, trbHealthTR4);
 
-                    TR4.UpdateDisplayName(savegame);
+                    TR4.UpdateDisplayName(savegame, fileData);
                     UpdateSavegameDisplayNameTR4(cmbSavegamesTR4, savegame);
 
                     DisableButtonsTR4();
@@ -1312,7 +1316,9 @@ namespace TRR_SaveMaster
                     TR5.SetSavegamePath(savegamePathTRX2);
                     TR5.SetSavegameOffset(savegame.Offset);
 
-                    if (!TR5.IsSavegamePresent())
+                    byte[] fileData = File.ReadAllBytes(savegamePathTRX2);
+
+                    if (!TR5.IsSavegamePresent(fileData))
                     {
                         string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
                         MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1329,12 +1335,12 @@ namespace TRR_SaveMaster
 
                     File.SetAttributes(savegamePathTRX2, File.GetAttributes(savegamePathTRX2) & ~FileAttributes.ReadOnly);
 
-                    TR5.WriteChanges(nudSaveNumberTR5, nudSmallMedipacksTR5, nudLargeMedipacksTR5, nudFlaresTR5, nudSecretsTR5,
+                    TR5.WriteChanges(fileData, nudSaveNumberTR5, nudSmallMedipacksTR5, nudLargeMedipacksTR5, nudFlaresTR5, nudSecretsTR5,
                         chkPistolsTR5, chkRevolverTR5, chkDeagleTR5, chkUziTR5, chkHKGunTR5, chkGrapplingGunTR5, chkShotgunTR5,
                         nudRevolverAmmoTR5, nudDeagleAmmoTR5, nudUziAmmoTR5, nudHKGunAmmoTR5, nudGrapplingGunAmmoTR5,
                         nudShotgunNormalAmmoTR5, nudShotgunWideshotAmmoTR5, trbHealthTR5);
 
-                    TR5.UpdateDisplayName(savegame);
+                    TR5.UpdateDisplayName(savegame, fileData);
                     UpdateSavegameDisplayNameTR5(cmbSavegamesTR5, savegame);
 
                     DisableButtonsTR5();
@@ -1358,7 +1364,9 @@ namespace TRR_SaveMaster
                     TR6.SetSavegamePath(savegamePathTRX2);
                     TR6.SetSavegameOffset(savegame.Offset);
 
-                    if (!TR6.IsSavegamePresent())
+                    byte[] fileData = File.ReadAllBytes(savegamePathTRX2);
+
+                    if (!TR6.IsSavegamePresent(fileData))
                     {
                         string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
                         MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1377,7 +1385,7 @@ namespace TRR_SaveMaster
 
                     TR6.WriteChanges(nudCashTR6, trbHealthTR6, nudSaveNumberTR6);
 
-                    TR6.UpdateDisplayName(savegame);
+                    TR6.UpdateDisplayName(savegame, fileData);
                     UpdateSavegameDisplayNameTR6(cmbSavegamesTR6, savegame);
 
                     DisableButtonsTR6();
@@ -1675,7 +1683,9 @@ namespace TRR_SaveMaster
                     TR1.SetSavegamePath(savegamePathTRX);
                     TR1.SetSavegameOffset(selectedSavegame.Offset);
 
-                    if (!TR1.IsSavegamePresent())
+                    byte[] fileData = File.ReadAllBytes(savegamePathTRX);
+
+                    if (!TR1.IsSavegamePresent(fileData))
                     {
                         string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
                         MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1685,10 +1695,10 @@ namespace TRR_SaveMaster
                         return;
                     }
 
-                    TR1.UpdateDisplayName(selectedSavegame);
+                    TR1.UpdateDisplayName(selectedSavegame, fileData);
                     UpdateSavegameDisplayNameTR1(cmbSavegamesTR1, selectedSavegame);
 
-                    TR1.DisplayGameInfo(chkPistolsTR1, chkMagnumsTR1, chkUzisTR1, chkShotgunTR1,
+                    TR1.DisplayGameInfo(fileData, chkPistolsTR1, chkMagnumsTR1, chkUzisTR1, chkShotgunTR1,
                         nudSmallMedipacksTR1, nudLargeMedipacksTR1, nudUziAmmoTR1, nudShotgunAmmoTR1, nudMagnumAmmoTR1,
                         nudSaveNumberTR1, trbHealthTR1, lblHealthTR1, lblHealthErrorTR1);
 
@@ -1715,7 +1725,9 @@ namespace TRR_SaveMaster
                     TR2.SetSavegamePath(savegamePathTRX);
                     TR2.SetSavegameOffset(selectedSavegame.Offset);
 
-                    if (!TR2.IsSavegamePresent())
+                    byte[] fileData = File.ReadAllBytes(savegamePathTRX);
+
+                    if (!TR2.IsSavegamePresent(fileData))
                     {
                         string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
                         MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1725,14 +1737,14 @@ namespace TRR_SaveMaster
                         return;
                     }
 
-                    TR2.UpdateDisplayName(selectedSavegame);
+                    TR2.UpdateDisplayName(selectedSavegame, fileData);
                     UpdateSavegameDisplayNameTR2(cmbSavegamesTR2, selectedSavegame);
 
-                    TR2.SetLevelParams(chkPistolsTR2, chkShotgunTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkM16TR2,
+                    TR2.SetLevelParams(fileData, chkPistolsTR2, chkShotgunTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkM16TR2,
                         chkGrenadeLauncherTR2, chkHarpoonGunTR2, nudShotgunAmmoTR2, nudAutomaticPistolsAmmoTR2, nudUziAmmoTR2,
                         nudM16AmmoTR2, nudGrenadeLauncherAmmoTR2, nudHarpoonGunAmmoTR2, lblPistolAmmoTR2);
 
-                    TR2.DisplayGameInfo(chkPistolsTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkM16TR2,
+                    TR2.DisplayGameInfo(fileData, chkPistolsTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkM16TR2,
                         chkGrenadeLauncherTR2, chkHarpoonGunTR2, nudSaveNumberTR2, nudAutomaticPistolsAmmoTR2, chkShotgunTR2,
                         nudUziAmmoTR2, nudM16AmmoTR2, nudGrenadeLauncherAmmoTR2, nudHarpoonGunAmmoTR2,
                         nudShotgunAmmoTR2, nudFlaresTR2, nudSmallMedipacksTR2, nudLargeMedipacksTR2,
@@ -1761,7 +1773,9 @@ namespace TRR_SaveMaster
                     TR3.SetSavegamePath(savegamePathTRX);
                     TR3.SetSavegameOffset(selectedSavegame.Offset);
 
-                    if (!TR3.IsSavegamePresent())
+                    byte[] fileData = File.ReadAllBytes(savegamePathTRX);
+
+                    if (!TR3.IsSavegamePresent(fileData))
                     {
                         string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
                         MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1771,10 +1785,10 @@ namespace TRR_SaveMaster
                         return;
                     }
 
-                    TR3.UpdateDisplayName(selectedSavegame);
+                    TR3.UpdateDisplayName(selectedSavegame, fileData);
                     UpdateSavegameDisplayNameTR3(cmbSavegamesTR3, selectedSavegame);
 
-                    TR3.DisplayGameInfo(chkPistolsTR3, chkShotgunTR3, chkDeagleTR3, chkUzisTR3, chkMP5TR3,
+                    TR3.DisplayGameInfo(fileData, chkPistolsTR3, chkShotgunTR3, chkDeagleTR3, chkUzisTR3, chkMP5TR3,
                         chkRocketLauncherTR3, chkGrenadeLauncherTR3, chkHarpoonGunTR3, nudSaveNumberTR3, nudSmallMedipacksTR3,
                         nudLargeMedipacksTR3, nudFlaresTR3, nudShotgunAmmoTR3, nudDeagleAmmoTR3, nudGrenadeLauncherAmmoTR3,
                         nudRocketLauncherAmmoTR3, nudHarpoonGunAmmoTR3, nudMP5AmmoTR3, nudUziAmmoTR3,
@@ -1803,7 +1817,9 @@ namespace TRR_SaveMaster
                     TR4.SetSavegamePath(savegamePathTRX2);
                     TR4.SetSavegameOffset(selectedSavegame.Offset);
 
-                    if (!TR4.IsSavegamePresent())
+                    byte[] fileData = File.ReadAllBytes(savegamePathTRX2);
+
+                    if (!TR4.IsSavegamePresent(fileData))
                     {
                         string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
                         MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1813,11 +1829,10 @@ namespace TRR_SaveMaster
                         return;
                     }
 
-                    TR4.UpdateDisplayName(selectedSavegame);
+                    TR4.UpdateDisplayName(selectedSavegame, fileData);
                     UpdateSavegameDisplayNameTR4(cmbSavegamesTR4, selectedSavegame);
 
-                    TR4.DetermineOffsets();
-                    TR4.DisplayGameInfo(nudSaveNumberTR4, nudSmallMedipacksTR4, nudLargeMedipacksTR4,
+                    TR4.DisplayGameInfo(fileData, nudSaveNumberTR4, nudSmallMedipacksTR4, nudLargeMedipacksTR4,
                         nudFlaresTR4, nudGoldenSkullsTR4, lblGoldenSkullsTR4, chkPistolsTR4, chkShotgunTR4, chkUziTR4, chkRevolverTR4,
                         chkGrenadeGunTR4, chkCrossbowTR4, trbHealthTR4, lblHealthTR4, lblHealthErrorTR4,
                         nudShotgunNormalAmmoTR4, nudShotgunWideshotAmmoTR4, nudUziAmmoTR4, nudRevolverAmmoTR4,
@@ -1847,7 +1862,9 @@ namespace TRR_SaveMaster
                     TR5.SetSavegamePath(savegamePathTRX2);
                     TR5.SetSavegameOffset(selectedSavegame.Offset);
 
-                    if (!TR5.IsSavegamePresent())
+                    byte[] fileData = File.ReadAllBytes(savegamePathTRX2);
+
+                    if (!TR5.IsSavegamePresent(fileData))
                     {
                         string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
                         MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1857,15 +1874,14 @@ namespace TRR_SaveMaster
                         return;
                     }
 
-                    TR5.UpdateDisplayName(selectedSavegame);
+                    TR5.UpdateDisplayName(selectedSavegame, fileData);
                     UpdateSavegameDisplayNameTR5(cmbSavegamesTR5, selectedSavegame);
 
-                    TR5.DetermineOffsets();
-                    TR5.SetLevelParams(chkRevolverTR5, chkDeagleTR5, nudRevolverAmmoTR5, nudDeagleAmmoTR5, chkUziTR5, nudUziAmmoTR5, chkShotgunTR5,
+                    TR5.SetLevelParams(fileData, chkRevolverTR5, chkDeagleTR5, nudRevolverAmmoTR5, nudDeagleAmmoTR5, chkUziTR5, nudUziAmmoTR5, chkShotgunTR5,
                         nudShotgunNormalAmmoTR5, nudShotgunWideshotAmmoTR5, chkGrapplingGunTR5, nudGrapplingGunAmmoTR5, chkHKGunTR5, nudHKGunAmmoTR5,
                         chkPistolsTR5, nudFlaresTR5, lblPistolAmmoTR5);
 
-                    TR5.DisplayGameInfo(nudSaveNumberTR5, nudSmallMedipacksTR5, nudLargeMedipacksTR5, nudFlaresTR5, nudSecretsTR5,
+                    TR5.DisplayGameInfo(fileData, nudSaveNumberTR5, nudSmallMedipacksTR5, nudLargeMedipacksTR5, nudFlaresTR5, nudSecretsTR5,
                         chkPistolsTR5, chkRevolverTR5, chkDeagleTR5, chkUziTR5, chkHKGunTR5, chkGrapplingGunTR5, chkShotgunTR5,
                         nudRevolverAmmoTR5, nudDeagleAmmoTR5, nudUziAmmoTR5, nudHKGunAmmoTR5, nudGrapplingGunAmmoTR5,
                         nudShotgunNormalAmmoTR5, nudShotgunWideshotAmmoTR5, trbHealthTR5, lblHealthTR5, lblHealthErrorTR5);
@@ -1893,7 +1909,9 @@ namespace TRR_SaveMaster
                     TR6.SetSavegamePath(savegamePathTRX2);
                     TR6.SetSavegameOffset(selectedSavegame.Offset);
 
-                    if (!TR6.IsSavegamePresent())
+                    byte[] fileData = File.ReadAllBytes(savegamePathTRX2);
+
+                    if (!TR6.IsSavegamePresent(fileData))
                     {
                         string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
                         MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1903,11 +1921,10 @@ namespace TRR_SaveMaster
                         return;
                     }
 
-                    TR6.UpdateDisplayName(selectedSavegame);
+                    TR6.UpdateDisplayName(selectedSavegame, fileData);
                     UpdateSavegameDisplayNameTR6(cmbSavegamesTR6, selectedSavegame);
 
-                    TR6.DetermineOffsets(selectedSavegame);
-                    TR6.DisplayGameInfo(trbHealthTR6, lblHealthTR6, lblHealthErrorTR6, nudCashTR6, nudSaveNumberTR6);
+                    TR6.DisplayGameInfo(fileData, trbHealthTR6, lblHealthTR6, lblHealthErrorTR6, nudCashTR6, nudSaveNumberTR6);
 
                     // Default to inventory of active player
                     cmbInventoryTR6.SelectedIndex = TR6.IsPlayerKurtis() ? 1 : 0;
@@ -2106,16 +2123,7 @@ namespace TRR_SaveMaster
 
         private void tsmiStatistics_Click(object sender, EventArgs e)
         {
-            string savegamePath = "";
-
-            if (IsTRXTabSelected())
-            {
-                savegamePath = savegamePathTRX;
-            }
-            else if (IsTRX2TabSelected())
-            {
-                savegamePath = savegamePathTRX2;
-            }
+            string savegamePath = IsTRXTabSelected() ? savegamePathTRX : savegamePathTRX2;
 
             if (!File.Exists(savegamePath))
             {
@@ -2124,6 +2132,8 @@ namespace TRR_SaveMaster
 
                 return;
             }
+
+            byte[] fileData = File.ReadAllBytes(savegamePath);
 
             StatisticsForm statisticsForm = new StatisticsForm(slblStatus, tsmiBackupBeforeSaving.Checked,
                 savegamePath, tabGame.SelectedIndex);
@@ -2135,32 +2145,32 @@ namespace TRR_SaveMaster
             if (tabGame.SelectedIndex == TAB_TR1 && cmbSavegamesTR1.SelectedIndex != -1)
             {
                 selectedSavegame = cmbSavegamesTR1.Items[cmbSavegamesTR1.SelectedIndex] as Savegame;
-                savegamePresent = TR1.IsSavegamePresent();
+                savegamePresent = TR1.IsSavegamePresent(fileData);
             }
             else if (tabGame.SelectedIndex == TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1)
             {
                 selectedSavegame = cmbSavegamesTR2.Items[cmbSavegamesTR2.SelectedIndex] as Savegame;
-                savegamePresent = TR2.IsSavegamePresent();
+                savegamePresent = TR2.IsSavegamePresent(fileData);
             }
             else if (tabGame.SelectedIndex == TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1)
             {
                 selectedSavegame = cmbSavegamesTR3.Items[cmbSavegamesTR3.SelectedIndex] as Savegame;
-                savegamePresent = TR3.IsSavegamePresent();
+                savegamePresent = TR3.IsSavegamePresent(fileData);
             }
             else if (tabGame.SelectedIndex == TAB_TR4 && cmbSavegamesTR4.SelectedIndex != -1)
             {
                 selectedSavegame = cmbSavegamesTR4.Items[cmbSavegamesTR4.SelectedIndex] as Savegame;
-                savegamePresent = TR4.IsSavegamePresent();
+                savegamePresent = TR4.IsSavegamePresent(fileData);
             }
             else if (tabGame.SelectedIndex == TAB_TR5 && cmbSavegamesTR5.SelectedIndex != -1)
             {
                 selectedSavegame = cmbSavegamesTR5.Items[cmbSavegamesTR5.SelectedIndex] as Savegame;
-                savegamePresent = TR5.IsSavegamePresent();
+                savegamePresent = TR5.IsSavegamePresent(fileData);
             }
             else if (tabGame.SelectedIndex == TAB_TR6 && cmbSavegamesTR6.SelectedIndex != -1)
             {
                 selectedSavegame = cmbSavegamesTR6.Items[cmbSavegamesTR6.SelectedIndex] as Savegame;
-                savegamePresent = TR6.IsSavegamePresent();
+                savegamePresent = TR6.IsSavegamePresent(fileData);
             }
 
             if (!savegamePresent)
@@ -2182,31 +2192,17 @@ namespace TRR_SaveMaster
 
         private void tsmiPosition_Click(object sender, EventArgs e)
         {
-            if (!File.Exists(savegamePathTRX) && IsTRXTabSelected())
+            string savegamePath = IsTRXTabSelected() ? savegamePathTRX : savegamePathTRX2;
+
+            if (!File.Exists(savegamePath))
             {
                 string errorMessage = $"Could not find savegame file.";
                 MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 return;
             }
-            else if (!File.Exists(savegamePathTRX2) && IsTRX2TabSelected())
-            {
-                string errorMessage = $"Could not find savegame file.";
-                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                return;
-            }
-
-            string savegamePath = "";
-
-            if (IsTRXTabSelected())
-            {
-                savegamePath = savegamePathTRX;
-            }
-            else if (IsTRX2TabSelected())
-            {
-                savegamePath = savegamePathTRX2;
-            }
+            byte[] fileData = File.ReadAllBytes(savegamePath);
 
             PositionForm positionForm = new PositionForm(slblStatus, tsmiBackupBeforeSaving.Checked,
                 savegamePath, tabGame.SelectedIndex);
@@ -2215,7 +2211,7 @@ namespace TRR_SaveMaster
 
             if (tabGame.SelectedIndex == TAB_TR1 && cmbSavegamesTR1.SelectedIndex != -1)
             {
-                if (!TR1.IsSavegamePresent())
+                if (!TR1.IsSavegamePresent(fileData))
                 {
                     string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
                     MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -2225,7 +2221,7 @@ namespace TRR_SaveMaster
                     return;
                 }
 
-                int healthOffset = TR1.GetHealthOffset();
+                int healthOffset = TR1.GetHealthOffset(fileData);
 
                 if (healthOffset == -1)
                 {
@@ -2239,7 +2235,7 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1)
             {
-                if (!TR2.IsSavegamePresent())
+                if (!TR2.IsSavegamePresent(fileData))
                 {
                     string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
                     MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -2258,7 +2254,7 @@ namespace TRR_SaveMaster
                     return;
                 }
 
-                if (TR2.IsLaraInVehicle(healthOffset))
+                if (TR2.IsLaraInVehicle(healthOffset, fileData))
                 {
                     string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
                     MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -2270,7 +2266,7 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1)
             {
-                if (!TR3.IsSavegamePresent())
+                if (!TR3.IsSavegamePresent(fileData))
                 {
                     string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
                     MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -2289,7 +2285,7 @@ namespace TRR_SaveMaster
                     return;
                 }
 
-                if (TR3.IsLaraInVehicle(healthOffset))
+                if (TR3.IsLaraInVehicle(healthOffset, fileData))
                 {
                     string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
                     MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -2301,7 +2297,7 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == TAB_TR4 && cmbSavegamesTR4.SelectedIndex != -1)
             {
-                if (!TR4.IsSavegamePresent())
+                if (!TR4.IsSavegamePresent(fileData))
                 {
                     string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
                     MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -2332,7 +2328,7 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == TAB_TR5 && cmbSavegamesTR5.SelectedIndex != -1)
             {
-                if (!TR5.IsSavegamePresent())
+                if (!TR5.IsSavegamePresent(fileData))
                 {
                     string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
                     MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -2356,7 +2352,7 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == TAB_TR6 && cmbSavegamesTR6.SelectedIndex != -1)
             {
-                if (!TR6.IsSavegamePresent())
+                if (!TR6.IsSavegamePresent(fileData))
                 {
                     string errorMessage = $"Savegame no longer present. Press OK to refresh savegames.";
                     MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -2601,20 +2597,8 @@ namespace TRR_SaveMaster
         {
             string deletedSavegameString = savegame.ToString();
 
-            int SAVEGAME_SIZE = 0;
-            string savegamePath;
-
-            if (IsTRXTabSelected())
-            {
-                SAVEGAME_SIZE = SAVEGAME_SIZE_TRX;
-                savegamePath = savegamePathTRX;
-
-            }
-            else
-            {
-                SAVEGAME_SIZE = SAVEGAME_SIZE_TRX2;
-                savegamePath = savegamePathTRX2;
-            }
+            int SAVEGAME_SIZE = IsTRXTabSelected() ? SAVEGAME_SIZE_TRX : SAVEGAME_SIZE_TRX2;
+            string savegamePath = IsTRXTabSelected() ? savegamePathTRX : savegamePathTRX2;
 
             try
             {
@@ -2625,12 +2609,12 @@ namespace TRR_SaveMaster
 
                 File.SetAttributes(savegamePath, File.GetAttributes(savegamePath) & ~FileAttributes.ReadOnly);
 
-                using (FileStream saveFile = new FileStream(savegamePath, FileMode.Open, FileAccess.Write, FileShare.ReadWrite))
+                using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Write, FileShare.ReadWrite))
                 {
                     for (int offset = savegame.Offset; offset < (savegame.Offset + SAVEGAME_SIZE); offset++)
                     {
-                        saveFile.Seek(offset, SeekOrigin.Begin);
-                        saveFile.WriteByte(0);
+                        fs.Seek(offset, SeekOrigin.Begin);
+                        fs.WriteByte(0);
                     }
                 }
 
