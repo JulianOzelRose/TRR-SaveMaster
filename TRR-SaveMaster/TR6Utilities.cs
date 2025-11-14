@@ -118,8 +118,8 @@ namespace TRR_SaveMaster
 
         private void DetermineOffsets(byte[] fileData)
         {
-            int savegameVersion = GetSavegameVersion(fileData);
-            int compressedBlockSize = GetCompressedBlockSize(fileData);
+            Int32 savegameVersion = GetSavegameVersion(fileData);
+            Int32 compressedBlockSize = GetCompressedBlockSize(fileData);
             byte[] compressedBlockData = ReadBytes(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, compressedBlockSize);
 
             decompressedBuffer = new byte[0];   // Clear buffer
@@ -163,7 +163,7 @@ namespace TRR_SaveMaster
             return BitConverter.ToInt32(fileData, savegameOffset + SAVE_NUMBER_OFFSET);
         }
 
-        private int GetCompressedBlockSize(byte[] fileData)
+        private Int32 GetCompressedBlockSize(byte[] fileData)
         {
             return BitConverter.ToInt32(fileData, savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
         }
@@ -284,7 +284,7 @@ namespace TRR_SaveMaster
             objects = TR6EntityCache.GetObjectArray(sgCurrentLevel);
         }
 
-        private void MapPickupLoad(BinaryReader reader, int savegameVersion)
+        private void MapPickupLoad(BinaryReader reader, Int32 savegameVersion)
         {
             bool isPickupLevel =
                 sgCurrentLevel == 0x04 || sgCurrentLevel == 0x05 || sgCurrentLevel == 0x06 ||
@@ -1513,7 +1513,7 @@ namespace TRR_SaveMaster
 
                 // Compress the modified buffer
                 byte[] compressedBuffer = Pack(modifiedBuffer);
-                int compressedBufferSize = compressedBuffer.Length;
+                Int32 compressedBufferSize = compressedBuffer.Length;
 
                 // Write the compressed data to the savegame file
                 using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Write))
