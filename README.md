@@ -4,7 +4,7 @@ This editor is compatible with PC, PS4, and Nintendo Switch savegames. However, 
 For instructions on how to download and use this editor, scroll down to the section below. If you are interested in reverse engineering, there is a technical portion on the bottom section of this README.
 For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder or delete savegames, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
-![TRR-SaveMaster-UI](https://github.com/user-attachments/assets/9e539805-69f6-4cc5-8132-cb3101497d6b)
+<img width="723" height="640" alt="TRR-SaveMaster-UI" src="https://github.com/user-attachments/assets/098f5106-7551-4790-9805-35859c917498" />
 
 ## Installation and use
 To download and use this savegame editor, simply navigate to the [Releases](https://github.com/JulianOzelRose/TRR-SaveMaster/releases) page,
@@ -35,7 +35,7 @@ Regular backups can safeguard your progress in the event of unforeseen issues or
 you can also do this by clicking "File" then "Create backup".
 
 ## Using the Position Editor
-![PositionEditor-UI](https://github.com/user-attachments/assets/27e61f83-6a77-42a7-9c28-e2709cf1f60d)
+<img width="359" height="344" alt="PositionEditor-UI" src="https://github.com/user-attachments/assets/70df2a90-3d92-4bd9-9345-52bcea999cd0" />
 
 This savegame editor includes a Position Editor feature. To use it, click "Edit," then select "Position." For Lara's coordinates to be correctly parsed, the health bytes must be located. If the health bytes cannot be found, try saving the game while Lara is standing. Once in the Position Editor menu, you can teleport to pre-determined coordinates, such as the start of the level, end of the level or secret locations.  
 
@@ -49,7 +49,7 @@ It's essential that the Room/Zone number matches Lara's current coordinates; oth
 position.
 
 ## Using the Statistics Editor
-![StatisticsEditor-UI](https://github.com/user-attachments/assets/ac69fd84-bbaa-4699-beef-fcc491b72c15)
+<img width="391" height="419" alt="StatisticsEditor-UI" src="https://github.com/user-attachments/assets/98b7737d-ba0f-42fa-b66d-d0cd6938b80f" />
 
 
 This savegame editor also includes a Statistics Editor feature. To use it, click "Edit," then select "Statistics." For Tomb Raider I-III and VI, the statistics displayed are level-specific, meaning each level has its own separate stats such as time taken,
@@ -74,17 +74,17 @@ the value is 0. See the code below.
 for (int i = 0; i < MAX_SAVEGAMES; i++)
 {
     int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR3 + (i * SAVEGAME_SIZE);
-    SetSavegameOffset(currentSavegameOffset);
 
-    Int32 saveNumber = GetSaveNumber();
-    byte levelIndex = GetLevelIndex();
-    bool savegamePresent = IsSavegamePresent();
+    byte slotStatus = fileData[currentSavegameOffset + SLOT_STATUS_OFFSET];
+    byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
+    Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
+    bool savegamePresent = slotStatus != 0;
 
     if (savegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
     {
         string levelName = levelNames[levelIndex];
         int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR3) / SAVEGAME_SIZE;
-        GameMode gameMode = GetGameMode();
+        GameMode gameMode = fileData[currentSavegameOffset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
 
         Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode);
         cmbSavegames.Items.Add(savegame);
@@ -182,11 +182,11 @@ public int GetHealthOffset()
         fs.Read(savegameData, 0, savegameData.Length);
     }
 
-    for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset += 0x1A)
+    for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset++)
     {
         int valueIndex = savegameOffset + offset;
 
-        if (valueIndex + 2 >= savegameData.Length)
+        if (valueIndex + 1 >= savegameData.Length)
         {
             break;
         }
@@ -195,10 +195,10 @@ public int GetHealthOffset()
 
         if (value >= MIN_HEALTH_VALUE && value <= MAX_HEALTH_VALUE)
         {
-            int flagIndex1 = savegameOffset + offset - 10;
-            int flagIndex2 = savegameOffset + offset - 9;
-            int flagIndex3 = savegameOffset + offset - 8;
-            int flagIndex4 = savegameOffset + offset - 7;
+            int flagIndex1 = savegameOffset + offset - 7;
+            int flagIndex2 = savegameOffset + offset - 6;
+            int flagIndex3 = savegameOffset + offset - 5;
+            int flagIndex4 = savegameOffset + offset - 4;
 
             if (flagIndex4 >= savegameData.Length)
             {
@@ -235,7 +235,7 @@ private const byte WEAPON_M16 = 32;
 private const byte WEAPON_GRENADE_LAUNCHER = 64;
 private const byte WEAPON_HARPOON_GUN = 128;
 
-byte weaponsConfigNum = GetWeaponsConfigNum();
+byte weaponsConfigNum = GetWeaponsConfigNum(fileData);
 
 if (weaponsConfigNum == 1)
 {
@@ -273,6 +273,8 @@ if (chkShotgun.Checked) newWeaponsConfigNum += WEAPON_SHOTGUN;
 if (chkM16.Checked) newWeaponsConfigNum += WEAPON_M16;
 if (chkGrenadeLauncher.Checked) newWeaponsConfigNum += WEAPON_GRENADE_LAUNCHER;
 if (chkHarpoonGun.Checked) newWeaponsConfigNum += WEAPON_HARPOON_GUN;
+
+WriteWeaponsConfigNum(fileData, newWeaponsConfigNum);
 ```
 
 
@@ -294,17 +296,17 @@ level -- so there is no need to recalculate them once they have been determined 
 zeroes the secondary ammo bytes to free its address space. See the code below.
 
 ```
-private void WriteShotgunAmmo(bool isPresent, UInt16 ammo)
+private void WriteShotgunAmmo(byte[] fileData, bool isPresent, UInt16 ammo)
 {
-    WriteUInt16(savegameOffset + shotgunAmmoOffset, ammo);
+    WriteUInt16ToBuffer(fileData, savegameOffset + SHOTGUN_AMMO_OFFSET, ammo);
 
     if (isPresent)
     {
-        WriteUInt16(savegameOffset + shotgunAmmoOffset2, ammo);
+        WriteUInt16ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, ammo);
     }
     else
     {
-        WriteUInt16(savegameOffset + shotgunAmmoOffset2, 0);
+        WriteUInt16ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, 0);
     }
 }
 ```
@@ -328,19 +330,19 @@ There are very few static offsets in Tomb Raider II savegames; just level index,
 be calculated dynamically. This can be done based on just the level index. See the code below.
 
 ```
-byte levelIndex = GetLevelIndex();
+byte levelIndex = GetLevelIndex(fileData);
 
-automaticPistolsAmmoOffset = 0x12 + (levelIndex * 0x30);
-uziAmmoOffset = 0x14 + (levelIndex * 0x30);
-shotgunAmmoOffset = 0x16 + (levelIndex * 0x30);
-m16AmmoOffset = 0x18 + (levelIndex * 0x30);
-grenadeLauncherAmmoOffset = 0x1A + (levelIndex * 0x30);
-harpoonGunAmmoOffset = 0x1C + (levelIndex * 0x30);
+AUTOMATIC_PISTOLS_AMMO_OFFSET = 0x12 + (levelIndex * 0x30);
+UZI_AMMO_OFFSET = 0x14 + (levelIndex * 0x30);
+SHOTGUN_AMMO_OFFSET = 0x16 + (levelIndex * 0x30);
+M16_AMMO_OFFSET = 0x18 + (levelIndex * 0x30);
+GRENADE_LAUNCHER_AMMO_OFFSET = 0x1A + (levelIndex * 0x30);
+HARPOON_GUN_AMMO_OFFSET = 0x1C + (levelIndex * 0x30);
 
-smallMedipackOffset = 0x1E + (levelIndex * 0x30);
-largeMedipackOffset = 0x1F + (levelIndex * 0x30);
-flaresOffset = 0x21 + (levelIndex * 0x30);
-weaponsConfigNumOffset = 0x3C + (levelIndex * 0x30);
+SMALL_MEDIPACK_OFFSET = 0x1E + (levelIndex * 0x30);
+LARGE_MEDIPACK_OFFSET = 0x1F + (levelIndex * 0x30);
+FLARES_OFFSET = 0x21 + (levelIndex * 0x30);
+WEAPONS_CONFIG_NUM_OFFSET = 0x3C + (levelIndex * 0x30);
 ```
 
 Note that the ammunition offsets calculated in that code snippet are just the primary ammo offsets. Secondary ammo offsets must be calculated in a different manner. Not
@@ -353,9 +355,9 @@ This array's location can be used to calculate both the base secondary ammo offs
 there are some exceptions. Each index corresponds to two possible locations of the 0xFF array. The second location is +0xA bytes away from the first. See the code below.
 
 ```
-private int GetSecondaryAmmoIndex()
+private int GetSecondaryAmmoIndex(byte[] fileData)
 {
-    byte levelIndex = GetLevelIndex();
+    byte levelIndex = GetLevelIndex(fileData);
 
     Dictionary<byte, int[]> ammoIndexData;
 
@@ -387,12 +389,12 @@ private int GetSecondaryAmmoIndex()
                 offsets2[i] += savegameOffset + (index * 0xC);
             }
 
-            if (offsets1.All(offset => ReadByte(offset) == 0xFF))
+            if (offsets1.All(offset => fileData[offset] == 0xFF))
             {
                 return index;
             }
 
-            if (offsets2.All(offset => ReadByte(offset) == 0xFF))
+            if (offsets2.All(offset => fileData[offset] == 0xFF))
             {
                 return index;
             }
@@ -409,17 +411,17 @@ nature of the ammo index in Tomb Raider II, it is important to account for edge 
 only writes to the primary offset to avoid corrupting the savegame.
 
 ```
-private void WriteAutomaticPistolsAmmo(bool isPresent, UInt16 ammo)
+private void WriteAutomaticPistolsAmmo(byte[] fileData, bool isPresent, UInt16 ammo)
 {
-    WriteUInt16(savegameOffset + automaticPistolsAmmoOffset, ammo);
+    WriteUInt16ToBuffer(fileData, savegameOffset + AUTOMATIC_PISTOLS_AMMO_OFFSET, ammo);
 
     if (isPresent && secondaryAmmoIndex != -1)
     {
-        WriteUInt16(savegameOffset + automaticPistolsAmmoOffset2, ammo);
+        WriteUInt16ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, ammo);
     }
     else if (!isPresent && secondaryAmmoIndex != -1)
     {
-        WriteUInt16(savegameOffset + automaticPistolsAmmoOffset2, 0);
+        WriteUInt16ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, 0);
     }
 }
 ```
@@ -429,22 +431,21 @@ Similar to Tomb Raider II, most of the offsets in Tomb Raider III are dynamic. T
 You can calculate most of the remaining offsets based on the level index, just as with Tomb Raider II. See the code below.
 
 ```
-byte levelIndex = GetLevelIndex();
+byte levelIndex = GetLevelIndex(fileData);
 
-deagleAmmoOffset = 0x66 + (levelIndex * 0x40);
-uziAmmoOffset = 0x68 + (levelIndex * 0x40);
-shotgunAmmoOffset = 0x6A + (levelIndex * 0x40);
-mp5AmmoOffset = 0x6C + (levelIndex * 0x40);
-rocketLauncherAmmoOffset = 0x6E + (levelIndex * 0x40);
-harpoonGunAmmoOffset = 0x70 + (levelIndex * 0x40);
-grenadeLauncherAmmoOffset = 0x72 + (levelIndex * 0x40);
-
-smallMedipackOffset = 0x74 + (levelIndex * 0x40);
-largeMedipackOffset = 0x75 + (levelIndex * 0x40);
-flaresOffset = 0x77 + (levelIndex * 0x40);
-collectibleCrystalsOffset = 0x78 + (levelIndex * 0x40);
-weaponsConfigNumOffset = 0xA0 + (levelIndex * 0x40);
-harpoonGunOffset = 0xA1 + (levelIndex * 0x40);
+DEAGLE_AMMO_OFFSET = 0x66 + (levelIndex * 0x40);
+UZI_AMMO_OFFSET = 0x68 + (levelIndex * 0x40);
+SHOTGUN_AMMO_OFFSET = 0x6A + (levelIndex * 0x40);
+MP5_AMMO_OFFSET = 0x6C + (levelIndex * 0x40);
+ROCKET_LAUNCHER_AMMO_OFFSET = 0x6E + (levelIndex * 0x40);
+HARPOON_GUN_AMMO_OFFSET = 0x70 + (levelIndex * 0x40);
+GRENADE_LAUNCHER_AMMO_OFFSET = 0x72 + (levelIndex * 0x40);
+SMALL_MEDIPACK_OFFSET = 0x74 + (levelIndex * 0x40);
+LARGE_MEDIPACK_OFFSET = 0x75 + (levelIndex * 0x40);
+FLARES_OFFSET = 0x77 + (levelIndex * 0x40);
+COLLECTIBLE_CRYSTALS_OFFSET = 0x78 + (levelIndex * 0x40);
+WEAPONS_CONFIG_NUM_OFFSET = 0xA0 + (levelIndex * 0x40);
+HARPOON_GUN_OFFSET = 0xA1 + (levelIndex * 0x40);
 ```
 
 Weapons information is also stored on a single offset, the same as with Tomb Raider II. The only exception is the Harpoon Gun, which is stored
@@ -470,9 +471,9 @@ The ammo index in Tomb Raider III typically shifts by a value of 0x1A. However, 
 two possible locations of the 0xFF array, the second array being +0xA bytes from the first array. See the code below for calculating the secondary ammo index.
 
 ```
-private int GetSecondaryAmmoIndex()
+private int GetSecondaryAmmoIndex(byte[] fileData)
 {
-    byte levelIndex = GetLevelIndex();
+    byte levelIndex = GetLevelIndex(fileData);
 
     Dictionary<byte, int[]> ammoIndexData;
 
@@ -504,12 +505,12 @@ private int GetSecondaryAmmoIndex()
                 offsets2[i] += savegameOffset + (index * 0x1A);
             }
 
-            if (offsets1.All(offset => ReadByte(offset) == 0xFF))
+            if (offsets1.All(offset => fileData[offset] == 0xFF))
             {
                 return index;
             }
 
-            if (offsets2.All(offset => ReadByte(offset) == 0xFF))
+            if (offsets2.All(offset => fileData[offset] == 0xFF))
             {
                 return index;
             }
@@ -525,17 +526,17 @@ When removing a weapon, the secondary ammo bytes must be zeroed to free up its a
 to the primary offset to avoid corrupting the savegame.
 
 ```
-private void WriteRocketLauncherAmmo(bool isPresent, UInt16 ammo)
+private void WriteRocketLauncherAmmo(byte[] fileData, bool isPresent, UInt16 ammo)
 {
-    WriteUInt16(savegameOffset + rocketLauncherAmmoOffset, ammo);
+    WriteUInt16ToBuffer(fileData, savegameOffset + ROCKET_LAUNCHER_AMMO_OFFSET, ammo);
 
     if (isPresent && secondaryAmmoIndex != -1)
     {
-        WriteUInt16(savegameOffset + rocketLauncherAmmoOffset2, ammo);
+        WriteUInt16ToBuffer(fileData, savegameOffset + rocketLauncherAmmoOffset2, ammo);
     }
     else if (!isPresent && secondaryAmmoIndex != -1)
     {
-        WriteUInt16(savegameOffset + rocketLauncherAmmoOffset2, 0);
+        WriteUInt16ToBuffer(fileData, savegameOffset + rocketLauncherAmmoOffset2, 0);
     }
 }
 ```
@@ -634,7 +635,7 @@ Below are the offset tables for Tomb Raider IV-VI. With the exception of health,
 | 0x256     | UInt16  | Kills                        |
 | 0x258     | UInt8   | Health Restored              |
 | 0x35C     | Int32   | Game Mode                    |
-| 0x364     | UInt16  | Compressed Block Size        |
+| 0x364     | Int32   | Compressed Block Size        |
 
 ## Tomb Raider IV savegame format
 Tomb Raider IV is based on a heavily modified version of the engine that the first three games use. There are some similarities, but since it contains
@@ -655,43 +656,43 @@ the game will no longer be expecting the health bytes to be stored on the buffer
 See the code below.
 
 ```
-private void WriteHealthValue(UInt16 newHealth)
+private void WriteHealthValue(byte[] fileData, UInt16 newHealth)
 {
     int healthOffset = GetHealthOffset();
 
     if (healthOffset != -1)
     {
-        byte currentToggle = ReadByte(healthOffset - 0x13);
+        int toggleOffset = healthOffset - 0x13;
+        byte currentToggle = fileData[toggleOffset];
 
         bool currentlyFull = (currentToggle == FULL_HEALTH_TOGGLE_BYTE);
         bool currentlyPartial = (currentToggle == PARTIAL_HEALTH_TOGGLE_BYTE);
         bool newIsPartial = newHealth < MAX_HEALTH_VALUE;
 
+
         if (currentlyFull && newIsPartial)
         {
             // Full health -> Partial health
-            byte newToggle = (byte)(currentToggle + TOGGLE_DELTA);
-            WriteByte(healthOffset - 0x13, newToggle);
-            WriteUInt16(healthOffset, newHealth);
-            ShiftBytesRight(healthOffset);
+            fileData[toggleOffset] = (byte)(currentToggle + TOGGLE_DELTA);
+            WriteUInt16ToBuffer(fileData, healthOffset, newHealth);
+            ShiftBytesRight(ref fileData, healthOffset);
         }
         else if (currentlyPartial && !newIsPartial)
         {
             // Partial health -> Full health
-            byte newToggle = (byte)(currentToggle - TOGGLE_DELTA);
-            WriteByte(healthOffset - 0x13, newToggle);
-            WriteUInt16(healthOffset, 0x0);  // Zero health bytes
-            ShiftBytesLeft(healthOffset);
+            fileData[toggleOffset] = (byte)(currentToggle - TOGGLE_DELTA);
+            WriteUInt16ToBuffer(fileData, healthOffset, 0);
+            ShiftBytesLeft(ref fileData, healthOffset);
         }
         else if (currentlyFull && !newIsPartial)
         {
             // Already full health
-            WriteUInt16(healthOffset, 0);
+            WriteUInt16ToBuffer(fileData, healthOffset, 0);
         }
         else
         {
             // Partial health -> Partial health
-            WriteUInt16(healthOffset, newHealth);
+            WriteUInt16ToBuffer(fileData, healthOffset, newHealth);
         }
     }
 }
@@ -739,7 +740,7 @@ which entities are stored/loaded in the Map block.
 7. **Rooms**
 
 With the exception of Water, all of these entities are allocated at runtime. Since the game performs conditional reads based on the properties of the runtime entities, it is also necessary to reverse engineer the
-game's WAD file format (GMX), specifically for the properties needed for the conditional reads. Namely, the APB values (animation post-bone?) for Actors and Objects, the 'active flag' for the Actors, and whether or
+game's WAD file format (GMX), specifically for the properties needed for the conditional reads. Namely, the APB values for Actors and Objects, the 'active flag' for the Actors, and whether or
 not a specific Actor is the active player. For Triggers, Emitters, and Audio Locators, only the entity count is needed.
 
 The `Inv2` block stores the inventory data for both Lara and Kurtis, as well as the active player's health. The item counts are stored as UInt8 values. The actual inventory array of the respective player is stored
