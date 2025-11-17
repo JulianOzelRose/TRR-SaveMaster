@@ -329,6 +329,51 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void UpdateDynamicParams(byte[] fileData)
+        {
+            byte levelIndex = GetLevelIndex(fileData);
+
+            if (SELECTED_TAB == TAB_TR1)
+            {
+                nudSecretsFoundMax.Value = secretsFoundMaxTR1[levelIndex];
+                nudPickupsMax.Value = pickupsFoundMaxTR1[levelIndex];
+
+                nudSecretsFound.Maximum = nudSecretsFoundMax.Value;
+                nudPickups.Maximum = nudPickupsMax.Value;
+
+                nudCrystalsUsed.Enabled = selectedSavegame.Mode == GameMode.Plus;
+            }
+            else if (SELECTED_TAB == TAB_TR2)
+            {
+                nudSecretsFoundMax.Value = secretsFoundMaxTR2[levelIndex];
+                nudPickupsMax.Value = pickupsFoundMaxTR2[levelIndex];
+
+                nudSecretsFound.Maximum = nudSecretsFoundMax.Value;
+                nudPickups.Maximum = nudPickupsMax.Value;
+            }
+            else if (SELECTED_TAB == TAB_TR3)
+            {
+                nudSecretsFoundMax.Value = secretsFoundMaxTR3[levelIndex];
+                nudPickupsMax.Value = pickupsFoundMaxTR3[levelIndex];
+
+                nudSecretsFound.Maximum = nudSecretsFoundMax.Value;
+                nudPickups.Maximum = nudPickupsMax.Value;
+
+                nudCrystalsUsed.Enabled = selectedSavegame.Mode == GameMode.Plus;
+            }
+            else if (SELECTED_TAB == TAB_TR6)
+            {
+                nudPickupsMax.Value = pickupsFoundMaxTR6[levelIndex];
+                nudPickups.Maximum = nudPickupsMax.Value;
+
+                nudHealthItemsFoundMax.Value = healthItemsFoundMaxTR6[levelIndex];
+                nudHealthItemsFound.Maximum = nudHealthItemsFoundMax.Value;
+
+                nudChocobarsFoundMax.Value = chocobarsFoundMaxTR6[levelIndex];
+                nudChocobarsFound.Maximum = nudChocobarsFoundMax.Value;
+            }
+        }
+
         private void UpdateSavegameDisplayName(byte[] fileData)
         {
             if (SELECTED_TAB == TAB_TR1)
@@ -362,6 +407,11 @@ namespace TRR_SaveMaster
         private bool IsTRXSavegame()
         {
             return SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR2 || SELECTED_TAB == TAB_TR3;
+        }
+
+        private bool HasDynamicParams()
+        {
+            return SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR2 || SELECTED_TAB == TAB_TR3 || SELECTED_TAB == TAB_TR6;
         }
 
         private void WriteInt32ToBuffer(byte[] buffer, int offset, int value)
@@ -446,6 +496,11 @@ namespace TRR_SaveMaster
                 }
 
                 UpdateSavegameDisplayName(fileData);
+
+                if (HasDynamicParams())
+                {
+                    UpdateDynamicParams(fileData);
+                }
 
                 if (IsTRXSavegame())
                 {
