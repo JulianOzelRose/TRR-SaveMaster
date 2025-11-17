@@ -2135,7 +2135,7 @@ namespace TRR_SaveMaster
 
             byte[] fileData = File.ReadAllBytes(savegamePath);
 
-            StatisticsForm statisticsForm = new StatisticsForm(slblStatus, tsmiBackupBeforeSaving.Checked,
+            StatisticsForm statisticsForm = new StatisticsForm(this, slblStatus, tsmiBackupBeforeSaving.Checked,
                 savegamePath, tabGame.SelectedIndex);
 
             Savegame selectedSavegame = null;
@@ -2721,6 +2721,34 @@ namespace TRR_SaveMaster
                 tsmiPosition.Enabled = cmbSavegamesTR6.SelectedIndex != -1;
                 tsmiMaxEverything.Enabled = cmbSavegamesTR6.SelectedIndex != -1;
                 tsmiDeleteSavegame.Enabled = cmbSavegamesTR6.SelectedIndex != -1;
+            }
+        }
+
+        public void UpdateDisplayNamesConditionally()
+        {
+            if (tabGame.SelectedIndex == TAB_TR1)
+            {
+                UpdateSavegameDisplayNameTR1(cmbSavegamesTR1, cmbSavegamesTR1.SelectedItem as Savegame);
+            }
+            else if (tabGame.SelectedIndex == TAB_TR2)
+            {
+                UpdateSavegameDisplayNameTR2(cmbSavegamesTR2, cmbSavegamesTR2.SelectedItem as Savegame);
+            }
+            else if (tabGame.SelectedIndex == TAB_TR3)
+            {
+                UpdateSavegameDisplayNameTR3(cmbSavegamesTR3, cmbSavegamesTR3.SelectedItem as Savegame);
+            }
+            else if (tabGame.SelectedIndex == TAB_TR4)
+            {
+                UpdateSavegameDisplayNameTR4(cmbSavegamesTR4, cmbSavegamesTR4.SelectedItem as Savegame);
+            }
+            else if (tabGame.SelectedIndex == TAB_TR5)
+            {
+                UpdateSavegameDisplayNameTR5(cmbSavegamesTR5, cmbSavegamesTR5.SelectedItem as Savegame);
+            }
+            else if (tabGame.SelectedIndex == TAB_TR6)
+            {
+                UpdateSavegameDisplayNameTR6(cmbSavegamesTR6, cmbSavegamesTR6.SelectedItem as Savegame);
             }
         }
 

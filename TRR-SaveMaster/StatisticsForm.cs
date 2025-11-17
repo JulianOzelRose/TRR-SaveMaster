@@ -35,6 +35,14 @@ namespace TRR_SaveMaster
         private const int MAX_SECRETS_FOUND_TR5 = 36;
         private const int MAX_PICKUPS_TR5 = 239;
 
+        // Utils
+        private readonly TR1Utilities TR1 = new TR1Utilities();
+        private readonly TR2Utilities TR2 = new TR2Utilities();
+        private readonly TR3Utilities TR3 = new TR3Utilities();
+        private readonly TR4Utilities TR4 = new TR4Utilities();
+        private readonly TR5Utilities TR5 = new TR5Utilities();
+        private readonly TR6Utilities TR6 = new TR6Utilities();
+
         // Tabs
         private const int TAB_TR1 = 0;
         private const int TAB_TR2 = 1;
@@ -48,11 +56,12 @@ namespace TRR_SaveMaster
         private string savegamePath;
         private int savegameOffset;
         private ToolStripStatusLabel slblStatus;
+        private MainForm mainForm;
         private bool isLoading = true;
         private bool backupBeforeSaving = false;
         private int SELECTED_TAB;
 
-        public StatisticsForm(ToolStripStatusLabel slblStatus, bool backupBeforeSaving, string savegamePath, int SELECTED_TAB)
+        public StatisticsForm(MainForm mainForm, ToolStripStatusLabel slblStatus, bool backupBeforeSaving, string savegamePath, int SELECTED_TAB)
         {
             InitializeComponent();
 
@@ -60,6 +69,7 @@ namespace TRR_SaveMaster
             this.backupBeforeSaving = backupBeforeSaving;
             this.savegamePath = savegamePath;
             this.SELECTED_TAB = SELECTED_TAB;
+            this.mainForm = mainForm;
         }
 
         private void StatisticsForm_Load(object sender, EventArgs e)
@@ -72,6 +82,7 @@ namespace TRR_SaveMaster
         private void StatisticsForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             ConfirmChanges();
+            mainForm.UpdateDisplayNamesConditionally();
         }
 
         public void SetSavegame(Savegame savegame)
@@ -318,6 +329,36 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void UpdateSavegameDisplayName(byte[] fileData)
+        {
+            if (SELECTED_TAB == TAB_TR1)
+            {
+                TR1.UpdateDisplayName(selectedSavegame, fileData);
+            }
+            else if (SELECTED_TAB == TAB_TR2)
+            {
+                TR2.UpdateDisplayName(selectedSavegame, fileData);
+            }
+            else if (SELECTED_TAB == TAB_TR3)
+            {
+                TR3.UpdateDisplayName(selectedSavegame, fileData);
+            }
+            else if (SELECTED_TAB == TAB_TR4)
+            {
+                TR4.UpdateDisplayName(selectedSavegame, fileData);
+            }
+            else if (SELECTED_TAB == TAB_TR5)
+            {
+                TR5.UpdateDisplayName(selectedSavegame, fileData);
+            }
+            else if (SELECTED_TAB == TAB_TR6)
+            {
+                TR6.UpdateDisplayName(selectedSavegame, fileData);
+            }
+
+            grpSavegameStatistics.Text = $"{selectedSavegame}";
+        }
+
         private bool IsTRXSavegame()
         {
             return SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR2 || SELECTED_TAB == TAB_TR3;
@@ -403,6 +444,8 @@ namespace TRR_SaveMaster
                     this.Close();
                     return;
                 }
+
+                UpdateSavegameDisplayName(fileData);
 
                 if (IsTRXSavegame())
                 {
@@ -890,6 +933,7 @@ namespace TRR_SaveMaster
                 File.WriteAllBytes(savegamePath, fileData);
 
                 DisableButtons();
+                UpdateSavegameDisplayName(fileData);
 
                 slblStatus.Text = $"Successfully patched statistics of savegame: '{selectedSavegame}'";
             }
