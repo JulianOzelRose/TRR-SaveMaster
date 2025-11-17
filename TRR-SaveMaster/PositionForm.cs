@@ -18,6 +18,14 @@ namespace TRR_SaveMaster
         private int ORIENTATION_OFFSET;
         private int ROOM_OFFSET;
 
+        // Utils
+        private readonly TR1Utilities TR1 = new TR1Utilities();
+        private readonly TR2Utilities TR2 = new TR2Utilities();
+        private readonly TR3Utilities TR3 = new TR3Utilities();
+        private readonly TR4Utilities TR4 = new TR4Utilities();
+        private readonly TR5Utilities TR5 = new TR5Utilities();
+        private readonly TR6Utilities TR6 = new TR6Utilities();
+
         // Tabs
         private const int TAB_TR1 = 0;
         private const int TAB_TR2 = 1;
@@ -34,13 +42,14 @@ namespace TRR_SaveMaster
         private int playerBaseOffset;
 
         // Misc
+        private MainForm mainForm;
         private ToolStripStatusLabel slblStatus;
         private bool isLoading = true;
         private bool backupBeforeSaving = false;
         private int SELECTED_TAB;
         private byte[] decompressedBuffer = null;
 
-        public PositionForm(ToolStripStatusLabel slblStatus, bool backupBeforeSaving, string savegamePath, int SELECTED_TAB)
+        public PositionForm(MainForm mainForm, ToolStripStatusLabel slblStatus, bool backupBeforeSaving, string savegamePath, int SELECTED_TAB)
         {
             InitializeComponent();
 
@@ -48,6 +57,7 @@ namespace TRR_SaveMaster
             this.backupBeforeSaving = backupBeforeSaving;
             this.savegamePath = savegamePath;
             this.SELECTED_TAB = SELECTED_TAB;
+            this.mainForm = mainForm;
         }
 
         private void PositionForm_Load(object sender, EventArgs e)
@@ -63,6 +73,7 @@ namespace TRR_SaveMaster
         private void PositionForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             ConfirmChanges();
+            mainForm.UpdateDisplayNamesConditionally();
         }
 
         private void DetermineOffsets()
@@ -337,6 +348,36 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void UpdateSavegameDisplayName(byte[] fileData)
+        {
+            if (SELECTED_TAB == TAB_TR1)
+            {
+                TR1.UpdateDisplayName(selectedSavegame, fileData);
+            }
+            else if (SELECTED_TAB == TAB_TR2)
+            {
+                TR2.UpdateDisplayName(selectedSavegame, fileData);
+            }
+            else if (SELECTED_TAB == TAB_TR3)
+            {
+                TR3.UpdateDisplayName(selectedSavegame, fileData);
+            }
+            else if (SELECTED_TAB == TAB_TR4)
+            {
+                TR4.UpdateDisplayName(selectedSavegame, fileData);
+            }
+            else if (SELECTED_TAB == TAB_TR5)
+            {
+                TR5.UpdateDisplayName(selectedSavegame, fileData);
+            }
+            else if (SELECTED_TAB == TAB_TR6)
+            {
+                TR6.UpdateDisplayName(selectedSavegame, fileData);
+            }
+
+            grpSavegameCoordinates.Text = $"{selectedSavegame}";
+        }
+
         private void SetNUDRanges()
         {
             if (SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR2 || SELECTED_TAB == TAB_TR3)
@@ -432,6 +473,8 @@ namespace TRR_SaveMaster
                     return;
                 }
 
+                UpdateSavegameDisplayName(fileData);
+
                 if (SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR2 || SELECTED_TAB == TAB_TR3)
                 {
                     nudXCoordinate.Value = BitConverter.ToInt32(fileData, savegameOffset + X_COORDINATE_OFFSET);
@@ -450,7 +493,6 @@ namespace TRR_SaveMaster
                 }
                 else if (SELECTED_TAB == TAB_TR6)
                 {
-                    TR6Utilities TR6 = new TR6Utilities();
                     TR6.SetSavegamePath(savegamePath);
                     TR6.SetSavegameOffset(savegameOffset);
 
@@ -537,7 +579,6 @@ namespace TRR_SaveMaster
                 }
                 else if (SELECTED_TAB == TAB_TR6)
                 {
-                    TR6Utilities TR6 = new TR6Utilities();
                     TR6.SetSavegamePath(savegamePath);
                     TR6.SetSavegameOffset(savegameOffset);
 
@@ -585,6 +626,7 @@ namespace TRR_SaveMaster
                 }
 
                 DisableButtons();
+                UpdateSavegameDisplayName(fileData);
 
                 slblStatus.Text = $"Successfully patched coordinates of savegame: '{selectedSavegame}'";
             }

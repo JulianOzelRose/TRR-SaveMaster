@@ -2204,7 +2204,7 @@ namespace TRR_SaveMaster
 
             byte[] fileData = File.ReadAllBytes(savegamePath);
 
-            PositionForm positionForm = new PositionForm(slblStatus, tsmiBackupBeforeSaving.Checked,
+            PositionForm positionForm = new PositionForm(this, slblStatus, tsmiBackupBeforeSaving.Checked,
                 savegamePath, tabGame.SelectedIndex);
 
             Savegame selectedSavegame = null;
