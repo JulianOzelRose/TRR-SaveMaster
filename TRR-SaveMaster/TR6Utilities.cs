@@ -1538,6 +1538,11 @@ namespace TRR_SaveMaster
             }
         }
 
+        public void UpdateSavegameBuffer(byte[] buffer)
+        {
+            decompressedBuffer = buffer;
+        }
+
         public bool IsPlayerKurtis()
         {
             // The Sanitarium, Maximum Containment Area, Boaz Returns

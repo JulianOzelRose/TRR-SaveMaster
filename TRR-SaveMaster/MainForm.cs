@@ -590,6 +590,11 @@ namespace TRR_SaveMaster
             return tabGame.SelectedIndex == TAB_TR4 || tabGame.SelectedIndex == TAB_TR5 || tabGame.SelectedIndex == TAB_TR6;
         }
 
+        public void UpdateSavegameBufferTR6(byte[] buffer)
+        {
+            TR6.UpdateSavegameBuffer(buffer);
+        }
+
         private void btnExitTR1_Click(object sender, EventArgs e)
         {
             Application.Exit();

@@ -618,6 +618,8 @@ namespace TRR_SaveMaster
                         fs.Seek(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, SeekOrigin.Begin);
                         writer.Write(compressedBuffer);
                     }
+
+                    mainForm.UpdateSavegameBufferTR6(decompressedBuffer);
                 }
 
                 if (SELECTED_TAB != TAB_TR6)
