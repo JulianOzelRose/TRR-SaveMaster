@@ -62,6 +62,7 @@ namespace TRR_SaveMaster
         private string savegamePath;
         private int savegameOffset;
         private int secondaryAmmoIndex = -1;
+        private const int MAX_ENTITY_COUNT = 20;
 
         // Level names
         private readonly Dictionary<byte, string> levelNames = new Dictionary<byte, string>()
@@ -835,7 +836,7 @@ namespace TRR_SaveMaster
                 int[] offsets1 = new int[indexData.Length];
                 int[] offsets2 = new int[indexData.Length];
 
-                for (int index = 0; index < 20; index++)
+                for (int index = 0; index < MAX_ENTITY_COUNT; index++)
                 {
                     Array.Copy(indexData, offsets1, indexData.Length);
 
