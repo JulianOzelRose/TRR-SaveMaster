@@ -984,7 +984,7 @@ namespace TRR_SaveMaster
                         nudK2ImpactorAmmoTR6, nudLargeHealthPackTR6, chkScorpionXTR6, nudScorpionXAmmoTR6, chkVectorR35TR6, nudVectorR35AmmoTR6,
                         chkDesertRangerTR6, nudDesertRangerAmmoTR6, chkDartSSTR6, nudDartSSAmmoTR6, chkRigg09TR6, nudRigg09AmmoTR6,
                         chkViperSMGTR6, nudViperSMGAmmoTR6, chkMagVegaTR6, nudMagVegaAmmoTR6, chkVectorR35PairTR6, lblVectorR35PairAmmoTR6, chkScorpionXPairTR6, lblScorpionXPairAmmoTR6,
-                        nudPoisonAntidoteTR6, chkChirugaiBladeTR6, lblChirugaiBladeAmmoTR6, nudGPSSaveGame, lblGPSSaveGame);
+                        nudPoisonAntidoteTR6, chkChirugaiBladeTR6, lblChirugaiBladeAmmoTR6, nudGPSSaveGame);
                 }
                 catch (Exception ex)
                 {
@@ -1939,7 +1939,7 @@ namespace TRR_SaveMaster
                         nudK2ImpactorAmmoTR6, nudLargeHealthPackTR6, chkScorpionXTR6, nudScorpionXAmmoTR6, chkVectorR35TR6, nudVectorR35AmmoTR6,
                         chkDesertRangerTR6, nudDesertRangerAmmoTR6, chkDartSSTR6, nudDartSSAmmoTR6, chkRigg09TR6, nudRigg09AmmoTR6,
                         chkViperSMGTR6, nudViperSMGAmmoTR6, chkMagVegaTR6, nudMagVegaAmmoTR6, chkVectorR35PairTR6, lblVectorR35PairAmmoTR6, chkScorpionXPairTR6, lblScorpionXPairAmmoTR6,
-                        nudPoisonAntidoteTR6, chkChirugaiBladeTR6, lblChirugaiBladeAmmoTR6, nudGPSSaveGame, lblGPSSaveGame);
+                        nudPoisonAntidoteTR6, chkChirugaiBladeTR6, lblChirugaiBladeAmmoTR6, nudGPSSaveGame);
 
                     slblStatus.Text = $"Successfully loaded savegame: '{selectedSavegame}'";
                 }

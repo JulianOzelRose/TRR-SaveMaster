@@ -49,10 +49,10 @@ namespace TRR_SaveMaster
         private List<InventoryItem> invKurtis = new List<InventoryItem>();
 
         // Inventory types
-        private const int INVENTORY_TYPE_ITEM = 2;
-        private const int INVENTORY_TYPE_WEAPON = 3;
-        private const int INVENTORY_TYPE_HEALTH_ITEM = 4;
-        private const int INVENTORY_TYPE_AMMO = 7;
+        private const Int32 INVENTORY_TYPE_ITEM = 2;
+        private const Int32 INVENTORY_TYPE_WEAPON = 3;
+        private const Int32 INVENTORY_TYPE_HEALTH_ITEM = 4;
+        private const Int32 INVENTORY_TYPE_AMMO = 7;
 
         // Health
         private const float MAX_HEALTH_VALUE = 100f;
@@ -178,7 +178,7 @@ namespace TRR_SaveMaster
 
                 byte itemCount;
 
-                ushort itemClassID;
+                UInt16 itemClassID;
                 Int32 itemType;
                 Int32 itemQuantity;
 
@@ -724,10 +724,12 @@ namespace TRR_SaveMaster
             sgBufferCursor += (0x17E - 0x8C);
             sgBufferCursor += 0x10D;
 
-            for (int i = 0; i < 5; i++)
-            {
-                BoneControlLoad(reader);
-            }
+            // Call BoneControlLoad 5 times
+            BoneControlLoad(reader);
+            BoneControlLoad(reader);
+            BoneControlLoad(reader);
+            BoneControlLoad(reader);
+            BoneControlLoad(reader);
         }
 
         private void BoneControlLoad(BinaryReader reader)
@@ -1092,7 +1094,7 @@ namespace TRR_SaveMaster
             UpdateInventoryItem(selectedInventory, Inventory.GPS_SAVE_GAME, (Int32)nudGPSSaveGame.Value);
         }
 
-        private void UpdateInventoryItem(List<InventoryItem> inventory, ushort classId, int quantity)
+        private void UpdateInventoryItem(List<InventoryItem> inventory, UInt16 classId, Int32 quantity)
         {
             // Find existing item
             int index = inventory.FindIndex(i => i.ClassId == classId);
@@ -1117,7 +1119,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void UpdateInventoryWeapon(List<InventoryItem> inventory, ushort classId, bool isChecked)
+        private void UpdateInventoryWeapon(List<InventoryItem> inventory, UInt16 classId, bool isChecked)
         {
             int index = inventory.FindIndex(i => i.ClassId == classId);
 
@@ -1137,7 +1139,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void UpdateInventoryHealthItem(List<InventoryItem> inventory, ushort classId, int quantity)
+        private void UpdateInventoryHealthItem(List<InventoryItem> inventory, UInt16 classId, Int32 quantity)
         {
             // Find existing item
             int index = inventory.FindIndex(i => i.ClassId == classId);
@@ -1162,7 +1164,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void UpdateInventoryAmmo(List<InventoryItem> inventory, ushort classId, int quantity)
+        private void UpdateInventoryAmmo(List<InventoryItem> inventory, UInt16 classId, Int32 quantity)
         {
             // Find existing ammo item
             int index = inventory.FindIndex(i => i.ClassId == classId);
@@ -1196,7 +1198,7 @@ namespace TRR_SaveMaster
             NumericUpDown nudDesertRangerAmmo, CheckBox chkDartSS, NumericUpDown nudDartSSAmmo,
             CheckBox chkRigg09, NumericUpDown nudRigg09Ammo, CheckBox chkViperSMG, NumericUpDown nudViperSMGAmmo,
             CheckBox chkMagVega, NumericUpDown nudMagVegaAmmo, CheckBox chkVectorR35Pair, Label lblVectorR35PairAmmo, CheckBox chkScorpionXPair, Label lblScorpionXPairAmmo,
-            NumericUpDown nudPoisonAntidote, CheckBox chkChirugaiBlade, Label lblChirugaiBladeAmmo, NumericUpDown nudGPSSaveGame, Label lblGPSSaveGame)
+            NumericUpDown nudPoisonAntidote, CheckBox chkChirugaiBlade, Label lblChirugaiBladeAmmo, NumericUpDown nudGPSSaveGame)
         {
             // Determine whose inventory to update
             List<InventoryItem> selectedInventory = cmbInventory.SelectedIndex == 1 ? invKurtis : invLara;
@@ -1426,7 +1428,7 @@ namespace TRR_SaveMaster
                 using (BinaryWriter writer = new BinaryWriter(fs))
                 {
                     fs.Seek(savegameOffset + SAVE_NUMBER_OFFSET, SeekOrigin.Begin);
-                    writer.Write((int)nudSaveNumber.Value);
+                    writer.Write((Int32)nudSaveNumber.Value);
                 }
 
                 if (POST_INVENTORY_END_OFFSET > decompressedBuffer.Length)
@@ -1450,7 +1452,7 @@ namespace TRR_SaveMaster
                 using (BinaryWriter writer = new BinaryWriter(ms))
                 {
                     ms.Seek(CASH_OFFSET, SeekOrigin.Begin);
-                    writer.Write((int)nudCash.Value);
+                    writer.Write((Int32)nudCash.Value);
 
                     if (trbHealth.Enabled)
                     {
@@ -1468,18 +1470,18 @@ namespace TRR_SaveMaster
                     invWriter.Write((byte)invLara.Count); // Item count
                     foreach (var item in invLara)
                     {
-                        invWriter.Write((ushort)item.ClassId);
-                        invWriter.Write((int)item.Type);
-                        invWriter.Write((int)item.Quantity);
+                        invWriter.Write((UInt16)item.ClassId);
+                        invWriter.Write((Int32)item.Type);
+                        invWriter.Write((Int32)item.Quantity);
                     }
 
                     // Write Kurtis' inventory
                     invWriter.Write((byte)invKurtis.Count); // Item count
                     foreach (var item in invKurtis)
                     {
-                        invWriter.Write((ushort)item.ClassId);
-                        invWriter.Write((int)item.Type);
-                        invWriter.Write((int)item.Quantity);
+                        invWriter.Write((UInt16)item.ClassId);
+                        invWriter.Write((Int32)item.Type);
+                        invWriter.Write((Int32)item.Quantity);
                     }
 
                     newInventoryBlock = inventoryStream.ToArray();
@@ -1519,11 +1521,9 @@ namespace TRR_SaveMaster
                 using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Write))
                 using (BinaryWriter writer = new BinaryWriter(fs))
                 {
-                    // Write compressed block size
                     fs.Seek(savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET, SeekOrigin.Begin);
                     writer.Write(compressedBufferSize);
 
-                    // Write the compressed buffer to the savegame
                     fs.Seek(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, SeekOrigin.Begin);
                     writer.Write(compressedBuffer);
                 }
