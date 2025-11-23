@@ -2730,27 +2730,27 @@ namespace TRR_SaveMaster
 
         public void UpdateDisplayNamesConditionally()
         {
-            if (tabGame.SelectedIndex == TAB_TR1)
+            if (tabGame.SelectedIndex == TAB_TR1 && cmbSavegamesTR1.SelectedIndex != -1)
             {
                 UpdateSavegameDisplayNameTR1(cmbSavegamesTR1, cmbSavegamesTR1.SelectedItem as Savegame);
             }
-            else if (tabGame.SelectedIndex == TAB_TR2)
+            else if (tabGame.SelectedIndex == TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1)
             {
                 UpdateSavegameDisplayNameTR2(cmbSavegamesTR2, cmbSavegamesTR2.SelectedItem as Savegame);
             }
-            else if (tabGame.SelectedIndex == TAB_TR3)
+            else if (tabGame.SelectedIndex == TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1)
             {
                 UpdateSavegameDisplayNameTR3(cmbSavegamesTR3, cmbSavegamesTR3.SelectedItem as Savegame);
             }
-            else if (tabGame.SelectedIndex == TAB_TR4)
+            else if (tabGame.SelectedIndex == TAB_TR4 && cmbSavegamesTR4.SelectedIndex != -1)
             {
                 UpdateSavegameDisplayNameTR4(cmbSavegamesTR4, cmbSavegamesTR4.SelectedItem as Savegame);
             }
-            else if (tabGame.SelectedIndex == TAB_TR5)
+            else if (tabGame.SelectedIndex == TAB_TR5 && cmbSavegamesTR5.SelectedIndex != -1)
             {
                 UpdateSavegameDisplayNameTR5(cmbSavegamesTR5, cmbSavegamesTR5.SelectedItem as Savegame);
             }
-            else if (tabGame.SelectedIndex == TAB_TR6)
+            else if (tabGame.SelectedIndex == TAB_TR6 && cmbSavegamesTR6.SelectedIndex != -1)
             {
                 UpdateSavegameDisplayNameTR6(cmbSavegamesTR6, cmbSavegamesTR6.SelectedItem as Savegame);
             }
