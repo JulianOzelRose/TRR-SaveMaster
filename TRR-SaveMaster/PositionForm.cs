@@ -225,6 +225,11 @@ namespace TRR_SaveMaster
             playerBaseOffset = offset;
         }
 
+        public void SetSavegameBuffer(byte[] buffer)
+        {
+            decompressedBuffer = buffer;
+        }
+
         private byte[] ReadBytes(long offset, int length)
         {
             using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Read))
@@ -661,10 +666,13 @@ namespace TRR_SaveMaster
                 }
                 else if (IsTR6Savegame())
                 {
-                    Int32 compressedBlockSize = BitConverter.ToInt32(fileData, savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
-                    byte[] compressedBlockData = ReadBytes(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, compressedBlockSize);
+                    if (decompressedBuffer == null)
+                    {
+                        Int32 compressedBlockSize = BitConverter.ToInt32(fileData, savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
+                        byte[] compressedBlockData = ReadBytes(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, compressedBlockSize);
 
-                    decompressedBuffer = TR6.Unpack(compressedBlockData);
+                        decompressedBuffer = TR6.Unpack(compressedBlockData);
+                    }
 
                     using (MemoryStream ms = new MemoryStream(decompressedBuffer))
                     using (BinaryReader reader = new BinaryReader(ms))

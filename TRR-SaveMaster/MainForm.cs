@@ -2362,9 +2362,13 @@ namespace TRR_SaveMaster
                     return;
                 }
 
-                selectedSavegame = cmbSavegamesTR6.Items[cmbSavegamesTR6.SelectedIndex] as Savegame;
                 int PLAYER_BASE_OFFSET = TR6.GetPlayerBaseOffset();
+                byte[] decompressedBuffer = TR6.GetSavegameBuffer();
+
                 positionForm.SetPlayerBaseOffset(PLAYER_BASE_OFFSET);
+                positionForm.SetSavegameBuffer(decompressedBuffer);
+
+                selectedSavegame = cmbSavegamesTR6.Items[cmbSavegamesTR6.SelectedIndex] as Savegame;
             }
 
             if (selectedSavegame != null)
