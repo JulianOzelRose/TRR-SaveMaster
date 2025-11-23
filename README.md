@@ -1,8 +1,9 @@
 # Tomb Raider I-VI Remastered Savegame Editor
 This is a savegame editor for Tomb Raider I-VI Remastered. With this editor, you can edit items, health, weapons, ammunition, statistics, and position.
-This editor is compatible with PC, PS4, and Nintendo Switch savegames. However, the savegames must be decrypted first. You can find more information on how to do that [here](https://github.com/JulianOzelRose/TombExtract/issues/1#issuecomment-1978837071).
+This editor is compatible with PC, PS4, and Nintendo Switch savegames. However, console format Tomb Raider I-III savegames must be decrypted first.
+You can find more information on how to do that [here](https://github.com/JulianOzelRose/TombExtract/issues/1#issuecomment-1978837071).
 For instructions on how to download and use this editor, scroll down to the section below. If you are interested in reverse engineering, there is a technical portion on the bottom section of this README.
-For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder or delete savegames, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
+For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder/delete savegames, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
 <img width="723" height="640" alt="TRR-SaveMaster-UI" src="https://github.com/user-attachments/assets/098f5106-7551-4790-9805-35859c917498" />
 
@@ -377,7 +378,7 @@ private int GetSecondaryAmmoIndex(byte[] fileData)
         int[] offsets1 = new int[indexData.Length];
         int[] offsets2 = new int[indexData.Length];
 
-        for (int index = 0; index < 25; index++)
+        for (int index = 0; index < MAX_ENTITY_COUNT; index++)
         {
             Array.Copy(indexData, offsets1, indexData.Length);
 
@@ -493,7 +494,7 @@ private int GetSecondaryAmmoIndex(byte[] fileData)
         int[] offsets1 = new int[indexData.Length];
         int[] offsets2 = new int[indexData.Length];
 
-        for (int index = 0; index < 20; index++)
+        for (int index = 0; index < MAX_ENTITY_COUNT; index++)
         {
             Array.Copy(indexData, offsets1, indexData.Length);
 
