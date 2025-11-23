@@ -988,7 +988,13 @@ namespace TRR_SaveMaster
                 File.WriteAllBytes(savegamePath, fileData);
 
                 DisableButtons();
+
                 UpdateSavegameDisplayName(fileData);
+
+                if (HasDynamicParams())
+                {
+                    UpdateDynamicParams(fileData);
+                }
 
                 slblStatus.Text = $"Successfully patched statistics of savegame: '{selectedSavegame}'";
             }
