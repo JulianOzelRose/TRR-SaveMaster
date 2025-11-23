@@ -184,7 +184,7 @@ namespace TRR_SaveMaster
             return -1;
         }
 
-        private void DetermineOffsets(byte[] fileData)
+        public void DetermineOffsets(byte[] fileData)
         {
             byte levelIndex = GetLevelIndex(fileData);
 
@@ -883,10 +883,8 @@ namespace TRR_SaveMaster
             return false;
         }
 
-        public bool IsLaraInVehicle(int healthOffset)
+        public bool IsLaraInVehicle(int healthOffset, byte[] fileData)
         {
-            byte[] fileData = File.ReadAllBytes(savegamePath);
-
             byte byteFlag1 = fileData[healthOffset - 7];
             byte byteFlag2 = fileData[healthOffset - 6];
             byte byteFlag3 = fileData[healthOffset - 5];

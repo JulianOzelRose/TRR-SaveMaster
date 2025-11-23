@@ -2236,7 +2236,6 @@ namespace TRR_SaveMaster
                 }
 
                 selectedSavegame = cmbSavegamesTR1.Items[cmbSavegamesTR1.SelectedIndex] as Savegame;
-                positionForm.SetHealthOffset(healthOffset - selectedSavegame.Offset);
             }
             else if (tabGame.SelectedIndex == TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1)
             {
@@ -2267,7 +2266,6 @@ namespace TRR_SaveMaster
                 }
 
                 selectedSavegame = cmbSavegamesTR2.Items[cmbSavegamesTR2.SelectedIndex] as Savegame;
-                positionForm.SetHealthOffset(healthOffset - selectedSavegame.Offset);
             }
             else if (tabGame.SelectedIndex == TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1)
             {
@@ -2298,7 +2296,6 @@ namespace TRR_SaveMaster
                 }
 
                 selectedSavegame = cmbSavegamesTR3.Items[cmbSavegamesTR3.SelectedIndex] as Savegame;
-                positionForm.SetHealthOffset(healthOffset - selectedSavegame.Offset);
             }
             else if (tabGame.SelectedIndex == TAB_TR4 && cmbSavegamesTR4.SelectedIndex != -1)
             {
@@ -2321,7 +2318,7 @@ namespace TRR_SaveMaster
                     return;
                 }
 
-                if (TR4.IsLaraInVehicle(healthOffset))
+                if (TR4.IsLaraInVehicle(healthOffset, fileData))
                 {
                     string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
                     MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -2329,7 +2326,6 @@ namespace TRR_SaveMaster
                 }
 
                 selectedSavegame = cmbSavegamesTR4.Items[cmbSavegamesTR4.SelectedIndex] as Savegame;
-                positionForm.SetHealthOffset(healthOffset - selectedSavegame.Offset);
             }
             else if (tabGame.SelectedIndex == TAB_TR5 && cmbSavegamesTR5.SelectedIndex != -1)
             {
@@ -2353,7 +2349,6 @@ namespace TRR_SaveMaster
                 }
 
                 selectedSavegame = cmbSavegamesTR5.Items[cmbSavegamesTR5.SelectedIndex] as Savegame;
-                positionForm.SetHealthOffset(healthOffset - selectedSavegame.Offset);
             }
             else if (tabGame.SelectedIndex == TAB_TR6 && cmbSavegamesTR6.SelectedIndex != -1)
             {

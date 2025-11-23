@@ -217,7 +217,7 @@ namespace TRR_SaveMaster
             return -1;
         }
 
-        private void DetermineOffsets(byte[] fileData)
+        public void DetermineOffsets(byte[] fileData)
         {
             byte levelIndex = GetLevelIndex(fileData);
 

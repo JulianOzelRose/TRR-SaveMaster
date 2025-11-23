@@ -38,7 +38,6 @@ namespace TRR_SaveMaster
         private Savegame selectedSavegame;
         private string savegamePath;
         private int savegameOffset;
-        private int healthOffset;
         private int playerBaseOffset;
 
         // Misc
@@ -62,12 +61,10 @@ namespace TRR_SaveMaster
 
         private void PositionForm_Load(object sender, EventArgs e)
         {
-            DetermineOffsets();
+            DetermineLevelIndexOffset();
             SetNUDRanges();
+            InitializeUtilConstructors();
             DisplayCoordinates();
-            EnableStartOfLevelButtonConditionally();
-            EnableEndOfLevelButtonConditionally();
-            EnableSecretButtonsConditionally();
         }
 
         private void PositionForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -76,34 +73,71 @@ namespace TRR_SaveMaster
             mainForm.UpdateDisplayNamesConditionally();
         }
 
-        private void DetermineOffsets()
+        private void DetermineLevelIndexOffset()
         {
-            if (SELECTED_TAB == TAB_TR1)
+            if (IsTR1Savegame())
             {
                 LEVEL_INDEX_OFFSET = 0x62C;
             }
-            else if (SELECTED_TAB == TAB_TR2)
+            else if (IsTR2Savegame())
             {
                 LEVEL_INDEX_OFFSET = 0x628;
             }
-            else if (SELECTED_TAB == TAB_TR3)
+            else if (IsTR3Savegame())
             {
                 LEVEL_INDEX_OFFSET = 0x8D6;
             }
-            else if (SELECTED_TAB == TAB_TR4)
+            else if (IsTR4Savegame())
             {
                 LEVEL_INDEX_OFFSET = 0x26F;
             }
-            else if (SELECTED_TAB == TAB_TR5)
+            else if (IsTR5Savegame())
             {
                 LEVEL_INDEX_OFFSET = 0x26F;
             }
-            else if (SELECTED_TAB == TAB_TR6)
+            else if (IsTR6Savegame())
             {
                 LEVEL_INDEX_OFFSET = 0x14;
             }
+        }
 
-            if (SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR2 || SELECTED_TAB == TAB_TR3)
+        private void InitializeUtilConstructors()
+        {
+            if (IsTR1Savegame())
+            {
+                TR1.SetSavegamePath(savegamePath);
+                TR1.SetSavegameOffset(savegameOffset);
+            }
+            else if (IsTR2Savegame())
+            {
+                TR2.SetSavegamePath(savegamePath);
+                TR2.SetSavegameOffset(savegameOffset);
+            }
+            else if (IsTR3Savegame())
+            {
+                TR3.SetSavegamePath(savegamePath);
+                TR3.SetSavegameOffset(savegameOffset);
+            }
+            else if (IsTR4Savegame())
+            {
+                TR4.SetSavegamePath(savegamePath);
+                TR4.SetSavegameOffset(savegameOffset);
+            }
+            else if (IsTR5Savegame())
+            {
+                TR5.SetSavegamePath(savegamePath);
+                TR5.SetSavegameOffset(savegameOffset);
+            }
+            else if (IsTR6Savegame())
+            {
+                TR6.SetSavegamePath(savegamePath);
+                TR6.SetSavegameOffset(savegameOffset);
+            }
+        }
+
+        private void DeterminePositionOffsets(int healthOffset)
+        {
+            if (IsTRXSavegame())
             {
                 X_COORDINATE_OFFSET = healthOffset - 0x24;
                 Y_COORDINATE_OFFSET = healthOffset - 0x20;
@@ -111,7 +145,7 @@ namespace TRR_SaveMaster
                 ORIENTATION_OFFSET = healthOffset - 0x16;
                 ROOM_OFFSET = healthOffset - 0x10;
             }
-            else if (SELECTED_TAB == TAB_TR4 || SELECTED_TAB == TAB_TR5)
+            else if (IsTR4Savegame() || IsTR5Savegame())
             {
                 X_COORDINATE_OFFSET = healthOffset - 0x10;
                 Y_COORDINATE_OFFSET = healthOffset - 0xE;
@@ -119,14 +153,64 @@ namespace TRR_SaveMaster
                 ORIENTATION_OFFSET = healthOffset - 0x9;
                 ROOM_OFFSET = healthOffset - 0xA;
             }
-            else if (SELECTED_TAB == TAB_TR6)
+        }
+
+        private void DeterminePositionOffsetsTR6()
+        {
+            X_COORDINATE_OFFSET = playerBaseOffset;
+            Y_COORDINATE_OFFSET = playerBaseOffset + 0x8;
+            Z_COORDINATE_OFFSET = playerBaseOffset + 0x4;
+            ORIENTATION_OFFSET = playerBaseOffset + 0x18;
+            ROOM_OFFSET = 0x5;
+        }
+
+        private int GetHealthOffset(byte[] fileData)
+        {
+            if (IsTR1Savegame())
             {
-                X_COORDINATE_OFFSET = playerBaseOffset;
-                Y_COORDINATE_OFFSET = playerBaseOffset + 0x8;
-                Z_COORDINATE_OFFSET = playerBaseOffset + 0x4;
-                ORIENTATION_OFFSET = playerBaseOffset + 0x18;
-                ROOM_OFFSET = 0x5;
+                TR1.DetermineOffsets(fileData);
+                return TR1.GetHealthOffset(fileData);
             }
+            else if (IsTR2Savegame())
+            {
+                TR2.DetermineOffsets(fileData);
+                return TR2.GetHealthOffset();
+            }
+            else if (IsTR3Savegame())
+            {
+                TR3.DetermineOffsets(fileData);
+                return TR3.GetHealthOffset();
+            }
+            else if (IsTR4Savegame())
+            {
+                TR4.DetermineOffsets(fileData);
+                return TR4.GetHealthOffset();
+            }
+            else if (IsTR5Savegame())
+            {
+                TR5.DetermineOffsets(fileData);
+                return TR5.GetHealthOffset();
+            }
+
+            return -1;
+        }
+
+        private bool IsLaraInVehicle(int healthOffset, byte[] fileData)
+        {
+            if (IsTR2Savegame())
+            {
+                return TR2.IsLaraInVehicle(healthOffset, fileData);
+            }
+            else if (IsTR3Savegame())
+            {
+                return TR3.IsLaraInVehicle(healthOffset, fileData);
+            }
+            else if (IsTR4Savegame())
+            {
+                return TR4.IsLaraInVehicle(healthOffset, fileData);
+            }
+
+            return false;
         }
 
         public void SetSavegame(Savegame savegame)
@@ -134,11 +218,6 @@ namespace TRR_SaveMaster
             selectedSavegame = savegame;
             savegameOffset = savegame.Offset;
             grpSavegameCoordinates.Text = $"{selectedSavegame}";
-        }
-
-        public void SetHealthOffset(int offset)
-        {
-            healthOffset = offset;
         }
 
         public void SetPlayerBaseOffset(int offset)
@@ -176,7 +255,7 @@ namespace TRR_SaveMaster
 
         private Int16 GetOrientation(byte[] fileData)
         {
-            Int16 rawValue = BitConverter.ToInt16(fileData, savegameOffset + ORIENTATION_OFFSET);
+            Int16 rawValue = BitConverter.ToInt16(fileData, ORIENTATION_OFFSET);
             double degrees = rawValue * 180.0 / Int16.MaxValue;
 
             return (degrees >= 0) ? (Int16)degrees : (Int16)(-degrees);
@@ -185,7 +264,7 @@ namespace TRR_SaveMaster
         private void WriteOrientation(byte[] fileData, Int16 value)
         {
             Int16 rawValue = (Int16)(value * Int16.MaxValue / 180.0);
-            WriteInt16ToBuffer(fileData, savegameOffset + ORIENTATION_OFFSET, rawValue);
+            WriteInt16ToBuffer(fileData, ORIENTATION_OFFSET, rawValue);
         }
 
         private bool IsSavegamePresent(byte[] fileData = null)
@@ -231,27 +310,27 @@ namespace TRR_SaveMaster
         {
             byte levelIndex = GetLevelIndex();
 
-            if (SELECTED_TAB == TAB_TR1)
+            if (IsTR1Savegame())
             {
                 btnEndOfLevel.Enabled = true;
             }
-            else if (SELECTED_TAB == TAB_TR2)
+            else if (IsTR2Savegame())
             {
                 btnEndOfLevel.Enabled = endOfLevelCoordinatesTR2.ContainsKey(levelIndex);
             }
-            else if (SELECTED_TAB == TAB_TR3)
+            else if (IsTR3Savegame())
             {
                 btnEndOfLevel.Enabled = endOfLevelCoordinatesTR3.ContainsKey(levelIndex);
             }
-            else if (SELECTED_TAB == TAB_TR4)
+            else if (IsTR4Savegame())
             {
                 btnEndOfLevel.Enabled = endOfLevelCoordinatesTR4.ContainsKey(levelIndex);
             }
-            else if (SELECTED_TAB == TAB_TR5)
+            else if (IsTR5Savegame())
             {
                 btnEndOfLevel.Enabled = endOfLevelCoordinatesTR5.ContainsKey(levelIndex);
             }
-            else if (SELECTED_TAB == TAB_TR6)
+            else if (IsTR6Savegame())
             {
                 btnEndOfLevel.Enabled = endOfLevelCoordinatesTR6.ContainsKey(levelIndex);
             }
@@ -261,27 +340,27 @@ namespace TRR_SaveMaster
         {
             byte levelIndex = GetLevelIndex();
 
-            if (SELECTED_TAB == TAB_TR1)
+            if (IsTR1Savegame())
             {
                 btnStartOfLevel.Enabled = startOfLevelCoordinatesTR1.ContainsKey(levelIndex);
             }
-            else if (SELECTED_TAB == TAB_TR2)
+            else if (IsTR2Savegame())
             {
                 btnStartOfLevel.Enabled = startOfLevelCoordinatesTR2.ContainsKey(levelIndex);
             }
-            else if (SELECTED_TAB == TAB_TR3)
+            else if (IsTR3Savegame())
             {
                 btnStartOfLevel.Enabled = startOfLevelCoordinatesTR3.ContainsKey(levelIndex);
             }
-            else if (SELECTED_TAB == TAB_TR4)
+            else if (IsTR4Savegame())
             {
                 btnStartOfLevel.Enabled = startOfLevelCoordinatesTR4.ContainsKey(levelIndex);
             }
-            else if (SELECTED_TAB == TAB_TR5)
+            else if (IsTR5Savegame())
             {
                 btnStartOfLevel.Enabled = startOfLevelCoordinatesTR5.ContainsKey(levelIndex);
             }
-            else if (SELECTED_TAB == TAB_TR6)
+            else if (IsTR6Savegame())
             {
                 btnStartOfLevel.Enabled = startOfLevelCoordinatesTR6.ContainsKey(levelIndex);
             }
@@ -291,7 +370,7 @@ namespace TRR_SaveMaster
         {
             byte levelIndex = GetLevelIndex();
 
-            if (SELECTED_TAB == TAB_TR1)
+            if (IsTR1Savegame())
             {
                 btnSecret1.Enabled = secret1CoordinatesTR1.ContainsKey(levelIndex);
                 btnSecret2.Enabled = secret2CoordinatesTR1.ContainsKey(levelIndex);
@@ -302,7 +381,7 @@ namespace TRR_SaveMaster
                 btnSecret7.Enabled = false;
                 btnSecret8.Enabled = false;
             }
-            else if (SELECTED_TAB == TAB_TR2)
+            else if (IsTR2Savegame())
             {
                 btnSecret1.Enabled = secret1CoordinatesTR2.ContainsKey(levelIndex);
                 btnSecret2.Enabled = secret2CoordinatesTR2.ContainsKey(levelIndex);
@@ -313,7 +392,7 @@ namespace TRR_SaveMaster
                 btnSecret7.Enabled = false;
                 btnSecret8.Enabled = false;
             }
-            else if (SELECTED_TAB == TAB_TR3)
+            else if (IsTR3Savegame())
             {
                 btnSecret1.Enabled = secret1CoordinatesTR3.ContainsKey(levelIndex);
                 btnSecret2.Enabled = secret2CoordinatesTR3.ContainsKey(levelIndex);
@@ -324,7 +403,7 @@ namespace TRR_SaveMaster
                 btnSecret7.Enabled = false;
                 btnSecret8.Enabled = false;
             }
-            else if (SELECTED_TAB == TAB_TR4)
+            else if (IsTR4Savegame())
             {
                 btnSecret1.Enabled = secret1CoordinatesTR4.ContainsKey(levelIndex);
                 btnSecret2.Enabled = secret2CoordinatesTR4.ContainsKey(levelIndex);
@@ -335,7 +414,7 @@ namespace TRR_SaveMaster
                 btnSecret7.Enabled = secret7CoordinatesTR4.ContainsKey(levelIndex);
                 btnSecret8.Enabled = secret8CoordinatesTR4.ContainsKey(levelIndex);
             }
-            else if (SELECTED_TAB == TAB_TR5)
+            else if (IsTR5Savegame())
             {
                 btnSecret1.Enabled = secret1CoordinatesTR5.ContainsKey(levelIndex);
                 btnSecret2.Enabled = secret2CoordinatesTR5.ContainsKey(levelIndex);
@@ -346,31 +425,42 @@ namespace TRR_SaveMaster
                 btnSecret7.Enabled = false;
                 btnSecret8.Enabled = false;
             }
+            else if (IsTR6Savegame())
+            {
+                btnSecret1.Enabled = false;
+                btnSecret2.Enabled = false;
+                btnSecret3.Enabled = false;
+                btnSecret4.Enabled = false;
+                btnSecret5.Enabled = false;
+                btnSecret6.Enabled = false;
+                btnSecret7.Enabled = false;
+                btnSecret8.Enabled = false;
+            }
         }
 
         private void UpdateSavegameDisplayName(byte[] fileData)
         {
-            if (SELECTED_TAB == TAB_TR1)
+            if (IsTR1Savegame())
             {
                 TR1.UpdateDisplayName(selectedSavegame, fileData);
             }
-            else if (SELECTED_TAB == TAB_TR2)
+            else if (IsTR2Savegame())
             {
                 TR2.UpdateDisplayName(selectedSavegame, fileData);
             }
-            else if (SELECTED_TAB == TAB_TR3)
+            else if (IsTR3Savegame())
             {
                 TR3.UpdateDisplayName(selectedSavegame, fileData);
             }
-            else if (SELECTED_TAB == TAB_TR4)
+            else if (IsTR4Savegame())
             {
                 TR4.UpdateDisplayName(selectedSavegame, fileData);
             }
-            else if (SELECTED_TAB == TAB_TR5)
+            else if (IsTR5Savegame())
             {
                 TR5.UpdateDisplayName(selectedSavegame, fileData);
             }
-            else if (SELECTED_TAB == TAB_TR6)
+            else if (IsTR6Savegame())
             {
                 TR6.UpdateDisplayName(selectedSavegame, fileData);
             }
@@ -380,7 +470,7 @@ namespace TRR_SaveMaster
 
         private void SetNUDRanges()
         {
-            if (SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR2 || SELECTED_TAB == TAB_TR3)
+            if (IsTRXSavegame())
             {
                 nudXCoordinate.Maximum = Int32.MaxValue;
                 nudXCoordinate.Minimum = Int32.MinValue;
@@ -391,7 +481,7 @@ namespace TRR_SaveMaster
                 nudZCoordinate.Maximum = Int32.MaxValue;
                 nudZCoordinate.Minimum = Int32.MinValue;
             }
-            else if (SELECTED_TAB == TAB_TR4 || SELECTED_TAB == TAB_TR5)
+            else if (IsTR4Savegame() || IsTR5Savegame())
             {
                 nudXCoordinate.Maximum = UInt16.MaxValue;
                 nudXCoordinate.Minimum = UInt16.MinValue;
@@ -402,7 +492,7 @@ namespace TRR_SaveMaster
                 nudZCoordinate.Maximum = UInt16.MaxValue;
                 nudZCoordinate.Minimum = UInt16.MinValue;
             }
-            else if (SELECTED_TAB == TAB_TR6)
+            else if (IsTR6Savegame())
             {
                 nudXCoordinate.DecimalPlaces = 2;
                 nudXCoordinate.Increment = 10;
@@ -426,22 +516,27 @@ namespace TRR_SaveMaster
                 nudRoom.Maximum = Int32.MaxValue;
                 nudRoom.Minimum = 0;
 
-                bool isPlayerKurtis = IsPlayerKurtis();
-
-                string xCoordinateToolTipText = $"Represents horizontal position in game. Decreasing moves {(isPlayerKurtis ? "Kurtis" : "Lara")} to the left, increasing moves {(isPlayerKurtis ? "him" : "her")} to the right.";
-                string yCoordinateToolTipText = $"Represents vertical position in game. Increasing moves {(isPlayerKurtis ? "Kurtis" : "Lara")} up, decreasing moves {(isPlayerKurtis ? "him" : "her")} down.";
-                string zCoordinateToolTipText = $"Represents depth position in game. Increasing moves {(isPlayerKurtis ? "Kurtis" : "Lara")} backwards, decreasing moves {(isPlayerKurtis ? "him" : "her")} forwards.";
-                string orientationToolTipText = $"Represents the direction {(isPlayerKurtis ? "Kurtis" : "Lara")} is facing in degrees. Valid range is -180 to 180.";
-                string roomToolTipText = $"Represents the active zone {(isPlayerKurtis ? "Kurtis" : "Lara")} is in. Zones control which parts of the level are loaded and rendered.";
-                string roomLabelText = $"Zone:";
-
-                tipPosition.SetToolTip(picInfoXCoordinate, xCoordinateToolTipText);
-                tipPosition.SetToolTip(picInfoYCoordinate, yCoordinateToolTipText);
-                tipPosition.SetToolTip(picInfoZCoordinate, zCoordinateToolTipText);
-                tipPosition.SetToolTip(picInfoOrientation, orientationToolTipText);
-                tipPosition.SetToolTip(picInfoRoom, roomToolTipText);
-                lblRoom.Text = roomLabelText;
+                SetToolTipText();
             }
+        }
+
+        private void SetToolTipText()
+        {
+            bool isPlayerKurtis = IsPlayerKurtis();
+
+            string xCoordinateToolTipText = $"Represents horizontal position in game. Decreasing moves {(isPlayerKurtis ? "Kurtis" : "Lara")} to the left, increasing moves {(isPlayerKurtis ? "him" : "her")} to the right.";
+            string yCoordinateToolTipText = $"Represents vertical position in game. Increasing moves {(isPlayerKurtis ? "Kurtis" : "Lara")} up, decreasing moves {(isPlayerKurtis ? "him" : "her")} down.";
+            string zCoordinateToolTipText = $"Represents depth position in game. Increasing moves {(isPlayerKurtis ? "Kurtis" : "Lara")} backwards, decreasing moves {(isPlayerKurtis ? "him" : "her")} forwards.";
+            string orientationToolTipText = $"Represents the direction {(isPlayerKurtis ? "Kurtis" : "Lara")} is facing in degrees. Valid range is -180 to 180.";
+            string roomToolTipText = $"Represents the active zone {(isPlayerKurtis ? "Kurtis" : "Lara")} is in. Zones control which parts of the level are loaded and rendered.";
+            string roomLabelText = $"Zone:";
+
+            tipPosition.SetToolTip(picInfoXCoordinate, xCoordinateToolTipText);
+            tipPosition.SetToolTip(picInfoYCoordinate, yCoordinateToolTipText);
+            tipPosition.SetToolTip(picInfoZCoordinate, zCoordinateToolTipText);
+            tipPosition.SetToolTip(picInfoOrientation, orientationToolTipText);
+            tipPosition.SetToolTip(picInfoRoom, roomToolTipText);
+            lblRoom.Text = roomLabelText;
         }
 
         private bool IsPlayerKurtis()
@@ -450,6 +545,41 @@ namespace TRR_SaveMaster
 
             // The Sanitarium, Maximum Containment Area, Boaz Returns
             return levelIndex == 24 || levelIndex == 25 || levelIndex == 27;
+        }
+
+        private bool IsTRXSavegame()
+        {
+            return SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR2 || SELECTED_TAB == TAB_TR3;
+        }
+
+        private bool IsTR1Savegame()
+        {
+            return SELECTED_TAB == TAB_TR1;
+        }
+
+        private bool IsTR2Savegame()
+        {
+            return SELECTED_TAB == TAB_TR2;
+        }
+
+        private bool IsTR3Savegame()
+        {
+            return SELECTED_TAB == TAB_TR3;
+        }
+
+        private bool IsTR4Savegame()
+        {
+            return SELECTED_TAB == TAB_TR4;
+        }
+
+        private bool IsTR5Savegame()
+        {
+            return SELECTED_TAB == TAB_TR5;
+        }
+
+        private bool IsTR6Savegame()
+        {
+            return SELECTED_TAB == TAB_TR6;
         }
 
         private void DisplayCoordinates(byte[] fileData = null)
@@ -475,27 +605,62 @@ namespace TRR_SaveMaster
 
                 UpdateSavegameDisplayName(fileData);
 
-                if (SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR2 || SELECTED_TAB == TAB_TR3)
+                if (IsTR6Savegame())
                 {
-                    nudXCoordinate.Value = BitConverter.ToInt32(fileData, savegameOffset + X_COORDINATE_OFFSET);
-                    nudYCoordinate.Value = BitConverter.ToInt32(fileData, savegameOffset + Y_COORDINATE_OFFSET);
-                    nudZCoordinate.Value = BitConverter.ToInt32(fileData, savegameOffset + Z_COORDINATE_OFFSET);
-                    nudOrientation.Value = GetOrientation(fileData);
-                    nudRoom.Value = fileData[savegameOffset + ROOM_OFFSET];
+                    DeterminePositionOffsetsTR6();
                 }
-                else if (SELECTED_TAB == TAB_TR4 || SELECTED_TAB == TAB_TR5)
+                else
                 {
-                    nudXCoordinate.Value = BitConverter.ToUInt16(fileData, savegameOffset + X_COORDINATE_OFFSET);
-                    nudYCoordinate.Value = BitConverter.ToInt16(fileData, savegameOffset + Y_COORDINATE_OFFSET);
-                    nudZCoordinate.Value = BitConverter.ToUInt16(fileData, savegameOffset + Z_COORDINATE_OFFSET);
-                    nudOrientation.Value = GetOrientation(fileData);
-                    nudRoom.Value = fileData[savegameOffset + ROOM_OFFSET];
-                }
-                else if (SELECTED_TAB == TAB_TR6)
-                {
-                    TR6.SetSavegamePath(savegamePath);
-                    TR6.SetSavegameOffset(savegameOffset);
+                    int healthOffset = GetHealthOffset(fileData);
 
+                    if (healthOffset == -1)
+                    {
+                        string errorMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
+                        MessageBox.Show(errorMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        DisableButtons();
+                        this.Close();
+                        return;
+                    }
+
+                    if (IsTR2Savegame() || IsTR3Savegame() || IsTR4Savegame())
+                    {
+                        if (IsLaraInVehicle(healthOffset, fileData))
+                        {
+                            string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
+                            MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                            DisableButtons();
+                            this.Close();
+                            return;
+                        }
+                    }
+
+                    DeterminePositionOffsets(healthOffset);
+                }
+
+                EnableStartOfLevelButtonConditionally();
+                EnableEndOfLevelButtonConditionally();
+                EnableSecretButtonsConditionally();
+
+                if (IsTRXSavegame())
+                {
+                    nudXCoordinate.Value = BitConverter.ToInt32(fileData, X_COORDINATE_OFFSET);
+                    nudYCoordinate.Value = BitConverter.ToInt32(fileData, Y_COORDINATE_OFFSET);
+                    nudZCoordinate.Value = BitConverter.ToInt32(fileData, Z_COORDINATE_OFFSET);
+                    nudOrientation.Value = GetOrientation(fileData);
+                    nudRoom.Value = fileData[ROOM_OFFSET];
+                }
+                else if (IsTR4Savegame() || IsTR5Savegame())
+                {
+                    nudXCoordinate.Value = BitConverter.ToUInt16(fileData, X_COORDINATE_OFFSET);
+                    nudYCoordinate.Value = BitConverter.ToInt16(fileData, Y_COORDINATE_OFFSET);
+                    nudZCoordinate.Value = BitConverter.ToUInt16(fileData, Z_COORDINATE_OFFSET);
+                    nudOrientation.Value = GetOrientation(fileData);
+                    nudRoom.Value = fileData[ROOM_OFFSET];
+                }
+                else if (IsTR6Savegame())
+                {
                     Int32 compressedBlockSize = BitConverter.ToInt32(fileData, savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
                     byte[] compressedBlockData = ReadBytes(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, compressedBlockSize);
 
@@ -554,6 +719,46 @@ namespace TRR_SaveMaster
                     return;
                 }
 
+                if (IsTR6Savegame())
+                {
+                    DeterminePositionOffsetsTR6();
+                }
+                else
+                {
+                    int healthOffset = GetHealthOffset(fileData);
+
+                    if (healthOffset == -1)
+                    {
+                        string errorMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
+                        MessageBox.Show(errorMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        slblStatus.Text = $"Error writing savegame coordinates.";
+
+                        DisableButtons();
+                        this.Close();
+                        return;
+                    }
+
+                    if (IsTR2Savegame() || IsTR3Savegame() || IsTR4Savegame())
+                    {
+                        if (IsLaraInVehicle(healthOffset, fileData))
+                        {
+                            string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
+                            MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            slblStatus.Text = $"Error writing savegame coordinates.";
+
+                            DisableButtons();
+                            this.Close();
+                            return;
+                        }
+                    }
+
+                    DeterminePositionOffsets(healthOffset);
+                }
+
+                EnableStartOfLevelButtonConditionally();
+                EnableEndOfLevelButtonConditionally();
+                EnableSecretButtonsConditionally();
+
                 if (backupBeforeSaving)
                 {
                     CreateBackup();
@@ -561,27 +766,24 @@ namespace TRR_SaveMaster
 
                 File.SetAttributes(savegamePath, File.GetAttributes(savegamePath) & ~FileAttributes.ReadOnly);
 
-                if (SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR2 || SELECTED_TAB == TAB_TR3)
+                if (IsTRXSavegame())
                 {
-                    WriteInt32ToBuffer(fileData, savegameOffset + X_COORDINATE_OFFSET, (Int32)nudXCoordinate.Value);
-                    WriteInt32ToBuffer(fileData, savegameOffset + Y_COORDINATE_OFFSET, (Int32)nudYCoordinate.Value);
-                    WriteInt32ToBuffer(fileData, savegameOffset + Z_COORDINATE_OFFSET, (Int32)nudZCoordinate.Value);
+                    WriteInt32ToBuffer(fileData, X_COORDINATE_OFFSET, (Int32)nudXCoordinate.Value);
+                    WriteInt32ToBuffer(fileData, Y_COORDINATE_OFFSET, (Int32)nudYCoordinate.Value);
+                    WriteInt32ToBuffer(fileData, Z_COORDINATE_OFFSET, (Int32)nudZCoordinate.Value);
                     WriteOrientation(fileData, (Int16)nudOrientation.Value);
-                    fileData[savegameOffset + ROOM_OFFSET] = (byte)nudRoom.Value;
+                    fileData[ROOM_OFFSET] = (byte)nudRoom.Value;
                 }
-                else if (SELECTED_TAB == TAB_TR4 || SELECTED_TAB == TAB_TR5)
+                else if (IsTR4Savegame() || IsTR5Savegame())
                 {
-                    WriteUInt16ToBuffer(fileData, savegameOffset + X_COORDINATE_OFFSET, (UInt16)nudXCoordinate.Value);
-                    WriteInt16ToBuffer(fileData, savegameOffset + Y_COORDINATE_OFFSET, (Int16)nudYCoordinate.Value);
-                    WriteUInt16ToBuffer(fileData, savegameOffset + Z_COORDINATE_OFFSET, (UInt16)nudZCoordinate.Value);
+                    WriteUInt16ToBuffer(fileData, X_COORDINATE_OFFSET, (UInt16)nudXCoordinate.Value);
+                    WriteInt16ToBuffer(fileData, Y_COORDINATE_OFFSET, (Int16)nudYCoordinate.Value);
+                    WriteUInt16ToBuffer(fileData, Z_COORDINATE_OFFSET, (UInt16)nudZCoordinate.Value);
                     WriteOrientation(fileData, (Int16)nudOrientation.Value);
-                    fileData[savegameOffset + ROOM_OFFSET] = (byte)nudRoom.Value;
+                    fileData[ROOM_OFFSET] = (byte)nudRoom.Value;
                 }
-                else if (SELECTED_TAB == TAB_TR6)
+                else if (IsTR6Savegame())
                 {
-                    TR6.SetSavegamePath(savegamePath);
-                    TR6.SetSavegameOffset(savegameOffset);
-
                     Int32 compressedBlockSize = BitConverter.ToInt32(fileData, savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
                     byte[] compressedBlockData = ReadBytes(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, compressedBlockSize);
 
@@ -607,14 +809,13 @@ namespace TRR_SaveMaster
                     byte[] compressedBuffer = TR6.Pack(decompressedBuffer);
                     Int32 compressedBufferSize = compressedBuffer.Length;
 
+                    // Write the compressed data to the savegame file
                     using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Write))
                     using (BinaryWriter writer = new BinaryWriter(fs))
                     {
-                        // Write compressed block size
                         fs.Seek(savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET, SeekOrigin.Begin);
                         writer.Write(compressedBufferSize);
 
-                        // Write the compressed buffer to the savegame
                         fs.Seek(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, SeekOrigin.Begin);
                         writer.Write(compressedBuffer);
                     }
@@ -622,7 +823,7 @@ namespace TRR_SaveMaster
                     mainForm.UpdateSavegameBufferTR6(decompressedBuffer);
                 }
 
-                if (SELECTED_TAB != TAB_TR6)
+                if (!IsTR6Savegame())
                 {
                     File.WriteAllBytes(savegamePath, fileData);
                 }
@@ -685,7 +886,7 @@ namespace TRR_SaveMaster
         {
             byte levelIndex = GetLevelIndex();
 
-            if (SELECTED_TAB == TAB_TR6)
+            if (IsTR6Savegame())
             {
                 if (startOfLevelCoordinatesTR6.ContainsKey(levelIndex))
                 {
@@ -708,23 +909,23 @@ namespace TRR_SaveMaster
 
             Int32[] startOfLevelCoordinates = new Int32[4];
 
-            if (SELECTED_TAB == TAB_TR1 && startOfLevelCoordinatesTR1.ContainsKey(levelIndex))
+            if (IsTR1Savegame() && startOfLevelCoordinatesTR1.ContainsKey(levelIndex))
             {
                 startOfLevelCoordinates = startOfLevelCoordinatesTR1[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR2 && startOfLevelCoordinatesTR2.ContainsKey(levelIndex))
+            else if (IsTR2Savegame() && startOfLevelCoordinatesTR2.ContainsKey(levelIndex))
             {
                 startOfLevelCoordinates = startOfLevelCoordinatesTR2[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR3 && startOfLevelCoordinatesTR3.ContainsKey(levelIndex))
+            else if (IsTR3Savegame() && startOfLevelCoordinatesTR3.ContainsKey(levelIndex))
             {
                 startOfLevelCoordinates = startOfLevelCoordinatesTR3[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR4 && startOfLevelCoordinatesTR4.ContainsKey(levelIndex))
+            else if (IsTR4Savegame() && startOfLevelCoordinatesTR4.ContainsKey(levelIndex))
             {
                 startOfLevelCoordinates = startOfLevelCoordinatesTR4[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR5 && startOfLevelCoordinatesTR5.ContainsKey(levelIndex))
+            else if (IsTR5Savegame() && startOfLevelCoordinatesTR5.ContainsKey(levelIndex))
             {
                 startOfLevelCoordinates = startOfLevelCoordinatesTR5[levelIndex];
             }
@@ -745,7 +946,7 @@ namespace TRR_SaveMaster
         {
             byte levelIndex = GetLevelIndex();
 
-            if (SELECTED_TAB == TAB_TR6)
+            if (IsTR6Savegame())
             {
                 if (endOfLevelCoordinatesTR6.ContainsKey(levelIndex))
                 {
@@ -768,23 +969,23 @@ namespace TRR_SaveMaster
 
             Int32[] endOfLevelCoordinates = new Int32[4];
 
-            if (SELECTED_TAB == TAB_TR1 && endOfLevelCoordinatesTR1.ContainsKey(levelIndex))
+            if (IsTR1Savegame() && endOfLevelCoordinatesTR1.ContainsKey(levelIndex))
             {
                 endOfLevelCoordinates = endOfLevelCoordinatesTR1[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR2 && endOfLevelCoordinatesTR2.ContainsKey(levelIndex))
+            else if (IsTR2Savegame() && endOfLevelCoordinatesTR2.ContainsKey(levelIndex))
             {
                 endOfLevelCoordinates = endOfLevelCoordinatesTR2[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR3 && endOfLevelCoordinatesTR3.ContainsKey(levelIndex))
+            else if (IsTR3Savegame() && endOfLevelCoordinatesTR3.ContainsKey(levelIndex))
             {
                 endOfLevelCoordinates = endOfLevelCoordinatesTR3[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR4 && endOfLevelCoordinatesTR4.ContainsKey(levelIndex))
+            else if (IsTR4Savegame() && endOfLevelCoordinatesTR4.ContainsKey(levelIndex))
             {
                 endOfLevelCoordinates = endOfLevelCoordinatesTR4[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR5 && endOfLevelCoordinatesTR5.ContainsKey(levelIndex))
+            else if (IsTR5Savegame() && endOfLevelCoordinatesTR5.ContainsKey(levelIndex))
             {
                 endOfLevelCoordinates = endOfLevelCoordinatesTR5[levelIndex];
             }
@@ -806,23 +1007,23 @@ namespace TRR_SaveMaster
             byte levelIndex = GetLevelIndex();
             Int32[] secret1Coordinates = new Int32[4];
 
-            if (SELECTED_TAB == TAB_TR1 && secret1CoordinatesTR1.ContainsKey(levelIndex))
+            if (IsTR1Savegame() && secret1CoordinatesTR1.ContainsKey(levelIndex))
             {
                 secret1Coordinates = secret1CoordinatesTR1[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR2 && secret1CoordinatesTR2.ContainsKey(levelIndex))
+            else if (IsTR2Savegame() && secret1CoordinatesTR2.ContainsKey(levelIndex))
             {
                 secret1Coordinates = secret1CoordinatesTR2[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR3 && secret1CoordinatesTR3.ContainsKey(levelIndex))
+            else if (IsTR3Savegame() && secret1CoordinatesTR3.ContainsKey(levelIndex))
             {
                 secret1Coordinates = secret1CoordinatesTR3[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR4 && secret1CoordinatesTR4.ContainsKey(levelIndex))
+            else if (IsTR4Savegame() && secret1CoordinatesTR4.ContainsKey(levelIndex))
             {
                 secret1Coordinates = secret1CoordinatesTR4[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR5 && secret1CoordinatesTR5.ContainsKey(levelIndex))
+            else if (IsTR5Savegame() && secret1CoordinatesTR5.ContainsKey(levelIndex))
             {
                 secret1Coordinates = secret1CoordinatesTR5[levelIndex];
             }
@@ -844,23 +1045,23 @@ namespace TRR_SaveMaster
             byte levelIndex = GetLevelIndex();
             Int32[] secret2Coordinates = new Int32[4];
 
-            if (SELECTED_TAB == TAB_TR1 && secret2CoordinatesTR1.ContainsKey(levelIndex))
+            if (IsTR1Savegame() && secret2CoordinatesTR1.ContainsKey(levelIndex))
             {
                 secret2Coordinates = secret2CoordinatesTR1[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR2 && secret2CoordinatesTR2.ContainsKey(levelIndex))
+            else if (IsTR2Savegame() && secret2CoordinatesTR2.ContainsKey(levelIndex))
             {
                 secret2Coordinates = secret2CoordinatesTR2[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR3 && secret2CoordinatesTR3.ContainsKey(levelIndex))
+            else if (IsTR3Savegame() && secret2CoordinatesTR3.ContainsKey(levelIndex))
             {
                 secret2Coordinates = secret2CoordinatesTR3[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR4 && secret2CoordinatesTR4.ContainsKey(levelIndex))
+            else if (IsTR4Savegame() && secret2CoordinatesTR4.ContainsKey(levelIndex))
             {
                 secret2Coordinates = secret2CoordinatesTR4[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR5 && secret2CoordinatesTR5.ContainsKey(levelIndex))
+            else if (IsTR5Savegame() && secret2CoordinatesTR5.ContainsKey(levelIndex))
             {
                 secret2Coordinates = secret2CoordinatesTR5[levelIndex];
             }
@@ -882,23 +1083,23 @@ namespace TRR_SaveMaster
             byte levelIndex = GetLevelIndex();
             Int32[] secret3Coordinates = new Int32[4];
 
-            if (SELECTED_TAB == TAB_TR1 && secret3CoordinatesTR1.ContainsKey(levelIndex))
+            if (IsTR1Savegame() && secret3CoordinatesTR1.ContainsKey(levelIndex))
             {
                 secret3Coordinates = secret3CoordinatesTR1[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR2 && secret3CoordinatesTR2.ContainsKey(levelIndex))
+            else if (IsTR2Savegame() && secret3CoordinatesTR2.ContainsKey(levelIndex))
             {
                 secret3Coordinates = secret3CoordinatesTR2[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR3 && secret3CoordinatesTR3.ContainsKey(levelIndex))
+            else if (IsTR3Savegame() && secret3CoordinatesTR3.ContainsKey(levelIndex))
             {
                 secret3Coordinates = secret3CoordinatesTR3[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR4 && secret3CoordinatesTR4.ContainsKey(levelIndex))
+            else if (IsTR4Savegame() && secret3CoordinatesTR4.ContainsKey(levelIndex))
             {
                 secret3Coordinates = secret3CoordinatesTR4[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR5 && secret3CoordinatesTR5.ContainsKey(levelIndex))
+            else if (IsTR5Savegame() && secret3CoordinatesTR5.ContainsKey(levelIndex))
             {
                 secret3Coordinates = secret3CoordinatesTR5[levelIndex];
             }
@@ -920,15 +1121,15 @@ namespace TRR_SaveMaster
             byte levelIndex = GetLevelIndex();
             Int32[] secret4Coordinates = new Int32[4];
 
-            if (SELECTED_TAB == TAB_TR1 && secret4CoordinatesTR1.ContainsKey(levelIndex))
+            if (IsTR1Savegame() && secret4CoordinatesTR1.ContainsKey(levelIndex))
             {
                 secret4Coordinates = secret4CoordinatesTR1[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR3 && secret4CoordinatesTR3.ContainsKey(levelIndex))
+            else if (IsTR3Savegame() && secret4CoordinatesTR3.ContainsKey(levelIndex))
             {
                 secret4Coordinates = secret4CoordinatesTR3[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR4 && secret4CoordinatesTR4.ContainsKey(levelIndex))
+            else if (IsTR4Savegame() && secret4CoordinatesTR4.ContainsKey(levelIndex))
             {
                 secret4Coordinates = secret4CoordinatesTR4[levelIndex];
             }
@@ -950,15 +1151,15 @@ namespace TRR_SaveMaster
             byte levelIndex = GetLevelIndex();
             Int32[] secret5Coordinates = new Int32[4];
 
-            if (SELECTED_TAB == TAB_TR1 && secret5CoordinatesTR1.ContainsKey(levelIndex))
+            if (IsTR1Savegame() && secret5CoordinatesTR1.ContainsKey(levelIndex))
             {
                 secret5Coordinates = secret5CoordinatesTR1[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR3 && secret5CoordinatesTR3.ContainsKey(levelIndex))
+            else if (IsTR3Savegame() && secret5CoordinatesTR3.ContainsKey(levelIndex))
             {
                 secret5Coordinates = secret5CoordinatesTR3[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR4 && secret5CoordinatesTR4.ContainsKey(levelIndex))
+            else if (IsTR4Savegame() && secret5CoordinatesTR4.ContainsKey(levelIndex))
             {
                 secret5Coordinates = secret5CoordinatesTR4[levelIndex];
             }
@@ -980,11 +1181,11 @@ namespace TRR_SaveMaster
             byte levelIndex = GetLevelIndex();
             Int32[] secret6Coordinates = new Int32[4];
 
-            if (SELECTED_TAB == TAB_TR3 && secret6CoordinatesTR3.ContainsKey(levelIndex))
+            if (IsTR3Savegame() && secret6CoordinatesTR3.ContainsKey(levelIndex))
             {
                 secret6Coordinates = secret6CoordinatesTR3[levelIndex];
             }
-            else if (SELECTED_TAB == TAB_TR4 && secret6CoordinatesTR4.ContainsKey(levelIndex))
+            else if (IsTR4Savegame() && secret6CoordinatesTR4.ContainsKey(levelIndex))
             {
                 secret6Coordinates = secret6CoordinatesTR4[levelIndex];
             }
@@ -1006,7 +1207,7 @@ namespace TRR_SaveMaster
             byte levelIndex = GetLevelIndex();
             Int32[] secret7Coordinates = new Int32[4];
 
-            if (SELECTED_TAB == TAB_TR4 && secret7CoordinatesTR4.ContainsKey(levelIndex))
+            if (IsTR4Savegame() && secret7CoordinatesTR4.ContainsKey(levelIndex))
             {
                 secret7Coordinates = secret7CoordinatesTR4[levelIndex];
             }
@@ -1028,7 +1229,7 @@ namespace TRR_SaveMaster
             byte levelIndex = GetLevelIndex();
             Int32[] secret8Coordinates = new Int32[4];
 
-            if (SELECTED_TAB == TAB_TR4 && secret8CoordinatesTR4.ContainsKey(levelIndex))
+            if (IsTR4Savegame() && secret8CoordinatesTR4.ContainsKey(levelIndex))
             {
                 secret8Coordinates = secret8CoordinatesTR4[levelIndex];
             }
