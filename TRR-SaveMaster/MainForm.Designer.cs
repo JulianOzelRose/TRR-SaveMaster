@@ -34,7 +34,6 @@ namespace TRR_SaveMaster
             this.tpTR1 = new System.Windows.Forms.TabPage();
             this.nudSaveNumberTR1 = new System.Windows.Forms.NumericUpDown();
             this.lblSaveNumberTR1 = new System.Windows.Forms.Label();
-            this.btnRefreshTR1 = new System.Windows.Forms.Button();
             this.lblSavegameTR1 = new System.Windows.Forms.Label();
             this.btnExitTR1 = new System.Windows.Forms.Button();
             this.grpHealthTR1 = new System.Windows.Forms.GroupBox();
@@ -66,7 +65,6 @@ namespace TRR_SaveMaster
             this.btnExitTR2 = new System.Windows.Forms.Button();
             this.btnSaveTR2 = new System.Windows.Forms.Button();
             this.btnCancelTR2 = new System.Windows.Forms.Button();
-            this.btnRefreshTR2 = new System.Windows.Forms.Button();
             this.lblSavegameTR2 = new System.Windows.Forms.Label();
             this.cmbSavegamesTR2 = new System.Windows.Forms.ComboBox();
             this.grpWeaponsTR2 = new System.Windows.Forms.GroupBox();
@@ -100,7 +98,6 @@ namespace TRR_SaveMaster
             this.tpTR3 = new System.Windows.Forms.TabPage();
             this.nudSaveNumberTR3 = new System.Windows.Forms.NumericUpDown();
             this.lblSaveNumberTR3 = new System.Windows.Forms.Label();
-            this.btnRefreshTR3 = new System.Windows.Forms.Button();
             this.btnExitTR3 = new System.Windows.Forms.Button();
             this.btnSaveTR3 = new System.Windows.Forms.Button();
             this.btnCancelTR3 = new System.Windows.Forms.Button();
@@ -144,7 +141,6 @@ namespace TRR_SaveMaster
             this.btnSaveTR4 = new System.Windows.Forms.Button();
             this.nudSaveNumberTR4 = new System.Windows.Forms.NumericUpDown();
             this.lblSaveNumberTR4 = new System.Windows.Forms.Label();
-            this.btnRefreshTR4 = new System.Windows.Forms.Button();
             this.lblSavegameTR4 = new System.Windows.Forms.Label();
             this.grpHealthTR4 = new System.Windows.Forms.GroupBox();
             this.lblHealthErrorTR4 = new System.Windows.Forms.Label();
@@ -188,7 +184,6 @@ namespace TRR_SaveMaster
             this.btnSaveTR5 = new System.Windows.Forms.Button();
             this.nudSaveNumberTR5 = new System.Windows.Forms.NumericUpDown();
             this.lblSaveNumberTR5 = new System.Windows.Forms.Label();
-            this.btnRefreshTR5 = new System.Windows.Forms.Button();
             this.lblSavegameTR5 = new System.Windows.Forms.Label();
             this.grpHealthTR5 = new System.Windows.Forms.GroupBox();
             this.lblHealthErrorTR5 = new System.Windows.Forms.Label();
@@ -228,7 +223,6 @@ namespace TRR_SaveMaster
             this.cmbInventoryTR6 = new System.Windows.Forms.ComboBox();
             this.lblSaveNumberTR6 = new System.Windows.Forms.Label();
             this.lblInventoryTR6 = new System.Windows.Forms.Label();
-            this.btnRefreshTR6 = new System.Windows.Forms.Button();
             this.btnExitTR6 = new System.Windows.Forms.Button();
             this.btnSaveTR6 = new System.Windows.Forms.Button();
             this.btnCancelTR6 = new System.Windows.Forms.Button();
@@ -322,6 +316,7 @@ namespace TRR_SaveMaster
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiReportBug = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiRefreshSavegameList = new System.Windows.Forms.ToolStripMenuItem();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR1)).BeginInit();
@@ -457,7 +452,6 @@ namespace TRR_SaveMaster
             this.tpTR1.BackColor = System.Drawing.Color.White;
             this.tpTR1.Controls.Add(this.nudSaveNumberTR1);
             this.tpTR1.Controls.Add(this.lblSaveNumberTR1);
-            this.tpTR1.Controls.Add(this.btnRefreshTR1);
             this.tpTR1.Controls.Add(this.lblSavegameTR1);
             this.tpTR1.Controls.Add(this.btnExitTR1);
             this.tpTR1.Controls.Add(this.grpHealthTR1);
@@ -497,21 +491,10 @@ namespace TRR_SaveMaster
             this.lblSaveNumberTR1.TabIndex = 19;
             this.lblSaveNumberTR1.Text = "Save Number:";
             // 
-            // btnRefreshTR1
-            // 
-            this.btnRefreshTR1.Enabled = false;
-            this.btnRefreshTR1.Location = new System.Drawing.Point(628, 14);
-            this.btnRefreshTR1.Name = "btnRefreshTR1";
-            this.btnRefreshTR1.Size = new System.Drawing.Size(80, 23);
-            this.btnRefreshTR1.TabIndex = 30;
-            this.btnRefreshTR1.Text = "Refresh";
-            this.btnRefreshTR1.UseVisualStyleBackColor = true;
-            this.btnRefreshTR1.Click += new System.EventHandler(this.btnRefreshTR1_Click);
-            // 
             // lblSavegameTR1
             // 
             this.lblSavegameTR1.AutoSize = true;
-            this.lblSavegameTR1.Location = new System.Drawing.Point(376, 18);
+            this.lblSavegameTR1.Location = new System.Drawing.Point(423, 18);
             this.lblSavegameTR1.Name = "lblSavegameTR1";
             this.lblSavegameTR1.Size = new System.Drawing.Size(64, 15);
             this.lblSavegameTR1.TabIndex = 22;
@@ -576,9 +559,9 @@ namespace TRR_SaveMaster
             // 
             this.cmbSavegamesTR1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSavegamesTR1.FormattingEnabled = true;
-            this.cmbSavegamesTR1.Location = new System.Drawing.Point(441, 14);
+            this.cmbSavegamesTR1.Location = new System.Drawing.Point(493, 14);
             this.cmbSavegamesTR1.Name = "cmbSavegamesTR1";
-            this.cmbSavegamesTR1.Size = new System.Drawing.Size(182, 23);
+            this.cmbSavegamesTR1.Size = new System.Drawing.Size(209, 23);
             this.cmbSavegamesTR1.TabIndex = 21;
             this.cmbSavegamesTR1.SelectedIndexChanged += new System.EventHandler(this.cmbSavegamesTR1_SelectedIndexChanged);
             this.cmbSavegamesTR1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cmbSavegamesTR1_MouseDown);
@@ -806,7 +789,6 @@ namespace TRR_SaveMaster
             this.tpTR2.Controls.Add(this.btnExitTR2);
             this.tpTR2.Controls.Add(this.btnSaveTR2);
             this.tpTR2.Controls.Add(this.btnCancelTR2);
-            this.tpTR2.Controls.Add(this.btnRefreshTR2);
             this.tpTR2.Controls.Add(this.lblSavegameTR2);
             this.tpTR2.Controls.Add(this.cmbSavegamesTR2);
             this.tpTR2.Controls.Add(this.grpWeaponsTR2);
@@ -873,21 +855,10 @@ namespace TRR_SaveMaster
             this.btnCancelTR2.UseVisualStyleBackColor = true;
             this.btnCancelTR2.Click += new System.EventHandler(this.btnCancelTR2_Click);
             // 
-            // btnRefreshTR2
-            // 
-            this.btnRefreshTR2.Enabled = false;
-            this.btnRefreshTR2.Location = new System.Drawing.Point(628, 14);
-            this.btnRefreshTR2.Name = "btnRefreshTR2";
-            this.btnRefreshTR2.Size = new System.Drawing.Size(80, 23);
-            this.btnRefreshTR2.TabIndex = 35;
-            this.btnRefreshTR2.Text = "Refresh";
-            this.btnRefreshTR2.UseVisualStyleBackColor = true;
-            this.btnRefreshTR2.Click += new System.EventHandler(this.btnRefreshTR2_Click);
-            // 
             // lblSavegameTR2
             // 
             this.lblSavegameTR2.AutoSize = true;
-            this.lblSavegameTR2.Location = new System.Drawing.Point(376, 18);
+            this.lblSavegameTR2.Location = new System.Drawing.Point(423, 18);
             this.lblSavegameTR2.Name = "lblSavegameTR2";
             this.lblSavegameTR2.Size = new System.Drawing.Size(64, 15);
             this.lblSavegameTR2.TabIndex = 27;
@@ -897,9 +868,9 @@ namespace TRR_SaveMaster
             // 
             this.cmbSavegamesTR2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSavegamesTR2.FormattingEnabled = true;
-            this.cmbSavegamesTR2.Location = new System.Drawing.Point(441, 14);
+            this.cmbSavegamesTR2.Location = new System.Drawing.Point(493, 14);
             this.cmbSavegamesTR2.Name = "cmbSavegamesTR2";
-            this.cmbSavegamesTR2.Size = new System.Drawing.Size(182, 23);
+            this.cmbSavegamesTR2.Size = new System.Drawing.Size(209, 23);
             this.cmbSavegamesTR2.TabIndex = 26;
             this.cmbSavegamesTR2.SelectedIndexChanged += new System.EventHandler(this.cmbSavegamesTR2_SelectedIndexChanged);
             this.cmbSavegamesTR2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cmbSavegamesTR2_MouseDown);
@@ -1253,7 +1224,6 @@ namespace TRR_SaveMaster
             this.tpTR3.BackColor = System.Drawing.Color.White;
             this.tpTR3.Controls.Add(this.nudSaveNumberTR3);
             this.tpTR3.Controls.Add(this.lblSaveNumberTR3);
-            this.tpTR3.Controls.Add(this.btnRefreshTR3);
             this.tpTR3.Controls.Add(this.btnExitTR3);
             this.tpTR3.Controls.Add(this.btnSaveTR3);
             this.tpTR3.Controls.Add(this.btnCancelTR3);
@@ -1291,17 +1261,6 @@ namespace TRR_SaveMaster
             this.lblSaveNumberTR3.TabIndex = 38;
             this.lblSaveNumberTR3.Text = "Save Number:";
             // 
-            // btnRefreshTR3
-            // 
-            this.btnRefreshTR3.Enabled = false;
-            this.btnRefreshTR3.Location = new System.Drawing.Point(628, 14);
-            this.btnRefreshTR3.Name = "btnRefreshTR3";
-            this.btnRefreshTR3.Size = new System.Drawing.Size(80, 23);
-            this.btnRefreshTR3.TabIndex = 36;
-            this.btnRefreshTR3.Text = "Refresh";
-            this.btnRefreshTR3.UseVisualStyleBackColor = true;
-            this.btnRefreshTR3.Click += new System.EventHandler(this.btnRefreshTR3_Click);
-            // 
             // btnExitTR3
             // 
             this.btnExitTR3.Location = new System.Drawing.Point(456, 479);
@@ -1337,7 +1296,7 @@ namespace TRR_SaveMaster
             // lblSavegameTR3
             // 
             this.lblSavegameTR3.AutoSize = true;
-            this.lblSavegameTR3.Location = new System.Drawing.Point(376, 18);
+            this.lblSavegameTR3.Location = new System.Drawing.Point(423, 18);
             this.lblSavegameTR3.Name = "lblSavegameTR3";
             this.lblSavegameTR3.Size = new System.Drawing.Size(64, 15);
             this.lblSavegameTR3.TabIndex = 19;
@@ -1347,9 +1306,9 @@ namespace TRR_SaveMaster
             // 
             this.cmbSavegamesTR3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSavegamesTR3.FormattingEnabled = true;
-            this.cmbSavegamesTR3.Location = new System.Drawing.Point(441, 14);
+            this.cmbSavegamesTR3.Location = new System.Drawing.Point(493, 14);
             this.cmbSavegamesTR3.Name = "cmbSavegamesTR3";
-            this.cmbSavegamesTR3.Size = new System.Drawing.Size(182, 23);
+            this.cmbSavegamesTR3.Size = new System.Drawing.Size(209, 23);
             this.cmbSavegamesTR3.TabIndex = 18;
             this.cmbSavegamesTR3.SelectedIndexChanged += new System.EventHandler(this.cmbSavegamesTR3_SelectedIndexChanged);
             this.cmbSavegamesTR3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cmbSavegamesTR3_MouseDown);
@@ -1758,7 +1717,6 @@ namespace TRR_SaveMaster
             this.tpTR4.Controls.Add(this.btnSaveTR4);
             this.tpTR4.Controls.Add(this.nudSaveNumberTR4);
             this.tpTR4.Controls.Add(this.lblSaveNumberTR4);
-            this.tpTR4.Controls.Add(this.btnRefreshTR4);
             this.tpTR4.Controls.Add(this.lblSavegameTR4);
             this.tpTR4.Controls.Add(this.grpHealthTR4);
             this.tpTR4.Controls.Add(this.cmbSavegamesTR4);
@@ -1825,21 +1783,10 @@ namespace TRR_SaveMaster
             this.lblSaveNumberTR4.TabIndex = 32;
             this.lblSaveNumberTR4.Text = "Save Number:";
             // 
-            // btnRefreshTR4
-            // 
-            this.btnRefreshTR4.Enabled = false;
-            this.btnRefreshTR4.Location = new System.Drawing.Point(628, 14);
-            this.btnRefreshTR4.Name = "btnRefreshTR4";
-            this.btnRefreshTR4.Size = new System.Drawing.Size(80, 23);
-            this.btnRefreshTR4.TabIndex = 38;
-            this.btnRefreshTR4.Text = "Refresh";
-            this.btnRefreshTR4.UseVisualStyleBackColor = true;
-            this.btnRefreshTR4.Click += new System.EventHandler(this.btnRefreshTR4_Click);
-            // 
             // lblSavegameTR4
             // 
             this.lblSavegameTR4.AutoSize = true;
-            this.lblSavegameTR4.Location = new System.Drawing.Point(376, 18);
+            this.lblSavegameTR4.Location = new System.Drawing.Point(423, 18);
             this.lblSavegameTR4.Name = "lblSavegameTR4";
             this.lblSavegameTR4.Size = new System.Drawing.Size(64, 15);
             this.lblSavegameTR4.TabIndex = 34;
@@ -1894,9 +1841,9 @@ namespace TRR_SaveMaster
             // 
             this.cmbSavegamesTR4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSavegamesTR4.FormattingEnabled = true;
-            this.cmbSavegamesTR4.Location = new System.Drawing.Point(441, 14);
+            this.cmbSavegamesTR4.Location = new System.Drawing.Point(493, 14);
             this.cmbSavegamesTR4.Name = "cmbSavegamesTR4";
-            this.cmbSavegamesTR4.Size = new System.Drawing.Size(182, 23);
+            this.cmbSavegamesTR4.Size = new System.Drawing.Size(209, 23);
             this.cmbSavegamesTR4.TabIndex = 33;
             this.cmbSavegamesTR4.SelectedIndexChanged += new System.EventHandler(this.cmbSavegamesTR4_SelectedIndexChanged);
             this.cmbSavegamesTR4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cmbSavegamesTR4_MouseDown);
@@ -2303,7 +2250,6 @@ namespace TRR_SaveMaster
             this.tpTR5.Controls.Add(this.btnSaveTR5);
             this.tpTR5.Controls.Add(this.nudSaveNumberTR5);
             this.tpTR5.Controls.Add(this.lblSaveNumberTR5);
-            this.tpTR5.Controls.Add(this.btnRefreshTR5);
             this.tpTR5.Controls.Add(this.lblSavegameTR5);
             this.tpTR5.Controls.Add(this.grpHealthTR5);
             this.tpTR5.Controls.Add(this.cmbSavegamesTR5);
@@ -2371,21 +2317,10 @@ namespace TRR_SaveMaster
             this.lblSaveNumberTR5.TabIndex = 43;
             this.lblSaveNumberTR5.Text = "Save Number:";
             // 
-            // btnRefreshTR5
-            // 
-            this.btnRefreshTR5.Enabled = false;
-            this.btnRefreshTR5.Location = new System.Drawing.Point(628, 14);
-            this.btnRefreshTR5.Name = "btnRefreshTR5";
-            this.btnRefreshTR5.Size = new System.Drawing.Size(80, 23);
-            this.btnRefreshTR5.TabIndex = 49;
-            this.btnRefreshTR5.Text = "Refresh";
-            this.btnRefreshTR5.UseVisualStyleBackColor = true;
-            this.btnRefreshTR5.Click += new System.EventHandler(this.btnRefreshTR5_Click);
-            // 
             // lblSavegameTR5
             // 
             this.lblSavegameTR5.AutoSize = true;
-            this.lblSavegameTR5.Location = new System.Drawing.Point(376, 18);
+            this.lblSavegameTR5.Location = new System.Drawing.Point(423, 18);
             this.lblSavegameTR5.Name = "lblSavegameTR5";
             this.lblSavegameTR5.Size = new System.Drawing.Size(64, 15);
             this.lblSavegameTR5.TabIndex = 45;
@@ -2440,9 +2375,9 @@ namespace TRR_SaveMaster
             // 
             this.cmbSavegamesTR5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSavegamesTR5.FormattingEnabled = true;
-            this.cmbSavegamesTR5.Location = new System.Drawing.Point(441, 14);
+            this.cmbSavegamesTR5.Location = new System.Drawing.Point(493, 14);
             this.cmbSavegamesTR5.Name = "cmbSavegamesTR5";
-            this.cmbSavegamesTR5.Size = new System.Drawing.Size(182, 23);
+            this.cmbSavegamesTR5.Size = new System.Drawing.Size(209, 23);
             this.cmbSavegamesTR5.TabIndex = 44;
             this.cmbSavegamesTR5.SelectedIndexChanged += new System.EventHandler(this.cmbSavegamesTR5_SelectedIndexChanged);
             this.cmbSavegamesTR5.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cmbSavegamesTR5_MouseDown);
@@ -2804,7 +2739,6 @@ namespace TRR_SaveMaster
             this.tpTR6.Controls.Add(this.cmbInventoryTR6);
             this.tpTR6.Controls.Add(this.lblSaveNumberTR6);
             this.tpTR6.Controls.Add(this.lblInventoryTR6);
-            this.tpTR6.Controls.Add(this.btnRefreshTR6);
             this.tpTR6.Controls.Add(this.btnExitTR6);
             this.tpTR6.Controls.Add(this.btnSaveTR6);
             this.tpTR6.Controls.Add(this.btnCancelTR6);
@@ -2866,17 +2800,6 @@ namespace TRR_SaveMaster
             this.lblInventoryTR6.Text = "Inventory:";
             this.lblInventoryTR6.Visible = false;
             // 
-            // btnRefreshTR6
-            // 
-            this.btnRefreshTR6.Enabled = false;
-            this.btnRefreshTR6.Location = new System.Drawing.Point(628, 14);
-            this.btnRefreshTR6.Name = "btnRefreshTR6";
-            this.btnRefreshTR6.Size = new System.Drawing.Size(80, 23);
-            this.btnRefreshTR6.TabIndex = 45;
-            this.btnRefreshTR6.Text = "Refresh";
-            this.btnRefreshTR6.UseVisualStyleBackColor = true;
-            this.btnRefreshTR6.Click += new System.EventHandler(this.btnRefreshTR6_Click);
-            // 
             // btnExitTR6
             // 
             this.btnExitTR6.Location = new System.Drawing.Point(456, 479);
@@ -2912,7 +2835,7 @@ namespace TRR_SaveMaster
             // lblSavegameTR6
             // 
             this.lblSavegameTR6.AutoSize = true;
-            this.lblSavegameTR6.Location = new System.Drawing.Point(376, 18);
+            this.lblSavegameTR6.Location = new System.Drawing.Point(423, 18);
             this.lblSavegameTR6.Name = "lblSavegameTR6";
             this.lblSavegameTR6.Size = new System.Drawing.Size(64, 15);
             this.lblSavegameTR6.TabIndex = 38;
@@ -2922,9 +2845,9 @@ namespace TRR_SaveMaster
             // 
             this.cmbSavegamesTR6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSavegamesTR6.FormattingEnabled = true;
-            this.cmbSavegamesTR6.Location = new System.Drawing.Point(441, 14);
+            this.cmbSavegamesTR6.Location = new System.Drawing.Point(493, 14);
             this.cmbSavegamesTR6.Name = "cmbSavegamesTR6";
-            this.cmbSavegamesTR6.Size = new System.Drawing.Size(182, 23);
+            this.cmbSavegamesTR6.Size = new System.Drawing.Size(209, 23);
             this.cmbSavegamesTR6.TabIndex = 37;
             this.cmbSavegamesTR6.SelectedIndexChanged += new System.EventHandler(this.cmbSavegamesTR6_SelectedIndexChanged);
             this.cmbSavegamesTR6.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cmbSavegamesTR6_MouseDown);
@@ -3616,6 +3539,7 @@ namespace TRR_SaveMaster
             this.tsmiFileSeparator,
             this.tsmiBackupBeforeSaving,
             this.tsmiCreateBackup,
+            this.tsmiRefreshSavegameList,
             this.tsmiFileSeparator2,
             this.tsmiExit});
             this.tsddbFile.Image = ((System.Drawing.Image)(resources.GetObject("tsddbFile.Image")));
@@ -3898,6 +3822,14 @@ namespace TRR_SaveMaster
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
             // 
+            // tsmiRefreshSavegameList
+            // 
+            this.tsmiRefreshSavegameList.Enabled = false;
+            this.tsmiRefreshSavegameList.Name = "tsmiRefreshSavegameList";
+            this.tsmiRefreshSavegameList.Size = new System.Drawing.Size(287, 22);
+            this.tsmiRefreshSavegameList.Text = "Refresh savegame list";
+            this.tsmiRefreshSavegameList.Click += new System.EventHandler(this.tsmiRefreshSavegameList_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -4101,7 +4033,6 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.ToolStripMenuItem tsmiViewReadme;
         private System.Windows.Forms.ToolStripMenuItem tsmiReportBug;
         private System.Windows.Forms.ToolStripMenuItem tsmiAbout;
-        private System.Windows.Forms.Button btnRefreshTR1;
         private System.Windows.Forms.Label lblSavegameTR2;
         private System.Windows.Forms.ComboBox cmbSavegamesTR2;
         private System.Windows.Forms.GroupBox grpWeaponsTR2;
@@ -4133,7 +4064,6 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.Button btnExitTR2;
         private System.Windows.Forms.Button btnSaveTR2;
         private System.Windows.Forms.Button btnCancelTR2;
-        private System.Windows.Forms.Button btnRefreshTR2;
         private System.Windows.Forms.Label lblSavegameTR3;
         private System.Windows.Forms.ComboBox cmbSavegamesTR3;
         private System.Windows.Forms.GroupBox grpWeaponsTR3;
@@ -4167,7 +4097,6 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.Button btnExitTR3;
         private System.Windows.Forms.Button btnSaveTR3;
         private System.Windows.Forms.Button btnCancelTR3;
-        private System.Windows.Forms.Button btnRefreshTR3;
         private System.Windows.Forms.Label lblCollectibleCrystalsTR3;
         private System.Windows.Forms.NumericUpDown nudCollectibleCrystalsTR3;
         private System.Windows.Forms.ToolStripDropDownButton tsddbEdit;
@@ -4195,7 +4124,6 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.TabPage tpTR4;
         private System.Windows.Forms.NumericUpDown nudSaveNumberTR4;
         private System.Windows.Forms.Label lblSaveNumberTR4;
-        private System.Windows.Forms.Button btnRefreshTR4;
         private System.Windows.Forms.Label lblSavegameTR4;
         private System.Windows.Forms.GroupBox grpHealthTR4;
         private System.Windows.Forms.Label lblHealthErrorTR4;
@@ -4249,7 +4177,6 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.Button btnSaveTR5;
         private System.Windows.Forms.NumericUpDown nudSaveNumberTR5;
         private System.Windows.Forms.Label lblSaveNumberTR5;
-        private System.Windows.Forms.Button btnRefreshTR5;
         private System.Windows.Forms.Label lblSavegameTR5;
         private System.Windows.Forms.GroupBox grpHealthTR5;
         private System.Windows.Forms.Label lblHealthErrorTR5;
@@ -4285,7 +4212,6 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.NumericUpDown nudShotgunNormalAmmoTR5;
         private System.Windows.Forms.CheckBox chkShotgunTR5;
         private System.Windows.Forms.TabPage tpTR6;
-        private System.Windows.Forms.Button btnRefreshTR6;
         private System.Windows.Forms.Button btnExitTR6;
         private System.Windows.Forms.Button btnSaveTR6;
         private System.Windows.Forms.Button btnCancelTR6;
@@ -4350,6 +4276,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.NumericUpDown nudSaveNumberTR6;
         private System.Windows.Forms.Label lblSaveNumberTR6;
         private System.Windows.Forms.ToolStripMenuItem tsmiShowInventoryToggleTR6;
+        private System.Windows.Forms.ToolStripMenuItem tsmiRefreshSavegameList;
     }
 }
 

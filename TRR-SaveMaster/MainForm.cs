@@ -54,7 +54,7 @@ namespace TRR_SaveMaster
             ReadConfigFile();
             PopulateSavegamesTR1();
 
-            btnRefreshTR1.Enabled = !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX);
+            tsmiRefreshSavegameList.Enabled = !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX);
             tsmiCreateBackup.Enabled = !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX);
             tsmiBackupBeforeSaving.Enabled = !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX);
 
@@ -373,9 +373,7 @@ namespace TRR_SaveMaster
 
                     PopulateSavegamesConditionally();
 
-                    btnRefreshTR1.Enabled = true;
-                    btnRefreshTR2.Enabled = true;
-                    btnRefreshTR3.Enabled = true;
+                    tsmiRefreshSavegameList.Enabled = true;
 
                     EnableToolStripMenuItemsConditionally();
 
@@ -417,9 +415,7 @@ namespace TRR_SaveMaster
 
                     PopulateSavegamesConditionally();
 
-                    btnRefreshTR4.Enabled = true;
-                    btnRefreshTR5.Enabled = true;
-                    btnRefreshTR6.Enabled = true;
+                    tsmiRefreshSavegameList.Enabled = true;
 
                     EnableToolStripMenuItemsConditionally();
 
@@ -1435,102 +1431,6 @@ namespace TRR_SaveMaster
             WriteChangesTR6(cmbSavegamesTR6.SelectedItem as Savegame);
         }
 
-        private void btnRefreshTR1_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX))
-            {
-                cmbSavegamesTR1.Items.Clear();
-                TR1.PopulateSavegames(cmbSavegamesTR1);
-
-                slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX)) ?
-                    $"{cmbSavegamesTR1.Items.Count} savegames found for Tomb Raider I" : "Ready";
-            }
-            else
-            {
-                MessageBox.Show("Could not find savegame file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnRefreshTR2_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX))
-            {
-                cmbSavegamesTR2.Items.Clear();
-                TR2.PopulateSavegames(cmbSavegamesTR2);
-
-                slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX)) ?
-                    $"{cmbSavegamesTR2.Items.Count} savegames found for Tomb Raider II" : "Ready";
-            }
-            else
-            {
-                MessageBox.Show("Could not find savegame file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnRefreshTR3_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX))
-            {
-                cmbSavegamesTR3.Items.Clear();
-                TR3.PopulateSavegames(cmbSavegamesTR3);
-
-                slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX)) ?
-                    $"{cmbSavegamesTR3.Items.Count} savegames found for Tomb Raider III" : "Ready";
-            }
-            else
-            {
-                MessageBox.Show("Could not find savegame file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnRefreshTR4_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
-            {
-                cmbSavegamesTR4.Items.Clear();
-                TR4.PopulateSavegames(cmbSavegamesTR4);
-
-                slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2)) ?
-                    $"{cmbSavegamesTR4.Items.Count} savegames found for Tomb Raider IV" : "Ready";
-            }
-            else
-            {
-                MessageBox.Show("Could not find savegame file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnRefreshTR5_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
-            {
-                cmbSavegamesTR5.Items.Clear();
-                TR5.PopulateSavegames(cmbSavegamesTR5);
-
-                slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2)) ?
-                    $"{cmbSavegamesTR5.Items.Count} savegames found for Tomb Raider V" : "Ready";
-            }
-            else
-            {
-                MessageBox.Show("Could not find savegame file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnRefreshTR6_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
-            {
-                cmbSavegamesTR6.Items.Clear();
-                TR6.PopulateSavegames(cmbSavegamesTR6);
-
-                slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2)) ?
-                    $"{cmbSavegamesTR6.Items.Count} savegames found for Tomb Raider VI" : "Ready";
-            }
-            else
-            {
-                MessageBox.Show("Could not find savegame file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
         private void UpdateSavegameDisplayNameTR1(ComboBox cmbSavegames, Savegame selectedSavegame)
         {
             cmbSavegames.SelectedIndexChanged -= cmbSavegamesTR1_SelectedIndexChanged;
@@ -1957,7 +1857,7 @@ namespace TRR_SaveMaster
         {
             if (tabGame.SelectedIndex == TAB_TR1)
             {
-                btnRefreshTR1.Enabled = !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX);
+                tsmiRefreshSavegameList.Enabled = !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX);
 
                 if (cmbSavegamesTR1.Items.Count == 0)
                 {
@@ -1973,7 +1873,7 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == TAB_TR2)
             {
-                btnRefreshTR2.Enabled = !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX);
+                tsmiRefreshSavegameList.Enabled = !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX);
 
                 if (cmbSavegamesTR2.Items.Count == 0)
                 {
@@ -1989,7 +1889,7 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == TAB_TR3)
             {
-                btnRefreshTR3.Enabled = !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX);
+                tsmiRefreshSavegameList.Enabled = !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX);
 
                 if (cmbSavegamesTR3.Items.Count == 0)
                 {
@@ -2011,7 +1911,7 @@ namespace TRR_SaveMaster
                     return;
                 }
 
-                btnRefreshTR4.Enabled = !string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2);
+                tsmiRefreshSavegameList.Enabled = !string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2);
 
                 if (cmbSavegamesTR4.Items.Count == 0)
                 {
@@ -2033,7 +1933,7 @@ namespace TRR_SaveMaster
                     return;
                 }
 
-                btnRefreshTR5.Enabled = !string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2);
+                tsmiRefreshSavegameList.Enabled = !string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2);
 
                 if (cmbSavegamesTR5.Items.Count == 0)
                 {
@@ -2055,7 +1955,7 @@ namespace TRR_SaveMaster
                     return;
                 }
 
-                btnRefreshTR6.Enabled = !string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2);
+                tsmiRefreshSavegameList.Enabled = !string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2);
 
                 if (cmbSavegamesTR6.Items.Count == 0)
                 {
@@ -2111,6 +2011,58 @@ namespace TRR_SaveMaster
                 ssrStatusStrip.Visible = false;
                 slblStatus.Visible = false;
                 this.Height -= ssrStatusStrip.Height;
+            }
+        }
+
+        private void tsmiRefreshSavegameList_Click(object sender, EventArgs e)
+        {
+            if (tabGame.SelectedIndex == TAB_TR1 && !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX))
+            {
+                cmbSavegamesTR1.Items.Clear();
+                TR1.PopulateSavegames(cmbSavegamesTR1);
+
+                slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX)) ?
+                    $"{cmbSavegamesTR1.Items.Count} savegames found for Tomb Raider I" : "Ready";
+            }
+            else if (tabGame.SelectedIndex == TAB_TR2 && !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX))
+            {
+                cmbSavegamesTR2.Items.Clear();
+                TR2.PopulateSavegames(cmbSavegamesTR2);
+
+                slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX)) ?
+                    $"{cmbSavegamesTR2.Items.Count} savegames found for Tomb Raider II" : "Ready";
+            }
+            else if (tabGame.SelectedIndex == TAB_TR3 && !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX))
+            {
+                cmbSavegamesTR3.Items.Clear();
+                TR3.PopulateSavegames(cmbSavegamesTR3);
+
+                slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX)) ?
+                    $"{cmbSavegamesTR3.Items.Count} savegames found for Tomb Raider III" : "Ready";
+            }
+            else if (tabGame.SelectedIndex == TAB_TR4 && !string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
+            {
+                cmbSavegamesTR4.Items.Clear();
+                TR4.PopulateSavegames(cmbSavegamesTR4);
+
+                slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2)) ?
+                    $"{cmbSavegamesTR4.Items.Count} savegames found for Tomb Raider IV" : "Ready";
+            }
+            else if (tabGame.SelectedIndex == TAB_TR5 && !string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
+            {
+                cmbSavegamesTR5.Items.Clear();
+                TR5.PopulateSavegames(cmbSavegamesTR5);
+
+                slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2)) ?
+                    $"{cmbSavegamesTR5.Items.Count} savegames found for Tomb Raider V" : "Ready";
+            }
+            else if (tabGame.SelectedIndex == TAB_TR6 && !string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
+            {
+                cmbSavegamesTR6.Items.Clear();
+                TR6.PopulateSavegames(cmbSavegamesTR6);
+
+                slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2)) ?
+                    $"{cmbSavegamesTR6.Items.Count} savegames found for Tomb Raider VI" : "Ready";
             }
         }
 
