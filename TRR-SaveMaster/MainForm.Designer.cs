@@ -440,6 +440,7 @@ namespace TRR_SaveMaster
             this.tabGame.Controls.Add(this.tpTR4);
             this.tabGame.Controls.Add(this.tpTR5);
             this.tabGame.Controls.Add(this.tpTR6);
+            this.tabGame.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabGame.ItemSize = new System.Drawing.Size(238, 22);
             this.tabGame.Location = new System.Drawing.Point(1, 28);
             this.tabGame.Multiline = true;
@@ -465,6 +466,7 @@ namespace TRR_SaveMaster
             this.tpTR1.Controls.Add(this.grpItemsTR1);
             this.tpTR1.Controls.Add(this.btnSaveTR1);
             this.tpTR1.Controls.Add(this.grpWeaponsTR1);
+            this.tpTR1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tpTR1.Location = new System.Drawing.Point(4, 48);
             this.tpTR1.Name = "tpTR1";
             this.tpTR1.Padding = new System.Windows.Forms.Padding(3);
@@ -474,14 +476,14 @@ namespace TRR_SaveMaster
             // 
             // nudSaveNumberTR1
             // 
-            this.nudSaveNumberTR1.Location = new System.Drawing.Point(101, 16);
+            this.nudSaveNumberTR1.Location = new System.Drawing.Point(106, 16);
             this.nudSaveNumberTR1.Maximum = new decimal(new int[] {
             2147483647,
             0,
             0,
             0});
             this.nudSaveNumberTR1.Name = "nudSaveNumberTR1";
-            this.nudSaveNumberTR1.Size = new System.Drawing.Size(53, 20);
+            this.nudSaveNumberTR1.Size = new System.Drawing.Size(53, 23);
             this.nudSaveNumberTR1.TabIndex = 19;
             this.nudSaveNumberTR1.ValueChanged += new System.EventHandler(this.nudSaveNumberTR1_ValueChanged);
             this.nudSaveNumberTR1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSaveNumberTR1_KeyPress);
@@ -491,14 +493,14 @@ namespace TRR_SaveMaster
             this.lblSaveNumberTR1.AutoSize = true;
             this.lblSaveNumberTR1.Location = new System.Drawing.Point(22, 18);
             this.lblSaveNumberTR1.Name = "lblSaveNumberTR1";
-            this.lblSaveNumberTR1.Size = new System.Drawing.Size(75, 13);
+            this.lblSaveNumberTR1.Size = new System.Drawing.Size(81, 15);
             this.lblSaveNumberTR1.TabIndex = 19;
             this.lblSaveNumberTR1.Text = "Save Number:";
             // 
             // btnRefreshTR1
             // 
             this.btnRefreshTR1.Enabled = false;
-            this.btnRefreshTR1.Location = new System.Drawing.Point(628, 13);
+            this.btnRefreshTR1.Location = new System.Drawing.Point(628, 14);
             this.btnRefreshTR1.Name = "btnRefreshTR1";
             this.btnRefreshTR1.Size = new System.Drawing.Size(80, 23);
             this.btnRefreshTR1.TabIndex = 30;
@@ -511,7 +513,7 @@ namespace TRR_SaveMaster
             this.lblSavegameTR1.AutoSize = true;
             this.lblSavegameTR1.Location = new System.Drawing.Point(376, 18);
             this.lblSavegameTR1.Name = "lblSavegameTR1";
-            this.lblSavegameTR1.Size = new System.Drawing.Size(61, 13);
+            this.lblSavegameTR1.Size = new System.Drawing.Size(64, 15);
             this.lblSavegameTR1.TabIndex = 22;
             this.lblSavegameTR1.Text = "Savegame:";
             // 
@@ -527,6 +529,7 @@ namespace TRR_SaveMaster
             // 
             // grpHealthTR1
             // 
+            this.grpHealthTR1.BackColor = System.Drawing.Color.Transparent;
             this.grpHealthTR1.Controls.Add(this.lblHealthErrorTR1);
             this.grpHealthTR1.Controls.Add(this.lblHealthTR1);
             this.grpHealthTR1.Controls.Add(this.trbHealthTR1);
@@ -542,7 +545,7 @@ namespace TRR_SaveMaster
             this.lblHealthErrorTR1.AutoSize = true;
             this.lblHealthErrorTR1.Location = new System.Drawing.Point(93, 55);
             this.lblHealthErrorTR1.Name = "lblHealthErrorTR1";
-            this.lblHealthErrorTR1.Size = new System.Drawing.Size(133, 13);
+            this.lblHealthErrorTR1.Size = new System.Drawing.Size(149, 15);
             this.lblHealthErrorTR1.TabIndex = 2;
             this.lblHealthErrorTR1.Text = "Unable to find health bytes";
             this.lblHealthErrorTR1.Visible = false;
@@ -550,9 +553,9 @@ namespace TRR_SaveMaster
             // lblHealthTR1
             // 
             this.lblHealthTR1.AutoSize = true;
-            this.lblHealthTR1.Location = new System.Drawing.Point(292, 33);
+            this.lblHealthTR1.Location = new System.Drawing.Point(289, 32);
             this.lblHealthTR1.Name = "lblHealthTR1";
-            this.lblHealthTR1.Size = new System.Drawing.Size(30, 13);
+            this.lblHealthTR1.Size = new System.Drawing.Size(32, 15);
             this.lblHealthTR1.TabIndex = 1;
             this.lblHealthTR1.Text = "0.1%";
             // 
@@ -575,7 +578,7 @@ namespace TRR_SaveMaster
             this.cmbSavegamesTR1.FormattingEnabled = true;
             this.cmbSavegamesTR1.Location = new System.Drawing.Point(441, 14);
             this.cmbSavegamesTR1.Name = "cmbSavegamesTR1";
-            this.cmbSavegamesTR1.Size = new System.Drawing.Size(182, 21);
+            this.cmbSavegamesTR1.Size = new System.Drawing.Size(182, 23);
             this.cmbSavegamesTR1.TabIndex = 21;
             this.cmbSavegamesTR1.SelectedIndexChanged += new System.EventHandler(this.cmbSavegamesTR1_SelectedIndexChanged);
             this.cmbSavegamesTR1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cmbSavegamesTR1_MouseDown);
@@ -609,7 +612,7 @@ namespace TRR_SaveMaster
             this.lblLargeMedipacksTR1.AutoSize = true;
             this.lblLargeMedipacksTR1.Location = new System.Drawing.Point(18, 57);
             this.lblLargeMedipacksTR1.Name = "lblLargeMedipacksTR1";
-            this.lblLargeMedipacksTR1.Size = new System.Drawing.Size(96, 13);
+            this.lblLargeMedipacksTR1.Size = new System.Drawing.Size(102, 15);
             this.lblLargeMedipacksTR1.TabIndex = 18;
             this.lblLargeMedipacksTR1.Text = "Large Medi Packs:";
             // 
@@ -618,7 +621,7 @@ namespace TRR_SaveMaster
             this.lblSmallMedipacksTR1.AutoSize = true;
             this.lblSmallMedipacksTR1.Location = new System.Drawing.Point(18, 31);
             this.lblSmallMedipacksTR1.Name = "lblSmallMedipacksTR1";
-            this.lblSmallMedipacksTR1.Size = new System.Drawing.Size(94, 13);
+            this.lblSmallMedipacksTR1.Size = new System.Drawing.Size(102, 15);
             this.lblSmallMedipacksTR1.TabIndex = 9;
             this.lblSmallMedipacksTR1.Text = "Small Medi Packs:";
             // 
@@ -631,7 +634,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudLargeMedipacksTR1.Name = "nudLargeMedipacksTR1";
-            this.nudLargeMedipacksTR1.Size = new System.Drawing.Size(53, 20);
+            this.nudLargeMedipacksTR1.Size = new System.Drawing.Size(53, 23);
             this.nudLargeMedipacksTR1.TabIndex = 16;
             this.nudLargeMedipacksTR1.ValueChanged += new System.EventHandler(this.nudLargeMedipacksTR1_ValueChanged);
             this.nudLargeMedipacksTR1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudLargeMedipacksTR1_KeyPress);
@@ -645,7 +648,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudSmallMedipacksTR1.Name = "nudSmallMedipacksTR1";
-            this.nudSmallMedipacksTR1.Size = new System.Drawing.Size(53, 20);
+            this.nudSmallMedipacksTR1.Size = new System.Drawing.Size(53, 23);
             this.nudSmallMedipacksTR1.TabIndex = 15;
             this.nudSmallMedipacksTR1.ValueChanged += new System.EventHandler(this.nudSmallMedipacksTR1_ValueChanged);
             this.nudSmallMedipacksTR1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSmallMedipacksTR1_KeyPress);
@@ -683,29 +686,29 @@ namespace TRR_SaveMaster
             // lblPresentTR1
             // 
             this.lblPresentTR1.AutoSize = true;
-            this.lblPresentTR1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPresentTR1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPresentTR1.Location = new System.Drawing.Point(24, 29);
             this.lblPresentTR1.Name = "lblPresentTR1";
-            this.lblPresentTR1.Size = new System.Drawing.Size(43, 13);
+            this.lblPresentTR1.Size = new System.Drawing.Size(46, 15);
             this.lblPresentTR1.TabIndex = 43;
             this.lblPresentTR1.Text = "Present";
             // 
             // lblPistolAmmoTR1
             // 
             this.lblPistolAmmoTR1.AutoSize = true;
-            this.lblPistolAmmoTR1.Location = new System.Drawing.Point(162, 59);
+            this.lblPistolAmmoTR1.Location = new System.Drawing.Point(159, 59);
             this.lblPistolAmmoTR1.Name = "lblPistolAmmoTR1";
-            this.lblPistolAmmoTR1.Size = new System.Drawing.Size(50, 13);
+            this.lblPistolAmmoTR1.Size = new System.Drawing.Size(59, 15);
             this.lblPistolAmmoTR1.TabIndex = 14;
             this.lblPistolAmmoTR1.Text = "Unlimited";
             // 
             // lblAmmoTR1
             // 
             this.lblAmmoTR1.AutoSize = true;
-            this.lblAmmoTR1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmmoTR1.Location = new System.Drawing.Point(164, 29);
+            this.lblAmmoTR1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAmmoTR1.Location = new System.Drawing.Point(162, 29);
             this.lblAmmoTR1.Name = "lblAmmoTR1";
-            this.lblAmmoTR1.Size = new System.Drawing.Size(36, 13);
+            this.lblAmmoTR1.Size = new System.Drawing.Size(44, 15);
             this.lblAmmoTR1.TabIndex = 42;
             this.lblAmmoTR1.Text = "Ammo";
             // 
@@ -718,7 +721,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudShotgunAmmoTR1.Name = "nudShotgunAmmoTR1";
-            this.nudShotgunAmmoTR1.Size = new System.Drawing.Size(53, 20);
+            this.nudShotgunAmmoTR1.Size = new System.Drawing.Size(53, 23);
             this.nudShotgunAmmoTR1.TabIndex = 13;
             this.nudShotgunAmmoTR1.ValueChanged += new System.EventHandler(this.nudShotgunAmmoTR1_ValueChanged);
             this.nudShotgunAmmoTR1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudShotgunAmmoTR1_KeyPress);
@@ -732,7 +735,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudMagnumAmmoTR1.Name = "nudMagnumAmmoTR1";
-            this.nudMagnumAmmoTR1.Size = new System.Drawing.Size(53, 20);
+            this.nudMagnumAmmoTR1.Size = new System.Drawing.Size(53, 23);
             this.nudMagnumAmmoTR1.TabIndex = 11;
             this.nudMagnumAmmoTR1.ValueChanged += new System.EventHandler(this.nudMagnumAmmoTR1_ValueChanged);
             this.nudMagnumAmmoTR1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudMagnumAmmoTR1_KeyPress);
@@ -746,7 +749,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudUziAmmoTR1.Name = "nudUziAmmoTR1";
-            this.nudUziAmmoTR1.Size = new System.Drawing.Size(53, 20);
+            this.nudUziAmmoTR1.Size = new System.Drawing.Size(53, 23);
             this.nudUziAmmoTR1.TabIndex = 9;
             this.nudUziAmmoTR1.ValueChanged += new System.EventHandler(this.nudUziAmmoTR1_ValueChanged);
             this.nudUziAmmoTR1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudUziAmmoTR1_KeyPress);
@@ -756,7 +759,7 @@ namespace TRR_SaveMaster
             this.chkShotgunTR1.AutoSize = true;
             this.chkShotgunTR1.Location = new System.Drawing.Point(22, 81);
             this.chkShotgunTR1.Name = "chkShotgunTR1";
-            this.chkShotgunTR1.Size = new System.Drawing.Size(69, 17);
+            this.chkShotgunTR1.Size = new System.Drawing.Size(74, 19);
             this.chkShotgunTR1.TabIndex = 5;
             this.chkShotgunTR1.Text = "Shotgun:";
             this.chkShotgunTR1.UseVisualStyleBackColor = true;
@@ -767,7 +770,7 @@ namespace TRR_SaveMaster
             this.chkMagnumsTR1.AutoSize = true;
             this.chkMagnumsTR1.Location = new System.Drawing.Point(22, 107);
             this.chkMagnumsTR1.Name = "chkMagnumsTR1";
-            this.chkMagnumsTR1.Size = new System.Drawing.Size(75, 17);
+            this.chkMagnumsTR1.Size = new System.Drawing.Size(83, 19);
             this.chkMagnumsTR1.TabIndex = 4;
             this.chkMagnumsTR1.Text = "Magnums:";
             this.chkMagnumsTR1.UseVisualStyleBackColor = true;
@@ -778,7 +781,7 @@ namespace TRR_SaveMaster
             this.chkUzisTR1.AutoSize = true;
             this.chkUzisTR1.Location = new System.Drawing.Point(22, 133);
             this.chkUzisTR1.Name = "chkUzisTR1";
-            this.chkUzisTR1.Size = new System.Drawing.Size(49, 17);
+            this.chkUzisTR1.Size = new System.Drawing.Size(50, 19);
             this.chkUzisTR1.TabIndex = 2;
             this.chkUzisTR1.Text = "Uzis:";
             this.chkUzisTR1.UseVisualStyleBackColor = true;
@@ -789,7 +792,7 @@ namespace TRR_SaveMaster
             this.chkPistolsTR1.AutoSize = true;
             this.chkPistolsTR1.Location = new System.Drawing.Point(22, 55);
             this.chkPistolsTR1.Name = "chkPistolsTR1";
-            this.chkPistolsTR1.Size = new System.Drawing.Size(59, 17);
+            this.chkPistolsTR1.Size = new System.Drawing.Size(63, 19);
             this.chkPistolsTR1.TabIndex = 0;
             this.chkPistolsTR1.Text = "Pistols:";
             this.chkPistolsTR1.UseVisualStyleBackColor = true;
@@ -817,14 +820,14 @@ namespace TRR_SaveMaster
             // 
             // nudSaveNumberTR2
             // 
-            this.nudSaveNumberTR2.Location = new System.Drawing.Point(101, 16);
+            this.nudSaveNumberTR2.Location = new System.Drawing.Point(106, 16);
             this.nudSaveNumberTR2.Maximum = new decimal(new int[] {
             2147483647,
             0,
             0,
             0});
             this.nudSaveNumberTR2.Name = "nudSaveNumberTR2";
-            this.nudSaveNumberTR2.Size = new System.Drawing.Size(53, 20);
+            this.nudSaveNumberTR2.Size = new System.Drawing.Size(53, 23);
             this.nudSaveNumberTR2.TabIndex = 39;
             this.nudSaveNumberTR2.ValueChanged += new System.EventHandler(this.nudSaveNumberTR2_ValueChanged);
             this.nudSaveNumberTR2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSaveNumberTR2_KeyPress);
@@ -834,7 +837,7 @@ namespace TRR_SaveMaster
             this.lblSaveNumberTR2.AutoSize = true;
             this.lblSaveNumberTR2.Location = new System.Drawing.Point(22, 18);
             this.lblSaveNumberTR2.Name = "lblSaveNumberTR2";
-            this.lblSaveNumberTR2.Size = new System.Drawing.Size(75, 13);
+            this.lblSaveNumberTR2.Size = new System.Drawing.Size(81, 15);
             this.lblSaveNumberTR2.TabIndex = 40;
             this.lblSaveNumberTR2.Text = "Save Number:";
             // 
@@ -873,7 +876,7 @@ namespace TRR_SaveMaster
             // btnRefreshTR2
             // 
             this.btnRefreshTR2.Enabled = false;
-            this.btnRefreshTR2.Location = new System.Drawing.Point(628, 13);
+            this.btnRefreshTR2.Location = new System.Drawing.Point(628, 14);
             this.btnRefreshTR2.Name = "btnRefreshTR2";
             this.btnRefreshTR2.Size = new System.Drawing.Size(80, 23);
             this.btnRefreshTR2.TabIndex = 35;
@@ -886,7 +889,7 @@ namespace TRR_SaveMaster
             this.lblSavegameTR2.AutoSize = true;
             this.lblSavegameTR2.Location = new System.Drawing.Point(376, 18);
             this.lblSavegameTR2.Name = "lblSavegameTR2";
-            this.lblSavegameTR2.Size = new System.Drawing.Size(61, 13);
+            this.lblSavegameTR2.Size = new System.Drawing.Size(64, 15);
             this.lblSavegameTR2.TabIndex = 27;
             this.lblSavegameTR2.Text = "Savegame:";
             // 
@@ -896,7 +899,7 @@ namespace TRR_SaveMaster
             this.cmbSavegamesTR2.FormattingEnabled = true;
             this.cmbSavegamesTR2.Location = new System.Drawing.Point(441, 14);
             this.cmbSavegamesTR2.Name = "cmbSavegamesTR2";
-            this.cmbSavegamesTR2.Size = new System.Drawing.Size(182, 21);
+            this.cmbSavegamesTR2.Size = new System.Drawing.Size(182, 23);
             this.cmbSavegamesTR2.TabIndex = 26;
             this.cmbSavegamesTR2.SelectedIndexChanged += new System.EventHandler(this.cmbSavegamesTR2_SelectedIndexChanged);
             this.cmbSavegamesTR2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cmbSavegamesTR2_MouseDown);
@@ -929,29 +932,29 @@ namespace TRR_SaveMaster
             // lblPresentTR2
             // 
             this.lblPresentTR2.AutoSize = true;
-            this.lblPresentTR2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPresentTR2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPresentTR2.Location = new System.Drawing.Point(24, 29);
             this.lblPresentTR2.Name = "lblPresentTR2";
-            this.lblPresentTR2.Size = new System.Drawing.Size(43, 13);
+            this.lblPresentTR2.Size = new System.Drawing.Size(46, 15);
             this.lblPresentTR2.TabIndex = 45;
             this.lblPresentTR2.Text = "Present";
             // 
             // lblAmmoTR2
             // 
             this.lblAmmoTR2.AutoSize = true;
-            this.lblAmmoTR2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmmoTR2.Location = new System.Drawing.Point(164, 29);
+            this.lblAmmoTR2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAmmoTR2.Location = new System.Drawing.Point(162, 29);
             this.lblAmmoTR2.Name = "lblAmmoTR2";
-            this.lblAmmoTR2.Size = new System.Drawing.Size(36, 13);
+            this.lblAmmoTR2.Size = new System.Drawing.Size(44, 15);
             this.lblAmmoTR2.TabIndex = 44;
             this.lblAmmoTR2.Text = "Ammo";
             // 
             // lblPistolAmmoTR2
             // 
             this.lblPistolAmmoTR2.AutoSize = true;
-            this.lblPistolAmmoTR2.Location = new System.Drawing.Point(162, 59);
+            this.lblPistolAmmoTR2.Location = new System.Drawing.Point(159, 59);
             this.lblPistolAmmoTR2.Name = "lblPistolAmmoTR2";
-            this.lblPistolAmmoTR2.Size = new System.Drawing.Size(50, 13);
+            this.lblPistolAmmoTR2.Size = new System.Drawing.Size(59, 15);
             this.lblPistolAmmoTR2.TabIndex = 18;
             this.lblPistolAmmoTR2.Text = "Unlimited";
             // 
@@ -964,7 +967,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudShotgunAmmoTR2.Name = "nudShotgunAmmoTR2";
-            this.nudShotgunAmmoTR2.Size = new System.Drawing.Size(53, 20);
+            this.nudShotgunAmmoTR2.Size = new System.Drawing.Size(53, 23);
             this.nudShotgunAmmoTR2.TabIndex = 17;
             this.nudShotgunAmmoTR2.ValueChanged += new System.EventHandler(this.nudShotgunAmmoTR2_ValueChanged);
             this.nudShotgunAmmoTR2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudShotgunAmmoTR2_KeyPress);
@@ -974,7 +977,7 @@ namespace TRR_SaveMaster
             this.chkHarpoonGunTR2.AutoSize = true;
             this.chkHarpoonGunTR2.Location = new System.Drawing.Point(22, 211);
             this.chkHarpoonGunTR2.Name = "chkHarpoonGunTR2";
-            this.chkHarpoonGunTR2.Size = new System.Drawing.Size(93, 17);
+            this.chkHarpoonGunTR2.Size = new System.Drawing.Size(101, 19);
             this.chkHarpoonGunTR2.TabIndex = 16;
             this.chkHarpoonGunTR2.Text = "Harpoon Gun:";
             this.chkHarpoonGunTR2.UseVisualStyleBackColor = true;
@@ -985,7 +988,7 @@ namespace TRR_SaveMaster
             this.chkGrenadeLauncherTR2.AutoSize = true;
             this.chkGrenadeLauncherTR2.Location = new System.Drawing.Point(22, 185);
             this.chkGrenadeLauncherTR2.Name = "chkGrenadeLauncherTR2";
-            this.chkGrenadeLauncherTR2.Size = new System.Drawing.Size(118, 17);
+            this.chkGrenadeLauncherTR2.Size = new System.Drawing.Size(125, 19);
             this.chkGrenadeLauncherTR2.TabIndex = 15;
             this.chkGrenadeLauncherTR2.Text = "Grenade Launcher:";
             this.chkGrenadeLauncherTR2.UseVisualStyleBackColor = true;
@@ -1000,7 +1003,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudUziAmmoTR2.Name = "nudUziAmmoTR2";
-            this.nudUziAmmoTR2.Size = new System.Drawing.Size(53, 20);
+            this.nudUziAmmoTR2.Size = new System.Drawing.Size(53, 23);
             this.nudUziAmmoTR2.TabIndex = 14;
             this.nudUziAmmoTR2.ValueChanged += new System.EventHandler(this.nudUziAmmoTR2_ValueChanged);
             this.nudUziAmmoTR2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudUziAmmoTR2_KeyPress);
@@ -1014,7 +1017,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudM16AmmoTR2.Name = "nudM16AmmoTR2";
-            this.nudM16AmmoTR2.Size = new System.Drawing.Size(53, 20);
+            this.nudM16AmmoTR2.Size = new System.Drawing.Size(53, 23);
             this.nudM16AmmoTR2.TabIndex = 13;
             this.nudM16AmmoTR2.ValueChanged += new System.EventHandler(this.nudM16AmmoTR2_ValueChanged);
             this.nudM16AmmoTR2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudM16AmmoTR2_KeyPress);
@@ -1028,7 +1031,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudGrenadeLauncherAmmoTR2.Name = "nudGrenadeLauncherAmmoTR2";
-            this.nudGrenadeLauncherAmmoTR2.Size = new System.Drawing.Size(53, 20);
+            this.nudGrenadeLauncherAmmoTR2.Size = new System.Drawing.Size(53, 23);
             this.nudGrenadeLauncherAmmoTR2.TabIndex = 10;
             this.nudGrenadeLauncherAmmoTR2.ValueChanged += new System.EventHandler(this.nudGrenadeLauncherAmmoTR2_ValueChanged);
             this.nudGrenadeLauncherAmmoTR2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudGrenadeLauncherAmmoTR2_KeyPress);
@@ -1042,7 +1045,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudHarpoonGunAmmoTR2.Name = "nudHarpoonGunAmmoTR2";
-            this.nudHarpoonGunAmmoTR2.Size = new System.Drawing.Size(53, 20);
+            this.nudHarpoonGunAmmoTR2.Size = new System.Drawing.Size(53, 23);
             this.nudHarpoonGunAmmoTR2.TabIndex = 12;
             this.nudHarpoonGunAmmoTR2.ValueChanged += new System.EventHandler(this.nudHarpoonGunAmmoTR2_ValueChanged);
             this.nudHarpoonGunAmmoTR2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudHarpoonGunAmmoTR2_KeyPress);
@@ -1056,7 +1059,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudAutomaticPistolsAmmoTR2.Name = "nudAutomaticPistolsAmmoTR2";
-            this.nudAutomaticPistolsAmmoTR2.Size = new System.Drawing.Size(53, 20);
+            this.nudAutomaticPistolsAmmoTR2.Size = new System.Drawing.Size(53, 23);
             this.nudAutomaticPistolsAmmoTR2.TabIndex = 9;
             this.nudAutomaticPistolsAmmoTR2.ValueChanged += new System.EventHandler(this.nudAutomaticPistolsAmmoTR2_ValueChanged);
             this.nudAutomaticPistolsAmmoTR2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudAutomaticPistolsAmmoTR2_KeyPress);
@@ -1066,7 +1069,7 @@ namespace TRR_SaveMaster
             this.chkShotgunTR2.AutoSize = true;
             this.chkShotgunTR2.Location = new System.Drawing.Point(22, 81);
             this.chkShotgunTR2.Name = "chkShotgunTR2";
-            this.chkShotgunTR2.Size = new System.Drawing.Size(69, 17);
+            this.chkShotgunTR2.Size = new System.Drawing.Size(74, 19);
             this.chkShotgunTR2.TabIndex = 5;
             this.chkShotgunTR2.Text = "Shotgun:";
             this.chkShotgunTR2.UseVisualStyleBackColor = true;
@@ -1077,7 +1080,7 @@ namespace TRR_SaveMaster
             this.chkM16TR2.AutoSize = true;
             this.chkM16TR2.Location = new System.Drawing.Point(22, 159);
             this.chkM16TR2.Name = "chkM16TR2";
-            this.chkM16TR2.Size = new System.Drawing.Size(50, 17);
+            this.chkM16TR2.Size = new System.Drawing.Size(52, 19);
             this.chkM16TR2.TabIndex = 3;
             this.chkM16TR2.Text = "M16:";
             this.chkM16TR2.UseVisualStyleBackColor = true;
@@ -1088,7 +1091,7 @@ namespace TRR_SaveMaster
             this.chkUzisTR2.AutoSize = true;
             this.chkUzisTR2.Location = new System.Drawing.Point(22, 133);
             this.chkUzisTR2.Name = "chkUzisTR2";
-            this.chkUzisTR2.Size = new System.Drawing.Size(49, 17);
+            this.chkUzisTR2.Size = new System.Drawing.Size(50, 19);
             this.chkUzisTR2.TabIndex = 2;
             this.chkUzisTR2.Text = "Uzis:";
             this.chkUzisTR2.UseVisualStyleBackColor = true;
@@ -1099,7 +1102,7 @@ namespace TRR_SaveMaster
             this.chkAutomaticPistolsTR2.AutoSize = true;
             this.chkAutomaticPistolsTR2.Location = new System.Drawing.Point(22, 107);
             this.chkAutomaticPistolsTR2.Name = "chkAutomaticPistolsTR2";
-            this.chkAutomaticPistolsTR2.Size = new System.Drawing.Size(109, 17);
+            this.chkAutomaticPistolsTR2.Size = new System.Drawing.Size(122, 19);
             this.chkAutomaticPistolsTR2.TabIndex = 1;
             this.chkAutomaticPistolsTR2.Text = "Automatic Pistols:";
             this.chkAutomaticPistolsTR2.UseVisualStyleBackColor = true;
@@ -1110,7 +1113,7 @@ namespace TRR_SaveMaster
             this.chkPistolsTR2.AutoSize = true;
             this.chkPistolsTR2.Location = new System.Drawing.Point(22, 55);
             this.chkPistolsTR2.Name = "chkPistolsTR2";
-            this.chkPistolsTR2.Size = new System.Drawing.Size(59, 17);
+            this.chkPistolsTR2.Size = new System.Drawing.Size(63, 19);
             this.chkPistolsTR2.TabIndex = 0;
             this.chkPistolsTR2.Text = "Pistols:";
             this.chkPistolsTR2.UseVisualStyleBackColor = true;
@@ -1133,7 +1136,7 @@ namespace TRR_SaveMaster
             this.lblHealthErrorTR2.AutoSize = true;
             this.lblHealthErrorTR2.Location = new System.Drawing.Point(93, 55);
             this.lblHealthErrorTR2.Name = "lblHealthErrorTR2";
-            this.lblHealthErrorTR2.Size = new System.Drawing.Size(133, 13);
+            this.lblHealthErrorTR2.Size = new System.Drawing.Size(149, 15);
             this.lblHealthErrorTR2.TabIndex = 20;
             this.lblHealthErrorTR2.Text = "Unable to find health bytes";
             this.lblHealthErrorTR2.Visible = false;
@@ -1141,9 +1144,10 @@ namespace TRR_SaveMaster
             // lblHealthTR2
             // 
             this.lblHealthTR2.AutoSize = true;
-            this.lblHealthTR2.Location = new System.Drawing.Point(292, 33);
+            this.lblHealthTR2.BackColor = System.Drawing.Color.Transparent;
+            this.lblHealthTR2.Location = new System.Drawing.Point(289, 32);
             this.lblHealthTR2.Name = "lblHealthTR2";
-            this.lblHealthTR2.Size = new System.Drawing.Size(30, 13);
+            this.lblHealthTR2.Size = new System.Drawing.Size(32, 15);
             this.lblHealthTR2.TabIndex = 1;
             this.lblHealthTR2.Text = "0.1%";
             // 
@@ -1180,7 +1184,7 @@ namespace TRR_SaveMaster
             this.lblFlaresTR2.AutoSize = true;
             this.lblFlaresTR2.Location = new System.Drawing.Point(18, 83);
             this.lblFlaresTR2.Name = "lblFlaresTR2";
-            this.lblFlaresTR2.Size = new System.Drawing.Size(38, 13);
+            this.lblFlaresTR2.Size = new System.Drawing.Size(40, 15);
             this.lblFlaresTR2.TabIndex = 19;
             this.lblFlaresTR2.Text = "Flares:";
             // 
@@ -1189,7 +1193,7 @@ namespace TRR_SaveMaster
             this.lblLargeMedipacksTR2.AutoSize = true;
             this.lblLargeMedipacksTR2.Location = new System.Drawing.Point(18, 57);
             this.lblLargeMedipacksTR2.Name = "lblLargeMedipacksTR2";
-            this.lblLargeMedipacksTR2.Size = new System.Drawing.Size(96, 13);
+            this.lblLargeMedipacksTR2.Size = new System.Drawing.Size(102, 15);
             this.lblLargeMedipacksTR2.TabIndex = 18;
             this.lblLargeMedipacksTR2.Text = "Large Medi Packs:";
             // 
@@ -1198,7 +1202,7 @@ namespace TRR_SaveMaster
             this.lblSmallMedipacksTR2.AutoSize = true;
             this.lblSmallMedipacksTR2.Location = new System.Drawing.Point(18, 31);
             this.lblSmallMedipacksTR2.Name = "lblSmallMedipacksTR2";
-            this.lblSmallMedipacksTR2.Size = new System.Drawing.Size(94, 13);
+            this.lblSmallMedipacksTR2.Size = new System.Drawing.Size(102, 15);
             this.lblSmallMedipacksTR2.TabIndex = 9;
             this.lblSmallMedipacksTR2.Text = "Small Medi Packs:";
             // 
@@ -1211,7 +1215,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudFlaresTR2.Name = "nudFlaresTR2";
-            this.nudFlaresTR2.Size = new System.Drawing.Size(53, 20);
+            this.nudFlaresTR2.Size = new System.Drawing.Size(53, 23);
             this.nudFlaresTR2.TabIndex = 17;
             this.nudFlaresTR2.ValueChanged += new System.EventHandler(this.nudFlaresTR2_ValueChanged);
             this.nudFlaresTR2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudFlaresTR2_KeyPress);
@@ -1225,7 +1229,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudLargeMedipacksTR2.Name = "nudLargeMedipacksTR2";
-            this.nudLargeMedipacksTR2.Size = new System.Drawing.Size(53, 20);
+            this.nudLargeMedipacksTR2.Size = new System.Drawing.Size(53, 23);
             this.nudLargeMedipacksTR2.TabIndex = 16;
             this.nudLargeMedipacksTR2.ValueChanged += new System.EventHandler(this.nudLargeMedipacksTR2_ValueChanged);
             this.nudLargeMedipacksTR2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudLargeMedipacksTR2_KeyPress);
@@ -1239,7 +1243,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudSmallMedipacksTR2.Name = "nudSmallMedipacksTR2";
-            this.nudSmallMedipacksTR2.Size = new System.Drawing.Size(53, 20);
+            this.nudSmallMedipacksTR2.Size = new System.Drawing.Size(53, 23);
             this.nudSmallMedipacksTR2.TabIndex = 15;
             this.nudSmallMedipacksTR2.ValueChanged += new System.EventHandler(this.nudSmallMedipacksTR2_ValueChanged);
             this.nudSmallMedipacksTR2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSmallMedipacksTR2_KeyPress);
@@ -1266,14 +1270,14 @@ namespace TRR_SaveMaster
             // 
             // nudSaveNumberTR3
             // 
-            this.nudSaveNumberTR3.Location = new System.Drawing.Point(101, 16);
+            this.nudSaveNumberTR3.Location = new System.Drawing.Point(106, 16);
             this.nudSaveNumberTR3.Maximum = new decimal(new int[] {
             2147483647,
             0,
             0,
             0});
             this.nudSaveNumberTR3.Name = "nudSaveNumberTR3";
-            this.nudSaveNumberTR3.Size = new System.Drawing.Size(53, 20);
+            this.nudSaveNumberTR3.Size = new System.Drawing.Size(53, 23);
             this.nudSaveNumberTR3.TabIndex = 37;
             this.nudSaveNumberTR3.ValueChanged += new System.EventHandler(this.nudSaveNumberTR3_ValueChanged);
             this.nudSaveNumberTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSaveNumberTR3_KeyPress);
@@ -1283,14 +1287,14 @@ namespace TRR_SaveMaster
             this.lblSaveNumberTR3.AutoSize = true;
             this.lblSaveNumberTR3.Location = new System.Drawing.Point(22, 18);
             this.lblSaveNumberTR3.Name = "lblSaveNumberTR3";
-            this.lblSaveNumberTR3.Size = new System.Drawing.Size(75, 13);
+            this.lblSaveNumberTR3.Size = new System.Drawing.Size(81, 15);
             this.lblSaveNumberTR3.TabIndex = 38;
             this.lblSaveNumberTR3.Text = "Save Number:";
             // 
             // btnRefreshTR3
             // 
             this.btnRefreshTR3.Enabled = false;
-            this.btnRefreshTR3.Location = new System.Drawing.Point(628, 13);
+            this.btnRefreshTR3.Location = new System.Drawing.Point(628, 14);
             this.btnRefreshTR3.Name = "btnRefreshTR3";
             this.btnRefreshTR3.Size = new System.Drawing.Size(80, 23);
             this.btnRefreshTR3.TabIndex = 36;
@@ -1335,7 +1339,7 @@ namespace TRR_SaveMaster
             this.lblSavegameTR3.AutoSize = true;
             this.lblSavegameTR3.Location = new System.Drawing.Point(376, 18);
             this.lblSavegameTR3.Name = "lblSavegameTR3";
-            this.lblSavegameTR3.Size = new System.Drawing.Size(61, 13);
+            this.lblSavegameTR3.Size = new System.Drawing.Size(64, 15);
             this.lblSavegameTR3.TabIndex = 19;
             this.lblSavegameTR3.Text = "Savegame:";
             // 
@@ -1345,7 +1349,7 @@ namespace TRR_SaveMaster
             this.cmbSavegamesTR3.FormattingEnabled = true;
             this.cmbSavegamesTR3.Location = new System.Drawing.Point(441, 14);
             this.cmbSavegamesTR3.Name = "cmbSavegamesTR3";
-            this.cmbSavegamesTR3.Size = new System.Drawing.Size(182, 21);
+            this.cmbSavegamesTR3.Size = new System.Drawing.Size(182, 23);
             this.cmbSavegamesTR3.TabIndex = 18;
             this.cmbSavegamesTR3.SelectedIndexChanged += new System.EventHandler(this.cmbSavegamesTR3_SelectedIndexChanged);
             this.cmbSavegamesTR3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cmbSavegamesTR3_MouseDown);
@@ -1380,29 +1384,29 @@ namespace TRR_SaveMaster
             // lblPresentTR3
             // 
             this.lblPresentTR3.AutoSize = true;
-            this.lblPresentTR3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPresentTR3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPresentTR3.Location = new System.Drawing.Point(24, 29);
             this.lblPresentTR3.Name = "lblPresentTR3";
-            this.lblPresentTR3.Size = new System.Drawing.Size(43, 13);
+            this.lblPresentTR3.Size = new System.Drawing.Size(46, 15);
             this.lblPresentTR3.TabIndex = 47;
             this.lblPresentTR3.Text = "Present";
             // 
             // lblAmmoTR3
             // 
             this.lblAmmoTR3.AutoSize = true;
-            this.lblAmmoTR3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmmoTR3.Location = new System.Drawing.Point(164, 29);
+            this.lblAmmoTR3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAmmoTR3.Location = new System.Drawing.Point(162, 29);
             this.lblAmmoTR3.Name = "lblAmmoTR3";
-            this.lblAmmoTR3.Size = new System.Drawing.Size(36, 13);
+            this.lblAmmoTR3.Size = new System.Drawing.Size(44, 15);
             this.lblAmmoTR3.TabIndex = 46;
             this.lblAmmoTR3.Text = "Ammo";
             // 
             // lblPistolAmmoTR3
             // 
             this.lblPistolAmmoTR3.AutoSize = true;
-            this.lblPistolAmmoTR3.Location = new System.Drawing.Point(162, 59);
+            this.lblPistolAmmoTR3.Location = new System.Drawing.Point(159, 59);
             this.lblPistolAmmoTR3.Name = "lblPistolAmmoTR3";
-            this.lblPistolAmmoTR3.Size = new System.Drawing.Size(50, 13);
+            this.lblPistolAmmoTR3.Size = new System.Drawing.Size(59, 15);
             this.lblPistolAmmoTR3.TabIndex = 18;
             this.lblPistolAmmoTR3.Text = "Unlimited";
             // 
@@ -1415,7 +1419,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudShotgunAmmoTR3.Name = "nudShotgunAmmoTR3";
-            this.nudShotgunAmmoTR3.Size = new System.Drawing.Size(53, 20);
+            this.nudShotgunAmmoTR3.Size = new System.Drawing.Size(53, 23);
             this.nudShotgunAmmoTR3.TabIndex = 17;
             this.nudShotgunAmmoTR3.ValueChanged += new System.EventHandler(this.nudShotgunAmmoTR3_ValueChanged);
             this.nudShotgunAmmoTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudShotgunAmmoTR3_KeyPress);
@@ -1425,7 +1429,7 @@ namespace TRR_SaveMaster
             this.chkHarpoonGunTR3.AutoSize = true;
             this.chkHarpoonGunTR3.Location = new System.Drawing.Point(22, 237);
             this.chkHarpoonGunTR3.Name = "chkHarpoonGunTR3";
-            this.chkHarpoonGunTR3.Size = new System.Drawing.Size(93, 17);
+            this.chkHarpoonGunTR3.Size = new System.Drawing.Size(101, 19);
             this.chkHarpoonGunTR3.TabIndex = 16;
             this.chkHarpoonGunTR3.Text = "Harpoon Gun:";
             this.chkHarpoonGunTR3.UseVisualStyleBackColor = true;
@@ -1436,7 +1440,7 @@ namespace TRR_SaveMaster
             this.chkGrenadeLauncherTR3.AutoSize = true;
             this.chkGrenadeLauncherTR3.Location = new System.Drawing.Point(22, 211);
             this.chkGrenadeLauncherTR3.Name = "chkGrenadeLauncherTR3";
-            this.chkGrenadeLauncherTR3.Size = new System.Drawing.Size(118, 17);
+            this.chkGrenadeLauncherTR3.Size = new System.Drawing.Size(125, 19);
             this.chkGrenadeLauncherTR3.TabIndex = 15;
             this.chkGrenadeLauncherTR3.Text = "Grenade Launcher:";
             this.chkGrenadeLauncherTR3.UseVisualStyleBackColor = true;
@@ -1451,7 +1455,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudUziAmmoTR3.Name = "nudUziAmmoTR3";
-            this.nudUziAmmoTR3.Size = new System.Drawing.Size(53, 20);
+            this.nudUziAmmoTR3.Size = new System.Drawing.Size(53, 23);
             this.nudUziAmmoTR3.TabIndex = 14;
             this.nudUziAmmoTR3.ValueChanged += new System.EventHandler(this.nudUziAmmoTR3_ValueChanged);
             this.nudUziAmmoTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudUziAmmoTR3_KeyPress);
@@ -1465,7 +1469,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudMP5AmmoTR3.Name = "nudMP5AmmoTR3";
-            this.nudMP5AmmoTR3.Size = new System.Drawing.Size(53, 20);
+            this.nudMP5AmmoTR3.Size = new System.Drawing.Size(53, 23);
             this.nudMP5AmmoTR3.TabIndex = 13;
             this.nudMP5AmmoTR3.ValueChanged += new System.EventHandler(this.nudMP5AmmoTR3_ValueChanged);
             this.nudMP5AmmoTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudMP5AmmoTR3_KeyPress);
@@ -1479,7 +1483,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudRocketLauncherAmmoTR3.Name = "nudRocketLauncherAmmoTR3";
-            this.nudRocketLauncherAmmoTR3.Size = new System.Drawing.Size(53, 20);
+            this.nudRocketLauncherAmmoTR3.Size = new System.Drawing.Size(53, 23);
             this.nudRocketLauncherAmmoTR3.TabIndex = 11;
             this.nudRocketLauncherAmmoTR3.ValueChanged += new System.EventHandler(this.nudRocketLauncherAmmoTR3_ValueChanged);
             this.nudRocketLauncherAmmoTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudRocketLauncherAmmoTR3_KeyPress);
@@ -1493,7 +1497,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudGrenadeLauncherAmmoTR3.Name = "nudGrenadeLauncherAmmoTR3";
-            this.nudGrenadeLauncherAmmoTR3.Size = new System.Drawing.Size(53, 20);
+            this.nudGrenadeLauncherAmmoTR3.Size = new System.Drawing.Size(53, 23);
             this.nudGrenadeLauncherAmmoTR3.TabIndex = 10;
             this.nudGrenadeLauncherAmmoTR3.ValueChanged += new System.EventHandler(this.nudGrenadeLauncherAmmoTR3_ValueChanged);
             this.nudGrenadeLauncherAmmoTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudGrenadeLauncherAmmoTR3_KeyPress);
@@ -1507,7 +1511,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudHarpoonGunAmmoTR3.Name = "nudHarpoonGunAmmoTR3";
-            this.nudHarpoonGunAmmoTR3.Size = new System.Drawing.Size(53, 20);
+            this.nudHarpoonGunAmmoTR3.Size = new System.Drawing.Size(53, 23);
             this.nudHarpoonGunAmmoTR3.TabIndex = 12;
             this.nudHarpoonGunAmmoTR3.ValueChanged += new System.EventHandler(this.nudHarpoonGunAmmoTR3_ValueChanged);
             this.nudHarpoonGunAmmoTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudHarpoonGunAmmoTR3_KeyPress);
@@ -1521,7 +1525,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudDeagleAmmoTR3.Name = "nudDeagleAmmoTR3";
-            this.nudDeagleAmmoTR3.Size = new System.Drawing.Size(53, 20);
+            this.nudDeagleAmmoTR3.Size = new System.Drawing.Size(53, 23);
             this.nudDeagleAmmoTR3.TabIndex = 9;
             this.nudDeagleAmmoTR3.ValueChanged += new System.EventHandler(this.nudDeagleAmmoTR3_ValueChanged);
             this.nudDeagleAmmoTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudDeagleAmmoTR3_KeyPress);
@@ -1531,7 +1535,7 @@ namespace TRR_SaveMaster
             this.chkRocketLauncherTR3.AutoSize = true;
             this.chkRocketLauncherTR3.Location = new System.Drawing.Point(22, 185);
             this.chkRocketLauncherTR3.Name = "chkRocketLauncherTR3";
-            this.chkRocketLauncherTR3.Size = new System.Drawing.Size(112, 17);
+            this.chkRocketLauncherTR3.Size = new System.Drawing.Size(117, 19);
             this.chkRocketLauncherTR3.TabIndex = 4;
             this.chkRocketLauncherTR3.Text = "Rocket Launcher:";
             this.chkRocketLauncherTR3.UseVisualStyleBackColor = true;
@@ -1542,7 +1546,7 @@ namespace TRR_SaveMaster
             this.chkUzisTR3.AutoSize = true;
             this.chkUzisTR3.Location = new System.Drawing.Point(22, 133);
             this.chkUzisTR3.Name = "chkUzisTR3";
-            this.chkUzisTR3.Size = new System.Drawing.Size(49, 17);
+            this.chkUzisTR3.Size = new System.Drawing.Size(50, 19);
             this.chkUzisTR3.TabIndex = 2;
             this.chkUzisTR3.Text = "Uzis:";
             this.chkUzisTR3.UseVisualStyleBackColor = true;
@@ -1553,7 +1557,7 @@ namespace TRR_SaveMaster
             this.chkShotgunTR3.AutoSize = true;
             this.chkShotgunTR3.Location = new System.Drawing.Point(22, 81);
             this.chkShotgunTR3.Name = "chkShotgunTR3";
-            this.chkShotgunTR3.Size = new System.Drawing.Size(69, 17);
+            this.chkShotgunTR3.Size = new System.Drawing.Size(74, 19);
             this.chkShotgunTR3.TabIndex = 5;
             this.chkShotgunTR3.Text = "Shotgun:";
             this.chkShotgunTR3.UseVisualStyleBackColor = true;
@@ -1564,7 +1568,7 @@ namespace TRR_SaveMaster
             this.chkMP5TR3.AutoSize = true;
             this.chkMP5TR3.Location = new System.Drawing.Point(22, 159);
             this.chkMP5TR3.Name = "chkMP5TR3";
-            this.chkMP5TR3.Size = new System.Drawing.Size(51, 17);
+            this.chkMP5TR3.Size = new System.Drawing.Size(53, 19);
             this.chkMP5TR3.TabIndex = 3;
             this.chkMP5TR3.Text = "MP5:";
             this.chkMP5TR3.UseVisualStyleBackColor = true;
@@ -1575,7 +1579,7 @@ namespace TRR_SaveMaster
             this.chkDeagleTR3.AutoSize = true;
             this.chkDeagleTR3.Location = new System.Drawing.Point(22, 107);
             this.chkDeagleTR3.Name = "chkDeagleTR3";
-            this.chkDeagleTR3.Size = new System.Drawing.Size(90, 17);
+            this.chkDeagleTR3.Size = new System.Drawing.Size(93, 19);
             this.chkDeagleTR3.TabIndex = 1;
             this.chkDeagleTR3.Text = "Desert Eagle:";
             this.chkDeagleTR3.UseVisualStyleBackColor = true;
@@ -1586,7 +1590,7 @@ namespace TRR_SaveMaster
             this.chkPistolsTR3.AutoSize = true;
             this.chkPistolsTR3.Location = new System.Drawing.Point(22, 55);
             this.chkPistolsTR3.Name = "chkPistolsTR3";
-            this.chkPistolsTR3.Size = new System.Drawing.Size(59, 17);
+            this.chkPistolsTR3.Size = new System.Drawing.Size(63, 19);
             this.chkPistolsTR3.TabIndex = 0;
             this.chkPistolsTR3.Text = "Pistols:";
             this.chkPistolsTR3.UseVisualStyleBackColor = true;
@@ -1609,7 +1613,7 @@ namespace TRR_SaveMaster
             this.lblHealthErrorTR3.AutoSize = true;
             this.lblHealthErrorTR3.Location = new System.Drawing.Point(93, 55);
             this.lblHealthErrorTR3.Name = "lblHealthErrorTR3";
-            this.lblHealthErrorTR3.Size = new System.Drawing.Size(133, 13);
+            this.lblHealthErrorTR3.Size = new System.Drawing.Size(149, 15);
             this.lblHealthErrorTR3.TabIndex = 20;
             this.lblHealthErrorTR3.Text = "Unable to find health bytes";
             this.lblHealthErrorTR3.Visible = false;
@@ -1617,9 +1621,10 @@ namespace TRR_SaveMaster
             // lblHealthTR3
             // 
             this.lblHealthTR3.AutoSize = true;
-            this.lblHealthTR3.Location = new System.Drawing.Point(292, 33);
+            this.lblHealthTR3.BackColor = System.Drawing.Color.Transparent;
+            this.lblHealthTR3.Location = new System.Drawing.Point(289, 32);
             this.lblHealthTR3.Name = "lblHealthTR3";
-            this.lblHealthTR3.Size = new System.Drawing.Size(30, 13);
+            this.lblHealthTR3.Size = new System.Drawing.Size(32, 15);
             this.lblHealthTR3.TabIndex = 1;
             this.lblHealthTR3.Text = "0.1%";
             // 
@@ -1658,7 +1663,7 @@ namespace TRR_SaveMaster
             this.lblCollectibleCrystalsTR3.AutoSize = true;
             this.lblCollectibleCrystalsTR3.Location = new System.Drawing.Point(18, 109);
             this.lblCollectibleCrystalsTR3.Name = "lblCollectibleCrystalsTR3";
-            this.lblCollectibleCrystalsTR3.Size = new System.Drawing.Size(97, 13);
+            this.lblCollectibleCrystalsTR3.Size = new System.Drawing.Size(110, 15);
             this.lblCollectibleCrystalsTR3.TabIndex = 21;
             this.lblCollectibleCrystalsTR3.Text = "Collectible Crystals:";
             // 
@@ -1671,7 +1676,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudCollectibleCrystalsTR3.Name = "nudCollectibleCrystalsTR3";
-            this.nudCollectibleCrystalsTR3.Size = new System.Drawing.Size(53, 20);
+            this.nudCollectibleCrystalsTR3.Size = new System.Drawing.Size(53, 23);
             this.nudCollectibleCrystalsTR3.TabIndex = 20;
             this.nudCollectibleCrystalsTR3.ValueChanged += new System.EventHandler(this.nudCollectibleCrystalsTR3_ValueChanged);
             this.nudCollectibleCrystalsTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudCollectibleCrystalsTR3_KeyPress);
@@ -1681,7 +1686,7 @@ namespace TRR_SaveMaster
             this.lblFlaresTR3.AutoSize = true;
             this.lblFlaresTR3.Location = new System.Drawing.Point(18, 83);
             this.lblFlaresTR3.Name = "lblFlaresTR3";
-            this.lblFlaresTR3.Size = new System.Drawing.Size(38, 13);
+            this.lblFlaresTR3.Size = new System.Drawing.Size(40, 15);
             this.lblFlaresTR3.TabIndex = 19;
             this.lblFlaresTR3.Text = "Flares:";
             // 
@@ -1690,7 +1695,7 @@ namespace TRR_SaveMaster
             this.lblLargeMedipacksTR3.AutoSize = true;
             this.lblLargeMedipacksTR3.Location = new System.Drawing.Point(18, 57);
             this.lblLargeMedipacksTR3.Name = "lblLargeMedipacksTR3";
-            this.lblLargeMedipacksTR3.Size = new System.Drawing.Size(96, 13);
+            this.lblLargeMedipacksTR3.Size = new System.Drawing.Size(102, 15);
             this.lblLargeMedipacksTR3.TabIndex = 18;
             this.lblLargeMedipacksTR3.Text = "Large Medi Packs:";
             // 
@@ -1699,7 +1704,7 @@ namespace TRR_SaveMaster
             this.lblSmallMedipacksTR3.AutoSize = true;
             this.lblSmallMedipacksTR3.Location = new System.Drawing.Point(18, 31);
             this.lblSmallMedipacksTR3.Name = "lblSmallMedipacksTR3";
-            this.lblSmallMedipacksTR3.Size = new System.Drawing.Size(94, 13);
+            this.lblSmallMedipacksTR3.Size = new System.Drawing.Size(102, 15);
             this.lblSmallMedipacksTR3.TabIndex = 9;
             this.lblSmallMedipacksTR3.Text = "Small Medi Packs:";
             // 
@@ -1712,7 +1717,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudFlaresTR3.Name = "nudFlaresTR3";
-            this.nudFlaresTR3.Size = new System.Drawing.Size(53, 20);
+            this.nudFlaresTR3.Size = new System.Drawing.Size(53, 23);
             this.nudFlaresTR3.TabIndex = 17;
             this.nudFlaresTR3.ValueChanged += new System.EventHandler(this.nudFlaresTR3_ValueChanged);
             this.nudFlaresTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudFlaresTR3_KeyPress);
@@ -1726,7 +1731,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudLargeMedipacksTR3.Name = "nudLargeMedipacksTR3";
-            this.nudLargeMedipacksTR3.Size = new System.Drawing.Size(53, 20);
+            this.nudLargeMedipacksTR3.Size = new System.Drawing.Size(53, 23);
             this.nudLargeMedipacksTR3.TabIndex = 16;
             this.nudLargeMedipacksTR3.ValueChanged += new System.EventHandler(this.nudLargeMedipacksTR3_ValueChanged);
             this.nudLargeMedipacksTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudLargeMedipacksTR3_KeyPress);
@@ -1740,7 +1745,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudSmallMedipacksTR3.Name = "nudSmallMedipacksTR3";
-            this.nudSmallMedipacksTR3.Size = new System.Drawing.Size(53, 20);
+            this.nudSmallMedipacksTR3.Size = new System.Drawing.Size(53, 23);
             this.nudSmallMedipacksTR3.TabIndex = 15;
             this.nudSmallMedipacksTR3.ValueChanged += new System.EventHandler(this.nudSmallMedipacksTR3_ValueChanged);
             this.nudSmallMedipacksTR3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSmallMedipacksTR3_KeyPress);
@@ -1799,14 +1804,14 @@ namespace TRR_SaveMaster
             // 
             // nudSaveNumberTR4
             // 
-            this.nudSaveNumberTR4.Location = new System.Drawing.Point(101, 16);
+            this.nudSaveNumberTR4.Location = new System.Drawing.Point(106, 16);
             this.nudSaveNumberTR4.Maximum = new decimal(new int[] {
             2147483647,
             0,
             0,
             0});
             this.nudSaveNumberTR4.Name = "nudSaveNumberTR4";
-            this.nudSaveNumberTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudSaveNumberTR4.Size = new System.Drawing.Size(53, 23);
             this.nudSaveNumberTR4.TabIndex = 31;
             this.nudSaveNumberTR4.ValueChanged += new System.EventHandler(this.nudSaveNumberTR4_ValueChanged);
             this.nudSaveNumberTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSaveNumberTR4_KeyPress);
@@ -1816,14 +1821,14 @@ namespace TRR_SaveMaster
             this.lblSaveNumberTR4.AutoSize = true;
             this.lblSaveNumberTR4.Location = new System.Drawing.Point(22, 18);
             this.lblSaveNumberTR4.Name = "lblSaveNumberTR4";
-            this.lblSaveNumberTR4.Size = new System.Drawing.Size(75, 13);
+            this.lblSaveNumberTR4.Size = new System.Drawing.Size(81, 15);
             this.lblSaveNumberTR4.TabIndex = 32;
             this.lblSaveNumberTR4.Text = "Save Number:";
             // 
             // btnRefreshTR4
             // 
             this.btnRefreshTR4.Enabled = false;
-            this.btnRefreshTR4.Location = new System.Drawing.Point(628, 13);
+            this.btnRefreshTR4.Location = new System.Drawing.Point(628, 14);
             this.btnRefreshTR4.Name = "btnRefreshTR4";
             this.btnRefreshTR4.Size = new System.Drawing.Size(80, 23);
             this.btnRefreshTR4.TabIndex = 38;
@@ -1836,7 +1841,7 @@ namespace TRR_SaveMaster
             this.lblSavegameTR4.AutoSize = true;
             this.lblSavegameTR4.Location = new System.Drawing.Point(376, 18);
             this.lblSavegameTR4.Name = "lblSavegameTR4";
-            this.lblSavegameTR4.Size = new System.Drawing.Size(61, 13);
+            this.lblSavegameTR4.Size = new System.Drawing.Size(64, 15);
             this.lblSavegameTR4.TabIndex = 34;
             this.lblSavegameTR4.Text = "Savegame:";
             // 
@@ -1857,7 +1862,7 @@ namespace TRR_SaveMaster
             this.lblHealthErrorTR4.AutoSize = true;
             this.lblHealthErrorTR4.Location = new System.Drawing.Point(93, 55);
             this.lblHealthErrorTR4.Name = "lblHealthErrorTR4";
-            this.lblHealthErrorTR4.Size = new System.Drawing.Size(133, 13);
+            this.lblHealthErrorTR4.Size = new System.Drawing.Size(149, 15);
             this.lblHealthErrorTR4.TabIndex = 2;
             this.lblHealthErrorTR4.Text = "Unable to find health bytes";
             this.lblHealthErrorTR4.Visible = false;
@@ -1865,9 +1870,10 @@ namespace TRR_SaveMaster
             // lblHealthTR4
             // 
             this.lblHealthTR4.AutoSize = true;
-            this.lblHealthTR4.Location = new System.Drawing.Point(292, 33);
+            this.lblHealthTR4.BackColor = System.Drawing.Color.Transparent;
+            this.lblHealthTR4.Location = new System.Drawing.Point(289, 32);
             this.lblHealthTR4.Name = "lblHealthTR4";
-            this.lblHealthTR4.Size = new System.Drawing.Size(30, 13);
+            this.lblHealthTR4.Size = new System.Drawing.Size(32, 15);
             this.lblHealthTR4.TabIndex = 1;
             this.lblHealthTR4.Text = "0.1%";
             // 
@@ -1890,7 +1896,7 @@ namespace TRR_SaveMaster
             this.cmbSavegamesTR4.FormattingEnabled = true;
             this.cmbSavegamesTR4.Location = new System.Drawing.Point(441, 14);
             this.cmbSavegamesTR4.Name = "cmbSavegamesTR4";
-            this.cmbSavegamesTR4.Size = new System.Drawing.Size(182, 21);
+            this.cmbSavegamesTR4.Size = new System.Drawing.Size(182, 23);
             this.cmbSavegamesTR4.TabIndex = 33;
             this.cmbSavegamesTR4.SelectedIndexChanged += new System.EventHandler(this.cmbSavegamesTR4_SelectedIndexChanged);
             this.cmbSavegamesTR4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cmbSavegamesTR4_MouseDown);
@@ -1917,7 +1923,7 @@ namespace TRR_SaveMaster
             this.lblGoldenSkullsTR4.AutoSize = true;
             this.lblGoldenSkullsTR4.Location = new System.Drawing.Point(18, 109);
             this.lblGoldenSkullsTR4.Name = "lblGoldenSkullsTR4";
-            this.lblGoldenSkullsTR4.Size = new System.Drawing.Size(75, 13);
+            this.lblGoldenSkullsTR4.Size = new System.Drawing.Size(81, 15);
             this.lblGoldenSkullsTR4.TabIndex = 22;
             this.lblGoldenSkullsTR4.Text = "Golden Skulls:";
             // 
@@ -1930,7 +1936,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudGoldenSkullsTR4.Name = "nudGoldenSkullsTR4";
-            this.nudGoldenSkullsTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudGoldenSkullsTR4.Size = new System.Drawing.Size(53, 23);
             this.nudGoldenSkullsTR4.TabIndex = 21;
             this.nudGoldenSkullsTR4.ValueChanged += new System.EventHandler(this.nudGoldenSkullsTR4_ValueChanged);
             this.nudGoldenSkullsTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudGoldenSkullsTR4_KeyPress);
@@ -1940,7 +1946,7 @@ namespace TRR_SaveMaster
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(18, 83);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.Size = new System.Drawing.Size(40, 15);
             this.label1.TabIndex = 20;
             this.label1.Text = "Flares:";
             // 
@@ -1953,7 +1959,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudFlaresTR4.Name = "nudFlaresTR4";
-            this.nudFlaresTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudFlaresTR4.Size = new System.Drawing.Size(53, 23);
             this.nudFlaresTR4.TabIndex = 19;
             this.nudFlaresTR4.ValueChanged += new System.EventHandler(this.nudFlaresTR4_ValueChanged);
             this.nudFlaresTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudFlaresTR4_KeyPress);
@@ -1963,7 +1969,7 @@ namespace TRR_SaveMaster
             this.lblLargeMedipacksTR4.AutoSize = true;
             this.lblLargeMedipacksTR4.Location = new System.Drawing.Point(18, 57);
             this.lblLargeMedipacksTR4.Name = "lblLargeMedipacksTR4";
-            this.lblLargeMedipacksTR4.Size = new System.Drawing.Size(92, 13);
+            this.lblLargeMedipacksTR4.Size = new System.Drawing.Size(99, 15);
             this.lblLargeMedipacksTR4.TabIndex = 18;
             this.lblLargeMedipacksTR4.Text = "Large Medipacks:";
             // 
@@ -1972,7 +1978,7 @@ namespace TRR_SaveMaster
             this.lblSmallMedipacksTR4.AutoSize = true;
             this.lblSmallMedipacksTR4.Location = new System.Drawing.Point(18, 31);
             this.lblSmallMedipacksTR4.Name = "lblSmallMedipacksTR4";
-            this.lblSmallMedipacksTR4.Size = new System.Drawing.Size(90, 13);
+            this.lblSmallMedipacksTR4.Size = new System.Drawing.Size(99, 15);
             this.lblSmallMedipacksTR4.TabIndex = 9;
             this.lblSmallMedipacksTR4.Text = "Small Medipacks:";
             // 
@@ -1985,7 +1991,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudLargeMedipacksTR4.Name = "nudLargeMedipacksTR4";
-            this.nudLargeMedipacksTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudLargeMedipacksTR4.Size = new System.Drawing.Size(53, 23);
             this.nudLargeMedipacksTR4.TabIndex = 16;
             this.nudLargeMedipacksTR4.ValueChanged += new System.EventHandler(this.nudLargeMedipacksTR4_ValueChanged);
             this.nudLargeMedipacksTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudLargeMedipacksTR4_KeyPress);
@@ -1999,7 +2005,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudSmallMedipacksTR4.Name = "nudSmallMedipacksTR4";
-            this.nudSmallMedipacksTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudSmallMedipacksTR4.Size = new System.Drawing.Size(53, 23);
             this.nudSmallMedipacksTR4.TabIndex = 15;
             this.nudSmallMedipacksTR4.ValueChanged += new System.EventHandler(this.nudSmallMedipacksTR4_ValueChanged);
             this.nudSmallMedipacksTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSmallMedipacksTR4_KeyPress);
@@ -2037,40 +2043,40 @@ namespace TRR_SaveMaster
             // lblPresentTR4
             // 
             this.lblPresentTR4.AutoSize = true;
-            this.lblPresentTR4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPresentTR4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPresentTR4.Location = new System.Drawing.Point(24, 29);
             this.lblPresentTR4.Name = "lblPresentTR4";
-            this.lblPresentTR4.Size = new System.Drawing.Size(43, 13);
+            this.lblPresentTR4.Size = new System.Drawing.Size(46, 15);
             this.lblPresentTR4.TabIndex = 41;
             this.lblPresentTR4.Text = "Present";
             // 
             // lblAmmo3TR4
             // 
             this.lblAmmo3TR4.AutoSize = true;
-            this.lblAmmo3TR4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmmo3TR4.Location = new System.Drawing.Point(288, 29);
+            this.lblAmmo3TR4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAmmo3TR4.Location = new System.Drawing.Point(286, 29);
             this.lblAmmo3TR4.Name = "lblAmmo3TR4";
-            this.lblAmmo3TR4.Size = new System.Drawing.Size(45, 13);
+            this.lblAmmo3TR4.Size = new System.Drawing.Size(53, 15);
             this.lblAmmo3TR4.TabIndex = 40;
             this.lblAmmo3TR4.Text = "Ammo 3";
             // 
             // lblAmmo2TR4
             // 
             this.lblAmmo2TR4.AutoSize = true;
-            this.lblAmmo2TR4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmmo2TR4.Location = new System.Drawing.Point(226, 29);
+            this.lblAmmo2TR4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAmmo2TR4.Location = new System.Drawing.Point(224, 29);
             this.lblAmmo2TR4.Name = "lblAmmo2TR4";
-            this.lblAmmo2TR4.Size = new System.Drawing.Size(45, 13);
+            this.lblAmmo2TR4.Size = new System.Drawing.Size(53, 15);
             this.lblAmmo2TR4.TabIndex = 39;
             this.lblAmmo2TR4.Text = "Ammo 2";
             // 
             // lblAmmo1TR4
             // 
             this.lblAmmo1TR4.AutoSize = true;
-            this.lblAmmo1TR4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmmo1TR4.Location = new System.Drawing.Point(164, 29);
+            this.lblAmmo1TR4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAmmo1TR4.Location = new System.Drawing.Point(162, 29);
             this.lblAmmo1TR4.Name = "lblAmmo1TR4";
-            this.lblAmmo1TR4.Size = new System.Drawing.Size(45, 13);
+            this.lblAmmo1TR4.Size = new System.Drawing.Size(53, 15);
             this.lblAmmo1TR4.TabIndex = 38;
             this.lblAmmo1TR4.Text = "Ammo 1";
             // 
@@ -2083,7 +2089,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudGrenadeGunFlashAmmoTR4.Name = "nudGrenadeGunFlashAmmoTR4";
-            this.nudGrenadeGunFlashAmmoTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudGrenadeGunFlashAmmoTR4.Size = new System.Drawing.Size(53, 23);
             this.nudGrenadeGunFlashAmmoTR4.TabIndex = 37;
             this.nudGrenadeGunFlashAmmoTR4.ValueChanged += new System.EventHandler(this.nudGrenadeGunFlashAmmoTR4_ValueChanged);
             this.nudGrenadeGunFlashAmmoTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudGrenadeGunFlashAmmoTR4_KeyPress);
@@ -2097,7 +2103,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudGrenadeGunSuperAmmoTR4.Name = "nudGrenadeGunSuperAmmoTR4";
-            this.nudGrenadeGunSuperAmmoTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudGrenadeGunSuperAmmoTR4.Size = new System.Drawing.Size(53, 23);
             this.nudGrenadeGunSuperAmmoTR4.TabIndex = 36;
             this.nudGrenadeGunSuperAmmoTR4.ValueChanged += new System.EventHandler(this.nudGrenadeGunSuperAmmoTR4_ValueChanged);
             this.nudGrenadeGunSuperAmmoTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudGrenadeGunSuperAmmoTR4_KeyPress);
@@ -2111,7 +2117,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudCrossbowExplosiveAmmoTR4.Name = "nudCrossbowExplosiveAmmoTR4";
-            this.nudCrossbowExplosiveAmmoTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudCrossbowExplosiveAmmoTR4.Size = new System.Drawing.Size(53, 23);
             this.nudCrossbowExplosiveAmmoTR4.TabIndex = 35;
             this.nudCrossbowExplosiveAmmoTR4.ValueChanged += new System.EventHandler(this.nudCrossbowExplosiveAmmoTR4_ValueChanged);
             this.nudCrossbowExplosiveAmmoTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudCrossbowExplosiveAmmoTR4_KeyPress);
@@ -2125,7 +2131,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudCrossbowPoisonAmmoTR4.Name = "nudCrossbowPoisonAmmoTR4";
-            this.nudCrossbowPoisonAmmoTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudCrossbowPoisonAmmoTR4.Size = new System.Drawing.Size(53, 23);
             this.nudCrossbowPoisonAmmoTR4.TabIndex = 34;
             this.nudCrossbowPoisonAmmoTR4.ValueChanged += new System.EventHandler(this.nudCrossbowPoisonAmmoTR4_ValueChanged);
             this.nudCrossbowPoisonAmmoTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudCrossbowPoisonAmmoTR4_KeyPress);
@@ -2139,7 +2145,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudShotgunWideshotAmmoTR4.Name = "nudShotgunWideshotAmmoTR4";
-            this.nudShotgunWideshotAmmoTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudShotgunWideshotAmmoTR4.Size = new System.Drawing.Size(53, 23);
             this.nudShotgunWideshotAmmoTR4.TabIndex = 33;
             this.nudShotgunWideshotAmmoTR4.ValueChanged += new System.EventHandler(this.nudShotgunWideshotAmmoTR4_ValueChanged);
             this.nudShotgunWideshotAmmoTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudShotgunWideshotAmmoTR4_KeyPress);
@@ -2153,7 +2159,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudShotgunNormalAmmoTR4.Name = "nudShotgunNormalAmmoTR4";
-            this.nudShotgunNormalAmmoTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudShotgunNormalAmmoTR4.Size = new System.Drawing.Size(53, 23);
             this.nudShotgunNormalAmmoTR4.TabIndex = 32;
             this.nudShotgunNormalAmmoTR4.ValueChanged += new System.EventHandler(this.nudShotgunNormalAmmoTR4_ValueChanged);
             this.nudShotgunNormalAmmoTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudShotgunNormalAmmoTR4_KeyPress);
@@ -2163,7 +2169,7 @@ namespace TRR_SaveMaster
             this.chkGrenadeGunTR4.AutoSize = true;
             this.chkGrenadeGunTR4.Location = new System.Drawing.Point(22, 159);
             this.chkGrenadeGunTR4.Name = "chkGrenadeGunTR4";
-            this.chkGrenadeGunTR4.Size = new System.Drawing.Size(93, 17);
+            this.chkGrenadeGunTR4.Size = new System.Drawing.Size(98, 19);
             this.chkGrenadeGunTR4.TabIndex = 31;
             this.chkGrenadeGunTR4.Text = "Grenade Gun:";
             this.chkGrenadeGunTR4.UseVisualStyleBackColor = true;
@@ -2178,7 +2184,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudUziAmmoTR4.Name = "nudUziAmmoTR4";
-            this.nudUziAmmoTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudUziAmmoTR4.Size = new System.Drawing.Size(53, 23);
             this.nudUziAmmoTR4.TabIndex = 30;
             this.nudUziAmmoTR4.ValueChanged += new System.EventHandler(this.nudUziAmmoTR4_ValueChanged);
             this.nudUziAmmoTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudUziAmmoTR4_KeyPress);
@@ -2192,7 +2198,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudRevolverAmmoTR4.Name = "nudRevolverAmmoTR4";
-            this.nudRevolverAmmoTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudRevolverAmmoTR4.Size = new System.Drawing.Size(53, 23);
             this.nudRevolverAmmoTR4.TabIndex = 29;
             this.nudRevolverAmmoTR4.ValueChanged += new System.EventHandler(this.nudRevolverAmmoTR4_ValueChanged);
             this.nudRevolverAmmoTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudRevolverAmmoTR4_KeyPress);
@@ -2206,7 +2212,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudGrenadeGunNormalAmmoTR4.Name = "nudGrenadeGunNormalAmmoTR4";
-            this.nudGrenadeGunNormalAmmoTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudGrenadeGunNormalAmmoTR4.Size = new System.Drawing.Size(53, 23);
             this.nudGrenadeGunNormalAmmoTR4.TabIndex = 28;
             this.nudGrenadeGunNormalAmmoTR4.ValueChanged += new System.EventHandler(this.nudGrenadeGunNormalAmmoTR4_ValueChanged);
             this.nudGrenadeGunNormalAmmoTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudGrenadeGunNormalAmmoTR4_KeyPress);
@@ -2220,7 +2226,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudCrossbowNormalAmmoTR4.Name = "nudCrossbowNormalAmmoTR4";
-            this.nudCrossbowNormalAmmoTR4.Size = new System.Drawing.Size(53, 20);
+            this.nudCrossbowNormalAmmoTR4.Size = new System.Drawing.Size(53, 23);
             this.nudCrossbowNormalAmmoTR4.TabIndex = 27;
             this.nudCrossbowNormalAmmoTR4.ValueChanged += new System.EventHandler(this.nudCrossbowNormalAmmoTR4_ValueChanged);
             this.nudCrossbowNormalAmmoTR4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudCrossbowNormalAmmoTR4_KeyPress);
@@ -2230,7 +2236,7 @@ namespace TRR_SaveMaster
             this.chkShotgunTR4.AutoSize = true;
             this.chkShotgunTR4.Location = new System.Drawing.Point(22, 133);
             this.chkShotgunTR4.Name = "chkShotgunTR4";
-            this.chkShotgunTR4.Size = new System.Drawing.Size(69, 17);
+            this.chkShotgunTR4.Size = new System.Drawing.Size(74, 19);
             this.chkShotgunTR4.TabIndex = 26;
             this.chkShotgunTR4.Text = "Shotgun:";
             this.chkShotgunTR4.UseVisualStyleBackColor = true;
@@ -2241,7 +2247,7 @@ namespace TRR_SaveMaster
             this.chkRevolverTR4.AutoSize = true;
             this.chkRevolverTR4.Location = new System.Drawing.Point(22, 107);
             this.chkRevolverTR4.Name = "chkRevolverTR4";
-            this.chkRevolverTR4.Size = new System.Drawing.Size(72, 17);
+            this.chkRevolverTR4.Size = new System.Drawing.Size(74, 19);
             this.chkRevolverTR4.TabIndex = 25;
             this.chkRevolverTR4.Text = "Revolver:";
             this.chkRevolverTR4.UseVisualStyleBackColor = true;
@@ -2252,7 +2258,7 @@ namespace TRR_SaveMaster
             this.chkUziTR4.AutoSize = true;
             this.chkUziTR4.Location = new System.Drawing.Point(22, 81);
             this.chkUziTR4.Name = "chkUziTR4";
-            this.chkUziTR4.Size = new System.Drawing.Size(44, 17);
+            this.chkUziTR4.Size = new System.Drawing.Size(45, 19);
             this.chkUziTR4.TabIndex = 24;
             this.chkUziTR4.Text = "Uzi:";
             this.chkUziTR4.UseVisualStyleBackColor = true;
@@ -2263,7 +2269,7 @@ namespace TRR_SaveMaster
             this.chkCrossbowTR4.AutoSize = true;
             this.chkCrossbowTR4.Location = new System.Drawing.Point(22, 185);
             this.chkCrossbowTR4.Name = "chkCrossbowTR4";
-            this.chkCrossbowTR4.Size = new System.Drawing.Size(75, 17);
+            this.chkCrossbowTR4.Size = new System.Drawing.Size(81, 19);
             this.chkCrossbowTR4.TabIndex = 23;
             this.chkCrossbowTR4.Text = "Crossbow:";
             this.chkCrossbowTR4.UseVisualStyleBackColor = true;
@@ -2272,9 +2278,9 @@ namespace TRR_SaveMaster
             // lblPistolAmmoTR4
             // 
             this.lblPistolAmmoTR4.AutoSize = true;
-            this.lblPistolAmmoTR4.Location = new System.Drawing.Point(162, 59);
+            this.lblPistolAmmoTR4.Location = new System.Drawing.Point(159, 59);
             this.lblPistolAmmoTR4.Name = "lblPistolAmmoTR4";
-            this.lblPistolAmmoTR4.Size = new System.Drawing.Size(50, 13);
+            this.lblPistolAmmoTR4.Size = new System.Drawing.Size(59, 15);
             this.lblPistolAmmoTR4.TabIndex = 14;
             this.lblPistolAmmoTR4.Text = "Unlimited";
             // 
@@ -2283,7 +2289,7 @@ namespace TRR_SaveMaster
             this.chkPistolsTR4.AutoSize = true;
             this.chkPistolsTR4.Location = new System.Drawing.Point(22, 55);
             this.chkPistolsTR4.Name = "chkPistolsTR4";
-            this.chkPistolsTR4.Size = new System.Drawing.Size(59, 17);
+            this.chkPistolsTR4.Size = new System.Drawing.Size(63, 19);
             this.chkPistolsTR4.TabIndex = 0;
             this.chkPistolsTR4.Text = "Pistols:";
             this.chkPistolsTR4.UseVisualStyleBackColor = true;
@@ -2303,6 +2309,7 @@ namespace TRR_SaveMaster
             this.tpTR5.Controls.Add(this.cmbSavegamesTR5);
             this.tpTR5.Controls.Add(this.grpItemsTR5);
             this.tpTR5.Controls.Add(this.grpWeaponsTR5);
+            this.tpTR5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tpTR5.Location = new System.Drawing.Point(4, 48);
             this.tpTR5.Name = "tpTR5";
             this.tpTR5.Size = new System.Drawing.Size(713, 508);
@@ -2343,14 +2350,14 @@ namespace TRR_SaveMaster
             // 
             // nudSaveNumberTR5
             // 
-            this.nudSaveNumberTR5.Location = new System.Drawing.Point(101, 16);
+            this.nudSaveNumberTR5.Location = new System.Drawing.Point(106, 16);
             this.nudSaveNumberTR5.Maximum = new decimal(new int[] {
             2147483647,
             0,
             0,
             0});
             this.nudSaveNumberTR5.Name = "nudSaveNumberTR5";
-            this.nudSaveNumberTR5.Size = new System.Drawing.Size(53, 20);
+            this.nudSaveNumberTR5.Size = new System.Drawing.Size(53, 23);
             this.nudSaveNumberTR5.TabIndex = 42;
             this.nudSaveNumberTR5.ValueChanged += new System.EventHandler(this.nudSaveNumberTR5_ValueChanged);
             this.nudSaveNumberTR5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSaveNumberTR5_KeyPress);
@@ -2360,14 +2367,14 @@ namespace TRR_SaveMaster
             this.lblSaveNumberTR5.AutoSize = true;
             this.lblSaveNumberTR5.Location = new System.Drawing.Point(22, 18);
             this.lblSaveNumberTR5.Name = "lblSaveNumberTR5";
-            this.lblSaveNumberTR5.Size = new System.Drawing.Size(75, 13);
+            this.lblSaveNumberTR5.Size = new System.Drawing.Size(81, 15);
             this.lblSaveNumberTR5.TabIndex = 43;
             this.lblSaveNumberTR5.Text = "Save Number:";
             // 
             // btnRefreshTR5
             // 
             this.btnRefreshTR5.Enabled = false;
-            this.btnRefreshTR5.Location = new System.Drawing.Point(628, 13);
+            this.btnRefreshTR5.Location = new System.Drawing.Point(628, 14);
             this.btnRefreshTR5.Name = "btnRefreshTR5";
             this.btnRefreshTR5.Size = new System.Drawing.Size(80, 23);
             this.btnRefreshTR5.TabIndex = 49;
@@ -2380,7 +2387,7 @@ namespace TRR_SaveMaster
             this.lblSavegameTR5.AutoSize = true;
             this.lblSavegameTR5.Location = new System.Drawing.Point(376, 18);
             this.lblSavegameTR5.Name = "lblSavegameTR5";
-            this.lblSavegameTR5.Size = new System.Drawing.Size(61, 13);
+            this.lblSavegameTR5.Size = new System.Drawing.Size(64, 15);
             this.lblSavegameTR5.TabIndex = 45;
             this.lblSavegameTR5.Text = "Savegame:";
             // 
@@ -2401,7 +2408,7 @@ namespace TRR_SaveMaster
             this.lblHealthErrorTR5.AutoSize = true;
             this.lblHealthErrorTR5.Location = new System.Drawing.Point(93, 55);
             this.lblHealthErrorTR5.Name = "lblHealthErrorTR5";
-            this.lblHealthErrorTR5.Size = new System.Drawing.Size(133, 13);
+            this.lblHealthErrorTR5.Size = new System.Drawing.Size(149, 15);
             this.lblHealthErrorTR5.TabIndex = 2;
             this.lblHealthErrorTR5.Text = "Unable to find health bytes";
             this.lblHealthErrorTR5.Visible = false;
@@ -2409,9 +2416,10 @@ namespace TRR_SaveMaster
             // lblHealthTR5
             // 
             this.lblHealthTR5.AutoSize = true;
-            this.lblHealthTR5.Location = new System.Drawing.Point(292, 33);
+            this.lblHealthTR5.BackColor = System.Drawing.Color.Transparent;
+            this.lblHealthTR5.Location = new System.Drawing.Point(289, 32);
             this.lblHealthTR5.Name = "lblHealthTR5";
-            this.lblHealthTR5.Size = new System.Drawing.Size(30, 13);
+            this.lblHealthTR5.Size = new System.Drawing.Size(32, 15);
             this.lblHealthTR5.TabIndex = 1;
             this.lblHealthTR5.Text = "0.1%";
             // 
@@ -2434,7 +2442,7 @@ namespace TRR_SaveMaster
             this.cmbSavegamesTR5.FormattingEnabled = true;
             this.cmbSavegamesTR5.Location = new System.Drawing.Point(441, 14);
             this.cmbSavegamesTR5.Name = "cmbSavegamesTR5";
-            this.cmbSavegamesTR5.Size = new System.Drawing.Size(182, 21);
+            this.cmbSavegamesTR5.Size = new System.Drawing.Size(182, 23);
             this.cmbSavegamesTR5.TabIndex = 44;
             this.cmbSavegamesTR5.SelectedIndexChanged += new System.EventHandler(this.cmbSavegamesTR5_SelectedIndexChanged);
             this.cmbSavegamesTR5.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cmbSavegamesTR5_MouseDown);
@@ -2461,7 +2469,7 @@ namespace TRR_SaveMaster
             this.lblSecretsTR5.AutoSize = true;
             this.lblSecretsTR5.Location = new System.Drawing.Point(18, 109);
             this.lblSecretsTR5.Name = "lblSecretsTR5";
-            this.lblSecretsTR5.Size = new System.Drawing.Size(46, 13);
+            this.lblSecretsTR5.Size = new System.Drawing.Size(47, 15);
             this.lblSecretsTR5.TabIndex = 22;
             this.lblSecretsTR5.Text = "Secrets:";
             // 
@@ -2474,7 +2482,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudSecretsTR5.Name = "nudSecretsTR5";
-            this.nudSecretsTR5.Size = new System.Drawing.Size(53, 20);
+            this.nudSecretsTR5.Size = new System.Drawing.Size(53, 23);
             this.nudSecretsTR5.TabIndex = 21;
             this.nudSecretsTR5.ValueChanged += new System.EventHandler(this.nudSecretsTR5_ValueChanged);
             this.nudSecretsTR5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSecretsTR5_KeyPress);
@@ -2484,7 +2492,7 @@ namespace TRR_SaveMaster
             this.lblFlaresTR5.AutoSize = true;
             this.lblFlaresTR5.Location = new System.Drawing.Point(18, 83);
             this.lblFlaresTR5.Name = "lblFlaresTR5";
-            this.lblFlaresTR5.Size = new System.Drawing.Size(38, 13);
+            this.lblFlaresTR5.Size = new System.Drawing.Size(40, 15);
             this.lblFlaresTR5.TabIndex = 20;
             this.lblFlaresTR5.Text = "Flares:";
             // 
@@ -2497,7 +2505,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudFlaresTR5.Name = "nudFlaresTR5";
-            this.nudFlaresTR5.Size = new System.Drawing.Size(53, 20);
+            this.nudFlaresTR5.Size = new System.Drawing.Size(53, 23);
             this.nudFlaresTR5.TabIndex = 19;
             this.nudFlaresTR5.ValueChanged += new System.EventHandler(this.nudFlaresTR5_ValueChanged);
             this.nudFlaresTR5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudFlaresTR5_KeyPress);
@@ -2507,7 +2515,7 @@ namespace TRR_SaveMaster
             this.lblLargeMedipacksTR5.AutoSize = true;
             this.lblLargeMedipacksTR5.Location = new System.Drawing.Point(18, 57);
             this.lblLargeMedipacksTR5.Name = "lblLargeMedipacksTR5";
-            this.lblLargeMedipacksTR5.Size = new System.Drawing.Size(92, 13);
+            this.lblLargeMedipacksTR5.Size = new System.Drawing.Size(99, 15);
             this.lblLargeMedipacksTR5.TabIndex = 18;
             this.lblLargeMedipacksTR5.Text = "Large Medipacks:";
             // 
@@ -2516,7 +2524,7 @@ namespace TRR_SaveMaster
             this.lblSmallMedipacksTR5.AutoSize = true;
             this.lblSmallMedipacksTR5.Location = new System.Drawing.Point(18, 31);
             this.lblSmallMedipacksTR5.Name = "lblSmallMedipacksTR5";
-            this.lblSmallMedipacksTR5.Size = new System.Drawing.Size(90, 13);
+            this.lblSmallMedipacksTR5.Size = new System.Drawing.Size(99, 15);
             this.lblSmallMedipacksTR5.TabIndex = 9;
             this.lblSmallMedipacksTR5.Text = "Small Medipacks:";
             // 
@@ -2529,7 +2537,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudLargeMedipacksTR5.Name = "nudLargeMedipacksTR5";
-            this.nudLargeMedipacksTR5.Size = new System.Drawing.Size(53, 20);
+            this.nudLargeMedipacksTR5.Size = new System.Drawing.Size(53, 23);
             this.nudLargeMedipacksTR5.TabIndex = 16;
             this.nudLargeMedipacksTR5.ValueChanged += new System.EventHandler(this.nudLargeMedipacksTR5_ValueChanged);
             this.nudLargeMedipacksTR5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudLargeMedipacksTR5_KeyPress);
@@ -2543,7 +2551,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudSmallMedipacksTR5.Name = "nudSmallMedipacksTR5";
-            this.nudSmallMedipacksTR5.Size = new System.Drawing.Size(53, 20);
+            this.nudSmallMedipacksTR5.Size = new System.Drawing.Size(53, 23);
             this.nudSmallMedipacksTR5.TabIndex = 15;
             this.nudSmallMedipacksTR5.ValueChanged += new System.EventHandler(this.nudSmallMedipacksTR5_ValueChanged);
             this.nudSmallMedipacksTR5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSmallMedipacksTR5_KeyPress);
@@ -2584,7 +2592,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudShotgunNormalAmmoTR5.Name = "nudShotgunNormalAmmoTR5";
-            this.nudShotgunNormalAmmoTR5.Size = new System.Drawing.Size(53, 20);
+            this.nudShotgunNormalAmmoTR5.Size = new System.Drawing.Size(53, 23);
             this.nudShotgunNormalAmmoTR5.TabIndex = 43;
             this.nudShotgunNormalAmmoTR5.ValueChanged += new System.EventHandler(this.nudShotgunNormalAmmoTR5_ValueChanged);
             this.nudShotgunNormalAmmoTR5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudShotgunNormalAmmoTR5_KeyPress);
@@ -2594,7 +2602,7 @@ namespace TRR_SaveMaster
             this.chkShotgunTR5.AutoSize = true;
             this.chkShotgunTR5.Location = new System.Drawing.Point(22, 133);
             this.chkShotgunTR5.Name = "chkShotgunTR5";
-            this.chkShotgunTR5.Size = new System.Drawing.Size(69, 17);
+            this.chkShotgunTR5.Size = new System.Drawing.Size(74, 19);
             this.chkShotgunTR5.TabIndex = 42;
             this.chkShotgunTR5.Text = "Shotgun:";
             this.chkShotgunTR5.UseVisualStyleBackColor = true;
@@ -2603,30 +2611,30 @@ namespace TRR_SaveMaster
             // lblPresentTR5
             // 
             this.lblPresentTR5.AutoSize = true;
-            this.lblPresentTR5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPresentTR5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPresentTR5.Location = new System.Drawing.Point(24, 29);
             this.lblPresentTR5.Name = "lblPresentTR5";
-            this.lblPresentTR5.Size = new System.Drawing.Size(43, 13);
+            this.lblPresentTR5.Size = new System.Drawing.Size(46, 15);
             this.lblPresentTR5.TabIndex = 41;
             this.lblPresentTR5.Text = "Present";
             // 
             // lblAmmo2TR5
             // 
             this.lblAmmo2TR5.AutoSize = true;
-            this.lblAmmo2TR5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmmo2TR5.Location = new System.Drawing.Point(226, 29);
+            this.lblAmmo2TR5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAmmo2TR5.Location = new System.Drawing.Point(224, 29);
             this.lblAmmo2TR5.Name = "lblAmmo2TR5";
-            this.lblAmmo2TR5.Size = new System.Drawing.Size(45, 13);
+            this.lblAmmo2TR5.Size = new System.Drawing.Size(53, 15);
             this.lblAmmo2TR5.TabIndex = 39;
             this.lblAmmo2TR5.Text = "Ammo 2";
             // 
             // lblAmmo1TR5
             // 
             this.lblAmmo1TR5.AutoSize = true;
-            this.lblAmmo1TR5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmmo1TR5.Location = new System.Drawing.Point(164, 29);
+            this.lblAmmo1TR5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAmmo1TR5.Location = new System.Drawing.Point(162, 29);
             this.lblAmmo1TR5.Name = "lblAmmo1TR5";
-            this.lblAmmo1TR5.Size = new System.Drawing.Size(45, 13);
+            this.lblAmmo1TR5.Size = new System.Drawing.Size(53, 15);
             this.lblAmmo1TR5.TabIndex = 38;
             this.lblAmmo1TR5.Text = "Ammo 1";
             // 
@@ -2639,7 +2647,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudShotgunWideshotAmmoTR5.Name = "nudShotgunWideshotAmmoTR5";
-            this.nudShotgunWideshotAmmoTR5.Size = new System.Drawing.Size(53, 20);
+            this.nudShotgunWideshotAmmoTR5.Size = new System.Drawing.Size(53, 23);
             this.nudShotgunWideshotAmmoTR5.TabIndex = 34;
             this.nudShotgunWideshotAmmoTR5.ValueChanged += new System.EventHandler(this.nudShotgunWideshotAmmoTR5_ValueChanged);
             this.nudShotgunWideshotAmmoTR5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudShotgunWideshotAmmoTR5_KeyPress);
@@ -2653,7 +2661,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudUziAmmoTR5.Name = "nudUziAmmoTR5";
-            this.nudUziAmmoTR5.Size = new System.Drawing.Size(53, 20);
+            this.nudUziAmmoTR5.Size = new System.Drawing.Size(53, 23);
             this.nudUziAmmoTR5.TabIndex = 32;
             this.nudUziAmmoTR5.ValueChanged += new System.EventHandler(this.nudUziAmmoTR5_ValueChanged);
             this.nudUziAmmoTR5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudUziAmmoTR5_KeyPress);
@@ -2663,7 +2671,7 @@ namespace TRR_SaveMaster
             this.chkHKGunTR5.AutoSize = true;
             this.chkHKGunTR5.Location = new System.Drawing.Point(22, 185);
             this.chkHKGunTR5.Name = "chkHKGunTR5";
-            this.chkHKGunTR5.Size = new System.Drawing.Size(67, 17);
+            this.chkHKGunTR5.Size = new System.Drawing.Size(70, 19);
             this.chkHKGunTR5.TabIndex = 31;
             this.chkHKGunTR5.Text = "HK Gun:";
             this.chkHKGunTR5.UseVisualStyleBackColor = true;
@@ -2678,7 +2686,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudRevolverAmmoTR5.Name = "nudRevolverAmmoTR5";
-            this.nudRevolverAmmoTR5.Size = new System.Drawing.Size(53, 20);
+            this.nudRevolverAmmoTR5.Size = new System.Drawing.Size(53, 23);
             this.nudRevolverAmmoTR5.TabIndex = 30;
             this.nudRevolverAmmoTR5.ValueChanged += new System.EventHandler(this.nudRevolverAmmoTR5_ValueChanged);
             this.nudRevolverAmmoTR5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudRevolverAmmoTR5_KeyPress);
@@ -2692,7 +2700,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudDeagleAmmoTR5.Name = "nudDeagleAmmoTR5";
-            this.nudDeagleAmmoTR5.Size = new System.Drawing.Size(53, 20);
+            this.nudDeagleAmmoTR5.Size = new System.Drawing.Size(53, 23);
             this.nudDeagleAmmoTR5.TabIndex = 29;
             this.nudDeagleAmmoTR5.ValueChanged += new System.EventHandler(this.nudDeagleAmmoTR5_ValueChanged);
             this.nudDeagleAmmoTR5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudDeagleAmmoTR5_KeyPress);
@@ -2706,7 +2714,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudHKGunAmmoTR5.Name = "nudHKGunAmmoTR5";
-            this.nudHKGunAmmoTR5.Size = new System.Drawing.Size(53, 20);
+            this.nudHKGunAmmoTR5.Size = new System.Drawing.Size(53, 23);
             this.nudHKGunAmmoTR5.TabIndex = 28;
             this.nudHKGunAmmoTR5.ValueChanged += new System.EventHandler(this.nudHKGunAmmoTR5_ValueChanged);
             this.nudHKGunAmmoTR5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudHKGunAmmoTR5_KeyPress);
@@ -2720,7 +2728,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudGrapplingGunAmmoTR5.Name = "nudGrapplingGunAmmoTR5";
-            this.nudGrapplingGunAmmoTR5.Size = new System.Drawing.Size(53, 20);
+            this.nudGrapplingGunAmmoTR5.Size = new System.Drawing.Size(53, 23);
             this.nudGrapplingGunAmmoTR5.TabIndex = 27;
             this.nudGrapplingGunAmmoTR5.ValueChanged += new System.EventHandler(this.nudGrapplingGunAmmoTR5_ValueChanged);
             this.nudGrapplingGunAmmoTR5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudGrapplingGunAmmoTR5_KeyPress);
@@ -2730,7 +2738,7 @@ namespace TRR_SaveMaster
             this.chkUziTR5.AutoSize = true;
             this.chkUziTR5.Location = new System.Drawing.Point(22, 81);
             this.chkUziTR5.Name = "chkUziTR5";
-            this.chkUziTR5.Size = new System.Drawing.Size(44, 17);
+            this.chkUziTR5.Size = new System.Drawing.Size(45, 19);
             this.chkUziTR5.TabIndex = 26;
             this.chkUziTR5.Text = "Uzi:";
             this.chkUziTR5.UseVisualStyleBackColor = true;
@@ -2741,7 +2749,7 @@ namespace TRR_SaveMaster
             this.chkDeagleTR5.AutoSize = true;
             this.chkDeagleTR5.Location = new System.Drawing.Point(22, 159);
             this.chkDeagleTR5.Name = "chkDeagleTR5";
-            this.chkDeagleTR5.Size = new System.Drawing.Size(90, 17);
+            this.chkDeagleTR5.Size = new System.Drawing.Size(93, 19);
             this.chkDeagleTR5.TabIndex = 25;
             this.chkDeagleTR5.Text = "Desert Eagle:";
             this.chkDeagleTR5.UseVisualStyleBackColor = true;
@@ -2752,7 +2760,7 @@ namespace TRR_SaveMaster
             this.chkRevolverTR5.AutoSize = true;
             this.chkRevolverTR5.Location = new System.Drawing.Point(22, 107);
             this.chkRevolverTR5.Name = "chkRevolverTR5";
-            this.chkRevolverTR5.Size = new System.Drawing.Size(72, 17);
+            this.chkRevolverTR5.Size = new System.Drawing.Size(74, 19);
             this.chkRevolverTR5.TabIndex = 24;
             this.chkRevolverTR5.Text = "Revolver:";
             this.chkRevolverTR5.UseVisualStyleBackColor = true;
@@ -2763,7 +2771,7 @@ namespace TRR_SaveMaster
             this.chkGrapplingGunTR5.AutoSize = true;
             this.chkGrapplingGunTR5.Location = new System.Drawing.Point(22, 211);
             this.chkGrapplingGunTR5.Name = "chkGrapplingGunTR5";
-            this.chkGrapplingGunTR5.Size = new System.Drawing.Size(97, 17);
+            this.chkGrapplingGunTR5.Size = new System.Drawing.Size(106, 19);
             this.chkGrapplingGunTR5.TabIndex = 23;
             this.chkGrapplingGunTR5.Text = "Grappling Gun:";
             this.chkGrapplingGunTR5.UseVisualStyleBackColor = true;
@@ -2772,9 +2780,9 @@ namespace TRR_SaveMaster
             // lblPistolAmmoTR5
             // 
             this.lblPistolAmmoTR5.AutoSize = true;
-            this.lblPistolAmmoTR5.Location = new System.Drawing.Point(162, 59);
+            this.lblPistolAmmoTR5.Location = new System.Drawing.Point(159, 59);
             this.lblPistolAmmoTR5.Name = "lblPistolAmmoTR5";
-            this.lblPistolAmmoTR5.Size = new System.Drawing.Size(50, 13);
+            this.lblPistolAmmoTR5.Size = new System.Drawing.Size(59, 15);
             this.lblPistolAmmoTR5.TabIndex = 14;
             this.lblPistolAmmoTR5.Text = "Unlimited";
             // 
@@ -2783,7 +2791,7 @@ namespace TRR_SaveMaster
             this.chkPistolsTR5.AutoSize = true;
             this.chkPistolsTR5.Location = new System.Drawing.Point(22, 55);
             this.chkPistolsTR5.Name = "chkPistolsTR5";
-            this.chkPistolsTR5.Size = new System.Drawing.Size(59, 17);
+            this.chkPistolsTR5.Size = new System.Drawing.Size(63, 19);
             this.chkPistolsTR5.TabIndex = 0;
             this.chkPistolsTR5.Text = "Pistols:";
             this.chkPistolsTR5.UseVisualStyleBackColor = true;
@@ -2813,14 +2821,14 @@ namespace TRR_SaveMaster
             // 
             // nudSaveNumberTR6
             // 
-            this.nudSaveNumberTR6.Location = new System.Drawing.Point(101, 16);
+            this.nudSaveNumberTR6.Location = new System.Drawing.Point(106, 16);
             this.nudSaveNumberTR6.Maximum = new decimal(new int[] {
             2147483647,
             0,
             0,
             0});
             this.nudSaveNumberTR6.Name = "nudSaveNumberTR6";
-            this.nudSaveNumberTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudSaveNumberTR6.Size = new System.Drawing.Size(53, 23);
             this.nudSaveNumberTR6.TabIndex = 44;
             this.nudSaveNumberTR6.ValueChanged += new System.EventHandler(this.nudSaveNumberTR6_ValueChanged);
             this.nudSaveNumberTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSaveNumberTR6_KeyPress);
@@ -2834,7 +2842,7 @@ namespace TRR_SaveMaster
             "Kurtis Trent"});
             this.cmbInventoryTR6.Location = new System.Drawing.Point(239, 14);
             this.cmbInventoryTR6.Name = "cmbInventoryTR6";
-            this.cmbInventoryTR6.Size = new System.Drawing.Size(94, 21);
+            this.cmbInventoryTR6.Size = new System.Drawing.Size(94, 23);
             this.cmbInventoryTR6.TabIndex = 47;
             this.cmbInventoryTR6.Visible = false;
             this.cmbInventoryTR6.SelectedIndexChanged += new System.EventHandler(this.cmbInventoryTR6_SelectedIndexChanged);
@@ -2844,16 +2852,16 @@ namespace TRR_SaveMaster
             this.lblSaveNumberTR6.AutoSize = true;
             this.lblSaveNumberTR6.Location = new System.Drawing.Point(22, 18);
             this.lblSaveNumberTR6.Name = "lblSaveNumberTR6";
-            this.lblSaveNumberTR6.Size = new System.Drawing.Size(75, 13);
+            this.lblSaveNumberTR6.Size = new System.Drawing.Size(81, 15);
             this.lblSaveNumberTR6.TabIndex = 45;
             this.lblSaveNumberTR6.Text = "Save Number:";
             // 
             // lblInventoryTR6
             // 
             this.lblInventoryTR6.AutoSize = true;
-            this.lblInventoryTR6.Location = new System.Drawing.Point(179, 18);
+            this.lblInventoryTR6.Location = new System.Drawing.Point(178, 18);
             this.lblInventoryTR6.Name = "lblInventoryTR6";
-            this.lblInventoryTR6.Size = new System.Drawing.Size(54, 13);
+            this.lblInventoryTR6.Size = new System.Drawing.Size(60, 15);
             this.lblInventoryTR6.TabIndex = 46;
             this.lblInventoryTR6.Text = "Inventory:";
             this.lblInventoryTR6.Visible = false;
@@ -2861,7 +2869,7 @@ namespace TRR_SaveMaster
             // btnRefreshTR6
             // 
             this.btnRefreshTR6.Enabled = false;
-            this.btnRefreshTR6.Location = new System.Drawing.Point(628, 13);
+            this.btnRefreshTR6.Location = new System.Drawing.Point(628, 14);
             this.btnRefreshTR6.Name = "btnRefreshTR6";
             this.btnRefreshTR6.Size = new System.Drawing.Size(80, 23);
             this.btnRefreshTR6.TabIndex = 45;
@@ -2906,7 +2914,7 @@ namespace TRR_SaveMaster
             this.lblSavegameTR6.AutoSize = true;
             this.lblSavegameTR6.Location = new System.Drawing.Point(376, 18);
             this.lblSavegameTR6.Name = "lblSavegameTR6";
-            this.lblSavegameTR6.Size = new System.Drawing.Size(61, 13);
+            this.lblSavegameTR6.Size = new System.Drawing.Size(64, 15);
             this.lblSavegameTR6.TabIndex = 38;
             this.lblSavegameTR6.Text = "Savegame:";
             // 
@@ -2916,7 +2924,7 @@ namespace TRR_SaveMaster
             this.cmbSavegamesTR6.FormattingEnabled = true;
             this.cmbSavegamesTR6.Location = new System.Drawing.Point(441, 14);
             this.cmbSavegamesTR6.Name = "cmbSavegamesTR6";
-            this.cmbSavegamesTR6.Size = new System.Drawing.Size(182, 21);
+            this.cmbSavegamesTR6.Size = new System.Drawing.Size(182, 23);
             this.cmbSavegamesTR6.TabIndex = 37;
             this.cmbSavegamesTR6.SelectedIndexChanged += new System.EventHandler(this.cmbSavegamesTR6_SelectedIndexChanged);
             this.cmbSavegamesTR6.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cmbSavegamesTR6_MouseDown);
@@ -2963,27 +2971,27 @@ namespace TRR_SaveMaster
             // lblChirugaiBladeAmmoTR6
             // 
             this.lblChirugaiBladeAmmoTR6.AutoSize = true;
-            this.lblChirugaiBladeAmmoTR6.Location = new System.Drawing.Point(162, 371);
+            this.lblChirugaiBladeAmmoTR6.Location = new System.Drawing.Point(159, 371);
             this.lblChirugaiBladeAmmoTR6.Name = "lblChirugaiBladeAmmoTR6";
-            this.lblChirugaiBladeAmmoTR6.Size = new System.Drawing.Size(50, 13);
+            this.lblChirugaiBladeAmmoTR6.Size = new System.Drawing.Size(59, 15);
             this.lblChirugaiBladeAmmoTR6.TabIndex = 63;
             this.lblChirugaiBladeAmmoTR6.Text = "Unlimited";
             // 
             // lblVectorR35PairAmmoTR6
             // 
             this.lblVectorR35PairAmmoTR6.AutoSize = true;
-            this.lblVectorR35PairAmmoTR6.Location = new System.Drawing.Point(162, 215);
+            this.lblVectorR35PairAmmoTR6.Location = new System.Drawing.Point(159, 215);
             this.lblVectorR35PairAmmoTR6.Name = "lblVectorR35PairAmmoTR6";
-            this.lblVectorR35PairAmmoTR6.Size = new System.Drawing.Size(41, 13);
+            this.lblVectorR35PairAmmoTR6.Size = new System.Drawing.Size(43, 15);
             this.lblVectorR35PairAmmoTR6.TabIndex = 62;
             this.lblVectorR35PairAmmoTR6.Text = "Shared";
             // 
             // lblScorpionXPairAmmoTR6
             // 
             this.lblScorpionXPairAmmoTR6.AutoSize = true;
-            this.lblScorpionXPairAmmoTR6.Location = new System.Drawing.Point(162, 137);
+            this.lblScorpionXPairAmmoTR6.Location = new System.Drawing.Point(159, 137);
             this.lblScorpionXPairAmmoTR6.Name = "lblScorpionXPairAmmoTR6";
-            this.lblScorpionXPairAmmoTR6.Size = new System.Drawing.Size(41, 13);
+            this.lblScorpionXPairAmmoTR6.Size = new System.Drawing.Size(43, 15);
             this.lblScorpionXPairAmmoTR6.TabIndex = 61;
             this.lblScorpionXPairAmmoTR6.Text = "Shared";
             // 
@@ -2992,7 +3000,7 @@ namespace TRR_SaveMaster
             this.chkChirugaiBladeTR6.AutoSize = true;
             this.chkChirugaiBladeTR6.Location = new System.Drawing.Point(22, 367);
             this.chkChirugaiBladeTR6.Name = "chkChirugaiBladeTR6";
-            this.chkChirugaiBladeTR6.Size = new System.Drawing.Size(97, 17);
+            this.chkChirugaiBladeTR6.Size = new System.Drawing.Size(106, 19);
             this.chkChirugaiBladeTR6.TabIndex = 60;
             this.chkChirugaiBladeTR6.Text = "Chirugai Blade:";
             this.chkChirugaiBladeTR6.UseVisualStyleBackColor = true;
@@ -3003,7 +3011,7 @@ namespace TRR_SaveMaster
             this.chkBoranXTR6.AutoSize = true;
             this.chkBoranXTR6.Location = new System.Drawing.Point(22, 393);
             this.chkBoranXTR6.Name = "chkBoranXTR6";
-            this.chkBoranXTR6.Size = new System.Drawing.Size(67, 17);
+            this.chkBoranXTR6.Size = new System.Drawing.Size(72, 19);
             this.chkBoranXTR6.TabIndex = 58;
             this.chkBoranXTR6.Text = "Boran-X:";
             this.chkBoranXTR6.UseVisualStyleBackColor = true;
@@ -3018,7 +3026,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudBoranXAmmoTR6.Name = "nudBoranXAmmoTR6";
-            this.nudBoranXAmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudBoranXAmmoTR6.Size = new System.Drawing.Size(53, 23);
             this.nudBoranXAmmoTR6.TabIndex = 57;
             this.nudBoranXAmmoTR6.ValueChanged += new System.EventHandler(this.nudBoranXAmmoTR6_ValueChanged);
             this.nudBoranXAmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudBoranXAmmoTR6_KeyPress);
@@ -3028,7 +3036,7 @@ namespace TRR_SaveMaster
             this.chkViperSMGTR6.AutoSize = true;
             this.chkViperSMGTR6.Location = new System.Drawing.Point(22, 341);
             this.chkViperSMGTR6.Name = "chkViperSMGTR6";
-            this.chkViperSMGTR6.Size = new System.Drawing.Size(80, 17);
+            this.chkViperSMGTR6.Size = new System.Drawing.Size(84, 19);
             this.chkViperSMGTR6.TabIndex = 56;
             this.chkViperSMGTR6.Text = "Viper SMG:";
             this.chkViperSMGTR6.UseVisualStyleBackColor = true;
@@ -3043,7 +3051,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudViperSMGAmmoTR6.Name = "nudViperSMGAmmoTR6";
-            this.nudViperSMGAmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudViperSMGAmmoTR6.Size = new System.Drawing.Size(53, 23);
             this.nudViperSMGAmmoTR6.TabIndex = 55;
             this.nudViperSMGAmmoTR6.ValueChanged += new System.EventHandler(this.nudViperSMGAmmoTR6_ValueChanged);
             this.nudViperSMGAmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudViperSMGAmmoTR6_KeyPress);
@@ -3053,7 +3061,7 @@ namespace TRR_SaveMaster
             this.chkRigg09TR6.AutoSize = true;
             this.chkRigg09TR6.Location = new System.Drawing.Point(22, 315);
             this.chkRigg09TR6.Name = "chkRigg09TR6";
-            this.chkRigg09TR6.Size = new System.Drawing.Size(66, 17);
+            this.chkRigg09TR6.Size = new System.Drawing.Size(68, 19);
             this.chkRigg09TR6.TabIndex = 54;
             this.chkRigg09TR6.Text = "Rigg 09:";
             this.chkRigg09TR6.UseVisualStyleBackColor = true;
@@ -3068,7 +3076,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudRigg09AmmoTR6.Name = "nudRigg09AmmoTR6";
-            this.nudRigg09AmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudRigg09AmmoTR6.Size = new System.Drawing.Size(53, 23);
             this.nudRigg09AmmoTR6.TabIndex = 53;
             this.nudRigg09AmmoTR6.ValueChanged += new System.EventHandler(this.nudRigg09AmmoTR6_ValueChanged);
             this.nudRigg09AmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudRigg09AmmoTR6_KeyPress);
@@ -3078,7 +3086,7 @@ namespace TRR_SaveMaster
             this.chkDartSSTR6.AutoSize = true;
             this.chkDartSSTR6.Location = new System.Drawing.Point(22, 289);
             this.chkDartSSTR6.Name = "chkDartSSTR6";
-            this.chkDartSSTR6.Size = new System.Drawing.Size(66, 17);
+            this.chkDartSSTR6.Size = new System.Drawing.Size(66, 19);
             this.chkDartSSTR6.TabIndex = 52;
             this.chkDartSSTR6.Text = "Dart SS:";
             this.chkDartSSTR6.UseVisualStyleBackColor = true;
@@ -3093,7 +3101,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudDartSSAmmoTR6.Name = "nudDartSSAmmoTR6";
-            this.nudDartSSAmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudDartSSAmmoTR6.Size = new System.Drawing.Size(53, 23);
             this.nudDartSSAmmoTR6.TabIndex = 51;
             this.nudDartSSAmmoTR6.ValueChanged += new System.EventHandler(this.nudDartSSAmmoTR6_ValueChanged);
             this.nudDartSSAmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudDartSSAmmoTR6_KeyPress);
@@ -3103,7 +3111,7 @@ namespace TRR_SaveMaster
             this.chkMagVegaTR6.AutoSize = true;
             this.chkMagVegaTR6.Location = new System.Drawing.Point(22, 263);
             this.chkMagVegaTR6.Name = "chkMagVegaTR6";
-            this.chkMagVegaTR6.Size = new System.Drawing.Size(78, 17);
+            this.chkMagVegaTR6.Size = new System.Drawing.Size(81, 19);
             this.chkMagVegaTR6.TabIndex = 50;
             this.chkMagVegaTR6.Text = "Mag Vega:";
             this.chkMagVegaTR6.UseVisualStyleBackColor = true;
@@ -3118,7 +3126,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudMagVegaAmmoTR6.Name = "nudMagVegaAmmoTR6";
-            this.nudMagVegaAmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudMagVegaAmmoTR6.Size = new System.Drawing.Size(53, 23);
             this.nudMagVegaAmmoTR6.TabIndex = 49;
             this.nudMagVegaAmmoTR6.ValueChanged += new System.EventHandler(this.nudMagVegaAmmoTR6_ValueChanged);
             this.nudMagVegaAmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudMagVegaAmmoTR6_KeyPress);
@@ -3132,7 +3140,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudMV9AmmoTR6.Name = "nudMV9AmmoTR6";
-            this.nudMV9AmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudMV9AmmoTR6.Size = new System.Drawing.Size(53, 23);
             this.nudMV9AmmoTR6.TabIndex = 48;
             this.nudMV9AmmoTR6.ValueChanged += new System.EventHandler(this.nudMV9AmmoTR6_ValueChanged);
             this.nudMV9AmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudMV9AmmoTR6_KeyPress);
@@ -3140,20 +3148,20 @@ namespace TRR_SaveMaster
             // lblPresentTR6
             // 
             this.lblPresentTR6.AutoSize = true;
-            this.lblPresentTR6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPresentTR6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPresentTR6.Location = new System.Drawing.Point(24, 29);
             this.lblPresentTR6.Name = "lblPresentTR6";
-            this.lblPresentTR6.Size = new System.Drawing.Size(43, 13);
+            this.lblPresentTR6.Size = new System.Drawing.Size(46, 15);
             this.lblPresentTR6.TabIndex = 47;
             this.lblPresentTR6.Text = "Present";
             // 
             // lblAmmo1TR6
             // 
             this.lblAmmo1TR6.AutoSize = true;
-            this.lblAmmo1TR6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmmo1TR6.Location = new System.Drawing.Point(164, 29);
+            this.lblAmmo1TR6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAmmo1TR6.Location = new System.Drawing.Point(162, 29);
             this.lblAmmo1TR6.Name = "lblAmmo1TR6";
-            this.lblAmmo1TR6.Size = new System.Drawing.Size(36, 13);
+            this.lblAmmo1TR6.Size = new System.Drawing.Size(44, 15);
             this.lblAmmo1TR6.TabIndex = 46;
             this.lblAmmo1TR6.Text = "Ammo";
             // 
@@ -3166,7 +3174,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudVPackerAmmoTR6.Name = "nudVPackerAmmoTR6";
-            this.nudVPackerAmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudVPackerAmmoTR6.Size = new System.Drawing.Size(53, 23);
             this.nudVPackerAmmoTR6.TabIndex = 17;
             this.nudVPackerAmmoTR6.ValueChanged += new System.EventHandler(this.nudVPackerAmmoTR6_ValueChanged);
             this.nudVPackerAmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudVPackerAmmoTR6_KeyPress);
@@ -3176,7 +3184,7 @@ namespace TRR_SaveMaster
             this.chkDesertRangerTR6.AutoSize = true;
             this.chkDesertRangerTR6.Location = new System.Drawing.Point(22, 237);
             this.chkDesertRangerTR6.Name = "chkDesertRangerTR6";
-            this.chkDesertRangerTR6.Size = new System.Drawing.Size(98, 17);
+            this.chkDesertRangerTR6.Size = new System.Drawing.Size(102, 19);
             this.chkDesertRangerTR6.TabIndex = 16;
             this.chkDesertRangerTR6.Text = "Desert Ranger:";
             this.chkDesertRangerTR6.UseVisualStyleBackColor = true;
@@ -3187,7 +3195,7 @@ namespace TRR_SaveMaster
             this.chkVectorR35PairTR6.AutoSize = true;
             this.chkVectorR35PairTR6.Location = new System.Drawing.Point(22, 211);
             this.chkVectorR35PairTR6.Name = "chkVectorR35PairTR6";
-            this.chkVectorR35PairTR6.Size = new System.Drawing.Size(116, 17);
+            this.chkVectorR35PairTR6.Size = new System.Drawing.Size(123, 19);
             this.chkVectorR35PairTR6.TabIndex = 15;
             this.chkVectorR35PairTR6.Text = "Vector - R35 (Pair):";
             this.chkVectorR35PairTR6.UseVisualStyleBackColor = true;
@@ -3202,7 +3210,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudK2ImpactorAmmoTR6.Name = "nudK2ImpactorAmmoTR6";
-            this.nudK2ImpactorAmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudK2ImpactorAmmoTR6.Size = new System.Drawing.Size(53, 23);
             this.nudK2ImpactorAmmoTR6.TabIndex = 13;
             this.nudK2ImpactorAmmoTR6.ValueChanged += new System.EventHandler(this.nudK2ImpactorAmmoTR6_ValueChanged);
             this.nudK2ImpactorAmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudK2ImpactorAmmoTR6_KeyPress);
@@ -3216,7 +3224,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudVectorR35AmmoTR6.Name = "nudVectorR35AmmoTR6";
-            this.nudVectorR35AmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudVectorR35AmmoTR6.Size = new System.Drawing.Size(53, 23);
             this.nudVectorR35AmmoTR6.TabIndex = 11;
             this.nudVectorR35AmmoTR6.ValueChanged += new System.EventHandler(this.nudVectorR35AmmoTR6_ValueChanged);
             this.nudVectorR35AmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudVectorR35AmmoTR6_KeyPress);
@@ -3230,7 +3238,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudDesertRangerAmmoTR6.Name = "nudDesertRangerAmmoTR6";
-            this.nudDesertRangerAmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudDesertRangerAmmoTR6.Size = new System.Drawing.Size(53, 23);
             this.nudDesertRangerAmmoTR6.TabIndex = 12;
             this.nudDesertRangerAmmoTR6.ValueChanged += new System.EventHandler(this.nudDesertRangerAmmoTR6_ValueChanged);
             this.nudDesertRangerAmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudDesertRangerAmmoTR6_KeyPress);
@@ -3244,7 +3252,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudScorpionXAmmoTR6.Name = "nudScorpionXAmmoTR6";
-            this.nudScorpionXAmmoTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudScorpionXAmmoTR6.Size = new System.Drawing.Size(53, 23);
             this.nudScorpionXAmmoTR6.TabIndex = 9;
             this.nudScorpionXAmmoTR6.ValueChanged += new System.EventHandler(this.nudScorpionXAmmoTR6_ValueChanged);
             this.nudScorpionXAmmoTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudScorpionXAmmoTR6_KeyPress);
@@ -3254,7 +3262,7 @@ namespace TRR_SaveMaster
             this.chkVectorR35TR6.AutoSize = true;
             this.chkVectorR35TR6.Location = new System.Drawing.Point(22, 185);
             this.chkVectorR35TR6.Name = "chkVectorR35TR6";
-            this.chkVectorR35TR6.Size = new System.Drawing.Size(89, 17);
+            this.chkVectorR35TR6.Size = new System.Drawing.Size(92, 19);
             this.chkVectorR35TR6.TabIndex = 4;
             this.chkVectorR35TR6.Text = "Vector - R35:";
             this.chkVectorR35TR6.UseVisualStyleBackColor = true;
@@ -3265,7 +3273,7 @@ namespace TRR_SaveMaster
             this.chkScorpionXPairTR6.AutoSize = true;
             this.chkScorpionXPairTR6.Location = new System.Drawing.Point(22, 133);
             this.chkScorpionXPairTR6.Name = "chkScorpionXPairTR6";
-            this.chkScorpionXPairTR6.Size = new System.Drawing.Size(108, 17);
+            this.chkScorpionXPairTR6.Size = new System.Drawing.Size(117, 19);
             this.chkScorpionXPairTR6.TabIndex = 2;
             this.chkScorpionXPairTR6.Text = "Scorpion X (Pair):";
             this.chkScorpionXPairTR6.UseVisualStyleBackColor = true;
@@ -3276,7 +3284,7 @@ namespace TRR_SaveMaster
             this.chkVPackerTR6.AutoSize = true;
             this.chkVPackerTR6.Location = new System.Drawing.Point(22, 81);
             this.chkVPackerTR6.Name = "chkVPackerTR6";
-            this.chkVPackerTR6.Size = new System.Drawing.Size(73, 17);
+            this.chkVPackerTR6.Size = new System.Drawing.Size(76, 19);
             this.chkVPackerTR6.TabIndex = 5;
             this.chkVPackerTR6.Text = "V-Packer:";
             this.chkVPackerTR6.UseVisualStyleBackColor = true;
@@ -3287,7 +3295,7 @@ namespace TRR_SaveMaster
             this.chkK2ImpactorTR6.AutoSize = true;
             this.chkK2ImpactorTR6.Location = new System.Drawing.Point(22, 159);
             this.chkK2ImpactorTR6.Name = "chkK2ImpactorTR6";
-            this.chkK2ImpactorTR6.Size = new System.Drawing.Size(86, 17);
+            this.chkK2ImpactorTR6.Size = new System.Drawing.Size(93, 19);
             this.chkK2ImpactorTR6.TabIndex = 3;
             this.chkK2ImpactorTR6.Text = "K2 Impactor:";
             this.chkK2ImpactorTR6.UseVisualStyleBackColor = true;
@@ -3298,7 +3306,7 @@ namespace TRR_SaveMaster
             this.chkScorpionXTR6.AutoSize = true;
             this.chkScorpionXTR6.Location = new System.Drawing.Point(22, 107);
             this.chkScorpionXTR6.Name = "chkScorpionXTR6";
-            this.chkScorpionXTR6.Size = new System.Drawing.Size(81, 17);
+            this.chkScorpionXTR6.Size = new System.Drawing.Size(86, 19);
             this.chkScorpionXTR6.TabIndex = 1;
             this.chkScorpionXTR6.Text = "Scorpion X:";
             this.chkScorpionXTR6.UseVisualStyleBackColor = true;
@@ -3309,7 +3317,7 @@ namespace TRR_SaveMaster
             this.chkMV9TR6.AutoSize = true;
             this.chkMV9TR6.Location = new System.Drawing.Point(22, 55);
             this.chkMV9TR6.Name = "chkMV9TR6";
-            this.chkMV9TR6.Size = new System.Drawing.Size(54, 17);
+            this.chkMV9TR6.Size = new System.Drawing.Size(58, 19);
             this.chkMV9TR6.TabIndex = 0;
             this.chkMV9TR6.Text = "M-V9:";
             this.chkMV9TR6.UseVisualStyleBackColor = true;
@@ -3332,7 +3340,7 @@ namespace TRR_SaveMaster
             this.lblHealthErrorTR6.AutoSize = true;
             this.lblHealthErrorTR6.Location = new System.Drawing.Point(93, 55);
             this.lblHealthErrorTR6.Name = "lblHealthErrorTR6";
-            this.lblHealthErrorTR6.Size = new System.Drawing.Size(133, 13);
+            this.lblHealthErrorTR6.Size = new System.Drawing.Size(149, 15);
             this.lblHealthErrorTR6.TabIndex = 20;
             this.lblHealthErrorTR6.Text = "Unable to find health bytes";
             this.lblHealthErrorTR6.Visible = false;
@@ -3340,11 +3348,12 @@ namespace TRR_SaveMaster
             // lblHealthTR6
             // 
             this.lblHealthTR6.AutoSize = true;
-            this.lblHealthTR6.Location = new System.Drawing.Point(292, 33);
+            this.lblHealthTR6.BackColor = System.Drawing.Color.Transparent;
+            this.lblHealthTR6.Location = new System.Drawing.Point(289, 32);
             this.lblHealthTR6.Name = "lblHealthTR6";
-            this.lblHealthTR6.Size = new System.Drawing.Size(30, 13);
+            this.lblHealthTR6.Size = new System.Drawing.Size(23, 15);
             this.lblHealthTR6.TabIndex = 1;
-            this.lblHealthTR6.Text = "0.1%";
+            this.lblHealthTR6.Text = "1%";
             // 
             // trbHealthTR6
             // 
@@ -3389,7 +3398,7 @@ namespace TRR_SaveMaster
             this.lblGPSSaveGame.AutoSize = true;
             this.lblGPSSaveGame.Location = new System.Drawing.Point(18, 213);
             this.lblGPSSaveGame.Name = "lblGPSSaveGame";
-            this.lblGPSSaveGame.Size = new System.Drawing.Size(91, 13);
+            this.lblGPSSaveGame.Size = new System.Drawing.Size(92, 15);
             this.lblGPSSaveGame.TabIndex = 29;
             this.lblGPSSaveGame.Text = "GPS Save Game:";
             // 
@@ -3402,7 +3411,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudGPSSaveGame.Name = "nudGPSSaveGame";
-            this.nudGPSSaveGame.Size = new System.Drawing.Size(53, 20);
+            this.nudGPSSaveGame.Size = new System.Drawing.Size(53, 23);
             this.nudGPSSaveGame.TabIndex = 28;
             this.nudGPSSaveGame.ValueChanged += new System.EventHandler(this.nudGPSSaveGame_ValueChanged);
             this.nudGPSSaveGame.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudGPSSaveGame_KeyPress);
@@ -3412,7 +3421,7 @@ namespace TRR_SaveMaster
             this.lblPoisonAntidoteTR6.AutoSize = true;
             this.lblPoisonAntidoteTR6.Location = new System.Drawing.Point(18, 187);
             this.lblPoisonAntidoteTR6.Name = "lblPoisonAntidoteTR6";
-            this.lblPoisonAntidoteTR6.Size = new System.Drawing.Size(84, 13);
+            this.lblPoisonAntidoteTR6.Size = new System.Drawing.Size(95, 15);
             this.lblPoisonAntidoteTR6.TabIndex = 27;
             this.lblPoisonAntidoteTR6.Text = "Poison Antidote:";
             // 
@@ -3425,7 +3434,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudPoisonAntidoteTR6.Name = "nudPoisonAntidoteTR6";
-            this.nudPoisonAntidoteTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudPoisonAntidoteTR6.Size = new System.Drawing.Size(53, 23);
             this.nudPoisonAntidoteTR6.TabIndex = 26;
             this.nudPoisonAntidoteTR6.ValueChanged += new System.EventHandler(this.nudPoisonAntidoteTR6_ValueChanged);
             this.nudPoisonAntidoteTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudPoisonAntidoteTR6_KeyPress);
@@ -3435,7 +3444,7 @@ namespace TRR_SaveMaster
             this.lblChocolateBarTR6.AutoSize = true;
             this.lblChocolateBarTR6.Location = new System.Drawing.Point(18, 161);
             this.lblChocolateBarTR6.Name = "lblChocolateBarTR6";
-            this.lblChocolateBarTR6.Size = new System.Drawing.Size(77, 13);
+            this.lblChocolateBarTR6.Size = new System.Drawing.Size(84, 15);
             this.lblChocolateBarTR6.TabIndex = 25;
             this.lblChocolateBarTR6.Text = "Chocolate Bar:";
             // 
@@ -3444,7 +3453,7 @@ namespace TRR_SaveMaster
             this.lblHealthPillsTR6.AutoSize = true;
             this.lblHealthPillsTR6.Location = new System.Drawing.Point(18, 135);
             this.lblHealthPillsTR6.Name = "lblHealthPillsTR6";
-            this.lblHealthPillsTR6.Size = new System.Drawing.Size(62, 13);
+            this.lblHealthPillsTR6.Size = new System.Drawing.Size(69, 15);
             this.lblHealthPillsTR6.TabIndex = 24;
             this.lblHealthPillsTR6.Text = "Health Pills:";
             // 
@@ -3457,7 +3466,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudChocolateBarTR6.Name = "nudChocolateBarTR6";
-            this.nudChocolateBarTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudChocolateBarTR6.Size = new System.Drawing.Size(53, 23);
             this.nudChocolateBarTR6.TabIndex = 23;
             this.nudChocolateBarTR6.ValueChanged += new System.EventHandler(this.nudChocolateBarTR6_ValueChanged);
             this.nudChocolateBarTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudChocolateBarTR6_KeyPress);
@@ -3471,7 +3480,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudHealthPillsTR6.Name = "nudHealthPillsTR6";
-            this.nudHealthPillsTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudHealthPillsTR6.Size = new System.Drawing.Size(53, 23);
             this.nudHealthPillsTR6.TabIndex = 22;
             this.nudHealthPillsTR6.ValueChanged += new System.EventHandler(this.nudHealthPillsTR6_ValueChanged);
             this.nudHealthPillsTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudHealthPillsTR6_KeyPress);
@@ -3481,7 +3490,7 @@ namespace TRR_SaveMaster
             this.lblHealthBandagesTR6.AutoSize = true;
             this.lblHealthBandagesTR6.Location = new System.Drawing.Point(18, 109);
             this.lblHealthBandagesTR6.Name = "lblHealthBandagesTR6";
-            this.lblHealthBandagesTR6.Size = new System.Drawing.Size(92, 13);
+            this.lblHealthBandagesTR6.Size = new System.Drawing.Size(99, 15);
             this.lblHealthBandagesTR6.TabIndex = 21;
             this.lblHealthBandagesTR6.Text = "Health Bandages:";
             // 
@@ -3494,7 +3503,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudHealthBandagesTR6.Name = "nudHealthBandagesTR6";
-            this.nudHealthBandagesTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudHealthBandagesTR6.Size = new System.Drawing.Size(53, 23);
             this.nudHealthBandagesTR6.TabIndex = 20;
             this.nudHealthBandagesTR6.ValueChanged += new System.EventHandler(this.nudHealthBandagesTR6_ValueChanged);
             this.nudHealthBandagesTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudHealthBandagesTR6_KeyPress);
@@ -3504,7 +3513,7 @@ namespace TRR_SaveMaster
             this.lblSmallMedipackTR6.AutoSize = true;
             this.lblSmallMedipackTR6.Location = new System.Drawing.Point(18, 83);
             this.lblSmallMedipackTR6.Name = "lblSmallMedipackTR6";
-            this.lblSmallMedipackTR6.Size = new System.Drawing.Size(85, 13);
+            this.lblSmallMedipackTR6.Size = new System.Drawing.Size(94, 15);
             this.lblSmallMedipackTR6.TabIndex = 19;
             this.lblSmallMedipackTR6.Text = "Small Medipack:";
             // 
@@ -3513,7 +3522,7 @@ namespace TRR_SaveMaster
             this.lblLargeHealthPackTR6.AutoSize = true;
             this.lblLargeHealthPackTR6.Location = new System.Drawing.Point(18, 57);
             this.lblLargeHealthPackTR6.Name = "lblLargeHealthPackTR6";
-            this.lblLargeHealthPackTR6.Size = new System.Drawing.Size(99, 13);
+            this.lblLargeHealthPackTR6.Size = new System.Drawing.Size(105, 15);
             this.lblLargeHealthPackTR6.TabIndex = 18;
             this.lblLargeHealthPackTR6.Text = "Large Health Pack:";
             // 
@@ -3522,7 +3531,7 @@ namespace TRR_SaveMaster
             this.lblCashTR6.AutoSize = true;
             this.lblCashTR6.Location = new System.Drawing.Point(18, 31);
             this.lblCashTR6.Name = "lblCashTR6";
-            this.lblCashTR6.Size = new System.Drawing.Size(34, 13);
+            this.lblCashTR6.Size = new System.Drawing.Size(36, 15);
             this.lblCashTR6.TabIndex = 9;
             this.lblCashTR6.Text = "Cash:";
             // 
@@ -3535,7 +3544,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudSmallMedipackTR6.Name = "nudSmallMedipackTR6";
-            this.nudSmallMedipackTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudSmallMedipackTR6.Size = new System.Drawing.Size(53, 23);
             this.nudSmallMedipackTR6.TabIndex = 17;
             this.nudSmallMedipackTR6.ValueChanged += new System.EventHandler(this.nudSmallMedipackTR6_ValueChanged);
             this.nudSmallMedipackTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSmallMedipackTR6_KeyPress);
@@ -3549,7 +3558,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudLargeHealthPackTR6.Name = "nudLargeHealthPackTR6";
-            this.nudLargeHealthPackTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudLargeHealthPackTR6.Size = new System.Drawing.Size(53, 23);
             this.nudLargeHealthPackTR6.TabIndex = 16;
             this.nudLargeHealthPackTR6.ValueChanged += new System.EventHandler(this.nudLargeHealthPackTR6_ValueChanged);
             this.nudLargeHealthPackTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudLargeHealthPackTR6_KeyPress);
@@ -3563,7 +3572,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudCashTR6.Name = "nudCashTR6";
-            this.nudCashTR6.Size = new System.Drawing.Size(53, 20);
+            this.nudCashTR6.Size = new System.Drawing.Size(53, 23);
             this.nudCashTR6.TabIndex = 15;
             this.nudCashTR6.ValueChanged += new System.EventHandler(this.nudCashTR6_ValueChanged);
             this.nudCashTR6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudCashTR6_KeyPress);
@@ -3619,21 +3628,21 @@ namespace TRR_SaveMaster
             // tsmiBrowseTRXSavegamePath
             // 
             this.tsmiBrowseTRXSavegamePath.Name = "tsmiBrowseTRXSavegamePath";
-            this.tsmiBrowseTRXSavegamePath.Size = new System.Drawing.Size(286, 22);
+            this.tsmiBrowseTRXSavegamePath.Size = new System.Drawing.Size(287, 22);
             this.tsmiBrowseTRXSavegamePath.Text = "Select Tomb Raider I-III savegame file...";
             this.tsmiBrowseTRXSavegamePath.Click += new System.EventHandler(this.tsmiBrowseTRXSavegamePath_Click);
             // 
             // tsmiBrowseTRX2SavegamePath
             // 
             this.tsmiBrowseTRX2SavegamePath.Name = "tsmiBrowseTRX2SavegamePath";
-            this.tsmiBrowseTRX2SavegamePath.Size = new System.Drawing.Size(286, 22);
+            this.tsmiBrowseTRX2SavegamePath.Size = new System.Drawing.Size(287, 22);
             this.tsmiBrowseTRX2SavegamePath.Text = "Select Tomb Raider IV-VI savegame file...";
             this.tsmiBrowseTRX2SavegamePath.Click += new System.EventHandler(this.tsmiBrowseTRX2SavegamePath_Click);
             // 
             // tsmiFileSeparator
             // 
             this.tsmiFileSeparator.Name = "tsmiFileSeparator";
-            this.tsmiFileSeparator.Size = new System.Drawing.Size(283, 6);
+            this.tsmiFileSeparator.Size = new System.Drawing.Size(284, 6);
             // 
             // tsmiBackupBeforeSaving
             // 
@@ -3642,26 +3651,26 @@ namespace TRR_SaveMaster
             this.tsmiBackupBeforeSaving.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiBackupBeforeSaving.Enabled = false;
             this.tsmiBackupBeforeSaving.Name = "tsmiBackupBeforeSaving";
-            this.tsmiBackupBeforeSaving.Size = new System.Drawing.Size(286, 22);
+            this.tsmiBackupBeforeSaving.Size = new System.Drawing.Size(287, 22);
             this.tsmiBackupBeforeSaving.Text = "Backup before saving";
             // 
             // tsmiCreateBackup
             // 
             this.tsmiCreateBackup.Enabled = false;
             this.tsmiCreateBackup.Name = "tsmiCreateBackup";
-            this.tsmiCreateBackup.Size = new System.Drawing.Size(286, 22);
+            this.tsmiCreateBackup.Size = new System.Drawing.Size(287, 22);
             this.tsmiCreateBackup.Text = "Create backup";
             this.tsmiCreateBackup.Click += new System.EventHandler(this.tsmiCreateBackup_Click);
             // 
             // tsmiFileSeparator2
             // 
             this.tsmiFileSeparator2.Name = "tsmiFileSeparator2";
-            this.tsmiFileSeparator2.Size = new System.Drawing.Size(283, 6);
+            this.tsmiFileSeparator2.Size = new System.Drawing.Size(284, 6);
             // 
             // tsmiExit
             // 
             this.tsmiExit.Name = "tsmiExit";
-            this.tsmiExit.Size = new System.Drawing.Size(286, 22);
+            this.tsmiExit.Size = new System.Drawing.Size(287, 22);
             this.tsmiExit.Text = "Exit";
             this.tsmiExit.Click += new System.EventHandler(this.tsmiExit_Click);
             // 
@@ -3690,7 +3699,7 @@ namespace TRR_SaveMaster
             // 
             this.tsmiEnableAllWeapons.Enabled = false;
             this.tsmiEnableAllWeapons.Name = "tsmiEnableAllWeapons";
-            this.tsmiEnableAllWeapons.Size = new System.Drawing.Size(217, 22);
+            this.tsmiEnableAllWeapons.Size = new System.Drawing.Size(216, 22);
             this.tsmiEnableAllWeapons.Text = "Enable all weapons";
             this.tsmiEnableAllWeapons.Click += new System.EventHandler(this.tsmiEnableAllWeapons_Click);
             // 
@@ -3698,7 +3707,7 @@ namespace TRR_SaveMaster
             // 
             this.tsmiSetMaximumAmmunition.Enabled = false;
             this.tsmiSetMaximumAmmunition.Name = "tsmiSetMaximumAmmunition";
-            this.tsmiSetMaximumAmmunition.Size = new System.Drawing.Size(217, 22);
+            this.tsmiSetMaximumAmmunition.Size = new System.Drawing.Size(216, 22);
             this.tsmiSetMaximumAmmunition.Text = "Set maximum ammunition";
             this.tsmiSetMaximumAmmunition.Click += new System.EventHandler(this.tsmiSetMaximumAmmunition_Click);
             // 
@@ -3706,7 +3715,7 @@ namespace TRR_SaveMaster
             // 
             this.tsmiSetMaximumItems.Enabled = false;
             this.tsmiSetMaximumItems.Name = "tsmiSetMaximumItems";
-            this.tsmiSetMaximumItems.Size = new System.Drawing.Size(217, 22);
+            this.tsmiSetMaximumItems.Size = new System.Drawing.Size(216, 22);
             this.tsmiSetMaximumItems.Text = "Set maximum items";
             this.tsmiSetMaximumItems.Click += new System.EventHandler(this.tsmiSetMaximumItems_Click);
             // 
@@ -3714,20 +3723,20 @@ namespace TRR_SaveMaster
             // 
             this.tsmiMaxEverything.Enabled = false;
             this.tsmiMaxEverything.Name = "tsmiMaxEverything";
-            this.tsmiMaxEverything.Size = new System.Drawing.Size(217, 22);
+            this.tsmiMaxEverything.Size = new System.Drawing.Size(216, 22);
             this.tsmiMaxEverything.Text = "Max everything";
             this.tsmiMaxEverything.Click += new System.EventHandler(this.tsmiMaxEverything_Click);
             // 
             // tsmiEditSeparator
             // 
             this.tsmiEditSeparator.Name = "tsmiEditSeparator";
-            this.tsmiEditSeparator.Size = new System.Drawing.Size(214, 6);
+            this.tsmiEditSeparator.Size = new System.Drawing.Size(213, 6);
             // 
             // tsmiStatistics
             // 
             this.tsmiStatistics.Enabled = false;
             this.tsmiStatistics.Name = "tsmiStatistics";
-            this.tsmiStatistics.Size = new System.Drawing.Size(217, 22);
+            this.tsmiStatistics.Size = new System.Drawing.Size(216, 22);
             this.tsmiStatistics.Text = "Statistics";
             this.tsmiStatistics.Click += new System.EventHandler(this.tsmiStatistics_Click);
             // 
@@ -3735,20 +3744,20 @@ namespace TRR_SaveMaster
             // 
             this.tsmiPosition.Enabled = false;
             this.tsmiPosition.Name = "tsmiPosition";
-            this.tsmiPosition.Size = new System.Drawing.Size(217, 22);
+            this.tsmiPosition.Size = new System.Drawing.Size(216, 22);
             this.tsmiPosition.Text = "Position";
             this.tsmiPosition.Click += new System.EventHandler(this.tsmiPosition_Click);
             // 
             // tsmiEditSeparator2
             // 
             this.tsmiEditSeparator2.Name = "tsmiEditSeparator2";
-            this.tsmiEditSeparator2.Size = new System.Drawing.Size(214, 6);
+            this.tsmiEditSeparator2.Size = new System.Drawing.Size(213, 6);
             // 
             // tsmiDeleteSavegame
             // 
             this.tsmiDeleteSavegame.Enabled = false;
             this.tsmiDeleteSavegame.Name = "tsmiDeleteSavegame";
-            this.tsmiDeleteSavegame.Size = new System.Drawing.Size(217, 22);
+            this.tsmiDeleteSavegame.Size = new System.Drawing.Size(216, 22);
             this.tsmiDeleteSavegame.Text = "Delete savegame";
             this.tsmiDeleteSavegame.Click += new System.EventHandler(this.tsmiDeleteSavegame_Click);
             // 
@@ -3898,6 +3907,7 @@ namespace TRR_SaveMaster
             this.Controls.Add(this.ssrStatusStrip);
             this.Controls.Add(this.tsrToolStrip);
             this.DoubleBuffered = true;
+            this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;

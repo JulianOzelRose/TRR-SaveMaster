@@ -103,6 +103,7 @@ namespace TRR_SaveMaster
             this.grpSavegameCoordinates.Controls.Add(this.nudZCoordinate);
             this.grpSavegameCoordinates.Controls.Add(this.nudYCoordinate);
             this.grpSavegameCoordinates.Controls.Add(this.nudXCoordinate);
+            this.grpSavegameCoordinates.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpSavegameCoordinates.Location = new System.Drawing.Point(12, 5);
             this.grpSavegameCoordinates.Name = "grpSavegameCoordinates";
             this.grpSavegameCoordinates.Size = new System.Drawing.Size(333, 271);
@@ -221,7 +222,7 @@ namespace TRR_SaveMaster
             this.lblOrientation.AutoSize = true;
             this.lblOrientation.Location = new System.Drawing.Point(12, 103);
             this.lblOrientation.Name = "lblOrientation";
-            this.lblOrientation.Size = new System.Drawing.Size(61, 13);
+            this.lblOrientation.Size = new System.Drawing.Size(70, 15);
             this.lblOrientation.TabIndex = 14;
             this.lblOrientation.Text = "Orientation:";
             // 
@@ -244,7 +245,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudOrientation.Name = "nudOrientation";
-            this.nudOrientation.Size = new System.Drawing.Size(70, 20);
+            this.nudOrientation.Size = new System.Drawing.Size(70, 23);
             this.nudOrientation.TabIndex = 12;
             this.nudOrientation.ValueChanged += new System.EventHandler(this.nudOrientation_ValueChanged);
             this.nudOrientation.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudOrientation_KeyPress);
@@ -312,7 +313,7 @@ namespace TRR_SaveMaster
             0,
             0});
             this.nudRoom.Name = "nudRoom";
-            this.nudRoom.Size = new System.Drawing.Size(70, 20);
+            this.nudRoom.Size = new System.Drawing.Size(70, 23);
             this.nudRoom.TabIndex = 7;
             this.nudRoom.ValueChanged += new System.EventHandler(this.nudRoom_ValueChanged);
             this.nudRoom.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudRoom_KeyPress);
@@ -322,7 +323,7 @@ namespace TRR_SaveMaster
             this.lblRoom.AutoSize = true;
             this.lblRoom.Location = new System.Drawing.Point(12, 129);
             this.lblRoom.Name = "lblRoom";
-            this.lblRoom.Size = new System.Drawing.Size(38, 13);
+            this.lblRoom.Size = new System.Drawing.Size(42, 15);
             this.lblRoom.TabIndex = 6;
             this.lblRoom.Text = "Room:";
             // 
@@ -331,7 +332,7 @@ namespace TRR_SaveMaster
             this.lblZCoordinate.AutoSize = true;
             this.lblZCoordinate.Location = new System.Drawing.Point(12, 77);
             this.lblZCoordinate.Name = "lblZCoordinate";
-            this.lblZCoordinate.Size = new System.Drawing.Size(63, 13);
+            this.lblZCoordinate.Size = new System.Drawing.Size(71, 15);
             this.lblZCoordinate.TabIndex = 5;
             this.lblZCoordinate.Text = "Position (Z):";
             // 
@@ -340,7 +341,7 @@ namespace TRR_SaveMaster
             this.lblYCoordinate.AutoSize = true;
             this.lblYCoordinate.Location = new System.Drawing.Point(12, 51);
             this.lblYCoordinate.Name = "lblYCoordinate";
-            this.lblYCoordinate.Size = new System.Drawing.Size(63, 13);
+            this.lblYCoordinate.Size = new System.Drawing.Size(71, 15);
             this.lblYCoordinate.TabIndex = 4;
             this.lblYCoordinate.Text = "Position (Y):";
             // 
@@ -349,7 +350,7 @@ namespace TRR_SaveMaster
             this.lblXCoordinate.AutoSize = true;
             this.lblXCoordinate.Location = new System.Drawing.Point(12, 25);
             this.lblXCoordinate.Name = "lblXCoordinate";
-            this.lblXCoordinate.Size = new System.Drawing.Size(63, 13);
+            this.lblXCoordinate.Size = new System.Drawing.Size(71, 15);
             this.lblXCoordinate.TabIndex = 3;
             this.lblXCoordinate.Text = "Position (X):";
             // 
@@ -372,7 +373,7 @@ namespace TRR_SaveMaster
             0,
             -2147483648});
             this.nudZCoordinate.Name = "nudZCoordinate";
-            this.nudZCoordinate.Size = new System.Drawing.Size(70, 20);
+            this.nudZCoordinate.Size = new System.Drawing.Size(70, 23);
             this.nudZCoordinate.TabIndex = 2;
             this.nudZCoordinate.ValueChanged += new System.EventHandler(this.nudZCoordinate_ValueChanged);
             this.nudZCoordinate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudZCoordinate_KeyPress);
@@ -396,7 +397,7 @@ namespace TRR_SaveMaster
             0,
             -2147483648});
             this.nudYCoordinate.Name = "nudYCoordinate";
-            this.nudYCoordinate.Size = new System.Drawing.Size(70, 20);
+            this.nudYCoordinate.Size = new System.Drawing.Size(70, 23);
             this.nudYCoordinate.TabIndex = 1;
             this.nudYCoordinate.ValueChanged += new System.EventHandler(this.nudYCoordinate_ValueChanged);
             this.nudYCoordinate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudYCoordinate_KeyPress);
@@ -420,7 +421,7 @@ namespace TRR_SaveMaster
             0,
             -2147483648});
             this.nudXCoordinate.Name = "nudXCoordinate";
-            this.nudXCoordinate.Size = new System.Drawing.Size(70, 20);
+            this.nudXCoordinate.Size = new System.Drawing.Size(70, 23);
             this.nudXCoordinate.TabIndex = 0;
             this.nudXCoordinate.ValueChanged += new System.EventHandler(this.nudXCoordinate_ValueChanged);
             this.nudXCoordinate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudXCoordinate_KeyPress);
@@ -428,6 +429,7 @@ namespace TRR_SaveMaster
             // btnSave
             // 
             this.btnSave.Enabled = false;
+            this.btnSave.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.Location = new System.Drawing.Point(270, 282);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
@@ -439,6 +441,7 @@ namespace TRR_SaveMaster
             // btnCancel
             // 
             this.btnCancel.Enabled = false;
+            this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.Location = new System.Drawing.Point(189, 282);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
@@ -449,6 +452,7 @@ namespace TRR_SaveMaster
             // 
             // btnClose
             // 
+            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClose.Location = new System.Drawing.Point(108, 282);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
@@ -473,6 +477,7 @@ namespace TRR_SaveMaster
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.grpSavegameCoordinates);
             this.DoubleBuffered = true;
+            this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
