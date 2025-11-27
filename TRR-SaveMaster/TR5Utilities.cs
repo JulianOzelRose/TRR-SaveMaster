@@ -42,9 +42,9 @@ namespace TRR_SaveMaster
         private const int DEAGLE_OFFSET = 0x19A;
 
         // Weapon byte flags
-        private const int WEAPON_PRESENT = 0x9;
-        private const int WEAPON_PRESENT_WITH_SILENCER = 0xB;
-        private const int WEAPON_PRESENT_WITH_SIGHT = 0xD;
+        private const byte WEAPON_PRESENT = 0x9;
+        private const byte WEAPON_PRESENT_WITH_SILENCER = 0xB;
+        private const byte WEAPON_PRESENT_WITH_SIGHT = 0xD;
 
         // Health
         private const UInt16 MAX_HEALTH_VALUE = 1000;
