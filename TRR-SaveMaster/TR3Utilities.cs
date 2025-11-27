@@ -723,16 +723,7 @@ namespace TRR_SaveMaster
 
             if (secondaryAmmoIndex != -1)
             {
-                Dictionary<byte, int[]> ammoIndexData;
-
-                if (platform == Platform.PC)
-                {
-                    ammoIndexData = ammoIndexDataPC;
-                }
-                else
-                {
-                    ammoIndexData = ammoIndexDataConsole;
-                }
+                Dictionary<byte, int[]> ammoIndexData = platform == Platform.PC ? ammoIndexDataPC : ammoIndexDataConsole;
 
                 int baseSecondaryAmmoOffset = ammoIndexData[levelIndex][0];
 
@@ -818,16 +809,7 @@ namespace TRR_SaveMaster
         {
             byte levelIndex = GetLevelIndex(fileData);
 
-            Dictionary<byte, int[]> ammoIndexData;
-
-            if (platform == Platform.PC)
-            {
-                ammoIndexData = ammoIndexDataPC;
-            }
-            else
-            {
-                ammoIndexData = ammoIndexDataConsole;
-            }
+            Dictionary<byte, int[]> ammoIndexData = platform == Platform.PC ? ammoIndexDataPC : ammoIndexDataConsole;
 
             if (ammoIndexData.ContainsKey(levelIndex))
             {
