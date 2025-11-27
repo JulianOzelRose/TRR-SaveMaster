@@ -82,7 +82,7 @@ namespace TRR_SaveMaster
         private void StatisticsForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             ConfirmChanges();
-            mainForm.UpdateDisplayNamesConditionally();
+            mainForm.RefreshGameInfoConditionally();
         }
 
         public void SetSavegame(Savegame savegame)

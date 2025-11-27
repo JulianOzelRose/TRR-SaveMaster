@@ -70,7 +70,7 @@ namespace TRR_SaveMaster
         private void PositionForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             ConfirmChanges();
-            mainForm.UpdateDisplayNamesConditionally();
+            mainForm.RefreshGameInfoConditionally();
         }
 
         private void DetermineLevelIndexOffset()

@@ -2680,31 +2680,37 @@ namespace TRR_SaveMaster
             }
         }
 
-        public void UpdateDisplayNamesConditionally()
+        public void RefreshGameInfoConditionally()
         {
             if (tabGame.SelectedIndex == TAB_TR1 && cmbSavegamesTR1.SelectedIndex != -1)
             {
-                UpdateSavegameDisplayNameTR1(cmbSavegamesTR1, cmbSavegamesTR1.SelectedItem as Savegame);
+                DisableButtonsTR1();
+                DisplayGameInfoTR1(cmbSavegamesTR1.SelectedItem as Savegame);
             }
             else if (tabGame.SelectedIndex == TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1)
             {
-                UpdateSavegameDisplayNameTR2(cmbSavegamesTR2, cmbSavegamesTR2.SelectedItem as Savegame);
+                DisableButtonsTR2();
+                DisplayGameInfoTR2(cmbSavegamesTR2.SelectedItem as Savegame);
             }
             else if (tabGame.SelectedIndex == TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1)
             {
-                UpdateSavegameDisplayNameTR3(cmbSavegamesTR3, cmbSavegamesTR3.SelectedItem as Savegame);
+                DisableButtonsTR3();
+                DisplayGameInfoTR3(cmbSavegamesTR3.SelectedItem as Savegame);
             }
             else if (tabGame.SelectedIndex == TAB_TR4 && cmbSavegamesTR4.SelectedIndex != -1)
             {
-                UpdateSavegameDisplayNameTR4(cmbSavegamesTR4, cmbSavegamesTR4.SelectedItem as Savegame);
+                DisableButtonsTR4();
+                DisplayGameInfoTR4(cmbSavegamesTR4.SelectedItem as Savegame);
             }
             else if (tabGame.SelectedIndex == TAB_TR5 && cmbSavegamesTR5.SelectedIndex != -1)
             {
-                UpdateSavegameDisplayNameTR5(cmbSavegamesTR5, cmbSavegamesTR5.SelectedItem as Savegame);
+                DisableButtonsTR5();
+                DisplayGameInfoTR5(cmbSavegamesTR5.SelectedItem as Savegame);
             }
             else if (tabGame.SelectedIndex == TAB_TR6 && cmbSavegamesTR6.SelectedIndex != -1)
             {
-                UpdateSavegameDisplayNameTR6(cmbSavegamesTR6, cmbSavegamesTR6.SelectedItem as Savegame);
+                DisableButtonsTR6();
+                DisplayGameInfoTR6(cmbSavegamesTR6.SelectedItem as Savegame);
             }
         }
 
