@@ -5,7 +5,7 @@ You can find more information on how to do that [here](https://github.com/Julian
 For instructions on how to download and use this editor, scroll down to the section below. If you are interested in reverse engineering, there is a technical portion on the bottom section of this README.
 For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder/delete savegames, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
-<img width="723" height="640" alt="TRR-SaveMaster-UI" src="https://github.com/user-attachments/assets/098f5106-7551-4790-9805-35859c917498" />
+<img width="723" height="640" alt="TRR-SaveMaster-UI" src="https://github.com/user-attachments/assets/10325c35-7f31-4f6d-8c0b-53e5b3aa4a36" />
 
 ## Installation and use
 To download and use this savegame editor, simply navigate to the [Releases](https://github.com/JulianOzelRose/TRR-SaveMaster/releases) page,
@@ -36,7 +36,7 @@ Regular backups can safeguard your progress in the event of unforeseen issues or
 you can also do this by clicking "File" then "Create backup".
 
 ## Using the Position Editor
-<img width="359" height="344" alt="PositionEditor-UI" src="https://github.com/user-attachments/assets/70df2a90-3d92-4bd9-9345-52bcea999cd0" />
+<img width="359" height="344" alt="PositionForm-UI" src="https://github.com/user-attachments/assets/1454e3c1-964b-406c-ace3-a6b138761625" />
 
 This savegame editor includes a Position Editor feature. To use it, click "Edit," then select "Position." For Lara's coordinates to be correctly parsed, the health bytes must be located. If the health bytes cannot be found, try saving the game while Lara is standing. Once in the Position Editor menu, you can teleport to pre-determined coordinates, such as the start of the level, end of the level or secret locations.  
 
@@ -50,8 +50,7 @@ It's essential that the Room/Zone number matches Lara's current coordinates; oth
 position.
 
 ## Using the Statistics Editor
-<img width="391" height="419" alt="StatisticsEditor-UI" src="https://github.com/user-attachments/assets/98b7737d-ba0f-42fa-b66d-d0cd6938b80f" />
-
+<img width="391" height="419" alt="StatisticsForm-UI" src="https://github.com/user-attachments/assets/22d976c7-3df2-4efe-948c-74ac9b143c88" />
 
 This savegame editor also includes a Statistics Editor feature. To use it, click "Edit," then select "Statistics." For Tomb Raider I-III and VI, the statistics displayed are level-specific, meaning each level has its own separate stats such as time taken,
 enemies killed, and secrets found. For Tomb Raider IV and V, the statistics are global, meaning they track cumulative progress across all levels, including total playtime, total kills, and total pickups.
@@ -360,16 +359,7 @@ private int GetSecondaryAmmoIndex(byte[] fileData)
 {
     byte levelIndex = GetLevelIndex(fileData);
 
-    Dictionary<byte, int[]> ammoIndexData;
-
-    if (platform == Platform.PC)
-    {
-        ammoIndexData = ammoIndexDataPC;
-    }
-    else
-    {
-        ammoIndexData = ammoIndexDataConsole;
-    }
+    Dictionary<byte, int[]> ammoIndexData = platform == Platform.PC ? ammoIndexDataPC : ammoIndexDataConsole;
 
     if (ammoIndexData.ContainsKey(levelIndex))
     {
@@ -476,16 +466,7 @@ private int GetSecondaryAmmoIndex(byte[] fileData)
 {
     byte levelIndex = GetLevelIndex(fileData);
 
-    Dictionary<byte, int[]> ammoIndexData;
-
-    if (platform == Platform.PC)
-    {
-        ammoIndexData = ammoIndexDataPC;
-    }
-    else
-    {
-        ammoIndexData = ammoIndexDataConsole;
-    }
+    Dictionary<byte, int[]> ammoIndexData = platform == Platform.PC ? ammoIndexDataPC : ammoIndexDataConsole;
 
     if (ammoIndexData.ContainsKey(levelIndex))
     {
