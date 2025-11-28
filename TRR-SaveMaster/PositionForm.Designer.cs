@@ -116,7 +116,7 @@ namespace TRR_SaveMaster
             this.btnStartOfLevel.Location = new System.Drawing.Point(63, 178);
             this.btnStartOfLevel.Name = "btnStartOfLevel";
             this.btnStartOfLevel.Size = new System.Drawing.Size(100, 23);
-            this.btnStartOfLevel.TabIndex = 24;
+            this.btnStartOfLevel.TabIndex = 11;
             this.btnStartOfLevel.Text = "Start of Level";
             this.btnStartOfLevel.UseVisualStyleBackColor = true;
             this.btnStartOfLevel.Click += new System.EventHandler(this.btnStartOfLevel_Click);
@@ -127,7 +127,7 @@ namespace TRR_SaveMaster
             this.btnSecret8.Location = new System.Drawing.Point(247, 236);
             this.btnSecret8.Name = "btnSecret8";
             this.btnSecret8.Size = new System.Drawing.Size(73, 23);
-            this.btnSecret8.TabIndex = 23;
+            this.btnSecret8.TabIndex = 20;
             this.btnSecret8.Text = "Secret 8";
             this.btnSecret8.UseVisualStyleBackColor = true;
             this.btnSecret8.Click += new System.EventHandler(this.btnSecret8_Click);
@@ -138,7 +138,7 @@ namespace TRR_SaveMaster
             this.btnSecret7.Location = new System.Drawing.Point(169, 236);
             this.btnSecret7.Name = "btnSecret7";
             this.btnSecret7.Size = new System.Drawing.Size(73, 23);
-            this.btnSecret7.TabIndex = 22;
+            this.btnSecret7.TabIndex = 19;
             this.btnSecret7.Text = "Secret 7";
             this.btnSecret7.UseVisualStyleBackColor = true;
             this.btnSecret7.Click += new System.EventHandler(this.btnSecret7_Click);
@@ -149,7 +149,7 @@ namespace TRR_SaveMaster
             this.lblSeparator.Location = new System.Drawing.Point(14, 166);
             this.lblSeparator.Name = "lblSeparator";
             this.lblSeparator.Size = new System.Drawing.Size(306, 2);
-            this.lblSeparator.TabIndex = 21;
+            this.lblSeparator.TabIndex = 10;
             // 
             // btnSecret6
             // 
@@ -157,7 +157,7 @@ namespace TRR_SaveMaster
             this.btnSecret6.Location = new System.Drawing.Point(90, 236);
             this.btnSecret6.Name = "btnSecret6";
             this.btnSecret6.Size = new System.Drawing.Size(73, 23);
-            this.btnSecret6.TabIndex = 20;
+            this.btnSecret6.TabIndex = 18;
             this.btnSecret6.Text = "Secret 6";
             this.btnSecret6.UseVisualStyleBackColor = true;
             this.btnSecret6.Click += new System.EventHandler(this.btnSecret6_Click);
@@ -168,7 +168,7 @@ namespace TRR_SaveMaster
             this.btnSecret5.Location = new System.Drawing.Point(11, 236);
             this.btnSecret5.Name = "btnSecret5";
             this.btnSecret5.Size = new System.Drawing.Size(73, 23);
-            this.btnSecret5.TabIndex = 19;
+            this.btnSecret5.TabIndex = 17;
             this.btnSecret5.Text = "Secret 5";
             this.btnSecret5.UseVisualStyleBackColor = true;
             this.btnSecret5.Click += new System.EventHandler(this.btnSecret5_Click);
@@ -179,7 +179,7 @@ namespace TRR_SaveMaster
             this.btnSecret4.Location = new System.Drawing.Point(247, 207);
             this.btnSecret4.Name = "btnSecret4";
             this.btnSecret4.Size = new System.Drawing.Size(73, 23);
-            this.btnSecret4.TabIndex = 18;
+            this.btnSecret4.TabIndex = 16;
             this.btnSecret4.Text = "Secret 4";
             this.btnSecret4.UseVisualStyleBackColor = true;
             this.btnSecret4.Click += new System.EventHandler(this.btnSecret4_Click);
@@ -190,7 +190,7 @@ namespace TRR_SaveMaster
             this.btnSecret3.Location = new System.Drawing.Point(169, 207);
             this.btnSecret3.Name = "btnSecret3";
             this.btnSecret3.Size = new System.Drawing.Size(73, 23);
-            this.btnSecret3.TabIndex = 17;
+            this.btnSecret3.TabIndex = 15;
             this.btnSecret3.Text = "Secret 3";
             this.btnSecret3.UseVisualStyleBackColor = true;
             this.btnSecret3.Click += new System.EventHandler(this.btnSecret3_Click);
@@ -201,7 +201,7 @@ namespace TRR_SaveMaster
             this.btnSecret1.Location = new System.Drawing.Point(11, 207);
             this.btnSecret1.Name = "btnSecret1";
             this.btnSecret1.Size = new System.Drawing.Size(73, 23);
-            this.btnSecret1.TabIndex = 16;
+            this.btnSecret1.TabIndex = 13;
             this.btnSecret1.Text = "Secret 1";
             this.btnSecret1.UseVisualStyleBackColor = true;
             this.btnSecret1.Click += new System.EventHandler(this.btnSecret1_Click);
@@ -212,7 +212,7 @@ namespace TRR_SaveMaster
             this.btnSecret2.Location = new System.Drawing.Point(90, 207);
             this.btnSecret2.Name = "btnSecret2";
             this.btnSecret2.Size = new System.Drawing.Size(73, 23);
-            this.btnSecret2.TabIndex = 15;
+            this.btnSecret2.TabIndex = 14;
             this.btnSecret2.Text = "Secret 2";
             this.btnSecret2.UseVisualStyleBackColor = true;
             this.btnSecret2.Click += new System.EventHandler(this.btnSecret2_Click);
@@ -223,7 +223,7 @@ namespace TRR_SaveMaster
             this.lblOrientation.Location = new System.Drawing.Point(12, 103);
             this.lblOrientation.Name = "lblOrientation";
             this.lblOrientation.Size = new System.Drawing.Size(70, 15);
-            this.lblOrientation.TabIndex = 14;
+            this.lblOrientation.TabIndex = 6;
             this.lblOrientation.Text = "Orientation:";
             // 
             // picInfoOrientation
@@ -246,7 +246,7 @@ namespace TRR_SaveMaster
             0});
             this.nudOrientation.Name = "nudOrientation";
             this.nudOrientation.Size = new System.Drawing.Size(70, 23);
-            this.nudOrientation.TabIndex = 12;
+            this.nudOrientation.TabIndex = 7;
             this.nudOrientation.ValueChanged += new System.EventHandler(this.nudOrientation_ValueChanged);
             this.nudOrientation.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudOrientation_KeyPress);
             // 
@@ -299,7 +299,7 @@ namespace TRR_SaveMaster
             this.btnEndOfLevel.Location = new System.Drawing.Point(169, 178);
             this.btnEndOfLevel.Name = "btnEndOfLevel";
             this.btnEndOfLevel.Size = new System.Drawing.Size(100, 23);
-            this.btnEndOfLevel.TabIndex = 5;
+            this.btnEndOfLevel.TabIndex = 12;
             this.btnEndOfLevel.Text = "End of Level";
             this.btnEndOfLevel.UseVisualStyleBackColor = true;
             this.btnEndOfLevel.Click += new System.EventHandler(this.btnEndOfLevel_Click);
@@ -314,7 +314,7 @@ namespace TRR_SaveMaster
             0});
             this.nudRoom.Name = "nudRoom";
             this.nudRoom.Size = new System.Drawing.Size(70, 23);
-            this.nudRoom.TabIndex = 7;
+            this.nudRoom.TabIndex = 9;
             this.nudRoom.ValueChanged += new System.EventHandler(this.nudRoom_ValueChanged);
             this.nudRoom.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudRoom_KeyPress);
             // 
@@ -324,7 +324,7 @@ namespace TRR_SaveMaster
             this.lblRoom.Location = new System.Drawing.Point(12, 129);
             this.lblRoom.Name = "lblRoom";
             this.lblRoom.Size = new System.Drawing.Size(42, 15);
-            this.lblRoom.TabIndex = 6;
+            this.lblRoom.TabIndex = 8;
             this.lblRoom.Text = "Room:";
             // 
             // lblZCoordinate
@@ -333,7 +333,7 @@ namespace TRR_SaveMaster
             this.lblZCoordinate.Location = new System.Drawing.Point(12, 77);
             this.lblZCoordinate.Name = "lblZCoordinate";
             this.lblZCoordinate.Size = new System.Drawing.Size(71, 15);
-            this.lblZCoordinate.TabIndex = 5;
+            this.lblZCoordinate.TabIndex = 4;
             this.lblZCoordinate.Text = "Position (Z):";
             // 
             // lblYCoordinate
@@ -342,7 +342,7 @@ namespace TRR_SaveMaster
             this.lblYCoordinate.Location = new System.Drawing.Point(12, 51);
             this.lblYCoordinate.Name = "lblYCoordinate";
             this.lblYCoordinate.Size = new System.Drawing.Size(71, 15);
-            this.lblYCoordinate.TabIndex = 4;
+            this.lblYCoordinate.TabIndex = 2;
             this.lblYCoordinate.Text = "Position (Y):";
             // 
             // lblXCoordinate
@@ -351,7 +351,7 @@ namespace TRR_SaveMaster
             this.lblXCoordinate.Location = new System.Drawing.Point(12, 25);
             this.lblXCoordinate.Name = "lblXCoordinate";
             this.lblXCoordinate.Size = new System.Drawing.Size(71, 15);
-            this.lblXCoordinate.TabIndex = 3;
+            this.lblXCoordinate.TabIndex = 0;
             this.lblXCoordinate.Text = "Position (X):";
             // 
             // nudZCoordinate
@@ -374,7 +374,7 @@ namespace TRR_SaveMaster
             -2147483648});
             this.nudZCoordinate.Name = "nudZCoordinate";
             this.nudZCoordinate.Size = new System.Drawing.Size(70, 23);
-            this.nudZCoordinate.TabIndex = 2;
+            this.nudZCoordinate.TabIndex = 5;
             this.nudZCoordinate.ValueChanged += new System.EventHandler(this.nudZCoordinate_ValueChanged);
             this.nudZCoordinate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudZCoordinate_KeyPress);
             // 
@@ -398,7 +398,7 @@ namespace TRR_SaveMaster
             -2147483648});
             this.nudYCoordinate.Name = "nudYCoordinate";
             this.nudYCoordinate.Size = new System.Drawing.Size(70, 23);
-            this.nudYCoordinate.TabIndex = 1;
+            this.nudYCoordinate.TabIndex = 3;
             this.nudYCoordinate.ValueChanged += new System.EventHandler(this.nudYCoordinate_ValueChanged);
             this.nudYCoordinate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudYCoordinate_KeyPress);
             // 
@@ -422,7 +422,7 @@ namespace TRR_SaveMaster
             -2147483648});
             this.nudXCoordinate.Name = "nudXCoordinate";
             this.nudXCoordinate.Size = new System.Drawing.Size(70, 23);
-            this.nudXCoordinate.TabIndex = 0;
+            this.nudXCoordinate.TabIndex = 1;
             this.nudXCoordinate.ValueChanged += new System.EventHandler(this.nudXCoordinate_ValueChanged);
             this.nudXCoordinate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudXCoordinate_KeyPress);
             // 
@@ -433,7 +433,7 @@ namespace TRR_SaveMaster
             this.btnSave.Location = new System.Drawing.Point(270, 282);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 1;
+            this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -456,7 +456,7 @@ namespace TRR_SaveMaster
             this.btnClose.Location = new System.Drawing.Point(108, 282);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 3;
+            this.btnClose.TabIndex = 1;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);

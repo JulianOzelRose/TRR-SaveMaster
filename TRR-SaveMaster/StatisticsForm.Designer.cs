@@ -145,7 +145,7 @@ namespace TRR_SaveMaster
             this.grpSavegameStatistics.Location = new System.Drawing.Point(12, 5);
             this.grpSavegameStatistics.Name = "grpSavegameStatistics";
             this.grpSavegameStatistics.Size = new System.Drawing.Size(365, 346);
-            this.grpSavegameStatistics.TabIndex = 8;
+            this.grpSavegameStatistics.TabIndex = 0;
             this.grpSavegameStatistics.TabStop = false;
             // 
             // lblSlash4
@@ -154,7 +154,7 @@ namespace TRR_SaveMaster
             this.lblSlash4.Location = new System.Drawing.Point(206, 313);
             this.lblSlash4.Name = "lblSlash4";
             this.lblSlash4.Size = new System.Drawing.Size(12, 15);
-            this.lblSlash4.TabIndex = 52;
+            this.lblSlash4.TabIndex = 39;
             this.lblSlash4.Text = "/";
             // 
             // nudVesselsBrokenMax
@@ -168,7 +168,7 @@ namespace TRR_SaveMaster
             0});
             this.nudVesselsBrokenMax.Name = "nudVesselsBrokenMax";
             this.nudVesselsBrokenMax.Size = new System.Drawing.Size(51, 23);
-            this.nudVesselsBrokenMax.TabIndex = 51;
+            this.nudVesselsBrokenMax.TabIndex = 40;
             // 
             // lblSlash3
             // 
@@ -176,7 +176,7 @@ namespace TRR_SaveMaster
             this.lblSlash3.Location = new System.Drawing.Point(206, 261);
             this.lblSlash3.Name = "lblSlash3";
             this.lblSlash3.Size = new System.Drawing.Size(12, 15);
-            this.lblSlash3.TabIndex = 50;
+            this.lblSlash3.TabIndex = 32;
             this.lblSlash3.Text = "/";
             // 
             // nudChocobarsFoundMax
@@ -190,7 +190,7 @@ namespace TRR_SaveMaster
             0});
             this.nudChocobarsFoundMax.Name = "nudChocobarsFoundMax";
             this.nudChocobarsFoundMax.Size = new System.Drawing.Size(51, 23);
-            this.nudChocobarsFoundMax.TabIndex = 49;
+            this.nudChocobarsFoundMax.TabIndex = 33;
             // 
             // lblSlash2
             // 
@@ -198,7 +198,7 @@ namespace TRR_SaveMaster
             this.lblSlash2.Location = new System.Drawing.Point(206, 235);
             this.lblSlash2.Name = "lblSlash2";
             this.lblSlash2.Size = new System.Drawing.Size(12, 15);
-            this.lblSlash2.TabIndex = 48;
+            this.lblSlash2.TabIndex = 28;
             this.lblSlash2.Text = "/";
             // 
             // nudHealthItemsFoundMax
@@ -212,7 +212,7 @@ namespace TRR_SaveMaster
             0});
             this.nudHealthItemsFoundMax.Name = "nudHealthItemsFoundMax";
             this.nudHealthItemsFoundMax.Size = new System.Drawing.Size(51, 23);
-            this.nudHealthItemsFoundMax.TabIndex = 47;
+            this.nudHealthItemsFoundMax.TabIndex = 29;
             // 
             // lblChocobarsFound
             // 
@@ -220,7 +220,7 @@ namespace TRR_SaveMaster
             this.lblChocobarsFound.Location = new System.Drawing.Point(11, 257);
             this.lblChocobarsFound.Name = "lblChocobarsFound";
             this.lblChocobarsFound.Size = new System.Drawing.Size(104, 15);
-            this.lblChocobarsFound.TabIndex = 46;
+            this.lblChocobarsFound.TabIndex = 30;
             this.lblChocobarsFound.Text = "Chocobars Found:";
             // 
             // lblHealthItemsFound
@@ -229,7 +229,7 @@ namespace TRR_SaveMaster
             this.lblHealthItemsFound.Location = new System.Drawing.Point(11, 231);
             this.lblHealthItemsFound.Name = "lblHealthItemsFound";
             this.lblHealthItemsFound.Size = new System.Drawing.Size(114, 15);
-            this.lblHealthItemsFound.TabIndex = 45;
+            this.lblHealthItemsFound.TabIndex = 26;
             this.lblHealthItemsFound.Text = "Health Items Found:";
             // 
             // nudChocobarsFound
@@ -243,7 +243,7 @@ namespace TRR_SaveMaster
             0});
             this.nudChocobarsFound.Name = "nudChocobarsFound";
             this.nudChocobarsFound.Size = new System.Drawing.Size(51, 23);
-            this.nudChocobarsFound.TabIndex = 44;
+            this.nudChocobarsFound.TabIndex = 31;
             this.nudChocobarsFound.ValueChanged += new System.EventHandler(this.nudChocobarsFound_ValueChanged);
             this.nudChocobarsFound.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudChocobarsFound_KeyPress);
             // 
@@ -258,7 +258,7 @@ namespace TRR_SaveMaster
             0});
             this.nudHealthItemsFound.Name = "nudHealthItemsFound";
             this.nudHealthItemsFound.Size = new System.Drawing.Size(51, 23);
-            this.nudHealthItemsFound.TabIndex = 43;
+            this.nudHealthItemsFound.TabIndex = 27;
             this.nudHealthItemsFound.ValueChanged += new System.EventHandler(this.nudHealthItemsFound_ValueChanged);
             this.nudHealthItemsFound.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudHealthItemsFound_KeyPress);
             // 
@@ -268,7 +268,7 @@ namespace TRR_SaveMaster
             this.lblVesselsBroken.Location = new System.Drawing.Point(11, 309);
             this.lblVesselsBroken.Name = "lblVesselsBroken";
             this.lblVesselsBroken.Size = new System.Drawing.Size(86, 15);
-            this.lblVesselsBroken.TabIndex = 42;
+            this.lblVesselsBroken.TabIndex = 37;
             this.lblVesselsBroken.Text = "Vessels Broken:";
             // 
             // lblCrystalsUsed
@@ -277,7 +277,7 @@ namespace TRR_SaveMaster
             this.lblCrystalsUsed.Location = new System.Drawing.Point(11, 101);
             this.lblCrystalsUsed.Name = "lblCrystalsUsed";
             this.lblCrystalsUsed.Size = new System.Drawing.Size(80, 15);
-            this.lblCrystalsUsed.TabIndex = 40;
+            this.lblCrystalsUsed.TabIndex = 12;
             this.lblCrystalsUsed.Text = "Crystals Used:";
             // 
             // lblDistanceTravelled
@@ -286,7 +286,7 @@ namespace TRR_SaveMaster
             this.lblDistanceTravelled.Location = new System.Drawing.Point(11, 283);
             this.lblDistanceTravelled.Name = "lblDistanceTravelled";
             this.lblDistanceTravelled.Size = new System.Drawing.Size(105, 15);
-            this.lblDistanceTravelled.TabIndex = 31;
+            this.lblDistanceTravelled.TabIndex = 34;
             this.lblDistanceTravelled.Text = "Distance Travelled:";
             // 
             // nudCrystalsUsed
@@ -299,7 +299,7 @@ namespace TRR_SaveMaster
             0});
             this.nudCrystalsUsed.Name = "nudCrystalsUsed";
             this.nudCrystalsUsed.Size = new System.Drawing.Size(51, 23);
-            this.nudCrystalsUsed.TabIndex = 39;
+            this.nudCrystalsUsed.TabIndex = 13;
             this.nudCrystalsUsed.ValueChanged += new System.EventHandler(this.nudCrystalsUsed_ValueChanged);
             this.nudCrystalsUsed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudCrystalsUsed_KeyPress);
             // 
@@ -314,7 +314,7 @@ namespace TRR_SaveMaster
             0});
             this.nudVesselsBroken.Name = "nudVesselsBroken";
             this.nudVesselsBroken.Size = new System.Drawing.Size(51, 23);
-            this.nudVesselsBroken.TabIndex = 41;
+            this.nudVesselsBroken.TabIndex = 38;
             this.nudVesselsBroken.ValueChanged += new System.EventHandler(this.nudVesselsBroken_ValueChanged);
             this.nudVesselsBroken.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudVesselsBroken_KeyPress);
             // 
@@ -324,7 +324,7 @@ namespace TRR_SaveMaster
             this.lblColon2.Location = new System.Drawing.Point(280, 27);
             this.lblColon2.Name = "lblColon2";
             this.lblColon2.Size = new System.Drawing.Size(10, 15);
-            this.lblColon2.TabIndex = 38;
+            this.lblColon2.TabIndex = 4;
             this.lblColon2.Text = ":";
             // 
             // nudDistanceTravelled
@@ -343,7 +343,7 @@ namespace TRR_SaveMaster
             0});
             this.nudDistanceTravelled.Name = "nudDistanceTravelled";
             this.nudDistanceTravelled.Size = new System.Drawing.Size(51, 23);
-            this.nudDistanceTravelled.TabIndex = 30;
+            this.nudDistanceTravelled.TabIndex = 35;
             this.nudDistanceTravelled.ValueChanged += new System.EventHandler(this.nudDistanceTravelled_ValueChanged);
             this.nudDistanceTravelled.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudDistanceTravelled_KeyPress);
             // 
@@ -353,7 +353,7 @@ namespace TRR_SaveMaster
             this.lblDistanceTravelledUnit.Location = new System.Drawing.Point(206, 287);
             this.lblDistanceTravelledUnit.Name = "lblDistanceTravelledUnit";
             this.lblDistanceTravelledUnit.Size = new System.Drawing.Size(18, 15);
-            this.lblDistanceTravelledUnit.TabIndex = 32;
+            this.lblDistanceTravelledUnit.TabIndex = 36;
             this.lblDistanceTravelledUnit.Text = "m";
             // 
             // lblColon
@@ -362,7 +362,7 @@ namespace TRR_SaveMaster
             this.lblColon.Location = new System.Drawing.Point(205, 27);
             this.lblColon.Name = "lblColon";
             this.lblColon.Size = new System.Drawing.Size(10, 15);
-            this.lblColon.TabIndex = 37;
+            this.lblColon.TabIndex = 2;
             this.lblColon.Text = ":";
             // 
             // nudSeconds
@@ -375,7 +375,7 @@ namespace TRR_SaveMaster
             0});
             this.nudSeconds.Name = "nudSeconds";
             this.nudSeconds.Size = new System.Drawing.Size(51, 23);
-            this.nudSeconds.TabIndex = 36;
+            this.nudSeconds.TabIndex = 5;
             this.nudSeconds.ValueChanged += new System.EventHandler(this.nudSeconds_ValueChanged);
             this.nudSeconds.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSeconds_KeyPress);
             // 
@@ -389,7 +389,7 @@ namespace TRR_SaveMaster
             0});
             this.nudMinutes.Name = "nudMinutes";
             this.nudMinutes.Size = new System.Drawing.Size(51, 23);
-            this.nudMinutes.TabIndex = 35;
+            this.nudMinutes.TabIndex = 3;
             this.nudMinutes.ValueChanged += new System.EventHandler(this.nudMinutes_ValueChanged);
             this.nudMinutes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudMinutes_KeyPress);
             // 
@@ -403,7 +403,7 @@ namespace TRR_SaveMaster
             0});
             this.nudHours.Name = "nudHours";
             this.nudHours.Size = new System.Drawing.Size(51, 23);
-            this.nudHours.TabIndex = 34;
+            this.nudHours.TabIndex = 1;
             this.nudHours.ValueChanged += new System.EventHandler(this.nudHours_ValueChanged);
             this.nudHours.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudHours_KeyPress);
             // 
@@ -413,7 +413,7 @@ namespace TRR_SaveMaster
             this.lblTimeTaken.Location = new System.Drawing.Point(11, 23);
             this.lblTimeTaken.Name = "lblTimeTaken";
             this.lblTimeTaken.Size = new System.Drawing.Size(71, 15);
-            this.lblTimeTaken.TabIndex = 33;
+            this.lblTimeTaken.TabIndex = 0;
             this.lblTimeTaken.Text = "Time Taken:";
             // 
             // lblSlash
@@ -422,7 +422,7 @@ namespace TRR_SaveMaster
             this.lblSlash.Location = new System.Drawing.Point(206, 183);
             this.lblSlash.Name = "lblSlash";
             this.lblSlash.Size = new System.Drawing.Size(12, 15);
-            this.lblSlash.TabIndex = 29;
+            this.lblSlash.TabIndex = 22;
             this.lblSlash.Text = "/";
             // 
             // nudHits
@@ -435,7 +435,7 @@ namespace TRR_SaveMaster
             0});
             this.nudHits.Name = "nudHits";
             this.nudHits.Size = new System.Drawing.Size(51, 23);
-            this.nudHits.TabIndex = 28;
+            this.nudHits.TabIndex = 23;
             this.nudHits.ValueChanged += new System.EventHandler(this.nudHits_ValueChanged);
             this.nudHits.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudHits_KeyPress);
             // 
@@ -450,7 +450,7 @@ namespace TRR_SaveMaster
             0});
             this.nudPickupsMax.Name = "nudPickupsMax";
             this.nudPickupsMax.Size = new System.Drawing.Size(51, 23);
-            this.nudPickupsMax.TabIndex = 27;
+            this.nudPickupsMax.TabIndex = 17;
             this.nudPickupsMax.ValueChanged += new System.EventHandler(this.nudPickupsMax_ValueChanged);
             this.nudPickupsMax.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudPickupsMax_KeyPress);
             // 
@@ -460,7 +460,7 @@ namespace TRR_SaveMaster
             this.lblOf2.Location = new System.Drawing.Point(204, 131);
             this.lblOf2.Name = "lblOf2";
             this.lblOf2.Size = new System.Drawing.Size(18, 15);
-            this.lblOf2.TabIndex = 26;
+            this.lblOf2.TabIndex = 16;
             this.lblOf2.Text = "of";
             // 
             // nudSecretsFoundMax
@@ -474,7 +474,7 @@ namespace TRR_SaveMaster
             0});
             this.nudSecretsFoundMax.Name = "nudSecretsFoundMax";
             this.nudSecretsFoundMax.Size = new System.Drawing.Size(51, 23);
-            this.nudSecretsFoundMax.TabIndex = 25;
+            this.nudSecretsFoundMax.TabIndex = 9;
             this.nudSecretsFoundMax.ValueChanged += new System.EventHandler(this.nudSecretsFoundMax_ValueChanged);
             this.nudSecretsFoundMax.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSecretsFoundMax_KeyPress);
             // 
@@ -484,7 +484,7 @@ namespace TRR_SaveMaster
             this.lblOf.Location = new System.Drawing.Point(204, 53);
             this.lblOf.Name = "lblOf";
             this.lblOf.Size = new System.Drawing.Size(18, 15);
-            this.lblOf.TabIndex = 24;
+            this.lblOf.TabIndex = 8;
             this.lblOf.Text = "of";
             // 
             // nudMedipacksUsed
@@ -503,7 +503,7 @@ namespace TRR_SaveMaster
             65536});
             this.nudMedipacksUsed.Name = "nudMedipacksUsed";
             this.nudMedipacksUsed.Size = new System.Drawing.Size(51, 23);
-            this.nudMedipacksUsed.TabIndex = 22;
+            this.nudMedipacksUsed.TabIndex = 25;
             this.nudMedipacksUsed.ValueChanged += new System.EventHandler(this.nudMedipacksUsed_ValueChanged);
             this.nudMedipacksUsed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudMedipacksUsed_KeyPress);
             // 
@@ -531,7 +531,7 @@ namespace TRR_SaveMaster
             0});
             this.nudKills.Name = "nudKills";
             this.nudKills.Size = new System.Drawing.Size(51, 23);
-            this.nudKills.TabIndex = 20;
+            this.nudKills.TabIndex = 19;
             this.nudKills.ValueChanged += new System.EventHandler(this.nudKills_ValueChanged);
             this.nudKills.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudKills_KeyPress);
             // 
@@ -545,7 +545,7 @@ namespace TRR_SaveMaster
             0});
             this.nudPickups.Name = "nudPickups";
             this.nudPickups.Size = new System.Drawing.Size(51, 23);
-            this.nudPickups.TabIndex = 19;
+            this.nudPickups.TabIndex = 15;
             this.nudPickups.ValueChanged += new System.EventHandler(this.nudPickups_ValueChanged);
             this.nudPickups.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudPickups_KeyPress);
             // 
@@ -559,7 +559,7 @@ namespace TRR_SaveMaster
             0});
             this.nudCrystalsFound.Name = "nudCrystalsFound";
             this.nudCrystalsFound.Size = new System.Drawing.Size(51, 23);
-            this.nudCrystalsFound.TabIndex = 18;
+            this.nudCrystalsFound.TabIndex = 11;
             this.nudCrystalsFound.ValueChanged += new System.EventHandler(this.nudCrystalsFound_ValueChanged);
             this.nudCrystalsFound.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudCrystalsFound_KeyPress);
             // 
@@ -573,7 +573,7 @@ namespace TRR_SaveMaster
             0});
             this.nudSecretsFound.Name = "nudSecretsFound";
             this.nudSecretsFound.Size = new System.Drawing.Size(51, 23);
-            this.nudSecretsFound.TabIndex = 17;
+            this.nudSecretsFound.TabIndex = 7;
             this.nudSecretsFound.ValueChanged += new System.EventHandler(this.nudSecretsFound_ValueChanged);
             this.nudSecretsFound.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudSecretsFound_KeyPress);
             // 
@@ -583,7 +583,7 @@ namespace TRR_SaveMaster
             this.lblCrystalsFound.Location = new System.Drawing.Point(11, 75);
             this.lblCrystalsFound.Name = "lblCrystalsFound";
             this.lblCrystalsFound.Size = new System.Drawing.Size(88, 15);
-            this.lblCrystalsFound.TabIndex = 16;
+            this.lblCrystalsFound.TabIndex = 10;
             this.lblCrystalsFound.Text = "Crystals Found:";
             // 
             // lblMedipacksUsed
@@ -592,7 +592,7 @@ namespace TRR_SaveMaster
             this.lblMedipacksUsed.Location = new System.Drawing.Point(11, 205);
             this.lblMedipacksUsed.Name = "lblMedipacksUsed";
             this.lblMedipacksUsed.Size = new System.Drawing.Size(99, 15);
-            this.lblMedipacksUsed.TabIndex = 13;
+            this.lblMedipacksUsed.TabIndex = 24;
             this.lblMedipacksUsed.Text = "Medi Packs Used:";
             // 
             // lblSecretsFound
@@ -601,7 +601,7 @@ namespace TRR_SaveMaster
             this.lblSecretsFound.Location = new System.Drawing.Point(11, 49);
             this.lblSecretsFound.Name = "lblSecretsFound";
             this.lblSecretsFound.Size = new System.Drawing.Size(84, 15);
-            this.lblSecretsFound.TabIndex = 9;
+            this.lblSecretsFound.TabIndex = 6;
             this.lblSecretsFound.Text = "Secrets Found:";
             // 
             // lblAmmoUsedHits
@@ -610,7 +610,7 @@ namespace TRR_SaveMaster
             this.lblAmmoUsedHits.Location = new System.Drawing.Point(11, 179);
             this.lblAmmoUsedHits.Name = "lblAmmoUsedHits";
             this.lblAmmoUsedHits.Size = new System.Drawing.Size(108, 15);
-            this.lblAmmoUsedHits.TabIndex = 12;
+            this.lblAmmoUsedHits.TabIndex = 20;
             this.lblAmmoUsedHits.Text = "Ammo Used / Hits:";
             // 
             // lblPickups
@@ -619,7 +619,7 @@ namespace TRR_SaveMaster
             this.lblPickups.Location = new System.Drawing.Point(11, 127);
             this.lblPickups.Name = "lblPickups";
             this.lblPickups.Size = new System.Drawing.Size(51, 15);
-            this.lblPickups.TabIndex = 10;
+            this.lblPickups.TabIndex = 14;
             this.lblPickups.Text = "Pickups:";
             // 
             // lblKills
@@ -628,7 +628,7 @@ namespace TRR_SaveMaster
             this.lblKills.Location = new System.Drawing.Point(11, 153);
             this.lblKills.Name = "lblKills";
             this.lblKills.Size = new System.Drawing.Size(31, 15);
-            this.lblKills.TabIndex = 11;
+            this.lblKills.TabIndex = 18;
             this.lblKills.Text = "Kills:";
             // 
             // btnSave
@@ -638,7 +638,7 @@ namespace TRR_SaveMaster
             this.btnSave.Location = new System.Drawing.Point(302, 357);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 9;
+            this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -649,7 +649,7 @@ namespace TRR_SaveMaster
             this.btnClose.Location = new System.Drawing.Point(140, 357);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 11;
+            this.btnClose.TabIndex = 1;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -661,7 +661,7 @@ namespace TRR_SaveMaster
             this.btnCancel.Location = new System.Drawing.Point(221, 357);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 12;
+            this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);

@@ -51,7 +51,7 @@ namespace TRR_SaveMaster
             this.lblVersion.Location = new System.Drawing.Point(185, 74);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(116, 26);
-            this.lblVersion.TabIndex = 22;
+            this.lblVersion.TabIndex = 0;
             this.lblVersion.Text = "Version 2.37";
             // 
             // lblAuthor
@@ -63,7 +63,7 @@ namespace TRR_SaveMaster
             this.lblAuthor.Location = new System.Drawing.Point(148, 106);
             this.lblAuthor.Name = "lblAuthor";
             this.lblAuthor.Size = new System.Drawing.Size(188, 28);
-            this.lblAuthor.TabIndex = 21;
+            this.lblAuthor.TabIndex = 1;
             this.lblAuthor.Text = "by Julian Ozel Rose";
             // 
             // btnOK
@@ -78,7 +78,7 @@ namespace TRR_SaveMaster
             this.btnOK.Location = new System.Drawing.Point(171, 321);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(155, 47);
-            this.btnOK.TabIndex = 23;
+            this.btnOK.TabIndex = 7;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = false;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -92,7 +92,7 @@ namespace TRR_SaveMaster
             this.lblAbout2.Location = new System.Drawing.Point(212, 161);
             this.lblAbout2.Name = "lblAbout2";
             this.lblAbout2.Size = new System.Drawing.Size(66, 21);
-            this.lblAbout2.TabIndex = 27;
+            this.lblAbout2.TabIndex = 4;
             this.lblAbout2.Text = "for the";
             // 
             // lblAbout3
@@ -104,7 +104,7 @@ namespace TRR_SaveMaster
             this.lblAbout3.Location = new System.Drawing.Point(28, 187);
             this.lblAbout3.Name = "lblAbout3";
             this.lblAbout3.Size = new System.Drawing.Size(230, 19);
-            this.lblAbout3.TabIndex = 26;
+            this.lblAbout3.TabIndex = 5;
             this.lblAbout3.Text = "latest version and for more";
             // 
             // lblAbout1
@@ -116,7 +116,7 @@ namespace TRR_SaveMaster
             this.lblAbout1.Location = new System.Drawing.Point(28, 161);
             this.lblAbout1.Name = "lblAbout1";
             this.lblAbout1.Size = new System.Drawing.Size(124, 21);
-            this.lblAbout1.TabIndex = 25;
+            this.lblAbout1.TabIndex = 2;
             this.lblAbout1.Text = "Check out my";
             // 
             // llbGitHub
@@ -129,7 +129,7 @@ namespace TRR_SaveMaster
             this.llbGitHub.Location = new System.Drawing.Point(149, 161);
             this.llbGitHub.Name = "llbGitHub";
             this.llbGitHub.Size = new System.Drawing.Size(68, 21);
-            this.llbGitHub.TabIndex = 24;
+            this.llbGitHub.TabIndex = 3;
             this.llbGitHub.TabStop = true;
             this.llbGitHub.Text = "GitHub";
             this.llbGitHub.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llbGitHub_LinkClicked);
@@ -144,7 +144,7 @@ namespace TRR_SaveMaster
             this.lblAbout4.Location = new System.Drawing.Point(28, 215);
             this.lblAbout4.Name = "lblAbout4";
             this.lblAbout4.Size = new System.Drawing.Size(244, 19);
-            this.lblAbout4.TabIndex = 29;
+            this.lblAbout4.TabIndex = 6;
             this.lblAbout4.Text = "reverse engineering content.";
             // 
             // picTitleText
