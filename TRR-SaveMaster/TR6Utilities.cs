@@ -116,7 +116,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void DetermineOffsets(byte[] fileData)
+        public void DetermineOffsets(byte[] fileData)
         {
             Int32 savegameVersion = GetSavegameVersion(fileData);
             Int32 compressedBlockSize = GetCompressedBlockSize(fileData);
@@ -1538,12 +1538,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        public void UpdateSavegameBuffer(byte[] buffer)
-        {
-            decompressedBuffer = buffer;
-        }
-
-        public byte[] GetSavegameBuffer()
+        public byte[] GetDecompressedBuffer()
         {
             return decompressedBuffer;
         }

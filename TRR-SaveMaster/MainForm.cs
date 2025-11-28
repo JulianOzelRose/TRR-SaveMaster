@@ -586,11 +586,6 @@ namespace TRR_SaveMaster
             return tabGame.SelectedIndex == TAB_TR4 || tabGame.SelectedIndex == TAB_TR5 || tabGame.SelectedIndex == TAB_TR6;
         }
 
-        public void UpdateSavegameBufferTR6(byte[] buffer)
-        {
-            TR6.UpdateSavegameBuffer(buffer);
-        }
-
         private void btnExitTR1_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -2313,12 +2308,6 @@ namespace TRR_SaveMaster
                     PopulateSavegamesTR6();
                     return;
                 }
-
-                int PLAYER_BASE_OFFSET = TR6.GetPlayerBaseOffset();
-                byte[] decompressedBuffer = TR6.GetSavegameBuffer();
-
-                positionForm.SetPlayerBaseOffset(PLAYER_BASE_OFFSET);
-                positionForm.SetSavegameBuffer(decompressedBuffer);
 
                 selectedSavegame = cmbSavegamesTR6.Items[cmbSavegamesTR6.SelectedIndex] as Savegame;
             }

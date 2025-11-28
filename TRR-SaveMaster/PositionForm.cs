@@ -38,7 +38,6 @@ namespace TRR_SaveMaster
         private Savegame selectedSavegame;
         private string savegamePath;
         private int savegameOffset;
-        private int playerBaseOffset;
 
         // Misc
         private MainForm mainForm;
@@ -155,7 +154,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void DeterminePositionOffsetsTR6()
+        private void DeterminePositionOffsetsTR6(int playerBaseOffset)
         {
             X_COORDINATE_OFFSET = playerBaseOffset;
             Y_COORDINATE_OFFSET = playerBaseOffset + 0x8;
@@ -218,16 +217,6 @@ namespace TRR_SaveMaster
             selectedSavegame = savegame;
             savegameOffset = savegame.Offset;
             grpSavegameCoordinates.Text = $"{selectedSavegame}";
-        }
-
-        public void SetPlayerBaseOffset(int offset)
-        {
-            playerBaseOffset = offset;
-        }
-
-        public void SetSavegameBuffer(byte[] buffer)
-        {
-            decompressedBuffer = buffer;
         }
 
         private byte[] ReadBytes(long offset, int length)
@@ -587,16 +576,13 @@ namespace TRR_SaveMaster
             return SELECTED_TAB == TAB_TR6;
         }
 
-        private void DisplayCoordinates(byte[] fileData = null)
+        private void DisplayCoordinates()
         {
             isLoading = true;
 
             try
             {
-                if (fileData == null)
-                {
-                    fileData = File.ReadAllBytes(savegamePath);
-                }
+                byte[] fileData = File.ReadAllBytes(savegamePath);
 
                 if (!IsSavegamePresent(fileData))
                 {
@@ -612,7 +598,14 @@ namespace TRR_SaveMaster
 
                 if (IsTR6Savegame())
                 {
-                    DeterminePositionOffsetsTR6();
+                    if (decompressedBuffer == null)
+                    {
+                        TR6.DetermineOffsets(fileData);
+                        decompressedBuffer = TR6.GetDecompressedBuffer();
+                    }
+
+                    int playerBaseOffset = TR6.GetPlayerBaseOffset();
+                    DeterminePositionOffsetsTR6(playerBaseOffset);
                 }
                 else
                 {
@@ -666,14 +659,6 @@ namespace TRR_SaveMaster
                 }
                 else if (IsTR6Savegame())
                 {
-                    if (decompressedBuffer == null)
-                    {
-                        Int32 compressedBlockSize = BitConverter.ToInt32(fileData, savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
-                        byte[] compressedBlockData = ReadBytes(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, compressedBlockSize);
-
-                        decompressedBuffer = TR6.Unpack(compressedBlockData);
-                    }
-
                     using (MemoryStream ms = new MemoryStream(decompressedBuffer))
                     using (BinaryReader reader = new BinaryReader(ms))
                     {
@@ -699,7 +684,6 @@ namespace TRR_SaveMaster
                         nudRoom.Value = zone;
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -729,7 +713,8 @@ namespace TRR_SaveMaster
 
                 if (IsTR6Savegame())
                 {
-                    DeterminePositionOffsetsTR6();
+                    int playerBaseOffset = TR6.GetPlayerBaseOffset();
+                    DeterminePositionOffsetsTR6(playerBaseOffset);
                 }
                 else
                 {
@@ -827,8 +812,6 @@ namespace TRR_SaveMaster
                         fs.Seek(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, SeekOrigin.Begin);
                         writer.Write(compressedBuffer);
                     }
-
-                    mainForm.UpdateSavegameBufferTR6(decompressedBuffer);
                 }
 
                 if (!IsTR6Savegame())
