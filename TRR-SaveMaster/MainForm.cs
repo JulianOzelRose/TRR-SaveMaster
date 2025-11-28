@@ -1381,6 +1381,9 @@ namespace TRR_SaveMaster
 
                     TR6.WriteChanges(nudCashTR6, trbHealthTR6, nudSaveNumberTR6);
 
+                    // Reload updated header bytes
+                    fileData = File.ReadAllBytes(savegamePathTRX2);
+
                     TR6.UpdateDisplayName(savegame, fileData);
                     UpdateSavegameDisplayNameTR6(cmbSavegamesTR6, savegame);
 
