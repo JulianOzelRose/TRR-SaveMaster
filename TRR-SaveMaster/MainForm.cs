@@ -2176,6 +2176,7 @@ namespace TRR_SaveMaster
                     return;
                 }
 
+                TR1.DetermineOffsets(fileData);
                 int healthOffset = TR1.GetHealthOffset(fileData);
 
                 if (healthOffset == -1)
@@ -2199,6 +2200,7 @@ namespace TRR_SaveMaster
                     return;
                 }
 
+                TR2.DetermineOffsets(fileData);
                 int healthOffset = TR2.GetHealthOffset();
 
                 if (healthOffset == -1)
@@ -2229,6 +2231,7 @@ namespace TRR_SaveMaster
                     return;
                 }
 
+                TR3.DetermineOffsets(fileData);
                 int healthOffset = TR3.GetHealthOffset();
 
                 if (healthOffset == -1)
@@ -2259,6 +2262,7 @@ namespace TRR_SaveMaster
                     return;
                 }
 
+                TR4.DetermineOffsets(fileData);
                 int healthOffset = TR4.GetHealthOffset();
 
                 if (healthOffset == -1)
@@ -2289,6 +2293,7 @@ namespace TRR_SaveMaster
                     return;
                 }
 
+                TR5.DetermineOffsets(fileData);
                 int healthOffset = TR5.GetHealthOffset();
 
                 if (healthOffset == -1)
