@@ -212,6 +212,32 @@ namespace TRR_SaveMaster
             return false;
         }
 
+        private bool IsLaraFreefalling(int healthOffset, byte[] fileData)
+        {
+            if (IsTR1Savegame())
+            {
+                return TR1.IsLaraFreefalling(healthOffset, fileData);
+            }
+            else if (IsTR2Savegame())
+            {
+                return TR2.IsLaraFreefalling(healthOffset, fileData);
+            }
+            else if (IsTR3Savegame())
+            {
+                return TR3.IsLaraFreefalling(healthOffset, fileData);
+            }
+            else if (IsTR4Savegame())
+            {
+                return TR4.IsLaraFreefalling(healthOffset, fileData);
+            }
+            else if (IsTR5Savegame())
+            {
+                return TR5.IsLaraFreefalling(healthOffset, fileData);
+            }
+
+            return false;
+        }
+
         public void SetSavegame(Savegame savegame)
         {
             selectedSavegame = savegame;
@@ -634,6 +660,16 @@ namespace TRR_SaveMaster
                         }
                     }
 
+                    if (IsLaraFreefalling(healthOffset, fileData))
+                    {
+                        string warningMessage = $"Cannot edit position while Lara is freefalling.";
+                        MessageBox.Show(warningMessage, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                        DisableButtons();
+                        this.Close();
+                        return;
+                    }
+
                     DeterminePositionOffsets(healthOffset);
                 }
 
@@ -743,6 +779,16 @@ namespace TRR_SaveMaster
                             this.Close();
                             return;
                         }
+                    }
+
+                    if (IsLaraFreefalling(healthOffset, fileData))
+                    {
+                        string warningMessage = $"Cannot edit position while Lara is freefalling.";
+                        MessageBox.Show(warningMessage, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                        DisableButtons();
+                        this.Close();
+                        return;
                     }
 
                     DeterminePositionOffsets(healthOffset);

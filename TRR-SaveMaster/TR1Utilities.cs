@@ -456,6 +456,18 @@ namespace TRR_SaveMaster
             File.WriteAllBytes(savegamePath, fileData);
         }
 
+        public bool IsLaraFreefalling(int healthOffset, byte[] fileData)
+        {
+            byte byteFlag1 = fileData[healthOffset - 10];
+            byte byteFlag2 = fileData[healthOffset - 9];
+            byte byteFlag3 = fileData[healthOffset - 8];
+            byte byteFlag4 = fileData[healthOffset - 7];
+
+            if (byteFlag1 == 0x09 && byteFlag2 == 0x00 && byteFlag3 == 0x09 && byteFlag4 == 0x00) return true;
+
+            return false;
+        }
+
         public void SetPlatform(Platform platform)
         {
             this.platform = platform;

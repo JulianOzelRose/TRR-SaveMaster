@@ -2186,6 +2186,13 @@ namespace TRR_SaveMaster
                     return;
                 }
 
+                if (TR1.IsLaraFreefalling(healthOffset, fileData))
+                {
+                    string warningMessage = $"Cannot edit position while Lara is freefalling.";
+                    MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 selectedSavegame = cmbSavegamesTR1.Items[cmbSavegamesTR1.SelectedIndex] as Savegame;
             }
             else if (tabGame.SelectedIndex == TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1)
@@ -2213,6 +2220,13 @@ namespace TRR_SaveMaster
                 if (TR2.IsLaraInVehicle(healthOffset, fileData))
                 {
                     string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
+                    MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (TR2.IsLaraFreefalling(healthOffset, fileData))
+                {
+                    string warningMessage = $"Cannot edit position while Lara is freefalling.";
                     MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -2248,6 +2262,13 @@ namespace TRR_SaveMaster
                     return;
                 }
 
+                if (TR3.IsLaraFreefalling(healthOffset, fileData))
+                {
+                    string warningMessage = $"Cannot edit position while Lara is freefalling.";
+                    MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 selectedSavegame = cmbSavegamesTR3.Items[cmbSavegamesTR3.SelectedIndex] as Savegame;
             }
             else if (tabGame.SelectedIndex == TAB_TR4 && cmbSavegamesTR4.SelectedIndex != -1)
@@ -2279,6 +2300,13 @@ namespace TRR_SaveMaster
                     return;
                 }
 
+                if (TR4.IsLaraFreefalling(healthOffset, fileData))
+                {
+                    string warningMessage = $"Cannot edit position while Lara is freefalling.";
+                    MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 selectedSavegame = cmbSavegamesTR4.Items[cmbSavegamesTR4.SelectedIndex] as Savegame;
             }
             else if (tabGame.SelectedIndex == TAB_TR5 && cmbSavegamesTR5.SelectedIndex != -1)
@@ -2300,6 +2328,13 @@ namespace TRR_SaveMaster
                 {
                     string warningMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
                     MessageBox.Show(warningMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (TR5.IsLaraFreefalling(healthOffset, fileData))
+                {
+                    string warningMessage = $"Cannot edit position while Lara is freefalling.";
+                    MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 

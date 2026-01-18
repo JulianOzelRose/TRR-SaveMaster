@@ -867,6 +867,7 @@ namespace TRR_SaveMaster
             if (byteFlag1 == 0x12 && byteFlag2 == 0x12 && byteFlag3 == 0x00 && byteFlag4 == 0xC6) return true;  // Swimming forward
             if (byteFlag1 == 0x12 && byteFlag2 == 0x0D && byteFlag3 == 0x00 && byteFlag4 == 0xC8) return true;  // Swimming forward
             if (byteFlag1 == 0x18 && byteFlag2 == 0x18 && byteFlag3 == 0x00 && byteFlag4 == 0x46) return true;  // Sliding downhill
+            if (byteFlag1 == 0x09 && byteFlag2 == 0x09 && byteFlag3 == 0x00 && byteFlag4 == 0x17) return true;  // Freefalling
             if (byteFlag1 == 0x00 && byteFlag2 == 0x00 && byteFlag3 == 0x00 && byteFlag4 == 0x40) return true;  // Jeep
             if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x34) return true;  // Jeep
             if (byteFlag1 == 0x0B && byteFlag2 == 0x0B && byteFlag3 == 0x00 && byteFlag4 == 0x38) return true;  // Jeep
@@ -902,6 +903,18 @@ namespace TRR_SaveMaster
             if (byteFlag1 == 0x08 && byteFlag2 == 0x08 && byteFlag3 == 0x00 && byteFlag4 == 0x39) return true;  // Motorbike
             if (byteFlag1 == 0x11 && byteFlag2 == 0x11 && byteFlag3 == 0x00 && byteFlag4 == 0x3A) return true;  // Motorbike
             if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x27) return true;  // Motorbike
+
+            return false;
+        }
+
+        public bool IsLaraFreefalling(int healthOffset, byte[] fileData)
+        {
+            byte byteFlag1 = fileData[healthOffset - 7];
+            byte byteFlag2 = fileData[healthOffset - 6];
+            byte byteFlag3 = fileData[healthOffset - 5];
+            byte byteFlag4 = fileData[healthOffset - 4];
+
+            if (byteFlag1 == 0x09 && byteFlag2 == 0x09 && byteFlag3 == 0x00 && byteFlag4 == 0x17) return true;
 
             return false;
         }

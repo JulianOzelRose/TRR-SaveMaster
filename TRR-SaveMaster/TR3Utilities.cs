@@ -776,6 +776,7 @@ namespace TRR_SaveMaster
             if (byteFlag1 == 0x50 && byteFlag2 == 0x00 && byteFlag3 == 0x50 && byteFlag4 == 0x00) return true;  // Kneeling
             if (byteFlag1 == 0x51 && byteFlag2 == 0x00 && byteFlag3 == 0x50 && byteFlag4 == 0x00) return true;  // Crawling forward
             if (byteFlag1 == 0x2A && byteFlag2 == 0x00 && byteFlag3 == 0x02 && byteFlag4 == 0x00) return true;  // Using puzzle item
+            if (byteFlag1 == 0x09 && byteFlag2 == 0x00 && byteFlag3 == 0x09 && byteFlag4 == 0x00) return true;  // Freefalling
             if (byteFlag1 == 0x0F && byteFlag2 == 0x00 && byteFlag3 == 0x0F && byteFlag4 == 0x00) return true;  // Quad Bike
             if (byteFlag1 == 0x08 && byteFlag2 == 0x00 && byteFlag3 == 0x08 && byteFlag4 == 0x00) return true;  // Quad Bike
             if (byteFlag1 == 0x05 && byteFlag2 == 0x00 && byteFlag3 == 0x05 && byteFlag4 == 0x00) return true;  // UPV
@@ -801,6 +802,18 @@ namespace TRR_SaveMaster
             if (byteFlag1 == 0x03 && byteFlag2 == 0x00 && byteFlag3 == 0x01 && byteFlag4 == 0x00) return true;  // Kayak or Boat
             if (byteFlag1 == 0x06 && byteFlag2 == 0x00 && byteFlag3 == 0x06 && byteFlag4 == 0x00) return true;  // Mine Cart
             if (byteFlag1 == 0x0C && byteFlag2 == 0x00 && byteFlag3 == 0x0C && byteFlag4 == 0x00) return true;  // Mine Cart
+
+            return false;
+        }
+
+        public bool IsLaraFreefalling(int healthOffset, byte[] fileData)
+        {
+            byte byteFlag1 = fileData[healthOffset - 10];
+            byte byteFlag2 = fileData[healthOffset - 9];
+            byte byteFlag3 = fileData[healthOffset - 8];
+            byte byteFlag4 = fileData[healthOffset - 7];
+
+            if (byteFlag1 == 0x09 && byteFlag2 == 0x00 && byteFlag3 == 0x09 && byteFlag4 == 0x00) return true;
 
             return false;
         }
