@@ -270,7 +270,7 @@ namespace TRR_SaveMaster
             }
             else if (levelIndex == 18)  // Catacombs
             {
-                MIN_HEALTH_OFFSET = 0xE2B;
+                MIN_HEALTH_OFFSET = 0x5F0;
                 MAX_HEALTH_OFFSET = 0x24F5;
             }
             else if (levelIndex == 19)  // Temple of Poseidon
