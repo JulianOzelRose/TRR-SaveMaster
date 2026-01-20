@@ -2186,13 +2186,6 @@ namespace TRR_SaveMaster
                     return;
                 }
 
-                if (TR1.IsLaraFreefalling(healthOffset, fileData))
-                {
-                    string warningMessage = $"Cannot edit position while Lara is freefalling.";
-                    MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
                 selectedSavegame = cmbSavegamesTR1.Items[cmbSavegamesTR1.SelectedIndex] as Savegame;
             }
             else if (tabGame.SelectedIndex == TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1)
@@ -2224,13 +2217,6 @@ namespace TRR_SaveMaster
                     return;
                 }
 
-                if (TR2.IsLaraFreefalling(healthOffset, fileData))
-                {
-                    string warningMessage = $"Cannot edit position while Lara is freefalling.";
-                    MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
                 selectedSavegame = cmbSavegamesTR2.Items[cmbSavegamesTR2.SelectedIndex] as Savegame;
             }
             else if (tabGame.SelectedIndex == TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1)
@@ -2258,13 +2244,6 @@ namespace TRR_SaveMaster
                 if (TR3.IsLaraInVehicle(healthOffset, fileData))
                 {
                     string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
-                    MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                if (TR3.IsLaraFreefalling(healthOffset, fileData))
-                {
-                    string warningMessage = $"Cannot edit position while Lara is freefalling.";
                     MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }

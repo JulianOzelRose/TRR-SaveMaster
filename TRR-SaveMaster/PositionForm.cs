@@ -238,6 +238,26 @@ namespace TRR_SaveMaster
             return false;
         }
 
+        private void SetLaraStanding(int healthOffset, byte[] fileData)
+        {
+            if (IsTR1Savegame() || IsTR2Savegame() || IsTR3Savegame())
+            {
+                // Standing flags
+                fileData[healthOffset - 10] = 0x02;
+                fileData[healthOffset - 9] = 0x00;
+                fileData[healthOffset - 8] = 0x02;
+                fileData[healthOffset - 7] = 0x00;
+            }
+            else if (IsTR4Savegame() || IsTR5Savegame())
+            {
+                // Standing flags (not sufficient)
+                fileData[healthOffset - 7] = 0x02;
+                fileData[healthOffset - 6] = 0x02;
+                fileData[healthOffset - 5] = 0x00;
+                fileData[healthOffset - 4] = 0x52;
+            }
+        }
+
         public void SetSavegame(Savegame savegame)
         {
             selectedSavegame = savegame;
@@ -660,7 +680,7 @@ namespace TRR_SaveMaster
                         }
                     }
 
-                    if (IsLaraFreefalling(healthOffset, fileData))
+                    if (IsLaraFreefalling(healthOffset, fileData) && !IsTRXSavegame())
                     {
                         string warningMessage = $"Cannot edit position while Lara is freefalling.";
                         MessageBox.Show(warningMessage, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -783,12 +803,17 @@ namespace TRR_SaveMaster
 
                     if (IsLaraFreefalling(healthOffset, fileData))
                     {
-                        string warningMessage = $"Cannot edit position while Lara is freefalling.";
-                        MessageBox.Show(warningMessage, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        if (!IsTRXSavegame())
+                        {
+                            string warningMessage = $"Cannot edit position while Lara is freefalling.";
+                            MessageBox.Show(warningMessage, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                        DisableButtons();
-                        this.Close();
-                        return;
+                            DisableButtons();
+                            this.Close();
+                            return;
+                        }
+
+                        SetLaraStanding(healthOffset, fileData);
                     }
 
                     DeterminePositionOffsets(healthOffset);
