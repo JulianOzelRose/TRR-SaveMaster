@@ -254,7 +254,7 @@ namespace TRR_SaveMaster
                 fileData[healthOffset - 7] = 0x02;
                 fileData[healthOffset - 6] = 0x02;
                 fileData[healthOffset - 5] = 0x00;
-                fileData[healthOffset - 4] = 0x52;
+                fileData[healthOffset - 4] = 0x18;
             }
         }
 

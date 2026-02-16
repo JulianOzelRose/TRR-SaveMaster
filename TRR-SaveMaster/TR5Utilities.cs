@@ -914,6 +914,8 @@ namespace TRR_SaveMaster
             if (byteFlag1 == 0x12 && byteFlag2 == 0x0D && byteFlag3 == 0x00 && byteFlag4 == 0xC8) return true;  // Swimming forward
             if (byteFlag1 == 0x18 && byteFlag2 == 0x18 && byteFlag3 == 0x00 && byteFlag4 == 0x46) return true;  // Sliding downhill
             if (byteFlag1 == 0x09 && byteFlag2 == 0x09 && byteFlag3 == 0x00 && byteFlag4 == 0x17) return true;  // Freefalling
+            if (byteFlag1 == 0x09 && byteFlag2 == 0x09 && byteFlag3 == 0x47 && byteFlag4 == 0x17) return true;  // Freefalling
+            if (byteFlag1 == 0x02 && byteFlag2 == 0x02 && byteFlag3 == 0x00 && byteFlag4 == 0x18) return true;  // Fall recovery
 
             return false;
         }
@@ -926,6 +928,7 @@ namespace TRR_SaveMaster
             byte byteFlag4 = fileData[healthOffset - 4];
 
             if (byteFlag1 == 0x09 && byteFlag2 == 0x09 && byteFlag3 == 0x00 && byteFlag4 == 0x17) return true;
+            if (byteFlag1 == 0x09 && byteFlag2 == 0x09 && byteFlag3 == 0x47 && byteFlag4 == 0x17) return true;
 
             return false;
         }
