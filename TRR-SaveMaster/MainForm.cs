@@ -57,6 +57,9 @@ namespace TRR_SaveMaster
             tsmiRefreshSavegameList.Enabled = !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX);
             tsmiCreateBackup.Enabled = !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX);
             tsmiBackupBeforeSaving.Enabled = !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX);
+            tsmiUnlocks.Enabled =
+                !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX) ||
+                !string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2);
 
             EnableToolStripMenuItemsConditionally();
 
@@ -379,6 +382,7 @@ namespace TRR_SaveMaster
 
                     tsmiCreateBackup.Enabled = true;
                     tsmiBackupBeforeSaving.Enabled = true;
+                    tsmiUnlocks.Enabled = true;
 
                     this.Text = $"Tomb Raider I-VI Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(platform)})";
 
@@ -421,6 +425,7 @@ namespace TRR_SaveMaster
 
                     tsmiCreateBackup.Enabled = true;
                     tsmiBackupBeforeSaving.Enabled = true;
+                    tsmiUnlocks.Enabled = true;
 
                     this.Text = $"Tomb Raider I-VI Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(platform)})";
 
@@ -2074,6 +2079,13 @@ namespace TRR_SaveMaster
             AboutForm aboutForm = new AboutForm();
             aboutForm.TopMost = TopMost;
             aboutForm.ShowDialog();
+        }
+
+        private void tsmiUnlocks_Click(object sender, EventArgs e)
+        {
+            UnlocksForm unlocksForm = new UnlocksForm(this, slblStatus, tsmiBackupBeforeSaving.Checked, savegamePathTRX, savegamePathTRX2);
+            unlocksForm.TopMost = TopMost;
+            unlocksForm.ShowDialog();
         }
 
         private void tsmiStatistics_Click(object sender, EventArgs e)

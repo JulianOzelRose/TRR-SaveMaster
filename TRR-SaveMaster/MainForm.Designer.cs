@@ -317,6 +317,7 @@ namespace TRR_SaveMaster
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiReportBug = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiUnlocks = new System.Windows.Forms.ToolStripMenuItem();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR1)).BeginInit();
@@ -3618,6 +3619,7 @@ namespace TRR_SaveMaster
             this.tsmiEditSeparator,
             this.tsmiStatistics,
             this.tsmiPosition,
+            this.tsmiUnlocks,
             this.tsmiEditSeparator2,
             this.tsmiDeleteSavegame});
             this.tsddbEdit.Image = ((System.Drawing.Image)(resources.GetObject("tsddbEdit.Image")));
@@ -3829,6 +3831,14 @@ namespace TRR_SaveMaster
             this.tsmiAbout.Size = new System.Drawing.Size(148, 22);
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
+            // 
+            // tsmiUnlocks
+            // 
+            this.tsmiUnlocks.Enabled = false;
+            this.tsmiUnlocks.Name = "tsmiUnlocks";
+            this.tsmiUnlocks.Size = new System.Drawing.Size(216, 22);
+            this.tsmiUnlocks.Text = "Unlocks";
+            this.tsmiUnlocks.Click += new System.EventHandler(this.tsmiUnlocks_Click);
             // 
             // MainForm
             // 
@@ -4277,6 +4287,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.Label lblSaveNumberTR6;
         private System.Windows.Forms.ToolStripMenuItem tsmiShowInventoryToggleTR6;
         private System.Windows.Forms.ToolStripMenuItem tsmiRefreshSavegameList;
+        private System.Windows.Forms.ToolStripMenuItem tsmiUnlocks;
     }
 }
 
