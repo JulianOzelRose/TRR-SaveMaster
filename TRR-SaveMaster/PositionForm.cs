@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using TRR_SaveMaster.Properties;
 
 namespace TRR_SaveMaster
 {
@@ -64,6 +65,18 @@ namespace TRR_SaveMaster
             SetNUDRanges();
             InitializeUtilConstructors();
             DisplayCoordinates();
+
+            if (ThemeUtilities.DARK_MODE_ENABLED)
+            {
+                ThemeUtilities.ApplyDarkMode(this);
+                ThemeUtilities.ApplyDarkTitleBar(this);
+
+                picInfoOrientation.Image = Resources.ToolTip_Image_DarkMode;
+                picInfoRoom.Image = Resources.ToolTip_Image_DarkMode;
+                picInfoXCoordinate.Image = Resources.ToolTip_Image_DarkMode;
+                picInfoYCoordinate.Image = Resources.ToolTip_Image_DarkMode;
+                picInfoZCoordinate.Image = Resources.ToolTip_Image_DarkMode;
+            }
         }
 
         private void PositionForm_FormClosing(object sender, FormClosingEventArgs e)

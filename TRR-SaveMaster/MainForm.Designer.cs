@@ -300,6 +300,7 @@ namespace TRR_SaveMaster
             this.tsmiEditSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiStatistics = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPosition = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiUnlocks = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEditSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiDeleteSavegame = new System.Windows.Forms.ToolStripMenuItem();
             this.tsddbSettings = new System.Windows.Forms.ToolStripDropDownButton();
@@ -310,6 +311,7 @@ namespace TRR_SaveMaster
             this.tsmiSettingsSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiStatusBar = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiDarkMode = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAdvanced = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAllowUnsafeMaxValuesTR6 = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiShowInventoryToggleTR6 = new System.Windows.Forms.ToolStripMenuItem();
@@ -317,7 +319,6 @@ namespace TRR_SaveMaster
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiReportBug = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiUnlocks = new System.Windows.Forms.ToolStripMenuItem();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR1)).BeginInit();
@@ -513,7 +514,7 @@ namespace TRR_SaveMaster
             // 
             // grpHealthTR1
             // 
-            this.grpHealthTR1.BackColor = System.Drawing.Color.Transparent;
+            this.grpHealthTR1.BackColor = System.Drawing.Color.White;
             this.grpHealthTR1.Controls.Add(this.lblHealthErrorTR1);
             this.grpHealthTR1.Controls.Add(this.lblHealthTR1);
             this.grpHealthTR1.Controls.Add(this.trbHealthTR1);
@@ -3682,6 +3683,14 @@ namespace TRR_SaveMaster
             this.tsmiPosition.Text = "Position";
             this.tsmiPosition.Click += new System.EventHandler(this.tsmiPosition_Click);
             // 
+            // tsmiUnlocks
+            // 
+            this.tsmiUnlocks.Enabled = false;
+            this.tsmiUnlocks.Name = "tsmiUnlocks";
+            this.tsmiUnlocks.Size = new System.Drawing.Size(216, 22);
+            this.tsmiUnlocks.Text = "Unlocks";
+            this.tsmiUnlocks.Click += new System.EventHandler(this.tsmiUnlocks_Click);
+            // 
             // tsmiEditSeparator2
             // 
             this.tsmiEditSeparator2.Name = "tsmiEditSeparator2";
@@ -3701,10 +3710,11 @@ namespace TRR_SaveMaster
             this.tsddbSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tsddbSettings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiPlatform,
+            this.tsmiAdvanced,
             this.tsmiSettingsSeparator,
             this.tsmiAlwaysOnTop,
             this.tsmiStatusBar,
-            this.tsmiAdvanced});
+            this.tsmiDarkMode});
             this.tsddbSettings.Image = ((System.Drawing.Image)(resources.GetObject("tsddbSettings.Image")));
             this.tsddbSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsddbSettings.Name = "tsddbSettings";
@@ -3719,7 +3729,7 @@ namespace TRR_SaveMaster
             this.tsmiPlayStation4,
             this.tsmiNintendoSwitch});
             this.tsmiPlatform.Name = "tsmiPlatform";
-            this.tsmiPlatform.Size = new System.Drawing.Size(149, 22);
+            this.tsmiPlatform.Size = new System.Drawing.Size(180, 22);
             this.tsmiPlatform.Text = "Platform";
             // 
             // tsmiPC
@@ -3751,13 +3761,13 @@ namespace TRR_SaveMaster
             // tsmiSettingsSeparator
             // 
             this.tsmiSettingsSeparator.Name = "tsmiSettingsSeparator";
-            this.tsmiSettingsSeparator.Size = new System.Drawing.Size(146, 6);
+            this.tsmiSettingsSeparator.Size = new System.Drawing.Size(177, 6);
             // 
             // tsmiAlwaysOnTop
             // 
             this.tsmiAlwaysOnTop.CheckOnClick = true;
             this.tsmiAlwaysOnTop.Name = "tsmiAlwaysOnTop";
-            this.tsmiAlwaysOnTop.Size = new System.Drawing.Size(149, 22);
+            this.tsmiAlwaysOnTop.Size = new System.Drawing.Size(180, 22);
             this.tsmiAlwaysOnTop.Text = "Always on top";
             this.tsmiAlwaysOnTop.Click += new System.EventHandler(this.tsmiAlwaysOnTop_Click);
             // 
@@ -3767,9 +3777,17 @@ namespace TRR_SaveMaster
             this.tsmiStatusBar.CheckOnClick = true;
             this.tsmiStatusBar.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiStatusBar.Name = "tsmiStatusBar";
-            this.tsmiStatusBar.Size = new System.Drawing.Size(149, 22);
+            this.tsmiStatusBar.Size = new System.Drawing.Size(180, 22);
             this.tsmiStatusBar.Text = "Status Bar";
             this.tsmiStatusBar.Click += new System.EventHandler(this.tsmiStatusBar_Click);
+            // 
+            // tsmiDarkMode
+            // 
+            this.tsmiDarkMode.CheckOnClick = true;
+            this.tsmiDarkMode.Name = "tsmiDarkMode";
+            this.tsmiDarkMode.Size = new System.Drawing.Size(180, 22);
+            this.tsmiDarkMode.Text = "Dark Mode";
+            this.tsmiDarkMode.Click += new System.EventHandler(this.tsmiDarkMode_Click);
             // 
             // tsmiAdvanced
             // 
@@ -3777,7 +3795,7 @@ namespace TRR_SaveMaster
             this.tsmiAllowUnsafeMaxValuesTR6,
             this.tsmiShowInventoryToggleTR6});
             this.tsmiAdvanced.Name = "tsmiAdvanced";
-            this.tsmiAdvanced.Size = new System.Drawing.Size(149, 22);
+            this.tsmiAdvanced.Size = new System.Drawing.Size(180, 22);
             this.tsmiAdvanced.Text = "Advanced";
             // 
             // tsmiAllowUnsafeMaxValuesTR6
@@ -3831,14 +3849,6 @@ namespace TRR_SaveMaster
             this.tsmiAbout.Size = new System.Drawing.Size(148, 22);
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
-            // 
-            // tsmiUnlocks
-            // 
-            this.tsmiUnlocks.Enabled = false;
-            this.tsmiUnlocks.Name = "tsmiUnlocks";
-            this.tsmiUnlocks.Size = new System.Drawing.Size(216, 22);
-            this.tsmiUnlocks.Text = "Unlocks";
-            this.tsmiUnlocks.Click += new System.EventHandler(this.tsmiUnlocks_Click);
             // 
             // MainForm
             // 
@@ -4288,6 +4298,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.ToolStripMenuItem tsmiShowInventoryToggleTR6;
         private System.Windows.Forms.ToolStripMenuItem tsmiRefreshSavegameList;
         private System.Windows.Forms.ToolStripMenuItem tsmiUnlocks;
+        private System.Windows.Forms.ToolStripMenuItem tsmiDarkMode;
     }
 }
 

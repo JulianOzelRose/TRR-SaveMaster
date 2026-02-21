@@ -45,6 +45,12 @@ namespace TRR_SaveMaster
         {
             SetCheckboxes();
             DisplayData();
+
+            if (ThemeUtilities.DARK_MODE_ENABLED)
+            {
+                ThemeUtilities.ApplyDarkMode(this);
+                ThemeUtilities.ApplyDarkTitleBar(this);
+            }
         }
 
         private void UnlocksForm_FormClosing(object sender, FormClosingEventArgs e)

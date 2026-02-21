@@ -10,6 +10,14 @@ namespace TRR_SaveMaster
             InitializeComponent();
         }
 
+        private void AboutForm_Load(object sender, EventArgs e)
+        {
+            if (ThemeUtilities.DARK_MODE_ENABLED)
+            {
+                ThemeUtilities.ApplyDarkTitleBar(this);
+            }
+        }
+
         private void btnOK_Click(object sender, EventArgs e)
         {
             this.Close();

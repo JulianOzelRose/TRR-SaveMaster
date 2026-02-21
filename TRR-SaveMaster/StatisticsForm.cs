@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using TRR_SaveMaster.Properties;
 
 namespace TRR_SaveMaster
 {
@@ -77,6 +78,12 @@ namespace TRR_SaveMaster
             DetermineOffsets();
             SetParams();
             DisplayStatistics();
+
+            if (ThemeUtilities.DARK_MODE_ENABLED)
+            {
+                ThemeUtilities.ApplyDarkMode(this);
+                ThemeUtilities.ApplyDarkTitleBar(this);
+            }
         }
 
         private void StatisticsForm_FormClosing(object sender, FormClosingEventArgs e)

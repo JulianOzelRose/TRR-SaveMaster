@@ -96,6 +96,7 @@
     <Compile Include="StatisticsForm.Designer.cs">
       <DependentUpon>StatisticsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ThemeUtilities.cs" />
     <Compile Include="TR1Utilities.cs" />
     <Compile Include="TR2Utilities.cs" />
     <Compile Include="TR3Utilities.cs" />
@@ -154,6 +155,7 @@
     <Content Include="Images\About_Background.png" />
     <None Include="Images\ToolTip_Image.png" />
     <Content Include="Images\Title_Text.png" />
+    <Content Include="Images\ToolTip_Image_DarkMode.png" />
     <Content Include="TRR-SaveMaster.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

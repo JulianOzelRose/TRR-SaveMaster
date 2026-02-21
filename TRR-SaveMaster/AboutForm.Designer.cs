@@ -181,6 +181,7 @@ namespace TRR_SaveMaster
             this.Name = "AboutForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "About";
+            this.Load += new System.EventHandler(this.AboutForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picTitleText)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
