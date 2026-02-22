@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using TRR_SaveMaster.Properties;
 
 namespace TRR_SaveMaster
 {
@@ -563,7 +562,7 @@ namespace TRR_SaveMaster
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                slblStatus.Text = $"Error loading savegame statistics.";
+                slblStatus.Text = $"Error loading savegame statistics";
                 this.Close();
             }
 
@@ -1008,7 +1007,7 @@ namespace TRR_SaveMaster
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                slblStatus.Text = $"Error editing savegame statistics.";
+                slblStatus.Text = $"Error writing to savegame statistics";
             }
         }
 

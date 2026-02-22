@@ -757,7 +757,7 @@ namespace TRR_SaveMaster
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                slblStatus.Text = $"Error loading savegame coordinates.";
+                slblStatus.Text = $"Error loading savegame position data";
                 this.Close();
             }
 
@@ -793,7 +793,7 @@ namespace TRR_SaveMaster
                     {
                         string errorMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
                         MessageBox.Show(errorMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        slblStatus.Text = $"Error writing savegame coordinates.";
+                        slblStatus.Text = $"Error writing to savegame position data";
 
                         DisableButtons();
                         this.Close();
@@ -806,7 +806,7 @@ namespace TRR_SaveMaster
                         {
                             string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
                             MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            slblStatus.Text = $"Error writing savegame coordinates.";
+                            slblStatus.Text = $"Error writing to savegame position data";
 
                             DisableButtons();
                             this.Close();
@@ -906,12 +906,12 @@ namespace TRR_SaveMaster
                 DisableButtons();
                 UpdateSavegameDisplayName(fileData);
 
-                slblStatus.Text = $"Successfully patched coordinates of savegame: '{selectedSavegame}'";
+                slblStatus.Text = $"Successfully patched position data of savegame: '{selectedSavegame}'";
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                slblStatus.Text = $"Error writing to savegame coordinates.";
+                slblStatus.Text = $"Error writing to savegame position data";
             }
         }
 

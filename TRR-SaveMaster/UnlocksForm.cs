@@ -103,7 +103,7 @@ namespace TRR_SaveMaster
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                slblStatus.Text = $"Error loading savegame globals.";
+                slblStatus.Text = $"Error loading savegame globals";
                 this.Close();
             }
 
@@ -181,13 +181,13 @@ namespace TRR_SaveMaster
                 if (wroteSomething)
                 {
                     DisableButtons();
-                    slblStatus.Text = $"Successfully patched global variables!";
+                    slblStatus.Text = $"Successfully patched savegame globals";
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                slblStatus.Text = $"Error writing savegame globals.";
+                slblStatus.Text = $"Error writing to savegame globals";
                 this.Close();
             }
         }
