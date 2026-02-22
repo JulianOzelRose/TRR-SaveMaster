@@ -308,13 +308,13 @@ namespace TRR_SaveMaster
             this.tsmiPC = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPlayStation4 = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiNintendoSwitch = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAdvanced = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAllowUnsafeMaxValuesTR6 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiShowInventoryToggleTR6 = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSettingsSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiStatusBar = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDarkMode = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiAdvanced = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiAllowUnsafeMaxValuesTR6 = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiShowInventoryToggleTR6 = new System.Windows.Forms.ToolStripMenuItem();
             this.tsddbHelp = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiReportBug = new System.Windows.Forms.ToolStripMenuItem();
@@ -3618,9 +3618,9 @@ namespace TRR_SaveMaster
             this.tsmiSetMaximumItems,
             this.tsmiMaxEverything,
             this.tsmiEditSeparator,
+            this.tsmiUnlocks,
             this.tsmiStatistics,
             this.tsmiPosition,
-            this.tsmiUnlocks,
             this.tsmiEditSeparator2,
             this.tsmiDeleteSavegame});
             this.tsddbEdit.Image = ((System.Drawing.Image)(resources.GetObject("tsddbEdit.Image")));
@@ -3758,6 +3758,31 @@ namespace TRR_SaveMaster
             this.tsmiNintendoSwitch.Text = "Nintendo Switch";
             this.tsmiNintendoSwitch.CheckedChanged += new System.EventHandler(this.tsmiNintendoSwitch_CheckedChanged);
             // 
+            // tsmiAdvanced
+            // 
+            this.tsmiAdvanced.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiAllowUnsafeMaxValuesTR6,
+            this.tsmiShowInventoryToggleTR6});
+            this.tsmiAdvanced.Name = "tsmiAdvanced";
+            this.tsmiAdvanced.Size = new System.Drawing.Size(180, 22);
+            this.tsmiAdvanced.Text = "Advanced";
+            // 
+            // tsmiAllowUnsafeMaxValuesTR6
+            // 
+            this.tsmiAllowUnsafeMaxValuesTR6.CheckOnClick = true;
+            this.tsmiAllowUnsafeMaxValuesTR6.Name = "tsmiAllowUnsafeMaxValuesTR6";
+            this.tsmiAllowUnsafeMaxValuesTR6.Size = new System.Drawing.Size(402, 22);
+            this.tsmiAllowUnsafeMaxValuesTR6.Text = "Allow unsafe max values for Tomb Raider VI (may crash game)";
+            this.tsmiAllowUnsafeMaxValuesTR6.Click += new System.EventHandler(this.tsmiAllowUnsafeMaxValuesTR6_Click);
+            // 
+            // tsmiShowInventoryToggleTR6
+            // 
+            this.tsmiShowInventoryToggleTR6.CheckOnClick = true;
+            this.tsmiShowInventoryToggleTR6.Name = "tsmiShowInventoryToggleTR6";
+            this.tsmiShowInventoryToggleTR6.Size = new System.Drawing.Size(402, 22);
+            this.tsmiShowInventoryToggleTR6.Text = "Show inventory toggle for Tomb Raider VI";
+            this.tsmiShowInventoryToggleTR6.Click += new System.EventHandler(this.tsmiShowInventoryToggleTR6_Click);
+            // 
             // tsmiSettingsSeparator
             // 
             this.tsmiSettingsSeparator.Name = "tsmiSettingsSeparator";
@@ -3788,31 +3813,6 @@ namespace TRR_SaveMaster
             this.tsmiDarkMode.Size = new System.Drawing.Size(180, 22);
             this.tsmiDarkMode.Text = "Dark Mode";
             this.tsmiDarkMode.Click += new System.EventHandler(this.tsmiDarkMode_Click);
-            // 
-            // tsmiAdvanced
-            // 
-            this.tsmiAdvanced.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiAllowUnsafeMaxValuesTR6,
-            this.tsmiShowInventoryToggleTR6});
-            this.tsmiAdvanced.Name = "tsmiAdvanced";
-            this.tsmiAdvanced.Size = new System.Drawing.Size(180, 22);
-            this.tsmiAdvanced.Text = "Advanced";
-            // 
-            // tsmiAllowUnsafeMaxValuesTR6
-            // 
-            this.tsmiAllowUnsafeMaxValuesTR6.CheckOnClick = true;
-            this.tsmiAllowUnsafeMaxValuesTR6.Name = "tsmiAllowUnsafeMaxValuesTR6";
-            this.tsmiAllowUnsafeMaxValuesTR6.Size = new System.Drawing.Size(402, 22);
-            this.tsmiAllowUnsafeMaxValuesTR6.Text = "Allow unsafe max values for Tomb Raider VI (may crash game)";
-            this.tsmiAllowUnsafeMaxValuesTR6.Click += new System.EventHandler(this.tsmiAllowUnsafeMaxValuesTR6_Click);
-            // 
-            // tsmiShowInventoryToggleTR6
-            // 
-            this.tsmiShowInventoryToggleTR6.CheckOnClick = true;
-            this.tsmiShowInventoryToggleTR6.Name = "tsmiShowInventoryToggleTR6";
-            this.tsmiShowInventoryToggleTR6.Size = new System.Drawing.Size(402, 22);
-            this.tsmiShowInventoryToggleTR6.Text = "Show inventory toggle for Tomb Raider VI";
-            this.tsmiShowInventoryToggleTR6.Click += new System.EventHandler(this.tsmiShowInventoryToggleTR6_Click);
             // 
             // tsddbHelp
             // 
