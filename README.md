@@ -55,6 +55,12 @@ position.
 This savegame editor also includes a Statistics Editor feature. To use it, click "Edit," then select "Statistics." For Tomb Raider I-III and VI, the statistics displayed are level-specific, meaning each level has its own separate stats such as time taken,
 enemies killed, and secrets found. For Tomb Raider IV and V, the statistics are global, meaning they track cumulative progress across all levels, including total playtime, total kills, and total pickups.
 
+## Dark Mode
+<img width="723" height="618" alt="DarkMode-UI" src="https://github.com/user-attachments/assets/37e46635-148d-4926-b6fb-5bc1f6c1a875" />
+
+If you prefer a darker interface, you can enable Dark Mode from the Settings menu at the top of the program.
+Please note that Dark Mode may not display correctly when using very high or very low DPI settings.
+
 ## Tomb Raider I-III Remastered Savegame Format
 This section details the technical aspects of reverse engineering the savegames of the Tomb Raider I-III Remastered trilogy. All savegames are stored in the `savegame.dat` file.
 Savegames for expansions are stored in the same slots as the original game. Each savegame slot for each game begins at a specific offset in the file, with a maximum of 32
