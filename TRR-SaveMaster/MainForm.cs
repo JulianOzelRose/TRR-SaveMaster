@@ -66,7 +66,7 @@ namespace TRR_SaveMaster
 
             if (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX))
             {
-                slblStatus.Text = $"{cmbSavegamesTR1.Items.Count} savegames found for Tomb Raider I";
+                slblStatus.Text = $"{cmbSavegamesTR1.Items.Count} savegame(s) found for Tomb Raider I";
             }
             else
             {
@@ -1930,7 +1930,7 @@ namespace TRR_SaveMaster
                 }
 
                 slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX)) ?
-                    $"{cmbSavegamesTR1.Items.Count} savegames found for Tomb Raider I" : "Ready";
+                    $"{cmbSavegamesTR1.Items.Count} savegame(s) found for Tomb Raider I" : "Ready";
             }
             else if (tabGame.SelectedIndex == TAB_TR2)
             {
@@ -1946,7 +1946,7 @@ namespace TRR_SaveMaster
                 }
 
                 slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX)) ?
-                    $"{cmbSavegamesTR2.Items.Count} savegames found for Tomb Raider II" : "Ready";
+                    $"{cmbSavegamesTR2.Items.Count} savegame(s) found for Tomb Raider II" : "Ready";
             }
             else if (tabGame.SelectedIndex == TAB_TR3)
             {
@@ -1962,7 +1962,7 @@ namespace TRR_SaveMaster
                 }
 
                 slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX)) ?
-                    $"{cmbSavegamesTR3.Items.Count} savegames found for Tomb Raider III" : "Ready";
+                    $"{cmbSavegamesTR3.Items.Count} savegame(s) found for Tomb Raider III" : "Ready";
             }
             else if (tabGame.SelectedIndex == TAB_TR4)
             {
@@ -1984,7 +1984,7 @@ namespace TRR_SaveMaster
                 }
 
                 slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2)) ?
-                    $"{cmbSavegamesTR4.Items.Count} savegames found for Tomb Raider IV" : "Ready";
+                    $"{cmbSavegamesTR4.Items.Count} savegame(s) found for Tomb Raider IV" : "Ready";
             }
             else if (tabGame.SelectedIndex == TAB_TR5)
             {
@@ -2006,7 +2006,7 @@ namespace TRR_SaveMaster
                 }
 
                 slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2)) ?
-                    $"{cmbSavegamesTR5.Items.Count} savegames found for Tomb Raider V" : "Ready";
+                    $"{cmbSavegamesTR5.Items.Count} savegame(s) found for Tomb Raider V" : "Ready";
             }
             else if (tabGame.SelectedIndex == TAB_TR6)
             {
@@ -2028,7 +2028,7 @@ namespace TRR_SaveMaster
                 }
 
                 slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2)) ?
-                    $"{cmbSavegamesTR6.Items.Count} savegames found for Tomb Raider VI" : "Ready";
+                    $"{cmbSavegamesTR6.Items.Count} savegame(s) found for Tomb Raider VI" : "Ready";
             }
 
             EnableToolStripMenuItemsConditionally();
@@ -2095,7 +2095,7 @@ namespace TRR_SaveMaster
                 TR1.PopulateSavegames(cmbSavegamesTR1);
 
                 slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX)) ?
-                    $"{cmbSavegamesTR1.Items.Count} savegames found for Tomb Raider I" : "Ready";
+                    $"{cmbSavegamesTR1.Items.Count} savegame(s) found for Tomb Raider I" : "Ready";
             }
             else if (tabGame.SelectedIndex == TAB_TR2 && !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX))
             {
@@ -2103,7 +2103,7 @@ namespace TRR_SaveMaster
                 TR2.PopulateSavegames(cmbSavegamesTR2);
 
                 slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX)) ?
-                    $"{cmbSavegamesTR2.Items.Count} savegames found for Tomb Raider II" : "Ready";
+                    $"{cmbSavegamesTR2.Items.Count} savegame(s) found for Tomb Raider II" : "Ready";
             }
             else if (tabGame.SelectedIndex == TAB_TR3 && !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX))
             {
@@ -2111,7 +2111,7 @@ namespace TRR_SaveMaster
                 TR3.PopulateSavegames(cmbSavegamesTR3);
 
                 slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX)) ?
-                    $"{cmbSavegamesTR3.Items.Count} savegames found for Tomb Raider III" : "Ready";
+                    $"{cmbSavegamesTR3.Items.Count} savegame(s) found for Tomb Raider III" : "Ready";
             }
             else if (tabGame.SelectedIndex == TAB_TR4 && !string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
             {
@@ -2119,7 +2119,7 @@ namespace TRR_SaveMaster
                 TR4.PopulateSavegames(cmbSavegamesTR4);
 
                 slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2)) ?
-                    $"{cmbSavegamesTR4.Items.Count} savegames found for Tomb Raider IV" : "Ready";
+                    $"{cmbSavegamesTR4.Items.Count} savegame(s) found for Tomb Raider IV" : "Ready";
             }
             else if (tabGame.SelectedIndex == TAB_TR5 && !string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
             {
@@ -2127,7 +2127,7 @@ namespace TRR_SaveMaster
                 TR5.PopulateSavegames(cmbSavegamesTR5);
 
                 slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2)) ?
-                    $"{cmbSavegamesTR5.Items.Count} savegames found for Tomb Raider V" : "Ready";
+                    $"{cmbSavegamesTR5.Items.Count} savegame(s) found for Tomb Raider V" : "Ready";
             }
             else if (tabGame.SelectedIndex == TAB_TR6 && !string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
             {
@@ -2135,7 +2135,7 @@ namespace TRR_SaveMaster
                 TR6.PopulateSavegames(cmbSavegamesTR6);
 
                 slblStatus.Text = (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2)) ?
-                    $"{cmbSavegamesTR6.Items.Count} savegames found for Tomb Raider VI" : "Ready";
+                    $"{cmbSavegamesTR6.Items.Count} savegame(s) found for Tomb Raider VI" : "Ready";
             }
         }
 
