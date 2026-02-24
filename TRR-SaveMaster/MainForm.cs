@@ -106,6 +106,18 @@ namespace TRR_SaveMaster
             ThemeUtilities.DARK_MODE_ENABLED = true;
         }
 
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                const int WS_EX_COMPOSITED = 0x02000000;
+
+                var cp = base.CreateParams;
+                cp.ExStyle |= WS_EX_COMPOSITED;
+                return cp;
+            }
+        }
+
         private void ApplyLightMode()
         {
             ThemeUtilities.ApplyLightMode(this);
