@@ -1557,7 +1557,7 @@ namespace TRR_SaveMaster
             { 13, new float[] { 14550.25f, -2633.78f, 27642.66f, 98.00f, 0      } },   // Bouchard's Hideout
             { 14, new float[] { 26786.08f, -2923.52f, 8343.60f, -136.28f, 0     } },   // Louvre Storm Drains
             { 15, new float[] { 42339.49f, 2048.39f, 43849.17f, -178.25f, 0     } },   // Louvre Galleries
-            { 16, new float[] { 415.71f, -108.02f, -2019.23f, 108.75f, 0        } },   // Von Croy's Apartment
+            { 16, new float[] { 415.71f, -108.02f, -2019.23f, 108.75f, 0        } },   // Galleries Under Siege
             { 17, new float[] { -1581.19f, 28701.71f, -25261.96f, -100.00f, 0   } },   // Tomb of Ancients
             { 18, new float[] { 9494.10f, 6091.68f, 9509.15f, -71.25f, 0        } },   // The Archaeological Dig
             { 19, new float[] { 415.71f, -108.02f, -2019.23f, 108.75f, 0        } },   // Von Croy's Apartment
@@ -1711,6 +1711,7 @@ namespace TRR_SaveMaster
             { 12, new float[] { 31129.59f, 2592.12f, 67953.78f, -88.28f, 0      } },   // St. Aicard's Graveyard
             { 14, new float[] { 29220.79f, 1354.01f, 33338.64f, 69.45f, 1       } },   // Louvre Storm Drains
             { 15, new float[] { 70621.10f, -106.19f, 75969.54f, 92.13f, 3       } },   // Louvre Galleries
+            { 16, new float[] { 59816.59f, 5142.44f, 45514.46f, -84.04f, 1      } },   // Galleries Under Siege
             { 17, new float[] { 631.05f, -2016.59f, 3017.42f, -130.63f, 1       } },   // Tomb of Ancients
             { 18, new float[] { -327.16f, 5671.09f, 170.96f, -45.00f, 0         } },   // The Archaeological Dig
             { 22, new float[] { 76213.44f, -6633.47f, 9273.43f, -98.29f, 3      } },   // The Bio-Research Facility
