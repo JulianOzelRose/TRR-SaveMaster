@@ -1715,6 +1715,7 @@ namespace TRR_SaveMaster
             { 17, new float[] { 631.05f, -2016.59f, 3017.42f, -130.63f, 1       } },   // Tomb of Ancients
             { 18, new float[] { -327.16f, 5671.09f, 170.96f, -45.00f, 0         } },   // The Archaeological Dig
             { 22, new float[] { 76213.44f, -6633.47f, 9273.43f, -98.29f, 3      } },   // The Bio-Research Facility
+            { 23, new float[] { 93804.38f, -18514.64f, -1458.61f, -89.93f, 0    } },   // Aquatic Research Area
             { 24, new float[] { 40940.62f, -6736.23f, 3623.77f, 84.11f, 1       } },   // The Sanitarium
             { 26, new float[] { -7826.16f, -1578.75f, -14227.08f, -179.94f, 1   } },   // The Vault of Trophies
             { 28, new float[] { 11986.98f, -4705.54f, 6343.56f, -62.40f, 1      } },   // Eckhardt's Lab
