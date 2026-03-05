@@ -37,10 +37,5 @@ namespace TRR_SaveMaster
                 toolTip.SetToolTip(linkLabel, "https://github.com/JulianOzelRose");
             }
         }
-
-        private void picPayPal_MouseClick(object sender, MouseEventArgs e)
-        {
-            System.Diagnostics.Process.Start("https://www.paypal.com/donate/?business=9FFHZNJ4FE99C&no_recurring=1&currency_code=USD");
-        }
     }
 }
