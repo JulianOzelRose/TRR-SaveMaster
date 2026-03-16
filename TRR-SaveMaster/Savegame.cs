@@ -41,8 +41,9 @@ namespace TRR_SaveMaster
         public string Name { get; set; }
         public GameMode Mode { get; set; }
         public bool SaveNumberFirst { get; set; }
+        public bool IsChallengeMode { get; set; }
 
-        public Savegame(int savegameOffset, int slot, Int32 saveNumber, string levelName, GameMode gameMode, bool saveNumberFirst = false)
+        public Savegame(int savegameOffset, int slot, Int32 saveNumber, string levelName, GameMode gameMode, bool saveNumberFirst = false, bool isChallengeMode = false)
         {
             Number = saveNumber;
             Name = levelName;
@@ -50,25 +51,28 @@ namespace TRR_SaveMaster
             Slot = slot;
             Mode = gameMode;
             SaveNumberFirst = saveNumberFirst;
+            IsChallengeMode = isChallengeMode;
         }
 
-        public void UpdateDisplayName(string levelName, Int32 saveNumber, GameMode gameMode)
+        public void UpdateDisplayName(string levelName, Int32 saveNumber, GameMode gameMode, bool isChallengeMode = false)
         {
             Name = levelName;
             Number = saveNumber;
             Mode = gameMode;
+            IsChallengeMode = isChallengeMode;
         }
 
         public override string ToString()
         {
             string modeSuffix = Mode == GameMode.Plus ? "+" : "";
+            string challengePrefix = IsChallengeMode ? "💀 " : "";
 
             if (SaveNumberFirst)
             {
                 return $"{Number} - {Name}{modeSuffix}";
             }
 
-            return $"{Name}{modeSuffix} - {Number}";
+            return $"{challengePrefix}{Name}{modeSuffix} - {Number}";
         }
     }
 }

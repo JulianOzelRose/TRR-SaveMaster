@@ -49,6 +49,7 @@ namespace TRR_SaveMaster
 
         // Health
         private const UInt16 MAX_HEALTH_VALUE = 1000;
+        private UInt16 MAX_HEALTH_VALUE_TR1 = 1000;
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -1099,7 +1100,7 @@ namespace TRR_SaveMaster
 
         private void trbHealthTR1_Scroll(object sender, EventArgs e)
         {
-            double healthPercentage = ((double)trbHealthTR1.Value / (double)MAX_HEALTH_VALUE) * 100;
+            double healthPercentage = ((double)trbHealthTR1.Value / (double)MAX_HEALTH_VALUE_TR1) * 100;
             lblHealthTR1.Text = healthPercentage.ToString("0.0") + "%";
 
             if (!isLoading && cmbSavegamesTR1.SelectedIndex != -1)
@@ -1675,6 +1676,9 @@ namespace TRR_SaveMaster
 
                     TR1.UpdateDisplayName(selectedSavegame, fileData);
                     UpdateSavegameDisplayNameTR1(cmbSavegamesTR1, selectedSavegame);
+
+                    bool isChallengeMode = TR1.IsChallengeMode(fileData);
+                    MAX_HEALTH_VALUE_TR1 = isChallengeMode ? TR1.GetChallengeModeMaxHealth(fileData) : (UInt16)1000;
 
                     TR1.DisplayGameInfo(fileData, chkPistolsTR1, chkMagnumsTR1, chkUzisTR1, chkShotgunTR1,
                         nudSmallMedipacksTR1, nudLargeMedipacksTR1, nudUziAmmoTR1, nudShotgunAmmoTR1, nudMagnumAmmoTR1,
