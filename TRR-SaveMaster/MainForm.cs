@@ -28,6 +28,7 @@ namespace TRR_SaveMaster
         private Platform platform;
         private const string CONFIG_FILE_NAME = "TRR-SaveMaster.ini";
         private const int SAVEGAME_SIZE_TRX = 0x3800;
+        private const int SAVEGAME_SIZE_TRX_PATCH5 = 0x6800;
         private const int SAVEGAME_SIZE_TRX2 = 0xA470;
         private const int SAVEGAME_FILE_SIZE_TRX = 0x152004;
 
@@ -50,6 +51,10 @@ namespace TRR_SaveMaster
         // Health
         private const UInt16 MAX_HEALTH_VALUE = 1000;
         private UInt16 MAX_HEALTH_VALUE_TR1 = 1000;
+
+        // Patch-related
+        private const int SAVEGAME_VERSION_OFFSET = 0x000;
+        private const byte PATCH5_SIGNATURE = 0x3C;
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -129,6 +134,11 @@ namespace TRR_SaveMaster
 
             ThemeUtilities.ApplyLightTitleBar(this);
             ThemeUtilities.DARK_MODE_ENABLED = false;
+        }
+
+        private byte GetSavegameVersion(byte[] fileData)
+        {
+            return fileData[SAVEGAME_VERSION_OFFSET];
         }
 
         private void tabGame_DrawItem(object sender, DrawItemEventArgs e)
@@ -2662,7 +2672,20 @@ namespace TRR_SaveMaster
         {
             string deletedSavegameString = savegame.ToString();
 
-            int SAVEGAME_SIZE = IsTRXTabSelected() ? SAVEGAME_SIZE_TRX : SAVEGAME_SIZE_TRX2;
+            int SAVEGAME_SIZE;
+            
+            if (IsTRXTabSelected())
+            {
+                byte[] fileData = File.ReadAllBytes(savegamePathTRX);
+
+                bool isPatch5 = GetSavegameVersion(fileData) == PATCH5_SIGNATURE;
+                SAVEGAME_SIZE = isPatch5 ? SAVEGAME_SIZE_TRX_PATCH5 : SAVEGAME_SIZE_TRX;
+            }
+            else
+            {
+                SAVEGAME_SIZE = SAVEGAME_SIZE_TRX2;
+            }
+
             string savegamePath = IsTRXTabSelected() ? savegamePathTRX : savegamePathTRX2;
 
             try
