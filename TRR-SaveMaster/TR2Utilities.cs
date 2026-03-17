@@ -481,7 +481,6 @@ namespace TRR_SaveMaster
 
             if (isPatch5)
             {
-                Console.WriteLine("Using Patch 5 ammo index data...");
                 ammoIndexData = ammoIndexDataPatch5PC;
             }
             else
@@ -1070,11 +1069,10 @@ namespace TRR_SaveMaster
                     string levelName = levelNames[levelIndex];
                     int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR2) / SAVEGAME_SIZE;
                     GameMode gameMode = fileData[currentSavegameOffset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
-                    bool isChallengeMode = fileData[savegameOffset + CHALLENGE_MODE_OFFSET] == 1;
+                    bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1;
 
                     Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode, false, isChallengeMode);
                     cmbSavegames.Items.Add(savegame);
-                    Console.WriteLine($"0x{currentSavegameOffset:X}: {savegame}");
 
                     numSaves++;
                 }
