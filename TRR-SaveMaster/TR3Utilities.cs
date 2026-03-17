@@ -215,7 +215,7 @@ namespace TRR_SaveMaster
                 fs.Read(savegameData, 0, savegameData.Length);
             }
 
-            for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset += ENTITY_STRIDE)
+            for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset++)
             {
                 int valueIndex = savegameOffset + offset;
 
