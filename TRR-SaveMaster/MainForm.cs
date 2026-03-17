@@ -52,6 +52,7 @@ namespace TRR_SaveMaster
         private const UInt16 MAX_HEALTH_VALUE = 1000;
         private UInt16 MAX_HEALTH_VALUE_TR1 = 1000;
         private UInt16 MAX_HEALTH_VALUE_TR2 = 1000;
+        private UInt16 MAX_HEALTH_VALUE_TR3 = 1000;
 
         // Patch-related
         private const int SAVEGAME_VERSION_OFFSET = 0x000;
@@ -1133,7 +1134,7 @@ namespace TRR_SaveMaster
 
         private void trbHealthTR3_Scroll(object sender, EventArgs e)
         {
-            double healthPercentage = ((double)trbHealthTR3.Value / (double)MAX_HEALTH_VALUE * 100);
+            double healthPercentage = ((double)trbHealthTR3.Value / (double)MAX_HEALTH_VALUE_TR3 * 100);
             lblHealthTR3.Text = healthPercentage.ToString("0.0") + "%";
 
             if (!isLoading && cmbSavegamesTR3.SelectedIndex != -1)
@@ -1783,6 +1784,9 @@ namespace TRR_SaveMaster
 
                     TR3.UpdateDisplayName(selectedSavegame, fileData);
                     UpdateSavegameDisplayNameTR3(cmbSavegamesTR3, selectedSavegame);
+
+                    bool isChallengeMode = TR3.IsChallengeMode(fileData);
+                    MAX_HEALTH_VALUE_TR3 = isChallengeMode ? TR3.GetChallengeModeMaxHealth(fileData) : (UInt16)1000;
 
                     TR3.DisplayGameInfo(fileData, chkPistolsTR3, chkShotgunTR3, chkDeagleTR3, chkUzisTR3, chkMP5TR3,
                         chkRocketLauncherTR3, chkGrenadeLauncherTR3, chkHarpoonGunTR3, nudSaveNumberTR3, nudSmallMedipacksTR3,

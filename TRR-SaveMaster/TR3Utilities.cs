@@ -9,14 +9,22 @@ namespace TRR_SaveMaster
     class TR3Utilities
     {
         // Savegame constants & offsets
+        private const int SAVEGAME_VERSION_OFFSET = 0x000;
         private const int SLOT_STATUS_OFFSET = 0x004;
         private const int GAME_MODE_OFFSET = 0x008;
         private const int SAVE_NUMBER_OFFSET = 0x00C;
         private const int LEVEL_INDEX_OFFSET = 0x8D6;
-        private const int BASE_SAVEGAME_OFFSET_TR3 = 0xE2000;
-        private const int MAX_SAVEGAME_OFFSET_TR3 = 0x152000;
-        private const int SAVEGAME_SIZE = 0x3800;
+        private const int CHALLENGE_MODE_OFFSET = 0x990;
+        private const int CHALLENGE_MODE_HEALTH_HANDICAP_OFFSET = 0x99E;
         private const int MAX_SAVEGAMES = 32;
+
+        // Patch-dependent
+        private int BASE_SAVEGAME_OFFSET_TR3 = 0xE2000;
+        private int MAX_SAVEGAME_OFFSET_TR3 = 0x152000;
+        private int SAVEGAME_SIZE = 0x3800;
+
+        // Patch-related signatures
+        private const byte PATCH5_SIGNATURE = 0x3C;
 
         // Static offsets (per level)
         private int SMALL_MEDIPACK_OFFSET;
@@ -52,7 +60,7 @@ namespace TRR_SaveMaster
         private const byte WEAPON_GRENADE_LAUNCHER = 128;
 
         // Health
-        private const UInt16 MAX_HEALTH_VALUE = 1000;
+        private UInt16 MAX_HEALTH_VALUE = 1000;
         private const UInt16 MIN_HEALTH_VALUE = 1;
         private int MAX_HEALTH_OFFSET;
         private int MIN_HEALTH_OFFSET;
@@ -63,8 +71,8 @@ namespace TRR_SaveMaster
         private int savegameOffset;
         private int secondaryAmmoIndex = -1;
         private const int MAX_ENTITY_COUNT = 20;
+        private const int ENTITY_STRIDE = 0x1A;
 
-        // Level names
         private readonly Dictionary<byte, string> levelNames = new Dictionary<byte, string>()
         {
             {  1, "Jungle"                      },
@@ -95,7 +103,6 @@ namespace TRR_SaveMaster
             { 26, "Reunion"                     },
         };
 
-        // Ammo index data (PC)
         private readonly Dictionary<byte, int[]> ammoIndexDataPC = new Dictionary<byte, int[]>()
         {
             {  1, new int[] { 0x1F86, 0x1F87, 0x1F88, 0x1F89 } },   // Jungle
@@ -126,7 +133,36 @@ namespace TRR_SaveMaster
             { 26, new int[] { 0x1A40, 0x1A41, 0x1A42, 0x1A43 } },   // Reunion
         };
 
-        // Ammo index data (Console)
+        private readonly Dictionary<byte, int[]> ammoIndexDataPatch5PC = new Dictionary<byte, int[]>()
+        {
+            {  1, new int[] { 0x21D2, 0x21D3, 0x21D4, 0x21D5 } },   // Jungle
+            {  2, new int[] { 0x34BC, 0x34BD, 0x34BE, 0x34BF } },   // Temple Ruins
+            {  3, new int[] { 0x23E6, 0x23E7, 0x23E8, 0x23E9 } },   // The River Ganges
+            {  4, new int[] { 0x145E, 0x145F, 0x1460, 0x1461 } },   // Caves of Kaliya
+            {  5, new int[] { 0x2570, 0x2571, 0x2572, 0x2573 } },   // Coastal Village
+            {  6, new int[] { 0x253A, 0x253B, 0x253C, 0x253D } },   // Crash Site
+            {  7, new int[] { 0x202E, 0x202F, 0x2030, 0x2031 } },   // Madubu Gorge
+            {  8, new int[] { 0x19D4, 0x19D5, 0x19D6, 0x19D7 } },   // Temple of Puna
+            {  9, new int[] { 0x25FA, 0x25FB, 0x25FC, 0x25FD } },   // Thames Wharf
+            { 10, new int[] { 0x33BE, 0x33BF, 0x33C0, 0x33C1 } },   // Aldwych
+            { 11, new int[] { 0x2C00, 0x2C01, 0x2C02, 0x2C03 } },   // Lud's Gate
+            { 12, new int[] { 0x125A, 0x125B, 0x125C, 0x125D } },   // City
+            { 13, new int[] { 0x244E, 0x244F, 0x2450, 0x2451 } },   // Nevada Desert
+            { 14, new int[] { 0x2E76, 0x2E77, 0x2E78, 0x2E79 } },   // High Security Compound
+            { 15, new int[] { 0x3138, 0x3139, 0x313A, 0x313B } },   // Area 51
+            { 16, new int[] { 0x2640, 0x2641, 0x2642, 0x2643 } },   // Antarctica
+            { 17, new int[] { 0x2710, 0x2711, 0x2712, 0x2713 } },   // RX-Tech Mines
+            { 18, new int[] { 0x2CDC, 0x2CDD, 0x2CDE, 0x2CDF } },   // Lost City of Tinnos
+            { 19, new int[] { 0x1226, 0x1227, 0x1228, 0x1229 } },   // Meteorite Cavern
+            { 20, new int[] { 0x19D2, 0x19D3, 0x19D4, 0x19D5 } },   // All Hallows
+            { 21, new int[] { 0x241A, 0x241B, 0x241C, 0x241D } },   // Highland Fling
+            { 22, new int[] { 0x27B2, 0x27B3, 0x27B4, 0x27B5 } },   // Willard's Lair
+            { 23, new int[] { 0x28DC, 0x28DD, 0x28DE, 0x28DF } },   // Shakespeare Cliff
+            { 24, new int[] { 0x263A, 0x263B, 0x263C, 0x263D } },   // Sleeping with the Fishes
+            { 25, new int[] { 0x2284, 0x2285, 0x2286, 0x2287 } },   // It's a Madhouse!
+            { 26, new int[] { 0x1BEC, 0x1BED, 0x1BEE, 0x1BEF } },   // Reunion
+        };
+
         private readonly Dictionary<byte, int[]> ammoIndexDataConsole = new Dictionary<byte, int[]>()
         {
             {  1, new int[] { 0x1F84, 0x1F85, 0x1F86, 0x1F87 } },   // Jungle
@@ -179,7 +215,7 @@ namespace TRR_SaveMaster
                 fs.Read(savegameData, 0, savegameData.Length);
             }
 
-            for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset += 0x1A)
+            for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset += ENTITY_STRIDE)
             {
                 int valueIndex = savegameOffset + offset;
 
@@ -235,135 +271,138 @@ namespace TRR_SaveMaster
             WEAPONS_CONFIG_NUM_OFFSET = 0xA0 + (levelIndex * 0x40);
             HARPOON_GUN_OFFSET = 0xA1 + (levelIndex * 0x40);
 
+            byte savegameVersion = GetSavegameVersion(fileData);
+            bool isPatch5 = savegameVersion >= PATCH5_SIGNATURE;
+
             if (levelIndex == 1)        // Jungle
             {
-                MIN_HEALTH_OFFSET = 0xB26;
-                MAX_HEALTH_OFFSET = 0xB26;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0xB4A : 0xB26;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0xB56 : 0xB26;
             }
             else if (levelIndex == 2)   // Temple Ruins
             {
-                MIN_HEALTH_OFFSET = 0xDCC;
-                MAX_HEALTH_OFFSET = 0xE34;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0xE20 : 0xDCC;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0xE88 : 0xE34;
             }
             else if (levelIndex == 3)   // The River Ganges
             {
-                MIN_HEALTH_OFFSET = 0xAFC;
-                MAX_HEALTH_OFFSET = 0xAFC;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0xB14 : 0xAFC;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0xB14 : 0xAFC;
             }
             else if (levelIndex == 4)   // Caves of Kaliya
             {
-                MIN_HEALTH_OFFSET = 0x1038;
-                MAX_HEALTH_OFFSET = 0x118A;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0x10B0 : 0x1038;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0x1202 : 0x118A;
             }
             else if (levelIndex == 5)   // Coastal Village
             {
-                MIN_HEALTH_OFFSET = 0xCB8;
-                MAX_HEALTH_OFFSET = 0xCB8;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0xD04 : 0xCB8;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0xD04 : 0xCB8;
             }
             else if (levelIndex == 6)   // Crash Site
             {
-                MIN_HEALTH_OFFSET = 0x2046;
-                MAX_HEALTH_OFFSET = 0x217E;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0x22A2 : 0x2046;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0x23DA : 0x217E;
             }
             else if (levelIndex == 7)   // Madubu Gorge
             {
-                MIN_HEALTH_OFFSET = 0x1250;
-                MAX_HEALTH_OFFSET = 0x12B8;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0x1328 : 0x1250;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0x1390 : 0x12B8;
             }
             else if (levelIndex == 8)   // Temple of Puna
             {
-                MIN_HEALTH_OFFSET = 0xAD2;
-                MAX_HEALTH_OFFSET = 0xAD2;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0xAEA : 0xAD2;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0xAEA : 0xAD2;
             }
             else if (levelIndex == 9)   // Thames Wharf
             {
-                MIN_HEALTH_OFFSET = 0x10AA;
-                MAX_HEALTH_OFFSET = 0x10DE;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0x1186 : 0x10AA;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0x11BA : 0x10DE;
             }
             else if (levelIndex == 10)  // Aldwych
             {
-                MIN_HEALTH_OFFSET = 0x2C9A;
-                MAX_HEALTH_OFFSET = 0x2D02;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0x3076 : 0x2C9A;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0x30DE : 0x2D02;
             }
             else if (levelIndex == 11)  // Lud's Gate
             {
-                MIN_HEALTH_OFFSET = 0xFF0;
-                MAX_HEALTH_OFFSET = 0x1058;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0x1098 : 0xFF0;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0x1100 : 0x1058;
             }
             else if (levelIndex == 12)  // City
             {
-                MIN_HEALTH_OFFSET = 0xBB2;
-                MAX_HEALTH_OFFSET = 0xBB2;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0xBE6 : 0xBB2;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0xBE6 : 0xBB2;
             }
             else if (levelIndex == 13)  // Nevada Desert
             {
-                MIN_HEALTH_OFFSET = 0xAF8;
-                MAX_HEALTH_OFFSET = 0xAF8;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0xB10 : 0xAF8;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0xB10 : 0xAF8;
             }
             else if (levelIndex == 14)  // High Security Compound
             {
-                MIN_HEALTH_OFFSET = 0xB4C;
-                MAX_HEALTH_OFFSET = 0xB66;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0xB70 : 0xB4C;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0xB8A : 0xB66;
             }
             else if (levelIndex == 15)  // Area 51
             {
-                MIN_HEALTH_OFFSET = 0x11E4;
-                MAX_HEALTH_OFFSET = 0x129A;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0x12D4 : 0x11E4;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0x138A : 0x129A;
             }
             else if (levelIndex == 16)  // Antarctica
             {
-                MIN_HEALTH_OFFSET = 0xB12;
-                MAX_HEALTH_OFFSET = 0xB12;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0xB2E : 0xB12;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0xB2E : 0xB12;
             }
             else if (levelIndex == 17)  // RX-Tech Mines
             {
-                MIN_HEALTH_OFFSET = 0xFB0;
-                MAX_HEALTH_OFFSET = 0xFCA;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0x1058 : 0xFB0;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0x1072 : 0xFCA;
             }
             else if (levelIndex == 18)  // Lost City of Tinnos
             {
-                MIN_HEALTH_OFFSET = 0xB7C;
-                MAX_HEALTH_OFFSET = 0xB7C;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0xBA8 : 0xB7C;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0xBA8 : 0xB7C;
             }
             else if (levelIndex == 19)  // Meteorite Cavern
             {
-                MIN_HEALTH_OFFSET = 0xAD0;
-                MAX_HEALTH_OFFSET = 0xAD0;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0xB38 : 0xAD0;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0xB38 : 0xAD0;
             }
             else if (levelIndex == 20)  // All Hallows
             {
-                MIN_HEALTH_OFFSET = 0x1076;
-                MAX_HEALTH_OFFSET = 0x10AA;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0x1136 : 0x1076;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0x116A : 0x10AA;
             }
             else if (levelIndex == 21)  // Highland Fling
             {
-                MIN_HEALTH_OFFSET = 0x1BF4;
-                MAX_HEALTH_OFFSET = 0x1CAA;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0x1DF0 : 0x1BF4;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0x1EA6 : 0x1CAA;
             }
             else if (levelIndex == 22)  // Willard's Lair
             {
-                MIN_HEALTH_OFFSET = 0x15EE;
-                MAX_HEALTH_OFFSET = 0x15EE;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0x172E : 0x15EE;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0x172E : 0x15EE;
             }
             else if (levelIndex == 23)  // Shakespeare Cliff
             {
-                MIN_HEALTH_OFFSET = 0x1338;
-                MAX_HEALTH_OFFSET = 0x1386;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0x1490 : 0x1338;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0x14DE : 0x1386;
             }
             else if (levelIndex == 24)  // Sleeping with the Fishes
             {
-                MIN_HEALTH_OFFSET = 0xB5A;
-                MAX_HEALTH_OFFSET = 0xB5A;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0xB7A : 0xB5A;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0xB7A : 0xB5A;
             }
             else if (levelIndex == 25)  // It's a Madhouse!
             {
-                MIN_HEALTH_OFFSET = 0x1084;
-                MAX_HEALTH_OFFSET = 0x1106;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0x1130 : 0x1084;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0x11B2 : 0x1106;
             }
             else if (levelIndex == 26)  // Reunion
             {
-                MIN_HEALTH_OFFSET = 0x1810;
-                MAX_HEALTH_OFFSET = 0x18C6;
+                MIN_HEALTH_OFFSET = isPatch5 ? 0x19BC : 0x1810;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0x1A72 : 0x18C6;
             }
 
             if (platform != Platform.PC)
@@ -377,6 +416,32 @@ namespace TRR_SaveMaster
         {
             byte gameMode = fileData[savegameOffset + GAME_MODE_OFFSET];
             return gameMode == 0 ? GameMode.Normal : GameMode.Plus;
+        }
+
+        private byte GetSavegameVersion(byte[] fileData)
+        {
+            return fileData[SAVEGAME_VERSION_OFFSET];
+        }
+
+        public bool IsChallengeMode(byte[] fileData)
+        {
+            return fileData[savegameOffset + CHALLENGE_MODE_OFFSET] == 1;
+        }
+
+        public UInt16 GetChallengeModeMaxHealth(byte[] fileData)
+        {
+            byte maxHealthSetting = fileData[savegameOffset + CHALLENGE_MODE_HEALTH_HANDICAP_OFFSET];
+
+            if (maxHealthSetting == 0) return (UInt16)100;
+            if (maxHealthSetting == 1) return (UInt16)250;
+            if (maxHealthSetting == 2) return (UInt16)500;
+            if (maxHealthSetting == 3) return (UInt16)1000;
+            if (maxHealthSetting == 4) return (UInt16)1500;
+            if (maxHealthSetting == 5) return (UInt16)1750;
+            if (maxHealthSetting == 6) return (UInt16)2000;
+            if (maxHealthSetting == 7) return (UInt16)5000;
+
+            return (UInt16)1000;
         }
 
         private Int32 GetSaveNumber(byte[] fileData)
@@ -615,6 +680,19 @@ namespace TRR_SaveMaster
         {
             DetermineOffsets(fileData);
 
+            bool isChallengeMode = IsChallengeMode(fileData);
+
+            if (isChallengeMode)
+            {
+                MAX_HEALTH_VALUE = GetChallengeModeMaxHealth(fileData);
+            }
+            else
+            {
+                MAX_HEALTH_VALUE = 1000;
+            }
+
+            trbHealth.Maximum = MAX_HEALTH_VALUE;
+
             nudSaveNumber.Value = GetSaveNumber(fileData);
             nudSmallMedipacks.Value = GetNumSmallMedipacks(fileData);
             nudLargeMedipacks.Value = GetNumLargeMedipacks(fileData);
@@ -723,7 +801,19 @@ namespace TRR_SaveMaster
 
             if (secondaryAmmoIndex != -1)
             {
-                Dictionary<byte, int[]> ammoIndexData = platform == Platform.PC ? ammoIndexDataPC : ammoIndexDataConsole;
+                Dictionary<byte, int[]> ammoIndexData;
+
+                byte savegameVersion = GetSavegameVersion(fileData);
+                bool isPatch5 = savegameVersion >= PATCH5_SIGNATURE;
+
+                if (isPatch5)
+                {
+                    ammoIndexData = ammoIndexDataPatch5PC;
+                }
+                else
+                {
+                    ammoIndexData = platform == Platform.PC ? ammoIndexDataPC : ammoIndexDataConsole;
+                }
 
                 int baseSecondaryAmmoOffset = ammoIndexData[levelIndex][0];
 
@@ -822,7 +912,19 @@ namespace TRR_SaveMaster
         {
             byte levelIndex = GetLevelIndex(fileData);
 
-            Dictionary<byte, int[]> ammoIndexData = platform == Platform.PC ? ammoIndexDataPC : ammoIndexDataConsole;
+            Dictionary<byte, int[]> ammoIndexData;
+
+            byte savegameVersion = GetSavegameVersion(fileData);
+            bool isPatch5 = savegameVersion >= PATCH5_SIGNATURE;
+
+            if (isPatch5)
+            {
+                ammoIndexData = ammoIndexDataPatch5PC;
+            }
+            else
+            {
+                ammoIndexData = platform == Platform.PC ? ammoIndexDataPC : ammoIndexDataConsole;
+            }
 
             if (ammoIndexData.ContainsKey(levelIndex))
             {
@@ -839,8 +941,8 @@ namespace TRR_SaveMaster
                     {
                         offsets2[i] = offsets1[i] + 0xA;
 
-                        offsets1[i] += savegameOffset + (index * 0x1A);
-                        offsets2[i] += savegameOffset + (index * 0x1A);
+                        offsets1[i] += savegameOffset + (index * ENTITY_STRIDE);
+                        offsets2[i] += savegameOffset + (index * ENTITY_STRIDE);
                     }
 
                     if (offsets1.All(offset => fileData[offset] == 0xFF))
@@ -860,7 +962,7 @@ namespace TRR_SaveMaster
 
         private int GetSecondaryAmmoOffset(int baseOffset)
         {
-            return baseOffset + (secondaryAmmoIndex * 0x1A);
+            return baseOffset + (secondaryAmmoIndex * ENTITY_STRIDE);
         }
 
         public void SetPlatform(Platform platform)
@@ -896,8 +998,9 @@ namespace TRR_SaveMaster
                 {
                     string levelName = levelNames[levelIndex];
                     GameMode gameMode = fileData[savegame.Offset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
+                    bool isChallengeMode = fileData[savegame.Offset + CHALLENGE_MODE_OFFSET] == 1;
 
-                    savegame.UpdateDisplayName(levelName, saveNumber, gameMode);
+                    savegame.UpdateDisplayName(levelName, saveNumber, gameMode, isChallengeMode);
                 }
             }
         }
@@ -941,8 +1044,9 @@ namespace TRR_SaveMaster
                         {
                             string levelName = levelNames[levelIndex];
                             GameMode gameMode = fileData[currentSavegameOffset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
+                            bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1;
 
-                            Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode);
+                            Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode, false, isChallengeMode);
                             cmbSavegames.Items.Add(savegame);
                         }
                     }
@@ -954,6 +1058,22 @@ namespace TRR_SaveMaster
         {
             byte[] fileData = File.ReadAllBytes(savegamePath);
             int numSaves = 0;
+
+            byte savegameVersion = GetSavegameVersion(fileData);
+            bool isPatch5 = savegameVersion >= PATCH5_SIGNATURE;
+
+            if (isPatch5)
+            {
+                BASE_SAVEGAME_OFFSET_TR3 = 0x1A2000;
+                MAX_SAVEGAME_OFFSET_TR3 = 0x26B800;
+                SAVEGAME_SIZE = 0x6800;
+            }
+            else
+            {
+                BASE_SAVEGAME_OFFSET_TR3 = 0xE2000;
+                MAX_SAVEGAME_OFFSET_TR3 = 0x152000;
+                SAVEGAME_SIZE = 0x3800;
+            }
 
             for (int i = 0; i < MAX_SAVEGAMES; i++)
             {
@@ -969,8 +1089,9 @@ namespace TRR_SaveMaster
                     string levelName = levelNames[levelIndex];
                     int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR3) / SAVEGAME_SIZE;
                     GameMode gameMode = fileData[currentSavegameOffset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
+                    bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1;
 
-                    Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode);
+                    Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode, false, isChallengeMode);
                     cmbSavegames.Items.Add(savegame);
 
                     numSaves++;
