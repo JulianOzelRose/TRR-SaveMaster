@@ -161,6 +161,9 @@ namespace TRR_SaveMaster
             {
                 byte[] savegameData = fileData;
 
+                bool isChallengeMode = IsChallengeMode(savegameData);
+                MAX_HEALTH_VALUE = isChallengeMode ? GetChallengeModeMaxHealth(savegameData) : (UInt16)1000;
+
                 for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset++)
                 {
                     int valueIndex = savegameOffset + offset;
