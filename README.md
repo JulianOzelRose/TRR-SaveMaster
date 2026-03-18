@@ -5,6 +5,9 @@ You can find more information on how to do that [here](https://github.com/Julian
 For instructions on how to download and use this editor, scroll down to the section below. If you are interested in reverse engineering, there is a technical portion on the bottom section of this README.
 For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder/delete savegames, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
+⚠️ **Patch 5 Compatibility**<br>
+The latest version of this editor (v2.60+) is compatible with Patch 5 savegames and backwards compatible with pre-patch savegames for Tomb Raider I-III. Patch 5 support is currently basic but will continue to be improved. Tomb Raider IV-VI savegames are unaffected.
+
 <img width="723" height="640" alt="TRR-SaveMaster-UI" src="https://github.com/user-attachments/assets/10325c35-7f31-4f6d-8c0b-53e5b3aa4a36" />
 
 ## Installation and use
