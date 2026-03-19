@@ -16,12 +16,18 @@ namespace TRR_SaveMaster
         private const int LEVEL_INDEX_OFFSET = 0x62C;
         private const int CHALLENGE_MODE_OFFSET = 0x6EC;
         private const int CHALLENGE_MODE_HEALTH_HANDICAP_OFFSET = 0x6F6;
-        private const int BASE_SAVEGAME_OFFSET_TR1 = 0x2000;
         private const int MAX_SAVEGAMES = 32;
 
-        // Patch-dependent offsets
-        private int MAX_SAVEGAME_OFFSET_TR1 = 0x72000;
-        private int SAVEGAME_SIZE = 0x3800;
+        // Patch-dependent
+        private int BASE_SAVEGAME_OFFSET_TR1;
+        private int MAX_SAVEGAME_OFFSET_TR1;
+        private int SAVEGAME_SIZE;
+        private const int SAVEGAME_SIZE_PREPATCH = 0x3800;
+        private const int SAVEGAME_SIZE_PATCH5 = 0x6800;
+        private const int BASE_SAVEGAME_OFFSET_TR1_PREPATCH = 0x2000;
+        private const int BASE_SAVEGAME_OFFSET_TR1_PATCH5 = 0x2000;
+        private const int MAX_SAVEGAME_OFFSET_TR1_PREPATCH = 0x72000;
+        private const int MAX_SAVEGAME_OFFSET_TR1_PATCH5 = 0xCB800;
 
         // Patch-related signatures
         private const byte PATCH5_SIGNATURE = 0x3C;
@@ -47,8 +53,9 @@ namespace TRR_SaveMaster
         private const byte WEAPON_SHOTGUN = 16;
 
         // Health
-        private UInt16 MAX_HEALTH_VALUE = 1000;
+        private const UInt16 MAX_HEALTH_VALUE_DEFAULT = 1000;
         private const UInt16 MIN_HEALTH_VALUE = 1;
+        private UInt16 MAX_HEALTH_VALUE = MAX_HEALTH_VALUE_DEFAULT;
         private int HEALTH_OFFSET = -1;
         private int MAX_HEALTH_OFFSET;
         private int MIN_HEALTH_OFFSET;
@@ -138,8 +145,7 @@ namespace TRR_SaveMaster
 
         public int GetHealthOffset(byte[] fileData)
         {
-            byte savegameVersion = GetSavegameVersion(fileData);
-            bool isPatch5 = savegameVersion >= PATCH5_SIGNATURE;
+            bool isPatch5 = IsPatch5Savegame(fileData);
 
             UInt16 value;
 
@@ -162,7 +168,7 @@ namespace TRR_SaveMaster
                 byte[] savegameData = fileData;
 
                 bool isChallengeMode = IsChallengeMode(savegameData);
-                MAX_HEALTH_VALUE = isChallengeMode ? GetChallengeModeMaxHealth(savegameData) : (UInt16)1000;
+                MAX_HEALTH_VALUE = isChallengeMode ? GetChallengeModeMaxHealth(savegameData) : MAX_HEALTH_VALUE_DEFAULT;
 
                 for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset++)
                 {
@@ -205,18 +211,19 @@ namespace TRR_SaveMaster
 
         public void DetermineOffsets(byte[] fileData)
         {
-            byte savegameVersion = GetSavegameVersion(fileData);
-            bool isPatch5 = savegameVersion >= PATCH5_SIGNATURE;
+            bool isPatch5 = IsPatch5Savegame(fileData);
 
             if (isPatch5)
             {
-                MAX_SAVEGAME_OFFSET_TR1 = 0xCB800;
-                SAVEGAME_SIZE = 0x6800;
+                BASE_SAVEGAME_OFFSET_TR1 = BASE_SAVEGAME_OFFSET_TR1_PATCH5;
+                MAX_SAVEGAME_OFFSET_TR1 = MAX_SAVEGAME_OFFSET_TR1_PATCH5;
+                SAVEGAME_SIZE = SAVEGAME_SIZE_PATCH5;
             }
             else
             {
-                MAX_SAVEGAME_OFFSET_TR1 = 0x72000;
-                SAVEGAME_SIZE = 0x3800;
+                BASE_SAVEGAME_OFFSET_TR1 = BASE_SAVEGAME_OFFSET_TR1_PREPATCH;
+                MAX_SAVEGAME_OFFSET_TR1 = MAX_SAVEGAME_OFFSET_TR1_PREPATCH;
+                SAVEGAME_SIZE = SAVEGAME_SIZE_PREPATCH;
             }
 
             byte levelIndex = GetLevelIndex(fileData);
@@ -373,9 +380,9 @@ namespace TRR_SaveMaster
             }
         }
 
-        private byte GetSavegameVersion(byte[] fileData)
+        private bool IsPatch5Savegame(byte[] fileData)
         {
-            return fileData[SAVEGAME_VERSION_OFFSET];
+            return fileData[SAVEGAME_VERSION_OFFSET] == PATCH5_SIGNATURE;
         }
 
         private GameMode GetGameMode(byte[] fileData)
@@ -645,15 +652,7 @@ namespace TRR_SaveMaster
             nudSmallMedipacks.Enabled = gameMode == GameMode.Normal;
             nudLargeMedipacks.Enabled = gameMode == GameMode.Normal;
 
-            if (isChallengeMode)
-            {
-                MAX_HEALTH_VALUE = GetChallengeModeMaxHealth(fileData);
-            }
-            else
-            {
-                MAX_HEALTH_VALUE = 1000;
-            }
-
+            MAX_HEALTH_VALUE = isChallengeMode ? GetChallengeModeMaxHealth(fileData) : MAX_HEALTH_VALUE_DEFAULT;
             trbHealth.Maximum = MAX_HEALTH_VALUE;
 
             byte weaponsConfigNum = GetWeaponsConfigNum(fileData);
@@ -676,7 +675,6 @@ namespace TRR_SaveMaster
             nudSaveNumber.Value = GetSaveNumber(fileData);
             nudSmallMedipacks.Value = GetNumSmallMedipacks(fileData);
             nudLargeMedipacks.Value = GetNumLargeMedipacks(fileData);
-
             nudUziAmmo.Value = GetUziAmmo(fileData);
             nudMagnumAmmo.Value = GetMagnumAmmo(fileData);
             nudShotgunAmmo.Value = GetShotgunAmmo(fileData);
@@ -689,7 +687,6 @@ namespace TRR_SaveMaster
                 double healthPercentage = ((double)health / MAX_HEALTH_VALUE) * 100;
                 trbHealth.Value = health;
                 trbHealth.Enabled = true;
-
                 lblHealth.Text = healthPercentage.ToString("0.0") + "%";
                 lblHealthError.Visible = false;
                 lblHealth.Visible = true;
@@ -721,8 +718,7 @@ namespace TRR_SaveMaster
 
             WriteWeaponsConfigNum(fileData, newWeaponsConfigNum);
 
-            int savegameVersion = GetSavegameVersion(fileData);
-            bool isPatch5 = savegameVersion >= PATCH5_SIGNATURE;
+            bool isPatch5 = IsPatch5Savegame(fileData);
 
             if (isPatch5)
             {
@@ -796,9 +792,10 @@ namespace TRR_SaveMaster
 
                 if (levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                 {
+                    bool isPatch5 = IsPatch5Savegame(fileData);
                     string levelName = levelNames[levelIndex];
                     GameMode gameMode = fileData[savegame.Offset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
-                    bool isChallengeMode = fileData[savegame.Offset + CHALLENGE_MODE_OFFSET] == 1;
+                    bool isChallengeMode = fileData[savegame.Offset + CHALLENGE_MODE_OFFSET] == 1 && isPatch5;
 
                     savegame.UpdateDisplayName(levelName, saveNumber, gameMode, isChallengeMode);
                 }
@@ -813,6 +810,7 @@ namespace TRR_SaveMaster
             }
 
             byte[] fileData = File.ReadAllBytes(savegamePath);
+            bool isPatch5 = IsPatch5Savegame(fileData);
 
             for (int i = cmbSavegames.Items.Count; i < MAX_SAVEGAMES; i++)
             {
@@ -843,7 +841,7 @@ namespace TRR_SaveMaster
                         {
                             string levelName = levelNames[levelIndex];
                             GameMode gameMode = fileData[currentSavegameOffset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
-                            bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1;
+                            bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1 && isPatch5;
 
                             Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode, false, isChallengeMode);
                             cmbSavegames.Items.Add(savegame);
@@ -858,18 +856,19 @@ namespace TRR_SaveMaster
             byte[] fileData = File.ReadAllBytes(savegamePath);
             int numSaves = 0;
 
-            byte savegameVersion = GetSavegameVersion(fileData);
-            bool isPatch5 = savegameVersion >= PATCH5_SIGNATURE;
+            bool isPatch5 = IsPatch5Savegame(fileData);
 
             if (isPatch5)
             {
-                MAX_SAVEGAME_OFFSET_TR1 = 0xCB800;
-                SAVEGAME_SIZE = 0x6800;
+                BASE_SAVEGAME_OFFSET_TR1 = BASE_SAVEGAME_OFFSET_TR1_PATCH5;
+                MAX_SAVEGAME_OFFSET_TR1 = MAX_SAVEGAME_OFFSET_TR1_PATCH5;
+                SAVEGAME_SIZE = SAVEGAME_SIZE_PATCH5;
             }
             else
             {
-                MAX_SAVEGAME_OFFSET_TR1 = 0x72000;
-                SAVEGAME_SIZE = 0x3800;
+                BASE_SAVEGAME_OFFSET_TR1 = BASE_SAVEGAME_OFFSET_TR1_PREPATCH;
+                MAX_SAVEGAME_OFFSET_TR1 = MAX_SAVEGAME_OFFSET_TR1_PREPATCH;
+                SAVEGAME_SIZE = SAVEGAME_SIZE_PREPATCH;
             }
 
             for (int i = 0; i < MAX_SAVEGAMES; i++)
@@ -886,7 +885,7 @@ namespace TRR_SaveMaster
                     string levelName = levelNames[levelIndex];
                     int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR1) / SAVEGAME_SIZE;
                     GameMode gameMode = fileData[currentSavegameOffset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
-                    bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1;
+                    bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1 && isPatch5;
 
                     Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode, false, isChallengeMode);
                     cmbSavegames.Items.Add(savegame);

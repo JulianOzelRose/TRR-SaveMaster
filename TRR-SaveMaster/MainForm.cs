@@ -27,10 +27,12 @@ namespace TRR_SaveMaster
         private bool hasShownTRX2PathPrompt = false;
         private Platform platform;
         private const string CONFIG_FILE_NAME = "TRR-SaveMaster.ini";
-        private const int SAVEGAME_SIZE_TRX = 0x3800;
+        private const int SAVEGAME_SIZE_TRX_PREPATCH = 0x3800;
         private const int SAVEGAME_SIZE_TRX_PATCH5 = 0x6800;
         private const int SAVEGAME_SIZE_TRX2 = 0xA470;
-        private const int SAVEGAME_FILE_SIZE_TRX = 0x152004;
+        private const int SAVEGAME_FILE_SIZE_TRX_PREPATCH = 0x152004;
+        private const int SAVEGAME_FILE_SIZE_TRX_PATCH5 = 0x272004;
+        private const int SAVEGAME_FILE_SIZE_TRX2 = 0x3DCA04;
 
         // Utils
         private readonly TR1Utilities TR1 = new TR1Utilities();
@@ -49,14 +51,16 @@ namespace TRR_SaveMaster
         private const int TAB_TR6 = 5;
 
         // Health
-        private const UInt16 MAX_HEALTH_VALUE = 1000;
+        private const UInt16 MAX_HEALTH_VALUE_DEFAULT = 1000;
         private UInt16 MAX_HEALTH_VALUE_TR1 = 1000;
         private UInt16 MAX_HEALTH_VALUE_TR2 = 1000;
         private UInt16 MAX_HEALTH_VALUE_TR3 = 1000;
 
         // Patch-related
         private const int SAVEGAME_VERSION_OFFSET = 0x000;
-        private const byte PATCH5_SIGNATURE = 0x3C;
+        private const byte TRX_PREPATCH_SIGNATURE = 0x3B;
+        private const byte TRX_PATCH5_SIGNATURE = 0x3C;
+        private const byte TRX2_SAVEGAME_SIGNATURE = 0x28;
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -386,16 +390,42 @@ namespace TRR_SaveMaster
             btnCancelTR6.Enabled = false;
         }
 
-        private bool IsValidSavegameFile(string path)
+        private bool IsValidSavegameFileTRX(string path)
         {
             FileInfo fileInfo = new FileInfo(path);
+            byte[] fileData = File.ReadAllBytes(path);
 
-            if (fileInfo.Extension.ToLower() != ".dat")
+            long savegameFileSize = fileInfo.Length;
+            byte savegameVersion = GetSavegameVersion(fileData);
+
+            if ((savegameVersion == TRX_PREPATCH_SIGNATURE || savegameVersion == TRX_PATCH5_SIGNATURE)
+                && (savegameFileSize >= SAVEGAME_FILE_SIZE_TRX_PREPATCH || savegameFileSize >= SAVEGAME_FILE_SIZE_TRX_PATCH5))
             {
-                return false;
+                return true;
             }
 
-            return fileInfo.Length >= SAVEGAME_FILE_SIZE_TRX;
+            return false;
+        }
+
+        private bool IsValidSavegameFileTRX2(string path)
+        {
+            FileInfo fileInfo = new FileInfo(path);
+            byte[] fileData = File.ReadAllBytes(path);
+
+            long savegameFileSize = fileInfo.Length;
+            byte savegameVersion = GetSavegameVersion(fileData);
+
+            if (savegameVersion == TRX2_SAVEGAME_SIGNATURE && savegameFileSize >= SAVEGAME_FILE_SIZE_TRX2)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool IsPatch5Savegame(byte[] fileData)
+        {
+            return fileData[SAVEGAME_VERSION_OFFSET] == TRX_PATCH5_SIGNATURE;
         }
 
         private void PromptBrowseSavegamePathTRX()
@@ -432,9 +462,9 @@ namespace TRR_SaveMaster
 
                 if (fileBrowserDialog.ShowDialog() == DialogResult.OK)
                 {
-                    if (!IsValidSavegameFile(fileBrowserDialog.FileName))
+                    if (!IsValidSavegameFileTRX(fileBrowserDialog.FileName))
                     {
-                        MessageBox.Show("Invalid savegame file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Not a valid Tomb Raider I-III Remastered savegame file.", "Invalid Savegame File", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -475,9 +505,9 @@ namespace TRR_SaveMaster
 
                 if (fileBrowserDialog.ShowDialog() == DialogResult.OK)
                 {
-                    if (!IsValidSavegameFile(fileBrowserDialog.FileName))
+                    if (!IsValidSavegameFileTRX2(fileBrowserDialog.FileName))
                     {
-                        MessageBox.Show("Invalid savegame file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Not a valid Tomb Raider IV-VI Remastered savegame file.", "Invalid Savegame File", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -1145,7 +1175,7 @@ namespace TRR_SaveMaster
 
         private void trbHealthTR4_Scroll(object sender, EventArgs e)
         {
-            double healthPercentage = ((double)trbHealthTR4.Value / (double)MAX_HEALTH_VALUE) * 100;
+            double healthPercentage = ((double)trbHealthTR4.Value / (double)MAX_HEALTH_VALUE_DEFAULT) * 100;
             lblHealthTR4.Text = healthPercentage.ToString("0.0") + "%";
 
             if (!isLoading && cmbSavegamesTR4.SelectedIndex != -1)
@@ -1156,7 +1186,7 @@ namespace TRR_SaveMaster
 
         private void trbHealthTR5_Scroll(object sender, EventArgs e)
         {
-            double healthPercentage = ((double)trbHealthTR5.Value / (double)MAX_HEALTH_VALUE) * 100;
+            double healthPercentage = ((double)trbHealthTR5.Value / (double)MAX_HEALTH_VALUE_DEFAULT) * 100;
             lblHealthTR5.Text = healthPercentage.ToString("0.0") + "%";
 
             if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
@@ -1176,7 +1206,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void CreateBackup()
+        private void CreateBackup(bool showSuccessMessage = false)
         {
             string savegamePath = IsTRXTabSelected() ? savegamePathTRX : savegamePathTRX2;
 
@@ -1195,7 +1225,10 @@ namespace TRR_SaveMaster
 
                 File.Copy(savegamePath, backupFilePath, true);
 
-                slblStatus.Text = $"Created savegame backup: \"{backupFilePath}\"";
+                if (showSuccessMessage)
+                {
+                    slblStatus.Text = $"Created savegame backup: \"{backupFilePath}\"";
+                }
             }
         }
 
@@ -1689,8 +1722,18 @@ namespace TRR_SaveMaster
                     TR1.UpdateDisplayName(selectedSavegame, fileData);
                     UpdateSavegameDisplayNameTR1(cmbSavegamesTR1, selectedSavegame);
 
-                    bool isChallengeMode = TR1.IsChallengeMode(fileData);
-                    MAX_HEALTH_VALUE_TR1 = isChallengeMode ? TR1.GetChallengeModeMaxHealth(fileData) : (UInt16)1000;
+                    bool isPatch5 = IsPatch5Savegame(fileData);
+                    bool isChallengeMode = false;
+
+                    if (isPatch5)
+                    {
+                        isChallengeMode = TR1.IsChallengeMode(fileData);
+                        MAX_HEALTH_VALUE_TR1 = isChallengeMode ? TR1.GetChallengeModeMaxHealth(fileData) : MAX_HEALTH_VALUE_DEFAULT;
+                    }
+                    else
+                    {
+                        MAX_HEALTH_VALUE_TR1 = MAX_HEALTH_VALUE_DEFAULT;
+                    }
 
                     TR1.DisplayGameInfo(fileData, chkPistolsTR1, chkMagnumsTR1, chkUzisTR1, chkShotgunTR1,
                         nudSmallMedipacksTR1, nudLargeMedipacksTR1, nudUziAmmoTR1, nudShotgunAmmoTR1, nudMagnumAmmoTR1,
@@ -1734,8 +1777,18 @@ namespace TRR_SaveMaster
                     TR2.UpdateDisplayName(selectedSavegame, fileData);
                     UpdateSavegameDisplayNameTR2(cmbSavegamesTR2, selectedSavegame);
 
-                    bool isChallengeMode = TR2.IsChallengeMode(fileData);
-                    MAX_HEALTH_VALUE_TR2 = isChallengeMode ? TR2.GetChallengeModeMaxHealth(fileData) : (UInt16)1000;
+                    bool isPatch5 = IsPatch5Savegame(fileData);
+                    bool isChallengeMode = false;
+
+                    if (isPatch5)
+                    {
+                        isChallengeMode = TR2.IsChallengeMode(fileData);
+                        MAX_HEALTH_VALUE_TR2 = isChallengeMode ? TR2.GetChallengeModeMaxHealth(fileData) : MAX_HEALTH_VALUE_DEFAULT;
+                    }
+                    else
+                    {
+                        MAX_HEALTH_VALUE_TR2 = MAX_HEALTH_VALUE_DEFAULT;
+                    }
 
                     TR2.SetLevelParams(fileData, chkPistolsTR2, chkShotgunTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkM16TR2,
                         chkGrenadeLauncherTR2, chkHarpoonGunTR2, nudShotgunAmmoTR2, nudAutomaticPistolsAmmoTR2, nudUziAmmoTR2,
@@ -1785,8 +1838,18 @@ namespace TRR_SaveMaster
                     TR3.UpdateDisplayName(selectedSavegame, fileData);
                     UpdateSavegameDisplayNameTR3(cmbSavegamesTR3, selectedSavegame);
 
-                    bool isChallengeMode = TR3.IsChallengeMode(fileData);
-                    MAX_HEALTH_VALUE_TR3 = isChallengeMode ? TR3.GetChallengeModeMaxHealth(fileData) : (UInt16)1000;
+                    bool isPatch5 = IsPatch5Savegame(fileData);
+                    bool isChallengeMode = false;
+
+                    if (isPatch5)
+                    {
+                        isChallengeMode = TR3.IsChallengeMode(fileData);
+                        MAX_HEALTH_VALUE_TR3 = isChallengeMode ? TR3.GetChallengeModeMaxHealth(fileData) : MAX_HEALTH_VALUE_DEFAULT;
+                    }
+                    else
+                    {
+                        MAX_HEALTH_VALUE_TR3 = MAX_HEALTH_VALUE_DEFAULT;
+                    }
 
                     TR3.DisplayGameInfo(fileData, chkPistolsTR3, chkShotgunTR3, chkDeagleTR3, chkUzisTR3, chkMP5TR3,
                         chkRocketLauncherTR3, chkGrenadeLauncherTR3, chkHarpoonGunTR3, nudSaveNumberTR3, nudSmallMedipacksTR3,
@@ -2175,7 +2238,7 @@ namespace TRR_SaveMaster
 
         private void tsmiCreateBackup_Click(object sender, EventArgs e)
         {
-            CreateBackup();
+            CreateBackup(true);
         }
 
         private void tsmiAbout_Click(object sender, EventArgs e)
@@ -2681,13 +2744,13 @@ namespace TRR_SaveMaster
             string deletedSavegameString = savegame.ToString();
 
             int SAVEGAME_SIZE;
-            
+
             if (IsTRXTabSelected())
             {
                 byte[] fileData = File.ReadAllBytes(savegamePathTRX);
 
-                bool isPatch5 = GetSavegameVersion(fileData) == PATCH5_SIGNATURE;
-                SAVEGAME_SIZE = isPatch5 ? SAVEGAME_SIZE_TRX_PATCH5 : SAVEGAME_SIZE_TRX;
+                bool isPatch5 = IsPatch5Savegame(fileData);
+                SAVEGAME_SIZE = isPatch5 ? SAVEGAME_SIZE_TRX_PATCH5 : SAVEGAME_SIZE_TRX_PREPATCH;
             }
             else
             {

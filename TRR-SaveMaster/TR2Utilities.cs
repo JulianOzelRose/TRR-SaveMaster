@@ -18,10 +18,16 @@ namespace TRR_SaveMaster
         private const int CHALLENGE_MODE_HEALTH_HANDICAP_OFFSET = 0x6C2;
         private const int MAX_SAVEGAMES = 32;
 
-        // Patch-dependent offsets
-        private int BASE_SAVEGAME_OFFSET_TR2 = 0x72000;
-        private int MAX_SAVEGAME_OFFSET_TR2 = 0xE2000;
-        private int SAVEGAME_SIZE = 0x3800;
+        // Patch-dependent
+        private int BASE_SAVEGAME_OFFSET_TR2;
+        private int MAX_SAVEGAME_OFFSET_TR2;
+        private int SAVEGAME_SIZE;
+        private const int SAVEGAME_SIZE_PREPATCH = 0x3800;
+        private const int SAVEGAME_SIZE_PATCH5 = 0x6800;
+        private const int BASE_SAVEGAME_OFFSET_TR2_PREPATCH = 0x72000;
+        private const int BASE_SAVEGAME_OFFSET_TR2_PATCH5 = 0xD2000;
+        private const int MAX_SAVEGAME_OFFSET_TR2_PREPATCH = 0xE2000;
+        private const int MAX_SAVEGAME_OFFSET_TR2_PATCH5 = 0x19B800;
 
         // Patch-related signatures
         private const byte PATCH5_SIGNATURE = 0x3C;
@@ -56,8 +62,9 @@ namespace TRR_SaveMaster
         private const byte WEAPON_HARPOON_GUN = 128;
 
         // Health
-        private UInt16 MAX_HEALTH_VALUE = 1000;
+        private const UInt16 MAX_HEALTH_VALUE_DEFAULT = 1000;
         private const UInt16 MIN_HEALTH_VALUE = 1;
+        private UInt16 MAX_HEALTH_VALUE = MAX_HEALTH_VALUE_DEFAULT;
         private int MAX_HEALTH_OFFSET;
         private int MIN_HEALTH_OFFSET;
 
@@ -199,8 +206,7 @@ namespace TRR_SaveMaster
                 fs.Read(savegameData, 0, savegameData.Length);
             }
 
-            byte savegameVersion = GetSavegameVersion(savegameData);
-            bool isPatch5 = savegameVersion >= PATCH5_SIGNATURE;
+            bool isPatch5 = IsPatch5Savegame(savegameData);
 
             if (isPatch5)
             {
@@ -256,14 +262,12 @@ namespace TRR_SaveMaster
             M16_AMMO_OFFSET = 0x18 + (levelIndex * 0x30);
             GRENADE_LAUNCHER_AMMO_OFFSET = 0x1A + (levelIndex * 0x30);
             HARPOON_GUN_AMMO_OFFSET = 0x1C + (levelIndex * 0x30);
-
             SMALL_MEDIPACK_OFFSET = 0x1E + (levelIndex * 0x30);
             LARGE_MEDIPACK_OFFSET = 0x1F + (levelIndex * 0x30);
             FLARES_OFFSET = 0x21 + (levelIndex * 0x30);
             WEAPONS_CONFIG_NUM_OFFSET = 0x3C + (levelIndex * 0x30);
 
-            byte savegameVersion = GetSavegameVersion(fileData);
-            bool isPatch5 = savegameVersion >= PATCH5_SIGNATURE;
+            bool isPatch5 = IsPatch5Savegame(fileData);
 
             if (levelIndex == 1)        // The Great Wall
             {
@@ -388,9 +392,9 @@ namespace TRR_SaveMaster
             }
         }
 
-        private byte GetSavegameVersion(byte[] fileData)
+        private bool IsPatch5Savegame(byte[] fileData)
         {
-            return fileData[SAVEGAME_VERSION_OFFSET];
+            return fileData[SAVEGAME_VERSION_OFFSET] == PATCH5_SIGNATURE;
         }
 
         public bool IsChallengeMode(byte[] fileData)
@@ -482,11 +486,9 @@ namespace TRR_SaveMaster
         private int GetSecondaryAmmoIndex(byte[] fileData)
         {
             byte levelIndex = GetLevelIndex(fileData);
+            bool isPatch5 = IsPatch5Savegame(fileData);
 
             Dictionary<byte, int[]> ammoIndexData;
-
-            byte savegameVersion = GetSavegameVersion(fileData);
-            bool isPatch5 = savegameVersion >= PATCH5_SIGNATURE;
 
             if (isPatch5)
             {
@@ -722,14 +724,12 @@ namespace TRR_SaveMaster
                 chkM16.Enabled = false;
                 chkGrenadeLauncher.Enabled = false;
                 chkHarpoonGun.Enabled = false;
-
                 nudShotgunAmmo.Enabled = true;
                 nudAutomaticPistolsAmmo.Enabled = false;
                 nudUziAmmo.Enabled = false;
                 nudM16Ammo.Enabled = false;
                 nudGrenadeLauncherAmmo.Enabled = false;
                 nudHarpoonGunAmmo.Enabled = false;
-
                 lblPistolAmmo.Enabled = false;
             }
             else if (levelIndex == 23)  // Nightmare in Vegas
@@ -741,14 +741,12 @@ namespace TRR_SaveMaster
                 chkM16.Enabled = false;
                 chkGrenadeLauncher.Enabled = false;
                 chkHarpoonGun.Enabled = false;
-
                 nudShotgunAmmo.Enabled = true;
                 nudAutomaticPistolsAmmo.Enabled = true;
                 nudUziAmmo.Enabled = true;
                 nudM16Ammo.Enabled = false;
                 nudGrenadeLauncherAmmo.Enabled = false;
                 nudHarpoonGunAmmo.Enabled = false;
-
                 lblPistolAmmo.Enabled = true;
             }
             else
@@ -760,14 +758,12 @@ namespace TRR_SaveMaster
                 chkM16.Enabled = true;
                 chkGrenadeLauncher.Enabled = true;
                 chkHarpoonGun.Enabled = true;
-
                 nudShotgunAmmo.Enabled = true;
                 nudAutomaticPistolsAmmo.Enabled = true;
                 nudUziAmmo.Enabled = true;
                 nudM16Ammo.Enabled = true;
                 nudGrenadeLauncherAmmo.Enabled = true;
                 nudHarpoonGunAmmo.Enabled = true;
-
                 lblPistolAmmo.Enabled = true;
             }
         }
@@ -783,15 +779,7 @@ namespace TRR_SaveMaster
 
             bool isChallengeMode = IsChallengeMode(fileData);
 
-            if (isChallengeMode)
-            {
-                MAX_HEALTH_VALUE = GetChallengeModeMaxHealth(fileData);
-            }
-            else
-            {
-                MAX_HEALTH_VALUE = 1000;
-            }
-
+            MAX_HEALTH_VALUE = isChallengeMode ? GetChallengeModeMaxHealth(fileData) : MAX_HEALTH_VALUE_DEFAULT;
             trbHealth.Maximum = MAX_HEALTH_VALUE;
 
             nudSaveNumber.Value = GetSaveNumber(fileData);
@@ -859,7 +847,6 @@ namespace TRR_SaveMaster
                 double healthPercentage = ((double)health / MAX_HEALTH_VALUE) * 100;
                 trbHealth.Value = health;
                 trbHealth.Enabled = true;
-
                 lblHealth.Text = healthPercentage.ToString("0.0") + "%";
                 lblHealthError.Visible = false;
                 lblHealth.Visible = true;
@@ -903,8 +890,7 @@ namespace TRR_SaveMaster
             {
                 Dictionary<byte, int[]> ammoIndexData;
 
-                byte savegameVersion = GetSavegameVersion(fileData);
-                bool isPatch5 = savegameVersion >= PATCH5_SIGNATURE;
+                bool isPatch5 = IsPatch5Savegame(fileData);
 
                 if (isPatch5)
                 {
@@ -984,9 +970,10 @@ namespace TRR_SaveMaster
 
                 if (levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                 {
+                    bool isPatch5 = IsPatch5Savegame(fileData);
                     string levelName = levelNames[levelIndex];
                     GameMode gameMode = fileData[savegame.Offset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
-                    bool isChallengeMode = fileData[savegame.Offset + CHALLENGE_MODE_OFFSET] == 1;
+                    bool isChallengeMode = fileData[savegame.Offset + CHALLENGE_MODE_OFFSET] == 1 && isPatch5;
 
                     savegame.UpdateDisplayName(levelName, saveNumber, gameMode, isChallengeMode);
                 }
@@ -1001,6 +988,7 @@ namespace TRR_SaveMaster
             }
 
             byte[] fileData = File.ReadAllBytes(savegamePath);
+            bool isPatch5 = IsPatch5Savegame(fileData);
 
             for (int i = cmbSavegames.Items.Count; i < MAX_SAVEGAMES; i++)
             {
@@ -1033,7 +1021,7 @@ namespace TRR_SaveMaster
                         {
                             string levelName = levelNames[levelIndex];
                             GameMode gameMode = fileData[currentSavegameOffset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
-                            bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1;
+                            bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1 && isPatch5;
 
                             Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode, false, isChallengeMode);
                             cmbSavegames.Items.Add(savegame);
@@ -1048,20 +1036,19 @@ namespace TRR_SaveMaster
             byte[] fileData = File.ReadAllBytes(savegamePath);
             int numSaves = 0;
 
-            byte savegameVersion = GetSavegameVersion(fileData);
-            bool isPatch5 = savegameVersion >= PATCH5_SIGNATURE;
+            bool isPatch5 = IsPatch5Savegame(fileData);
 
             if (isPatch5)
             {
-                BASE_SAVEGAME_OFFSET_TR2 = 0xD2000;
-                MAX_SAVEGAME_OFFSET_TR2 = 0x19B800;
-                SAVEGAME_SIZE = 0x6800;
+                BASE_SAVEGAME_OFFSET_TR2 = BASE_SAVEGAME_OFFSET_TR2_PATCH5;
+                MAX_SAVEGAME_OFFSET_TR2 = MAX_SAVEGAME_OFFSET_TR2_PATCH5;
+                SAVEGAME_SIZE = SAVEGAME_SIZE_PATCH5;
             }
             else
             {
-                BASE_SAVEGAME_OFFSET_TR2 = 0x72000;
-                MAX_SAVEGAME_OFFSET_TR2 = 0xE2000;
-                SAVEGAME_SIZE = 0x3800;
+                BASE_SAVEGAME_OFFSET_TR2 = BASE_SAVEGAME_OFFSET_TR2_PREPATCH;
+                MAX_SAVEGAME_OFFSET_TR2 = MAX_SAVEGAME_OFFSET_TR2_PREPATCH;
+                SAVEGAME_SIZE = SAVEGAME_SIZE_PREPATCH;
             }
 
             for (int i = 0; i < MAX_SAVEGAMES; i++)
@@ -1078,7 +1065,7 @@ namespace TRR_SaveMaster
                     string levelName = levelNames[levelIndex];
                     int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR2) / SAVEGAME_SIZE;
                     GameMode gameMode = fileData[currentSavegameOffset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
-                    bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1;
+                    bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1 && isPatch5;
 
                     Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode, false, isChallengeMode);
                     cmbSavegames.Items.Add(savegame);
