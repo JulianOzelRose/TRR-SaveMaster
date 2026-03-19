@@ -273,7 +273,7 @@ namespace TRR_SaveMaster
             else if (levelIndex == 2)   // Venice
             {
                 MIN_HEALTH_OFFSET = isPatch5 ? 0x81C : 0x7FA;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0x81C : 0x7FA;
+                MAX_HEALTH_OFFSET = isPatch5 ? 0x828 : 0x7FA;
             }
             else if (levelIndex == 3)   // Bartoli's Hideout
             {
