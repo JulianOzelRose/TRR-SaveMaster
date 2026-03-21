@@ -434,7 +434,7 @@ namespace TRR_SaveMaster
 
         private bool IsPatch5Savegame(byte[] fileData)
         {
-            return fileData[SAVEGAME_VERSION_OFFSET] == PATCH5_SIGNATURE;
+            return fileData[SAVEGAME_VERSION_OFFSET] >= PATCH5_SIGNATURE;
         }
 
         public bool IsChallengeMode(byte[] fileData)

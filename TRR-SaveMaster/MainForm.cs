@@ -25,6 +25,10 @@ namespace TRR_SaveMaster
         private bool isInventoryLoading = false;
         private bool userIndexChanged = true;
         private bool hasShownTRX2PathPrompt = false;
+        private bool hasShownTRXSavegameUnsupportedMessage = false;
+        private bool hasShownTRX2SavegameUnsupportedMessage = false;
+        private bool hasCheckedTRXSavegameSupport = false;
+        private bool hasCheckedTRX2SavegameSupport = false;
         private Platform platform;
         private const string CONFIG_FILE_NAME = "TRR-SaveMaster.ini";
         private const int SAVEGAME_SIZE_TRX_PREPATCH = 0x3800;
@@ -97,6 +101,10 @@ namespace TRR_SaveMaster
             if (string.IsNullOrEmpty(savegamePathTRX))
             {
                 PromptBrowseSavegamePathTRX();
+            }
+            else if (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX))
+            {
+                ValidateTRXSavegameSupport();
             }
         }
 
@@ -423,6 +431,20 @@ namespace TRR_SaveMaster
             return false;
         }
 
+        private bool IsSavegameSupportedTRX(byte[] fileData)
+        {
+            byte savegameVersion = GetSavegameVersion(fileData);
+
+            return savegameVersion == TRX_PREPATCH_SIGNATURE || savegameVersion == TRX_PATCH5_SIGNATURE;
+        }
+
+        private bool IsSavegameSupportedTRX2(byte[] fileData)
+        {
+            byte savegameVersion = GetSavegameVersion(fileData);
+
+            return savegameVersion == TRX2_SAVEGAME_SIGNATURE;
+        }
+
         private bool IsPatch5Savegame(byte[] fileData)
         {
             return fileData[SAVEGAME_VERSION_OFFSET] == TRX_PATCH5_SIGNATURE;
@@ -570,6 +592,115 @@ namespace TRR_SaveMaster
             else if (tabGame.SelectedIndex == TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1)
             {
                 DisplayGameInfoTR3(cmbSavegamesTR3.SelectedItem as Savegame);
+            }
+
+            ValidatePlatformSelection();
+        }
+
+        private void ValidatePlatformSelection()
+        {
+            if (!IsTRXTabSelected())
+            {
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX) && platform != Platform.PC)
+            {
+                byte[] fileData = File.ReadAllBytes(savegamePathTRX);
+                bool isPatch5 = IsPatch5Savegame(fileData);
+
+                if (!isPatch5)
+                {
+                    return;
+                }
+
+                string gameString = "";
+
+                if (tabGame.SelectedIndex == TAB_TR1)
+                {
+                    gameString = "Tomb Raider I";
+                }
+                else if (tabGame.SelectedIndex == TAB_TR2)
+                {
+                    gameString = "Tomb Raider II";
+                }
+                else if (tabGame.SelectedIndex == TAB_TR3)
+                {
+                    gameString = "Tomb Raider III";
+                }
+
+                string warningMessage = $"{platform.ToFriendlyString()} is not currently supported for {gameString} Patch 5.";
+                MessageBox.Show(warningMessage, "Platform Not Supported", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                tsmiPC.Checked = true;
+                tsmiPlayStation4.Checked = false;
+                tsmiNintendoSwitch.Checked = false;
+                this.platform = Platform.PC;
+                this.Text = $"Tomb Raider I-VI Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(Platform.PC)})";
+            }
+        }
+
+        private void ValidateTRXSavegameSupport()
+        {
+            if (!IsTRXTabSelected())
+            {
+                return;
+            }
+
+            if (hasCheckedTRXSavegameSupport)
+            {
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX))
+            {
+                byte[] fileData = File.ReadAllBytes(savegamePathTRX);
+                bool isSupported = IsSavegameSupportedTRX(fileData);
+
+                hasCheckedTRXSavegameSupport = true;
+
+                if (!isSupported && !hasShownTRXSavegameUnsupportedMessage)
+                {
+                    byte savegameVersion = GetSavegameVersion(fileData);
+
+                    MessageBox.Show($"Your Tomb Raider I-III savegame version ({savegameVersion}) is not currently supported. Game data may not display or modify correctly.",
+                        "Unsupported Savegame Version",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    hasShownTRXSavegameUnsupportedMessage = true;
+                }
+            }
+        }
+
+        private void ValidateTRX2SavegameSupport()
+        {
+            if (!IsTRX2TabSelected())
+            {
+                return;
+            }
+
+            if (hasCheckedTRX2SavegameSupport)
+            {
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
+            {
+                byte[] fileData = File.ReadAllBytes(savegamePathTRX2);
+                bool isSupported = IsSavegameSupportedTRX2(fileData);
+
+                hasCheckedTRX2SavegameSupport = true;
+
+                if (!isSupported && !hasShownTRX2SavegameUnsupportedMessage)
+                {
+                    byte savegameVersion = GetSavegameVersion(fileData);
+
+                    MessageBox.Show($"Your Tomb Raider IV-VI savegame version ({savegameVersion}) is not currently supported. Game data may not display or modify correctly.",
+                        "Unsupported Savegame Version",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    hasShownTRX2SavegameUnsupportedMessage = true;
+                }
             }
         }
 
@@ -2013,6 +2144,10 @@ namespace TRR_SaveMaster
 
         private void tabGame_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ValidatePlatformSelection();
+            ValidateTRXSavegameSupport();
+            ValidateTRX2SavegameSupport();
+
             if (tabGame.SelectedIndex == TAB_TR1)
             {
                 tsmiRefreshSavegameList.Enabled = !string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX);
