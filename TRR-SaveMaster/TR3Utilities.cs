@@ -16,6 +16,8 @@ namespace TRR_SaveMaster
         private const int LEVEL_INDEX_OFFSET = 0x8D6;
         private const int CHALLENGE_MODE_OFFSET = 0x990;
         private const int CHALLENGE_MODE_HEALTH_HANDICAP_OFFSET = 0x99E;
+        private const int CHALLENGE_MODE_ENEMY_COUNT_OFFSET = 0x9A2;
+        private const byte CHALLENGE_MODE_ENEMY_NUMBERS_REINFORCEMENT = 4;
         private const int MAX_SAVEGAMES = 32;
 
         // Patch-dependent
@@ -77,7 +79,7 @@ namespace TRR_SaveMaster
         private string savegamePath;
         private int savegameOffset;
         private int secondaryAmmoIndex = -1;
-        private const int MAX_ENTITY_COUNT = 20;
+        private const int MAX_ENTITY_COUNT = 50;
         private const int ENTITY_STRIDE = 0x1A;
 
         private readonly Dictionary<byte, string> levelNames = new Dictionary<byte, string>()
@@ -458,6 +460,11 @@ namespace TRR_SaveMaster
             return (UInt16)1000;
         }
 
+        private byte GetChallengeModeEnemyNumbers(byte[] fileData)
+        {
+            return fileData[savegameOffset + CHALLENGE_MODE_ENEMY_COUNT_OFFSET];
+        }
+
         private Int32 GetSaveNumber(byte[] fileData)
         {
             return BitConverter.ToInt32(fileData, savegameOffset + SAVE_NUMBER_OFFSET);
@@ -594,6 +601,15 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + SHOTGUN_AMMO_OFFSET, ammo);
 
+            bool isPatch5 = IsPatch5Savegame(fileData);
+            bool isChallengeMode = IsChallengeMode(fileData);
+            bool isHighEnemyCount = GetChallengeModeEnemyNumbers(fileData) >= CHALLENGE_MODE_ENEMY_NUMBERS_REINFORCEMENT;
+
+            if (isPatch5 && isChallengeMode && isHighEnemyCount)
+            {
+                return;
+            }
+
             if (isPresent && secondaryAmmoIndex != -1)
             {
                 WriteUInt16ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, ammo);
@@ -607,6 +623,15 @@ namespace TRR_SaveMaster
         private void WriteDeagleAmmo(byte[] fileData, bool isPresent, UInt16 ammo)
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + DEAGLE_AMMO_OFFSET, ammo);
+
+            bool isPatch5 = IsPatch5Savegame(fileData);
+            bool isChallengeMode = IsChallengeMode(fileData);
+            bool isHighEnemyCount = GetChallengeModeEnemyNumbers(fileData) >= CHALLENGE_MODE_ENEMY_NUMBERS_REINFORCEMENT;
+
+            if (isPatch5 && isChallengeMode && isHighEnemyCount)
+            {
+                return;
+            }
 
             if (isPresent && secondaryAmmoIndex != -1)
             {
@@ -622,6 +647,15 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + UZI_AMMO_OFFSET, ammo);
 
+            bool isPatch5 = IsPatch5Savegame(fileData);
+            bool isChallengeMode = IsChallengeMode(fileData);
+            bool isHighEnemyCount = GetChallengeModeEnemyNumbers(fileData) >= CHALLENGE_MODE_ENEMY_NUMBERS_REINFORCEMENT;
+
+            if (isPatch5 && isChallengeMode && isHighEnemyCount)
+            {
+                return;
+            }
+
             if (isPresent && secondaryAmmoIndex != -1)
             {
                 WriteUInt16ToBuffer(fileData, savegameOffset + uziAmmoOffset2, ammo);
@@ -635,6 +669,15 @@ namespace TRR_SaveMaster
         private void WriteGrenadeLauncherAmmo(byte[] fileData, bool isPresent, UInt16 ammo)
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + GRENADE_LAUNCHER_AMMO_OFFSET, ammo);
+
+            bool isPatch5 = IsPatch5Savegame(fileData);
+            bool isChallengeMode = IsChallengeMode(fileData);
+            bool isHighEnemyCount = GetChallengeModeEnemyNumbers(fileData) >= CHALLENGE_MODE_ENEMY_NUMBERS_REINFORCEMENT;
+
+            if (isPatch5 && isChallengeMode && isHighEnemyCount)
+            {
+                return;
+            }
 
             if (isPresent && secondaryAmmoIndex != -1)
             {
@@ -650,6 +693,15 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + MP5_AMMO_OFFSET, ammo);
 
+            bool isPatch5 = IsPatch5Savegame(fileData);
+            bool isChallengeMode = IsChallengeMode(fileData);
+            bool isHighEnemyCount = GetChallengeModeEnemyNumbers(fileData) >= CHALLENGE_MODE_ENEMY_NUMBERS_REINFORCEMENT;
+
+            if (isPatch5 && isChallengeMode && isHighEnemyCount)
+            {
+                return;
+            }
+
             if (isPresent && secondaryAmmoIndex != -1)
             {
                 WriteUInt16ToBuffer(fileData, savegameOffset + mp5AmmoOffset2, ammo);
@@ -664,6 +716,15 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + ROCKET_LAUNCHER_AMMO_OFFSET, ammo);
 
+            bool isPatch5 = IsPatch5Savegame(fileData);
+            bool isChallengeMode = IsChallengeMode(fileData);
+            bool isHighEnemyCount = GetChallengeModeEnemyNumbers(fileData) >= CHALLENGE_MODE_ENEMY_NUMBERS_REINFORCEMENT;
+
+            if (isPatch5 && isChallengeMode && isHighEnemyCount)
+            {
+                return;
+            }
+
             if (isPresent && secondaryAmmoIndex != -1)
             {
                 WriteUInt16ToBuffer(fileData, savegameOffset + rocketLauncherAmmoOffset2, ammo);
@@ -677,6 +738,15 @@ namespace TRR_SaveMaster
         private void WriteHarpoonGunAmmo(byte[] fileData, bool isPresent, UInt16 ammo)
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + HARPOON_GUN_AMMO_OFFSET, ammo);
+
+            bool isPatch5 = IsPatch5Savegame(fileData);
+            bool isChallengeMode = IsChallengeMode(fileData);
+            bool isHighEnemyCount = GetChallengeModeEnemyNumbers(fileData) >= CHALLENGE_MODE_ENEMY_NUMBERS_REINFORCEMENT;
+
+            if (isPatch5 && isChallengeMode && isHighEnemyCount)
+            {
+                return;
+            }
 
             if (secondaryAmmoIndex != -1)
             {
@@ -770,6 +840,30 @@ namespace TRR_SaveMaster
                 trbHealth.Value = trbHealth.Minimum;
                 lblHealthError.Visible = true;
                 lblHealth.Visible = false;
+            }
+
+            bool isPatch5 = IsPatch5Savegame(fileData);
+            bool isHighEnemyCount = GetChallengeModeEnemyNumbers(fileData) >= CHALLENGE_MODE_ENEMY_NUMBERS_REINFORCEMENT;
+
+            if (isPatch5 && isChallengeMode && isHighEnemyCount)
+            {
+                nudShotgunAmmo.Enabled = false;
+                nudDeagleAmmo.Enabled = false;
+                nudUziAmmo.Enabled = false;
+                nudMP5Ammo.Enabled = false;
+                nudRocketLauncherAmmo.Enabled = false;
+                nudGrenadeLauncherAmmo.Enabled = false;
+                nudHarpoonGunAmmo.Enabled = false;
+            }
+            else
+            {
+                nudShotgunAmmo.Enabled = true;
+                nudDeagleAmmo.Enabled = true;
+                nudUziAmmo.Enabled = true;
+                nudMP5Ammo.Enabled = true;
+                nudRocketLauncherAmmo.Enabled = true;
+                nudGrenadeLauncherAmmo.Enabled = true;
+                nudHarpoonGunAmmo.Enabled = true;
             }
         }
 
