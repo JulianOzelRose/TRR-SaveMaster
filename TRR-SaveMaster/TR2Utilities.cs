@@ -34,6 +34,7 @@ namespace TRR_SaveMaster
         private const int MAX_SAVEGAME_OFFSET_TR2_PATCH5 = 0x19B800;
 
         // Patch-related signatures
+        private const byte PREPATCH_SIGNATURE = 0x3B;
         private const byte PATCH5_SIGNATURE = 0x3C;
 
         // Static offsets (per level)
@@ -71,6 +72,7 @@ namespace TRR_SaveMaster
         private UInt16 MAX_HEALTH_VALUE = MAX_HEALTH_VALUE_DEFAULT;
         private int MAX_HEALTH_OFFSET;
         private int MIN_HEALTH_OFFSET;
+        private int HEALTH_OFFSET;
 
         // Misc
         private Platform platform;
@@ -176,14 +178,15 @@ namespace TRR_SaveMaster
             Buffer.BlockCopy(bytes, 0, buffer, offset, 2);
         }
 
-        public int GetHealthOffset()
+        public int GetHealthOffset(byte[] savegameData = null, bool areOffsetsDetermined = false)
         {
-            byte[] savegameData;
-
-            using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            if (savegameData == null)
             {
-                savegameData = new byte[fs.Length];
-                fs.Read(savegameData, 0, savegameData.Length);
+                using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    savegameData = new byte[fs.Length];
+                    fs.Read(savegameData, 0, savegameData.Length);
+                }
             }
 
             bool isPatch5 = IsPatch5Savegame(savegameData);
@@ -192,44 +195,62 @@ namespace TRR_SaveMaster
             {
                 bool isChallengeMode = IsChallengeMode(savegameData);
                 MAX_HEALTH_VALUE = isChallengeMode ? GetChallengeModeMaxHealth(savegameData) : MAX_HEALTH_VALUE_DEFAULT;
-            }
 
-            for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset += ENTITY_STRIDE)
-            {
-                int valueIndex = savegameOffset + offset;
-
-                if (valueIndex + 2 >= savegameData.Length)
+                if (!areOffsetsDetermined)
                 {
-                    break;
+                    DetermineDynamicOffsets(savegameData);
                 }
 
-                UInt16 value = BitConverter.ToUInt16(savegameData, valueIndex);
+                UInt16 value = BitConverter.ToUInt16(savegameData, savegameOffset + HEALTH_OFFSET);
 
                 if (value >= MIN_HEALTH_VALUE && value <= MAX_HEALTH_VALUE)
                 {
-                    int flagIndex1 = savegameOffset + offset - 10;
-                    int flagIndex2 = savegameOffset + offset - 9;
-                    int flagIndex3 = savegameOffset + offset - 8;
-                    int flagIndex4 = savegameOffset + offset - 7;
+                    return savegameOffset + HEALTH_OFFSET;
+                }
 
-                    if (flagIndex4 >= savegameData.Length)
+                return -1;
+            }
+            else
+            {
+                MAX_HEALTH_VALUE = MAX_HEALTH_VALUE_DEFAULT;
+
+                for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset += ENTITY_STRIDE)
+                {
+                    int valueIndex = savegameOffset + offset;
+
+                    if (valueIndex + 2 >= savegameData.Length)
                     {
-                        continue;
+                        break;
                     }
 
-                    byte byteFlag1 = savegameData[flagIndex1];
-                    byte byteFlag2 = savegameData[flagIndex2];
-                    byte byteFlag3 = savegameData[flagIndex3];
-                    byte byteFlag4 = savegameData[flagIndex4];
+                    UInt16 value = BitConverter.ToUInt16(savegameData, valueIndex);
 
-                    if (IsKnownByteFlagPattern(byteFlag1, byteFlag2, byteFlag3, byteFlag4))
+                    if (value >= MIN_HEALTH_VALUE && value <= MAX_HEALTH_VALUE)
                     {
-                        return savegameOffset + offset;
+                        int flagIndex1 = savegameOffset + offset - 10;
+                        int flagIndex2 = savegameOffset + offset - 9;
+                        int flagIndex3 = savegameOffset + offset - 8;
+                        int flagIndex4 = savegameOffset + offset - 7;
+
+                        if (flagIndex4 >= savegameData.Length)
+                        {
+                            continue;
+                        }
+
+                        byte byteFlag1 = savegameData[flagIndex1];
+                        byte byteFlag2 = savegameData[flagIndex2];
+                        byte byteFlag3 = savegameData[flagIndex3];
+                        byte byteFlag4 = savegameData[flagIndex4];
+
+                        if (IsKnownByteFlagPattern(byteFlag1, byteFlag2, byteFlag3, byteFlag4))
+                        {
+                            return savegameOffset + offset;
+                        }
                     }
                 }
-            }
 
-            return -1;
+                return -1;
+            }
         }
 
         public void DetermineOffsets(byte[] fileData)
@@ -247,134 +268,142 @@ namespace TRR_SaveMaster
             FLARES_OFFSET = 0x21 + (levelIndex * 0x30);
             WEAPONS_CONFIG_NUM_OFFSET = 0x3C + (levelIndex * 0x30);
 
-            bool isPatch5 = IsPatch5Savegame(fileData);
+            bool isPrepatch = IsPrepatchSavegame(fileData);
 
-            if (levelIndex == 1)        // The Great Wall
+            if (isPrepatch)
             {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0xBD6 : 0xB64;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0xC1E : 0xBAC;
-            }
-            else if (levelIndex == 2)   // Venice
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0x81C : 0x7FA;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0x828 : 0x7FA;
-            }
-            else if (levelIndex == 3)   // Bartoli's Hideout
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0x18DA : 0x1734;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0x190A : 0x1764;
-            }
-            else if (levelIndex == 4)   // Opera House
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0x20AE : 0x1E20;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0x20D2 : 0x1E38;
-            }
-            else if (levelIndex == 5)   // Offshore Rig
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0xB36 : 0xAC4;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0xB4E : 0xADC;
-            }
-            else if (levelIndex == 6)   // Diving Area
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0x1410 : 0x12DE;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0x144C : 0x131A;
-            }
-            else if (levelIndex == 7)   // 40 Fathoms
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0x81E : 0x7FC;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0x81E : 0x7FC;
-            }
-            else if (levelIndex == 8)   // Wreck of the Maria Doria
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0x26C8 : 0x238E;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0x2764 : 0x242A;
-            }
-            else if (levelIndex == 9)   // Living Quarters
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0x94C : 0x90A;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0x94C : 0x90A;
-            }
-            else if (levelIndex == 10)  // The Deck
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0xC42 : 0xBAC;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0xC8A : 0xBF4;
-            }
-            else if (levelIndex == 11)  // Tibetan Foothills
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0x13DA : 0x12E4;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0x140A : 0x1314;
-            }
-            else if (levelIndex == 12)  // Barkhang Monastery
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0x282C : 0x2522;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0x2904 : 0x25FA;
-            }
-            else if (levelIndex == 13)  // Catacombs of the Talion
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0x81A : 0x7F8;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0x81A : 0x7F8;
-            }
-            else if (levelIndex == 14)  // Ice Palace
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0xF34 : 0xE2A;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0xF58 : 0xE4E;
-            }
-            else if (levelIndex == 15)  // Temple of Xian
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0x2E54 : 0x2A7A;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0x2E9C : 0x2AC2;
-            }
-            else if (levelIndex == 16)  // Floating Islands
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0xA16 : 0x9CC;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0xA22 : 0x9D8;
-            }
-            else if (levelIndex == 17)  // The Dragon's Lair
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0x1042 : 0xF78;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0x108A : 0xFC0;
-            }
-            else if (levelIndex == 18)  // Home Sweet Home
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0xF54 : 0xE86;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0xFFC : 0xF2E;
-            }
-            else if (levelIndex == 19)  // The Cold War
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0x1778 : 0x1626;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0x17A8 : 0x1656;
-            }
-            else if (levelIndex == 20)  // Fool's Gold
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0x1F7E : 0x1D80;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0x1FBA : 0x1DBC;
-            }
-            else if (levelIndex == 21)  // Furnace of the Gods
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0x21FE : 0x1FD4;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0x228E : 0x2064;
-            }
-            else if (levelIndex == 22)  // Kingdom
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0x958 : 0x91A;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0x964 : 0x926;
-            }
-            else if (levelIndex == 23)  // Nightmare in Vegas
-            {
-                MIN_HEALTH_OFFSET = isPatch5 ? 0xE94 : 0xDDA;
-                MAX_HEALTH_OFFSET = isPatch5 ? 0xEAC : 0xDF2;
-            }
+                if (levelIndex == 1)        // The Great Wall
+                {
+                    MIN_HEALTH_OFFSET = 0xB64;
+                    MAX_HEALTH_OFFSET = 0xBAC;
+                }
+                else if (levelIndex == 2)   // Venice
+                {
+                    MIN_HEALTH_OFFSET = 0x7FA;
+                    MAX_HEALTH_OFFSET = 0x7FA;
+                }
+                else if (levelIndex == 3)   // Bartoli's Hideout
+                {
+                    MIN_HEALTH_OFFSET = 0x1734;
+                    MAX_HEALTH_OFFSET = 0x1764;
+                }
+                else if (levelIndex == 4)   // Opera House
+                {
+                    MIN_HEALTH_OFFSET = 0x1E20;
+                    MAX_HEALTH_OFFSET = 0x1E38;
+                }
+                else if (levelIndex == 5)   // Offshore Rig
+                {
+                    MIN_HEALTH_OFFSET = 0xAC4;
+                    MAX_HEALTH_OFFSET = 0xADC;
+                }
+                else if (levelIndex == 6)   // Diving Area
+                {
+                    MIN_HEALTH_OFFSET = 0x12DE;
+                    MAX_HEALTH_OFFSET = 0x131A;
+                }
+                else if (levelIndex == 7)   // 40 Fathoms
+                {
+                    MIN_HEALTH_OFFSET = 0x7FC;
+                    MAX_HEALTH_OFFSET = 0x7FC;
+                }
+                else if (levelIndex == 8)   // Wreck of the Maria Doria
+                {
+                    MIN_HEALTH_OFFSET = 0x238E;
+                    MAX_HEALTH_OFFSET = 0x242A;
+                }
+                else if (levelIndex == 9)   // Living Quarters
+                {
+                    MIN_HEALTH_OFFSET = 0x90A;
+                    MAX_HEALTH_OFFSET = 0x90A;
+                }
+                else if (levelIndex == 10)  // The Deck
+                {
+                    MIN_HEALTH_OFFSET = 0xBAC;
+                    MAX_HEALTH_OFFSET = 0xBF4;
+                }
+                else if (levelIndex == 11)  // Tibetan Foothills
+                {
+                    MIN_HEALTH_OFFSET = 0x12E4;
+                    MAX_HEALTH_OFFSET = 0x1314;
+                }
+                else if (levelIndex == 12)  // Barkhang Monastery
+                {
+                    MIN_HEALTH_OFFSET = 0x2522;
+                    MAX_HEALTH_OFFSET = 0x25FA;
+                }
+                else if (levelIndex == 13)  // Catacombs of the Talion
+                {
+                    MIN_HEALTH_OFFSET = 0x7F8;
+                    MAX_HEALTH_OFFSET = 0x7F8;
+                }
+                else if (levelIndex == 14)  // Ice Palace
+                {
+                    MIN_HEALTH_OFFSET = 0xE2A;
+                    MAX_HEALTH_OFFSET = 0xE4E;
+                }
+                else if (levelIndex == 15)  // Temple of Xian
+                {
+                    MIN_HEALTH_OFFSET = 0x2A7A;
+                    MAX_HEALTH_OFFSET = 0x2AC2;
+                }
+                else if (levelIndex == 16)  // Floating Islands
+                {
+                    MIN_HEALTH_OFFSET = 0x9CC;
+                    MAX_HEALTH_OFFSET = 0x9D8;
+                }
+                else if (levelIndex == 17)  // The Dragon's Lair
+                {
+                    MIN_HEALTH_OFFSET = 0xF78;
+                    MAX_HEALTH_OFFSET = 0xFC0;
+                }
+                else if (levelIndex == 18)  // Home Sweet Home
+                {
+                    MIN_HEALTH_OFFSET = 0xE86;
+                    MAX_HEALTH_OFFSET = 0xF2E;
+                }
+                else if (levelIndex == 19)  // The Cold War
+                {
+                    MIN_HEALTH_OFFSET = 0x1626;
+                    MAX_HEALTH_OFFSET = 0x1656;
+                }
+                else if (levelIndex == 20)  // Fool's Gold
+                {
+                    MIN_HEALTH_OFFSET = 0x1D80;
+                    MAX_HEALTH_OFFSET = 0x1DBC;
+                }
+                else if (levelIndex == 21)  // Furnace of the Gods
+                {
+                    MIN_HEALTH_OFFSET = 0x1FD4;
+                    MAX_HEALTH_OFFSET = 0x2064;
+                }
+                else if (levelIndex == 22)  // Kingdom
+                {
+                    MIN_HEALTH_OFFSET = 0x91A;
+                    MAX_HEALTH_OFFSET = 0x926;
+                }
+                else if (levelIndex == 23)  // Nightmare in Vegas
+                {
+                    MIN_HEALTH_OFFSET = 0xDDA;
+                    MAX_HEALTH_OFFSET = 0xDF2;
+                }
 
-            if (platform != Platform.PC)
-            {
-                MIN_HEALTH_OFFSET -= 4;
-                MAX_HEALTH_OFFSET -= 4;
+                if (platform != Platform.PC)
+                {
+                    MIN_HEALTH_OFFSET -= 4;
+                    MAX_HEALTH_OFFSET -= 4;
+                }
             }
         }
 
         private bool IsPatch5Savegame(byte[] fileData)
         {
             return fileData[SAVEGAME_VERSION_OFFSET] >= PATCH5_SIGNATURE;
+        }
+
+        private bool IsPrepatchSavegame(byte[] fileData)
+        {
+            return fileData[SAVEGAME_VERSION_OFFSET] == PREPATCH_SIGNATURE;
         }
 
         private bool IsNativePatch5Format(byte[] fileData)
@@ -597,7 +626,7 @@ namespace TRR_SaveMaster
 
         private void WriteHealthValue(byte[] fileData, UInt16 newHealth)
         {
-            int healthOffset = GetHealthOffset();
+            int healthOffset = GetHealthOffset(fileData, true);
 
             if (healthOffset != -1)
             {
@@ -949,6 +978,11 @@ namespace TRR_SaveMaster
                     throw new Exception($"FATAL: Missing object definition. LevelIndex={levelIndex}, ObjectId={objectId}, ItemIndex={itemIndex}");
                 }
 
+                if (tr2Object.ObjectId == 0)
+                {
+                    HEALTH_OFFSET = sgBufferCursor + 0x28;
+                }
+
                 if ((tr2Object.Flags00 & 0x08) != 0)
                 {
                     sgBufferCursor += 0x1A;
@@ -1014,6 +1048,7 @@ namespace TRR_SaveMaster
             NumericUpDown nudLargeMedipacks, TrackBar trbHealth, Label lblHealth, Label lblHealthError)
         {
             DetermineOffsets(fileData);
+            DetermineDynamicOffsets(fileData);
 
             bool isChallengeMode = IsChallengeMode(fileData);
 
@@ -1077,7 +1112,7 @@ namespace TRR_SaveMaster
                 chkHarpoonGun.Checked = (weaponsConfigNum & WEAPON_HARPOON_GUN) != 0;
             }
 
-            int healthOffset = GetHealthOffset();
+            int healthOffset = GetHealthOffset(fileData, true);
 
             if (healthOffset != -1)
             {
