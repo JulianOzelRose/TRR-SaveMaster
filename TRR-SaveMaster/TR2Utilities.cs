@@ -14,9 +14,11 @@ namespace TRR_SaveMaster
         private const int GAME_MODE_OFFSET = 0x008;
         private const int SAVE_NUMBER_OFFSET = 0x00C;
         private const int LEVEL_INDEX_OFFSET = 0x628;
+        private const int SAVEGAME_FORMAT_VERSION_OFFSET = 0x6A8;
         private const int CHALLENGE_MODE_OFFSET = 0x6B0;
         private const int CHALLENGE_MODE_HEALTH_HANDICAP_OFFSET = 0x6C2;
         private const int CHALLENGE_MODE_ENEMY_COUNT_OFFSET = 0x6C6;
+        private const int HEADER_SIZE = 0x6BC;
         private const byte CHALLENGE_MODE_ENEMY_NUMBERS_REINFORCEMENT = 4;
         private const int MAX_SAVEGAMES = 32;
 
@@ -77,6 +79,9 @@ namespace TRR_SaveMaster
         private int secondaryAmmoIndex = -1;
         private const int MAX_ENTITY_COUNT = 50;
         private const int ENTITY_STRIDE = 0xC;
+        private int AMMO_WRITE_LOWER_BOUND;
+        private int AMMO_WRITE_UPPER_BOUND;
+        private int sgBufferCursor = 0;
 
         private readonly Dictionary<byte, string> levelNames = new Dictionary<byte, string>()
         {
@@ -130,33 +135,6 @@ namespace TRR_SaveMaster
             { 21, new int[] { 0x2AF0, 0x2AF1, 0x2AF2, 0x2AF3 } },   // Furnace of the Gods
             { 22, new int[] { 0x210A, 0x210B, 0x210C, 0x210D } },   // Kingdom
             { 23, new int[] { 0x2354, 0x2355, 0x2356, 0x2357 } },   // Nightmare in Vegas
-        };
-
-        private readonly Dictionary<byte, int[]> ammoIndexDataPatch5PC = new Dictionary<byte, int[]>
-        {
-            {  1, new int[] { 0x1B80, 0x1B81, 0x1B82, 0x1B83 } },   // The Great Wall
-            {  2, new int[] { 0x1F2E, 0x1F2F, 0x1F30, 0x1F31 } },   // Venice
-            {  3, new int[] { 0x2146, 0x2147, 0x2148, 0x2149 } },   // Bartoli's Hideout
-            {  4, new int[] { 0x2D94, 0x2D95, 0x2D96, 0x2D97 } },   // Opera House
-            {  5, new int[] { 0x1CCC, 0x1CCD, 0x1CCE, 0x1CCF } },   // Offshore Rig
-            {  6, new int[] { 0x20E6, 0x20E7, 0x20E8, 0x20E9 } },   // Diving Area
-            {  7, new int[] { 0x1542, 0x1543, 0x1544, 0x1545 } },   // 40 Fathoms
-            {  8, new int[] { 0x28D2, 0x28D3, 0x28D4, 0x28D5 } },   // Wreck of the Maria Doria
-            {  9, new int[] { 0x1950, 0x1951, 0x1952, 0x1953 } },   // Living Quarters
-            { 10, new int[] { 0x1DDC, 0x1DDD, 0x1DDE, 0x1DDF } },   // The Deck
-            { 11, new int[] { 0x2140, 0x2141, 0x2142, 0x2143 } },   // Tibetan Foothills
-            { 12, new int[] { 0x2ED8, 0x2ED9, 0x2EDA, 0x2EDB } },   // Barkhang Monastery
-            { 13, new int[] { 0x2548, 0x2549, 0x254A, 0x254B } },   // Catacombs of the Talion
-            { 14, new int[] { 0x2084, 0x2085, 0x2086, 0x2087 } },   // Ice Palace
-            { 15, new int[] { 0x3090, 0x3091, 0x3092, 0x3093 } },   // Temple of Xian
-            { 16, new int[] { 0x2094, 0x2095, 0x2096, 0x2097 } },   // Floating Islands
-            { 17, new int[] { 0x16AA, 0x16AB, 0x16AC, 0x16AD } },   // The Dragon's Lair
-            { 18, new int[] { 0x1C7E, 0x1C7F, 0x1C80, 0x1C81 } },   // Home Sweet Home
-            { 19, new int[] { 0x3014, 0x3015, 0x3016, 0x3017 } },   // The Cold War
-            { 20, new int[] { 0x3014, 0x3015, 0x3016, 0x3017 } },   // Fool's Gold
-            { 21, new int[] { 0x2DE2, 0x2DE3, 0x2DE4, 0x2DE5 } },   // Furnace of the Gods
-            { 22, new int[] { 0x23EC, 0x23ED, 0x23EE, 0x23EF } },   // Kingdom
-            { 23, new int[] { 0x262A, 0x262B, 0x262C, 0x262D } },   // Nightmare in Vegas
         };
 
         private readonly Dictionary<byte, int[]> ammoIndexDataConsole = new Dictionary<byte, int[]>
@@ -399,6 +377,11 @@ namespace TRR_SaveMaster
             return fileData[SAVEGAME_VERSION_OFFSET] >= PATCH5_SIGNATURE;
         }
 
+        private bool IsNativePatch5Format(byte[] fileData)
+        {
+            return fileData[savegameOffset + SAVEGAME_FORMAT_VERSION_OFFSET] >= 2;
+        }
+
         public bool IsChallengeMode(byte[] fileData)
         {
             return fileData[savegameOffset + CHALLENGE_MODE_OFFSET] == 1;
@@ -495,16 +478,7 @@ namespace TRR_SaveMaster
             byte levelIndex = GetLevelIndex(fileData);
             bool isPatch5 = IsPatch5Savegame(fileData);
 
-            Dictionary<byte, int[]> ammoIndexData;
-
-            if (isPatch5)
-            {
-                ammoIndexData = ammoIndexDataPatch5PC;
-            }
-            else
-            {
-                ammoIndexData = platform == Platform.PC ? ammoIndexDataPC : ammoIndexDataConsole;
-            }
+            Dictionary<byte, int[]> ammoIndexData = platform == Platform.PC ? ammoIndexDataPC : ammoIndexDataConsole;
 
             if (ammoIndexData.ContainsKey(levelIndex))
             {
@@ -636,21 +610,33 @@ namespace TRR_SaveMaster
             WriteUInt16ToBuffer(fileData, savegameOffset + SHOTGUN_AMMO_OFFSET, ammo);
 
             bool isPatch5 = IsPatch5Savegame(fileData);
-            bool isChallengeMode = IsChallengeMode(fileData);
-            bool isHighEnemyCount = GetChallengeModeEnemyNumbers(fileData) >= CHALLENGE_MODE_ENEMY_NUMBERS_REINFORCEMENT;
 
-            if (isPatch5 && isChallengeMode && isHighEnemyCount)
+            if (isPatch5)
             {
-                return;
-            }
+                if (shotgunAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || shotgunAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
+                {
+                    return;
+                }
 
-            if (isPresent && secondaryAmmoIndex != -1)
-            {
-                WriteUInt16ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, ammo);
+                if (isPresent)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, ammo);
+                }
+                else if (!isPresent)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, 0);
+                }
             }
-            else if (!isPresent && secondaryAmmoIndex != -1)
+            else
             {
-                WriteUInt16ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, 0);
+                if (isPresent && secondaryAmmoIndex != -1)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, ammo);
+                }
+                else if (!isPresent && secondaryAmmoIndex != -1)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, 0);
+                }
             }
         }
 
@@ -659,21 +645,33 @@ namespace TRR_SaveMaster
             WriteUInt16ToBuffer(fileData, savegameOffset + AUTOMATIC_PISTOLS_AMMO_OFFSET, ammo);
 
             bool isPatch5 = IsPatch5Savegame(fileData);
-            bool isChallengeMode = IsChallengeMode(fileData);
-            bool isHighEnemyCount = GetChallengeModeEnemyNumbers(fileData) >= CHALLENGE_MODE_ENEMY_NUMBERS_REINFORCEMENT;
 
-            if (isPatch5 && isChallengeMode && isHighEnemyCount)
+            if (isPatch5)
             {
-                return;
-            }
+                if (automaticPistolsAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || automaticPistolsAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
+                {
+                    return;
+                }
 
-            if (isPresent && secondaryAmmoIndex != -1)
-            {
-                WriteUInt16ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, ammo);
+                if (isPresent)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, ammo);
+                }
+                else if (!isPresent)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, 0);
+                }
             }
-            else if (!isPresent && secondaryAmmoIndex != -1)
+            else
             {
-                WriteUInt16ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, 0);
+                if (isPresent && secondaryAmmoIndex != -1)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, ammo);
+                }
+                else if (!isPresent && secondaryAmmoIndex != -1)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, 0);
+                }
             }
         }
 
@@ -682,21 +680,33 @@ namespace TRR_SaveMaster
             WriteUInt16ToBuffer(fileData, savegameOffset + UZI_AMMO_OFFSET, ammo);
 
             bool isPatch5 = IsPatch5Savegame(fileData);
-            bool isChallengeMode = IsChallengeMode(fileData);
-            bool isHighEnemyCount = GetChallengeModeEnemyNumbers(fileData) >= CHALLENGE_MODE_ENEMY_NUMBERS_REINFORCEMENT;
 
-            if (isPatch5 && isChallengeMode && isHighEnemyCount)
+            if (isPatch5)
             {
-                return;
-            }
+                if (uziAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || uziAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
+                {
+                    return;
+                }
 
-            if (isPresent && secondaryAmmoIndex != -1)
-            {
-                WriteUInt16ToBuffer(fileData, savegameOffset + uziAmmoOffset2, ammo);
+                if (isPresent)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + uziAmmoOffset2, ammo);
+                }
+                else if (!isPresent)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + uziAmmoOffset2, 0);
+                }
             }
-            else if (!isPresent && secondaryAmmoIndex != -1)
+            else
             {
-                WriteUInt16ToBuffer(fileData, savegameOffset + uziAmmoOffset2, 0);
+                if (isPresent && secondaryAmmoIndex != -1)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + uziAmmoOffset2, ammo);
+                }
+                else if (!isPresent && secondaryAmmoIndex != -1)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + uziAmmoOffset2, 0);
+                }
             }
         }
 
@@ -705,21 +715,33 @@ namespace TRR_SaveMaster
             WriteUInt16ToBuffer(fileData, savegameOffset + M16_AMMO_OFFSET, ammo);
 
             bool isPatch5 = IsPatch5Savegame(fileData);
-            bool isChallengeMode = IsChallengeMode(fileData);
-            bool isHighEnemyCount = GetChallengeModeEnemyNumbers(fileData) >= CHALLENGE_MODE_ENEMY_NUMBERS_REINFORCEMENT;
 
-            if (isPatch5 && isChallengeMode && isHighEnemyCount)
+            if (isPatch5)
             {
-                return;
-            }
+                if (m16AmmoOffset2 < AMMO_WRITE_LOWER_BOUND || m16AmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
+                {
+                    return;
+                }
 
-            if (isPresent && secondaryAmmoIndex != -1)
-            {
-                WriteUInt16ToBuffer(fileData, savegameOffset + m16AmmoOffset2, ammo);
+                if (isPresent)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + m16AmmoOffset2, ammo);
+                }
+                else if (!isPresent)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + m16AmmoOffset2, 0);
+                }
             }
-            else if (!isPresent && secondaryAmmoIndex != -1)
+            else
             {
-                WriteUInt16ToBuffer(fileData, savegameOffset + m16AmmoOffset2, 0);
+                if (isPresent && secondaryAmmoIndex != -1)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + m16AmmoOffset2, ammo);
+                }
+                else if (!isPresent && secondaryAmmoIndex != -1)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + m16AmmoOffset2, 0);
+                }
             }
         }
 
@@ -728,21 +750,33 @@ namespace TRR_SaveMaster
             WriteUInt16ToBuffer(fileData, savegameOffset + GRENADE_LAUNCHER_AMMO_OFFSET, ammo);
 
             bool isPatch5 = IsPatch5Savegame(fileData);
-            bool isChallengeMode = IsChallengeMode(fileData);
-            bool isHighEnemyCount = GetChallengeModeEnemyNumbers(fileData) >= CHALLENGE_MODE_ENEMY_NUMBERS_REINFORCEMENT;
 
-            if (isPatch5 && isChallengeMode && isHighEnemyCount)
+            if (isPatch5)
             {
-                return;
-            }
+                if (isPresent)
+                {
+                    if (grenadeLauncherAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || grenadeLauncherAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
+                    {
+                        return;
+                    }
 
-            if (isPresent && secondaryAmmoIndex != -1)
-            {
-                WriteUInt16ToBuffer(fileData, savegameOffset + grenadeLauncherAmmoOffset2, ammo);
+                    WriteUInt16ToBuffer(fileData, savegameOffset + grenadeLauncherAmmoOffset2, ammo);
+                }
+                else if (!isPresent)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + grenadeLauncherAmmoOffset2, 0);
+                }
             }
-            else if (!isPresent && secondaryAmmoIndex != -1)
+            else
             {
-                WriteUInt16ToBuffer(fileData, savegameOffset + grenadeLauncherAmmoOffset2, 0);
+                if (isPresent && secondaryAmmoIndex != -1)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + grenadeLauncherAmmoOffset2, ammo);
+                }
+                else if (!isPresent && secondaryAmmoIndex != -1)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + grenadeLauncherAmmoOffset2, 0);
+                }
             }
         }
 
@@ -751,21 +785,33 @@ namespace TRR_SaveMaster
             WriteUInt16ToBuffer(fileData, savegameOffset + HARPOON_GUN_AMMO_OFFSET, ammo);
 
             bool isPatch5 = IsPatch5Savegame(fileData);
-            bool isChallengeMode = IsChallengeMode(fileData);
-            bool isHighEnemyCount = GetChallengeModeEnemyNumbers(fileData) >= CHALLENGE_MODE_ENEMY_NUMBERS_REINFORCEMENT;
 
-            if (isPatch5 && isChallengeMode && isHighEnemyCount)
+            if (isPatch5)
             {
-                return;
-            }
+                if (harpoonGunAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || harpoonGunAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
+                {
+                    return;
+                }
 
-            if (isPresent && secondaryAmmoIndex != -1)
-            {
-                WriteUInt16ToBuffer(fileData, savegameOffset + harpoonGunAmmoOffset2, ammo);
+                if (isPresent)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + harpoonGunAmmoOffset2, ammo);
+                }
+                else if (!isPresent)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + harpoonGunAmmoOffset2, 0);
+                }
             }
-            else if (!isPresent && secondaryAmmoIndex != -1)
+            else
             {
-                WriteUInt16ToBuffer(fileData, savegameOffset + harpoonGunAmmoOffset2, 0);
+                if (isPresent && secondaryAmmoIndex != -1)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + harpoonGunAmmoOffset2, ammo);
+                }
+                else if (!isPresent && secondaryAmmoIndex != -1)
+                {
+                    WriteUInt16ToBuffer(fileData, savegameOffset + harpoonGunAmmoOffset2, 0);
+                }
             }
         }
 
@@ -827,20 +873,137 @@ namespace TRR_SaveMaster
                 nudHarpoonGunAmmo.Enabled = true;
                 lblPistolAmmo.Enabled = true;
             }
+        }
 
-            bool isPatch5 = IsPatch5Savegame(fileData);
-            bool isChallengeMode = IsChallengeMode(fileData);
-            bool isHighEnemyCount = GetChallengeModeEnemyNumbers(fileData) >= CHALLENGE_MODE_ENEMY_NUMBERS_REINFORCEMENT;
-
-            if (isPatch5 && isChallengeMode && isHighEnemyCount)
+        private int GetEffectiveLevelItemCount(byte[] fileData, int levelIndex, bool isChallengeMode)
+        {
+            if (!TR2EntityCache.BaseLevelItemCounts.TryGetValue(levelIndex, out int itemCount))
             {
-                nudShotgunAmmo.Enabled = false;
-                nudAutomaticPistolsAmmo.Enabled = false;
-                nudUziAmmo.Enabled = false;
-                nudM16Ammo.Enabled = false;
-                nudGrenadeLauncherAmmo.Enabled = false;
-                nudHarpoonGunAmmo.Enabled = false;
+                throw new InvalidOperationException($"Missing base item count for level {levelIndex}.");
             }
+
+            if (!isChallengeMode)
+            {
+                return itemCount;
+            }
+
+            byte enemyMode = GetChallengeModeEnemyNumbers(fileData);
+
+            if (!TR2EntityCache.ChallengeModeItemCountModifiersByLevel.TryGetValue(levelIndex, out var levelModifiers))
+            {
+                throw new InvalidOperationException($"Missing Challenge Mode modifier table for level {levelIndex}.");
+            }
+
+            if (!levelModifiers.TryGetValue(enemyMode, out int modifier))
+            {
+                throw new InvalidOperationException($"Missing Challenge Mode item-count modifier for level {levelIndex}, Enemy Count {enemyMode}.");
+            }
+
+            return itemCount + modifier;
+        }
+
+        private void DetermineDynamicOffsets(byte[] fileData)
+        {
+            bool isChallengeMode = IsChallengeMode(fileData);
+            bool isNativePatch5 = IsNativePatch5Format(fileData);
+            int levelIndex = GetLevelIndex(fileData);
+
+            sgBufferCursor = 0x6BC;
+
+            if (isChallengeMode && isNativePatch5)
+            {
+                sgBufferCursor += 0x0C;
+            }
+
+            sgBufferCursor += 0x11C;
+
+            int gLevelStateEntryCount = TR2EntityCache.LevelStateEntryCounts[levelIndex];
+            sgBufferCursor += gLevelStateEntryCount * 2;
+
+            int gLevelItemCount = GetEffectiveLevelItemCount(fileData, levelIndex, isChallengeMode);
+
+            if (isNativePatch5)
+            {
+                sgBufferCursor += 4;
+            }
+
+            List<int> levelObjectIds = TR2EntityCache.LevelObjectIdsByLevel[levelIndex];
+
+            for (int itemIndex = 0; itemIndex < gLevelItemCount; itemIndex++)
+            {
+                int objectId = levelObjectIds[itemIndex];
+
+                // Base cursor increment
+                if (isNativePatch5)
+                {
+                    sgBufferCursor += 4;
+                }
+
+                if (!TR2EntityCache.TR2ObjectsByLevel.TryGetValue(levelIndex, out var levelObjects))
+                {
+                    throw new Exception($"FATAL: Missing level definition for level {levelIndex}.");
+                }
+
+                if (!levelObjects.TryGetValue(objectId, out var tr2Object))
+                {
+                    throw new Exception($"FATAL: Missing object definition. LevelIndex={levelIndex}, ObjectId={objectId}, ItemIndex={itemIndex}");
+                }
+
+                if ((tr2Object.Flags00 & 0x08) != 0)
+                {
+                    sgBufferCursor += 0x1A;
+                }
+
+                if ((tr2Object.Flags00 & 0x40) != 0)
+                {
+                    sgBufferCursor += 0x0A;
+                }
+
+                if ((tr2Object.Flags00 & 0x10) != 0)
+                {
+                    sgBufferCursor += 0x02;
+                }
+
+                if ((tr2Object.Flags00 & 0x20) != 0)
+                {
+                    int blockStart = sgBufferCursor;
+                    bool has02 = (tr2Object.Flags00 & 0x02) != 0;
+
+                    ushort u0 = BitConverter.ToUInt16(fileData, savegameOffset + blockStart);
+                    ushort u1 = BitConverter.ToUInt16(fileData, savegameOffset + blockStart + 2);
+                    ushort u2 = BitConverter.ToUInt16(fileData, savegameOffset + blockStart + (has02 ? 4 : 2));
+
+                    bool isEntityAIActive = has02 && (u2 & 0x0080) != 0;
+
+                    int increment = has02 ? 0x16 : 0x14;
+
+                    if (isEntityAIActive)
+                    {
+                        increment += 0x0C;
+                    }
+
+                    sgBufferCursor += increment;
+                }
+
+                if (objectId == 0x0D || objectId == 0x0E)
+                {
+                    sgBufferCursor += 0x18;
+                }
+                else if (objectId == 0x41)
+                {
+                    sgBufferCursor += 0x08;
+                }
+            }
+
+            // Fixed post-loop blob
+            sgBufferCursor += 0x1B0;
+
+            automaticPistolsAmmoOffset2 = sgBufferCursor - 0x64;
+            uziAmmoOffset2 = sgBufferCursor - 0x5C;
+            shotgunAmmoOffset2 = sgBufferCursor - 0x54;
+            harpoonGunAmmoOffset2 = sgBufferCursor - 0x4C;
+            grenadeLauncherAmmoOffset2 = sgBufferCursor - 0x44;
+            m16AmmoOffset2 = sgBufferCursor - 0x34;
         }
 
         public void DisplayGameInfo(byte[] fileData, CheckBox chkPistols, CheckBox chkAutomaticPistols, CheckBox chkUzis,
@@ -959,31 +1122,32 @@ namespace TRR_SaveMaster
             WriteWeaponsConfigNum(fileData, newWeaponsConfigNum);
 
             byte levelIndex = GetLevelIndex(fileData);
-            secondaryAmmoIndex = GetSecondaryAmmoIndex(fileData);
+            bool isPatch5 = IsPatch5Savegame(fileData);
 
-            if (secondaryAmmoIndex != -1)
+            if (isPatch5)
             {
-                Dictionary<byte, int[]> ammoIndexData;
+                DetermineDynamicOffsets(fileData);
 
-                bool isPatch5 = IsPatch5Savegame(fileData);
+                AMMO_WRITE_LOWER_BOUND = HEADER_SIZE;
+                AMMO_WRITE_UPPER_BOUND = SAVEGAME_SIZE - 2;
+            }
+            else
+            {
+                secondaryAmmoIndex = GetSecondaryAmmoIndex(fileData);
 
-                if (isPatch5)
+                if (secondaryAmmoIndex != -1)
                 {
-                    ammoIndexData = ammoIndexDataPatch5PC;
-                }
-                else
-                {
-                    ammoIndexData = platform == Platform.PC ? ammoIndexDataPC : ammoIndexDataConsole;
-                }
+                    Dictionary<byte, int[]> ammoIndexData = platform == Platform.PC ? ammoIndexDataPC : ammoIndexDataConsole;
 
-                int baseSecondaryAmmoOffset = ammoIndexData[levelIndex][0];
+                    int baseSecondaryAmmoOffset = ammoIndexData[levelIndex][0];
 
-                automaticPistolsAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0xAC);
-                uziAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0xA4);
-                shotgunAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x9C);
-                harpoonGunAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x94);
-                grenadeLauncherAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x8C);
-                m16AmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x7C);
+                    automaticPistolsAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0xAC);
+                    uziAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0xA4);
+                    shotgunAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x9C);
+                    harpoonGunAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x94);
+                    grenadeLauncherAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x8C);
+                    m16AmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x7C);
+                }
             }
 
             if (levelIndex == 18)       // Home Sweet Home
