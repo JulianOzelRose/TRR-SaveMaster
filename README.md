@@ -6,8 +6,8 @@ For instructions on how to download and use this editor, scroll down to the sect
 For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder/delete savegames, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
 ⚠️ **Patch 5 Compatibility**<br>
-The latest version of this editor is compatible with Patch 5 savegames and backwards compatible with pre-patch savegames for Tomb Raider I-III. Patch 5 support is currently basic but will continue to be improved.
-The current limitation is that ammo editing does not work on Challenge Mode savegames where the Enemy Count is high. A fix is in progress but may take some time.
+The latest version of this editor is compatible with Patch 5 savegames and backwards compatible with pre-patch savegames for Tomb Raider I-III.
+Ammo editing does not currently work for Challenge Mode savegames for Tomb Raider I and III. A fix is in progress.
 
 <img width="723" height="640" alt="TRR-SaveMaster-UI" src="https://github.com/user-attachments/assets/10325c35-7f31-4f6d-8c0b-53e5b3aa4a36" />
 
