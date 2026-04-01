@@ -7,7 +7,7 @@ For a tool that allows you to transfer individual savegames between files, conve
 
 ⚠️ **Patch 5 Compatibility**<br>
 The latest version of this editor is compatible with Patch 5 savegames and backwards compatible with pre-patch savegames for Tomb Raider I-III.
-Ammo editing does not currently work for Challenge Mode savegames for Tomb Raider I and III. A fix is in progress.
+Ammo editing does not currently work for Challenge Mode savegames for Tomb Raider I. A fix is in progress.
 
 <img width="723" height="640" alt="TRR-SaveMaster-UI" src="https://github.com/user-attachments/assets/10325c35-7f31-4f6d-8c0b-53e5b3aa4a36" />
 
