@@ -36,12 +36,12 @@ namespace TRR_SaveMaster
         private const int MAX_PICKUPS_TR5 = 239;
 
         // Utils
-        private readonly TR1Utilities TR1 = new TR1Utilities();
-        private readonly TR2Utilities TR2 = new TR2Utilities();
-        private readonly TR3Utilities TR3 = new TR3Utilities();
-        private readonly TR4Utilities TR4 = new TR4Utilities();
-        private readonly TR5Utilities TR5 = new TR5Utilities();
-        private readonly TR6Utilities TR6 = new TR6Utilities();
+        private readonly TR1Utilities tr1Utilities = new TR1Utilities();
+        private readonly TR2Utilities tr2Utilities = new TR2Utilities();
+        private readonly TR3Utilities tr3Utilities = new TR3Utilities();
+        private readonly TR4Utilities tr4Utilities = new TR4Utilities();
+        private readonly TR5Utilities tr5Utilities = new TR5Utilities();
+        private readonly TR6Utilities tr6Utilities = new TR6Utilities();
 
         // Tabs
         private const int TAB_TR1 = 0;
@@ -384,27 +384,27 @@ namespace TRR_SaveMaster
         {
             if (SELECTED_TAB == TAB_TR1)
             {
-                TR1.UpdateDisplayName(selectedSavegame, fileData);
+                tr1Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
             else if (SELECTED_TAB == TAB_TR2)
             {
-                TR2.UpdateDisplayName(selectedSavegame, fileData);
+                tr2Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
             else if (SELECTED_TAB == TAB_TR3)
             {
-                TR3.UpdateDisplayName(selectedSavegame, fileData);
+                tr3Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
             else if (SELECTED_TAB == TAB_TR4)
             {
-                TR4.UpdateDisplayName(selectedSavegame, fileData);
+                tr4Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
             else if (SELECTED_TAB == TAB_TR5)
             {
-                TR5.UpdateDisplayName(selectedSavegame, fileData);
+                tr5Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
             else if (SELECTED_TAB == TAB_TR6)
             {
-                TR6.UpdateDisplayName(selectedSavegame, fileData);
+                tr6Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
 
             grpSavegameStatistics.Text = $"{selectedSavegame}";

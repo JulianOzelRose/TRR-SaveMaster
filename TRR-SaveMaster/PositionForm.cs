@@ -20,12 +20,12 @@ namespace TRR_SaveMaster
         private int ROOM_OFFSET;
 
         // Utils
-        private readonly TR1Utilities TR1 = new TR1Utilities();
-        private readonly TR2Utilities TR2 = new TR2Utilities();
-        private readonly TR3Utilities TR3 = new TR3Utilities();
-        private readonly TR4Utilities TR4 = new TR4Utilities();
-        private readonly TR5Utilities TR5 = new TR5Utilities();
-        private readonly TR6Utilities TR6 = new TR6Utilities();
+        private readonly TR1Utilities tr1Utilities = new TR1Utilities();
+        private readonly TR2Utilities tr2Utilities = new TR2Utilities();
+        private readonly TR3Utilities tr3Utilities = new TR3Utilities();
+        private readonly TR4Utilities tr4Utilities = new TR4Utilities();
+        private readonly TR5Utilities tr5Utilities = new TR5Utilities();
+        private readonly TR6Utilities tr6Utilities = new TR6Utilities();
 
         // Tabs
         private const int TAB_TR1 = 0;
@@ -117,33 +117,33 @@ namespace TRR_SaveMaster
         {
             if (IsTR1Savegame())
             {
-                TR1.SetSavegamePath(savegamePath);
-                TR1.SetSavegameOffset(savegameOffset);
+                tr1Utilities.SetSavegamePath(savegamePath);
+                tr1Utilities.SetSavegameOffset(savegameOffset);
             }
             else if (IsTR2Savegame())
             {
-                TR2.SetSavegamePath(savegamePath);
-                TR2.SetSavegameOffset(savegameOffset);
+                tr2Utilities.SetSavegamePath(savegamePath);
+                tr2Utilities.SetSavegameOffset(savegameOffset);
             }
             else if (IsTR3Savegame())
             {
-                TR3.SetSavegamePath(savegamePath);
-                TR3.SetSavegameOffset(savegameOffset);
+                tr3Utilities.SetSavegamePath(savegamePath);
+                tr3Utilities.SetSavegameOffset(savegameOffset);
             }
             else if (IsTR4Savegame())
             {
-                TR4.SetSavegamePath(savegamePath);
-                TR4.SetSavegameOffset(savegameOffset);
+                tr4Utilities.SetSavegamePath(savegamePath);
+                tr4Utilities.SetSavegameOffset(savegameOffset);
             }
             else if (IsTR5Savegame())
             {
-                TR5.SetSavegamePath(savegamePath);
-                TR5.SetSavegameOffset(savegameOffset);
+                tr5Utilities.SetSavegamePath(savegamePath);
+                tr5Utilities.SetSavegameOffset(savegameOffset);
             }
             else if (IsTR6Savegame())
             {
-                TR6.SetSavegamePath(savegamePath);
-                TR6.SetSavegameOffset(savegameOffset);
+                tr6Utilities.SetSavegamePath(savegamePath);
+                tr6Utilities.SetSavegameOffset(savegameOffset);
             }
         }
 
@@ -180,28 +180,28 @@ namespace TRR_SaveMaster
         {
             if (IsTR1Savegame())
             {
-                TR1.DetermineOffsets(fileData);
-                return TR1.GetHealthOffset(fileData);
+                tr1Utilities.DetermineOffsets(fileData);
+                return tr1Utilities.GetHealthOffset(fileData);
             }
             else if (IsTR2Savegame())
             {
-                TR2.DetermineOffsets(fileData);
-                return TR2.GetHealthOffset();
+                tr2Utilities.DetermineOffsets(fileData);
+                return tr2Utilities.GetHealthOffset(fileData);
             }
             else if (IsTR3Savegame())
             {
-                TR3.DetermineOffsets(fileData);
-                return TR3.GetHealthOffset();
+                tr3Utilities.DetermineOffsets(fileData);
+                return tr3Utilities.GetHealthOffset(fileData);
             }
             else if (IsTR4Savegame())
             {
-                TR4.DetermineOffsets(fileData);
-                return TR4.GetHealthOffset();
+                tr4Utilities.DetermineOffsets(fileData);
+                return tr4Utilities.GetHealthOffset();
             }
             else if (IsTR5Savegame())
             {
-                TR5.DetermineOffsets(fileData);
-                return TR5.GetHealthOffset();
+                tr5Utilities.DetermineOffsets(fileData);
+                return tr5Utilities.GetHealthOffset();
             }
 
             return -1;
@@ -211,15 +211,15 @@ namespace TRR_SaveMaster
         {
             if (IsTR2Savegame())
             {
-                return TR2.IsLaraInVehicle(healthOffset, fileData);
+                return tr2Utilities.IsLaraInVehicle(healthOffset, fileData);
             }
             else if (IsTR3Savegame())
             {
-                return TR3.IsLaraInVehicle(healthOffset, fileData);
+                return tr3Utilities.IsLaraInVehicle(healthOffset, fileData);
             }
             else if (IsTR4Savegame())
             {
-                return TR4.IsLaraInVehicle(healthOffset, fileData);
+                return tr4Utilities.IsLaraInVehicle(healthOffset, fileData);
             }
 
             return false;
@@ -229,23 +229,23 @@ namespace TRR_SaveMaster
         {
             if (IsTR1Savegame())
             {
-                return TR1.IsLaraFreefalling(healthOffset, fileData);
+                return tr1Utilities.IsLaraFreefalling(healthOffset, fileData);
             }
             else if (IsTR2Savegame())
             {
-                return TR2.IsLaraFreefalling(healthOffset, fileData);
+                return tr2Utilities.IsLaraFreefalling(healthOffset, fileData);
             }
             else if (IsTR3Savegame())
             {
-                return TR3.IsLaraFreefalling(healthOffset, fileData);
+                return tr3Utilities.IsLaraFreefalling(healthOffset, fileData);
             }
             else if (IsTR4Savegame())
             {
-                return TR4.IsLaraFreefalling(healthOffset, fileData);
+                return tr4Utilities.IsLaraFreefalling(healthOffset, fileData);
             }
             else if (IsTR5Savegame())
             {
-                return TR5.IsLaraFreefalling(healthOffset, fileData);
+                return tr5Utilities.IsLaraFreefalling(healthOffset, fileData);
             }
 
             return false;
@@ -495,27 +495,27 @@ namespace TRR_SaveMaster
         {
             if (IsTR1Savegame())
             {
-                TR1.UpdateDisplayName(selectedSavegame, fileData);
+                tr1Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
             else if (IsTR2Savegame())
             {
-                TR2.UpdateDisplayName(selectedSavegame, fileData);
+                tr2Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
             else if (IsTR3Savegame())
             {
-                TR3.UpdateDisplayName(selectedSavegame, fileData);
+                tr3Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
             else if (IsTR4Savegame())
             {
-                TR4.UpdateDisplayName(selectedSavegame, fileData);
+                tr4Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
             else if (IsTR5Savegame())
             {
-                TR5.UpdateDisplayName(selectedSavegame, fileData);
+                tr5Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
             else if (IsTR6Savegame())
             {
-                TR6.UpdateDisplayName(selectedSavegame, fileData);
+                tr6Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
 
             grpSavegameCoordinates.Text = $"{selectedSavegame}";
@@ -659,11 +659,11 @@ namespace TRR_SaveMaster
                 {
                     if (decompressedBuffer == null)
                     {
-                        TR6.DetermineOffsets(fileData);
-                        decompressedBuffer = TR6.GetDecompressedBuffer();
+                        tr6Utilities.DetermineOffsets(fileData);
+                        decompressedBuffer = tr6Utilities.GetDecompressedBuffer();
                     }
 
-                    int playerBaseOffset = TR6.GetPlayerBaseOffset();
+                    int playerBaseOffset = tr6Utilities.GetPlayerBaseOffset();
                     DeterminePositionOffsetsTR6(playerBaseOffset);
                 }
                 else
@@ -782,7 +782,7 @@ namespace TRR_SaveMaster
 
                 if (IsTR6Savegame())
                 {
-                    int playerBaseOffset = TR6.GetPlayerBaseOffset();
+                    int playerBaseOffset = tr6Utilities.GetPlayerBaseOffset();
                     DeterminePositionOffsetsTR6(playerBaseOffset);
                 }
                 else
@@ -883,7 +883,7 @@ namespace TRR_SaveMaster
                         writer.Write((float)nudOrientation.Value);
                     }
 
-                    byte[] compressedBuffer = TR6.Pack(decompressedBuffer);
+                    byte[] compressedBuffer = tr6Utilities.Pack(decompressedBuffer);
                     Int32 compressedBufferSize = compressedBuffer.Length;
 
                     // Write the compressed data to the savegame file

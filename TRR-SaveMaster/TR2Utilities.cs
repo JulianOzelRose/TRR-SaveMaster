@@ -182,11 +182,7 @@ namespace TRR_SaveMaster
         {
             if (savegameData == null)
             {
-                using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Read, FileShare.Read))
-                {
-                    savegameData = new byte[fs.Length];
-                    fs.Read(savegameData, 0, savegameData.Length);
-                }
+                savegameData = File.ReadAllBytes(savegamePath);
             }
 
             bool isPatch5 = IsPatch5Savegame(savegameData);
