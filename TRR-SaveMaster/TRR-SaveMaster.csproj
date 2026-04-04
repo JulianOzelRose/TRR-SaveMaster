@@ -97,6 +97,8 @@
       <DependentUpon>StatisticsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ThemeUtilities.cs" />
+    <Compile Include="TR1EntityCache.cs" />
+    <Compile Include="TR1Models.cs" />
     <Compile Include="TR1Utilities.cs" />
     <Compile Include="TR2EntityCache.cs" />
     <Compile Include="TR2Models.cs" />
