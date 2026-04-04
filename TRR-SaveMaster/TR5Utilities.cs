@@ -86,14 +86,11 @@ namespace TRR_SaveMaster
             Buffer.BlockCopy(bytes, 0, buffer, offset, 2);
         }
 
-        public int GetHealthOffset()
+        public int GetHealthOffset(byte[] savegameData = null)
         {
-            byte[] savegameData;
-
-            using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            if (savegameData == null)
             {
-                savegameData = new byte[fs.Length];
-                fs.Read(savegameData, 0, savegameData.Length);
+                savegameData = File.ReadAllBytes(savegamePath);
             }
 
             for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset++)

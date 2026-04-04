@@ -196,12 +196,12 @@ namespace TRR_SaveMaster
             else if (IsTR4Savegame())
             {
                 tr4Utilities.DetermineOffsets(fileData);
-                return tr4Utilities.GetHealthOffset();
+                return tr4Utilities.GetHealthOffset(fileData);
             }
             else if (IsTR5Savegame())
             {
                 tr5Utilities.DetermineOffsets(fileData);
-                return tr5Utilities.GetHealthOffset();
+                return tr5Utilities.GetHealthOffset(fileData);
             }
 
             return -1;
@@ -672,8 +672,8 @@ namespace TRR_SaveMaster
 
                     if (healthOffset == -1)
                     {
-                        string errorMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
-                        MessageBox.Show(errorMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        string warningMessage = $"Unable to locate position data. Try saving the game while Lara is standing.";
+                        MessageBox.Show(warningMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                         DisableButtons();
                         this.Close();
@@ -791,8 +791,8 @@ namespace TRR_SaveMaster
 
                     if (healthOffset == -1)
                     {
-                        string errorMessage = $"Unable to find coordinates. Try saving the game while Lara is standing.";
-                        MessageBox.Show(errorMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        string warningMessage = $"Unable to locate position data. Try saving the game while Lara is standing.";
+                        MessageBox.Show(warningMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         slblStatus.Text = $"Error writing to savegame position data";
 
                         DisableButtons();
