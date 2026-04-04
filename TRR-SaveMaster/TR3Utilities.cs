@@ -197,9 +197,9 @@ namespace TRR_SaveMaster
                 savegameData = File.ReadAllBytes(savegamePath);
             }
 
-            bool isPatch5 = IsPatch5Savegame(savegameData);
+            bool isPrepatch = IsPrepatchSavegame(savegameData);
 
-            if (isPatch5)
+            if (!isPrepatch)
             {
                 bool isChallengeMode = IsChallengeMode(savegameData);
                 MAX_HEALTH_VALUE = isChallengeMode ? GetChallengeModeMaxHealth(savegameData) : MAX_HEALTH_VALUE_DEFAULT;
@@ -462,7 +462,9 @@ namespace TRR_SaveMaster
                 sgBufferCursor += 0x0C;
             }
 
-            sgBufferCursor += 0x11C;
+            sgBufferCursor += 4;
+
+            sgBufferCursor += 0x118;
 
             int gLevelStateEntryCount = TR3EntityCache.LevelStateEntryCounts[levelIndex];
             sgBufferCursor += gLevelStateEntryCount * 2;
@@ -480,7 +482,6 @@ namespace TRR_SaveMaster
             {
                 int objectId = levelObjectIds[itemIndex];
 
-                // Base cursor increment
                 if (isNativePatch5)
                 {
                     sgBufferCursor += 4;
@@ -575,27 +576,19 @@ namespace TRR_SaveMaster
                 }
             }
 
-            // Fixed post-loop blob
-            sgBufferCursor += 0x1D0;
-
-            deagleAmmoOffset2 = sgBufferCursor - 0x64;
-            uziAmmoOffset2 = sgBufferCursor - 0x5C;
-            shotgunAmmoOffset2 = sgBufferCursor - 0x54;
-            harpoonGunAmmoOffset2 = sgBufferCursor - 0x4C;
-            rocketLauncherAmmoOffset2 = sgBufferCursor - 0x44;
-            grenadeLauncherAmmoOffset2 = sgBufferCursor - 0x3C;
-            mp5AmmoOffset2 = sgBufferCursor - 0x34;
+            deagleAmmoOffset2 = sgBufferCursor + 0x16C;
+            uziAmmoOffset2 = sgBufferCursor + 0x174;
+            shotgunAmmoOffset2 = sgBufferCursor + 0x17C;
+            harpoonGunAmmoOffset2 = sgBufferCursor + 0x184;
+            rocketLauncherAmmoOffset2 = sgBufferCursor + 0x18C;
+            grenadeLauncherAmmoOffset2 = sgBufferCursor + 0x194;
+            mp5AmmoOffset2 = sgBufferCursor + 0x19C;
         }
 
         private GameMode GetGameMode(byte[] fileData)
         {
             byte gameMode = fileData[savegameOffset + GAME_MODE_OFFSET];
             return gameMode == 0 ? GameMode.Normal : GameMode.Plus;
-        }
-
-        private bool IsPatch5Savegame(byte[] fileData)
-        {
-            return fileData[SAVEGAME_VERSION_OFFSET] >= PATCH5_SIGNATURE;
         }
 
         private bool IsPrepatchSavegame(byte[] fileData)
@@ -770,9 +763,9 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + SHOTGUN_AMMO_OFFSET, ammo);
 
-            bool isPatch5 = IsPatch5Savegame(fileData);
+            bool isPrepatch = IsPrepatchSavegame(fileData);
 
-            if (isPatch5)
+            if (!isPrepatch)
             {
                 if (shotgunAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || shotgunAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
                 {
@@ -805,9 +798,9 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + DEAGLE_AMMO_OFFSET, ammo);
 
-            bool isPatch5 = IsPatch5Savegame(fileData);
+            bool isPrepatch = IsPrepatchSavegame(fileData);
 
-            if (isPatch5)
+            if (!isPrepatch)
             {
                 if (deagleAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || deagleAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
                 {
@@ -840,9 +833,9 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + UZI_AMMO_OFFSET, ammo);
 
-            bool isPatch5 = IsPatch5Savegame(fileData);
+            bool isPrepatch = IsPrepatchSavegame(fileData);
 
-            if (isPatch5)
+            if (!isPrepatch)
             {
                 if (uziAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || uziAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
                 {
@@ -875,9 +868,9 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + GRENADE_LAUNCHER_AMMO_OFFSET, ammo);
 
-            bool isPatch5 = IsPatch5Savegame(fileData);
+            bool isPrepatch = IsPrepatchSavegame(fileData);
 
-            if (isPatch5)
+            if (!isPrepatch)
             {
                 if (grenadeLauncherAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || grenadeLauncherAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
                 {
@@ -910,9 +903,9 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + MP5_AMMO_OFFSET, ammo);
 
-            bool isPatch5 = IsPatch5Savegame(fileData);
+            bool isPrepatch = IsPrepatchSavegame(fileData);
 
-            if (isPatch5)
+            if (!isPrepatch)
             {
                 if (mp5AmmoOffset2 < AMMO_WRITE_LOWER_BOUND || mp5AmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
                 {
@@ -945,9 +938,9 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + ROCKET_LAUNCHER_AMMO_OFFSET, ammo);
 
-            bool isPatch5 = IsPatch5Savegame(fileData);
+            bool isPrepatch = IsPrepatchSavegame(fileData);
 
-            if (isPatch5)
+            if (!isPrepatch)
             {
                 if (rocketLauncherAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || rocketLauncherAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
                 {
@@ -980,9 +973,9 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + HARPOON_GUN_AMMO_OFFSET, ammo);
 
-            bool isPatch5 = IsPatch5Savegame(fileData);
+            bool isPrepatch = IsPrepatchSavegame(fileData);
 
-            if (isPatch5)
+            if (!isPrepatch)
             {
                 if (harpoonGunAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || harpoonGunAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
                 {
@@ -1011,9 +1004,10 @@ namespace TRR_SaveMaster
             DetermineOffsets(fileData);
             DetermineDynamicOffsets(fileData);
 
+            bool isPrepatch = IsPrepatchSavegame(fileData);
             bool isChallengeMode = IsChallengeMode(fileData);
 
-            MAX_HEALTH_VALUE = isChallengeMode ? GetChallengeModeMaxHealth(fileData) : MAX_HEALTH_VALUE_DEFAULT;
+            MAX_HEALTH_VALUE = (isChallengeMode && !isPrepatch) ? GetChallengeModeMaxHealth(fileData) : MAX_HEALTH_VALUE_DEFAULT;
             trbHealth.Maximum = MAX_HEALTH_VALUE;
 
             nudSaveNumber.Value = GetSaveNumber(fileData);
@@ -1118,9 +1112,9 @@ namespace TRR_SaveMaster
             WriteHarpoonGunPresent(fileData, chkHarpoonGun.Checked);
 
             byte levelIndex = GetLevelIndex(fileData);
-            bool isPatch5 = IsPatch5Savegame(fileData);
+            bool isPrepatch = IsPrepatchSavegame(fileData);
 
-            if (isPatch5)
+            if (!isPrepatch)
             {
                 DetermineDynamicOffsets(fileData);
 
@@ -1305,10 +1299,10 @@ namespace TRR_SaveMaster
 
                 if (levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                 {
-                    bool isPatch5 = IsPatch5Savegame(fileData);
+                    bool isPrepatch = IsPrepatchSavegame(fileData);
                     string levelName = levelNames[levelIndex];
                     GameMode gameMode = fileData[savegame.Offset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
-                    bool isChallengeMode = fileData[savegame.Offset + CHALLENGE_MODE_OFFSET] == 1 && isPatch5;
+                    bool isChallengeMode = fileData[savegame.Offset + CHALLENGE_MODE_OFFSET] == 1 && !isPrepatch;
 
                     savegame.UpdateDisplayName(levelName, saveNumber, gameMode, isChallengeMode);
                 }
@@ -1323,7 +1317,7 @@ namespace TRR_SaveMaster
             }
 
             byte[] fileData = File.ReadAllBytes(savegamePath);
-            bool isPatch5 = IsPatch5Savegame(fileData);
+            bool isPrepatch = IsPrepatchSavegame(fileData);
 
             for (int i = cmbSavegames.Items.Count; i < MAX_SAVEGAMES; i++)
             {
@@ -1355,7 +1349,7 @@ namespace TRR_SaveMaster
                         {
                             string levelName = levelNames[levelIndex];
                             GameMode gameMode = fileData[currentSavegameOffset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
-                            bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1 && isPatch5;
+                            bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1 && !isPrepatch;
 
                             Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode, false, isChallengeMode);
                             cmbSavegames.Items.Add(savegame);
@@ -1370,19 +1364,19 @@ namespace TRR_SaveMaster
             byte[] fileData = File.ReadAllBytes(savegamePath);
             int numSaves = 0;
 
-            bool isPatch5 = IsPatch5Savegame(fileData);
+            bool isPrepatch = IsPrepatchSavegame(fileData);
 
-            if (isPatch5)
-            {
-                BASE_SAVEGAME_OFFSET_TR3 = BASE_SAVEGAME_OFFSET_TR3_PATCH5;
-                MAX_SAVEGAME_OFFSET_TR3 = MAX_SAVEGAME_OFFSET_TR3_PATCH5;
-                SAVEGAME_SIZE = SAVEGAME_SIZE_PATCH5;
-            }
-            else
+            if (isPrepatch)
             {
                 BASE_SAVEGAME_OFFSET_TR3 = BASE_SAVEGAME_OFFSET_TR3_PREPATCH;
                 MAX_SAVEGAME_OFFSET_TR3 = MAX_SAVEGAME_OFFSET_TR3_PREPATCH;
                 SAVEGAME_SIZE = SAVEGAME_SIZE_PREPATCH;
+            }
+            else
+            {
+                BASE_SAVEGAME_OFFSET_TR3 = BASE_SAVEGAME_OFFSET_TR3_PATCH5;
+                MAX_SAVEGAME_OFFSET_TR3 = MAX_SAVEGAME_OFFSET_TR3_PATCH5;
+                SAVEGAME_SIZE = SAVEGAME_SIZE_PATCH5;
             }
 
             for (int i = 0; i < MAX_SAVEGAMES; i++)
@@ -1399,7 +1393,7 @@ namespace TRR_SaveMaster
                     string levelName = levelNames[levelIndex];
                     int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR3) / SAVEGAME_SIZE;
                     GameMode gameMode = fileData[currentSavegameOffset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
-                    bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1 && isPatch5;
+                    bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1 && !isPrepatch;
 
                     Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode, false, isChallengeMode);
                     cmbSavegames.Items.Add(savegame);
