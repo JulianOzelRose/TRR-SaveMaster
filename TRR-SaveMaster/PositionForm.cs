@@ -1627,7 +1627,7 @@ namespace TRR_SaveMaster
 
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR3 = new Dictionary<byte, Int32[]>
         {
-            { 1,  new Int32[] { 22951, 23808, 71168, 0, 132     } },    // Jungle
+            { 1,  new Int32[] { 22601, 23808, 70671, 270, 132   } },    // Jungle
             { 2,  new Int32[] { 10895, 2304, 70849, 0, 214      } },    // Temple Ruins
             { 3,  new Int32[] { 43585, 5888, 68146, 180, 167    } },    // The River Ganges
             { 4,  new Int32[] { 41083, -4864, 52861, 90, 24     } },    // Caves of Kaliya
