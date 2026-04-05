@@ -14,9 +14,12 @@ namespace TRR_SaveMaster
         private const int SAVE_NUMBER_OFFSET = 0x00C;
         private const int LEVEL_INDEX_OFFSET = 0x62C;
         private const int SAVEGAME_FORMAT_VERSION_OFFSET = 0x6E4;
+        private const int CHALLENGE_MODE_RNG_SEED_OFFSET = 0x6E8;
         private const int CHALLENGE_MODE_OFFSET = 0x6EC;
         private const int CHALLENGE_MODE_HEALTH_HANDICAP_OFFSET = 0x6F6;
         private const int CHALLENGE_MODE_ENEMY_COUNT_OFFSET = 0x6FA;
+        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET = 0x6FD;
+        private const byte CHALLENGE_MODE_ENEMY_NUMBERS_REINFORCEMENT = 4;
         private const int HEADER_SIZE = 0x6F0;
         private const int MAX_SAVEGAMES = 32;
 
@@ -67,6 +70,7 @@ namespace TRR_SaveMaster
         private int AMMO_WRITE_LOWER_BOUND;
         private int AMMO_WRITE_UPPER_BOUND;
         private int sgBufferCursor = 0;
+        private int rngState;
 
         private readonly Dictionary<byte, string> levelNames = new Dictionary<byte, string>()
         {
@@ -299,43 +303,98 @@ namespace TRR_SaveMaster
             }
         }
 
-        private int GetEffectiveLevelItemCount(byte[] fileData, int levelIndex, bool isChallengeMode)
+        private void SeedRNG(int seed)
         {
-            if (!TR1EntityCache.BaseLevelItemCounts.TryGetValue(levelIndex, out int itemCount))
-            {
-                throw new InvalidOperationException($"Missing base item count for level {levelIndex}.");
-            }
+            rngState = seed;
+        }
 
-            if (!isChallengeMode)
-            {
-                return itemCount;
-            }
+        private int NextRNG()
+        {
+            rngState = rngState * 0x343FD + 0x269EC3;
+            return (rngState >> 0x10) & 0x7FFF;
+        }
 
-            byte enemyMode = GetChallengeModeEnemyNumbers(fileData);
+        private List<int> ApplyChallengeModeMutations(List<int> baseList, byte levelIndex, byte enemyNumbers, byte enemyType, Int32 seed)
+        {
+            var result = new List<int>(baseList);
+
+            if (enemyNumbers < CHALLENGE_MODE_ENEMY_NUMBERS_REINFORCEMENT)
+            {
+                return result;
+            }
 
             if (!TR1EntityCache.ChallengeModeItemCountModifiersByLevel.TryGetValue(levelIndex, out var levelModifiers))
             {
-                throw new InvalidOperationException($"Missing Challenge Mode modifier table for level {levelIndex}.");
+                return result;
             }
 
-            if (!levelModifiers.TryGetValue(enemyMode, out int modifier))
+            if (!levelModifiers.TryGetValue(enemyNumbers, out int addCount))
             {
-                throw new InvalidOperationException($"Missing Challenge Mode item-count modifier for level {levelIndex}, Enemy Count {enemyMode}.");
+                return result;
             }
 
-            return itemCount + modifier;
+            if (addCount <= 0)
+            {
+                return result;
+            }
+
+            SeedRNG(seed);
+
+            if (!TR1EntityCache.TR1ObjectsByLevel.TryGetValue(levelIndex, out var levelObjects))
+            {
+                return result;
+            }
+
+            var candidates = new List<int>();
+
+            for (int i = 0; i < result.Count; i++)
+            {
+                int id = result[i];
+
+                if (levelObjects.TryGetValue(id, out var obj))
+                {
+                    if ((obj.Flags00 & 0x02) != 0) // enemy-like
+                    {
+                        candidates.Add(id);
+                    }
+                }
+            }
+
+            if (candidates.Count == 0)
+            {
+                candidates = result;
+            }
+
+            for (int i = 0; i < addCount; i++)
+            {
+                int randomIndex = NextRNG() % candidates.Count;
+                int objectId = candidates[randomIndex];
+
+                result.Add(objectId);
+            }
+
+            return result;
         }
 
         private void DetermineDynamicOffsets(byte[] fileData)
         {
             bool isChallengeMode = IsChallengeMode(fileData);
             bool isNativePatch5 = IsNativePatch5Format(fileData);
-            int levelIndex = GetLevelIndex(fileData);
+            byte levelIndex = GetLevelIndex(fileData);
+
+            var baseList = TR1EntityCache.LevelObjectIdsByLevel[levelIndex];
+            var levelObjectIds = new List<int>(baseList);
 
             sgBufferCursor = 0x6F0;
 
             if (isChallengeMode && isNativePatch5)
             {
+                byte enemyNumbers = GetChallengeModeEnemyNumbers(fileData);
+                byte enemyType = GetChallengeModeEnemyType(fileData);
+                Int32 challengeModeRNGSeed = GetChallengeModeRNGSeed(fileData);
+
+                levelObjectIds = ApplyChallengeModeMutations(levelObjectIds, levelIndex, enemyNumbers, enemyType, challengeModeRNGSeed);
+
                 sgBufferCursor += 0x0C;
             }
 
@@ -346,16 +405,12 @@ namespace TRR_SaveMaster
             int gLevelStateEntryCount = TR1EntityCache.LevelStateEntryCounts[levelIndex];
             sgBufferCursor += gLevelStateEntryCount * 2;
 
-            int gLevelItemCount = GetEffectiveLevelItemCount(fileData, levelIndex, isChallengeMode);
-
             if (isNativePatch5)
             {
                 sgBufferCursor += 4;
             }
 
-            List<int> levelObjectIds = TR1EntityCache.LevelObjectIdsByLevel[levelIndex];
-
-            for (int itemIndex = 0; itemIndex < gLevelItemCount; itemIndex++)
+            for (int itemIndex = 0; itemIndex < levelObjectIds.Count; itemIndex++)
             {
                 int objectId = levelObjectIds[itemIndex];
 
@@ -451,6 +506,16 @@ namespace TRR_SaveMaster
         private byte GetChallengeModeEnemyNumbers(byte[] fileData)
         {
             return fileData[savegameOffset + CHALLENGE_MODE_ENEMY_COUNT_OFFSET];
+        }
+
+        private byte GetChallengeModeEnemyType(byte[] fileData)
+        {
+            return fileData[savegameOffset + CHALLENGE_MODE_ENEMY_TYPE_OFFSET];
+        }
+
+        private Int32 GetChallengeModeRNGSeed(byte[] fileData)
+        {
+            return BitConverter.ToInt32(fileData, savegameOffset + CHALLENGE_MODE_RNG_SEED_OFFSET);
         }
 
         private Int32 GetSaveNumber(byte[] fileData)
