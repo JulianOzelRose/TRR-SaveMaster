@@ -445,9 +445,9 @@ namespace TRR_SaveMaster
             return savegameVersion == TRX2_SAVEGAME_SIGNATURE;
         }
 
-        private bool IsPatch5Savegame(byte[] fileData)
+        private bool IsPrepatchSavegameTRX(byte[] fileData)
         {
-            return fileData[SAVEGAME_VERSION_OFFSET] == TRX_PATCH5_SIGNATURE;
+            return fileData[SAVEGAME_VERSION_OFFSET] == TRX_PREPATCH_SIGNATURE;
         }
 
         private void PromptBrowseSavegamePathTRX()
@@ -607,9 +607,9 @@ namespace TRR_SaveMaster
             if (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX) && platform != Platform.PC)
             {
                 byte[] fileData = File.ReadAllBytes(savegamePathTRX);
-                bool isPatch5 = IsPatch5Savegame(fileData);
+                bool isPrepatch = IsPrepatchSavegameTRX(fileData);
 
-                if (!isPatch5)
+                if (isPrepatch)
                 {
                     return;
                 }
@@ -1853,10 +1853,10 @@ namespace TRR_SaveMaster
                     tr1Utilities.UpdateDisplayName(selectedSavegame, fileData);
                     UpdateSavegameDisplayNameTR1(cmbSavegamesTR1, selectedSavegame);
 
-                    bool isPatch5 = IsPatch5Savegame(fileData);
+                    bool isPrepatch = IsPrepatchSavegameTRX(fileData);
                     bool isChallengeMode = false;
 
-                    if (isPatch5)
+                    if (!isPrepatch)
                     {
                         isChallengeMode = tr1Utilities.IsChallengeMode(fileData);
                         MAX_HEALTH_VALUE_TR1 = isChallengeMode ? tr1Utilities.GetChallengeModeMaxHealth(fileData) : MAX_HEALTH_VALUE_DEFAULT;
@@ -1908,10 +1908,10 @@ namespace TRR_SaveMaster
                     tr2Utilities.UpdateDisplayName(selectedSavegame, fileData);
                     UpdateSavegameDisplayNameTR2(cmbSavegamesTR2, selectedSavegame);
 
-                    bool isPatch5 = IsPatch5Savegame(fileData);
+                    bool isPrepatch = IsPrepatchSavegameTRX(fileData);
                     bool isChallengeMode = false;
 
-                    if (isPatch5)
+                    if (!isPrepatch)
                     {
                         isChallengeMode = tr2Utilities.IsChallengeMode(fileData);
                         MAX_HEALTH_VALUE_TR2 = isChallengeMode ? tr2Utilities.GetChallengeModeMaxHealth(fileData) : MAX_HEALTH_VALUE_DEFAULT;
@@ -1969,10 +1969,10 @@ namespace TRR_SaveMaster
                     tr3Utilities.UpdateDisplayName(selectedSavegame, fileData);
                     UpdateSavegameDisplayNameTR3(cmbSavegamesTR3, selectedSavegame);
 
-                    bool isPatch5 = IsPatch5Savegame(fileData);
+                    bool isPrepatch = IsPrepatchSavegameTRX(fileData);
                     bool isChallengeMode = false;
 
-                    if (isPatch5)
+                    if (!isPrepatch)
                     {
                         isChallengeMode = tr3Utilities.IsChallengeMode(fileData);
                         MAX_HEALTH_VALUE_TR3 = isChallengeMode ? tr3Utilities.GetChallengeModeMaxHealth(fileData) : MAX_HEALTH_VALUE_DEFAULT;
@@ -2884,8 +2884,8 @@ namespace TRR_SaveMaster
             {
                 byte[] fileData = File.ReadAllBytes(savegamePathTRX);
 
-                bool isPatch5 = IsPatch5Savegame(fileData);
-                SAVEGAME_SIZE = isPatch5 ? SAVEGAME_SIZE_TRX_PATCH5 : SAVEGAME_SIZE_TRX_PREPATCH;
+                bool isPrepatch = IsPrepatchSavegameTRX(fileData);
+                SAVEGAME_SIZE = isPrepatch ? SAVEGAME_SIZE_TRX_PREPATCH : SAVEGAME_SIZE_TRX_PATCH5;
             }
             else
             {
