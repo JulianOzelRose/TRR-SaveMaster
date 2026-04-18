@@ -61,7 +61,7 @@ namespace TRR_SaveMaster
             switch (_buttons)
             {
                 case MessageBoxButtons.OK:
-                    btnPrimary.Text = "OK";
+                    btnPrimary.Text = "&OK";
                     btnPrimary.DialogResult = DialogResult.OK;
                     btnPrimary.Visible = true;
 
@@ -72,10 +72,10 @@ namespace TRR_SaveMaster
                     break;
 
                 case MessageBoxButtons.YesNo:
-                    btnPrimary.Text = "Yes";
+                    btnPrimary.Text = "&Yes";
                     btnPrimary.DialogResult = DialogResult.Yes;
 
-                    btnSecondary.Text = "No";
+                    btnSecondary.Text = "&No";
                     btnSecondary.DialogResult = DialogResult.No;
 
                     btnPrimary.Visible = true;
@@ -86,10 +86,10 @@ namespace TRR_SaveMaster
                     break;
 
                 case MessageBoxButtons.OKCancel:
-                    btnPrimary.Text = "OK";
+                    btnPrimary.Text = "&OK";
                     btnPrimary.DialogResult = DialogResult.OK;
 
-                    btnSecondary.Text = "Cancel";
+                    btnSecondary.Text = "&Cancel";
                     btnSecondary.DialogResult = DialogResult.Cancel;
 
                     btnPrimary.Visible = true;
