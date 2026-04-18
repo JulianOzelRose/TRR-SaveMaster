@@ -24,6 +24,7 @@ namespace TRR_SaveMaster
         private bool isLoading = false;
         private bool isInventoryLoading = false;
         private bool userIndexChanged = true;
+        private bool isClosingConfirmed = false;
         private bool hasShownTRX2PathPrompt = false;
         private bool hasShownTRXSavegameUnsupportedMessage = false;
         private bool hasShownTRX2SavegameUnsupportedMessage = false;
@@ -110,8 +111,43 @@ namespace TRR_SaveMaster
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ConfirmChanges();
+            if (isClosingConfirmed)
+            {
+                return;
+            }
+
+            if (!HasPendingChanges())
+            {
+                UpdateConfigFile();
+                isClosingConfirmed = true;
+                return;
+            }
+
+            e.Cancel = true;
+
+            var result = PromptApplyChanges();
+            HandleApplyChanges(result);
+
             UpdateConfigFile();
+
+            isClosingConfirmed = true;
+            this.Close();
+        }
+
+        public static class ThemedMessageBox
+        {
+            public static DialogResult Show(
+                IWin32Window owner,
+                string message,
+                string title = "",
+                MessageBoxButtons buttons = MessageBoxButtons.OK,
+                MessageBoxIcon icon = MessageBoxIcon.None)
+            {
+                using (var dlg = new ThemedDialog(message, title, buttons, icon))
+                {
+                    return dlg.ShowDialog(owner);
+                }
+            }
         }
 
         private void ApplyDarkMode()
@@ -452,8 +488,14 @@ namespace TRR_SaveMaster
 
         private void PromptBrowseSavegamePathTRX()
         {
-            DialogResult result = MessageBox.Show("Tomb Raider I-III savegame path has not been set. Would you like to set it now?",
-                "Savegame Path", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            System.Media.SystemSounds.Asterisk.Play();
+
+            DialogResult result = ThemedMessageBox.Show(
+                this,
+                "Tomb Raider I–III savegame path has not been set. Would you like to set it now?",
+                "Savegame Path Not Set",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -463,8 +505,14 @@ namespace TRR_SaveMaster
 
         private void PromptBrowseSavegamePathTRX2()
         {
-            DialogResult result = MessageBox.Show("Tomb Raider IV-VI savegame path has not been set. Would you like to set it now?",
-                "Savegame Path", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            System.Media.SystemSounds.Asterisk.Play();
+
+            DialogResult result = ThemedMessageBox.Show(
+                this,
+                "Tomb Raider IV–VI savegame path is not set. Would you like to set it now?",
+                "Savegame Path Not Set",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -486,7 +534,15 @@ namespace TRR_SaveMaster
                 {
                     if (!IsValidSavegameFileTRX(fileBrowserDialog.FileName))
                     {
-                        MessageBox.Show("Not a valid Tomb Raider I-III Remastered savegame file.", "Invalid Savegame File", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        System.Media.SystemSounds.Asterisk.Play();
+
+                        ThemedMessageBox.Show(
+                            this,
+                            "Not a valid Tomb Raider I–III Remastered savegame file.",
+                            "Invalid Savegame File",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+
                         return;
                     }
 
@@ -529,7 +585,15 @@ namespace TRR_SaveMaster
                 {
                     if (!IsValidSavegameFileTRX2(fileBrowserDialog.FileName))
                     {
-                        MessageBox.Show("Not a valid Tomb Raider IV-VI Remastered savegame file.", "Invalid Savegame File", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        System.Media.SystemSounds.Asterisk.Play();
+
+                        ThemedMessageBox.Show(
+                            this,
+                            "Not a valid Tomb Raider IV–VI Remastered savegame file.",
+                            "Invalid Savegame File",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+
                         return;
                     }
 
@@ -629,8 +693,15 @@ namespace TRR_SaveMaster
                     gameString = "Tomb Raider III";
                 }
 
+                System.Media.SystemSounds.Asterisk.Play();
+
                 string warningMessage = $"{platform.ToFriendlyString()} is not currently supported for {gameString} Patch 5.";
-                MessageBox.Show(warningMessage, "Platform Not Supported", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ThemedMessageBox.Show(
+                    this,
+                    warningMessage,
+                    "Platform Not Supported",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
 
                 tsmiPC.Checked = true;
                 tsmiPlayStation4.Checked = false;
@@ -663,9 +734,14 @@ namespace TRR_SaveMaster
                 {
                     byte savegameVersion = GetSavegameVersion(fileData);
 
-                    MessageBox.Show($"Your Tomb Raider I-III savegame version ({savegameVersion}) is not currently supported. Game data may not display or modify correctly.",
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    ThemedMessageBox.Show(
+                        this,
+                        $"Your Tomb Raider I–III savegame version ({savegameVersion}) is not currently supported. Game data may not display or modify correctly.",
                         "Unsupported Savegame Version",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
 
                     hasShownTRXSavegameUnsupportedMessage = true;
                 }
@@ -695,9 +771,14 @@ namespace TRR_SaveMaster
                 {
                     byte savegameVersion = GetSavegameVersion(fileData);
 
-                    MessageBox.Show($"Your Tomb Raider IV-VI savegame version ({savegameVersion}) is not currently supported. Game data may not display or modify correctly.",
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    ThemedMessageBox.Show(
+                        this,
+                        $"Your Tomb Raider IV–VI savegame version ({savegameVersion}) is not currently supported. Game data may not display or modify correctly.",
                         "Unsupported Savegame Version",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
 
                     hasShownTRX2SavegameUnsupportedMessage = true;
                 }
@@ -837,40 +918,44 @@ namespace TRR_SaveMaster
 
         private void btnExitTR1_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void btnExitTR2_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void btnExitTR3_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void btnExitTR4_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void btnExitTR5_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void btnExitTR6_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void ConfirmChanges()
         {
             if (tabGame.SelectedIndex == TAB_TR1 && cmbSavegamesTR1.SelectedIndex != -1 && btnSaveTR1.Enabled)
             {
-                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
-                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = ThemedMessageBox.Show(
+                    this,
+                    "Would you like to apply changes to the savegame?",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
@@ -881,8 +966,12 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1 && btnSaveTR2.Enabled)
             {
-                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
-                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = ThemedMessageBox.Show(
+                    this,
+                    "Would you like to apply changes to the savegame?",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
@@ -893,8 +982,12 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1 && btnSaveTR3.Enabled)
             {
-                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
-                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = ThemedMessageBox.Show(
+                    this,
+                    "Would you like to apply changes to the savegame?",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
@@ -905,8 +998,12 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == TAB_TR4 && cmbSavegamesTR4.SelectedIndex != -1 && btnSaveTR4.Enabled)
             {
-                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
-                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = ThemedMessageBox.Show(
+                    this,
+                    "Would you like to apply changes to the savegame?",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
@@ -917,8 +1014,12 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == TAB_TR5 && cmbSavegamesTR5.SelectedIndex != -1 && btnSaveTR5.Enabled)
             {
-                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
-                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = ThemedMessageBox.Show(
+                    this,
+                    "Would you like to apply changes to the savegame?",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
@@ -929,9 +1030,140 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == TAB_TR6 && cmbSavegamesTR6.SelectedIndex != -1 && btnSaveTR6.Enabled)
             {
-                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
-                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = ThemedMessageBox.Show(
+                    this,
+                    "Would you like to apply changes to the savegame?",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
+                if (result == DialogResult.Yes)
+                {
+                    WriteChangesTR6(cmbSavegamesTR6.SelectedItem as Savegame);
+                }
+
+                DisableButtonsTR6();
+            }
+        }
+
+        private DialogResult PromptApplyChanges()
+        {
+            return ThemedMessageBox.Show(
+                this,
+                "Would you like to apply changes to the savegame?",
+                "Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+        }
+
+        private bool HasPendingChanges()
+        {
+            if (tabGame.SelectedIndex == TAB_TR1 &&
+                cmbSavegamesTR1.SelectedIndex != -1 &&
+                btnSaveTR1.Enabled)
+            {
+                return true;
+            }
+
+            if (tabGame.SelectedIndex == TAB_TR2 &&
+                cmbSavegamesTR2.SelectedIndex != -1 &&
+                btnSaveTR2.Enabled)
+            {
+                return true;
+            }
+
+            if (tabGame.SelectedIndex == TAB_TR3 &&
+                cmbSavegamesTR3.SelectedIndex != -1 &&
+                btnSaveTR3.Enabled)
+            {
+                return true;
+            }
+
+            if (tabGame.SelectedIndex == TAB_TR4 &&
+                cmbSavegamesTR4.SelectedIndex != -1 &&
+                btnSaveTR4.Enabled)
+            {
+                return true;
+            }
+
+            if (tabGame.SelectedIndex == TAB_TR5 &&
+                cmbSavegamesTR5.SelectedIndex != -1 &&
+                btnSaveTR5.Enabled)
+            {
+                return true;
+            }
+
+            if (tabGame.SelectedIndex == TAB_TR6 &&
+                cmbSavegamesTR6.SelectedIndex != -1 &&
+                btnSaveTR6.Enabled)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private void HandleApplyChanges(DialogResult result)
+        {
+            if (tabGame.SelectedIndex == TAB_TR1 &&
+                cmbSavegamesTR1.SelectedIndex != -1 &&
+                btnSaveTR1.Enabled)
+            {
+                if (result == DialogResult.Yes)
+                {
+                    WriteChangesTR1(cmbSavegamesTR1.SelectedItem as Savegame);
+                }
+
+                DisableButtonsTR1();
+            }
+            else if (tabGame.SelectedIndex == TAB_TR2 &&
+                cmbSavegamesTR2.SelectedIndex != -1 &&
+                btnSaveTR2.Enabled)
+            {
+                if (result == DialogResult.Yes)
+                {
+                    WriteChangesTR2(cmbSavegamesTR2.SelectedItem as Savegame);
+                }
+
+                DisableButtonsTR2();
+            }
+            else if (tabGame.SelectedIndex == TAB_TR3 &&
+                cmbSavegamesTR3.SelectedIndex != -1 &&
+                btnSaveTR3.Enabled)
+            {
+                if (result == DialogResult.Yes)
+                {
+                    WriteChangesTR3(cmbSavegamesTR3.SelectedItem as Savegame);
+                }
+
+                DisableButtonsTR3();
+            }
+            else if (tabGame.SelectedIndex == TAB_TR4 &&
+                cmbSavegamesTR4.SelectedIndex != -1 &&
+                btnSaveTR4.Enabled)
+            {
+                if (result == DialogResult.Yes)
+                {
+                    WriteChangesTR4(cmbSavegamesTR4.SelectedItem as Savegame);
+                }
+
+                DisableButtonsTR4();
+            }
+            else if (tabGame.SelectedIndex == TAB_TR5 &&
+                cmbSavegamesTR5.SelectedIndex != -1 &&
+                btnSaveTR5.Enabled)
+            {
+                if (result == DialogResult.Yes)
+                {
+                    WriteChangesTR5(cmbSavegamesTR5.SelectedItem as Savegame);
+                }
+
+                DisableButtonsTR5();
+            }
+            else if (tabGame.SelectedIndex == TAB_TR6 &&
+                cmbSavegamesTR6.SelectedIndex != -1 &&
+                btnSaveTR6.Enabled)
+            {
                 if (result == DialogResult.Yes)
                 {
                     WriteChangesTR6(cmbSavegamesTR6.SelectedItem as Savegame);
@@ -1085,8 +1317,12 @@ namespace TRR_SaveMaster
 
             if (previousSelectedSavegameTR1 != null && btnSaveTR1.Enabled)
             {
-                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
-                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = ThemedMessageBox.Show(
+                    this,
+                    "Would you like to apply changes to the savegame?",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
@@ -1107,8 +1343,12 @@ namespace TRR_SaveMaster
 
             if (previousSelectedSavegameTR2 != null && btnSaveTR2.Enabled)
             {
-                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
-                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = ThemedMessageBox.Show(
+                    this,
+                    "Would you like to apply changes to the savegame?",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
@@ -1129,8 +1369,12 @@ namespace TRR_SaveMaster
 
             if (previousSelectedSavegameTR3 != null && btnSaveTR3.Enabled)
             {
-                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
-                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = ThemedMessageBox.Show(
+                    this,
+                    "Would you like to apply changes to the savegame?",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
@@ -1151,8 +1395,12 @@ namespace TRR_SaveMaster
 
             if (previousSelectedSavegameTR4 != null && btnSaveTR4.Enabled)
             {
-                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
-                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = ThemedMessageBox.Show(
+                    this,
+                    "Would you like to apply changes to the savegame?",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
@@ -1173,8 +1421,12 @@ namespace TRR_SaveMaster
 
             if (previousSelectedSavegameTR5 != null && btnSaveTR5.Enabled)
             {
-                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
-                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = ThemedMessageBox.Show(
+                    this,
+                    "Would you like to apply changes to the savegame?",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
@@ -1195,8 +1447,12 @@ namespace TRR_SaveMaster
 
             if (previousSelectedSavegameTR6 != null && btnSaveTR6.Enabled)
             {
-                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
-                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = ThemedMessageBox.Show(
+                    this,
+                    "Would you like to apply changes to the savegame?",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
@@ -1228,7 +1484,14 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    ThemedMessageBox.Show(
+                        this,
+                        $"An error occurred: {ex.Message}",
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
                 }
             }
 
@@ -1376,8 +1639,15 @@ namespace TRR_SaveMaster
 
                     if (!tr1Utilities.IsSavegamePresent(fileData))
                     {
-                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Media.SystemSounds.Asterisk.Play();
+
+                        string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+                        ThemedMessageBox.Show(
+                            this,
+                            errorMessage,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
 
                         DisableButtonsTR1();
                         PopulateSavegamesTR1();
@@ -1403,7 +1673,15 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    ThemedMessageBox.Show(
+                        this,
+                        ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
                     slblStatus.Text = $"Error writing to savegame";
                 }
             }
@@ -1422,8 +1700,15 @@ namespace TRR_SaveMaster
 
                     if (!tr2Utilities.IsSavegamePresent(fileData))
                     {
-                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Media.SystemSounds.Asterisk.Play();
+
+                        string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+                        ThemedMessageBox.Show(
+                            this,
+                            errorMessage,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
 
                         DisableButtonsTR2();
                         PopulateSavegamesTR2();
@@ -1452,7 +1737,15 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    ThemedMessageBox.Show(
+                        this,
+                        ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
                     slblStatus.Text = $"Error writing to savegame";
                 }
             }
@@ -1471,8 +1764,15 @@ namespace TRR_SaveMaster
 
                     if (!tr3Utilities.IsSavegamePresent(fileData))
                     {
-                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Media.SystemSounds.Asterisk.Play();
+
+                        string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+                        ThemedMessageBox.Show(
+                            this,
+                            errorMessage,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
 
                         DisableButtonsTR3();
                         PopulateSavegamesTR3();
@@ -1500,7 +1800,15 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    ThemedMessageBox.Show(
+                        this,
+                        ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
                     slblStatus.Text = $"Error writing to savegame";
                 }
             }
@@ -1519,8 +1827,15 @@ namespace TRR_SaveMaster
 
                     if (!tr4Utilities.IsSavegamePresent(fileData))
                     {
-                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Media.SystemSounds.Asterisk.Play();
+
+                        string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+                        ThemedMessageBox.Show(
+                            this,
+                            errorMessage,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
 
                         DisableButtonsTR4();
                         PopulateSavegamesTR4();
@@ -1549,7 +1864,15 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    ThemedMessageBox.Show(
+                        this,
+                        ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
                     slblStatus.Text = $"Error writing to savegame";
                 }
             }
@@ -1568,8 +1891,15 @@ namespace TRR_SaveMaster
 
                     if (!tr5Utilities.IsSavegamePresent(fileData))
                     {
-                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Media.SystemSounds.Asterisk.Play();
+
+                        string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+                        ThemedMessageBox.Show(
+                            this,
+                            errorMessage,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
 
                         DisableButtonsTR5();
                         PopulateSavegamesTR5();
@@ -1597,7 +1927,15 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    ThemedMessageBox.Show(
+                        this,
+                        ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
                     slblStatus.Text = $"Error writing to savegame";
                 }
             }
@@ -1616,8 +1954,15 @@ namespace TRR_SaveMaster
 
                     if (!tr6Utilities.IsSavegamePresent(fileData))
                     {
-                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Media.SystemSounds.Asterisk.Play();
+
+                        string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+                        ThemedMessageBox.Show(
+                            this,
+                            errorMessage,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
 
                         DisableButtonsTR6();
                         PopulateSavegamesTR6();
@@ -1645,7 +1990,15 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    ThemedMessageBox.Show(
+                        this,
+                        ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
                     slblStatus.Text = $"Error writing to savegame";
                 }
             }
@@ -1822,7 +2175,14 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    ThemedMessageBox.Show(
+                        this,
+                        ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
                 }
             }
         }
@@ -1842,8 +2202,15 @@ namespace TRR_SaveMaster
 
                     if (!tr1Utilities.IsSavegamePresent(fileData))
                     {
-                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Media.SystemSounds.Asterisk.Play();
+
+                        string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+                        ThemedMessageBox.Show(
+                            this,
+                            errorMessage,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
 
                         DisableButtonsTR1();
                         PopulateSavegamesTR1();
@@ -1874,7 +2241,15 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    ThemedMessageBox.Show(
+                        this,
+                        ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
                     slblStatus.Text = $"Error retrieving savegame data";
                 }
 
@@ -1897,8 +2272,15 @@ namespace TRR_SaveMaster
 
                     if (!tr2Utilities.IsSavegamePresent(fileData))
                     {
-                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Media.SystemSounds.Asterisk.Play();
+
+                        string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+                        ThemedMessageBox.Show(
+                            this,
+                            errorMessage,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
 
                         DisableButtonsTR2();
                         PopulateSavegamesTR2();
@@ -1935,7 +2317,15 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    ThemedMessageBox.Show(
+                        this,
+                        ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
                     slblStatus.Text = $"Error retrieving savegame data";
                 }
 
@@ -1958,8 +2348,15 @@ namespace TRR_SaveMaster
 
                     if (!tr3Utilities.IsSavegamePresent(fileData))
                     {
-                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Media.SystemSounds.Asterisk.Play();
+
+                        string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+                        ThemedMessageBox.Show(
+                            this,
+                            errorMessage,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
 
                         DisableButtonsTR3();
                         PopulateSavegamesTR3();
@@ -1992,7 +2389,15 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    ThemedMessageBox.Show(
+                        this,
+                        ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
                     slblStatus.Text = $"Error retrieving savegame data";
                 }
 
@@ -2015,8 +2420,15 @@ namespace TRR_SaveMaster
 
                     if (!tr4Utilities.IsSavegamePresent(fileData))
                     {
-                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Media.SystemSounds.Asterisk.Play();
+
+                        string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+                        ThemedMessageBox.Show(
+                            this,
+                            errorMessage,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
 
                         DisableButtonsTR4();
                         PopulateSavegamesTR4();
@@ -2037,7 +2449,15 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    ThemedMessageBox.Show(
+                        this,
+                        ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
                     slblStatus.Text = $"Error retrieving savegame data";
                 }
 
@@ -2060,8 +2480,15 @@ namespace TRR_SaveMaster
 
                     if (!tr5Utilities.IsSavegamePresent(fileData))
                     {
-                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Media.SystemSounds.Asterisk.Play();
+
+                        string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+                        ThemedMessageBox.Show(
+                            this,
+                            errorMessage,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
 
                         DisableButtonsTR5();
                         PopulateSavegamesTR5();
@@ -2084,7 +2511,15 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    ThemedMessageBox.Show(
+                        this,
+                        ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
                     slblStatus.Text = $"Error retrieving savegame data";
                 }
 
@@ -2107,8 +2542,15 @@ namespace TRR_SaveMaster
 
                     if (!tr6Utilities.IsSavegamePresent(fileData))
                     {
-                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Media.SystemSounds.Asterisk.Play();
+
+                        string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+                        ThemedMessageBox.Show(
+                            this,
+                            errorMessage,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
 
                         DisableButtonsTR6();
                         PopulateSavegamesTR6();
@@ -2134,7 +2576,15 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    ThemedMessageBox.Show(
+                        this,
+                        ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
                     slblStatus.Text = $"Error retrieving savegame data";
                 }
 
@@ -2273,7 +2723,7 @@ namespace TRR_SaveMaster
 
         private void tsmiExit_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void tsmiAlwaysOnTop_Click(object sender, EventArgs e)
@@ -2396,8 +2846,16 @@ namespace TRR_SaveMaster
 
             if (!File.Exists(savegamePath))
             {
-                string errorMessage = $"Could not find savegame file.";
-                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Media.SystemSounds.Asterisk.Play();
+
+                string errorMessage = "Could not find savegame file.";
+
+                ThemedMessageBox.Show(
+                    this,
+                    errorMessage,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
 
                 return;
             }
@@ -2444,8 +2902,16 @@ namespace TRR_SaveMaster
 
             if (!savegamePresent)
             {
-                string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Media.SystemSounds.Asterisk.Play();
+
+                string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+
+                ThemedMessageBox.Show(
+                    this,
+                    errorMessage,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
 
                 PopulateSavegamesConditionally();
                 return;
@@ -2465,8 +2931,16 @@ namespace TRR_SaveMaster
 
             if (!File.Exists(savegamePath))
             {
-                string errorMessage = $"Could not find savegame file.";
-                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Media.SystemSounds.Asterisk.Play();
+
+                string errorMessage = "Could not find savegame file.";
+
+                ThemedMessageBox.Show(
+                    this,
+                    errorMessage,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
 
                 return;
             }
@@ -2482,8 +2956,16 @@ namespace TRR_SaveMaster
             {
                 if (!tr1Utilities.IsSavegamePresent(fileData))
                 {
-                    string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+
+                    ThemedMessageBox.Show(
+                        this,
+                        errorMessage,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
 
                     DisableButtonsTR1();
                     PopulateSavegamesTR1();
@@ -2495,8 +2977,17 @@ namespace TRR_SaveMaster
 
                 if (healthOffset == -1)
                 {
-                    string warningMessage = $"Unable to locate position data. Try saving the game while Lara is standing.";
-                    MessageBox.Show(warningMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    string warningMessage = "Unable to locate position data. Try saving the game while Lara is standing.";
+
+                    ThemedMessageBox.Show(
+                        this,
+                        warningMessage,
+                        "Position Not Found",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
                     return;
                 }
 
@@ -2506,8 +2997,16 @@ namespace TRR_SaveMaster
             {
                 if (!tr2Utilities.IsSavegamePresent(fileData))
                 {
+                    System.Media.SystemSounds.Asterisk.Play();
+
                     string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    ThemedMessageBox.Show(
+                        this,
+                        errorMessage,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
 
                     DisableButtonsTR2();
                     PopulateSavegamesTR2();
@@ -2519,15 +3018,33 @@ namespace TRR_SaveMaster
 
                 if (healthOffset == -1)
                 {
-                    string warningMessage = $"Unable to locate position data. Try saving the game while Lara is standing.";
-                    MessageBox.Show(warningMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    string warningMessage = "Unable to locate position data. Try saving the game while Lara is standing.";
+
+                    ThemedMessageBox.Show(
+                        this,
+                        warningMessage,
+                        "Position Not Found",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
                     return;
                 }
 
                 if (tr2Utilities.IsLaraInVehicle(healthOffset, fileData))
                 {
+                    System.Media.SystemSounds.Asterisk.Play();
+
                     string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
-                    MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    ThemedMessageBox.Show(
+                        this,
+                        warningMessage,
+                        "Cannot Edit Position",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
                     return;
                 }
 
@@ -2537,8 +3054,16 @@ namespace TRR_SaveMaster
             {
                 if (!tr3Utilities.IsSavegamePresent(fileData))
                 {
+                    System.Media.SystemSounds.Asterisk.Play();
+
                     string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    ThemedMessageBox.Show(
+                        this,
+                        errorMessage,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
 
                     DisableButtonsTR3();
                     PopulateSavegamesTR3();
@@ -2550,15 +3075,33 @@ namespace TRR_SaveMaster
 
                 if (healthOffset == -1)
                 {
-                    string warningMessage = $"Unable to locate position data. Try saving the game while Lara is standing.";
-                    MessageBox.Show(warningMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    string warningMessage = "Unable to locate position data. Try saving the game while Lara is standing.";
+
+                    ThemedMessageBox.Show(
+                        this,
+                        warningMessage,
+                        "Position Not Found",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
                     return;
                 }
 
                 if (tr3Utilities.IsLaraInVehicle(healthOffset, fileData))
                 {
+                    System.Media.SystemSounds.Asterisk.Play();
+
                     string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
-                    MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    ThemedMessageBox.Show(
+                        this,
+                        warningMessage,
+                        "Cannot Edit Position",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
                     return;
                 }
 
@@ -2568,8 +3111,16 @@ namespace TRR_SaveMaster
             {
                 if (!tr4Utilities.IsSavegamePresent(fileData))
                 {
+                    System.Media.SystemSounds.Asterisk.Play();
+
                     string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    ThemedMessageBox.Show(
+                        this,
+                        errorMessage,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
 
                     DisableButtonsTR4();
                     PopulateSavegamesTR4();
@@ -2581,22 +3132,49 @@ namespace TRR_SaveMaster
 
                 if (healthOffset == -1)
                 {
-                    string warningMessage = $"Unable to locate position data. Try saving the game while Lara is standing.";
-                    MessageBox.Show(warningMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    string warningMessage = "Unable to locate position data. Try saving the game while Lara is standing.";
+
+                    ThemedMessageBox.Show(
+                        this,
+                        warningMessage,
+                        "Position Not Found",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
                     return;
                 }
 
                 if (tr4Utilities.IsLaraInVehicle(healthOffset, fileData))
                 {
+                    System.Media.SystemSounds.Asterisk.Play();
+
                     string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
-                    MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    ThemedMessageBox.Show(
+                        this,
+                        warningMessage,
+                        "Cannot Edit Position",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
                     return;
                 }
 
                 if (tr4Utilities.IsLaraFreefalling(healthOffset, fileData))
                 {
+                    System.Media.SystemSounds.Asterisk.Play();
+
                     string warningMessage = $"Cannot edit position while Lara is freefalling.";
-                    MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    ThemedMessageBox.Show(
+                        this,
+                        warningMessage,
+                        "Cannot Edit Position",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
                     return;
                 }
 
@@ -2606,8 +3184,16 @@ namespace TRR_SaveMaster
             {
                 if (!tr5Utilities.IsSavegamePresent(fileData))
                 {
+                    System.Media.SystemSounds.Asterisk.Play();
+
                     string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    ThemedMessageBox.Show(
+                        this,
+                        errorMessage,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
 
                     DisableButtonsTR5();
                     PopulateSavegamesTR5();
@@ -2619,15 +3205,33 @@ namespace TRR_SaveMaster
 
                 if (healthOffset == -1)
                 {
-                    string warningMessage = $"Unable to locate position data. Try saving the game while Lara is standing.";
-                    MessageBox.Show(warningMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    System.Media.SystemSounds.Asterisk.Play();
+
+                    string warningMessage = "Unable to locate position data. Try saving the game while Lara is standing.";
+
+                    ThemedMessageBox.Show(
+                        this,
+                        warningMessage,
+                        "Position Not Found",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
                     return;
                 }
 
                 if (tr5Utilities.IsLaraFreefalling(healthOffset, fileData))
                 {
+                    System.Media.SystemSounds.Asterisk.Play();
+
                     string warningMessage = $"Cannot edit position while Lara is freefalling.";
-                    MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    ThemedMessageBox.Show(
+                        this,
+                        warningMessage,
+                        "Cannot Edit Position",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
                     return;
                 }
 
@@ -2637,8 +3241,16 @@ namespace TRR_SaveMaster
             {
                 if (!tr6Utilities.IsSavegamePresent(fileData))
                 {
+                    System.Media.SystemSounds.Asterisk.Play();
+
                     string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    ThemedMessageBox.Show(
+                        this,
+                        errorMessage,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
 
                     DisableButtonsTR6();
                     PopulateSavegamesTR6();
@@ -2863,8 +3475,12 @@ namespace TRR_SaveMaster
             {
                 System.Media.SystemSounds.Asterisk.Play();
 
-                DialogResult result = MessageBox.Show($"Are you sure you wish to delete '{savegameToDelete}'?",
-                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = ThemedMessageBox.Show(
+                    this,
+                    $"Are you sure you wish to delete '{savegameToDelete}'?",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
@@ -2916,8 +3532,15 @@ namespace TRR_SaveMaster
             }
             catch (Exception ex)
             {
+                System.Media.SystemSounds.Asterisk.Play();
+
                 slblStatus.Text = $"Error deleting savegame";
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ThemedMessageBox.Show(
+                    this,
+                    ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 

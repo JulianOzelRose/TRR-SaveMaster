@@ -96,6 +96,12 @@
     <Compile Include="StatisticsForm.Designer.cs">
       <DependentUpon>StatisticsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ThemedDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ThemedDialog.Designer.cs">
+      <DependentUpon>ThemedDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="ThemeUtilities.cs" />
     <Compile Include="TR1EntityCache.cs" />
     <Compile Include="TR1Models.cs" />
@@ -139,6 +145,9 @@
     </Compile>
     <EmbeddedResource Include="StatisticsForm.resx">
       <DependentUpon>StatisticsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ThemedDialog.resx">
+      <DependentUpon>ThemedDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UnlocksForm.resx">
       <DependentUpon>UnlocksForm.cs</DependentUpon>

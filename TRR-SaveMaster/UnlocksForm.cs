@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms;
+using static TRR_SaveMaster.MainForm;
 
 namespace TRR_SaveMaster
 {
@@ -102,7 +103,15 @@ namespace TRR_SaveMaster
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Media.SystemSounds.Asterisk.Play();
+
+                ThemedMessageBox.Show(
+                    this,
+                    ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
                 slblStatus.Text = $"Error loading savegame globals";
                 this.Close();
             }
@@ -186,7 +195,15 @@ namespace TRR_SaveMaster
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Media.SystemSounds.Asterisk.Play();
+
+                ThemedMessageBox.Show(
+                    this,
+                    ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
                 slblStatus.Text = $"Error writing to savegame globals";
                 this.Close();
             }
@@ -196,8 +213,12 @@ namespace TRR_SaveMaster
         {
             if (btnSave.Enabled)
             {
-                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
-                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = ThemedMessageBox.Show(
+                    this,
+                    $"Would you like to apply changes to the savegame?",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {

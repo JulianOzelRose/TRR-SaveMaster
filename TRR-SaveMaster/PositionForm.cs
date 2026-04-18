@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using TRR_SaveMaster.Properties;
+using static TRR_SaveMaster.MainForm;
 
 namespace TRR_SaveMaster
 {
@@ -645,8 +646,16 @@ namespace TRR_SaveMaster
 
                 if (!IsSavegamePresent(fileData))
                 {
+                    System.Media.SystemSounds.Asterisk.Play();
+
                     string errorMessage = $"Savegame no longer present.";
-                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    ThemedMessageBox.Show(
+                        this,
+                        errorMessage,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
 
                     DisableButtons();
                     this.Close();
@@ -672,8 +681,16 @@ namespace TRR_SaveMaster
 
                     if (healthOffset == -1)
                     {
+                        System.Media.SystemSounds.Asterisk.Play();
+
                         string warningMessage = $"Unable to locate position data. Try saving the game while Lara is standing.";
-                        MessageBox.Show(warningMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                        ThemedMessageBox.Show(
+                            this,
+                            warningMessage,
+                            "Position Not Found",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
 
                         DisableButtons();
                         this.Close();
@@ -684,8 +701,16 @@ namespace TRR_SaveMaster
                     {
                         if (IsLaraInVehicle(healthOffset, fileData))
                         {
+                            System.Media.SystemSounds.Asterisk.Play();
+
                             string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
-                            MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                            ThemedMessageBox.Show(
+                                this,
+                                warningMessage,
+                                "Cannot Edit Position",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
 
                             DisableButtons();
                             this.Close();
@@ -695,8 +720,16 @@ namespace TRR_SaveMaster
 
                     if (IsLaraFreefalling(healthOffset, fileData) && !IsTRXSavegame())
                     {
+                        System.Media.SystemSounds.Asterisk.Play();
+
                         string warningMessage = $"Cannot edit position while Lara is freefalling.";
-                        MessageBox.Show(warningMessage, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                        ThemedMessageBox.Show(
+                            this,
+                            warningMessage,
+                            "Warning",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
 
                         DisableButtons();
                         this.Close();
@@ -756,7 +789,15 @@ namespace TRR_SaveMaster
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Media.SystemSounds.Asterisk.Play();
+
+                ThemedMessageBox.Show(
+                    this,
+                    ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
                 slblStatus.Text = $"Error loading savegame position data";
                 this.Close();
             }
@@ -772,8 +813,16 @@ namespace TRR_SaveMaster
 
                 if (!IsSavegamePresent(fileData))
                 {
+                    System.Media.SystemSounds.Asterisk.Play();
+
                     string errorMessage = $"Savegame no longer present.";
-                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    ThemedMessageBox.Show(
+                        this,
+                        errorMessage,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
 
                     DisableButtons();
                     this.Close();
@@ -791,8 +840,17 @@ namespace TRR_SaveMaster
 
                     if (healthOffset == -1)
                     {
+                        System.Media.SystemSounds.Asterisk.Play();
+
                         string warningMessage = $"Unable to locate position data. Try saving the game while Lara is standing.";
-                        MessageBox.Show(warningMessage, "Position Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                        ThemedMessageBox.Show(
+                            this,
+                            warningMessage,
+                            "Position Not Found",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+
                         slblStatus.Text = $"Error writing to savegame position data";
 
                         DisableButtons();
@@ -804,8 +862,17 @@ namespace TRR_SaveMaster
                     {
                         if (IsLaraInVehicle(healthOffset, fileData))
                         {
+                            System.Media.SystemSounds.Asterisk.Play();
+
                             string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
-                            MessageBox.Show(warningMessage, "Cannot Edit Position", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                            ThemedMessageBox.Show(
+                                this,
+                                warningMessage,
+                                "Cannot Edit Position",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+
                             slblStatus.Text = $"Error writing to savegame position data";
 
                             DisableButtons();
@@ -818,8 +885,16 @@ namespace TRR_SaveMaster
                     {
                         if (!IsTRXSavegame())
                         {
+                            System.Media.SystemSounds.Asterisk.Play();
+
                             string warningMessage = $"Cannot edit position while Lara is freefalling.";
-                            MessageBox.Show(warningMessage, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                            ThemedMessageBox.Show(
+                                this,
+                                warningMessage,
+                                "Warning",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
 
                             DisableButtons();
                             this.Close();
@@ -910,7 +985,15 @@ namespace TRR_SaveMaster
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Media.SystemSounds.Asterisk.Play();
+
+                ThemedMessageBox.Show(
+                    this,
+                    ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
                 slblStatus.Text = $"Error writing to savegame position data";
             }
         }
@@ -919,8 +1002,12 @@ namespace TRR_SaveMaster
         {
             if (btnSave.Enabled)
             {
-                DialogResult result = MessageBox.Show($"Would you like to apply changes to the savegame?",
-                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = ThemedMessageBox.Show(
+                    this,
+                    $"Would you like to apply changes to the savegame?",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
