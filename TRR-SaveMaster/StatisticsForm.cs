@@ -191,8 +191,8 @@ namespace TRR_SaveMaster
 
             if (SELECTED_TAB == TAB_TR1)
             {
-                nudSecretsFoundMax.Value = secretsFoundMaxTR1[levelIndex];
-                nudPickupsMax.Value = pickupsFoundMaxTR1[levelIndex];
+                nudSecretsFoundMax.Value = secretsFoundMaxTR1.TryGetValue(levelIndex, out var secretsMax) ? secretsMax : 0;
+                nudPickupsMax.Value = pickupsFoundMaxTR1.TryGetValue(levelIndex, out var pickupsMax) ? pickupsMax : 0;
 
                 nudSecretsFound.Maximum = nudSecretsFoundMax.Value;
                 nudPickups.Maximum = nudPickupsMax.Value;
@@ -202,8 +202,8 @@ namespace TRR_SaveMaster
             }
             else if (SELECTED_TAB == TAB_TR2)
             {
-                nudSecretsFoundMax.Value = secretsFoundMaxTR2[levelIndex];
-                nudPickupsMax.Value = pickupsFoundMaxTR2[levelIndex];
+                nudSecretsFoundMax.Value = secretsFoundMaxTR2.TryGetValue(levelIndex, out var secretsMax) ? secretsMax : 0;
+                nudPickupsMax.Value = pickupsFoundMaxTR2.TryGetValue(levelIndex, out var pickupsMax) ? pickupsMax : 0;
 
                 nudSecretsFound.Maximum = nudSecretsFoundMax.Value;
                 nudPickups.Maximum = nudPickupsMax.Value;
@@ -213,8 +213,8 @@ namespace TRR_SaveMaster
             }
             else if (SELECTED_TAB == TAB_TR3)
             {
-                nudSecretsFoundMax.Value = secretsFoundMaxTR3[levelIndex];
-                nudPickupsMax.Value = pickupsFoundMaxTR3[levelIndex];
+                nudSecretsFoundMax.Value = secretsFoundMaxTR3.TryGetValue(levelIndex, out var secretsMax) ? secretsMax : 0;
+                nudPickupsMax.Value = pickupsFoundMaxTR3.TryGetValue(levelIndex, out var pickupsMax) ? pickupsMax : 0;
 
                 nudSecretsFound.Maximum = nudSecretsFoundMax.Value;
                 nudPickups.Maximum = nudPickupsMax.Value;
@@ -322,13 +322,13 @@ namespace TRR_SaveMaster
 
                 nudVesselsBroken.Enabled = false;
 
-                nudPickupsMax.Value = pickupsFoundMaxTR6[levelIndex];
+                nudPickupsMax.Value = pickupsFoundMaxTR6.TryGetValue(levelIndex, out var pickupsMax) ? pickupsMax : 0;
                 nudPickups.Maximum = nudPickupsMax.Value;
 
-                nudHealthItemsFoundMax.Value = healthItemsFoundMaxTR6[levelIndex];
+                nudHealthItemsFoundMax.Value = healthItemsFoundMaxTR6.TryGetValue(levelIndex, out var healthItemsMax) ? healthItemsMax : 0;
                 nudHealthItemsFound.Maximum = nudHealthItemsFoundMax.Value;
 
-                nudChocobarsFoundMax.Value = chocobarsFoundMaxTR6[levelIndex];
+                nudChocobarsFoundMax.Value = chocobarsFoundMaxTR6.TryGetValue(levelIndex, out var chocobarsMax) ? chocobarsMax : 0;
                 nudChocobarsFound.Maximum = nudChocobarsFoundMax.Value;
 
                 lblOf2.Text = "/";
@@ -341,8 +341,8 @@ namespace TRR_SaveMaster
 
             if (SELECTED_TAB == TAB_TR1)
             {
-                nudSecretsFoundMax.Value = secretsFoundMaxTR1[levelIndex];
-                nudPickupsMax.Value = pickupsFoundMaxTR1[levelIndex];
+                nudSecretsFoundMax.Value = secretsFoundMaxTR1.TryGetValue(levelIndex, out var secretsMax) ? secretsMax : 0;
+                nudPickupsMax.Value = pickupsFoundMaxTR1.TryGetValue(levelIndex, out var pickupsMax) ? pickupsMax : 0;
 
                 nudSecretsFound.Maximum = nudSecretsFoundMax.Value;
                 nudPickups.Maximum = nudPickupsMax.Value;
@@ -351,16 +351,16 @@ namespace TRR_SaveMaster
             }
             else if (SELECTED_TAB == TAB_TR2)
             {
-                nudSecretsFoundMax.Value = secretsFoundMaxTR2[levelIndex];
-                nudPickupsMax.Value = pickupsFoundMaxTR2[levelIndex];
+                nudSecretsFoundMax.Value = secretsFoundMaxTR2.TryGetValue(levelIndex, out var secretsMax) ? secretsMax : 0;
+                nudPickupsMax.Value = pickupsFoundMaxTR2.TryGetValue(levelIndex, out var pickupsMax) ? pickupsMax : 0;
 
                 nudSecretsFound.Maximum = nudSecretsFoundMax.Value;
                 nudPickups.Maximum = nudPickupsMax.Value;
             }
             else if (SELECTED_TAB == TAB_TR3)
             {
-                nudSecretsFoundMax.Value = secretsFoundMaxTR3[levelIndex];
-                nudPickupsMax.Value = pickupsFoundMaxTR3[levelIndex];
+                nudSecretsFoundMax.Value = secretsFoundMaxTR3.TryGetValue(levelIndex, out var secretsMax) ? secretsMax : 0;
+                nudPickupsMax.Value = pickupsFoundMaxTR3.TryGetValue(levelIndex, out var pickupsMax) ? pickupsMax : 0;
 
                 nudSecretsFound.Maximum = nudSecretsFoundMax.Value;
                 nudPickups.Maximum = nudPickupsMax.Value;
@@ -369,13 +369,13 @@ namespace TRR_SaveMaster
             }
             else if (SELECTED_TAB == TAB_TR6)
             {
-                nudPickupsMax.Value = pickupsFoundMaxTR6[levelIndex];
+                nudPickupsMax.Value = pickupsFoundMaxTR6.TryGetValue(levelIndex, out var pickupsMax) ? pickupsMax : 0;
                 nudPickups.Maximum = nudPickupsMax.Value;
 
-                nudHealthItemsFoundMax.Value = healthItemsFoundMaxTR6[levelIndex];
+                nudHealthItemsFoundMax.Value = healthItemsFoundMaxTR6.TryGetValue(levelIndex, out var healthItemsMax) ? healthItemsMax : 0;
                 nudHealthItemsFound.Maximum = nudHealthItemsFoundMax.Value;
 
-                nudChocobarsFoundMax.Value = chocobarsFoundMaxTR6[levelIndex];
+                nudChocobarsFoundMax.Value = chocobarsFoundMaxTR6.TryGetValue(levelIndex, out var chocobarsMax) ? chocobarsMax : 0;
                 nudChocobarsFound.Maximum = nudChocobarsFoundMax.Value;
             }
         }
