@@ -1488,7 +1488,7 @@ namespace TRR_SaveMaster
 
                     ThemedMessageBox.Show(
                         this,
-                        $"An error occurred: {ex.Message}",
+                        $"{ex.Message}",
                         "Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);

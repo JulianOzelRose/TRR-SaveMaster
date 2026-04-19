@@ -39,7 +39,7 @@
             // 
             this.btnPrimary.DialogResult = System.Windows.Forms.DialogResult.Yes;
             this.btnPrimary.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPrimary.Location = new System.Drawing.Point(186, 69);
+            this.btnPrimary.Location = new System.Drawing.Point(186, 75);
             this.btnPrimary.Name = "btnPrimary";
             this.btnPrimary.Size = new System.Drawing.Size(80, 25);
             this.btnPrimary.TabIndex = 1;
@@ -50,7 +50,7 @@
             // 
             this.btnSecondary.DialogResult = System.Windows.Forms.DialogResult.No;
             this.btnSecondary.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSecondary.Location = new System.Drawing.Point(272, 69);
+            this.btnSecondary.Location = new System.Drawing.Point(272, 75);
             this.btnSecondary.Name = "btnSecondary";
             this.btnSecondary.Size = new System.Drawing.Size(80, 25);
             this.btnSecondary.TabIndex = 2;
@@ -67,10 +67,11 @@
             // 
             // lblMessage
             // 
+            this.lblMessage.AutoEllipsis = true;
             this.lblMessage.AutoSize = true;
             this.lblMessage.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMessage.Location = new System.Drawing.Point(66, 25);
-            this.lblMessage.MaximumSize = new System.Drawing.Size(290, 0);
+            this.lblMessage.Location = new System.Drawing.Point(66, 24);
+            this.lblMessage.MaximumSize = new System.Drawing.Size(285, 45);
             this.lblMessage.Name = "lblMessage";
             this.lblMessage.Size = new System.Drawing.Size(53, 15);
             this.lblMessage.TabIndex = 0;
@@ -81,7 +82,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(364, 106);
+            this.ClientSize = new System.Drawing.Size(364, 112);
             this.Controls.Add(this.lblMessage);
             this.Controls.Add(this.picIcon);
             this.Controls.Add(this.btnSecondary);
