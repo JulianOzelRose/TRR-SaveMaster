@@ -526,7 +526,7 @@ namespace TRR_SaveMaster
         {
             using (OpenFileDialog fileBrowserDialog = new OpenFileDialog())
             {
-                fileBrowserDialog.InitialDirectory = "C:\\";
+                fileBrowserDialog.InitialDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TRX");
                 fileBrowserDialog.Title = "Select Tomb Raider I-III savegame file";
                 fileBrowserDialog.Filter = "DAT files (*.dat)|*.dat|All files (*.*)|*.*";
 
@@ -577,7 +577,7 @@ namespace TRR_SaveMaster
         {
             using (OpenFileDialog fileBrowserDialog = new OpenFileDialog())
             {
-                fileBrowserDialog.InitialDirectory = "C:\\";
+                fileBrowserDialog.InitialDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TRX2");
                 fileBrowserDialog.Title = "Select Tomb Raider IV-VI savegame file";
                 fileBrowserDialog.Filter = "DAT files (*.dat)|*.dat|All files (*.*)|*.*";
 
