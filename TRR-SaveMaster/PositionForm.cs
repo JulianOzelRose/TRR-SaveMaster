@@ -19,6 +19,15 @@ namespace TRR_SaveMaster
         private int Z_COORDINATE_OFFSET;
         private int ORIENTATION_OFFSET;
         private int ROOM_OFFSET;
+        private const int LEVEL_INDEX_OFFSET_TR1_PC = 0x62C;
+        private const int LEVEL_INDEX_OFFSET_TR1_ANDROID = 0x65C;
+        private const int LEVEL_INDEX_OFFSET_TR2_PC = 0x628;
+        private const int LEVEL_INDEX_OFFSET_TR2_ANDROID = 0x658;
+        private const int LEVEL_INDEX_OFFSET_TR3_PC = 0x8D6;
+        private const int LEVEL_INDEX_OFFSET_TR3_ANDROID = 0x916;
+        private const int LEVEL_INDEX_OFFSET_TR4 = 0x26F;
+        private const int LEVEL_INDEX_OFFSET_TR5 = 0x26F;
+        private const int LEVEL_INDEX_OFFSET_TR6 = 0x14;
 
         // Utils
         private readonly TR1Utilities tr1Utilities = new TR1Utilities();
@@ -40,6 +49,7 @@ namespace TRR_SaveMaster
         private Savegame selectedSavegame;
         private string savegamePath;
         private int savegameOffset;
+        private Platform platform;
 
         // Misc
         private MainForm mainForm;
@@ -49,7 +59,7 @@ namespace TRR_SaveMaster
         private int SELECTED_TAB;
         private byte[] decompressedBuffer = null;
 
-        public PositionForm(MainForm mainForm, ToolStripStatusLabel slblStatus, bool backupBeforeSaving, string savegamePath, int SELECTED_TAB)
+        public PositionForm(MainForm mainForm, ToolStripStatusLabel slblStatus, bool backupBeforeSaving, string savegamePath, int SELECTED_TAB, Platform platform)
         {
             InitializeComponent();
 
@@ -58,6 +68,7 @@ namespace TRR_SaveMaster
             this.savegamePath = savegamePath;
             this.SELECTED_TAB = SELECTED_TAB;
             this.mainForm = mainForm;
+            this.platform = platform;
         }
 
         private void PositionForm_Load(object sender, EventArgs e)
@@ -90,27 +101,27 @@ namespace TRR_SaveMaster
         {
             if (IsTR1Savegame())
             {
-                LEVEL_INDEX_OFFSET = 0x62C;
+                LEVEL_INDEX_OFFSET = platform == Platform.Android ? LEVEL_INDEX_OFFSET_TR1_ANDROID : LEVEL_INDEX_OFFSET_TR1_PC;
             }
             else if (IsTR2Savegame())
             {
-                LEVEL_INDEX_OFFSET = 0x628;
+                LEVEL_INDEX_OFFSET = platform == Platform.Android ? LEVEL_INDEX_OFFSET_TR2_ANDROID : LEVEL_INDEX_OFFSET_TR2_PC;
             }
             else if (IsTR3Savegame())
             {
-                LEVEL_INDEX_OFFSET = 0x8D6;
+                LEVEL_INDEX_OFFSET = platform == Platform.Android ? LEVEL_INDEX_OFFSET_TR3_ANDROID : LEVEL_INDEX_OFFSET_TR3_PC;
             }
             else if (IsTR4Savegame())
             {
-                LEVEL_INDEX_OFFSET = 0x26F;
+                LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR4;
             }
             else if (IsTR5Savegame())
             {
-                LEVEL_INDEX_OFFSET = 0x26F;
+                LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR5;
             }
             else if (IsTR6Savegame())
             {
-                LEVEL_INDEX_OFFSET = 0x14;
+                LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR6;
             }
         }
 
@@ -120,16 +131,19 @@ namespace TRR_SaveMaster
             {
                 tr1Utilities.SetSavegamePath(savegamePath);
                 tr1Utilities.SetSavegameOffset(savegameOffset);
+                tr1Utilities.SetPlatform(platform);
             }
             else if (IsTR2Savegame())
             {
                 tr2Utilities.SetSavegamePath(savegamePath);
                 tr2Utilities.SetSavegameOffset(savegameOffset);
+                tr2Utilities.SetPlatform(platform);
             }
             else if (IsTR3Savegame())
             {
                 tr3Utilities.SetSavegamePath(savegamePath);
                 tr3Utilities.SetSavegameOffset(savegameOffset);
+                tr3Utilities.SetPlatform(platform);
             }
             else if (IsTR4Savegame())
             {

@@ -298,9 +298,9 @@ namespace TRR_SaveMaster
             this.tsmiSetMaximumItems = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiMaxEverything = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEditSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmiUnlocks = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiStatistics = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPosition = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiUnlocks = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEditSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiDeleteSavegame = new System.Windows.Forms.ToolStripMenuItem();
             this.tsddbSettings = new System.Windows.Forms.ToolStripDropDownButton();
@@ -319,6 +319,7 @@ namespace TRR_SaveMaster
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiReportBug = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAndroid = new System.Windows.Forms.ToolStripMenuItem();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR1)).BeginInit();
@@ -3667,6 +3668,14 @@ namespace TRR_SaveMaster
             this.tsmiEditSeparator.Name = "tsmiEditSeparator";
             this.tsmiEditSeparator.Size = new System.Drawing.Size(213, 6);
             // 
+            // tsmiUnlocks
+            // 
+            this.tsmiUnlocks.Enabled = false;
+            this.tsmiUnlocks.Name = "tsmiUnlocks";
+            this.tsmiUnlocks.Size = new System.Drawing.Size(216, 22);
+            this.tsmiUnlocks.Text = "Unlocks";
+            this.tsmiUnlocks.Click += new System.EventHandler(this.tsmiUnlocks_Click);
+            // 
             // tsmiStatistics
             // 
             this.tsmiStatistics.Enabled = false;
@@ -3682,14 +3691,6 @@ namespace TRR_SaveMaster
             this.tsmiPosition.Size = new System.Drawing.Size(216, 22);
             this.tsmiPosition.Text = "Position";
             this.tsmiPosition.Click += new System.EventHandler(this.tsmiPosition_Click);
-            // 
-            // tsmiUnlocks
-            // 
-            this.tsmiUnlocks.Enabled = false;
-            this.tsmiUnlocks.Name = "tsmiUnlocks";
-            this.tsmiUnlocks.Size = new System.Drawing.Size(216, 22);
-            this.tsmiUnlocks.Text = "Unlocks";
-            this.tsmiUnlocks.Click += new System.EventHandler(this.tsmiUnlocks_Click);
             // 
             // tsmiEditSeparator2
             // 
@@ -3727,7 +3728,8 @@ namespace TRR_SaveMaster
             this.tsmiPlatform.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiPC,
             this.tsmiPlayStation4,
-            this.tsmiNintendoSwitch});
+            this.tsmiNintendoSwitch,
+            this.tsmiAndroid});
             this.tsmiPlatform.Name = "tsmiPlatform";
             this.tsmiPlatform.Size = new System.Drawing.Size(180, 22);
             this.tsmiPlatform.Text = "Platform";
@@ -3738,7 +3740,7 @@ namespace TRR_SaveMaster
             this.tsmiPC.CheckOnClick = true;
             this.tsmiPC.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiPC.Name = "tsmiPC";
-            this.tsmiPC.Size = new System.Drawing.Size(162, 22);
+            this.tsmiPC.Size = new System.Drawing.Size(180, 22);
             this.tsmiPC.Text = "PC";
             this.tsmiPC.CheckedChanged += new System.EventHandler(this.tsmiPC_CheckedChanged);
             // 
@@ -3746,7 +3748,7 @@ namespace TRR_SaveMaster
             // 
             this.tsmiPlayStation4.CheckOnClick = true;
             this.tsmiPlayStation4.Name = "tsmiPlayStation4";
-            this.tsmiPlayStation4.Size = new System.Drawing.Size(162, 22);
+            this.tsmiPlayStation4.Size = new System.Drawing.Size(180, 22);
             this.tsmiPlayStation4.Text = "PlayStation 4";
             this.tsmiPlayStation4.CheckedChanged += new System.EventHandler(this.tsmiPlayStation4_CheckedChanged);
             // 
@@ -3754,7 +3756,7 @@ namespace TRR_SaveMaster
             // 
             this.tsmiNintendoSwitch.CheckOnClick = true;
             this.tsmiNintendoSwitch.Name = "tsmiNintendoSwitch";
-            this.tsmiNintendoSwitch.Size = new System.Drawing.Size(162, 22);
+            this.tsmiNintendoSwitch.Size = new System.Drawing.Size(180, 22);
             this.tsmiNintendoSwitch.Text = "Nintendo Switch";
             this.tsmiNintendoSwitch.CheckedChanged += new System.EventHandler(this.tsmiNintendoSwitch_CheckedChanged);
             // 
@@ -3849,6 +3851,14 @@ namespace TRR_SaveMaster
             this.tsmiAbout.Size = new System.Drawing.Size(148, 22);
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
+            // 
+            // tsmiAndroid
+            // 
+            this.tsmiAndroid.CheckOnClick = true;
+            this.tsmiAndroid.Name = "tsmiAndroid";
+            this.tsmiAndroid.Size = new System.Drawing.Size(180, 22);
+            this.tsmiAndroid.Text = "Android";
+            this.tsmiAndroid.CheckedChanged += new System.EventHandler(this.tsmiAndroid_CheckedChanged);
             // 
             // MainForm
             // 
@@ -4299,6 +4309,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.ToolStripMenuItem tsmiRefreshSavegameList;
         private System.Windows.Forms.ToolStripMenuItem tsmiUnlocks;
         private System.Windows.Forms.ToolStripMenuItem tsmiDarkMode;
+        private System.Windows.Forms.ToolStripMenuItem tsmiAndroid;
     }
 }
 

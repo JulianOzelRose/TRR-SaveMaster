@@ -8,23 +8,47 @@ namespace TRR_SaveMaster
 {
     class TR3Utilities
     {
-        // Savegame constants & offsets
+        // Static offsets
         private const int SAVEGAME_VERSION_OFFSET = 0x000;
         private const int SLOT_STATUS_OFFSET = 0x004;
         private const int GAME_MODE_OFFSET = 0x008;
         private const int SAVE_NUMBER_OFFSET = 0x00C;
-        private const int LEVEL_INDEX_OFFSET = 0x8D6;
-        private const int SAVEGAME_FORMAT_VERSION_OFFSET = 0x98C;
-        private const int CHALLENGE_MODE_OFFSET = 0x990;
-        private const int CHALLENGE_MODE_HEALTH_HANDICAP_OFFSET = 0x99E;
-        private const int CHALLENGE_MODE_ENEMY_COUNT_OFFSET = 0x9A2;
-        private const int HEADER_SIZE = 0x998;
-        private const int MAX_SAVEGAMES = 32;
 
-        // Patch-dependent
+        // Platform or patch-dependent offsets
+        private int LEVEL_INDEX_OFFSET;
         private int BASE_SAVEGAME_OFFSET_TR3;
         private int MAX_SAVEGAME_OFFSET_TR3;
         private int SAVEGAME_SIZE;
+        private int SAVEGAME_FORMAT_VERSION_OFFSET;
+        private int CHALLENGE_MODE_RNG_SEED_OFFSET;
+        private int CHALLENGE_MODE_OFFSET;
+        private int CHALLENGE_MODE_MAX_HEALTH_OFFSET;
+        private int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET;
+        private int CHALLENGE_MODE_ENEMY_TYPE_OFFSET;
+
+        // Savegame constants
+        private const int HEADER_SIZE = 0x998;
+        private const int MAX_SAVEGAMES = 32;
+
+        // PC offsets
+        private const int LEVEL_INDEX_OFFSET_PC = 0x8D6;
+        private const int SAVEGAME_FORMAT_VERSION_OFFSET_PC = 0x98C;
+        private const int CHALLENGE_MODE_RNG_SEED_OFFSET_PC = 0x994;
+        private const int CHALLENGE_MODE_OFFSET_PC = 0x990;
+        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_PC = 0x99E;
+        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PC = 0x9A2;
+        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PC = 0x9A5;
+
+        // Android offsets
+        private const int LEVEL_INDEX_OFFSET_ANDROID = 0x916;
+        private const int SAVEGAME_FORMAT_VERSION_OFFSET_ANDROID = 0x9CC;
+        private const int CHALLENGE_MODE_RNG_SEED_OFFSET_ANDROID = 0x9D4;
+        private const int CHALLENGE_MODE_OFFSET_ANDROID = 0x9D0;
+        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_ANDROID = 0x9DE;
+        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_ANDROID = 0x9E2;
+        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_ANDROID = 0x9E5;
+
+        // Patch-dependent
         private const int SAVEGAME_SIZE_PREPATCH = 0x3800;
         private const int SAVEGAME_SIZE_PATCH5 = 0x6800;
         private const int BASE_SAVEGAME_OFFSET_TR3_PREPATCH = 0xE2000;
@@ -51,7 +75,7 @@ namespace TRR_SaveMaster
         private int GRENADE_LAUNCHER_AMMO_OFFSET;
         private int SHOTGUN_AMMO_OFFSET;
 
-        // Dynamic offsets
+        // Dynamic ammo offsets
         private int harpoonGunAmmoOffset2;
         private int deagleAmmoOffset2;
         private int mp5AmmoOffset2;
@@ -68,6 +92,11 @@ namespace TRR_SaveMaster
         private const byte WEAPON_MP5 = 32;
         private const byte WEAPON_ROCKET_LAUNCHER = 64;
         private const byte WEAPON_GRENADE_LAUNCHER = 128;
+
+        // Challenge Mode constants
+        private const byte CHALLENGE_MODE_ENEMY_NUMBERS_NORMAL = 3;
+        private const byte CHALLENGE_MODE_ENEMY_TYPE_NORMAL = 2;
+        private const byte CHALLENGE_MODE_ENEMY_TYPE_RANDOMIZER = 5;
 
         // Health
         private const UInt16 MAX_HEALTH_VALUE_DEFAULT = 1000;
@@ -263,6 +292,14 @@ namespace TRR_SaveMaster
 
         public void DetermineOffsets(byte[] fileData)
         {
+            LEVEL_INDEX_OFFSET = platform == Platform.Android ? LEVEL_INDEX_OFFSET_ANDROID : LEVEL_INDEX_OFFSET_PC;
+            SAVEGAME_FORMAT_VERSION_OFFSET = platform == Platform.Android ? SAVEGAME_FORMAT_VERSION_OFFSET_ANDROID : SAVEGAME_FORMAT_VERSION_OFFSET_PC;
+            CHALLENGE_MODE_RNG_SEED_OFFSET = platform == Platform.Android ? CHALLENGE_MODE_RNG_SEED_OFFSET_ANDROID : CHALLENGE_MODE_RNG_SEED_OFFSET_PC;
+            CHALLENGE_MODE_OFFSET = platform == Platform.Android ? CHALLENGE_MODE_OFFSET_ANDROID : CHALLENGE_MODE_OFFSET_PC;
+            CHALLENGE_MODE_MAX_HEALTH_OFFSET = platform == Platform.Android ? CHALLENGE_MODE_MAX_HEALTH_OFFSET_ANDROID : CHALLENGE_MODE_MAX_HEALTH_OFFSET_PC;
+            CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET = platform == Platform.Android ? CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_ANDROID : CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PC;
+            CHALLENGE_MODE_ENEMY_TYPE_OFFSET = platform == Platform.Android ? CHALLENGE_MODE_ENEMY_TYPE_OFFSET_ANDROID : CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PC;
+
             byte levelIndex = GetLevelIndex(fileData);
 
             DEAGLE_AMMO_OFFSET = 0x66 + (levelIndex * 0x40);
@@ -455,7 +492,7 @@ namespace TRR_SaveMaster
             bool isNativePatch5 = IsNativePatch5Format(fileData);
             int levelIndex = GetLevelIndex(fileData);
 
-            sgBufferCursor = 0x998;
+            sgBufferCursor = platform == Platform.Android ? 0x9E3 : 0x998;
 
             if (isChallengeMode && isNativePatch5)
             {
@@ -608,7 +645,7 @@ namespace TRR_SaveMaster
 
         public UInt16 GetChallengeModeMaxHealth(byte[] fileData)
         {
-            byte maxHealthSetting = fileData[savegameOffset + CHALLENGE_MODE_HEALTH_HANDICAP_OFFSET];
+            byte maxHealthSetting = fileData[savegameOffset + CHALLENGE_MODE_MAX_HEALTH_OFFSET];
 
             if (maxHealthSetting == 0) return (UInt16)100;
             if (maxHealthSetting == 1) return (UInt16)250;
@@ -624,7 +661,7 @@ namespace TRR_SaveMaster
 
         private byte GetChallengeModeEnemyNumbers(byte[] fileData)
         {
-            return fileData[savegameOffset + CHALLENGE_MODE_ENEMY_COUNT_OFFSET];
+            return fileData[savegameOffset + CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET];
         }
 
         private Int32 GetSaveNumber(byte[] fileData)
@@ -1378,6 +1415,9 @@ namespace TRR_SaveMaster
                 MAX_SAVEGAME_OFFSET_TR3 = MAX_SAVEGAME_OFFSET_TR3_PATCH5;
                 SAVEGAME_SIZE = SAVEGAME_SIZE_PATCH5;
             }
+
+            LEVEL_INDEX_OFFSET = platform == Platform.Android ? LEVEL_INDEX_OFFSET_ANDROID : LEVEL_INDEX_OFFSET_PC;
+            CHALLENGE_MODE_OFFSET = platform == Platform.Android ? CHALLENGE_MODE_OFFSET_ANDROID : CHALLENGE_MODE_OFFSET_PC;
 
             for (int i = 0; i < MAX_SAVEGAMES; i++)
             {

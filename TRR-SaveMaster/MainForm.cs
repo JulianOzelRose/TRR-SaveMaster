@@ -90,10 +90,6 @@ namespace TRR_SaveMaster
                 slblStatus.Text = "Ready";
             }
 
-            tr1Utilities.SetPlatform(platform);
-            tr2Utilities.SetPlatform(platform);
-            tr3Utilities.SetPlatform(platform);
-
             this.Text = $"Tomb Raider I-VI Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(platform)})";
         }
 
@@ -629,33 +625,47 @@ namespace TRR_SaveMaster
             tsmiPC.CheckedChanged -= tsmiPC_CheckedChanged;
             tsmiPlayStation4.CheckedChanged -= tsmiPlayStation4_CheckedChanged;
             tsmiNintendoSwitch.CheckedChanged -= tsmiNintendoSwitch_CheckedChanged;
+            tsmiAndroid.CheckedChanged -= tsmiAndroid_CheckedChanged;
 
             tsmiPC.Checked = (platform == Platform.PC);
             tsmiPlayStation4.Checked = (platform == Platform.PlayStation4);
             tsmiNintendoSwitch.Checked = (platform == Platform.NintendoSwitch);
+            tsmiAndroid.Checked = (platform == Platform.Android);
 
             tsmiPC.CheckedChanged += tsmiPC_CheckedChanged;
             tsmiPlayStation4.CheckedChanged += tsmiPlayStation4_CheckedChanged;
             tsmiNintendoSwitch.CheckedChanged += tsmiNintendoSwitch_CheckedChanged;
+            tsmiAndroid.CheckedChanged += tsmiAndroid_CheckedChanged;
 
             this.platform = platform;
             this.Text = $"Tomb Raider I-VI Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(platform)})";
+
+            ClearControlsTR1();
+            ClearControlsTR2();
+            ClearControlsTR3();
+
+            cmbSavegamesTR1.Items.Clear();
+            cmbSavegamesTR2.Items.Clear();
+            cmbSavegamesTR3.Items.Clear();
 
             tr1Utilities.SetPlatform(platform);
             tr2Utilities.SetPlatform(platform);
             tr3Utilities.SetPlatform(platform);
 
-            if (tabGame.SelectedIndex == TAB_TR1 && cmbSavegamesTR1.SelectedIndex != -1)
+            if (tabGame.SelectedIndex == TAB_TR1)
             {
-                DisplayGameInfoTR1(cmbSavegamesTR1.SelectedItem as Savegame);
+                DisableButtonsTR1();
+                PopulateSavegamesTR1();
             }
-            else if (tabGame.SelectedIndex == TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1)
+            else if (tabGame.SelectedIndex == TAB_TR2)
             {
-                DisplayGameInfoTR2(cmbSavegamesTR2.SelectedItem as Savegame);
+                DisableButtonsTR2();
+                PopulateSavegamesTR2();
             }
-            else if (tabGame.SelectedIndex == TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1)
+            else if (tabGame.SelectedIndex == TAB_TR3)
             {
-                DisplayGameInfoTR3(cmbSavegamesTR3.SelectedItem as Savegame);
+                DisableButtonsTR3();
+                PopulateSavegamesTR3();
             }
 
             ValidatePlatformSelection();
@@ -663,17 +673,24 @@ namespace TRR_SaveMaster
 
         private void ValidatePlatformSelection()
         {
-            if (!IsTRXTabSelected())
+            if (IsTRXTabSelected())
             {
-                return;
-            }
+                if (string.IsNullOrEmpty(savegamePathTRX) || !File.Exists(savegamePathTRX))
+                {
+                    return;
+                }
 
-            if (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX) && platform != Platform.PC)
-            {
                 byte[] fileData = File.ReadAllBytes(savegamePathTRX);
                 bool isPrepatch = IsPrepatchSavegameTRX(fileData);
 
-                if (isPrepatch)
+                // TRX (pre-patch) support: PC, PS4, NS
+                if (isPrepatch && platform != Platform.Android)
+                {
+                    return;
+                }
+
+                // TRX (Patch 5) support: PC, Android
+                if (!isPrepatch && (platform == Platform.PC || platform == Platform.Android))
                 {
                     return;
                 }
@@ -693,9 +710,11 @@ namespace TRR_SaveMaster
                     gameString = "Tomb Raider III";
                 }
 
+                string patchString = isPrepatch ? "" : " Patch 5";
+
                 System.Media.SystemSounds.Asterisk.Play();
 
-                string warningMessage = $"{platform.ToFriendlyString()} is not currently supported for {gameString} Patch 5.";
+                string warningMessage = $"{platform.ToFriendlyString()} is not currently supported for {gameString}{patchString}.";
                 ThemedMessageBox.Show(
                     this,
                     warningMessage,
@@ -706,6 +725,49 @@ namespace TRR_SaveMaster
                 tsmiPC.Checked = true;
                 tsmiPlayStation4.Checked = false;
                 tsmiNintendoSwitch.Checked = false;
+                tsmiAndroid.Checked = false;
+
+                this.platform = Platform.PC;
+                this.Text = $"Tomb Raider I-VI Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(Platform.PC)})";
+            }
+            else if (IsTRX2TabSelected())
+            {
+                // TRX2 support: PC, PS4, NS
+                if (platform != Platform.Android)
+                {
+                    return;
+                }
+
+                string gameString = "";
+
+                if (tabGame.SelectedIndex == TAB_TR4)
+                {
+                    gameString = "Tomb Raider IV";
+                }
+                else if (tabGame.SelectedIndex == TAB_TR5)
+                {
+                    gameString = "Tomb Raider V";
+                }
+                else if (tabGame.SelectedIndex == TAB_TR6)
+                {
+                    gameString = "Tomb Raider VI";
+                }
+
+                System.Media.SystemSounds.Asterisk.Play();
+
+                string warningMessage = $"{platform.ToFriendlyString()} is not currently supported for {gameString}.";
+                ThemedMessageBox.Show(
+                    this,
+                    warningMessage,
+                    "Platform Not Supported",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                tsmiPC.Checked = true;
+                tsmiPlayStation4.Checked = false;
+                tsmiNintendoSwitch.Checked = false;
+                tsmiAndroid.Checked = false;
+
                 this.platform = Platform.PC;
                 this.Text = $"Tomb Raider I-VI Remastered Savegame Editor ({PlatformExtensions.ToFriendlyString(Platform.PC)})";
             }
@@ -831,6 +893,10 @@ namespace TRR_SaveMaster
                         {
                             SetPlatform(Platform.NintendoSwitch);
                         }
+                        else if (platform == "Android")
+                        {
+                            SetPlatform(Platform.Android);
+                        }
                         else
                         {
                             SetPlatform(Platform.PC);
@@ -899,6 +965,10 @@ namespace TRR_SaveMaster
             else if (tsmiNintendoSwitch.Checked)
             {
                 platform = "NintendoSwitch";
+            }
+            else if (tsmiAndroid.Checked)
+            {
+                platform = "Android";
             }
 
             content += $"Platform={platform}";
@@ -2863,7 +2933,7 @@ namespace TRR_SaveMaster
             byte[] fileData = File.ReadAllBytes(savegamePath);
 
             StatisticsForm statisticsForm = new StatisticsForm(this, slblStatus, tsmiBackupBeforeSaving.Checked,
-                savegamePath, tabGame.SelectedIndex);
+                savegamePath, tabGame.SelectedIndex, platform);
 
             Savegame selectedSavegame = null;
 
@@ -2948,7 +3018,7 @@ namespace TRR_SaveMaster
             byte[] fileData = File.ReadAllBytes(savegamePath);
 
             PositionForm positionForm = new PositionForm(this, slblStatus, tsmiBackupBeforeSaving.Checked,
-                savegamePath, tabGame.SelectedIndex);
+                savegamePath, tabGame.SelectedIndex, platform);
 
             Savegame selectedSavegame = null;
 
@@ -3293,6 +3363,11 @@ namespace TRR_SaveMaster
             SetPlatform(Platform.NintendoSwitch);
         }
 
+        private void tsmiAndroid_CheckedChanged(object sender, EventArgs e)
+        {
+            SetPlatform(Platform.Android);
+        }
+
         private void tsmiEnableAllWeapons_Click(object sender, EventArgs e)
         {
             if (tabGame.SelectedIndex == TAB_TR1)
@@ -3588,6 +3663,10 @@ namespace TRR_SaveMaster
                 tsmiPosition.Enabled = cmbSavegamesTR1.SelectedIndex != -1;
                 tsmiMaxEverything.Enabled = cmbSavegamesTR1.SelectedIndex != -1;
                 tsmiDeleteSavegame.Enabled = cmbSavegamesTR1.SelectedIndex != -1;
+                tsmiPC.Enabled = true;
+                tsmiPlayStation4.Enabled = true;
+                tsmiNintendoSwitch.Enabled = true;
+                tsmiAndroid.Enabled = true;
             }
             else if (tabGame.SelectedIndex == TAB_TR2)
             {
@@ -3598,6 +3677,10 @@ namespace TRR_SaveMaster
                 tsmiPosition.Enabled = cmbSavegamesTR2.SelectedIndex != -1;
                 tsmiMaxEverything.Enabled = cmbSavegamesTR2.SelectedIndex != -1;
                 tsmiDeleteSavegame.Enabled = cmbSavegamesTR2.SelectedIndex != -1;
+                tsmiPC.Enabled = true;
+                tsmiPlayStation4.Enabled = true;
+                tsmiNintendoSwitch.Enabled = true;
+                tsmiAndroid.Enabled = true;
             }
             else if (tabGame.SelectedIndex == TAB_TR3)
             {
@@ -3608,6 +3691,10 @@ namespace TRR_SaveMaster
                 tsmiPosition.Enabled = cmbSavegamesTR3.SelectedIndex != -1;
                 tsmiMaxEverything.Enabled = cmbSavegamesTR3.SelectedIndex != -1;
                 tsmiDeleteSavegame.Enabled = cmbSavegamesTR3.SelectedIndex != -1;
+                tsmiPC.Enabled = true;
+                tsmiPlayStation4.Enabled = true;
+                tsmiNintendoSwitch.Enabled = true;
+                tsmiAndroid.Enabled = true;
             }
             else if (tabGame.SelectedIndex == TAB_TR4)
             {
@@ -3618,6 +3705,10 @@ namespace TRR_SaveMaster
                 tsmiPosition.Enabled = cmbSavegamesTR4.SelectedIndex != -1;
                 tsmiMaxEverything.Enabled = cmbSavegamesTR4.SelectedIndex != -1;
                 tsmiDeleteSavegame.Enabled = cmbSavegamesTR4.SelectedIndex != -1;
+                tsmiPC.Enabled = true;
+                tsmiPlayStation4.Enabled = true;
+                tsmiNintendoSwitch.Enabled = true;
+                tsmiAndroid.Enabled = false;
             }
             else if (tabGame.SelectedIndex == TAB_TR5)
             {
@@ -3628,6 +3719,10 @@ namespace TRR_SaveMaster
                 tsmiPosition.Enabled = cmbSavegamesTR5.SelectedIndex != -1;
                 tsmiMaxEverything.Enabled = cmbSavegamesTR5.SelectedIndex != -1;
                 tsmiDeleteSavegame.Enabled = cmbSavegamesTR5.SelectedIndex != -1;
+                tsmiPC.Enabled = true;
+                tsmiPlayStation4.Enabled = true;
+                tsmiNintendoSwitch.Enabled = true;
+                tsmiAndroid.Enabled = false;
             }
             else if (tabGame.SelectedIndex == TAB_TR6)
             {
@@ -3638,6 +3733,10 @@ namespace TRR_SaveMaster
                 tsmiPosition.Enabled = cmbSavegamesTR6.SelectedIndex != -1;
                 tsmiMaxEverything.Enabled = cmbSavegamesTR6.SelectedIndex != -1;
                 tsmiDeleteSavegame.Enabled = cmbSavegamesTR6.SelectedIndex != -1;
+                tsmiPC.Enabled = true;
+                tsmiPlayStation4.Enabled = true;
+                tsmiNintendoSwitch.Enabled = true;
+                tsmiAndroid.Enabled = false;
             }
         }
 

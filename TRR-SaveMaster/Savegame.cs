@@ -6,7 +6,8 @@ namespace TRR_SaveMaster
     {
         PC,
         PlayStation4,
-        NintendoSwitch
+        NintendoSwitch,
+        Android
     }
 
     public enum GameMode
@@ -27,6 +28,8 @@ namespace TRR_SaveMaster
                     return "PS4";
                 case Platform.NintendoSwitch:
                     return "Nintendo Switch";
+                case Platform.Android:
+                    return "Android";
                 default:
                     return platform.ToString();
             }
