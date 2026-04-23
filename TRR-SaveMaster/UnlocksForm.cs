@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Media;
 using System.Windows.Forms;
 using static TRR_SaveMaster.MainForm;
 
@@ -103,7 +104,9 @@ namespace TRR_SaveMaster
             }
             catch (Exception ex)
             {
-                System.Media.SystemSounds.Asterisk.Play();
+                slblStatus.Text = $"Error loading savegame globals";
+
+                SystemSounds.Hand.Play();
 
                 ThemedMessageBox.Show(
                     this,
@@ -112,7 +115,6 @@ namespace TRR_SaveMaster
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
-                slblStatus.Text = $"Error loading savegame globals";
                 this.Close();
             }
 
@@ -195,7 +197,9 @@ namespace TRR_SaveMaster
             }
             catch (Exception ex)
             {
-                System.Media.SystemSounds.Asterisk.Play();
+                slblStatus.Text = $"Error writing to savegame globals";
+
+                SystemSounds.Hand.Play();
 
                 ThemedMessageBox.Show(
                     this,
@@ -204,7 +208,6 @@ namespace TRR_SaveMaster
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
-                slblStatus.Text = $"Error writing to savegame globals";
                 this.Close();
             }
         }

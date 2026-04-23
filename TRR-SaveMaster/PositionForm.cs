@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Media;
 using System.Windows.Forms;
 using TRR_SaveMaster.Properties;
 using static TRR_SaveMaster.MainForm;
@@ -660,7 +661,7 @@ namespace TRR_SaveMaster
 
                 if (!IsSavegamePresent(fileData))
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    SystemSounds.Hand.Play();
 
                     string errorMessage = $"Savegame no longer present.";
 
@@ -803,7 +804,9 @@ namespace TRR_SaveMaster
             }
             catch (Exception ex)
             {
-                System.Media.SystemSounds.Asterisk.Play();
+                slblStatus.Text = $"Error loading savegame position data";
+
+                SystemSounds.Hand.Play();
 
                 ThemedMessageBox.Show(
                     this,
@@ -812,7 +815,6 @@ namespace TRR_SaveMaster
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
-                slblStatus.Text = $"Error loading savegame position data";
                 this.Close();
             }
 
@@ -827,7 +829,7 @@ namespace TRR_SaveMaster
 
                 if (!IsSavegamePresent(fileData))
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    SystemSounds.Hand.Play();
 
                     string errorMessage = $"Savegame no longer present.";
 
@@ -865,8 +867,6 @@ namespace TRR_SaveMaster
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning);
 
-                        slblStatus.Text = $"Error writing to savegame position data";
-
                         DisableButtons();
                         this.Close();
                         return;
@@ -886,8 +886,6 @@ namespace TRR_SaveMaster
                                 "Cannot Edit Position",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Warning);
-
-                            slblStatus.Text = $"Error writing to savegame position data";
 
                             DisableButtons();
                             this.Close();
@@ -999,7 +997,9 @@ namespace TRR_SaveMaster
             }
             catch (Exception ex)
             {
-                System.Media.SystemSounds.Asterisk.Play();
+                slblStatus.Text = $"Error writing to savegame position data";
+
+                SystemSounds.Hand.Play();
 
                 ThemedMessageBox.Show(
                     this,
@@ -1007,8 +1007,6 @@ namespace TRR_SaveMaster
                     "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-
-                slblStatus.Text = $"Error writing to savegame position data";
             }
         }
 

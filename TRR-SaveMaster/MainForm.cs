@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Media;
 using System.Windows.Forms;
 
 namespace TRR_SaveMaster
@@ -530,7 +531,7 @@ namespace TRR_SaveMaster
                 {
                     if (!IsValidSavegameFileTRX(fileBrowserDialog.FileName))
                     {
-                        System.Media.SystemSounds.Asterisk.Play();
+                        SystemSounds.Exclamation.Play();
 
                         ThemedMessageBox.Show(
                             this,
@@ -581,7 +582,7 @@ namespace TRR_SaveMaster
                 {
                     if (!IsValidSavegameFileTRX2(fileBrowserDialog.FileName))
                     {
-                        System.Media.SystemSounds.Asterisk.Play();
+                        SystemSounds.Exclamation.Play();
 
                         ThemedMessageBox.Show(
                             this,
@@ -696,6 +697,7 @@ namespace TRR_SaveMaster
                 }
 
                 string gameString = "";
+                string patchString = isPrepatch ? "" : " Patch 5";
 
                 if (tabGame.SelectedIndex == TAB_TR1)
                 {
@@ -710,11 +712,10 @@ namespace TRR_SaveMaster
                     gameString = "Tomb Raider III";
                 }
 
-                string patchString = isPrepatch ? "" : " Patch 5";
-
-                System.Media.SystemSounds.Asterisk.Play();
+                SystemSounds.Exclamation.Play();
 
                 string warningMessage = $"{platform.ToFriendlyString()} is not currently supported for {gameString}{patchString}.";
+
                 ThemedMessageBox.Show(
                     this,
                     warningMessage,
@@ -753,9 +754,10 @@ namespace TRR_SaveMaster
                     gameString = "Tomb Raider VI";
                 }
 
-                System.Media.SystemSounds.Asterisk.Play();
+                SystemSounds.Exclamation.Play();
 
                 string warningMessage = $"{platform.ToFriendlyString()} is not currently supported for {gameString}.";
+
                 ThemedMessageBox.Show(
                     this,
                     warningMessage,
@@ -796,7 +798,7 @@ namespace TRR_SaveMaster
                 {
                     byte savegameVersion = GetSavegameVersion(fileData);
 
-                    System.Media.SystemSounds.Asterisk.Play();
+                    SystemSounds.Exclamation.Play();
 
                     ThemedMessageBox.Show(
                         this,
@@ -833,7 +835,7 @@ namespace TRR_SaveMaster
                 {
                     byte savegameVersion = GetSavegameVersion(fileData);
 
-                    System.Media.SystemSounds.Asterisk.Play();
+                    SystemSounds.Exclamation.Play();
 
                     ThemedMessageBox.Show(
                         this,
@@ -1554,7 +1556,7 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    SystemSounds.Hand.Play();
 
                     ThemedMessageBox.Show(
                         this,
@@ -1709,9 +1711,10 @@ namespace TRR_SaveMaster
 
                     if (!tr1Utilities.IsSavegamePresent(fileData))
                     {
-                        System.Media.SystemSounds.Asterisk.Play();
+                        SystemSounds.Hand.Play();
 
                         string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+
                         ThemedMessageBox.Show(
                             this,
                             errorMessage,
@@ -1743,7 +1746,9 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    slblStatus.Text = $"Error writing to savegame";
+
+                    SystemSounds.Hand.Play();
 
                     ThemedMessageBox.Show(
                         this,
@@ -1751,8 +1756,6 @@ namespace TRR_SaveMaster
                         "Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
-
-                    slblStatus.Text = $"Error writing to savegame";
                 }
             }
         }
@@ -1770,9 +1773,10 @@ namespace TRR_SaveMaster
 
                     if (!tr2Utilities.IsSavegamePresent(fileData))
                     {
-                        System.Media.SystemSounds.Asterisk.Play();
+                        SystemSounds.Hand.Play();
 
                         string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+
                         ThemedMessageBox.Show(
                             this,
                             errorMessage,
@@ -1807,7 +1811,9 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    slblStatus.Text = $"Error writing to savegame";
+
+                    SystemSounds.Hand.Play();
 
                     ThemedMessageBox.Show(
                         this,
@@ -1815,8 +1821,6 @@ namespace TRR_SaveMaster
                         "Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
-
-                    slblStatus.Text = $"Error writing to savegame";
                 }
             }
         }
@@ -1834,9 +1838,10 @@ namespace TRR_SaveMaster
 
                     if (!tr3Utilities.IsSavegamePresent(fileData))
                     {
-                        System.Media.SystemSounds.Asterisk.Play();
+                        SystemSounds.Hand.Play();
 
                         string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+
                         ThemedMessageBox.Show(
                             this,
                             errorMessage,
@@ -1870,7 +1875,9 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    slblStatus.Text = $"Error writing to savegame";
+
+                    SystemSounds.Hand.Play();
 
                     ThemedMessageBox.Show(
                         this,
@@ -1878,8 +1885,6 @@ namespace TRR_SaveMaster
                         "Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
-
-                    slblStatus.Text = $"Error writing to savegame";
                 }
             }
         }
@@ -1897,9 +1902,10 @@ namespace TRR_SaveMaster
 
                     if (!tr4Utilities.IsSavegamePresent(fileData))
                     {
-                        System.Media.SystemSounds.Asterisk.Play();
+                        SystemSounds.Hand.Play();
 
                         string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+
                         ThemedMessageBox.Show(
                             this,
                             errorMessage,
@@ -1934,7 +1940,9 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    slblStatus.Text = $"Error writing to savegame";
+
+                    SystemSounds.Hand.Play();
 
                     ThemedMessageBox.Show(
                         this,
@@ -1942,8 +1950,6 @@ namespace TRR_SaveMaster
                         "Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
-
-                    slblStatus.Text = $"Error writing to savegame";
                 }
             }
         }
@@ -1961,9 +1967,10 @@ namespace TRR_SaveMaster
 
                     if (!tr5Utilities.IsSavegamePresent(fileData))
                     {
-                        System.Media.SystemSounds.Asterisk.Play();
+                        SystemSounds.Hand.Play();
 
                         string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+
                         ThemedMessageBox.Show(
                             this,
                             errorMessage,
@@ -1997,7 +2004,9 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    slblStatus.Text = $"Error writing to savegame";
+
+                    SystemSounds.Hand.Play();
 
                     ThemedMessageBox.Show(
                         this,
@@ -2005,8 +2014,6 @@ namespace TRR_SaveMaster
                         "Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
-
-                    slblStatus.Text = $"Error writing to savegame";
                 }
             }
         }
@@ -2024,9 +2031,10 @@ namespace TRR_SaveMaster
 
                     if (!tr6Utilities.IsSavegamePresent(fileData))
                     {
-                        System.Media.SystemSounds.Asterisk.Play();
+                        SystemSounds.Hand.Play();
 
                         string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+
                         ThemedMessageBox.Show(
                             this,
                             errorMessage,
@@ -2060,7 +2068,9 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    slblStatus.Text = $"Error writing to savegame";
+
+                    SystemSounds.Hand.Play();
 
                     ThemedMessageBox.Show(
                         this,
@@ -2068,8 +2078,6 @@ namespace TRR_SaveMaster
                         "Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
-
-                    slblStatus.Text = $"Error writing to savegame";
                 }
             }
         }
@@ -2245,7 +2253,7 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    SystemSounds.Hand.Play();
 
                     ThemedMessageBox.Show(
                         this,
@@ -2272,9 +2280,10 @@ namespace TRR_SaveMaster
 
                     if (!tr1Utilities.IsSavegamePresent(fileData))
                     {
-                        System.Media.SystemSounds.Asterisk.Play();
+                        SystemSounds.Hand.Play();
 
                         string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+
                         ThemedMessageBox.Show(
                             this,
                             errorMessage,
@@ -2311,7 +2320,9 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    slblStatus.Text = $"Error retrieving savegame data";
+
+                    SystemSounds.Hand.Play();
 
                     ThemedMessageBox.Show(
                         this,
@@ -2319,8 +2330,6 @@ namespace TRR_SaveMaster
                         "Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
-
-                    slblStatus.Text = $"Error retrieving savegame data";
                 }
 
                 isLoading = false;
@@ -2342,9 +2351,10 @@ namespace TRR_SaveMaster
 
                     if (!tr2Utilities.IsSavegamePresent(fileData))
                     {
-                        System.Media.SystemSounds.Asterisk.Play();
+                        SystemSounds.Hand.Play();
 
                         string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+
                         ThemedMessageBox.Show(
                             this,
                             errorMessage,
@@ -2387,7 +2397,9 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    slblStatus.Text = $"Error retrieving savegame data";
+
+                    SystemSounds.Hand.Play();
 
                     ThemedMessageBox.Show(
                         this,
@@ -2395,8 +2407,6 @@ namespace TRR_SaveMaster
                         "Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
-
-                    slblStatus.Text = $"Error retrieving savegame data";
                 }
 
                 isLoading = false;
@@ -2418,9 +2428,10 @@ namespace TRR_SaveMaster
 
                     if (!tr3Utilities.IsSavegamePresent(fileData))
                     {
-                        System.Media.SystemSounds.Asterisk.Play();
+                        SystemSounds.Hand.Play();
 
                         string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+
                         ThemedMessageBox.Show(
                             this,
                             errorMessage,
@@ -2459,7 +2470,9 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    slblStatus.Text = $"Error retrieving savegame data";
+
+                    SystemSounds.Hand.Play();
 
                     ThemedMessageBox.Show(
                         this,
@@ -2467,8 +2480,6 @@ namespace TRR_SaveMaster
                         "Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
-
-                    slblStatus.Text = $"Error retrieving savegame data";
                 }
 
                 isLoading = false;
@@ -2490,9 +2501,10 @@ namespace TRR_SaveMaster
 
                     if (!tr4Utilities.IsSavegamePresent(fileData))
                     {
-                        System.Media.SystemSounds.Asterisk.Play();
+                        SystemSounds.Hand.Play();
 
                         string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+
                         ThemedMessageBox.Show(
                             this,
                             errorMessage,
@@ -2519,7 +2531,9 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    slblStatus.Text = $"Error retrieving savegame data";
+
+                    SystemSounds.Hand.Play();
 
                     ThemedMessageBox.Show(
                         this,
@@ -2527,8 +2541,6 @@ namespace TRR_SaveMaster
                         "Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
-
-                    slblStatus.Text = $"Error retrieving savegame data";
                 }
 
                 isLoading = false;
@@ -2550,9 +2562,10 @@ namespace TRR_SaveMaster
 
                     if (!tr5Utilities.IsSavegamePresent(fileData))
                     {
-                        System.Media.SystemSounds.Asterisk.Play();
+                        SystemSounds.Hand.Play();
 
                         string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+
                         ThemedMessageBox.Show(
                             this,
                             errorMessage,
@@ -2581,7 +2594,9 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    slblStatus.Text = $"Error retrieving savegame data";
+
+                    SystemSounds.Hand.Play();
 
                     ThemedMessageBox.Show(
                         this,
@@ -2589,8 +2604,6 @@ namespace TRR_SaveMaster
                         "Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
-
-                    slblStatus.Text = $"Error retrieving savegame data";
                 }
 
                 isLoading = false;
@@ -2612,9 +2625,10 @@ namespace TRR_SaveMaster
 
                     if (!tr6Utilities.IsSavegamePresent(fileData))
                     {
-                        System.Media.SystemSounds.Asterisk.Play();
+                        SystemSounds.Hand.Play();
 
                         string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
+
                         ThemedMessageBox.Show(
                             this,
                             errorMessage,
@@ -2646,7 +2660,9 @@ namespace TRR_SaveMaster
                 }
                 catch (Exception ex)
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    slblStatus.Text = $"Error retrieving savegame data";
+
+                    SystemSounds.Hand.Play();
 
                     ThemedMessageBox.Show(
                         this,
@@ -2654,8 +2670,6 @@ namespace TRR_SaveMaster
                         "Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
-
-                    slblStatus.Text = $"Error retrieving savegame data";
                 }
 
                 isLoading = false;
@@ -2912,121 +2926,67 @@ namespace TRR_SaveMaster
 
         private void tsmiStatistics_Click(object sender, EventArgs e)
         {
-            string savegamePath = IsTRXTabSelected() ? savegamePathTRX : savegamePathTRX2;
-
-            if (!File.Exists(savegamePath))
+            try
             {
-                System.Media.SystemSounds.Asterisk.Play();
+                string savegamePath = IsTRXTabSelected() ? savegamePathTRX : savegamePathTRX2;
 
-                string errorMessage = "Could not find savegame file.";
+                StatisticsForm statisticsForm = new StatisticsForm(this, slblStatus, tsmiBackupBeforeSaving.Checked, savegamePath, tabGame.SelectedIndex, platform);
+                Savegame selectedSavegame = null;
 
-                ThemedMessageBox.Show(
-                    this,
-                    errorMessage,
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                bool savegamePresent = false;
 
-                return;
-            }
-
-            byte[] fileData = File.ReadAllBytes(savegamePath);
-
-            StatisticsForm statisticsForm = new StatisticsForm(this, slblStatus, tsmiBackupBeforeSaving.Checked,
-                savegamePath, tabGame.SelectedIndex, platform);
-
-            Savegame selectedSavegame = null;
-
-            bool savegamePresent = false;
-
-            if (tabGame.SelectedIndex == TAB_TR1 && cmbSavegamesTR1.SelectedIndex != -1)
-            {
-                selectedSavegame = cmbSavegamesTR1.Items[cmbSavegamesTR1.SelectedIndex] as Savegame;
-                savegamePresent = tr1Utilities.IsSavegamePresent(fileData);
-            }
-            else if (tabGame.SelectedIndex == TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1)
-            {
-                selectedSavegame = cmbSavegamesTR2.Items[cmbSavegamesTR2.SelectedIndex] as Savegame;
-                savegamePresent = tr2Utilities.IsSavegamePresent(fileData);
-            }
-            else if (tabGame.SelectedIndex == TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1)
-            {
-                selectedSavegame = cmbSavegamesTR3.Items[cmbSavegamesTR3.SelectedIndex] as Savegame;
-                savegamePresent = tr3Utilities.IsSavegamePresent(fileData);
-            }
-            else if (tabGame.SelectedIndex == TAB_TR4 && cmbSavegamesTR4.SelectedIndex != -1)
-            {
-                selectedSavegame = cmbSavegamesTR4.Items[cmbSavegamesTR4.SelectedIndex] as Savegame;
-                savegamePresent = tr4Utilities.IsSavegamePresent(fileData);
-            }
-            else if (tabGame.SelectedIndex == TAB_TR5 && cmbSavegamesTR5.SelectedIndex != -1)
-            {
-                selectedSavegame = cmbSavegamesTR5.Items[cmbSavegamesTR5.SelectedIndex] as Savegame;
-                savegamePresent = tr5Utilities.IsSavegamePresent(fileData);
-            }
-            else if (tabGame.SelectedIndex == TAB_TR6 && cmbSavegamesTR6.SelectedIndex != -1)
-            {
-                selectedSavegame = cmbSavegamesTR6.Items[cmbSavegamesTR6.SelectedIndex] as Savegame;
-                savegamePresent = tr6Utilities.IsSavegamePresent(fileData);
-            }
-
-            if (!savegamePresent)
-            {
-                System.Media.SystemSounds.Asterisk.Play();
-
-                string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
-
-                ThemedMessageBox.Show(
-                    this,
-                    errorMessage,
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-
-                PopulateSavegamesConditionally();
-                return;
-            }
-
-            if (selectedSavegame != null)
-            {
-                statisticsForm.SetSavegame(selectedSavegame);
-                statisticsForm.TopMost = TopMost;
-                statisticsForm.ShowDialog();
-            }
-        }
-
-        private void tsmiPosition_Click(object sender, EventArgs e)
-        {
-            string savegamePath = IsTRXTabSelected() ? savegamePathTRX : savegamePathTRX2;
-
-            if (!File.Exists(savegamePath))
-            {
-                System.Media.SystemSounds.Asterisk.Play();
-
-                string errorMessage = "Could not find savegame file.";
-
-                ThemedMessageBox.Show(
-                    this,
-                    errorMessage,
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-
-                return;
-            }
-
-            byte[] fileData = File.ReadAllBytes(savegamePath);
-
-            PositionForm positionForm = new PositionForm(this, slblStatus, tsmiBackupBeforeSaving.Checked,
-                savegamePath, tabGame.SelectedIndex, platform);
-
-            Savegame selectedSavegame = null;
-
-            if (tabGame.SelectedIndex == TAB_TR1 && cmbSavegamesTR1.SelectedIndex != -1)
-            {
-                if (!tr1Utilities.IsSavegamePresent(fileData))
+                if (!File.Exists(savegamePath))
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    SystemSounds.Hand.Play();
+
+                    string errorMessage = "Could not find savegame file.";
+
+                    ThemedMessageBox.Show(
+                        this,
+                        errorMessage,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
+                    return;
+                }
+
+                byte[] fileData = File.ReadAllBytes(savegamePath);
+
+                if (tabGame.SelectedIndex == TAB_TR1 && cmbSavegamesTR1.SelectedIndex != -1)
+                {
+                    selectedSavegame = cmbSavegamesTR1.Items[cmbSavegamesTR1.SelectedIndex] as Savegame;
+                    savegamePresent = tr1Utilities.IsSavegamePresent(fileData);
+                }
+                else if (tabGame.SelectedIndex == TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1)
+                {
+                    selectedSavegame = cmbSavegamesTR2.Items[cmbSavegamesTR2.SelectedIndex] as Savegame;
+                    savegamePresent = tr2Utilities.IsSavegamePresent(fileData);
+                }
+                else if (tabGame.SelectedIndex == TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1)
+                {
+                    selectedSavegame = cmbSavegamesTR3.Items[cmbSavegamesTR3.SelectedIndex] as Savegame;
+                    savegamePresent = tr3Utilities.IsSavegamePresent(fileData);
+                }
+                else if (tabGame.SelectedIndex == TAB_TR4 && cmbSavegamesTR4.SelectedIndex != -1)
+                {
+                    selectedSavegame = cmbSavegamesTR4.Items[cmbSavegamesTR4.SelectedIndex] as Savegame;
+                    savegamePresent = tr4Utilities.IsSavegamePresent(fileData);
+                }
+                else if (tabGame.SelectedIndex == TAB_TR5 && cmbSavegamesTR5.SelectedIndex != -1)
+                {
+                    selectedSavegame = cmbSavegamesTR5.Items[cmbSavegamesTR5.SelectedIndex] as Savegame;
+                    savegamePresent = tr5Utilities.IsSavegamePresent(fileData);
+                }
+                else if (tabGame.SelectedIndex == TAB_TR6 && cmbSavegamesTR6.SelectedIndex != -1)
+                {
+                    selectedSavegame = cmbSavegamesTR6.Items[cmbSavegamesTR6.SelectedIndex] as Savegame;
+                    savegamePresent = tr6Utilities.IsSavegamePresent(fileData);
+                }
+
+                if (!savegamePresent)
+                {
+                    SystemSounds.Hand.Play();
 
                     string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
 
@@ -3037,39 +2997,43 @@ namespace TRR_SaveMaster
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
 
-                    DisableButtonsTR1();
-                    PopulateSavegamesTR1();
+                    PopulateSavegamesConditionally();
                     return;
                 }
 
-                tr1Utilities.DetermineOffsets(fileData);
-                int healthOffset = tr1Utilities.GetHealthOffset(fileData);
-
-                if (healthOffset == -1)
+                if (selectedSavegame != null)
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
-
-                    string warningMessage = "Unable to locate position data. Try saving the game while Lara is standing.";
-
-                    ThemedMessageBox.Show(
-                        this,
-                        warningMessage,
-                        "Position Not Found",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning);
-
-                    return;
+                    statisticsForm.SetSavegame(selectedSavegame);
+                    statisticsForm.TopMost = TopMost;
+                    statisticsForm.ShowDialog();
                 }
-
-                selectedSavegame = cmbSavegamesTR1.Items[cmbSavegamesTR1.SelectedIndex] as Savegame;
             }
-            else if (tabGame.SelectedIndex == TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1)
+            catch (Exception ex)
             {
-                if (!tr2Utilities.IsSavegamePresent(fileData))
-                {
-                    System.Media.SystemSounds.Asterisk.Play();
+                slblStatus.Text = $"Error loading savegame statistics";
 
-                    string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
+                SystemSounds.Hand.Play();
+
+                ThemedMessageBox.Show(
+                    this,
+                    $"{ex.Message}",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
+        private void tsmiPosition_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string savegamePath = IsTRXTabSelected() ? savegamePathTRX : savegamePathTRX2;
+
+                if (!File.Exists(savegamePath))
+                {
+                    SystemSounds.Hand.Play();
+
+                    string errorMessage = "Could not find savegame file.";
 
                     ThemedMessageBox.Show(
                         this,
@@ -3078,263 +3042,341 @@ namespace TRR_SaveMaster
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
 
-                    DisableButtonsTR2();
-                    PopulateSavegamesTR2();
                     return;
                 }
 
-                tr2Utilities.DetermineOffsets(fileData);
-                int healthOffset = tr2Utilities.GetHealthOffset(fileData);
+                PositionForm positionForm = new PositionForm(this, slblStatus, tsmiBackupBeforeSaving.Checked, savegamePath, tabGame.SelectedIndex, platform);
+                Savegame selectedSavegame = null;
 
-                if (healthOffset == -1)
+                byte[] fileData = File.ReadAllBytes(savegamePath);
+
+                if (tabGame.SelectedIndex == TAB_TR1 && cmbSavegamesTR1.SelectedIndex != -1)
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    if (!tr1Utilities.IsSavegamePresent(fileData))
+                    {
+                        SystemSounds.Hand.Play();
 
-                    string warningMessage = "Unable to locate position data. Try saving the game while Lara is standing.";
+                        string errorMessage = "Savegame no longer present. Press OK to refresh savegame list.";
 
-                    ThemedMessageBox.Show(
-                        this,
-                        warningMessage,
-                        "Position Not Found",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning);
+                        ThemedMessageBox.Show(
+                            this,
+                            errorMessage,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
 
-                    return;
+                        DisableButtonsTR1();
+                        PopulateSavegamesTR1();
+                        return;
+                    }
+
+                    tr1Utilities.DetermineOffsets(fileData);
+                    int healthOffset = tr1Utilities.GetHealthOffset(fileData);
+
+                    if (healthOffset == -1)
+                    {
+                        SystemSounds.Exclamation.Play();
+
+                        string warningMessage = "Unable to locate position data. Try saving the game while Lara is standing.";
+
+                        ThemedMessageBox.Show(
+                            this,
+                            warningMessage,
+                            "Position Not Found",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+
+                        return;
+                    }
+
+                    selectedSavegame = cmbSavegamesTR1.Items[cmbSavegamesTR1.SelectedIndex] as Savegame;
                 }
-
-                if (tr2Utilities.IsLaraInVehicle(healthOffset, fileData))
+                else if (tabGame.SelectedIndex == TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1)
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    if (!tr2Utilities.IsSavegamePresent(fileData))
+                    {
+                        SystemSounds.Hand.Play();
 
-                    string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
+                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
 
-                    ThemedMessageBox.Show(
-                        this,
-                        warningMessage,
-                        "Cannot Edit Position",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning);
+                        ThemedMessageBox.Show(
+                            this,
+                            errorMessage,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
 
-                    return;
+                        DisableButtonsTR2();
+                        PopulateSavegamesTR2();
+                        return;
+                    }
+
+                    tr2Utilities.DetermineOffsets(fileData);
+                    int healthOffset = tr2Utilities.GetHealthOffset(fileData);
+
+                    if (healthOffset == -1)
+                    {
+                        SystemSounds.Exclamation.Play();
+
+                        string warningMessage = "Unable to locate position data. Try saving the game while Lara is standing.";
+
+                        ThemedMessageBox.Show(
+                            this,
+                            warningMessage,
+                            "Position Not Found",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+
+                        return;
+                    }
+
+                    if (tr2Utilities.IsLaraInVehicle(healthOffset, fileData))
+                    {
+                        SystemSounds.Exclamation.Play();
+
+                        string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
+
+                        ThemedMessageBox.Show(
+                            this,
+                            warningMessage,
+                            "Cannot Edit Position",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+
+                        return;
+                    }
+
+                    selectedSavegame = cmbSavegamesTR2.Items[cmbSavegamesTR2.SelectedIndex] as Savegame;
+                }
+                else if (tabGame.SelectedIndex == TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1)
+                {
+                    if (!tr3Utilities.IsSavegamePresent(fileData))
+                    {
+                        SystemSounds.Hand.Play();
+
+                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
+
+                        ThemedMessageBox.Show(
+                            this,
+                            errorMessage,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+
+                        DisableButtonsTR3();
+                        PopulateSavegamesTR3();
+                        return;
+                    }
+
+                    tr3Utilities.DetermineOffsets(fileData);
+                    int healthOffset = tr3Utilities.GetHealthOffset(fileData);
+
+                    if (healthOffset == -1)
+                    {
+                        SystemSounds.Exclamation.Play();
+
+                        string warningMessage = "Unable to locate position data. Try saving the game while Lara is standing.";
+
+                        ThemedMessageBox.Show(
+                            this,
+                            warningMessage,
+                            "Position Not Found",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+
+                        return;
+                    }
+
+                    if (tr3Utilities.IsLaraInVehicle(healthOffset, fileData))
+                    {
+                        SystemSounds.Exclamation.Play();
+
+                        string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
+
+                        ThemedMessageBox.Show(
+                            this,
+                            warningMessage,
+                            "Cannot Edit Position",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+
+                        return;
+                    }
+
+                    selectedSavegame = cmbSavegamesTR3.Items[cmbSavegamesTR3.SelectedIndex] as Savegame;
+                }
+                else if (tabGame.SelectedIndex == TAB_TR4 && cmbSavegamesTR4.SelectedIndex != -1)
+                {
+                    if (!tr4Utilities.IsSavegamePresent(fileData))
+                    {
+                        SystemSounds.Hand.Play();
+
+                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
+
+                        ThemedMessageBox.Show(
+                            this,
+                            errorMessage,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+
+                        DisableButtonsTR4();
+                        PopulateSavegamesTR4();
+                        return;
+                    }
+
+                    tr4Utilities.DetermineOffsets(fileData);
+                    int healthOffset = tr4Utilities.GetHealthOffset(fileData);
+
+                    if (healthOffset == -1)
+                    {
+                        SystemSounds.Exclamation.Play();
+
+                        string warningMessage = "Unable to locate position data. Try saving the game while Lara is standing.";
+
+                        ThemedMessageBox.Show(
+                            this,
+                            warningMessage,
+                            "Position Not Found",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+
+                        return;
+                    }
+
+                    if (tr4Utilities.IsLaraInVehicle(healthOffset, fileData))
+                    {
+                        SystemSounds.Exclamation.Play();
+
+                        string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
+
+                        ThemedMessageBox.Show(
+                            this,
+                            warningMessage,
+                            "Cannot Edit Position",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+
+                        return;
+                    }
+
+                    if (tr4Utilities.IsLaraFreefalling(healthOffset, fileData))
+                    {
+                        SystemSounds.Exclamation.Play();
+
+                        string warningMessage = $"Cannot edit position while Lara is freefalling.";
+
+                        ThemedMessageBox.Show(
+                            this,
+                            warningMessage,
+                            "Cannot Edit Position",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+
+                        return;
+                    }
+
+                    selectedSavegame = cmbSavegamesTR4.Items[cmbSavegamesTR4.SelectedIndex] as Savegame;
+                }
+                else if (tabGame.SelectedIndex == TAB_TR5 && cmbSavegamesTR5.SelectedIndex != -1)
+                {
+                    if (!tr5Utilities.IsSavegamePresent(fileData))
+                    {
+                        SystemSounds.Hand.Play();
+
+                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
+
+                        ThemedMessageBox.Show(
+                            this,
+                            errorMessage,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+
+                        DisableButtonsTR5();
+                        PopulateSavegamesTR5();
+                        return;
+                    }
+
+                    tr5Utilities.DetermineOffsets(fileData);
+                    int healthOffset = tr5Utilities.GetHealthOffset(fileData);
+
+                    if (healthOffset == -1)
+                    {
+                        SystemSounds.Exclamation.Play();
+
+                        string warningMessage = "Unable to locate position data. Try saving the game while Lara is standing.";
+
+                        ThemedMessageBox.Show(
+                            this,
+                            warningMessage,
+                            "Position Not Found",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+
+                        return;
+                    }
+
+                    if (tr5Utilities.IsLaraFreefalling(healthOffset, fileData))
+                    {
+                        SystemSounds.Exclamation.Play();
+
+                        string warningMessage = $"Cannot edit position while Lara is freefalling.";
+
+                        ThemedMessageBox.Show(
+                            this,
+                            warningMessage,
+                            "Cannot Edit Position",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+
+                        return;
+                    }
+
+                    selectedSavegame = cmbSavegamesTR5.Items[cmbSavegamesTR5.SelectedIndex] as Savegame;
+                }
+                else if (tabGame.SelectedIndex == TAB_TR6 && cmbSavegamesTR6.SelectedIndex != -1)
+                {
+                    if (!tr6Utilities.IsSavegamePresent(fileData))
+                    {
+                        SystemSounds.Hand.Play();
+
+                        string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
+
+                        ThemedMessageBox.Show(
+                            this,
+                            errorMessage,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+
+                        DisableButtonsTR6();
+                        PopulateSavegamesTR6();
+                        return;
+                    }
+
+                    selectedSavegame = cmbSavegamesTR6.Items[cmbSavegamesTR6.SelectedIndex] as Savegame;
                 }
 
-                selectedSavegame = cmbSavegamesTR2.Items[cmbSavegamesTR2.SelectedIndex] as Savegame;
+                if (selectedSavegame != null)
+                {
+                    positionForm.SetSavegame(selectedSavegame);
+                    positionForm.TopMost = TopMost;
+                    positionForm.ShowDialog();
+                }
             }
-            else if (tabGame.SelectedIndex == TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1)
+            catch (Exception ex)
             {
-                if (!tr3Utilities.IsSavegamePresent(fileData))
-                {
-                    System.Media.SystemSounds.Asterisk.Play();
+                slblStatus.Text = "Error retrieving savegame position data";
 
-                    string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
+                SystemSounds.Hand.Play();
 
-                    ThemedMessageBox.Show(
-                        this,
-                        errorMessage,
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-
-                    DisableButtonsTR3();
-                    PopulateSavegamesTR3();
-                    return;
-                }
-
-                tr3Utilities.DetermineOffsets(fileData);
-                int healthOffset = tr3Utilities.GetHealthOffset(fileData);
-
-                if (healthOffset == -1)
-                {
-                    System.Media.SystemSounds.Asterisk.Play();
-
-                    string warningMessage = "Unable to locate position data. Try saving the game while Lara is standing.";
-
-                    ThemedMessageBox.Show(
-                        this,
-                        warningMessage,
-                        "Position Not Found",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning);
-
-                    return;
-                }
-
-                if (tr3Utilities.IsLaraInVehicle(healthOffset, fileData))
-                {
-                    System.Media.SystemSounds.Asterisk.Play();
-
-                    string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
-
-                    ThemedMessageBox.Show(
-                        this,
-                        warningMessage,
-                        "Cannot Edit Position",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning);
-
-                    return;
-                }
-
-                selectedSavegame = cmbSavegamesTR3.Items[cmbSavegamesTR3.SelectedIndex] as Savegame;
-            }
-            else if (tabGame.SelectedIndex == TAB_TR4 && cmbSavegamesTR4.SelectedIndex != -1)
-            {
-                if (!tr4Utilities.IsSavegamePresent(fileData))
-                {
-                    System.Media.SystemSounds.Asterisk.Play();
-
-                    string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-
-                    ThemedMessageBox.Show(
-                        this,
-                        errorMessage,
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-
-                    DisableButtonsTR4();
-                    PopulateSavegamesTR4();
-                    return;
-                }
-
-                tr4Utilities.DetermineOffsets(fileData);
-                int healthOffset = tr4Utilities.GetHealthOffset(fileData);
-
-                if (healthOffset == -1)
-                {
-                    System.Media.SystemSounds.Asterisk.Play();
-
-                    string warningMessage = "Unable to locate position data. Try saving the game while Lara is standing.";
-
-                    ThemedMessageBox.Show(
-                        this,
-                        warningMessage,
-                        "Position Not Found",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning);
-
-                    return;
-                }
-
-                if (tr4Utilities.IsLaraInVehicle(healthOffset, fileData))
-                {
-                    System.Media.SystemSounds.Asterisk.Play();
-
-                    string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
-
-                    ThemedMessageBox.Show(
-                        this,
-                        warningMessage,
-                        "Cannot Edit Position",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning);
-
-                    return;
-                }
-
-                if (tr4Utilities.IsLaraFreefalling(healthOffset, fileData))
-                {
-                    System.Media.SystemSounds.Asterisk.Play();
-
-                    string warningMessage = $"Cannot edit position while Lara is freefalling.";
-
-                    ThemedMessageBox.Show(
-                        this,
-                        warningMessage,
-                        "Cannot Edit Position",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning);
-
-                    return;
-                }
-
-                selectedSavegame = cmbSavegamesTR4.Items[cmbSavegamesTR4.SelectedIndex] as Savegame;
-            }
-            else if (tabGame.SelectedIndex == TAB_TR5 && cmbSavegamesTR5.SelectedIndex != -1)
-            {
-                if (!tr5Utilities.IsSavegamePresent(fileData))
-                {
-                    System.Media.SystemSounds.Asterisk.Play();
-
-                    string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-
-                    ThemedMessageBox.Show(
-                        this,
-                        errorMessage,
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-
-                    DisableButtonsTR5();
-                    PopulateSavegamesTR5();
-                    return;
-                }
-
-                tr5Utilities.DetermineOffsets(fileData);
-                int healthOffset = tr5Utilities.GetHealthOffset(fileData);
-
-                if (healthOffset == -1)
-                {
-                    System.Media.SystemSounds.Asterisk.Play();
-
-                    string warningMessage = "Unable to locate position data. Try saving the game while Lara is standing.";
-
-                    ThemedMessageBox.Show(
-                        this,
-                        warningMessage,
-                        "Position Not Found",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning);
-
-                    return;
-                }
-
-                if (tr5Utilities.IsLaraFreefalling(healthOffset, fileData))
-                {
-                    System.Media.SystemSounds.Asterisk.Play();
-
-                    string warningMessage = $"Cannot edit position while Lara is freefalling.";
-
-                    ThemedMessageBox.Show(
-                        this,
-                        warningMessage,
-                        "Cannot Edit Position",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning);
-
-                    return;
-                }
-
-                selectedSavegame = cmbSavegamesTR5.Items[cmbSavegamesTR5.SelectedIndex] as Savegame;
-            }
-            else if (tabGame.SelectedIndex == TAB_TR6 && cmbSavegamesTR6.SelectedIndex != -1)
-            {
-                if (!tr6Utilities.IsSavegamePresent(fileData))
-                {
-                    System.Media.SystemSounds.Asterisk.Play();
-
-                    string errorMessage = $"Savegame no longer present. Press OK to refresh savegame list.";
-
-                    ThemedMessageBox.Show(
-                        this,
-                        errorMessage,
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-
-                    DisableButtonsTR6();
-                    PopulateSavegamesTR6();
-                    return;
-                }
-
-                selectedSavegame = cmbSavegamesTR6.Items[cmbSavegamesTR6.SelectedIndex] as Savegame;
-            }
-
-            if (selectedSavegame != null)
-            {
-                positionForm.SetSavegame(selectedSavegame);
-                positionForm.TopMost = TopMost;
-                positionForm.ShowDialog();
+                ThemedMessageBox.Show(
+                    this,
+                    $"{ex.Message}",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 
@@ -3607,9 +3649,10 @@ namespace TRR_SaveMaster
             }
             catch (Exception ex)
             {
-                System.Media.SystemSounds.Asterisk.Play();
-
                 slblStatus.Text = $"Error deleting savegame";
+
+                SystemSounds.Hand.Play();
+
                 ThemedMessageBox.Show(
                     this,
                     ex.Message,
