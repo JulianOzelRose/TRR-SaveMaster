@@ -21,7 +21,9 @@ namespace TRR_SaveMaster
         private Savegame previousSelectedSavegameTR5;
         private Savegame previousSelectedSavegameTR6;
         private string savegamePathTRX;
+        private string savegamePathTRXRaw;
         private string savegamePathTRX2;
+        private string savegamePathTRX2Raw;
         private bool isLoading = false;
         private bool isInventoryLoading = false;
         private bool userIndexChanged = true;
@@ -538,6 +540,7 @@ namespace TRR_SaveMaster
                     }
 
                     savegamePathTRX = fileBrowserDialog.FileName;
+                    savegamePathTRXRaw = fileBrowserDialog.FileName;
 
                     ClearControlsTR1();
                     ClearControlsTR2();
@@ -589,6 +592,7 @@ namespace TRR_SaveMaster
                     }
 
                     savegamePathTRX2 = fileBrowserDialog.FileName;
+                    savegamePathTRX2Raw = fileBrowserDialog.FileName;
 
                     ClearControlsTR4();
                     ClearControlsTR5();
@@ -857,12 +861,16 @@ namespace TRR_SaveMaster
                     if (line.StartsWith("TRXPath="))
                     {
                         string directoryPath = line.Substring("TRXPath=".Length);
-                        savegamePathTRX = directoryPath;
+
+                        savegamePathTRXRaw = directoryPath;
+                        savegamePathTRX = Environment.ExpandEnvironmentVariables(directoryPath);
                     }
                     else if (line.StartsWith("TRX2Path="))
                     {
                         string directoryPath = line.Substring("TRX2Path=".Length);
-                        savegamePathTRX2 = directoryPath;
+
+                        savegamePathTRX2Raw = directoryPath;
+                        savegamePathTRX2 = Environment.ExpandEnvironmentVariables(directoryPath);
                     }
                     else if (line.StartsWith("AutoBackup="))
                     {
@@ -941,8 +949,8 @@ namespace TRR_SaveMaster
             string rootFolder = AppDomain.CurrentDomain.BaseDirectory;
             string filePath = Path.Combine(rootFolder, CONFIG_FILE_NAME);
 
-            string content = $"TRXPath={savegamePathTRX}\n";
-            content += $"TRX2Path={savegamePathTRX2}\n";
+            string content = $"TRXPath={savegamePathTRXRaw ?? savegamePathTRX}\n";
+            content += $"TRX2Path={savegamePathTRX2Raw ?? savegamePathTRX2}\n";
             content += $"AutoBackup={tsmiBackupBeforeSaving.Checked}\n";
             content += $"StatusBar={tsmiStatusBar.Checked}\n";
             content += $"DarkMode={tsmiDarkMode.Checked}\n";
