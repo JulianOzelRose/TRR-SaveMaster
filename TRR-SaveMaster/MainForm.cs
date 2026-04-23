@@ -56,12 +56,6 @@ namespace TRR_SaveMaster
         private const int TAB_TR5 = 4;
         private const int TAB_TR6 = 5;
 
-        // Health
-        private const UInt16 MAX_HEALTH_VALUE_DEFAULT = 1000;
-        private UInt16 MAX_HEALTH_VALUE_TR1 = 1000;
-        private UInt16 MAX_HEALTH_VALUE_TR2 = 1000;
-        private UInt16 MAX_HEALTH_VALUE_TR3 = 1000;
-
         // Patch-related
         private const int SAVEGAME_VERSION_OFFSET = 0x000;
         private const byte TRX_PREPATCH_SIGNATURE = 0x3B;
@@ -1608,7 +1602,7 @@ namespace TRR_SaveMaster
 
         private void trbHealthTR1_Scroll(object sender, EventArgs e)
         {
-            double healthPercentage = ((double)trbHealthTR1.Value / (double)MAX_HEALTH_VALUE_TR1) * 100;
+            double healthPercentage = ((double)trbHealthTR1.Value / (double)trbHealthTR1.Maximum) * 100;
             lblHealthTR1.Text = healthPercentage.ToString("0.0") + "%";
 
             if (!isLoading && cmbSavegamesTR1.SelectedIndex != -1)
@@ -1619,7 +1613,7 @@ namespace TRR_SaveMaster
 
         private void trbHealthTR2_Scroll(object sender, EventArgs e)
         {
-            double healthPercentage = ((double)trbHealthTR2.Value / (double)MAX_HEALTH_VALUE_TR2 * 100);
+            double healthPercentage = ((double)trbHealthTR2.Value / (double)trbHealthTR2.Maximum * 100);
             lblHealthTR2.Text = healthPercentage.ToString("0.0") + "%";
 
             if (!isLoading && cmbSavegamesTR2.SelectedIndex != -1)
@@ -1630,7 +1624,7 @@ namespace TRR_SaveMaster
 
         private void trbHealthTR3_Scroll(object sender, EventArgs e)
         {
-            double healthPercentage = ((double)trbHealthTR3.Value / (double)MAX_HEALTH_VALUE_TR3 * 100);
+            double healthPercentage = ((double)trbHealthTR3.Value / (double)trbHealthTR3.Maximum * 100);
             lblHealthTR3.Text = healthPercentage.ToString("0.0") + "%";
 
             if (!isLoading && cmbSavegamesTR3.SelectedIndex != -1)
@@ -1641,7 +1635,7 @@ namespace TRR_SaveMaster
 
         private void trbHealthTR4_Scroll(object sender, EventArgs e)
         {
-            double healthPercentage = ((double)trbHealthTR4.Value / (double)MAX_HEALTH_VALUE_DEFAULT) * 100;
+            double healthPercentage = ((double)trbHealthTR4.Value / (double)trbHealthTR4.Maximum) * 100;
             lblHealthTR4.Text = healthPercentage.ToString("0.0") + "%";
 
             if (!isLoading && cmbSavegamesTR4.SelectedIndex != -1)
@@ -1652,7 +1646,7 @@ namespace TRR_SaveMaster
 
         private void trbHealthTR5_Scroll(object sender, EventArgs e)
         {
-            double healthPercentage = ((double)trbHealthTR5.Value / (double)MAX_HEALTH_VALUE_DEFAULT) * 100;
+            double healthPercentage = ((double)trbHealthTR5.Value / (double)trbHealthTR5.Maximum) * 100;
             lblHealthTR5.Text = healthPercentage.ToString("0.0") + "%";
 
             if (!isLoading && cmbSavegamesTR5.SelectedIndex != -1)
@@ -2299,19 +2293,6 @@ namespace TRR_SaveMaster
                     tr1Utilities.UpdateDisplayName(selectedSavegame, fileData);
                     UpdateSavegameDisplayNameTR1(cmbSavegamesTR1, selectedSavegame);
 
-                    bool isPrepatch = IsPrepatchSavegameTRX(fileData);
-                    bool isChallengeMode = false;
-
-                    if (!isPrepatch)
-                    {
-                        isChallengeMode = tr1Utilities.IsChallengeMode(fileData);
-                        MAX_HEALTH_VALUE_TR1 = isChallengeMode ? tr1Utilities.GetChallengeModeMaxHealth(fileData) : MAX_HEALTH_VALUE_DEFAULT;
-                    }
-                    else
-                    {
-                        MAX_HEALTH_VALUE_TR1 = MAX_HEALTH_VALUE_DEFAULT;
-                    }
-
                     tr1Utilities.DisplayGameInfo(fileData, chkPistolsTR1, chkMagnumsTR1, chkUzisTR1, chkShotgunTR1,
                         nudSmallMedipacksTR1, nudLargeMedipacksTR1, nudUziAmmoTR1, nudShotgunAmmoTR1, nudMagnumAmmoTR1,
                         nudSaveNumberTR1, trbHealthTR1, lblHealthTR1, lblHealthErrorTR1);
@@ -2369,19 +2350,6 @@ namespace TRR_SaveMaster
 
                     tr2Utilities.UpdateDisplayName(selectedSavegame, fileData);
                     UpdateSavegameDisplayNameTR2(cmbSavegamesTR2, selectedSavegame);
-
-                    bool isPrepatch = IsPrepatchSavegameTRX(fileData);
-                    bool isChallengeMode = false;
-
-                    if (!isPrepatch)
-                    {
-                        isChallengeMode = tr2Utilities.IsChallengeMode(fileData);
-                        MAX_HEALTH_VALUE_TR2 = isChallengeMode ? tr2Utilities.GetChallengeModeMaxHealth(fileData) : MAX_HEALTH_VALUE_DEFAULT;
-                    }
-                    else
-                    {
-                        MAX_HEALTH_VALUE_TR2 = MAX_HEALTH_VALUE_DEFAULT;
-                    }
 
                     tr2Utilities.SetLevelParams(fileData, chkPistolsTR2, chkShotgunTR2, chkAutomaticPistolsTR2, chkUzisTR2, chkM16TR2,
                         chkGrenadeLauncherTR2, chkHarpoonGunTR2, nudShotgunAmmoTR2, nudAutomaticPistolsAmmoTR2, nudUziAmmoTR2,
@@ -2446,19 +2414,6 @@ namespace TRR_SaveMaster
 
                     tr3Utilities.UpdateDisplayName(selectedSavegame, fileData);
                     UpdateSavegameDisplayNameTR3(cmbSavegamesTR3, selectedSavegame);
-
-                    bool isPrepatch = IsPrepatchSavegameTRX(fileData);
-                    bool isChallengeMode = false;
-
-                    if (!isPrepatch)
-                    {
-                        isChallengeMode = tr3Utilities.IsChallengeMode(fileData);
-                        MAX_HEALTH_VALUE_TR3 = isChallengeMode ? tr3Utilities.GetChallengeModeMaxHealth(fileData) : MAX_HEALTH_VALUE_DEFAULT;
-                    }
-                    else
-                    {
-                        MAX_HEALTH_VALUE_TR3 = MAX_HEALTH_VALUE_DEFAULT;
-                    }
 
                     tr3Utilities.DisplayGameInfo(fileData, chkPistolsTR3, chkShotgunTR3, chkDeagleTR3, chkUzisTR3, chkMP5TR3,
                         chkRocketLauncherTR3, chkGrenadeLauncherTR3, chkHarpoonGunTR3, nudSaveNumberTR3, nudSmallMedipacksTR3,
