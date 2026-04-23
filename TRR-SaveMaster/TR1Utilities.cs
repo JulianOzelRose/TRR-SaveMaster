@@ -965,17 +965,17 @@ namespace TRR_SaveMaster
             NumericUpDown nudSaveNumber, TrackBar trbHealth, Label lblHealth, Label lblHealthError)
         {
             DetermineOffsets(fileData);
-            DetermineDynamicOffsets(fileData);
 
-            GameMode gameMode = GetGameMode(fileData);
             bool isPrepatch = IsPrepatchSavegame(fileData);
             bool isChallengeMode = IsChallengeMode(fileData);
 
-            nudSmallMedipacks.Enabled = gameMode == GameMode.Normal;
-            nudLargeMedipacks.Enabled = gameMode == GameMode.Normal;
-
             MAX_HEALTH_VALUE = (isChallengeMode && !isPrepatch) ? GetChallengeModeMaxHealth(fileData) : MAX_HEALTH_VALUE_DEFAULT;
             trbHealth.Maximum = MAX_HEALTH_VALUE;
+
+            GameMode gameMode = GetGameMode(fileData);
+
+            nudSmallMedipacks.Enabled = gameMode == GameMode.Normal;
+            nudLargeMedipacks.Enabled = gameMode == GameMode.Normal;
 
             byte weaponsConfigNum = GetWeaponsConfigNum(fileData);
 
@@ -1000,6 +1000,11 @@ namespace TRR_SaveMaster
             nudUziAmmo.Value = GetUziAmmo(fileData);
             nudMagnumAmmo.Value = GetMagnumAmmo(fileData);
             nudShotgunAmmo.Value = GetShotgunAmmo(fileData);
+
+            if (!isPrepatch)
+            {
+                DetermineDynamicOffsets(fileData);
+            }
 
             int healthOffset = GetHealthOffset(fileData, true);
 

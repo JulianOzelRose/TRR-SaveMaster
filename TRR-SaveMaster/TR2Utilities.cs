@@ -1398,7 +1398,6 @@ namespace TRR_SaveMaster
             NumericUpDown nudLargeMedipacks, TrackBar trbHealth, Label lblHealth, Label lblHealthError)
         {
             DetermineOffsets(fileData);
-            DetermineDynamicOffsets(fileData);
 
             bool isPrepatch = IsPrepatchSavegame(fileData);
             bool isChallengeMode = IsChallengeMode(fileData);
@@ -1461,6 +1460,11 @@ namespace TRR_SaveMaster
                 chkM16.Checked = (weaponsConfigNum & WEAPON_M16) != 0;
                 chkGrenadeLauncher.Checked = (weaponsConfigNum & WEAPON_GRENADE_LAUNCHER) != 0;
                 chkHarpoonGun.Checked = (weaponsConfigNum & WEAPON_HARPOON_GUN) != 0;
+            }
+
+            if (!isPrepatch)
+            {
+                DetermineDynamicOffsets(fileData);
             }
 
             int healthOffset = GetHealthOffset(fileData, true);

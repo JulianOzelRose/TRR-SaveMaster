@@ -1039,7 +1039,6 @@ namespace TRR_SaveMaster
             Label lblCollectibleCrystals)
         {
             DetermineOffsets(fileData);
-            DetermineDynamicOffsets(fileData);
 
             bool isPrepatch = IsPrepatchSavegame(fileData);
             bool isChallengeMode = IsChallengeMode(fileData);
@@ -1099,6 +1098,11 @@ namespace TRR_SaveMaster
             }
 
             chkHarpoonGun.Checked = IsHarpoonGunPresent(fileData);
+
+            if (!isPrepatch)
+            {
+                DetermineDynamicOffsets(fileData);
+            }
 
             int healthOffset = GetHealthOffset(fileData, true);
 
