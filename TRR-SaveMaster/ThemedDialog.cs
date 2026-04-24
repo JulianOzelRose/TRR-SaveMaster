@@ -68,7 +68,8 @@ namespace TRR_SaveMaster
                     this.AcceptButton = btnPrimary;
                     this.CancelButton = btnPrimary;
 
-                    btnPrimary.Left = this.ClientSize.Width - btnPrimary.Width - 20;
+                    const int RightPadding = 15;
+                    btnPrimary.Left = this.ClientSize.Width - btnPrimary.Width - RightPadding;
                     break;
 
                 case MessageBoxButtons.YesNo:
