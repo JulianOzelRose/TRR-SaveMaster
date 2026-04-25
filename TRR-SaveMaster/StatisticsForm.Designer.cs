@@ -682,6 +682,7 @@ namespace TRR_SaveMaster
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "StatisticsForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Edit Statistics";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StatisticsForm_FormClosing);

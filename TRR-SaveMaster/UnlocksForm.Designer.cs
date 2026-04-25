@@ -222,6 +222,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "UnlocksForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Edit Unlocks";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UnlocksForm_FormClosing);

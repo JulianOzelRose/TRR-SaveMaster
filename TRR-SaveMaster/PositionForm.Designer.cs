@@ -483,6 +483,7 @@ namespace TRR_SaveMaster
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "PositionForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Edit Position";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PositionForm_FormClosing);

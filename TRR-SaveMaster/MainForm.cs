@@ -2877,14 +2877,14 @@ namespace TRR_SaveMaster
         {
             AboutForm aboutForm = new AboutForm();
             aboutForm.TopMost = TopMost;
-            aboutForm.ShowDialog();
+            aboutForm.ShowDialog(this);
         }
 
         private void tsmiUnlocks_Click(object sender, EventArgs e)
         {
             UnlocksForm unlocksForm = new UnlocksForm(this, slblStatus, tsmiBackupBeforeSaving.Checked, savegamePathTRX, savegamePathTRX2);
             unlocksForm.TopMost = TopMost;
-            unlocksForm.ShowDialog();
+            unlocksForm.ShowDialog(this);
         }
 
         private void tsmiStatistics_Click(object sender, EventArgs e)
@@ -2968,7 +2968,7 @@ namespace TRR_SaveMaster
                 {
                     statisticsForm.SetSavegame(selectedSavegame);
                     statisticsForm.TopMost = TopMost;
-                    statisticsForm.ShowDialog();
+                    statisticsForm.ShowDialog(this);
                 }
             }
             catch (Exception ex)
@@ -3325,7 +3325,7 @@ namespace TRR_SaveMaster
                 {
                     positionForm.SetSavegame(selectedSavegame);
                     positionForm.TopMost = TopMost;
-                    positionForm.ShowDialog();
+                    positionForm.ShowDialog(this);
                 }
             }
             catch (Exception ex)
