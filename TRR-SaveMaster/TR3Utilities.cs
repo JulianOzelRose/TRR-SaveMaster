@@ -116,6 +116,7 @@ namespace TRR_SaveMaster
         private int AMMO_WRITE_LOWER_BOUND;
         private int AMMO_WRITE_UPPER_BOUND;
         private int sgBufferCursor = 0;
+        private int rngState;
 
         private readonly Dictionary<byte, string> levelNames = new Dictionary<byte, string>()
         {
@@ -459,43 +460,360 @@ namespace TRR_SaveMaster
             }
         }
 
-        private int GetEffectiveLevelItemCount(byte[] fileData, int levelIndex, bool isChallengeMode)
+        private void SeedRNG(int seed)
         {
-            if (!TR3EntityCache.BaseLevelItemCounts.TryGetValue(levelIndex, out int itemCount))
+            rngState = seed;
+        }
+
+        private int NextRNG()
+        {
+            rngState = rngState * 0x343FD + 0x269EC3;
+            return (rngState >> 0x10) & 0x7FFF;
+        }
+
+        private HashSet<int> BuildRemovalSet(
+            List<int> entityIds,
+            Dictionary<int, TR3Object> levelObjects,
+            byte levelIndex,
+            byte enemyNumbers)
+        {
+            var removalSet = new HashSet<int>();
+
+            // Only applies to EN modes below Normal
+            if (enemyNumbers >= CHALLENGE_MODE_ENEMY_NUMBERS_NORMAL)
             {
-                throw new InvalidOperationException($"Missing base item count for level {levelIndex}.");
+                return removalSet;
             }
 
-            if (!isChallengeMode)
+            // =========================
+            // 1. Build candidate pool
+            // =========================
+            var candidates = new List<int>();
+
+            for (int i = 0; i < entityIds.Count; i++)
             {
-                return itemCount;
+                int objectId = entityIds[i];
+
+                // Must exist in EnemyDefinitions
+                if (!TR3EntityCache.TR3EnemyRemovableByObjectId.TryGetValue(objectId, out bool removable)) continue;
+
+                // Must be removable
+                if (!removable) continue;
+
+                // Skip unchangeable indices
+                if (TR3EntityCache.UnchangeableEntitiesByLevel.TryGetValue(levelIndex, out var locked) && locked.Contains(i)) continue;
+
+                candidates.Add(i);
             }
 
-            byte enemyMode = GetChallengeModeEnemyNumbers(fileData);
+            int candidateCount = candidates.Count;
+            if (candidateCount == 0)
+            {
+                return removalSet;
+            }
+
+            // =========================
+            // 2. Compute removal count
+            // =========================
+            int rawPercent = TR3EntityCache.EnemyRemovalPercents[enemyNumbers];
+
+            // Engine negates this
+            int percent = -rawPercent;
+
+            int removeCount = ComputeRemovalCount(candidateCount, percent);
+
+            if (removeCount <= 0)
+            {
+                return removalSet;
+            }
+
+            // =========================
+            // 3. RNG selection (retry)
+            // =========================
+            while (removalSet.Count < removeCount)
+            {
+                int roll = NextRNG();
+                int idx = roll % candidateCount;
+
+                int entityIndex = candidates[idx];
+
+                if (removalSet.Contains(entityIndex))
+                {
+                    continue; // retry (CRITICAL)
+                }
+
+                removalSet.Add(entityIndex);
+            }
+
+            return removalSet;
+        }
+
+        private int ComputeRemovalCount(int candidateCount, int percent)
+        {
+            // percent is negative
+            double value = (candidateCount * percent) / 100.0;
+
+            int floor = (int)value;
+            double fraction = value - floor;
+
+            if (fraction < 0.5)
+            {
+                return Math.Max(0, floor);
+            }
+
+            if (fraction > 0.5)
+            {
+                return Math.Max(0, floor + 1);
+            }
+
+            // exactly 0.5 -> RNG tie-break
+            int roll = NextRNG() % 100;
+
+            int result = (roll < 50) ? floor : floor + 1;
+
+            return Math.Max(0, result);
+        }
+
+        private void ApplyAddEnemies(
+            List<int> result,
+            byte levelIndex,
+            byte enemyNumbers)
+        {
+            if (enemyNumbers <= CHALLENGE_MODE_ENEMY_NUMBERS_NORMAL)
+            {
+                return;
+            }
+
+            if (!TR3EntityCache.TR3AddEnemyTableByLevel.TryGetValue(levelIndex, out var addList))
+            {
+                return;
+            }
+
+            int totalAddEntries = addList.Count;
+            if (totalAddEntries == 0)
+            {
+                return;
+            }
+
+            int percent = TR3EntityCache.EnemyRemovalPercents[enemyNumbers];
+            // Same table: 25/50/100 for > Normal
+
+            int selectedCount = ComputePositiveSelectionCount(totalAddEntries, percent);
+
+            if (selectedCount <= 0)
+            {
+                return;
+            }
+
+            var selected = new bool[totalAddEntries];
+            int selectedSoFar = 0;
+
+            while (selectedSoFar < selectedCount)
+            {
+                int randomIndex = NextRNG() % totalAddEntries;
+
+                if (selected[randomIndex])
+                {
+                    continue;
+                }
+
+                selected[randomIndex] = true;
+                selectedSoFar++;
+            }
+
+            // IMPORTANT: Append in original add-table order
+            for (int i = 0; i < totalAddEntries; i++)
+            {
+                if (selected[i])
+                {
+                    result.Add(addList[i]);
+                }
+            }
+        }
+
+        private int ComputePositiveSelectionCount(int totalCount, int percent)
+        {
+            double value = (double)(totalCount * percent) / 100.0;
+            int floor = (int)value;
+            double fraction = value - floor;
+
+            if (fraction < 0.5)
+            {
+                return floor;
+            }
+
+            if (fraction > 0.5)
+            {
+                return floor + 1;
+            }
+
+            // exactly .5
+            int roll = NextRNG() % 100;
+            return (roll < 50) ? floor : floor + 1;
+        }
+
+        private List<int> ApplyChallengeModeMutations(List<int> baseList, byte levelIndex, byte enemyNumbers, byte enemyType, Int32 seed)
+        {
+            var result = new List<int>(baseList);
+
+            if (enemyNumbers <= CHALLENGE_MODE_ENEMY_NUMBERS_NORMAL && enemyType == CHALLENGE_MODE_ENEMY_TYPE_NORMAL)
+            {
+                return result;
+            }
 
             if (!TR3EntityCache.ChallengeModeItemCountModifiersByLevel.TryGetValue(levelIndex, out var levelModifiers))
             {
-                throw new InvalidOperationException($"Missing Challenge Mode modifier table for level {levelIndex}.");
+                return result;
             }
 
-            if (!levelModifiers.TryGetValue(enemyMode, out int modifier))
+            if (!levelModifiers.TryGetValue(enemyNumbers, out int addCount))
             {
-                throw new InvalidOperationException($"Missing Challenge Mode item-count modifier for level {levelIndex}, Enemy Count {enemyMode}.");
+                return result;
             }
 
-            return itemCount + modifier;
+            if (addCount <= 0 && enemyType == CHALLENGE_MODE_ENEMY_TYPE_NORMAL)
+            {
+                return result;
+            }
+
+            SeedRNG(seed);
+
+            if (!TR3EntityCache.TR3ObjectsByLevel.TryGetValue(levelIndex, out var levelObjects))
+            {
+                if (enemyType != CHALLENGE_MODE_ENEMY_TYPE_RANDOMIZER)
+                {
+                    return result;
+                }
+            }
+
+            // ===================================
+            // EN APPEND FIRST
+            // ===================================
+            if (enemyNumbers > CHALLENGE_MODE_ENEMY_NUMBERS_NORMAL)
+            {
+                ApplyAddEnemies(result, levelIndex, enemyNumbers);
+            }
+
+            // ===================================
+            // SINGLE ET MUTATION PASS (FULL LIST)
+            // ===================================
+            if (enemyType != CHALLENGE_MODE_ENEMY_TYPE_NORMAL)
+            {
+                var catType = enemyType;
+
+                if (!TR3EntityCache.ChallengeModeCatGroups.TryGetValue(catType, out var catGroups))
+                {
+                    return result;
+                }
+
+                Dictionary<string, string> catMapping = null;
+
+                if (enemyType != CHALLENGE_MODE_ENEMY_TYPE_RANDOMIZER)
+                {
+                    if (!TR3EntityCache.ChallengeModeCatMapping.TryGetValue(enemyType, out catMapping))
+                    {
+                        return result;
+                    }
+                }
+
+                var objectToCat = new Dictionary<int, string>();
+
+                foreach (var kvp in catGroups)
+                {
+                    foreach (var entry in kvp.Value)
+                    {
+                        objectToCat[entry.ObjectId] = kvp.Key;
+                    }
+                }
+
+                var removalSet = BuildRemovalSet(result, levelObjects, levelIndex, enemyNumbers);
+
+                for (int i = 0; i < result.Count; i++)
+                {
+                    int originalId = result[i];
+
+                    if (!levelObjects.TryGetValue(originalId, out var obj)) continue;
+                    if ((obj.Flags00 & 0x02) == 0) continue;
+
+                    if (TR3EntityCache.TR3EnemyFriendlyByObjectId.TryGetValue(originalId, out bool isFriendly) && isFriendly)
+                    {
+                        continue;
+                    }
+
+                    if (!objectToCat.TryGetValue(originalId, out var sourceCat)) continue;
+                    if (!catGroups.TryGetValue(sourceCat, out var sourceEntries)) continue;
+                    if (TR3EntityCache.UnchangeableEntitiesByLevel.TryGetValue(levelIndex, out var set) && set.Contains(i)) continue;
+                    if (removalSet.Contains(i)) continue;
+
+                    TR3CatEntry sourceEntry = null;
+
+                    foreach (var e in sourceEntries)
+                    {
+                        if (e.ObjectId == originalId)
+                        {
+                            sourceEntry = e;
+                            break;
+                        }
+                    }
+
+                    if (sourceEntry == null) continue;
+
+                    int gateRoll = NextRNG() % 100;
+                    if (sourceEntry.Weight < gateRoll) continue;
+
+                    string targetCat;
+
+                    if (enemyType == CHALLENGE_MODE_ENEMY_TYPE_RANDOMIZER)
+                    {
+                        targetCat = sourceCat;
+                    }
+                    else
+                    {
+                        if (!catMapping.TryGetValue(sourceCat, out targetCat))
+                        {
+                            continue; // mapping missing = no mutation, but gate RNG was already consumed
+                        }
+                    }
+
+                    if (!catGroups.TryGetValue(targetCat, out var targetEntries)) continue;
+
+                    int pickRoll = NextRNG() % 100;
+                    int cumulative = 0;
+
+                    foreach (var entry in targetEntries)
+                    {
+                        cumulative += entry.Meta2;
+                        if (pickRoll <= cumulative)
+                        {
+                            result[i] = entry.ObjectId;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return result;
         }
 
         private void DetermineDynamicOffsets(byte[] fileData)
         {
             bool isChallengeMode = IsChallengeMode(fileData);
             bool isNativePatch5 = IsNativePatch5Format(fileData);
-            int levelIndex = GetLevelIndex(fileData);
+            byte levelIndex = GetLevelIndex(fileData);
+
+            var baseList = TR3EntityCache.LevelObjectIdsByLevel[levelIndex];
+            var levelObjectIds = new List<int>(baseList);
 
             sgBufferCursor = platform == Platform.Android ? 0x9E3 : 0x998;
 
             if (isChallengeMode && isNativePatch5)
             {
+                byte enemyNumbers = GetChallengeModeEnemyNumbers(fileData);
+                byte enemyType = GetChallengeModeEnemyType(fileData);
+                Int32 challengeModeRNGSeed = GetChallengeModeRNGSeed(fileData);
+
+                levelObjectIds = ApplyChallengeModeMutations(levelObjectIds, levelIndex, enemyNumbers, enemyType, challengeModeRNGSeed);
+
                 sgBufferCursor += 0x0C;
             }
 
@@ -506,16 +824,12 @@ namespace TRR_SaveMaster
             int gLevelStateEntryCount = TR3EntityCache.LevelStateEntryCounts[levelIndex];
             sgBufferCursor += gLevelStateEntryCount * 2;
 
-            int gLevelItemCount = GetEffectiveLevelItemCount(fileData, levelIndex, isChallengeMode);
-
             if (isNativePatch5)
             {
                 sgBufferCursor += 4;
             }
 
-            List<int> levelObjectIds = TR3EntityCache.LevelObjectIdsByLevel[levelIndex];
-
-            for (int itemIndex = 0; itemIndex < gLevelItemCount; itemIndex++)
+            for (int itemIndex = 0; itemIndex < levelObjectIds.Count; itemIndex++)
             {
                 int objectId = levelObjectIds[itemIndex];
 
@@ -662,6 +976,16 @@ namespace TRR_SaveMaster
         private byte GetChallengeModeEnemyNumbers(byte[] fileData)
         {
             return fileData[savegameOffset + CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET];
+        }
+
+        private byte GetChallengeModeEnemyType(byte[] fileData)
+        {
+            return fileData[savegameOffset + CHALLENGE_MODE_ENEMY_TYPE_OFFSET];
+        }
+
+        private Int32 GetChallengeModeRNGSeed(byte[] fileData)
+        {
+            return BitConverter.ToInt32(fileData, savegameOffset + CHALLENGE_MODE_RNG_SEED_OFFSET);
         }
 
         private Int32 GetSaveNumber(byte[] fileData)

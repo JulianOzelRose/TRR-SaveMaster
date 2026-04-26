@@ -4,36 +4,6 @@ namespace TRR_SaveMaster
 {
     public class TR3EntityCache
     {
-        public static readonly Dictionary<int, int> BaseLevelItemCounts = new Dictionary<int, int>()
-        {
-            {  1, 142 },    // Jungle
-            {  2, 229 },    // Temple Ruins
-            {  3, 117 },    // The River Ganges
-            {  4, 33  },    // Caves of Kaliya
-            {  5, 178 },    // Coastal Village
-            {  6, 148 },    // Crash Site
-            {  7, 135 },    // Madubu Gorge
-            {  8, 65  },    // Temple of Puna
-            {  9, 217 },    // Thames Wharf
-            { 10, 248 },    // Aldwych
-            { 11, 212 },    // Lud's Gate
-            { 12, 44  },    // City
-            { 13, 154 },    // Nevada Desert
-            { 14, 246 },    // High Security Compound
-            { 15, 242 },    // Area 51
-            { 16, 152 },    // Antarctica
-            { 17, 186 },    // RX-Tech Mines
-            { 18, 202 },    // Lost City of Tinnos
-            { 19, 51  },    // Meteorite Cavern
-            { 20, 103 },    // All Hallows
-            { 21, 150 },    // Highland Fling
-            { 22, 155 },    // Willard's Lair
-            { 23, 190 },    // Shakespeare Cliff
-            { 24, 149 },    // Sleeping with the Fishes
-            { 25, 144 },    // It's a Madhouse!
-            { 26, 102 },    // Reunion
-        };
-
         public static readonly Dictionary<int, int> LevelStateEntryCounts = new Dictionary<int, int>()
         {
             {  1, 13  },    // Jungle
@@ -380,6 +350,905 @@ namespace TRR_SaveMaster
             },
         };
 
+        public static readonly Dictionary<byte, Dictionary<string, List<TR3CatEntry>>> ChallengeModeCatGroups = new Dictionary<byte, Dictionary<string, List<TR3CatEntry>>>
+        {
+            {
+                0, // Downscaling
+                new Dictionary<string, List<TR3CatEntry>>
+                {
+                    {
+                        "CAT1 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x0047, 0, 0),
+                            new TR3CatEntry(0x0045, 0, 0),
+                            new TR3CatEntry(0x0017, 0, 35),
+                            new TR3CatEntry(0x0029, 0, 35),
+                            new TR3CatEntry(0x0016, 0, 30),
+                            new TR3CatEntry(0x0022, 0, 0),
+                        }
+                    },
+                    {
+                        "CAT2 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x001C, 75, 10),
+                            new TR3CatEntry(0x0038, 75, 10),
+                            new TR3CatEntry(0x0035, 75, 10),
+                            new TR3CatEntry(0x0014, 75, 5),
+                            new TR3CatEntry(0x0015, 75, 10),
+                            new TR3CatEntry(0x0025, 75, 10),
+                            new TR3CatEntry(0x0020, 0, 0),
+                            new TR3CatEntry(0x0023, 75, 10),
+                            new TR3CatEntry(0x003E, 75, 10),
+                            new TR3CatEntry(0x003C, 75, 10),
+                            new TR3CatEntry(0x003D, 75, 5),
+                            new TR3CatEntry(0x0027, 75, 5),
+                            new TR3CatEntry(0x002A, 75, 5),
+                        }
+                    },
+                    {
+                        "CAT3 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x003F, 75, 15),
+                            new TR3CatEntry(0x0028, 75, 30),
+                            new TR3CatEntry(0x0032, 75, 30),
+                            new TR3CatEntry(0x002E, 75, 5),
+                            new TR3CatEntry(0x0120, 75, 5),
+                            new TR3CatEntry(0x0033, 75, 15),
+                        }
+                    },
+                    {
+                        "CAT4 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x0046, 75, 0),
+                            new TR3CatEntry(0x002D, 75, 0),
+                        }
+                    },
+                    {
+                        "CAT5 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x001B, 0, 100),
+                        }
+                    },
+                    {
+                        "CAT6 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x001D, 75, 100),
+                        }
+                    },
+                    {
+                        "CAT7 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x002C, 75, 0),
+                        }
+                    }
+                }
+            },
+            {
+                1, // Upscaling
+                new Dictionary<string, List<TR3CatEntry>>
+                {
+                    {
+                        "CAT1 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x0047, 0, 0),
+                            new TR3CatEntry(0x0045, 0, 0),
+                            new TR3CatEntry(0x0017, 10, 0),
+                            new TR3CatEntry(0x0029, 10, 0),
+                            new TR3CatEntry(0x0016, 10, 0),
+                            new TR3CatEntry(0x0022, 10, 0),
+                        }
+                    },
+                    {
+                        "CAT2 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x001C, 75, 10),
+                            new TR3CatEntry(0x0038, 75, 10),
+                            new TR3CatEntry(0x0035, 75, 10),
+                            new TR3CatEntry(0x0014, 75, 5),
+                            new TR3CatEntry(0x0015, 75, 10),
+                            new TR3CatEntry(0x0025, 75, 10),
+                            new TR3CatEntry(0x0020, 0, 0),
+                            new TR3CatEntry(0x0023, 75, 10),
+                            new TR3CatEntry(0x003E, 75, 10),
+                            new TR3CatEntry(0x003C, 75, 10),
+                            new TR3CatEntry(0x003D, 75, 5),
+                            new TR3CatEntry(0x0027, 75, 5),
+                            new TR3CatEntry(0x002A, 75, 5),
+                        }
+                    },
+                    {
+                        "CAT3 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x003F, 75, 15),
+                            new TR3CatEntry(0x0028, 75, 30),
+                            new TR3CatEntry(0x0032, 75, 20),
+                            new TR3CatEntry(0x002E, 75, 10),
+                            new TR3CatEntry(0x0120, 75, 10),
+                            new TR3CatEntry(0x0033, 75, 15),
+                        }
+                    },
+                    {
+                        "CAT4 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x002D, 0, 50),
+                            new TR3CatEntry(0x0046, 0, 50),
+                        }
+                    },
+                    {
+                        "CAT5 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x001B, 75, 0),
+                        }
+                    },
+                    {
+                        "CAT6 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x001D, 75, 100),
+                        }
+                    },
+                    {
+                        "CAT7 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x002C, 0, 100),
+                        }
+                    }
+                }
+            },
+            {
+                3, // Mutant Mayhem
+                new Dictionary<string, List<TR3CatEntry>>
+                {
+                    {
+                        "CAT1 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x0047, 0, 0),
+                            new TR3CatEntry(0x0045, 0, 0),
+                            new TR3CatEntry(0x0017, 75, 0),
+                            new TR3CatEntry(0x0029, 75, 0),
+                            new TR3CatEntry(0x0016, 75, 0),
+                            new TR3CatEntry(0x0022, 75, 0),
+                        }
+                    },
+                    {
+                        "CAT2 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x001C, 75, 0),
+                            new TR3CatEntry(0x0038, 75, 0),
+                            new TR3CatEntry(0x0035, 75, 0),
+                            new TR3CatEntry(0x0014, 75, 0),
+                            new TR3CatEntry(0x0015, 75, 0),
+                            new TR3CatEntry(0x0025, 75, 0),
+                            new TR3CatEntry(0x0020, 0, 0),
+                            new TR3CatEntry(0x0023, 75, 0),
+                            new TR3CatEntry(0x003E, 75, 0),
+                            new TR3CatEntry(0x003C, 75, 0),
+                            new TR3CatEntry(0x003D, 75, 0),
+                            new TR3CatEntry(0x0027, 75, 10),
+                            new TR3CatEntry(0x002A, 75, 90),
+                        }
+                    },
+                    {
+                        "CAT3 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x003F, 75, 5),
+                            new TR3CatEntry(0x0028, 75, 5),
+                            new TR3CatEntry(0x0032, 75, 5),
+                            new TR3CatEntry(0x002E, 75, 80),
+                            new TR3CatEntry(0x0120, 75, 0),
+                            new TR3CatEntry(0x0033, 75, 5),
+                        }
+                    },
+                    {
+                        "CAT4 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x0046, 75, 0),
+                            new TR3CatEntry(0x002D, 75, 100),
+                        }
+                    },
+                    {
+                        "CAT5 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x001B, 75, 0),
+                        }
+                    },
+                    {
+                        "CAT6 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x001D, 75, 0),
+                        }
+                    },
+                    {
+                        "CAT7 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x002C, 0, 100),
+                        }
+                    }
+                }
+            },
+            {
+                4, // Cryptid Chaos
+                new Dictionary<string, List<TR3CatEntry>>
+                {
+                    {
+                        "CAT1 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x0047, 0, 0),
+                            new TR3CatEntry(0x0045, 0, 0),
+                            new TR3CatEntry(0x0017, 25, 0),
+                            new TR3CatEntry(0x0029, 25, 0),
+                            new TR3CatEntry(0x0016, 25, 0),
+                            new TR3CatEntry(0x0022, 25, 0),
+                        }
+                    },
+                    {
+                        "CAT2 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x001C, 75, 0),
+                            new TR3CatEntry(0x0038, 75, 0),
+                            new TR3CatEntry(0x0035, 75, 0),
+                            new TR3CatEntry(0x0014, 75, 0),
+                            new TR3CatEntry(0x0015, 75, 0),
+                            new TR3CatEntry(0x0025, 75, 0),
+                            new TR3CatEntry(0x0020, 0, 0),
+                            new TR3CatEntry(0x0023, 75, 80),
+                            new TR3CatEntry(0x003E, 75, 0),
+                            new TR3CatEntry(0x003C, 75, 0),
+                            new TR3CatEntry(0x003D, 75, 0),
+                            new TR3CatEntry(0x0027, 75, 0),
+                            new TR3CatEntry(0x002A, 75, 20),
+                        }
+                    },
+                    {
+                        "CAT3 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x003F, 75, 0),
+                            new TR3CatEntry(0x0028, 75, 0),
+                            new TR3CatEntry(0x0032, 75, 0),
+                            new TR3CatEntry(0x002E, 75, 20),
+                            new TR3CatEntry(0x0120, 75, 80),
+                            new TR3CatEntry(0x0033, 75, 0),
+                        }
+                    },
+                    {
+                        "CAT4 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x0046, 75, 80),
+                            new TR3CatEntry(0x002D, 75, 20),
+                        }
+                    },
+                    {
+                        "CAT5 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x001B, 75, 0),
+                        }
+                    },
+                    {
+                        "CAT6 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x001D, 75, 0),
+                        }
+                    },
+                    {
+                        "CAT7 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x002C, 0, 100),
+                        }
+                    }
+                }
+            },
+            {
+                5, // Randomizer
+                new Dictionary<string, List<TR3CatEntry>>
+                {
+                    {
+                        "CAT1 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x0047, 0, 0),
+                            new TR3CatEntry(0x0045, 0, 0),
+                            new TR3CatEntry(0x0017, 75, 40),
+                            new TR3CatEntry(0x0029, 75, 30),
+                            new TR3CatEntry(0x0016, 75, 30),
+                            new TR3CatEntry(0x0022, 75, 0),
+                        }
+                    },
+                    {
+                        "CAT2 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x001C, 75, 10),
+                            new TR3CatEntry(0x0038, 75, 10),
+                            new TR3CatEntry(0x0035, 75, 10),
+                            new TR3CatEntry(0x0014, 75, 5),
+                            new TR3CatEntry(0x0015, 75, 5),
+                            new TR3CatEntry(0x0025, 75, 10),
+                            new TR3CatEntry(0x0020, 0, 0),
+                            new TR3CatEntry(0x0023, 75, 5),
+                            new TR3CatEntry(0x003E, 75, 10),
+                            new TR3CatEntry(0x003C, 75, 10),
+                            new TR3CatEntry(0x003D, 75, 10),
+                            new TR3CatEntry(0x0027, 75, 10),
+                            new TR3CatEntry(0x002A, 75, 5),
+                        }
+                    },
+                    {
+                        "CAT3 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x003F, 75, 15),
+                            new TR3CatEntry(0x0028, 75, 30),
+                            new TR3CatEntry(0x0032, 75, 30),
+                            new TR3CatEntry(0x002E, 75, 5),
+                            new TR3CatEntry(0x0120, 75, 5),
+                            new TR3CatEntry(0x0033, 75, 15),
+                        }
+                    },
+                    {
+                        "CAT4 - Enemy",
+                        new List<TR3CatEntry>
+                        {
+                            new TR3CatEntry(0x002D, 75, 50),
+                            new TR3CatEntry(0x0046, 75, 50),
+                        }
+                    }
+                }
+            },
+        };
+
+        public static readonly Dictionary<byte, Dictionary<int, string>> ChallengeModeObjectIdToCategory = BuildObjectIdToCategoryMap();
+
+        private static Dictionary<byte, Dictionary<int, string>> BuildObjectIdToCategoryMap()
+        {
+            var result = new Dictionary<byte, Dictionary<int, string>>();
+
+            foreach (var etEntry in ChallengeModeCatGroups)
+            {
+                byte enemyType = etEntry.Key;
+                var catGroups = etEntry.Value;
+
+                var objectToCat = new Dictionary<int, string>();
+
+                foreach (var catEntry in catGroups)
+                {
+                    string catName = catEntry.Key;
+                    var entries = catEntry.Value;
+
+                    foreach (var entry in entries)
+                    {
+                        objectToCat[entry.ObjectId] = catName;
+                    }
+                }
+
+                result[enemyType] = objectToCat;
+            }
+
+            return result;
+        }
+
+        public static readonly Dictionary<byte, Dictionary<string, string>> ChallengeModeCatMapping = new Dictionary<byte, Dictionary<string, string>>()
+        {
+            {
+                0, // Downscaling
+                new Dictionary<string, string>
+                {
+                    { "CAT2 - Enemy", "CAT1 - Enemy" },
+                    { "CAT3 - Enemy", "CAT2 - Enemy" },
+                    { "CAT4 - Enemy", "CAT3 - Enemy" },
+                    { "CAT6 - Enemy", "CAT5 - Enemy" },
+                    { "CAT7 - Enemy", "CAT6 - Enemy" },
+                }
+            },
+            {
+                1, // Upscaling
+                new Dictionary<string, string>
+                {
+                    { "CAT1 - Enemy", "CAT2 - Enemy" },
+                    { "CAT2 - Enemy", "CAT3 - Enemy" },
+                    { "CAT3 - Enemy", "CAT4 - Enemy" },
+                    { "CAT5 - Enemy", "CAT6 - Enemy" },
+                    { "CAT6 - Enemy", "CAT7 - Enemy" },
+                }
+            },
+            {
+                3, // Mutant Mayhem
+                new Dictionary<string, string>
+                {
+                    { "CAT2 - Enemy", "CAT2 - Enemy" },
+                    { "CAT3 - Enemy", "CAT3 - Enemy" },
+                    { "CAT4 - Enemy", "CAT4 - Enemy" },
+                    { "CAT5 - Enemy", "CAT7 - Enemy" },
+                    { "CAT6 - Enemy", "CAT7 - Enemy" },
+                }
+            },
+            {
+                4, // Cryptid Chaos
+                new Dictionary<string, string>
+                {
+                    { "CAT1 - Enemy", "CAT2 - Enemy" },
+                    { "CAT2 - Enemy", "CAT2 - Enemy" },
+                    { "CAT3 - Enemy", "CAT3 - Enemy" },
+                    { "CAT4 - Enemy", "CAT4 - Enemy" },
+                    { "CAT5 - Enemy", "CAT7 - Enemy" },
+                    { "CAT6 - Enemy", "CAT7 - Enemy" },
+                }
+            },
+            {
+                5, // Randomizer
+                new Dictionary<string, string>
+                {
+                    { "CAT1 - Enemy", "CAT1 - Enemy" },
+                    { "CAT2 - Enemy", "CAT2 - Enemy" },
+                    { "CAT3 - Enemy", "CAT3 - Enemy" },
+                    { "CAT4 - Enemy", "CAT4 - Enemy" },
+                }
+            },
+        };
+
+        public static readonly Dictionary<byte, List<int>> ENCandidatePools = new Dictionary<byte, List<int>>()
+        {
+            {
+                1, // Jungle
+                new List<int>
+                {
+                    28, 71
+                }
+            },
+            {
+                2, // Temple Ruins
+                new List<int>
+                {
+                    69, 71
+                }
+            },
+            {
+                3, // The River Ganges
+                new List<int>
+                {
+                    29, 69, 71
+                }
+            },
+            {
+                4, // Caves of Kaliya
+                new List<int>
+                {
+                    69
+                }
+            },
+            {
+                5, // Coastal Village
+                new List<int>
+                {
+                    20, 21, 32
+                }
+            },
+            {
+                6, // Crash Site
+                new List<int>
+                {
+                    34, 37, 288
+                }
+            },
+            {
+                7, // Madubu Gorge
+                new List<int>
+                {
+                    32, 35
+                }
+            },
+            {
+                9, // Thames Wharf
+                new List<int>
+                {
+                    23, 27, 51, 56
+                }
+            },
+            {
+                10, // Aldwych
+                new List<int>
+                {
+                    22, 23, 53
+                }
+            },
+            {
+                11, // Lud's Gate
+                new List<int>
+                {
+                    26, 32, 53, 56
+                }
+            },
+            {
+                13, // Nevada Desert
+                new List<int>
+                {
+                    29, 65, 69
+                }
+            },
+            {
+                14, // High Security Compound
+                new List<int>
+                {
+                    60, 61, 62, 64
+                }
+            },
+            {
+                15, // Area 51
+                new List<int>
+                {
+                    22, 60, 62, 63, 64
+                }
+            },
+            {
+                16, // Antarctica
+                new List<int>
+                {
+                    39, 41
+                }
+            },
+            {
+                17, // RX-Tech Mines
+                new List<int>
+                {
+                    42, 50
+                }
+            },
+            {
+                18, // Lost City of Tinnos
+                new List<int>
+                {
+                    45
+                }
+            },
+            {
+                21, // Highland Fling
+                new List<int>
+                {
+                    22, 27, 56
+                }
+            },
+            {
+                22, // Willard's Lair
+                new List<int>
+                {
+                    20, 22, 27, 56
+                }
+            },
+            {
+                23, // Shakespeare Cliff
+                new List<int>
+                {
+                    23, 29, 51, 60
+                }
+            },
+            {
+                24, // Sleeping with the Fishes
+                new List<int>
+                {
+                    26, 32, 51
+                }
+            },
+            {
+                25, // It's a Madhouse!
+                new List<int>
+                {
+                    28, 29, 35, 71
+                }
+            },
+        };
+
+        public static readonly Dictionary<int, HashSet<int>> UnchangeableEntitiesByLevel = new Dictionary<int, HashSet<int>>
+        {
+            [1] = new HashSet<int> // Jungle
+            {
+                116
+            },
+            [10] = new HashSet<int> // Aldwych
+            {
+                190
+            },
+            [11] = new HashSet<int> // Lud's Gate
+            {
+                60, 63
+            },
+            [14] = new HashSet<int> // High Security Compound
+            {
+                17, 60, 63, 87, 105, 113, 114, 130
+            },
+            [15] = new HashSet<int> // Area 51
+            {
+                78
+            },
+            [18] = new HashSet<int> // Lost City of Tinnos
+            {
+                26, 27, 28, 130, 187, 198
+            },
+            [21] = new HashSet<int> // Highland Fling
+            {
+                21, 65
+            },
+            [24] = new HashSet<int> // Sleeping with the Fishes
+            {
+                20
+            },
+        };
+
+        public static readonly Dictionary<int, bool> TR3EnemyRemovableByObjectId = new Dictionary<int, bool>
+        {
+            [0x0014] = true,
+            [0x0015] = true,
+            [0x0016] = true,
+            [0x0017] = true,
+            [0x0018] = false,
+            [0x0019] = false,
+            [0x001A] = true,
+            [0x001B] = true,
+            [0x001C] = true,
+            [0x001D] = true,
+            [0x001F] = false,
+            [0x0020] = true,
+            [0x0022] = true,
+            [0x0023] = true,
+            [0x0024] = false,
+            [0x0025] = true,
+            [0x0120] = true,
+            [0x0027] = true,
+            [0x0028] = true,
+            [0x0029] = true,
+            [0x002A] = true,
+            [0x002C] = true,
+            [0x002D] = true,
+            [0x002E] = false,
+            [0x0031] = false,
+            [0x0032] = true,
+            [0x0033] = true,
+            [0x0035] = true,
+            [0x0038] = true,
+            [0x0039] = false,
+            [0x003C] = true,
+            [0x003D] = true,
+            [0x003E] = true,
+            [0x003F] = true,
+            [0x0040] = true,
+            [0x0041] = true,
+            [0x0045] = true,
+            [0x0046] = false,
+            [0x0047] = true,
+            [0x0049] = false,
+        };
+
+        public static readonly Dictionary<int, bool> TR3EnemyFriendlyByObjectId = new Dictionary<int, bool>
+        {
+            [0x0014] = false,
+            [0x0015] = false,
+            [0x0016] = false,
+            [0x0017] = false,
+            [0x0018] = false,
+            [0x0019] = true,
+            [0x001A] = false,
+            [0x001B] = false,
+            [0x001C] = false,
+            [0x001D] = false,
+            [0x001F] = false,
+            [0x0020] = false,
+            [0x0022] = false,
+            [0x0023] = false,
+            [0x0024] = false,
+            [0x0025] = false,
+            [0x0120] = false,
+            [0x0027] = false,
+            [0x0028] = false,
+            [0x0029] = false,
+            [0x002A] = false,
+            [0x002C] = false,
+            [0x002D] = false,
+            [0x002E] = false,
+            [0x0031] = false,
+            [0x0032] = false,
+            [0x0033] = false,
+            [0x0035] = false,
+            [0x0038] = false,
+            [0x0039] = false,
+            [0x003C] = false,
+            [0x003D] = false,
+            [0x003E] = true,
+            [0x003F] = false,
+            [0x0040] = false,
+            [0x0041] = false,
+            [0x0045] = false,
+            [0x0046] = false,
+            [0x0047] = true,
+            [0x0049] = false,
+        };
+
+        public static readonly Dictionary<byte, int> EnemyRemovalPercents = new Dictionary<byte, int>
+        {
+            { 0, -75 }, // Ghost Town
+            { 1, -50 }, // Scarcity
+            { 2, -25 }, // Understaffed
+            { 3,  0  }, // Normal
+            { 4,  25 }, // Reinforcement
+            { 5,  50 }, // Crowded
+            { 6, 100 }, // All Hands on Deck
+        };
+
+        public static readonly Dictionary<int, List<int>> TR3AddEnemyTableByLevel = new Dictionary<int, List<int>>
+        {
+            [1] = new List<int> // Jungle
+            {
+                0x001C, 0x001C, 0x0017, 0x0017, 0x0023, 0x001C, 0x001C, 0x001C, 0x0023, 0x0023,
+                0x001C, 0x001C, 0x0017, 0x001C, 0x0017, 0x0017, 0x001B, 0x001C, 0x001C, 0x0020,
+                0x0020, 0x0020, 0x001B, 0x001B, 0x001B, 0x0017, 0x0017, 0x0020
+            },
+            [2] = new List<int> // Temple Ruins
+            {
+                0x001C, 0x0023, 0x001D, 0x001D, 0x001D, 0x001D, 0x001C, 0x001C, 0x0047, 0x0047,
+                0x001C, 0x001C, 0x0020, 0x0020, 0x001B, 0x0017, 0x0017, 0x001C, 0x0017, 0x0017,
+                0x0017, 0x001C, 0x001C, 0x0020, 0x0047, 0x0047, 0x001C, 0x001C, 0x0023, 0x0023,
+                0x001C, 0x001C, 0x001B, 0x001C, 0x001C, 0x0120
+            },
+            [3] = new List<int> // The River Ganges
+            {
+                0x0047, 0x0047, 0x0047, 0x0120, 0x0047, 0x001C, 0x001C, 0x001C, 0x0047, 0x0047,
+                0x0016, 0x001D, 0x001D, 0x001C, 0x001C, 0x0047, 0x0047, 0x0047, 0x001D, 0x001C,
+                0x001D, 0x0016, 0x001C, 0x0020, 0x0016, 0x001C, 0x001C, 0x0047, 0x0047, 0x003D,
+                0x001C, 0x001C, 0x0047, 0x0047, 0x0047, 0x0047
+            },
+            [4] = new List<int> // Caves of Kaliya
+            {
+                0x0023, 0x0017, 0x0017, 0x0047, 0x0017, 0x0017, 0x0023, 0x0017, 0x0017, 0x0017
+            },
+            [5] = new List<int> // Coastal Village
+            {
+                0x0020, 0x0020, 0x0020, 0x001D, 0x0015, 0x0014, 0x0023, 0x0015, 0x0020, 0x0020,
+                0x001D, 0x001D, 0x0023, 0x0023, 0x0023, 0x0120, 0x0120, 0x0015, 0x0014, 0x0014,
+                0x0023, 0x001C, 0x0023, 0x0015, 0x001C, 0x001C, 0x001C, 0x0120
+            },
+            [6] = new List<int> // Crash Site
+            {
+                0x0023, 0x001D, 0x0120, 0x001D, 0x0022, 0x0022, 0x0022, 0x0022, 0x0022, 0x0022,
+                0x0022, 0x0120, 0x0120, 0x0015, 0x001D, 0x0120, 0x0022, 0x0022, 0x0120, 0x0022,
+                0x0022, 0x0120, 0x0022, 0x0120, 0x0120, 0x0120
+            },
+            [7] = new List<int> // Madubu Gorge
+            {
+                0x0022, 0x0022, 0x0022, 0x001D, 0x001D, 0x0014, 0x0014, 0x0023, 0x001D, 0x001D,
+                0x0023, 0x001D, 0x0020, 0x001D, 0x0023, 0x0014, 0x0020, 0x0022, 0x0022, 0x0015,
+                0x0015
+            },
+            [8] = new List<int> // Temple of Puna
+            {
+                0x0014, 0x0023, 0x0014, 0x0023, 0x0023, 0x0017, 0x001C, 0x001C, 0x0017, 0x0017,
+                0x0017, 0x0017
+            },
+            [9] = new List<int> // Thames Wharf
+            {
+                0x0033, 0x0033, 0x0033, 0x0033, 0x0033, 0x0033, 0x0033, 0x0017, 0x0017, 0x001B,
+                0x0033, 0x0017, 0x0017, 0x001B, 0x001B, 0x001B, 0x0038, 0x0016, 0x0016, 0x0038,
+                0x0016, 0x0038, 0x0038, 0x0038, 0x0020, 0x0020, 0x001B, 0x001B, 0x0033, 0x0033,
+                0x0016, 0x0016
+            },
+            [10] = new List<int> // Aldwych
+            {
+                0x0017, 0x0017, 0x0035, 0x0035, 0x0035, 0x0035, 0x0035, 0x0035, 0x0016, 0x0016,
+                0x0016, 0x0016, 0x0038, 0x0038, 0x0038, 0x0038, 0x0035, 0x0035, 0x0016, 0x0035,
+                0x0016, 0x0035, 0x0035, 0x0035, 0x0035, 0x0016, 0x0035, 0x0016, 0x0016
+            },
+            [11] = new List<int> // Lud's Gate
+            {
+                0x0038, 0x0038, 0x001C, 0x001C, 0x0017, 0x0038, 0x0038, 0x0016, 0x0016, 0x0020,
+                0x0038, 0x001B, 0x001B, 0x0038, 0x0038, 0x0017, 0x0017
+            },
+            [13] = new List<int> // Nevada Desert
+            {
+                0x003C, 0x003C, 0x003D, 0x0016, 0x003D, 0x001D, 0x0020, 0x003C, 0x001D, 0x0020,
+                0x0020, 0x0020, 0x001D, 0x003D, 0x003C, 0x003D, 0x0016, 0x003C, 0x003D, 0x0023,
+                0x0023, 0x0023, 0x0016, 0x003C, 0x003D, 0x003C, 0x003D, 0x0020, 0x0020, 0x003C,
+                0x003D, 0x0020, 0x0016, 0x003C, 0x003D, 0x0016, 0x003D, 0x003C, 0x003D, 0x003D,
+                0x003C
+            },
+            [14] = new List<int> // High Security Compound
+            {
+                0x003D, 0x003C, 0x0016, 0x003D, 0x003C, 0x003D, 0x0016, 0x0016, 0x003F, 0x003C,
+                0x003C, 0x0016, 0x003F, 0x003F
+            },
+            [15] = new List<int> // Area 51
+            {
+                0x0016, 0x0016, 0x0016, 0x003C, 0x003D, 0x003C, 0x003D, 0x003C, 0x003D, 0x003D,
+                0x0023, 0x0023, 0x0023, 0x0023, 0x0023, 0x0023, 0x0022, 0x0022, 0x0022, 0x0022,
+                0x0120, 0x003D, 0x003C, 0x003D, 0x003D, 0x0022, 0x0022, 0x0022, 0x0022, 0x0022,
+                0x0022, 0x0120
+            },
+            [16] = new List<int> // Antarctica
+            {
+                0x0020, 0x0020, 0x0027, 0x0027, 0x0029, 0x0029, 0x0027, 0x0027, 0x0029, 0x0028,
+                0x0027, 0x0027, 0x0027, 0x0027, 0x0029, 0x0029, 0x0027, 0x002A, 0x002A, 0x0032,
+                0x0029, 0x0029, 0x0027, 0x0029, 0x0028, 0x0028, 0x0028, 0x0027, 0x0029, 0x0029
+            },
+            [17] = new List<int> // RX-Tech Mines
+            {
+                0x002A, 0x002E, 0x0028, 0x002A, 0x0032, 0x002E, 0x002E, 0x002E, 0x002E, 0x002A,
+                0x002A, 0x002A, 0x002A, 0x002A, 0x002A, 0x002A, 0x002A, 0x002A, 0x002E, 0x002A,
+                0x002E
+            },
+            [18] = new List<int> // Lost City of Tinnos
+            {
+                0x002A, 0x0032, 0x002A, 0x002E, 0x002A, 0x002E, 0x0032, 0x002A, 0x0032, 0x0028,
+                0x002E, 0x002E, 0x002A, 0x002A, 0x002A, 0x002E, 0x002A
+            },
+            [19] = new List<int> // Meteorite Cavern
+            {
+                0x002A, 0x002A, 0x002C, 0x002C, 0x002C, 0x002C, 0x0028, 0x0032, 0x0032, 0x0028,
+                0x0032
+            },
+            [20] = new List<int> // All Hallows
+            {
+                0x0033, 0x0033, 0x0033, 0x0033, 0x0033, 0x0033, 0x0038, 0x0016, 0x0016, 0x0033,
+                0x0033, 0x0038, 0x0038
+            },
+            [21] = new List<int> // Highland Fling
+            {
+                0x0038, 0x0038, 0x0016, 0x0038, 0x0016, 0x0016, 0x0016, 0x0016, 0x0016, 0x0038,
+                0x0023, 0x0023, 0x0023, 0x001D, 0x001D, 0x0038, 0x0038, 0x0038, 0x0038, 0x0023,
+                0x0023, 0x0023, 0x0023, 0x0023, 0x0038, 0x0038, 0x0038, 0x0016
+            },
+            [22] = new List<int> // Willard's Lair
+            {
+                0x0016, 0x0016, 0x0020, 0x0016, 0x0017, 0x0016, 0x0016, 0x0038, 0x0038, 0x0016,
+                0x0016, 0x0038, 0x0038, 0x0017, 0x0017, 0x0017, 0x0017, 0x0016, 0x0014, 0x0014,
+                0x0014, 0x0016, 0x0016, 0x0014, 0x0014, 0x0014, 0x0014
+            },
+            [23] = new List<int> // Shakespeare Cliff
+            {
+                0x003C, 0x003C, 0x003C, 0x003C, 0x0033, 0x0033, 0x003C, 0x003C, 0x0017, 0x003C,
+                0x0033, 0x0033, 0x003C, 0x0033, 0x0033, 0x003C, 0x0033, 0x003C, 0x003C, 0x003C,
+                0x0017, 0x0017, 0x0022, 0x0022, 0x0022, 0x0022, 0x003C
+            },
+            [24] = new List<int> // Sleeping with the Fishes
+            {
+                0x0016, 0x0016, 0x0016, 0x003C, 0x0033, 0x0033, 0x0020, 0x0020, 0x0020, 0x0033,
+                0x003C, 0x003C, 0x002A, 0x002A, 0x0033, 0x003C, 0x002A, 0x002E, 0x0032, 0x003C,
+                0x002E, 0x002E
+            },
+            [25] = new List<int> // It's a Madhouse!
+            {
+                0x0047, 0x0047, 0x0047, 0x0047, 0x001C, 0x001C, 0x0120, 0x001C, 0x0047, 0x0047,
+                0x0017, 0x0017, 0x0017, 0x001C, 0x001C, 0x001C, 0x0016, 0x001C, 0x0047, 0x0047,
+                0x0047, 0x0047, 0x001C, 0x0035, 0x0035, 0x0035
+            },
+            [26] = new List<int> // Reunion
+            {
+                0x0035, 0x0035, 0x0035, 0x0035, 0x0035, 0x002C, 0x002C, 0x002C, 0x002C, 0x0035,
+                0x0035, 0x002C, 0x002C, 0x002C
+            },
+        };
+
         public static readonly Dictionary<int, List<int>> LevelObjectIdsByLevel = new Dictionary<int, List<int>>
         {
             {
@@ -526,35 +1395,7 @@ namespace TRR_SaveMaster
                     0x007F,
                     0x00B2,
                     0x0047,
-                    0x004B,
-                    0x001C,
-                    0x001C,
-                    0x0017,
-                    0x0017,
-                    0x0023,
-                    0x001C,
-                    0x001C,
-                    0x001C,
-                    0x0045,
-                    0x0045,
-                    0x001C,
-                    0x001C,
-                    0x0017,
-                    0x001C,
-                    0x0017,
-                    0x0017,
-                    0x0045,
-                    0x001C,
-                    0x001C,
-                    0x0020,
-                    0x0020,
-                    0x0020,
-                    0x001B,
-                    0x001B,
-                    0x001B,
-                    0x0017,
-                    0x0017,
-                    0x0020
+                    0x004B
                 }
             },
             {
@@ -569,7 +1410,7 @@ namespace TRR_SaveMaster
                     0x00B4,
                     0x0081,
                     0x00AD,
-                    0x00A9,
+                    0x00A1,
                     0x0081,
                     0x0045,
                     0x00AA,
@@ -604,7 +1445,7 @@ namespace TRR_SaveMaster
                     0x0045,
                     0x0061,
                     0x0018,
-                    0x00A9,
+                    0x00A1,
                     0x00A9,
                     0x0084,
                     0x0046,
@@ -788,43 +1629,7 @@ namespace TRR_SaveMaster
                     0x0082,
                     0x00E0,
                     0x0084,
-                    0x00E0,
-                    0x001C,
-                    0x0023,
-                    0x001D,
-                    0x001D,
-                    0x001D,
-                    0x001D,
-                    0x001C,
-                    0x001C,
-                    0x0047,
-                    0x0047,
-                    0x001C,
-                    0x001C,
-                    0x0020,
-                    0x0020,
-                    0x0045,
-                    0x0017,
-                    0x0017,
-                    0x001C,
-                    0x0045,
-                    0x0045,
-                    0x0045,
-                    0x001C,
-                    0x001C,
-                    0x0020,
-                    0x0047,
-                    0x0047,
-                    0x001C,
-                    0x001C,
-                    0x0045,
-                    0x0045,
-                    0x001C,
-                    0x001C,
-                    0x0045,
-                    0x001C,
-                    0x001C,
-                    0x0120
+                    0x00E0
                 }
             },
             {
@@ -946,43 +1751,7 @@ namespace TRR_SaveMaster
                     0x014B,
                     0x00B4,
                     0x00B1,
-                    0x00A9,
-                    0x0047,
-                    0x0047,
-                    0x0047,
-                    0x0045,
-                    0x0047,
-                    0x001C,
-                    0x001C,
-                    0x001C,
-                    0x0047,
-                    0x0047,
-                    0x0045,
-                    0x001D,
-                    0x001D,
-                    0x001C,
-                    0x001C,
-                    0x0047,
-                    0x0047,
-                    0x0047,
-                    0x001D,
-                    0x001C,
-                    0x001D,
-                    0x0045,
-                    0x001C,
-                    0x0020,
-                    0x0045,
-                    0x001C,
-                    0x001C,
-                    0x0047,
-                    0x0047,
-                    0x0045,
-                    0x001C,
-                    0x001C,
-                    0x0047,
-                    0x0047,
-                    0x0047,
-                    0x0047
+                    0x00A1
                 }
             },
             {
@@ -1020,17 +1789,7 @@ namespace TRR_SaveMaster
                     0x00A7,
                     0x00AF,
                     0x00B0,
-                    0x00B4,
-                    0x0023,
-                    0x0045,
-                    0x0045,
-                    0x0047,
-                    0x0045,
-                    0x0045,
-                    0x0023,
-                    0x0045,
-                    0x0045,
-                    0x0045
+                    0x00B4
                 }
             },
             {
@@ -1213,39 +1972,11 @@ namespace TRR_SaveMaster
                     0x006F,
                     0x006F,
                     0x0075,
-                    0x0015,
-                    0x0020,
-                    0x0020,
-                    0x0020,
-                    0x001D,
-                    0x0015,
-                    0x0014,
-                    0x0023,
-                    0x0015,
-                    0x0020,
-                    0x0020,
-                    0x001D,
-                    0x001D,
-                    0x0023,
-                    0x0023,
-                    0x0023,
-                    0x0120,
-                    0x0120,
-                    0x0015,
-                    0x0014,
-                    0x0014,
-                    0x0023,
-                    0x001C,
-                    0x0023,
-                    0x0015,
-                    0x001C,
-                    0x001C,
-                    0x001C,
-                    0x0120
+                    0x0015
                 }
             },
             {
-                6, new List<int>	// Crash Site
+                6, new List<int>    // Crash Site
                 {
                     0x0120,
                     0x004B,
@@ -1394,37 +2125,11 @@ namespace TRR_SaveMaster
                     0x015F,
                     0x0000,
                     0x00AD,
-                    0x00AD,
-                    0x0023,
-                    0x001D,
-                    0x0120,
-                    0x001D,
-                    0x0022,
-                    0x0022,
-                    0x0022,
-                    0x0022,
-                    0x0022,
-                    0x0022,
-                    0x0022,
-                    0x0120,
-                    0x0120,
-                    0x0015,
-                    0x001D,
-                    0x0120,
-                    0x0022,
-                    0x0022,
-                    0x0120,
-                    0x0022,
-                    0x0022,
-                    0x0120,
-                    0x0022,
-                    0x0120,
-                    0x0120,
-                    0x0120
+                    0x00AD
                 }
             },
             {
-                7, new List<int>	// Madubu Gorge
+                7, new List<int>    // Madubu Gorge
                 {
                     0x0131,
                     0x0131,
@@ -1560,32 +2265,11 @@ namespace TRR_SaveMaster
                     0x014B,
                     0x0083,
                     0x0082,
-                    0x0020,
-                    0x0022,
-                    0x0022,
-                    0x0022,
-                    0x001D,
-                    0x001D,
-                    0x0014,
-                    0x0014,
-                    0x0023,
-                    0x001D,
-                    0x001D,
-                    0x0023,
-                    0x001D,
-                    0x0020,
-                    0x001D,
-                    0x0023,
-                    0x0014,
-                    0x0020,
-                    0x0022,
-                    0x0022,
-                    0x0015,
-                    0x0015
+                    0x0020
                 }
             },
             {
-                8, new List<int>	// Temple of Puna
+                8, new List<int>    // Temple of Puna
                 {
                     0x0000,
                     0x0083,
@@ -1598,7 +2282,7 @@ namespace TRR_SaveMaster
                     0x0015,
                     0x0086,
                     0x0015,
-                    0x00AA,
+                    0x00A2,
                     0x00AA,
                     0x00AA,
                     0x00B1,
@@ -1651,23 +2335,11 @@ namespace TRR_SaveMaster
                     0x0023,
                     0x00F3,
                     0x00B0,
-                    0x00B0,
-                    0x0014,
-                    0x0023,
-                    0x0014,
-                    0x0023,
-                    0x0023,
-                    0x0017,
-                    0x001C,
-                    0x001C,
-                    0x0017,
-                    0x0017,
-                    0x0017,
-                    0x0017
+                    0x00B0
                 }
             },
             {
-                9, new List<int>	// Thames Wharf
+                9, new List<int>    // Thames Wharf
                 {
                     0x00B1,
                     0x00E1,
@@ -1843,7 +2515,7 @@ namespace TRR_SaveMaster
                     0x0057,
                     0x0057,
                     0x0080,
-                    0x00A9,
+                    0x00A1,
                     0x00A9,
                     0x0017,
                     0x0017,
@@ -1885,43 +2557,11 @@ namespace TRR_SaveMaster
                     0x004C,
                     0x004F,
                     0x004F,
-                    0x00A9,
-                    0x0033,
-                    0x0033,
-                    0x0033,
-                    0x0033,
-                    0x0033,
-                    0x0033,
-                    0x0033,
-                    0x0017,
-                    0x0017,
-                    0x001B,
-                    0x0033,
-                    0x0017,
-                    0x0017,
-                    0x001B,
-                    0x001B,
-                    0x001B,
-                    0x0038,
-                    0x0016,
-                    0x0016,
-                    0x0038,
-                    0x0016,
-                    0x0038,
-                    0x0038,
-                    0x0038,
-                    0x0020,
-                    0x0020,
-                    0x001B,
-                    0x001B,
-                    0x0033,
-                    0x0033,
-                    0x0016,
-                    0x0016
+                    0x00A9
                 }
             },
             {
-                10, new List<int>	// Aldwych
+                10, new List<int>    // Aldwych
                 {
                     0x0160,
                     0x0160,
@@ -1948,7 +2588,7 @@ namespace TRR_SaveMaster
                     0x0016,
                     0x0053,
                     0x00B4,
-                    0x00AB,
+                    0x00A3,
                     0x00A5,
                     0x00B4,
                     0x00B4,
@@ -2031,7 +2671,7 @@ namespace TRR_SaveMaster
                     0x006E,
                     0x006E,
                     0x015B,
-                    0x00A9,
+                    0x00A1,
                     0x0053,
                     0x014D,
                     0x014D,
@@ -2140,8 +2780,8 @@ namespace TRR_SaveMaster
                     0x00B2,
                     0x00AB,
                     0x0035,
-                    0x00A9,
-                    0x00AB,
+                    0x00A1,
+                    0x00A3,
                     0x0080,
                     0x00D0,
                     0x00AD,
@@ -2170,42 +2810,13 @@ namespace TRR_SaveMaster
                     0x00AE,
                     0x00B1,
                     0x00A9,
-                    0x0065,
-                    0x0017,
-                    0x0017,
-                    0x0035,
-                    0x0035,
-                    0x0035,
-                    0x0035,
-                    0x0035,
-                    0x0035,
-                    0x0016,
-                    0x0016,
-                    0x0016,
-                    0x0016,
-                    0x0038,
-                    0x0038,
-                    0x0038,
-                    0x0038,
-                    0x0035,
-                    0x0035,
-                    0x0016,
-                    0x0035,
-                    0x0016,
-                    0x0035,
-                    0x0035,
-                    0x0035,
-                    0x0035,
-                    0x0016,
-                    0x0035,
-                    0x0016,
-                    0x0016
+                    0x0065
                 }
             },
             {
-                11, new List<int>	// Lud's Gate
+                11, new List<int>    // Lud's Gate
                 {
-                    0x00A9,
+                    0x00A1,
                     0x00B4,
                     0x0080,
                     0x008B,
@@ -2416,28 +3027,11 @@ namespace TRR_SaveMaster
                     0x008B,
                     0x0082,
                     0x0086,
-                    0x0086,
-                    0x0038,
-                    0x0038,
-                    0x001C,
-                    0x001C,
-                    0x0017,
-                    0x0038,
-                    0x0038,
-                    0x0016,
-                    0x0016,
-                    0x0020,
-                    0x0038,
-                    0x0038,
-                    0x0038,
-                    0x0038,
-                    0x0038,
-                    0x0017,
-                    0x0017
+                    0x0086
                 }
             },
             {
-                12, new List<int>	// City
+                12, new List<int>    // City
                 {
                     0x015E,
                     0x0160,
@@ -2486,7 +3080,7 @@ namespace TRR_SaveMaster
                 }
             },
             {
-                13, new List<int>	// Nevada Desert
+                13, new List<int>    // Nevada Desert
                 {
                     0x0000,
                     0x0045,
@@ -2532,7 +3126,7 @@ namespace TRR_SaveMaster
                     0x0041,
                     0x0131,
                     0x0045,
-                    0x00AB,
+                    0x00A3,
                     0x0131,
                     0x0131,
                     0x0045,
@@ -2641,52 +3235,11 @@ namespace TRR_SaveMaster
                     0x0130,
                     0x00B2,
                     0x00AA,
-                    0x00AE,
-                    0x003C,
-                    0x003C,
-                    0x003D,
-                    0x0016,
-                    0x003D,
-                    0x001D,
-                    0x0020,
-                    0x003C,
-                    0x001D,
-                    0x0020,
-                    0x0020,
-                    0x0020,
-                    0x001D,
-                    0x0045,
-                    0x003C,
-                    0x003D,
-                    0x0016,
-                    0x003C,
-                    0x003D,
-                    0x0023,
-                    0x0023,
-                    0x0023,
-                    0x0016,
-                    0x003C,
-                    0x003D,
-                    0x003C,
-                    0x003D,
-                    0x0020,
-                    0x0020,
-                    0x003C,
-                    0x003D,
-                    0x0020,
-                    0x0016,
-                    0x003C,
-                    0x003D,
-                    0x0016,
-                    0x003D,
-                    0x003C,
-                    0x003D,
-                    0x003D,
-                    0x003C
+                    0x00AE
                 }
             },
             {
-                14, new List<int>	// High Security Compound
+                14, new List<int>    // High Security Compound
                 {
                     0x003E,
                     0x004D,
@@ -2911,7 +3464,7 @@ namespace TRR_SaveMaster
                     0x004F,
                     0x00A0,
                     0x00B1,
-                    0x00AA,
+                    0x00A2,
                     0x00AA,
                     0x00AA,
                     0x003D,
@@ -2933,25 +3486,11 @@ namespace TRR_SaveMaster
                     0x00AB,
                     0x00A9,
                     0x00B1,
-                    0x00B2,
-                    0x003D,
-                    0x003C,
-                    0x0016,
-                    0x003D,
-                    0x003C,
-                    0x003D,
-                    0x0016,
-                    0x0016,
-                    0x003F,
-                    0x003C,
-                    0x003C,
-                    0x0016,
-                    0x003F,
-                    0x003F
+                    0x00B2
                 }
             },
             {
-                15, new List<int>	// Area 51
+                15, new List<int>    // Area 51
                 {
                     0x003F,
                     0x00A9,
@@ -3177,12 +3716,12 @@ namespace TRR_SaveMaster
                     0x00B1,
                     0x00B2,
                     0x00B1,
-                    0x00A9,
+                    0x00A1,
                     0x0019,
                     0x0019,
                     0x00B4,
                     0x00B4,
-                    0x00A9,
+                    0x00A1,
                     0x003F,
                     0x0130,
                     0x008A,
@@ -3194,43 +3733,11 @@ namespace TRR_SaveMaster
                     0x003F,
                     0x003F,
                     0x004A,
-                    0x00AD,
-                    0x0016,
-                    0x0016,
-                    0x0016,
-                    0x003C,
-                    0x003D,
-                    0x003C,
-                    0x003D,
-                    0x003C,
-                    0x003D,
-                    0x003D,
-                    0x0023,
-                    0x0023,
-                    0x0023,
-                    0x0023,
-                    0x0023,
-                    0x0023,
-                    0x0022,
-                    0x0022,
-                    0x0022,
-                    0x0022,
-                    0x0120,
-                    0x003D,
-                    0x003C,
-                    0x003D,
-                    0x003D,
-                    0x0022,
-                    0x0022,
-                    0x0022,
-                    0x0022,
-                    0x0022,
-                    0x0022,
-                    0x0120
+                    0x00AD
                 }
             },
             {
-                16, new List<int>	// Antarctica
+                16, new List<int>    // Antarctica
                 {
                     0x00AA,
                     0x0000,
@@ -3245,7 +3752,7 @@ namespace TRR_SaveMaster
                     0x004B,
                     0x004D,
                     0x004B,
-                    0x00A9,
+                    0x00A1,
                     0x001F,
                     0x014A,
                     0x0027,
@@ -3314,7 +3821,7 @@ namespace TRR_SaveMaster
                     0x0027,
                     0x00CE,
                     0x0029,
-                    0x00AB,
+                    0x00A3,
                     0x0027,
                     0x00B0,
                     0x0083,
@@ -3383,41 +3890,11 @@ namespace TRR_SaveMaster
                     0x00AB,
                     0x00AB,
                     0x0029,
-                    0x0027,
-                    0x0020,
-                    0x0020,
-                    0x0027,
-                    0x0027,
-                    0x0029,
-                    0x0029,
-                    0x0027,
-                    0x0027,
-                    0x0029,
-                    0x0028,
-                    0x0027,
-                    0x0027,
-                    0x0027,
-                    0x0027,
-                    0x0029,
-                    0x0029,
-                    0x0027,
-                    0x002A,
-                    0x002A,
-                    0x0032,
-                    0x0029,
-                    0x0029,
-                    0x0027,
-                    0x0029,
-                    0x0028,
-                    0x0028,
-                    0x0028,
-                    0x0027,
-                    0x0029,
-                    0x0029
+                    0x0027
                 }
             },
             {
-                17, new List<int>	// RX-Tech Mines
+                17, new List<int>    // RX-Tech Mines
                 {
                     0x0090,
                     0x0090,
@@ -3540,7 +4017,7 @@ namespace TRR_SaveMaster
                     0x0085,
                     0x0080,
                     0x0080,
-                    0x00AA,
+                    0x00A2,
                     0x0150,
                     0x002E,
                     0x004B,
@@ -3604,32 +4081,11 @@ namespace TRR_SaveMaster
                     0x00AA,
                     0x00B2,
                     0x00AE,
-                    0x0080,
-                    0x002A,
-                    0x002E,
-                    0x0028,
-                    0x002A,
-                    0x0032,
-                    0x002E,
-                    0x002E,
-                    0x002E,
-                    0x002E,
-                    0x002A,
-                    0x002A,
-                    0x002A,
-                    0x002A,
-                    0x002A,
-                    0x002A,
-                    0x002A,
-                    0x002A,
-                    0x002A,
-                    0x002E,
-                    0x002A,
-                    0x002E
+                    0x0080
                 }
             },
             {
-                18, new List<int>	// Lost City of Tinnos
+                18, new List<int>    // Lost City of Tinnos
                 {
                     0x0089,
                     0x0083,
@@ -3775,7 +4231,7 @@ namespace TRR_SaveMaster
                     0x00B1,
                     0x00B4,
                     0x0081,
-                    0x00AA,
+                    0x00A2,
                     0x008B,
                     0x0056,
                     0x0056,
@@ -3832,28 +4288,11 @@ namespace TRR_SaveMaster
                     0x002C,
                     0x014B,
                     0x00AB,
-                    0x014B,
-                    0x002A,
-                    0x0032,
-                    0x002A,
-                    0x002E,
-                    0x002A,
-                    0x002E,
-                    0x0032,
-                    0x002A,
-                    0x0032,
-                    0x0028,
-                    0x002E,
-                    0x002E,
-                    0x002A,
-                    0x002A,
-                    0x002A,
-                    0x002E,
-                    0x002A
+                    0x014B
                 }
             },
             {
-                19, new List<int>	// Meteorite Cavern
+                19, new List<int>    // Meteorite Cavern
                 {
                     0x0050,
                     0x0050,
@@ -3905,22 +4344,11 @@ namespace TRR_SaveMaster
                     0x0142,
                     0x0028,
                     0x0084,
-                    0x0032,
-                    0x002A,
-                    0x002A,
-                    0x002C,
-                    0x002C,
-                    0x002C,
-                    0x002C,
-                    0x0028,
-                    0x0032,
-                    0x0032,
-                    0x0028,
                     0x0032
                 }
             },
             {
-                20, new List<int>	// All Hallows
+                20, new List<int>    // All Hallows
                 {
                     0x015B,
                     0x00B0,
@@ -3953,7 +4381,7 @@ namespace TRR_SaveMaster
                     0x00A7,
                     0x00A5,
                     0x00B1,
-                    0x00AA,
+                    0x00A2,
                     0x0057,
                     0x0057,
                     0x0057,
@@ -3997,7 +4425,7 @@ namespace TRR_SaveMaster
                     0x008E,
                     0x0090,
                     0x008E,
-                    0x00AB,
+                    0x00A3,
                     0x00B2,
                     0x0053,
                     0x014B,
@@ -4024,24 +4452,11 @@ namespace TRR_SaveMaster
                     0x00B0,
                     0x008B,
                     0x0083,
-                    0x0081,
-                    0x0033,
-                    0x0033,
-                    0x0033,
-                    0x0033,
-                    0x0033,
-                    0x0033,
-                    0x0038,
-                    0x0016,
-                    0x0016,
-                    0x0033,
-                    0x0033,
-                    0x0038,
-                    0x0038
+                    0x0081
                 }
             },
             {
-                21, new List<int>	// Highland Fling
+                21, new List<int>    // Highland Fling
                 {
                     0x00B0,
                     0x00AC,
@@ -4088,7 +4503,7 @@ namespace TRR_SaveMaster
                     0x014B,
                     0x0160,
                     0x014E,
-                    0x00AB,
+                    0x00A3,
                     0x00AC,
                     0x00A4,
                     0x015D,
@@ -4099,7 +4514,7 @@ namespace TRR_SaveMaster
                     0x001B,
                     0x001B,
                     0x0038,
-                    0x00A9,
+                    0x00A1,
                     0x00A9,
                     0x00A9,
                     0x001B,
@@ -4192,39 +4607,11 @@ namespace TRR_SaveMaster
                     0x014B,
                     0x014B,
                     0x014B,
-                    0x0016,
-                    0x0038,
-                    0x0038,
-                    0x0016,
-                    0x0038,
-                    0x0016,
-                    0x0016,
-                    0x0016,
-                    0x0016,
-                    0x0016,
-                    0x0038,
-                    0x0023,
-                    0x0023,
-                    0x0023,
-                    0x001D,
-                    0x001D,
-                    0x0038,
-                    0x0038,
-                    0x0038,
-                    0x0038,
-                    0x0023,
-                    0x0023,
-                    0x0023,
-                    0x0023,
-                    0x0023,
-                    0x0038,
-                    0x0038,
-                    0x0038,
                     0x0016
                 }
             },
             {
-                22, new List<int>	// Willard's Lair
+                22, new List<int>    // Willard's Lair
                 {
                     0x0061,
                     0x0061,
@@ -4254,7 +4641,7 @@ namespace TRR_SaveMaster
                     0x00AB,
                     0x0014,
                     0x00AB,
-                    0x00AB,
+                    0x00A3,
                     0x0014,
                     0x0014,
                     0x0014,
@@ -4278,7 +4665,7 @@ namespace TRR_SaveMaster
                     0x0074,
                     0x00A9,
                     0x0074,
-                    0x00A9,
+                    0x00A1,
                     0x00A9,
                     0x0074,
                     0x0057,
@@ -4380,38 +4767,11 @@ namespace TRR_SaveMaster
                     0x006B,
                     0x006B,
                     0x00B2,
-                    0x00B0,
-                    0x0016,
-                    0x0016,
-                    0x0020,
-                    0x0016,
-                    0x0017,
-                    0x0016,
-                    0x0016,
-                    0x0038,
-                    0x0038,
-                    0x0016,
-                    0x0016,
-                    0x0038,
-                    0x0038,
-                    0x0017,
-                    0x0017,
-                    0x0017,
-                    0x0017,
-                    0x0016,
-                    0x0014,
-                    0x0014,
-                    0x0014,
-                    0x0016,
-                    0x0016,
-                    0x0014,
-                    0x0014,
-                    0x0014,
-                    0x0014
+                    0x00B0
                 }
             },
             {
-                23, new List<int>	// Shakespeare Cliff
+                23, new List<int>    // Shakespeare Cliff
                 {
                     0x0074,
                     0x0018,
@@ -4433,7 +4793,7 @@ namespace TRR_SaveMaster
                     0x014A,
                     0x004B,
                     0x0130,
-                    0x00AB,
+                    0x00A3,
                     0x014A,
                     0x004B,
                     0x00B2,
@@ -4534,7 +4894,7 @@ namespace TRR_SaveMaster
                     0x0065,
                     0x014D,
                     0x00B0,
-                    0x00A9,
+                    0x00A1,
                     0x0087,
                     0x0076,
                     0x006E,
@@ -4602,38 +4962,11 @@ namespace TRR_SaveMaster
                     0x014F,
                     0x014F,
                     0x001D,
-                    0x00B1,
-                    0x003C,
-                    0x003C,
-                    0x003C,
-                    0x003C,
-                    0x0033,
-                    0x0033,
-                    0x003C,
-                    0x003C,
-                    0x0017,
-                    0x003C,
-                    0x0033,
-                    0x0033,
-                    0x003C,
-                    0x0033,
-                    0x0033,
-                    0x003C,
-                    0x0033,
-                    0x003C,
-                    0x003C,
-                    0x003C,
-                    0x0017,
-                    0x0017,
-                    0x0022,
-                    0x0022,
-                    0x0022,
-                    0x0022,
-                    0x003C
+                    0x00B1
                 }
             },
             {
-                24, new List<int>	// Sleeping with the Fishes
+                24, new List<int>    // Sleeping with the Fishes
                 {
                     0x0086,
                     0x00AC,
@@ -4695,7 +5028,7 @@ namespace TRR_SaveMaster
                     0x00AC,
                     0x00A9,
                     0x00A9,
-                    0x00A9,
+                    0x00A1,
                     0x001A,
                     0x001A,
                     0x0089,
@@ -4712,7 +5045,7 @@ namespace TRR_SaveMaster
                     0x0018,
                     0x00AA,
                     0x00AA,
-                    0x00AA,
+                    0x00A2,
                     0x00AC,
                     0x00B1,
                     0x00A4,
@@ -4755,7 +5088,7 @@ namespace TRR_SaveMaster
                     0x0084,
                     0x0082,
                     0x0020,
-                    0x00AB,
+                    0x00A3,
                     0x00AF,
                     0x0130,
                     0x00AE,
@@ -4783,33 +5116,11 @@ namespace TRR_SaveMaster
                     0x001A,
                     0x015F,
                     0x015F,
-                    0x00A6,
-                    0x0016,
-                    0x0016,
-                    0x0016,
-                    0x003C,
-                    0x0033,
-                    0x0033,
-                    0x0020,
-                    0x0020,
-                    0x0020,
-                    0x0033,
-                    0x003C,
-                    0x003C,
-                    0x002A,
-                    0x002A,
-                    0x0033,
-                    0x003C,
-                    0x002A,
-                    0x002E,
-                    0x0032,
-                    0x003C,
-                    0x002E,
-                    0x002E
+                    0x00A6
                 }
             },
             {
-                25, new List<int>	// It's a Madhouse!
+                25, new List<int>    // It's a Madhouse!
                 {
                     0x0047,
                     0x0047,
@@ -4845,7 +5156,7 @@ namespace TRR_SaveMaster
                     0x0023,
                     0x0023,
                     0x004C,
-                    0x00A9,
+                    0x00A1,
                     0x00A9,
                     0x00CD,
                     0x0000,
@@ -4891,7 +5202,7 @@ namespace TRR_SaveMaster
                     0x00A9,
                     0x001C,
                     0x0085,
-                    0x00AB,
+                    0x00A3,
                     0x00B2,
                     0x00B1,
                     0x001C,
@@ -4941,7 +5252,7 @@ namespace TRR_SaveMaster
                     0x0081,
                     0x0083,
                     0x007F,
-                    0x00AA,
+                    0x00A2,
                     0x00AA,
                     0x00B1,
                     0x004F,
@@ -4954,37 +5265,11 @@ namespace TRR_SaveMaster
                     0x00D5,
                     0x0130,
                     0x015E,
-                    0x015E,
-                    0x0047,
-                    0x0047,
-                    0x0047,
-                    0x0047,
-                    0x001C,
-                    0x001C,
-                    0x0045,
-                    0x001C,
-                    0x0047,
-                    0x0047,
-                    0x0045,
-                    0x0045,
-                    0x0045,
-                    0x001C,
-                    0x001C,
-                    0x001C,
-                    0x0045,
-                    0x001C,
-                    0x0047,
-                    0x0047,
-                    0x0047,
-                    0x0047,
-                    0x001C,
-                    0x0035,
-                    0x0035,
-                    0x0035
+                    0x015E
                 }
             },
             {
-                26, new List<int>	// Reunion
+                26, new List<int>    // Reunion
                 {
                     0x0056,
                     0x0081,
@@ -5087,21 +5372,7 @@ namespace TRR_SaveMaster
                     0x015E,
                     0x00B2,
                     0x0130,
-                    0x0000,
-                    0x0035,
-                    0x0035,
-                    0x0035,
-                    0x0035,
-                    0x0035,
-                    0x002C,
-                    0x002C,
-                    0x002C,
-                    0x002C,
-                    0x0035,
-                    0x0035,
-                    0x002C,
-                    0x002C,
-                    0x002C
+                    0x0000
                 }
             },
         };
