@@ -29,18 +29,22 @@ namespace TRR_SaveMaster
         private bool userIndexChanged = true;
         private bool isClosingConfirmed = false;
         private bool hasShownTRX2PathPrompt = false;
-        private bool hasShownTRXSavegameUnsupportedMessage = false;
+        private bool hasShownTRXSaveFileUnsupportedMessage = false;
         private bool hasShownTRX2SavegameUnsupportedMessage = false;
-        private bool hasCheckedTRXSavegameSupport = false;
-        private bool hasCheckedTRX2SavegameSupport = false;
+        private bool hasCheckedTRXSaveFileSupport = false;
+        private bool hasCheckedTRX2SaveFileSupport = false;
         private Platform platform;
         private const string CONFIG_FILE_NAME = "TRR-SaveMaster.ini";
+
+        // Savegame slot sizes
         private const int SAVEGAME_SIZE_TRX_PREPATCH = 0x3800;
         private const int SAVEGAME_SIZE_TRX_PATCH5 = 0x6800;
         private const int SAVEGAME_SIZE_TRX2 = 0xA470;
-        private const int SAVEGAME_FILE_SIZE_TRX_PREPATCH = 0x152004;
-        private const int SAVEGAME_FILE_SIZE_TRX_PATCH5 = 0x272004;
-        private const int SAVEGAME_FILE_SIZE_TRX2 = 0x3DCA04;
+
+        // Savefile sizes
+        private const int SAVEFILE_SIZE_TRX_PREPATCH = 0x152004;
+        private const int SAVEFILE_SIZE_TRX_PATCH5 = 0x272004;
+        private const int SAVEFILE_SIZE_TRX2 = 0x3DCA04;
 
         // Utils
         private readonly TR1Utilities tr1Utilities = new TR1Utilities();
@@ -58,11 +62,11 @@ namespace TRR_SaveMaster
         private const int TAB_TR5 = 4;
         private const int TAB_TR6 = 5;
 
-        // Patch-related
-        private const int SAVEGAME_VERSION_OFFSET = 0x000;
-        private const byte TRX_PREPATCH_SIGNATURE = 0x3B;
-        private const byte TRX_PATCH5_SIGNATURE = 0x3C;
-        private const byte TRX2_SAVEGAME_SIGNATURE = 0x28;
+        // Savefile header
+        private const int SAVEFILE_VERSION_OFFSET = 0x000;
+        private const byte SAVEFILE_TRX_PREPATCH = 0x3B;
+        private const byte SAVEFILE_TRX_PATCH5 = 0x3C;
+        private const byte SAVEFILE_TRX2_FORMAT = 0x28;
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -98,7 +102,7 @@ namespace TRR_SaveMaster
             }
             else if (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX))
             {
-                ValidateTRXSavegameSupport();
+                ValidateTRXSaveFileSupport();
             }
         }
 
@@ -179,9 +183,9 @@ namespace TRR_SaveMaster
             ThemeUtilities.DARK_MODE_ENABLED = false;
         }
 
-        private byte GetSavegameVersion(byte[] fileData)
+        private byte GetSaveFileVersion(byte[] fileData)
         {
-            return fileData[SAVEGAME_VERSION_OFFSET];
+            return fileData[SAVEFILE_VERSION_OFFSET];
         }
 
         private void tabGame_DrawItem(object sender, DrawItemEventArgs e)
@@ -432,11 +436,15 @@ namespace TRR_SaveMaster
             FileInfo fileInfo = new FileInfo(path);
             byte[] fileData = File.ReadAllBytes(path);
 
-            long savegameFileSize = fileInfo.Length;
-            byte savegameVersion = GetSavegameVersion(fileData);
+            long saveFileSize = fileInfo.Length;
+            byte saveFileVersion = GetSaveFileVersion(fileData);
 
-            if ((savegameVersion == TRX_PREPATCH_SIGNATURE || savegameVersion == TRX_PATCH5_SIGNATURE)
-                && (savegameFileSize >= SAVEGAME_FILE_SIZE_TRX_PREPATCH || savegameFileSize >= SAVEGAME_FILE_SIZE_TRX_PATCH5))
+            if (saveFileVersion == SAVEFILE_TRX_PREPATCH && saveFileSize >= SAVEFILE_SIZE_TRX_PREPATCH)
+            {
+                return true;
+            }
+
+            if (saveFileVersion == SAVEFILE_TRX_PATCH5 && saveFileSize >= SAVEFILE_SIZE_TRX_PATCH5)
             {
                 return true;
             }
@@ -450,9 +458,9 @@ namespace TRR_SaveMaster
             byte[] fileData = File.ReadAllBytes(path);
 
             long savegameFileSize = fileInfo.Length;
-            byte savegameVersion = GetSavegameVersion(fileData);
+            byte saveFileVersion = GetSaveFileVersion(fileData);
 
-            if (savegameVersion == TRX2_SAVEGAME_SIGNATURE && savegameFileSize >= SAVEGAME_FILE_SIZE_TRX2)
+            if (saveFileVersion == SAVEFILE_TRX2_FORMAT && savegameFileSize >= SAVEFILE_SIZE_TRX2)
             {
                 return true;
             }
@@ -460,23 +468,21 @@ namespace TRR_SaveMaster
             return false;
         }
 
-        private bool IsSavegameSupportedTRX(byte[] fileData)
+        private bool IsSavegameFileSupportedTRX(byte[] fileData)
         {
-            byte savegameVersion = GetSavegameVersion(fileData);
+            byte saveFileVersion = GetSaveFileVersion(fileData);
 
-            return savegameVersion == TRX_PREPATCH_SIGNATURE || savegameVersion == TRX_PATCH5_SIGNATURE;
+            return saveFileVersion == SAVEFILE_TRX_PREPATCH || saveFileVersion == SAVEFILE_TRX_PATCH5;
         }
 
-        private bool IsSavegameSupportedTRX2(byte[] fileData)
+        private bool IsSavegameFileSupportedTRX2(byte[] fileData)
         {
-            byte savegameVersion = GetSavegameVersion(fileData);
-
-            return savegameVersion == TRX2_SAVEGAME_SIGNATURE;
+            return GetSaveFileVersion(fileData) == SAVEFILE_TRX2_FORMAT;
         }
 
-        private bool IsPrepatchSavegameTRX(byte[] fileData)
+        private bool IsPrepatchSavegameFileTRX(byte[] fileData)
         {
-            return fileData[SAVEGAME_VERSION_OFFSET] == TRX_PREPATCH_SIGNATURE;
+            return GetSaveFileVersion(fileData) == SAVEFILE_TRX_PREPATCH;
         }
 
         private void PromptBrowseSavegamePathTRX()
@@ -485,7 +491,7 @@ namespace TRR_SaveMaster
 
             DialogResult result = ThemedMessageBox.Show(
                 this,
-                "Tomb Raider I–III savegame path has not been set. Would you like to set it now?",
+                "Tomb Raider I–III savegame file path has not been set. Would you like to set it now?",
                 "Savegame Path Not Set",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
@@ -502,7 +508,7 @@ namespace TRR_SaveMaster
 
             DialogResult result = ThemedMessageBox.Show(
                 this,
-                "Tomb Raider IV–VI savegame path is not set. Would you like to set it now?",
+                "Tomb Raider IV–VI savegame file path has not been set. Would you like to set it now?",
                 "Savegame Path Not Set",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
@@ -680,7 +686,7 @@ namespace TRR_SaveMaster
                 }
 
                 byte[] fileData = File.ReadAllBytes(savegamePathTRX);
-                bool isPrepatch = IsPrepatchSavegameTRX(fileData);
+                bool isPrepatch = IsPrepatchSavegameFileTRX(fileData);
 
                 // TRX (pre-patch) support: PC, PS4, NS
                 if (isPrepatch && platform != Platform.Android)
@@ -773,14 +779,14 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void ValidateTRXSavegameSupport()
+        private void ValidateTRXSaveFileSupport()
         {
             if (!IsTRXTabSelected())
             {
                 return;
             }
 
-            if (hasCheckedTRXSavegameSupport)
+            if (hasCheckedTRXSaveFileSupport)
             {
                 return;
             }
@@ -788,36 +794,36 @@ namespace TRR_SaveMaster
             if (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX))
             {
                 byte[] fileData = File.ReadAllBytes(savegamePathTRX);
-                bool isSupported = IsSavegameSupportedTRX(fileData);
+                bool isSupported = IsSavegameFileSupportedTRX(fileData);
 
-                hasCheckedTRXSavegameSupport = true;
+                hasCheckedTRXSaveFileSupport = true;
 
-                if (!isSupported && !hasShownTRXSavegameUnsupportedMessage)
+                if (!isSupported && !hasShownTRXSaveFileUnsupportedMessage)
                 {
-                    byte savegameVersion = GetSavegameVersion(fileData);
+                    byte saveFileVersion = GetSaveFileVersion(fileData);
 
                     SystemSounds.Exclamation.Play();
 
                     ThemedMessageBox.Show(
                         this,
-                        $"Your Tomb Raider I–III savegame version ({savegameVersion}) is not currently supported. Game data may not display or modify correctly.",
-                        "Unsupported Savegame Version",
+                        $"Your Tomb Raider I–III savegame file version ({saveFileVersion}) is not currently supported. Game data may not display or modify correctly.",
+                        "Unsupported Savegame File Version",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
 
-                    hasShownTRXSavegameUnsupportedMessage = true;
+                    hasShownTRXSaveFileUnsupportedMessage = true;
                 }
             }
         }
 
-        private void ValidateTRX2SavegameSupport()
+        private void ValidateTRX2SaveFileSupport()
         {
             if (!IsTRX2TabSelected())
             {
                 return;
             }
 
-            if (hasCheckedTRX2SavegameSupport)
+            if (hasCheckedTRX2SaveFileSupport)
             {
                 return;
             }
@@ -825,20 +831,20 @@ namespace TRR_SaveMaster
             if (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
             {
                 byte[] fileData = File.ReadAllBytes(savegamePathTRX2);
-                bool isSupported = IsSavegameSupportedTRX2(fileData);
+                bool isSupported = IsSavegameFileSupportedTRX2(fileData);
 
-                hasCheckedTRX2SavegameSupport = true;
+                hasCheckedTRX2SaveFileSupport = true;
 
                 if (!isSupported && !hasShownTRX2SavegameUnsupportedMessage)
                 {
-                    byte savegameVersion = GetSavegameVersion(fileData);
+                    byte saveFileVersion = GetSaveFileVersion(fileData);
 
                     SystemSounds.Exclamation.Play();
 
                     ThemedMessageBox.Show(
                         this,
-                        $"Your Tomb Raider IV–VI savegame version ({savegameVersion}) is not currently supported. Game data may not display or modify correctly.",
-                        "Unsupported Savegame Version",
+                        $"Your Tomb Raider IV–VI savegame file version ({saveFileVersion}) is not currently supported. Game data may not display or modify correctly.",
+                        "Unsupported Savegame File Version",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
 
@@ -2642,8 +2648,8 @@ namespace TRR_SaveMaster
         private void tabGame_SelectedIndexChanged(object sender, EventArgs e)
         {
             ValidatePlatformSelection();
-            ValidateTRXSavegameSupport();
-            ValidateTRX2SavegameSupport();
+            ValidateTRXSaveFileSupport();
+            ValidateTRX2SaveFileSupport();
 
             if (tabGame.SelectedIndex == TAB_TR1)
             {
@@ -3580,7 +3586,7 @@ namespace TRR_SaveMaster
             {
                 byte[] fileData = File.ReadAllBytes(savegamePathTRX);
 
-                bool isPrepatch = IsPrepatchSavegameTRX(fileData);
+                bool isPrepatch = IsPrepatchSavegameFileTRX(fileData);
                 SAVEGAME_SIZE = isPrepatch ? SAVEGAME_SIZE_TRX_PREPATCH : SAVEGAME_SIZE_TRX_PATCH5;
             }
             else

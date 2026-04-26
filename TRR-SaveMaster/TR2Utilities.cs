@@ -9,7 +9,7 @@ namespace TRR_SaveMaster
     class TR2Utilities
     {
         // Static offsets
-        private const int SAVEGAME_VERSION_OFFSET = 0x000;
+        private const int SAVEFILE_VERSION_OFFSET = 0x000;
         private const int SLOT_STATUS_OFFSET = 0x004;
         private const int GAME_MODE_OFFSET = 0x008;
         private const int SAVE_NUMBER_OFFSET = 0x00C;
@@ -19,7 +19,7 @@ namespace TRR_SaveMaster
         private int BASE_SAVEGAME_OFFSET_TR2;
         private int MAX_SAVEGAME_OFFSET_TR2;
         private int SAVEGAME_SIZE;
-        private int SAVEGAME_FORMAT_VERSION_OFFSET;
+        private int SAVEGAME_VERSION_OFFSET;
         private int CHALLENGE_MODE_RNG_SEED_OFFSET;
         private int CHALLENGE_MODE_OFFSET;
         private int CHALLENGE_MODE_MAX_HEALTH_OFFSET;
@@ -32,7 +32,7 @@ namespace TRR_SaveMaster
 
         // PC offsets
         private const int LEVEL_INDEX_OFFSET_PC = 0x628;
-        private const int SAVEGAME_FORMAT_VERSION_OFFSET_PC = 0x6A8;
+        private const int SAVEGAME_VERSION_OFFSET_PC = 0x6A8;
         private const int CHALLENGE_MODE_RNG_SEED_OFFSET_PC = 0x6AC;
         private const int CHALLENGE_MODE_OFFSET_PC = 0x6B0;
         private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_PC = 0x6C2;
@@ -41,7 +41,7 @@ namespace TRR_SaveMaster
 
         // Android offsets
         private const int LEVEL_INDEX_OFFSET_ANDROID = 0x658;
-        private const int SAVEGAME_FORMAT_VERSION_OFFSET_ANDROID = 0x6D4;
+        private const int SAVEGAME_VERSION_OFFSET_ANDROID = 0x6D4;
         private const int CHALLENGE_MODE_RNG_SEED_OFFSET_ANDROID = 0x6D8;
         private const int CHALLENGE_MODE_OFFSET_ANDROID = 0x6DC;
         private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_ANDROID = 0x6F9;
@@ -57,8 +57,8 @@ namespace TRR_SaveMaster
         private const int MAX_SAVEGAME_OFFSET_TR2_PATCH5 = 0x19B800;
 
         // Patch-related signatures
-        private const byte PREPATCH_SIGNATURE = 0x3B;
-        private const byte PATCH5_SIGNATURE = 0x3C;
+        private const byte SAVEFILE_PREPATCH = 0x3B;
+        private const byte SAVEFILE_PATCH5 = 0x3C;
 
         // Static offsets (per level)
         private int SMALL_MEDIPACK_OFFSET;
@@ -214,7 +214,7 @@ namespace TRR_SaveMaster
                 savegameData = File.ReadAllBytes(savegamePath);
             }
 
-            bool isPrepatch = IsPrepatchSavegame(savegameData);
+            bool isPrepatch = IsPrepatchSavegameFile(savegameData);
 
             if (!isPrepatch)
             {
@@ -281,7 +281,7 @@ namespace TRR_SaveMaster
         public void DetermineOffsets(byte[] fileData)
         {
             LEVEL_INDEX_OFFSET = platform == Platform.Android ? LEVEL_INDEX_OFFSET_ANDROID : LEVEL_INDEX_OFFSET_PC;
-            SAVEGAME_FORMAT_VERSION_OFFSET = platform == Platform.Android ? SAVEGAME_FORMAT_VERSION_OFFSET_ANDROID : SAVEGAME_FORMAT_VERSION_OFFSET_PC;
+            SAVEGAME_VERSION_OFFSET = platform == Platform.Android ? SAVEGAME_VERSION_OFFSET_ANDROID : SAVEGAME_VERSION_OFFSET_PC;
             CHALLENGE_MODE_RNG_SEED_OFFSET = platform == Platform.Android ? CHALLENGE_MODE_RNG_SEED_OFFSET_ANDROID : CHALLENGE_MODE_RNG_SEED_OFFSET_PC;
             CHALLENGE_MODE_OFFSET = platform == Platform.Android ? CHALLENGE_MODE_OFFSET_ANDROID : CHALLENGE_MODE_OFFSET_PC;
             CHALLENGE_MODE_MAX_HEALTH_OFFSET = platform == Platform.Android ? CHALLENGE_MODE_MAX_HEALTH_OFFSET_ANDROID : CHALLENGE_MODE_MAX_HEALTH_OFFSET_PC;
@@ -301,7 +301,7 @@ namespace TRR_SaveMaster
             FLARES_OFFSET = 0x21 + (levelIndex * 0x30);
             WEAPONS_CONFIG_NUM_OFFSET = 0x3C + (levelIndex * 0x30);
 
-            bool isPrepatch = IsPrepatchSavegame(fileData);
+            bool isPrepatch = IsPrepatchSavegameFile(fileData);
 
             if (isPrepatch)
             {
@@ -429,14 +429,15 @@ namespace TRR_SaveMaster
             }
         }
 
-        private bool IsPrepatchSavegame(byte[] fileData)
+        private bool IsPrepatchSavegameFile(byte[] fileData)
         {
-            return fileData[SAVEGAME_VERSION_OFFSET] == PREPATCH_SIGNATURE;
+            return fileData[SAVEFILE_VERSION_OFFSET] == SAVEFILE_PREPATCH;
         }
 
         private bool IsNativePatch5Format(byte[] fileData)
         {
-            return fileData[savegameOffset + SAVEGAME_FORMAT_VERSION_OFFSET] >= 2;
+            Int32 savegameVersion = BitConverter.ToInt32(fileData, savegameOffset + SAVEGAME_VERSION_OFFSET);
+            return savegameVersion >= 2;
         }
 
         public bool IsChallengeMode(byte[] fileData)
@@ -675,7 +676,7 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + SHOTGUN_AMMO_OFFSET, ammo);
 
-            bool isPrepatch = IsPrepatchSavegame(fileData);
+            bool isPrepatch = IsPrepatchSavegameFile(fileData);
 
             if (!isPrepatch)
             {
@@ -710,7 +711,7 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + AUTOMATIC_PISTOLS_AMMO_OFFSET, ammo);
 
-            bool isPrepatch = IsPrepatchSavegame(fileData);
+            bool isPrepatch = IsPrepatchSavegameFile(fileData);
 
             if (!isPrepatch)
             {
@@ -745,7 +746,7 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + UZI_AMMO_OFFSET, ammo);
 
-            bool isPrepatch = IsPrepatchSavegame(fileData);
+            bool isPrepatch = IsPrepatchSavegameFile(fileData);
 
             if (!isPrepatch)
             {
@@ -780,7 +781,7 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + M16_AMMO_OFFSET, ammo);
 
-            bool isPrepatch = IsPrepatchSavegame(fileData);
+            bool isPrepatch = IsPrepatchSavegameFile(fileData);
 
             if (!isPrepatch)
             {
@@ -815,7 +816,7 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + GRENADE_LAUNCHER_AMMO_OFFSET, ammo);
 
-            bool isPrepatch = IsPrepatchSavegame(fileData);
+            bool isPrepatch = IsPrepatchSavegameFile(fileData);
 
             if (!isPrepatch)
             {
@@ -850,7 +851,7 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + HARPOON_GUN_AMMO_OFFSET, ammo);
 
-            bool isPrepatch = IsPrepatchSavegame(fileData);
+            bool isPrepatch = IsPrepatchSavegameFile(fileData);
 
             if (!isPrepatch)
             {
@@ -1399,7 +1400,7 @@ namespace TRR_SaveMaster
         {
             DetermineOffsets(fileData);
 
-            bool isPrepatch = IsPrepatchSavegame(fileData);
+            bool isPrepatch = IsPrepatchSavegameFile(fileData);
             bool isChallengeMode = IsChallengeMode(fileData);
 
             MAX_HEALTH_VALUE = (isChallengeMode && !isPrepatch) ? GetChallengeModeMaxHealth(fileData) : MAX_HEALTH_VALUE_DEFAULT;
@@ -1512,7 +1513,7 @@ namespace TRR_SaveMaster
             WriteWeaponsConfigNum(fileData, newWeaponsConfigNum);
 
             byte levelIndex = GetLevelIndex(fileData);
-            bool isPrepatch = IsPrepatchSavegame(fileData);
+            bool isPrepatch = IsPrepatchSavegameFile(fileData);
 
             if (!isPrepatch)
             {
@@ -1599,7 +1600,7 @@ namespace TRR_SaveMaster
 
                 if (levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                 {
-                    bool isPrepatch = IsPrepatchSavegame(fileData);
+                    bool isPrepatch = IsPrepatchSavegameFile(fileData);
                     string levelName = levelNames[levelIndex];
                     GameMode gameMode = fileData[savegame.Offset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
                     bool isChallengeMode = fileData[savegame.Offset + CHALLENGE_MODE_OFFSET] == 1 && !isPrepatch;
@@ -1617,7 +1618,7 @@ namespace TRR_SaveMaster
             }
 
             byte[] fileData = File.ReadAllBytes(savegamePath);
-            bool isPrepatch = IsPrepatchSavegame(fileData);
+            bool isPrepatch = IsPrepatchSavegameFile(fileData);
 
             for (int i = cmbSavegames.Items.Count; i < MAX_SAVEGAMES; i++)
             {
@@ -1665,7 +1666,7 @@ namespace TRR_SaveMaster
             byte[] fileData = File.ReadAllBytes(savegamePath);
             int numSaves = 0;
 
-            bool isPrepatch = IsPrepatchSavegame(fileData);
+            bool isPrepatch = IsPrepatchSavegameFile(fileData);
 
             if (isPrepatch)
             {
