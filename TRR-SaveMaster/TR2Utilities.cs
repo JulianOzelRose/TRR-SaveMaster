@@ -1331,7 +1331,7 @@ namespace TRR_SaveMaster
 
                 if (!levelObjects.TryGetValue(objectId, out var tr2Object))
                 {
-                    throw new Exception($"FATAL: Missing object definition. LevelIndex={levelIndex}, ObjectId={objectId}, ItemIndex={itemIndex}");
+                    throw new Exception($"FATAL: Missing object definition (object ID: 0x{objectId:X}).");
                 }
 
                 if (tr2Object.ObjectId == 0)
