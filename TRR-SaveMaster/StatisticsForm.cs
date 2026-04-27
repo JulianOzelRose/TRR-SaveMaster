@@ -191,15 +191,15 @@ namespace TRR_SaveMaster
 
         private void StatisticsForm_Load(object sender, EventArgs e)
         {
-            DetermineOffsets();
-            SetParams();
-            DisplayStatistics();
-
             if (ThemeUtilities.DARK_MODE_ENABLED)
             {
                 ThemeUtilities.ApplyDarkMode(this);
                 ThemeUtilities.ApplyDarkTitleBar(this);
             }
+
+            DetermineOffsets();
+            SetParams();
+            DisplayStatistics();
         }
 
         private void StatisticsForm_FormClosing(object sender, FormClosingEventArgs e)

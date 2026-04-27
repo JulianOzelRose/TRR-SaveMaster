@@ -74,11 +74,6 @@ namespace TRR_SaveMaster
 
         private void PositionForm_Load(object sender, EventArgs e)
         {
-            DetermineLevelIndexOffset();
-            SetNUDRanges();
-            InitializeUtilConstructors();
-            DisplayCoordinates();
-
             if (ThemeUtilities.DARK_MODE_ENABLED)
             {
                 ThemeUtilities.ApplyDarkMode(this);
@@ -90,6 +85,11 @@ namespace TRR_SaveMaster
                 picInfoYCoordinate.Image = Resources.ToolTip_Image_DarkMode;
                 picInfoZCoordinate.Image = Resources.ToolTip_Image_DarkMode;
             }
+
+            DetermineLevelIndexOffset();
+            SetNUDRanges();
+            InitializeUtilConstructors();
+            DisplayCoordinates();
         }
 
         private void PositionForm_FormClosing(object sender, FormClosingEventArgs e)
