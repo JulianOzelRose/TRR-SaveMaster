@@ -52,7 +52,7 @@ namespace TRR_SaveMaster
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(116, 26);
             this.lblVersion.TabIndex = 0;
-            this.lblVersion.Text = "Version 2.70";
+            this.lblVersion.Text = "Version 2.75";
             // 
             // lblAuthor
             // 
