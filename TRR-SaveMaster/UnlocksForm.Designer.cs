@@ -42,12 +42,14 @@
             this.chkTR6Completed = new System.Windows.Forms.CheckBox();
             this.chkTR5Completed = new System.Windows.Forms.CheckBox();
             this.chkTR4Completed = new System.Windows.Forms.CheckBox();
+            this.btnOutfits = new System.Windows.Forms.Button();
             this.grpTRX.SuspendLayout();
             this.grpTRX2.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpTRX
             // 
+            this.grpTRX.Controls.Add(this.btnOutfits);
             this.grpTRX.Controls.Add(this.chkSocietyOfRaidersJoinedTRX);
             this.grpTRX.Controls.Add(this.chkTR3Completed);
             this.grpTRX.Controls.Add(this.chkTR2Completed);
@@ -205,6 +207,18 @@
             this.chkTR4Completed.UseVisualStyleBackColor = true;
             this.chkTR4Completed.CheckedChanged += new System.EventHandler(this.chkTR4Completed_CheckedChanged);
             // 
+            // btnOutfits
+            // 
+            this.btnOutfits.Enabled = false;
+            this.btnOutfits.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOutfits.Location = new System.Drawing.Point(223, 105);
+            this.btnOutfits.Name = "btnOutfits";
+            this.btnOutfits.Size = new System.Drawing.Size(75, 23);
+            this.btnOutfits.TabIndex = 7;
+            this.btnOutfits.Text = "Outfits";
+            this.btnOutfits.UseVisualStyleBackColor = true;
+            this.btnOutfits.Click += new System.EventHandler(this.btnOutfits_Click);
+            // 
             // UnlocksForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -250,5 +264,6 @@
         private System.Windows.Forms.CheckBox chkTR6Completed;
         private System.Windows.Forms.CheckBox chkTR5Completed;
         private System.Windows.Forms.CheckBox chkTR4Completed;
+        private System.Windows.Forms.Button btnOutfits;
     }
 }

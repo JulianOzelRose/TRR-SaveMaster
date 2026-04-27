@@ -9,6 +9,7 @@ namespace TRR_SaveMaster
     public partial class UnlocksForm : Form
     {
         // Offsets
+        private const int SAVEFILE_VERSION_OFFSET = 0x000;
         private const int TR1_COMPLETED_OFFSET = 0x18C;
         private const int TR2_COMPLETED_OFFSET = 0x190;
         private const int TR3_COMPLETED_OFFSET = 0x194;
@@ -21,6 +22,10 @@ namespace TRR_SaveMaster
         // Flags
         private const byte RAIDERS_MASK_TRX = 0x80;
         private const byte RAIDERS_MASK_TRX2 = 0x20;
+
+        // Patch-related signatures
+        private const byte SAVEFILE_PREPATCH = 0x3B;
+        private const byte SAVEFILE_PATCH5 = 0x3C;
 
         // Misc
         private MainForm mainForm;
@@ -45,14 +50,14 @@ namespace TRR_SaveMaster
 
         private void UnlocksForm_Load(object sender, EventArgs e)
         {
-            SetCheckboxes();
-            DisplayData();
-
             if (ThemeUtilities.DARK_MODE_ENABLED)
             {
                 ThemeUtilities.ApplyDarkMode(this);
                 ThemeUtilities.ApplyDarkTitleBar(this);
             }
+
+            SetCheckboxes();
+            DisplayData();
         }
 
         private void UnlocksForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -76,6 +81,11 @@ namespace TRR_SaveMaster
             chkSocietyOfRaidersJoinedTRX2.Enabled = !string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2);
         }
 
+        private bool IsPrepatchSavegameFile(byte[] fileData)
+        {
+            return fileData[SAVEFILE_VERSION_OFFSET] == SAVEFILE_PREPATCH;
+        }
+
         private void DisplayData()
         {
             isLoading = true;
@@ -85,11 +95,13 @@ namespace TRR_SaveMaster
                 if (!string.IsNullOrEmpty(savegamePathTRX) && File.Exists(savegamePathTRX))
                 {
                     byte[] fileDataTRX = File.ReadAllBytes(savegamePathTRX);
+                    bool isPrepatch = IsPrepatchSavegameFile(fileDataTRX);
 
                     chkTR1Completed.Checked = BitConverter.ToInt32(fileDataTRX, TR1_COMPLETED_OFFSET) != 0;
                     chkTR2Completed.Checked = BitConverter.ToInt32(fileDataTRX, TR2_COMPLETED_OFFSET) != 0;
                     chkTR3Completed.Checked = BitConverter.ToInt32(fileDataTRX, TR3_COMPLETED_OFFSET) != 0;
                     chkSocietyOfRaidersJoinedTRX.Checked = (fileDataTRX[SOCIETY_OF_RAIDERS_OFFSET_TRX] & RAIDERS_MASK_TRX) != 0;
+                    btnOutfits.Enabled = !isPrepatch;
                 }
 
                 if (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
@@ -284,6 +296,13 @@ namespace TRR_SaveMaster
         {
             byte[] bytes = BitConverter.GetBytes(value);
             Buffer.BlockCopy(bytes, 0, buffer, offset, 4);
+        }
+
+        private void btnOutfits_Click(object sender, EventArgs e)
+        {
+            OutfitsForm outfitsForm = new OutfitsForm(slblStatus, backupBeforeSaving, savegamePathTRX);
+            outfitsForm.TopMost = TopMost;
+            outfitsForm.ShowDialog(this);
         }
 
         private void btnClose_Click(object sender, EventArgs e)
