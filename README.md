@@ -1,6 +1,6 @@
 # Tomb Raider I-VI Remastered Savegame Editor
 This is a savegame editor for Tomb Raider I-VI Remastered. With this editor, you can edit items, health, weapons, ammunition, statistics, and position.
-This editor is compatible with PC, PS4, and Nintendo Switch savegames. However, console format Tomb Raider I-III savegames must be decrypted first.
+This editor is compatible with PC, PS4, Nintendo Switch, and Android savegames. However, console format Tomb Raider I-III savegames must be decrypted first.
 You can find more information on how to do that [here](https://github.com/JulianOzelRose/TombExtract/issues/1#issuecomment-1978837071).
 For instructions on how to download and use this editor, scroll down to the section below. If you are interested in reverse engineering, there is a technical portion on the bottom section of this README.
 For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder/delete savegames, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
@@ -13,23 +13,14 @@ The latest version of this editor is compatible with Patch 5 savegames and backw
 ## Installation and use
 To download and use this savegame editor, simply navigate to the [Releases](https://github.com/JulianOzelRose/TRR-SaveMaster/releases) page,
 then download the .exe file of the latest version under "Assets". You can save it anywhere on your computer. Once downloaded, open the file.
-The editor will then prompt you to select your savegame path, click "Yes". Your savegame path should be as follows:
-
-#### Tomb Raider I-III Remastered:
-`C:\Users\USERNAME\AppData\Roaming\TRX\77777777777777777\savegame.dat`
-
-#### Tomb Raider IV-VI Remastered:
-`C:\Users\USERNAME\AppData\Roaming\TRX2\77777777777777777\savegame.dat`
-
-Just replace "USERNAME" with your actual username, and "77777777777777777" with whatever numeric ID you see. The number is your Steam Community ID, so if
-you have multiple accounts with Tomb Raider Remastered, there may be multiple folders. Because the savegame file is located in a hidden directory, you will have to enable
-"Show hidden files, folders, or drives" in Windows Explorer. Once you have selected your savegame path, your savegames should populate in the editor. The editor will remember
-your savegame path, so there is no need to re-enter it every time.
+The editor will then prompt you to select your savegame path, click "Yes". The editor should automatically open to your TRX/TRX2 folder.
+Once here, simply navigate to the numeric folder that represents your Steam Community ID. If you have multiple accounts with Tomb Raider Remastered, there may be multiple folders.
 
 By default, this savegame editor assumes PC format of savegames. To change the savegame platform, click "Settings", then "Platform", then select your savegame platform.
-Current supported platforms are PC, PS4, and Nintendo Switch. Once the savegames are populated in the editor, you can select them using the combo box labeled "Savegame"
-in the top-right corner. The editor will automatically refresh savegame data when switching tabs or clicking the savegame combo box. If another savegame is added and not displaying,
-you can click "Refresh" to re-populate the savegames. Once you are done making changes, click "Save" to apply them. Because the game caches savegames into memory,
+Current supported platforms are PC, PS4, Nintendo Switch, and Android. PS4 and Nintendo Switch savegames are not yet supported for Patch 5 savegames.
+Once the savegames are populated in the editor, you can select them using the combo box labeled "Savegame" in the top-right corner.
+The editor will automatically refresh savegame data when switching tabs or clicking the savegame combo box. If another savegame is added and not displaying,
+you can click File -> 'Refresh savegame list' to re-populate the savegames. Once you are done making changes, click "Save" to apply them. Because the game caches savegames into memory,
 you must restart your game in order for the changes to take effect.
 
 This savegame editor has an auto backup feature, which will automatically create backups of your savegame file before writing. It is enabled by default. You can toggle this feature on or
@@ -59,7 +50,7 @@ This savegame editor also includes a Statistics Editor feature. To use it, click
 enemies killed, and secrets found. For Tomb Raider IV and V, the statistics are global, meaning they track cumulative progress across all levels, including total playtime, total kills, and total pickups.
 
 ## Dark Mode
-<img width="723" height="618" alt="DarkMode-UI" src="https://github.com/user-attachments/assets/37e46635-148d-4926-b6fb-5bc1f6c1a875" />
+<img width="723" height="618" alt="DarkMode-UI" src="https://github.com/user-attachments/assets/76a00668-5a68-4ef3-87ac-fd141ee62b58" />
 
 If you prefer a darker interface, you can enable Dark Mode from the Settings menu at the top of the program.
 Please note that Dark Mode may not display correctly when using very high or very low DPI settings.
