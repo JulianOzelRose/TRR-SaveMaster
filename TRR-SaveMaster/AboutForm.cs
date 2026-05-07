@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using TRR_SaveMaster.Properties;
 
 namespace TRR_SaveMaster
 {
@@ -15,6 +16,7 @@ namespace TRR_SaveMaster
             if (ThemeUtilities.DARK_MODE_ENABLED)
             {
                 ThemeUtilities.ApplyDarkTitleBar(this);
+                BackgroundImage = Resources.About_Background_DarkMode;
             }
         }
 
