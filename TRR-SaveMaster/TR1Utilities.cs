@@ -950,11 +950,9 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void WriteShotgunAmmo(byte[] fileData, bool isPresent, UInt16 ammo)
+        private void WriteShotgunAmmo(byte[] fileData, bool isPresent, UInt16 ammo, bool isPrepatch)
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + SHOTGUN_AMMO_OFFSET, ammo);
-
-            bool isPrepatch = IsPrepatchSavegameFile(fileData);
 
             if (!isPrepatch && (shotgunAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || shotgunAmmoOffset2 > AMMO_WRITE_UPPER_BOUND))
             {
@@ -963,19 +961,17 @@ namespace TRR_SaveMaster
 
             if (isPresent)
             {
-                WriteUInt16ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, ammo);
+                WriteInt32ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, (Int32)ammo);
             }
             else
             {
-                WriteUInt16ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, 0);
+                WriteInt32ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, 0);
             }
         }
 
-        private void WriteMagnumAmmo(byte[] fileData, bool isPresent, UInt16 ammo)
+        private void WriteMagnumAmmo(byte[] fileData, bool isPresent, UInt16 ammo, bool isPrepatch)
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + MAGNUM_AMMO_OFFSET, ammo);
-
-            bool isPrepatch = IsPrepatchSavegameFile(fileData);
 
             if (!isPrepatch && (magnumAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || magnumAmmoOffset2 > AMMO_WRITE_UPPER_BOUND))
             {
@@ -984,19 +980,17 @@ namespace TRR_SaveMaster
 
             if (isPresent)
             {
-                WriteUInt16ToBuffer(fileData, savegameOffset + magnumAmmoOffset2, ammo);
+                WriteInt32ToBuffer(fileData, savegameOffset + magnumAmmoOffset2, (Int32)ammo);
             }
             else
             {
-                WriteUInt16ToBuffer(fileData, savegameOffset + magnumAmmoOffset2, 0);
+                WriteInt32ToBuffer(fileData, savegameOffset + magnumAmmoOffset2, 0);
             }
         }
 
-        private void WriteUziAmmo(byte[] fileData, bool isPresent, UInt16 ammo)
+        private void WriteUziAmmo(byte[] fileData, bool isPresent, UInt16 ammo, bool isPrepatch)
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + UZI_AMMO_OFFSET, ammo);
-
-            bool isPrepatch = IsPrepatchSavegameFile(fileData);
 
             if (!isPrepatch && (uziAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || uziAmmoOffset2 > AMMO_WRITE_UPPER_BOUND))
             {
@@ -1005,11 +999,11 @@ namespace TRR_SaveMaster
 
             if (isPresent)
             {
-                WriteUInt16ToBuffer(fileData, savegameOffset + uziAmmoOffset2, ammo);
+                WriteInt32ToBuffer(fileData, savegameOffset + uziAmmoOffset2, (Int32)ammo);
             }
             else
             {
-                WriteUInt16ToBuffer(fileData, savegameOffset + uziAmmoOffset2, 0);
+                WriteInt32ToBuffer(fileData, savegameOffset + uziAmmoOffset2, 0);
             }
         }
 
@@ -1108,12 +1102,12 @@ namespace TRR_SaveMaster
                 int entityBlockStart = GetEntityBlockStart();
 
                 AMMO_WRITE_LOWER_BOUND = entityBlockStart;
-                AMMO_WRITE_UPPER_BOUND = SAVEGAME_SIZE - 2;
+                AMMO_WRITE_UPPER_BOUND = SAVEGAME_SIZE - 4;
             }
 
-            WriteUziAmmo(fileData, chkUzis.Checked, (UInt16)nudUziAmmo.Value);
-            WriteMagnumAmmo(fileData, chkMagnums.Checked, (UInt16)nudMagnumAmmo.Value);
-            WriteShotgunAmmo(fileData, chkShotgun.Checked, (UInt16)(nudShotgunAmmo.Value * 6));
+            WriteUziAmmo(fileData, chkUzis.Checked, (UInt16)nudUziAmmo.Value, isPrepatch);
+            WriteMagnumAmmo(fileData, chkMagnums.Checked, (UInt16)nudMagnumAmmo.Value, isPrepatch);
+            WriteShotgunAmmo(fileData, chkShotgun.Checked, (UInt16)(nudShotgunAmmo.Value * 6), isPrepatch);
 
             if (trbHealth.Enabled)
             {
