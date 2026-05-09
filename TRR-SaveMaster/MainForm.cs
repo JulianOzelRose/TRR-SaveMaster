@@ -457,10 +457,10 @@ namespace TRR_SaveMaster
             FileInfo fileInfo = new FileInfo(path);
             byte[] fileData = File.ReadAllBytes(path);
 
-            long savegameFileSize = fileInfo.Length;
+            long saveFileSize = fileInfo.Length;
             byte saveFileVersion = GetSaveFileVersion(fileData);
 
-            if (saveFileVersion == SAVEFILE_TRX2_FORMAT && savegameFileSize >= SAVEFILE_SIZE_TRX2)
+            if (saveFileVersion == SAVEFILE_TRX2_FORMAT && saveFileSize >= SAVEFILE_SIZE_TRX2)
             {
                 return true;
             }
@@ -694,8 +694,8 @@ namespace TRR_SaveMaster
                     return;
                 }
 
-                // TRX (Patch 5) support: PC, Android
-                if (!isPrepatch && (platform == Platform.PC || platform == Platform.Android))
+                // TRX (Patch 5) support: PC, Android, PS4
+                if (!isPrepatch && (platform == Platform.PC || platform == Platform.Android || platform == Platform.PlayStation4))
                 {
                     return;
                 }
@@ -2899,9 +2899,6 @@ namespace TRR_SaveMaster
             {
                 string savegamePath = IsTRXTabSelected() ? savegamePathTRX : savegamePathTRX2;
 
-                StatisticsForm statisticsForm = new StatisticsForm(this, slblStatus, tsmiBackupBeforeSaving.Checked, savegamePath, tabGame.SelectedIndex, platform);
-                Savegame selectedSavegame = null;
-
                 bool savegamePresent = false;
 
                 if (!File.Exists(savegamePath))
@@ -2921,6 +2918,10 @@ namespace TRR_SaveMaster
                 }
 
                 byte[] fileData = File.ReadAllBytes(savegamePath);
+                bool isPrepatch = IsPrepatchSavegameFileTRX(fileData);
+
+                StatisticsForm statisticsForm = new StatisticsForm(this, slblStatus, tsmiBackupBeforeSaving.Checked, savegamePath, tabGame.SelectedIndex, platform, isPrepatch);
+                Savegame selectedSavegame = null;
 
                 if (tabGame.SelectedIndex == TAB_TR1 && cmbSavegamesTR1.SelectedIndex != -1)
                 {

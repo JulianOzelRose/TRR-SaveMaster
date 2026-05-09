@@ -42,6 +42,18 @@ namespace TRR_SaveMaster
         private const int DISTANCE_TRAVELLED_OFFSET_TR1_PC = 0x624;
         private const int TIME_TAKEN_OFFSET_TR1_PC = 0x614;
 
+        // TR1 offsets (Prepatch)
+        private const int LEVEL_INDEX_OFFSET_TR1_PREPATCH = 0x62C;
+        private const int CRYSTALS_USED_OFFSET_TR1_PREPATCH = 0x610;
+        private const int AMMO_USED_OFFSET_TR1_PREPATCH = 0x618;
+        private const int HITS_OFFSET_TR1_PREPATCH = 0x61C;
+        private const int KILLS_OFFSET_TR1_PREPATCH = 0x620;
+        private const int SECRETS_FOUND_OFFSET_TR1_PREPATCH = 0x628;
+        private const int PICKUPS_OFFSET_TR1_PREPATCH = 0x62A;
+        private const int MEDIPACKS_USED_OFFSET_TR1_PREPATCH = 0x62B;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR1_PREPATCH = 0x624;
+        private const int TIME_TAKEN_OFFSET_TR1_PREPATCH = 0x614;
+
         // TR1 offsets (Android)
         private const int LEVEL_INDEX_OFFSET_TR1_ANDROID = 0x65C;
         private const int CRYSTALS_USED_OFFSET_TR1_ANDROID = 0x640;
@@ -54,6 +66,18 @@ namespace TRR_SaveMaster
         private const int DISTANCE_TRAVELLED_OFFSET_TR1_ANDROID = 0x654;
         private const int TIME_TAKEN_OFFSET_TR1_ANDROID = 0x644;
 
+        // TR1 offsets (PS4)
+        private const int LEVEL_INDEX_OFFSET_TR1_PS4 = 0x62C;
+        private const int CRYSTALS_USED_OFFSET_TR1_PS4 = 0x610;
+        private const int AMMO_USED_OFFSET_TR1_PS4 = 0x618;
+        private const int HITS_OFFSET_TR1_PS4 = 0x61C;
+        private const int KILLS_OFFSET_TR1_PS4 = 0x620;
+        private const int SECRETS_FOUND_OFFSET_TR1_PS4 = 0x628;
+        private const int PICKUPS_OFFSET_TR1_PS4 = 0x62A;
+        private const int MEDIPACKS_USED_OFFSET_TR1_PS4 = 0x62B;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR1_PS4 = 0x624;
+        private const int TIME_TAKEN_OFFSET_TR1_PS4 = 0x614;
+
         // TR2 offsets (PC)
         private const int LEVEL_INDEX_OFFSET_TR2_PC = 0x628;
         private const int AMMO_USED_OFFSET_TR2_PC = 0x614;
@@ -65,6 +89,17 @@ namespace TRR_SaveMaster
         private const int DISTANCE_TRAVELLED_OFFSET_TR2_PC = 0x620;
         private const int TIME_TAKEN_OFFSET_TR2_PC = 0x610;
 
+        // TR2 offsets (Prepatch)
+        private const int LEVEL_INDEX_OFFSET_TR2_PREPATCH = 0x628;
+        private const int AMMO_USED_OFFSET_TR2_PREPATCH = 0x614;
+        private const int HITS_OFFSET_TR2_PREPATCH = 0x618;
+        private const int KILLS_OFFSET_TR2_PREPATCH = 0x61C;
+        private const int SECRETS_FOUND_OFFSET_TR2_PREPATCH = 0x624;
+        private const int PICKUPS_OFFSET_TR2_PREPATCH = 0x626;
+        private const int MEDIPACKS_USED_OFFSET_TR2_PREPATCH = 0x627;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR2_PREPATCH = 0x620;
+        private const int TIME_TAKEN_OFFSET_TR2_PREPATCH = 0x610;
+
         // TR2 offsets (Android)
         private const int LEVEL_INDEX_OFFSET_TR2_ANDROID = 0x658;
         private const int AMMO_USED_OFFSET_TR2_ANDROID = 0x644;
@@ -75,6 +110,17 @@ namespace TRR_SaveMaster
         private const int MEDIPACKS_USED_OFFSET_TR2_ANDROID = 0x657;
         private const int DISTANCE_TRAVELLED_OFFSET_TR2_ANDROID = 0x650;
         private const int TIME_TAKEN_OFFSET_TR2_ANDROID = 0x640;
+
+        // TR2 offsets (PS4)
+        private const int LEVEL_INDEX_OFFSET_TR2_PS4 = 0x628;
+        private const int AMMO_USED_OFFSET_TR2_PS4 = 0x614;
+        private const int HITS_OFFSET_TR2_PS4 = 0x618;
+        private const int KILLS_OFFSET_TR2_PS4 = 0x61C;
+        private const int SECRETS_FOUND_OFFSET_TR2_PS4 = 0x624;
+        private const int PICKUPS_OFFSET_TR2_PS4 = 0x626;
+        private const int MEDIPACKS_USED_OFFSET_TR2_PS4 = 0x627;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR2_PS4 = 0x620;
+        private const int TIME_TAKEN_OFFSET_TR2_PS4 = 0x610;
 
         // TR3 offsets (PC)
         private const int LEVEL_INDEX_OFFSET_TR3_PC = 0x8D6;
@@ -89,6 +135,19 @@ namespace TRR_SaveMaster
         private const int PICKUPS_OFFSET_TR3_PC = 0x8C2;
         private const int MEDIPACKS_USED_OFFSET_TR3_PC = 0x8C3;
 
+        // TR3 offsets (Prepatch)
+        private const int LEVEL_INDEX_OFFSET_TR3_PREPATCH = 0x8D6;
+        private const int CRYSTALS_FOUND_OFFSET_TR3_PREPATCH = 0x8A4;
+        private const int CRYSTALS_USED_OFFSET_TR3_PREPATCH = 0x8A8;
+        private const int TIME_TAKEN_OFFSET_TR3_PREPATCH = 0x8AC;
+        private const int AMMO_USED_OFFSET_TR3_PREPATCH = 0x8B0;
+        private const int HITS_OFFSET_TR3_PREPATCH = 0x8B4;
+        private const int KILLS_OFFSET_TR3_PREPATCH = 0x8B8;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR3_PREPATCH = 0x8BC;
+        private const int SECRETS_FOUND_OFFSET_TR3_PREPATCH = 0x8C0;
+        private const int PICKUPS_OFFSET_TR3_PREPATCH = 0x8C2;
+        private const int MEDIPACKS_USED_OFFSET_TR3_PREPATCH = 0x8C3;
+
         // TR3 offsets (Android)
         private const int LEVEL_INDEX_OFFSET_TR3_ANDROID = 0x916;
         private const int CRYSTALS_FOUND_OFFSET_TR3_ANDROID = 0x8E4;
@@ -101,6 +160,19 @@ namespace TRR_SaveMaster
         private const int SECRETS_FOUND_OFFSET_TR3_ANDROID = 0x900;
         private const int PICKUPS_OFFSET_TR3_ANDROID = 0x902;
         private const int MEDIPACKS_USED_OFFSET_TR3_ANDROID = 0x903;
+
+        // TR3 offsets (PS4)
+        private const int LEVEL_INDEX_OFFSET_TR3_PS4 = 0x8D6;
+        private const int CRYSTALS_FOUND_OFFSET_TR3_PS4 = 0x8A4;
+        private const int CRYSTALS_USED_OFFSET_TR3_PS4 = 0x8A8;
+        private const int TIME_TAKEN_OFFSET_TR3_PS4 = 0x8AC;
+        private const int AMMO_USED_OFFSET_TR3_PS4 = 0x8B0;
+        private const int HITS_OFFSET_TR3_PS4 = 0x8B4;
+        private const int KILLS_OFFSET_TR3_PS4 = 0x8B8;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR3_PS4 = 0x8BC;
+        private const int SECRETS_FOUND_OFFSET_TR3_PS4 = 0x8C0;
+        private const int PICKUPS_OFFSET_TR3_PS4 = 0x8C2;
+        private const int MEDIPACKS_USED_OFFSET_TR3_PS4 = 0x8C3;
 
         // TR4 offsets
         private const int LEVEL_INDEX_OFFSET_TR4 = 0x26F;
@@ -176,8 +248,9 @@ namespace TRR_SaveMaster
         private bool backupBeforeSaving = false;
         private int SELECTED_TAB;
         private Platform platform;
+        private bool isPrepatch;
 
-        public StatisticsForm(MainForm mainForm, ToolStripStatusLabel slblStatus, bool backupBeforeSaving, string savegamePath, int SELECTED_TAB, Platform platform)
+        public StatisticsForm(MainForm mainForm, ToolStripStatusLabel slblStatus, bool backupBeforeSaving, string savegamePath, int SELECTED_TAB, Platform platform, bool isPrepatch)
         {
             InitializeComponent();
 
@@ -187,6 +260,7 @@ namespace TRR_SaveMaster
             this.SELECTED_TAB = SELECTED_TAB;
             this.mainForm = mainForm;
             this.platform = platform;
+            this.isPrepatch = isPrepatch;
         }
 
         private void StatisticsForm_Load(object sender, EventArgs e)
@@ -219,42 +293,177 @@ namespace TRR_SaveMaster
         {
             if (SELECTED_TAB == TAB_TR1)
             {
-                LEVEL_INDEX_OFFSET = platform == Platform.Android ? LEVEL_INDEX_OFFSET_TR1_ANDROID : LEVEL_INDEX_OFFSET_TR1_PC;
-                CRYSTALS_USED_OFFSET = platform == Platform.Android ? CRYSTALS_USED_OFFSET_TR1_ANDROID : CRYSTALS_USED_OFFSET_TR1_PC;
-                AMMO_USED_OFFSET = platform == Platform.Android ? AMMO_USED_OFFSET_TR1_ANDROID : AMMO_USED_OFFSET_TR1_PC;
-                HITS_OFFSET = platform == Platform.Android ? HITS_OFFSET_TR1_ANDROID : HITS_OFFSET_TR1_PC;
-                KILLS_OFFSET = platform == Platform.Android ? KILLS_OFFSET_TR1_ANDROID : KILLS_OFFSET_TR1_PC;
-                SECRETS_FOUND_OFFSET = platform == Platform.Android ? SECRETS_FOUND_OFFSET_TR1_ANDROID : SECRETS_FOUND_OFFSET_TR1_PC;
-                PICKUPS_OFFSET = platform == Platform.Android ? PICKUPS_OFFSET_TR1_ANDROID : PICKUPS_OFFSET_TR1_PC;
-                MEDIPACKS_USED_OFFSET = platform == Platform.Android ? MEDIPACKS_USED_OFFSET_TR1_ANDROID : MEDIPACKS_USED_OFFSET_TR1_PC;
-                DISTANCE_TRAVELLED_OFFSET = platform == Platform.Android ? DISTANCE_TRAVELLED_OFFSET_TR1_ANDROID : DISTANCE_TRAVELLED_OFFSET_TR1_PC;
-                TIME_TAKEN_OFFSET = platform == Platform.Android ? TIME_TAKEN_OFFSET_TR1_ANDROID : TIME_TAKEN_OFFSET_TR1_PC;
+                if (isPrepatch)
+                {
+                    LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR1_PREPATCH;
+                    CRYSTALS_USED_OFFSET = CRYSTALS_USED_OFFSET_TR1_PREPATCH;
+                    AMMO_USED_OFFSET = AMMO_USED_OFFSET_TR1_PREPATCH;
+                    HITS_OFFSET = HITS_OFFSET_TR1_PREPATCH;
+                    KILLS_OFFSET = KILLS_OFFSET_TR1_PREPATCH;
+                    SECRETS_FOUND_OFFSET = SECRETS_FOUND_OFFSET_TR1_PREPATCH;
+                    PICKUPS_OFFSET = PICKUPS_OFFSET_TR1_PREPATCH;
+                    MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR1_PREPATCH;
+                    DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR1_PREPATCH;
+                    TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR1_PREPATCH;
+                }
+                else
+                {
+                    if (platform == Platform.PC)
+                    {
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR1_PC;
+                        CRYSTALS_USED_OFFSET = CRYSTALS_USED_OFFSET_TR1_PC;
+                        AMMO_USED_OFFSET = AMMO_USED_OFFSET_TR1_PC;
+                        HITS_OFFSET = HITS_OFFSET_TR1_PC;
+                        KILLS_OFFSET = KILLS_OFFSET_TR1_PC;
+                        SECRETS_FOUND_OFFSET = SECRETS_FOUND_OFFSET_TR1_PC;
+                        PICKUPS_OFFSET = PICKUPS_OFFSET_TR1_PC;
+                        MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR1_PC;
+                        DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR1_PC;
+                        TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR1_PC;
+                    }
+                    else if (platform == Platform.Android)
+                    {
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR1_ANDROID;
+                        CRYSTALS_USED_OFFSET = CRYSTALS_USED_OFFSET_TR1_ANDROID;
+                        AMMO_USED_OFFSET = AMMO_USED_OFFSET_TR1_ANDROID;
+                        HITS_OFFSET = HITS_OFFSET_TR1_ANDROID;
+                        KILLS_OFFSET = KILLS_OFFSET_TR1_ANDROID;
+                        SECRETS_FOUND_OFFSET = SECRETS_FOUND_OFFSET_TR1_ANDROID;
+                        PICKUPS_OFFSET = PICKUPS_OFFSET_TR1_ANDROID;
+                        MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR1_ANDROID;
+                        DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR1_ANDROID;
+                        TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR1_ANDROID;
+                    }
+                    else if (platform == Platform.PlayStation4)
+                    {
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR1_PS4;
+                        CRYSTALS_USED_OFFSET = CRYSTALS_USED_OFFSET_TR1_PS4;
+                        AMMO_USED_OFFSET = AMMO_USED_OFFSET_TR1_PS4;
+                        HITS_OFFSET = HITS_OFFSET_TR1_PS4;
+                        KILLS_OFFSET = KILLS_OFFSET_TR1_PS4;
+                        SECRETS_FOUND_OFFSET = SECRETS_FOUND_OFFSET_TR1_PS4;
+                        PICKUPS_OFFSET = PICKUPS_OFFSET_TR1_PS4;
+                        MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR1_PS4;
+                        DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR1_PS4;
+                        TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR1_PS4;
+                    }
+                }
             }
             else if (SELECTED_TAB == TAB_TR2)
             {
-                LEVEL_INDEX_OFFSET = platform == Platform.Android ? LEVEL_INDEX_OFFSET_TR2_ANDROID : LEVEL_INDEX_OFFSET_TR2_PC;
-                AMMO_USED_OFFSET = platform == Platform.Android ? AMMO_USED_OFFSET_TR2_ANDROID : AMMO_USED_OFFSET_TR2_PC;
-                HITS_OFFSET = platform == Platform.Android ? HITS_OFFSET_TR2_ANDROID : HITS_OFFSET_TR2_PC;
-                KILLS_OFFSET = platform == Platform.Android ? KILLS_OFFSET_TR2_ANDROID : KILLS_OFFSET_TR2_PC;
-                SECRETS_FOUND_OFFSET = platform == Platform.Android ? SECRETS_FOUND_OFFSET_TR2_ANDROID : SECRETS_FOUND_OFFSET_TR2_PC;
-                PICKUPS_OFFSET = platform == Platform.Android ? PICKUPS_OFFSET_TR2_ANDROID : PICKUPS_OFFSET_TR2_PC;
-                MEDIPACKS_USED_OFFSET = platform == Platform.Android ? MEDIPACKS_USED_OFFSET_TR2_ANDROID : MEDIPACKS_USED_OFFSET_TR2_PC;
-                DISTANCE_TRAVELLED_OFFSET = platform == Platform.Android ? DISTANCE_TRAVELLED_OFFSET_TR2_ANDROID : DISTANCE_TRAVELLED_OFFSET_TR2_PC;
-                TIME_TAKEN_OFFSET = platform == Platform.Android ? TIME_TAKEN_OFFSET_TR2_ANDROID : TIME_TAKEN_OFFSET_TR2_PC;
+                if (isPrepatch)
+                {
+                    LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR2_PREPATCH;
+                    AMMO_USED_OFFSET = AMMO_USED_OFFSET_TR2_PREPATCH;
+                    HITS_OFFSET = HITS_OFFSET_TR2_PREPATCH;
+                    KILLS_OFFSET = KILLS_OFFSET_TR2_PREPATCH;
+                    SECRETS_FOUND_OFFSET = SECRETS_FOUND_OFFSET_TR2_PREPATCH;
+                    PICKUPS_OFFSET = PICKUPS_OFFSET_TR2_PREPATCH;
+                    MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR2_PREPATCH;
+                    DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR2_PREPATCH;
+                    TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR2_PREPATCH;
+                }
+                else
+                {
+                    if (platform == Platform.PC)
+                    {
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR2_PC;
+                        AMMO_USED_OFFSET = AMMO_USED_OFFSET_TR2_PC;
+                        HITS_OFFSET = HITS_OFFSET_TR2_PC;
+                        KILLS_OFFSET = KILLS_OFFSET_TR2_PC;
+                        SECRETS_FOUND_OFFSET = SECRETS_FOUND_OFFSET_TR2_PC;
+                        PICKUPS_OFFSET = PICKUPS_OFFSET_TR2_PC;
+                        MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR2_PC;
+                        DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR2_PC;
+                        TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR2_PC;
+                    }
+                    else if (platform == Platform.Android)
+                    {
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR2_ANDROID;
+                        AMMO_USED_OFFSET = AMMO_USED_OFFSET_TR2_ANDROID;
+                        HITS_OFFSET = HITS_OFFSET_TR2_ANDROID;
+                        KILLS_OFFSET = KILLS_OFFSET_TR2_ANDROID;
+                        SECRETS_FOUND_OFFSET = SECRETS_FOUND_OFFSET_TR2_ANDROID;
+                        PICKUPS_OFFSET = PICKUPS_OFFSET_TR2_ANDROID;
+                        MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR2_ANDROID;
+                        DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR2_ANDROID;
+                        TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR2_ANDROID;
+                    }
+                    else if (platform == Platform.PlayStation4)
+                    {
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR2_PS4;
+                        AMMO_USED_OFFSET = AMMO_USED_OFFSET_TR2_PS4;
+                        HITS_OFFSET = HITS_OFFSET_TR2_PS4;
+                        KILLS_OFFSET = KILLS_OFFSET_TR2_PS4;
+                        SECRETS_FOUND_OFFSET = SECRETS_FOUND_OFFSET_TR2_PS4;
+                        PICKUPS_OFFSET = PICKUPS_OFFSET_TR2_PS4;
+                        MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR2_PS4;
+                        DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR2_PS4;
+                        TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR2_PS4;
+                    }
+                }
             }
             else if (SELECTED_TAB == TAB_TR3)
             {
-                LEVEL_INDEX_OFFSET = platform == Platform.Android ? LEVEL_INDEX_OFFSET_TR3_ANDROID : LEVEL_INDEX_OFFSET_TR3_PC;
-                CRYSTALS_FOUND_OFFSET = platform == Platform.Android ? CRYSTALS_FOUND_OFFSET_TR3_ANDROID : CRYSTALS_FOUND_OFFSET_TR3_PC;
-                CRYSTALS_USED_OFFSET = platform == Platform.Android ? CRYSTALS_USED_OFFSET_TR3_ANDROID : CRYSTALS_USED_OFFSET_TR3_PC;
-                AMMO_USED_OFFSET = platform == Platform.Android ? AMMO_USED_OFFSET_TR3_ANDROID : AMMO_USED_OFFSET_TR3_PC;
-                HITS_OFFSET = platform == Platform.Android ? HITS_OFFSET_TR3_ANDROID : HITS_OFFSET_TR3_PC;
-                KILLS_OFFSET = platform == Platform.Android ? KILLS_OFFSET_TR3_ANDROID : KILLS_OFFSET_TR3_PC;
-                SECRETS_FOUND_OFFSET = platform == Platform.Android ? SECRETS_FOUND_OFFSET_TR3_ANDROID : SECRETS_FOUND_OFFSET_TR3_PC;
-                PICKUPS_OFFSET = platform == Platform.Android ? PICKUPS_OFFSET_TR3_ANDROID : PICKUPS_OFFSET_TR3_PC;
-                MEDIPACKS_USED_OFFSET = platform == Platform.Android ? MEDIPACKS_USED_OFFSET_TR3_ANDROID : MEDIPACKS_USED_OFFSET_TR3_PC;
-                DISTANCE_TRAVELLED_OFFSET = platform == Platform.Android ? DISTANCE_TRAVELLED_OFFSET_TR3_ANDROID : DISTANCE_TRAVELLED_OFFSET_TR3_PC;
-                TIME_TAKEN_OFFSET = platform == Platform.Android ? TIME_TAKEN_OFFSET_TR3_ANDROID : TIME_TAKEN_OFFSET_TR3_PC;
+                if (isPrepatch)
+                {
+                    LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR3_PREPATCH;
+                    CRYSTALS_FOUND_OFFSET = CRYSTALS_FOUND_OFFSET_TR3_PREPATCH;
+                    CRYSTALS_USED_OFFSET = CRYSTALS_USED_OFFSET_TR3_PREPATCH;
+                    AMMO_USED_OFFSET = AMMO_USED_OFFSET_TR3_PREPATCH;
+                    HITS_OFFSET = HITS_OFFSET_TR3_PREPATCH;
+                    KILLS_OFFSET = KILLS_OFFSET_TR3_PREPATCH;
+                    SECRETS_FOUND_OFFSET = SECRETS_FOUND_OFFSET_TR3_PREPATCH;
+                    PICKUPS_OFFSET = PICKUPS_OFFSET_TR3_PREPATCH;
+                    MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR3_PREPATCH;
+                    DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR3_PREPATCH;
+                    TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR3_PREPATCH;
+                }
+                else
+                {
+                    if (platform == Platform.PC)
+                    {
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR3_PC;
+                        CRYSTALS_FOUND_OFFSET = CRYSTALS_FOUND_OFFSET_TR3_PC;
+                        CRYSTALS_USED_OFFSET = CRYSTALS_USED_OFFSET_TR3_PC;
+                        AMMO_USED_OFFSET = AMMO_USED_OFFSET_TR3_PC;
+                        HITS_OFFSET = HITS_OFFSET_TR3_PC;
+                        KILLS_OFFSET = KILLS_OFFSET_TR3_PC;
+                        SECRETS_FOUND_OFFSET = SECRETS_FOUND_OFFSET_TR3_PC;
+                        PICKUPS_OFFSET = PICKUPS_OFFSET_TR3_PC;
+                        MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR3_PC;
+                        DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR3_PC;
+                        TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR3_PC;
+                    }
+                    else if (platform == Platform.Android)
+                    {
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR3_ANDROID;
+                        CRYSTALS_FOUND_OFFSET = CRYSTALS_FOUND_OFFSET_TR3_ANDROID;
+                        CRYSTALS_USED_OFFSET = CRYSTALS_USED_OFFSET_TR3_ANDROID;
+                        AMMO_USED_OFFSET = AMMO_USED_OFFSET_TR3_ANDROID;
+                        HITS_OFFSET = HITS_OFFSET_TR3_ANDROID;
+                        KILLS_OFFSET = KILLS_OFFSET_TR3_ANDROID;
+                        SECRETS_FOUND_OFFSET = SECRETS_FOUND_OFFSET_TR3_ANDROID;
+                        PICKUPS_OFFSET = PICKUPS_OFFSET_TR3_ANDROID;
+                        MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR3_ANDROID;
+                        DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR3_ANDROID;
+                        TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR3_ANDROID;
+                    }
+                    else if (platform == Platform.PlayStation4)
+                    {
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR3_PS4;
+                        CRYSTALS_FOUND_OFFSET = CRYSTALS_FOUND_OFFSET_TR3_PS4;
+                        CRYSTALS_USED_OFFSET = CRYSTALS_USED_OFFSET_TR3_PS4;
+                        AMMO_USED_OFFSET = AMMO_USED_OFFSET_TR3_PS4;
+                        HITS_OFFSET = HITS_OFFSET_TR3_PS4;
+                        KILLS_OFFSET = KILLS_OFFSET_TR3_PS4;
+                        SECRETS_FOUND_OFFSET = SECRETS_FOUND_OFFSET_TR3_PS4;
+                        PICKUPS_OFFSET = PICKUPS_OFFSET_TR3_PS4;
+                        MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR3_PS4;
+                        DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR3_PS4;
+                        TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR3_PS4;
+                    }
+                }
             }
             else if (SELECTED_TAB == TAB_TR4)
             {

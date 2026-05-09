@@ -13,6 +13,7 @@ namespace TRR_SaveMaster
         private const int SLOT_STATUS_OFFSET = 0x004;
         private const int GAME_MODE_OFFSET = 0x008;
         private const int SAVE_NUMBER_OFFSET = 0x00C;
+        private const int LEVEL_INDEX_OFFSET_PREPATCH = 0x628;
 
         // Platform or patch-dependent offsets
         private int LEVEL_INDEX_OFFSET;
@@ -27,7 +28,6 @@ namespace TRR_SaveMaster
         private int CHALLENGE_MODE_ENEMY_TYPE_OFFSET;
 
         // Savegame constants
-        private const int HEADER_SIZE = 0x6BC;
         private const int MAX_SAVEGAMES = 32;
 
         // PC offsets
@@ -47,6 +47,15 @@ namespace TRR_SaveMaster
         private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_ANDROID = 0x6F9;
         private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_ANDROID = 0x6FD;
         private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_ANDROID = 0x700;
+
+        // PS4 offsets
+        private const int LEVEL_INDEX_OFFSET_PS4 = 0x628;
+        private const int SAVEGAME_VERSION_OFFSET_PS4 = 0x6A4;
+        private const int CHALLENGE_MODE_RNG_SEED_OFFSET_PS4 = 0x6A8;
+        private const int CHALLENGE_MODE_OFFSET_PS4 = 0x6AC;
+        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_PS4 = 0x6BE;
+        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PS4 = 0x6C2;
+        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PS4 = 0x6C5;
 
         // Patch-dependent
         private const int SAVEGAME_SIZE_PREPATCH = 0x3800;
@@ -93,6 +102,11 @@ namespace TRR_SaveMaster
         private const byte CHALLENGE_MODE_ENEMY_NUMBERS_NORMAL = 3;
         private const byte CHALLENGE_MODE_ENEMY_TYPE_NORMAL = 2;
         private const byte CHALLENGE_MODE_ENEMY_TYPE_RANDOMIZER = 5;
+
+        // Entity block starts
+        private const int ENTITY_BLOCK_START_PC = 0x6BC;
+        private const int ENTITY_BLOCK_START_ANDROID = 0x6F3;
+        private const int ENTITY_BLOCK_START_PS4 = 0x6B8;
 
         // Health
         private const UInt16 MAX_HEALTH_VALUE_DEFAULT = 1000;
@@ -280,31 +294,14 @@ namespace TRR_SaveMaster
 
         public void DetermineOffsets(byte[] fileData)
         {
-            LEVEL_INDEX_OFFSET = platform == Platform.Android ? LEVEL_INDEX_OFFSET_ANDROID : LEVEL_INDEX_OFFSET_PC;
-            SAVEGAME_VERSION_OFFSET = platform == Platform.Android ? SAVEGAME_VERSION_OFFSET_ANDROID : SAVEGAME_VERSION_OFFSET_PC;
-            CHALLENGE_MODE_RNG_SEED_OFFSET = platform == Platform.Android ? CHALLENGE_MODE_RNG_SEED_OFFSET_ANDROID : CHALLENGE_MODE_RNG_SEED_OFFSET_PC;
-            CHALLENGE_MODE_OFFSET = platform == Platform.Android ? CHALLENGE_MODE_OFFSET_ANDROID : CHALLENGE_MODE_OFFSET_PC;
-            CHALLENGE_MODE_MAX_HEALTH_OFFSET = platform == Platform.Android ? CHALLENGE_MODE_MAX_HEALTH_OFFSET_ANDROID : CHALLENGE_MODE_MAX_HEALTH_OFFSET_PC;
-            CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET = platform == Platform.Android ? CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_ANDROID : CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PC;
-            CHALLENGE_MODE_ENEMY_TYPE_OFFSET = platform == Platform.Android ? CHALLENGE_MODE_ENEMY_TYPE_OFFSET_ANDROID : CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PC;
-
-            byte levelIndex = GetLevelIndex(fileData);
-
-            AUTOMATIC_PISTOLS_AMMO_OFFSET = 0x12 + (levelIndex * 0x30);
-            UZI_AMMO_OFFSET = 0x14 + (levelIndex * 0x30);
-            SHOTGUN_AMMO_OFFSET = 0x16 + (levelIndex * 0x30);
-            M16_AMMO_OFFSET = 0x18 + (levelIndex * 0x30);
-            GRENADE_LAUNCHER_AMMO_OFFSET = 0x1A + (levelIndex * 0x30);
-            HARPOON_GUN_AMMO_OFFSET = 0x1C + (levelIndex * 0x30);
-            SMALL_MEDIPACK_OFFSET = 0x1E + (levelIndex * 0x30);
-            LARGE_MEDIPACK_OFFSET = 0x1F + (levelIndex * 0x30);
-            FLARES_OFFSET = 0x21 + (levelIndex * 0x30);
-            WEAPONS_CONFIG_NUM_OFFSET = 0x3C + (levelIndex * 0x30);
-
             bool isPrepatch = IsPrepatchSavegameFile(fileData);
+            byte levelIndex;
 
             if (isPrepatch)
             {
+                LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PREPATCH;
+                levelIndex = GetLevelIndex(fileData);
+
                 if (levelIndex == 1)        // The Great Wall
                 {
                     MIN_HEALTH_OFFSET = 0xB64;
@@ -427,6 +424,52 @@ namespace TRR_SaveMaster
                     MAX_HEALTH_OFFSET -= 4;
                 }
             }
+            else
+            {
+                if (platform == Platform.PC)
+                {
+                    LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PC;
+                    SAVEGAME_VERSION_OFFSET = SAVEGAME_VERSION_OFFSET_PC;
+                    CHALLENGE_MODE_RNG_SEED_OFFSET = CHALLENGE_MODE_RNG_SEED_OFFSET_PC;
+                    CHALLENGE_MODE_OFFSET = CHALLENGE_MODE_OFFSET_PC;
+                    CHALLENGE_MODE_MAX_HEALTH_OFFSET = CHALLENGE_MODE_MAX_HEALTH_OFFSET_PC;
+                    CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET = CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PC;
+                    CHALLENGE_MODE_ENEMY_TYPE_OFFSET = CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PC;
+                }
+                else if (platform == Platform.Android)
+                {
+                    LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_ANDROID;
+                    SAVEGAME_VERSION_OFFSET = SAVEGAME_VERSION_OFFSET_ANDROID;
+                    CHALLENGE_MODE_RNG_SEED_OFFSET = CHALLENGE_MODE_RNG_SEED_OFFSET_ANDROID;
+                    CHALLENGE_MODE_OFFSET = CHALLENGE_MODE_OFFSET_ANDROID;
+                    CHALLENGE_MODE_MAX_HEALTH_OFFSET = CHALLENGE_MODE_MAX_HEALTH_OFFSET_ANDROID;
+                    CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET = CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_ANDROID;
+                    CHALLENGE_MODE_ENEMY_TYPE_OFFSET = CHALLENGE_MODE_ENEMY_TYPE_OFFSET_ANDROID;
+                }
+                else if (platform == Platform.PlayStation4)
+                {
+                    LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PS4;
+                    SAVEGAME_VERSION_OFFSET = SAVEGAME_VERSION_OFFSET_PS4;
+                    CHALLENGE_MODE_RNG_SEED_OFFSET = CHALLENGE_MODE_RNG_SEED_OFFSET_PS4;
+                    CHALLENGE_MODE_OFFSET = CHALLENGE_MODE_OFFSET_PS4;
+                    CHALLENGE_MODE_MAX_HEALTH_OFFSET = CHALLENGE_MODE_MAX_HEALTH_OFFSET_PS4;
+                    CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET = CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PS4;
+                    CHALLENGE_MODE_ENEMY_TYPE_OFFSET = CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PS4;
+                }
+            }
+
+            levelIndex = GetLevelIndex(fileData);
+
+            AUTOMATIC_PISTOLS_AMMO_OFFSET = 0x12 + (levelIndex * 0x30);
+            UZI_AMMO_OFFSET = 0x14 + (levelIndex * 0x30);
+            SHOTGUN_AMMO_OFFSET = 0x16 + (levelIndex * 0x30);
+            M16_AMMO_OFFSET = 0x18 + (levelIndex * 0x30);
+            GRENADE_LAUNCHER_AMMO_OFFSET = 0x1A + (levelIndex * 0x30);
+            HARPOON_GUN_AMMO_OFFSET = 0x1C + (levelIndex * 0x30);
+            SMALL_MEDIPACK_OFFSET = 0x1E + (levelIndex * 0x30);
+            LARGE_MEDIPACK_OFFSET = 0x1F + (levelIndex * 0x30);
+            FLARES_OFFSET = 0x21 + (levelIndex * 0x30);
+            WEAPONS_CONFIG_NUM_OFFSET = 0x3C + (levelIndex * 0x30);
         }
 
         private bool IsPrepatchSavegameFile(byte[] fileData)
@@ -1281,6 +1324,24 @@ namespace TRR_SaveMaster
             return result;
         }
 
+        private int GetEntityBlockStart()
+        {
+            if (platform == Platform.PC)
+            {
+                return ENTITY_BLOCK_START_PC;
+            }
+            else if (platform == Platform.Android)
+            {
+                return ENTITY_BLOCK_START_ANDROID;
+            }
+            else if (platform == Platform.PlayStation4)
+            {
+                return ENTITY_BLOCK_START_PS4;
+            }
+
+            return ENTITY_BLOCK_START_PC;
+        }
+
         private void DetermineDynamicOffsets(byte[] fileData)
         {
             bool isChallengeMode = IsChallengeMode(fileData);
@@ -1290,7 +1351,7 @@ namespace TRR_SaveMaster
             var baseList = TR2EntityCache.LevelObjectIdsByLevel[levelIndex];
             var levelObjectIds = new List<int>(baseList);
 
-            sgBufferCursor = platform == Platform.Android ? 0x6F3 : 0x6BC;
+            sgBufferCursor = GetEntityBlockStart();
 
             if (isChallengeMode && isNativePatch5)
             {
@@ -1519,7 +1580,9 @@ namespace TRR_SaveMaster
             {
                 DetermineDynamicOffsets(fileData);
 
-                AMMO_WRITE_LOWER_BOUND = HEADER_SIZE;
+                int entityBlockStart = GetEntityBlockStart();
+
+                AMMO_WRITE_LOWER_BOUND = entityBlockStart;
                 AMMO_WRITE_UPPER_BOUND = SAVEGAME_SIZE - 2;
             }
             else
@@ -1664,7 +1727,7 @@ namespace TRR_SaveMaster
         public void PopulateSavegames(ComboBox cmbSavegames)
         {
             byte[] fileData = File.ReadAllBytes(savegamePath);
-            int numSaves = 0;
+            int numSavegames = 0;
 
             bool isPrepatch = IsPrepatchSavegameFile(fileData);
 
@@ -1673,16 +1736,30 @@ namespace TRR_SaveMaster
                 BASE_SAVEGAME_OFFSET_TR2 = BASE_SAVEGAME_OFFSET_TR2_PREPATCH;
                 MAX_SAVEGAME_OFFSET_TR2 = MAX_SAVEGAME_OFFSET_TR2_PREPATCH;
                 SAVEGAME_SIZE = SAVEGAME_SIZE_PREPATCH;
+                LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PREPATCH;
             }
             else
             {
                 BASE_SAVEGAME_OFFSET_TR2 = BASE_SAVEGAME_OFFSET_TR2_PATCH5;
                 MAX_SAVEGAME_OFFSET_TR2 = MAX_SAVEGAME_OFFSET_TR2_PATCH5;
                 SAVEGAME_SIZE = SAVEGAME_SIZE_PATCH5;
-            }
 
-            LEVEL_INDEX_OFFSET = platform == Platform.Android ? LEVEL_INDEX_OFFSET_ANDROID : LEVEL_INDEX_OFFSET_PC;
-            CHALLENGE_MODE_OFFSET = platform == Platform.Android ? CHALLENGE_MODE_OFFSET_ANDROID : CHALLENGE_MODE_OFFSET_PC;
+                if (platform == Platform.PC)
+                {
+                    LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PC;
+                    CHALLENGE_MODE_OFFSET = CHALLENGE_MODE_OFFSET_PC;
+                }
+                else if (platform == Platform.Android)
+                {
+                    LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_ANDROID;
+                    CHALLENGE_MODE_OFFSET = CHALLENGE_MODE_OFFSET_ANDROID;
+                }
+                else if (platform == Platform.PlayStation4)
+                {
+                    LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PS4;
+                    CHALLENGE_MODE_OFFSET = CHALLENGE_MODE_OFFSET_PS4;
+                }
+            }
 
             for (int i = 0; i < MAX_SAVEGAMES; i++)
             {
@@ -1703,11 +1780,11 @@ namespace TRR_SaveMaster
                     Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode, false, isChallengeMode);
                     cmbSavegames.Items.Add(savegame);
 
-                    numSaves++;
+                    numSavegames++;
                 }
             }
 
-            if (numSaves > 0)
+            if (numSavegames > 0)
             {
                 cmbSavegames.SelectedIndex = 0;
             }
