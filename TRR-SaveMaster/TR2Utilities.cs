@@ -437,7 +437,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void WriteShotgunAmmo(byte[] fileData, bool isPresent, UInt16 ammo, bool isPrepatch)
+        private void WriteShotgunAmmo(byte[] fileData, bool isPresent, UInt16 ammo)
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + SHOTGUN_AMMO_OFFSET, ammo);
 
@@ -450,13 +450,13 @@ namespace TRR_SaveMaster
             {
                 WriteInt32ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, (Int32)ammo);
             }
-            else if (!isPresent)
+            else
             {
                 WriteInt32ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, 0);
             }
         }
 
-        private void WriteAutomaticPistolsAmmo(byte[] fileData, bool isPresent, UInt16 ammo, bool isPrepatch)
+        private void WriteAutomaticPistolsAmmo(byte[] fileData, bool isPresent, UInt16 ammo)
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + AUTOMATIC_PISTOLS_AMMO_OFFSET, ammo);
 
@@ -469,13 +469,13 @@ namespace TRR_SaveMaster
             {
                 WriteInt32ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, (Int32)ammo);
             }
-            else if (!isPresent)
+            else
             {
                 WriteInt32ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, 0);
             }
         }
 
-        private void WriteUziAmmo(byte[] fileData, bool isPresent, UInt16 ammo, bool isPrepatch)
+        private void WriteUziAmmo(byte[] fileData, bool isPresent, UInt16 ammo)
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + UZI_AMMO_OFFSET, ammo);
 
@@ -488,13 +488,13 @@ namespace TRR_SaveMaster
             {
                 WriteInt32ToBuffer(fileData, savegameOffset + uziAmmoOffset2, (Int32)ammo);
             }
-            else if (!isPresent)
+            else
             {
                 WriteInt32ToBuffer(fileData, savegameOffset + uziAmmoOffset2, 0);
             }
         }
 
-        private void WriteM16Ammo(byte[] fileData, bool isPresent, UInt16 ammo, bool isPrepatch)
+        private void WriteM16Ammo(byte[] fileData, bool isPresent, UInt16 ammo)
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + M16_AMMO_OFFSET, ammo);
 
@@ -507,13 +507,13 @@ namespace TRR_SaveMaster
             {
                 WriteInt32ToBuffer(fileData, savegameOffset + m16AmmoOffset2, (Int32)ammo);
             }
-            else if (!isPresent)
+            else
             {
                 WriteInt32ToBuffer(fileData, savegameOffset + m16AmmoOffset2, 0);
             }
         }
 
-        private void WriteGrenadeLauncherAmmo(byte[] fileData, bool isPresent, UInt16 ammo, bool isPrepatch)
+        private void WriteGrenadeLauncherAmmo(byte[] fileData, bool isPresent, UInt16 ammo)
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + GRENADE_LAUNCHER_AMMO_OFFSET, ammo);
 
@@ -526,13 +526,13 @@ namespace TRR_SaveMaster
             {
                 WriteInt32ToBuffer(fileData, savegameOffset + grenadeLauncherAmmoOffset2, (Int32)ammo);
             }
-            else if (!isPresent)
+            else
             {
                 WriteInt32ToBuffer(fileData, savegameOffset + grenadeLauncherAmmoOffset2, 0);
             }
         }
 
-        private void WriteHarpoonGunAmmo(byte[] fileData, bool isPresent, UInt16 ammo, bool isPrepatch)
+        private void WriteHarpoonGunAmmo(byte[] fileData, bool isPresent, UInt16 ammo)
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + HARPOON_GUN_AMMO_OFFSET, ammo);
 
@@ -545,7 +545,7 @@ namespace TRR_SaveMaster
             {
                 WriteInt32ToBuffer(fileData, savegameOffset + harpoonGunAmmoOffset2, (Int32)ammo);
             }
-            else if (!isPresent)
+            else
             {
                 WriteInt32ToBuffer(fileData, savegameOffset + harpoonGunAmmoOffset2, 0);
             }
@@ -1229,22 +1229,22 @@ namespace TRR_SaveMaster
 
             if (levelIndex == 18)       // Home Sweet Home
             {
-                WriteShotgunAmmo(fileData, chkShotgun.Checked, (UInt16)(nudShotgunAmmo.Value * 6), isPrepatch);
+                WriteShotgunAmmo(fileData, chkShotgun.Checked, (UInt16)(nudShotgunAmmo.Value * 6));
             }
             else if (levelIndex == 23)  // Nightmare in Vegas
             {
-                WriteShotgunAmmo(fileData, chkShotgun.Checked, (UInt16)(nudShotgunAmmo.Value * 6), isPrepatch);
-                WriteAutomaticPistolsAmmo(fileData, chkAutomaticPistols.Checked, (UInt16)nudAutomaticPistolsAmmo.Value, isPrepatch);
-                WriteUziAmmo(fileData, chkUzis.Checked, (UInt16)nudUziAmmo.Value, isPrepatch);
+                WriteShotgunAmmo(fileData, chkShotgun.Checked, (UInt16)(nudShotgunAmmo.Value * 6));
+                WriteAutomaticPistolsAmmo(fileData, chkAutomaticPistols.Checked, (UInt16)nudAutomaticPistolsAmmo.Value);
+                WriteUziAmmo(fileData, chkUzis.Checked, (UInt16)nudUziAmmo.Value);
             }
             else
             {
-                WriteShotgunAmmo(fileData, chkShotgun.Checked, (UInt16)(nudShotgunAmmo.Value * 6), isPrepatch);
-                WriteAutomaticPistolsAmmo(fileData, chkAutomaticPistols.Checked, (UInt16)nudAutomaticPistolsAmmo.Value, isPrepatch);
-                WriteUziAmmo(fileData, chkUzis.Checked, (UInt16)nudUziAmmo.Value, isPrepatch);
-                WriteHarpoonGunAmmo(fileData, chkHarpoonGun.Checked, (UInt16)nudHarpoonGunAmmo.Value, isPrepatch);
-                WriteGrenadeLauncherAmmo(fileData, chkGrenadeLauncher.Checked, (UInt16)nudGrenadeLauncherAmmo.Value, isPrepatch);
-                WriteM16Ammo(fileData, chkM16.Checked, (UInt16)nudM16Ammo.Value, isPrepatch);
+                WriteShotgunAmmo(fileData, chkShotgun.Checked, (UInt16)(nudShotgunAmmo.Value * 6));
+                WriteAutomaticPistolsAmmo(fileData, chkAutomaticPistols.Checked, (UInt16)nudAutomaticPistolsAmmo.Value);
+                WriteUziAmmo(fileData, chkUzis.Checked, (UInt16)nudUziAmmo.Value);
+                WriteHarpoonGunAmmo(fileData, chkHarpoonGun.Checked, (UInt16)nudHarpoonGunAmmo.Value);
+                WriteGrenadeLauncherAmmo(fileData, chkGrenadeLauncher.Checked, (UInt16)nudGrenadeLauncherAmmo.Value);
+                WriteM16Ammo(fileData, chkM16.Checked, (UInt16)nudM16Ammo.Value);
             }
 
             if (trbHealth.Enabled)
