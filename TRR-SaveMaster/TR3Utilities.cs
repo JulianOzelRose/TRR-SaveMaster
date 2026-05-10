@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace TRR_SaveMaster
@@ -111,21 +110,20 @@ namespace TRR_SaveMaster
         private const int ENTITY_BLOCK_START_PC = 0x998;
         private const int ENTITY_BLOCK_START_ANDROID = 0x9E3;
         private const int ENTITY_BLOCK_START_PS4 = 0x998;
+        private const int ENTITY_BLOCK_START_PC_PREPATCH = 0x988;
+        private const int ENTITY_BLOCK_START_PS4_PREPATCH = 0x986;
+        private const int ENTITY_BLOCK_START_NS_PREPATCH = 0x986;
 
         // Health
         private const UInt16 MAX_HEALTH_VALUE_DEFAULT = 1000;
         private const UInt16 MIN_HEALTH_VALUE = 1;
         private UInt16 MAX_HEALTH_VALUE = MAX_HEALTH_VALUE_DEFAULT;
-        private int MAX_HEALTH_OFFSET;
-        private int MIN_HEALTH_OFFSET;
         private int HEALTH_OFFSET;
 
         // Misc
         private Platform platform;
         private string savegamePath;
         private int savegameOffset;
-        private int secondaryAmmoIndex = -1;
-        private const int MAX_ACTIVE_ENTITY_AI_COUNT = 50;
         private const int ENTITY_AI_BLOCK_SIZE = 0x1A;
         private int AMMO_WRITE_LOWER_BOUND;
         private int AMMO_WRITE_UPPER_BOUND;
@@ -162,66 +160,6 @@ namespace TRR_SaveMaster
             { 26, "Reunion"                     },
         };
 
-        private readonly Dictionary<byte, int[]> ammoIndexDataPC = new Dictionary<byte, int[]>()
-        {
-            {  1, new int[] { 0x1F86, 0x1F87, 0x1F88, 0x1F89 } },   // Jungle
-            {  2, new int[] { 0x3114, 0x3115, 0x3116, 0x3117 } },   // Temple Ruins
-            {  3, new int[] { 0x21FE, 0x21FF, 0x2200, 0x2201 } },   // The River Ganges
-            {  4, new int[] { 0x13C6, 0x13C7, 0x13C8, 0x13C9 } },   // Caves of Kaliya
-            {  5, new int[] { 0x2294, 0x2295, 0x2296, 0x2297 } },   // Coastal Village
-            {  6, new int[] { 0x22D6, 0x22D7, 0x22D8, 0x22D9 } },   // Crash Site
-            {  7, new int[] { 0x1DFE, 0x1DFF, 0x1E00, 0x1E01 } },   // Madubu Gorge
-            {  8, new int[] { 0x18BC, 0x18BD, 0x18BE, 0x18BF } },   // Temple of Puna
-            {  9, new int[] { 0x2282, 0x2283, 0x2284, 0x2285 } },   // Thames Wharf
-            { 10, new int[] { 0x2FCA, 0x2FCB, 0x2FCC, 0x2FCD } },   // Aldwych
-            { 11, new int[] { 0x289C, 0x289D, 0x289E, 0x289F } },   // Lud's Gate
-            { 12, new int[] { 0x1196, 0x1197, 0x1198, 0x1199 } },   // City
-            { 13, new int[] { 0x21D2, 0x21D3, 0x21D4, 0x21D5 } },   // Nevada Desert
-            { 14, new int[] { 0x2A8A, 0x2A8B, 0x2A8C, 0x2A8D } },   // High Security Compound
-            { 15, new int[] { 0x2D5C, 0x2D5D, 0x2D5E, 0x2D5F } },   // Area 51
-            { 16, new int[] { 0x23CC, 0x23CD, 0x23CE, 0x23CF } },   // Antarctica
-            { 17, new int[] { 0x2414, 0x2415, 0x2416, 0x2417 } },   // RX-Tech Mines
-            { 18, new int[] { 0x29A0, 0x29A1, 0x29A2, 0x29A3 } },   // Lost City of Tinnos
-            { 19, new int[] { 0x1146, 0x1147, 0x1148, 0x1149 } },   // Meteorite Cavern
-            { 20, new int[] { 0x1822, 0x1823, 0x1824, 0x1825 } },   // All Hallows
-            { 21, new int[] { 0x21AE, 0x21AF, 0x21B0, 0x21B1 } },   // Highland Fling
-            { 22, new int[] { 0x2532, 0x2533, 0x2534, 0x2535 } },   // Willard's Lair
-            { 23, new int[] { 0x25D0, 0x25D1, 0x25D2, 0x25D3 } },   // Shakespeare Cliff
-            { 24, new int[] { 0x23D2, 0x23D3, 0x23D4, 0x23D5 } },   // Sleeping with the Fishes
-            { 25, new int[] { 0x2030, 0x2031, 0x2032, 0x2033 } },   // It's a Madhouse!
-            { 26, new int[] { 0x1A40, 0x1A41, 0x1A42, 0x1A43 } },   // Reunion
-        };
-
-        private readonly Dictionary<byte, int[]> ammoIndexDataConsole = new Dictionary<byte, int[]>()
-        {
-            {  1, new int[] { 0x1F84, 0x1F85, 0x1F86, 0x1F87 } },   // Jungle
-            {  2, new int[] { 0x3112, 0x3113, 0x3114, 0x3115 } },   // Temple Ruins
-            {  3, new int[] { 0x21FC, 0x21FD, 0x21FE, 0x21FF } },   // The River Ganges
-            {  4, new int[] { 0x13C4, 0x13C5, 0x13C6, 0x13C7 } },   // Caves of Kaliya
-            {  5, new int[] { 0x2292, 0x2293, 0x2294, 0x2295 } },   // Coastal Village
-            {  6, new int[] { 0x22D4, 0x22D5, 0x22D6, 0x22D7 } },   // Crash Site
-            {  7, new int[] { 0x1DFC, 0x1DFD, 0x1DFE, 0x1DFF } },   // Madubu Gorge
-            {  8, new int[] { 0x18BA, 0x18BB, 0x18BC, 0x18BD } },   // Temple of Puna
-            {  9, new int[] { 0x2280, 0x2281, 0x2282, 0x2283 } },   // Thames Wharf
-            { 10, new int[] { 0x2FC8, 0x2FC9, 0x2FCA, 0x2FCB } },   // Aldwych
-            { 11, new int[] { 0x289A, 0x289B, 0x289C, 0x289D } },   // Lud's Gate
-            { 12, new int[] { 0x1194, 0x1195, 0x1196, 0x1197 } },   // City
-            { 13, new int[] { 0x21D0, 0x21D1, 0x21D2, 0x21D3 } },   // Nevada Desert
-            { 14, new int[] { 0x2A88, 0x2A89, 0x2A8A, 0x2A8B } },   // High Security Compound
-            { 15, new int[] { 0x2D5A, 0x2D5B, 0x2D5C, 0x2D5D } },   // Area 51
-            { 16, new int[] { 0x23CA, 0x23CB, 0x23CC, 0x23CD } },   // Antarctica
-            { 17, new int[] { 0x2412, 0x2413, 0x2414, 0x2415 } },   // RX-Tech Mines
-            { 18, new int[] { 0x299E, 0x299F, 0x29A0, 0x29A1 } },   // Lost City of Tinnos
-            { 19, new int[] { 0x1144, 0x1145, 0x1146, 0x1147 } },   // Meteorite Cavern
-            { 20, new int[] { 0x1820, 0x1821, 0x1822, 0x1823 } },   // All Hallows
-            { 21, new int[] { 0x21AC, 0x21AD, 0x21AE, 0x21AF } },   // Highland Fling
-            { 22, new int[] { 0x2530, 0x2531, 0x2532, 0x2533 } },   // Willard's Lair
-            { 23, new int[] { 0x25CE, 0x25CF, 0x25D0, 0x25D1 } },   // Shakespeare Cliff
-            { 24, new int[] { 0x23D0, 0x23D1, 0x23D2, 0x23D3 } },   // Sleeping with the Fishes
-            { 25, new int[] { 0x202E, 0x202F, 0x2030, 0x2031 } },   // It's a Madhouse!
-            { 26, new int[] { 0x1A3E, 0x1A3F, 0x1A40, 0x1A41 } },   // Reunion
-        };
-
         private void WriteInt32ToBuffer(byte[] buffer, int offset, int value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
@@ -241,218 +179,50 @@ namespace TRR_SaveMaster
                 savegameData = File.ReadAllBytes(savegamePath);
             }
 
+            if (!areOffsetsDetermined)
+            {
+                DetermineDynamicOffsets(savegameData);
+            }
+
             bool isPrepatch = IsPrepatchSavegameFile(savegameData);
 
             if (!isPrepatch)
             {
                 bool isChallengeMode = IsChallengeMode(savegameData);
                 MAX_HEALTH_VALUE = isChallengeMode ? GetChallengeModeMaxHealth(savegameData) : MAX_HEALTH_VALUE_DEFAULT;
-
-                if (!areOffsetsDetermined)
-                {
-                    DetermineDynamicOffsets(savegameData);
-                }
-
-                UInt16 value = BitConverter.ToUInt16(savegameData, savegameOffset + HEALTH_OFFSET);
-
-                if (value >= MIN_HEALTH_VALUE && value <= MAX_HEALTH_VALUE)
-                {
-                    return savegameOffset + HEALTH_OFFSET;
-                }
-
-                return -1;
             }
             else
             {
                 MAX_HEALTH_VALUE = MAX_HEALTH_VALUE_DEFAULT;
-
-                for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset += ENTITY_AI_BLOCK_SIZE)
-                {
-                    int valueIndex = savegameOffset + offset;
-
-                    if (valueIndex + 2 >= savegameData.Length)
-                    {
-                        break;
-                    }
-
-                    UInt16 value = BitConverter.ToUInt16(savegameData, valueIndex);
-
-                    if (value >= MIN_HEALTH_VALUE && value <= MAX_HEALTH_VALUE)
-                    {
-                        int flagIndex1 = savegameOffset + offset - 10;
-                        int flagIndex2 = savegameOffset + offset - 9;
-                        int flagIndex3 = savegameOffset + offset - 8;
-                        int flagIndex4 = savegameOffset + offset - 7;
-
-                        if (flagIndex4 >= savegameData.Length)
-                        {
-                            continue;
-                        }
-
-                        byte byteFlag1 = savegameData[flagIndex1];
-                        byte byteFlag2 = savegameData[flagIndex2];
-                        byte byteFlag3 = savegameData[flagIndex3];
-                        byte byteFlag4 = savegameData[flagIndex4];
-
-                        if (IsKnownByteFlagPattern(byteFlag1, byteFlag2, byteFlag3, byteFlag4))
-                        {
-                            return savegameOffset + offset;
-                        }
-                    }
-                }
-
-                return -1;
             }
+
+            UInt16 value = BitConverter.ToUInt16(savegameData, savegameOffset + HEALTH_OFFSET);
+
+            if (value >= MIN_HEALTH_VALUE && value <= MAX_HEALTH_VALUE)
+            {
+                return savegameOffset + HEALTH_OFFSET;
+            }
+
+            return -1;
         }
 
         public void DetermineOffsets(byte[] fileData)
         {
             bool isPrepatch = IsPrepatchSavegameFile(fileData);
-            byte levelIndex;
 
             if (isPrepatch)
             {
-                levelIndex = GetLevelIndex(fileData);
-
-                if (levelIndex == 1)        // Jungle
-                {
-                    MIN_HEALTH_OFFSET = 0xB26;
-                    MAX_HEALTH_OFFSET = 0xB26;
-                }
-                else if (levelIndex == 2)   // Temple Ruins
-                {
-                    MIN_HEALTH_OFFSET = 0xDCC;
-                    MAX_HEALTH_OFFSET = 0xE34;
-                }
-                else if (levelIndex == 3)   // The River Ganges
-                {
-                    MIN_HEALTH_OFFSET = 0xAFC;
-                    MAX_HEALTH_OFFSET = 0xAFC;
-                }
-                else if (levelIndex == 4)   // Caves of Kaliya
-                {
-                    MIN_HEALTH_OFFSET = 0x1038;
-                    MAX_HEALTH_OFFSET = 0x118A;
-                }
-                else if (levelIndex == 5)   // Coastal Village
-                {
-                    MIN_HEALTH_OFFSET = 0xCB8;
-                    MAX_HEALTH_OFFSET = 0xCB8;
-                }
-                else if (levelIndex == 6)   // Crash Site
-                {
-                    MIN_HEALTH_OFFSET = 0x2046;
-                    MAX_HEALTH_OFFSET = 0x217E;
-                }
-                else if (levelIndex == 7)   // Madubu Gorge
-                {
-                    MIN_HEALTH_OFFSET = 0x1250;
-                    MAX_HEALTH_OFFSET = 0x12B8;
-                }
-                else if (levelIndex == 8)   // Temple of Puna
-                {
-                    MIN_HEALTH_OFFSET = 0xAD2;
-                    MAX_HEALTH_OFFSET = 0xAD2;
-                }
-                else if (levelIndex == 9)   // Thames Wharf
-                {
-                    MIN_HEALTH_OFFSET = 0x10AA;
-                    MAX_HEALTH_OFFSET = 0x10DE;
-                }
-                else if (levelIndex == 10)  // Aldwych
-                {
-                    MIN_HEALTH_OFFSET = 0x2C9A;
-                    MAX_HEALTH_OFFSET = 0x2D02;
-                }
-                else if (levelIndex == 11)  // Lud's Gate
-                {
-                    MIN_HEALTH_OFFSET = 0xFF0;
-                    MAX_HEALTH_OFFSET = 0x1058;
-                }
-                else if (levelIndex == 12)  // City
-                {
-                    MIN_HEALTH_OFFSET = 0xBB2;
-                    MAX_HEALTH_OFFSET = 0xBB2;
-                }
-                else if (levelIndex == 13)  // Nevada Desert
-                {
-                    MIN_HEALTH_OFFSET = 0xAF8;
-                    MAX_HEALTH_OFFSET = 0xAF8;
-                }
-                else if (levelIndex == 14)  // High Security Compound
-                {
-                    MIN_HEALTH_OFFSET = 0xB4C;
-                    MAX_HEALTH_OFFSET = 0xB66;
-                }
-                else if (levelIndex == 15)  // Area 51
-                {
-                    MIN_HEALTH_OFFSET = 0x11E4;
-                    MAX_HEALTH_OFFSET = 0x129A;
-                }
-                else if (levelIndex == 16)  // Antarctica
-                {
-                    MIN_HEALTH_OFFSET = 0xB12;
-                    MAX_HEALTH_OFFSET = 0xB12;
-                }
-                else if (levelIndex == 17)  // RX-Tech Mines
-                {
-                    MIN_HEALTH_OFFSET = 0xFB0;
-                    MAX_HEALTH_OFFSET = 0xFCA;
-                }
-                else if (levelIndex == 18)  // Lost City of Tinnos
-                {
-                    MIN_HEALTH_OFFSET = 0xB7C;
-                    MAX_HEALTH_OFFSET = 0xB7C;
-                }
-                else if (levelIndex == 19)  // Meteorite Cavern
-                {
-                    MIN_HEALTH_OFFSET = 0xAD0;
-                    MAX_HEALTH_OFFSET = 0xAD0;
-                }
-                else if (levelIndex == 20)  // All Hallows
-                {
-                    MIN_HEALTH_OFFSET = 0x1076;
-                    MAX_HEALTH_OFFSET = 0x10AA;
-                }
-                else if (levelIndex == 21)  // Highland Fling
-                {
-                    MIN_HEALTH_OFFSET = 0x1BF4;
-                    MAX_HEALTH_OFFSET = 0x1CAA;
-                }
-                else if (levelIndex == 22)  // Willard's Lair
-                {
-                    MIN_HEALTH_OFFSET = 0x15EE;
-                    MAX_HEALTH_OFFSET = 0x15EE;
-                }
-                else if (levelIndex == 23)  // Shakespeare Cliff
-                {
-                    MIN_HEALTH_OFFSET = 0x1338;
-                    MAX_HEALTH_OFFSET = 0x1386;
-                }
-                else if (levelIndex == 24)  // Sleeping with the Fishes
-                {
-                    MIN_HEALTH_OFFSET = 0xB5A;
-                    MAX_HEALTH_OFFSET = 0xB5A;
-                }
-                else if (levelIndex == 25)  // It's a Madhouse!
-                {
-                    MIN_HEALTH_OFFSET = 0x1084;
-                    MAX_HEALTH_OFFSET = 0x1106;
-                }
-                else if (levelIndex == 26)  // Reunion
-                {
-                    MIN_HEALTH_OFFSET = 0x1810;
-                    MAX_HEALTH_OFFSET = 0x18C6;
-                }
-
-                if (platform != Platform.PC)
-                {
-                    MIN_HEALTH_OFFSET -= 2;
-                    MAX_HEALTH_OFFSET -= 2;
-                }
+                BASE_SAVEGAME_OFFSET_TR3 = BASE_SAVEGAME_OFFSET_TR3_PREPATCH;
+                MAX_SAVEGAME_OFFSET_TR3 = MAX_SAVEGAME_OFFSET_TR3_PREPATCH;
+                SAVEGAME_SIZE = SAVEGAME_SIZE_PREPATCH;
+                LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PREPATCH;
             }
             else
             {
+                BASE_SAVEGAME_OFFSET_TR3 = BASE_SAVEGAME_OFFSET_TR3_PATCH5;
+                MAX_SAVEGAME_OFFSET_TR3 = MAX_SAVEGAME_OFFSET_TR3_PATCH5;
+                SAVEGAME_SIZE = SAVEGAME_SIZE_PATCH5;
+
                 if (platform == Platform.PC)
                 {
                     LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PC;
@@ -485,7 +255,7 @@ namespace TRR_SaveMaster
                 }
             }
 
-            levelIndex = GetLevelIndex(fileData);
+            byte levelIndex = GetLevelIndex(fileData);
 
             DEAGLE_AMMO_OFFSET = 0x66 + (levelIndex * 0x40);
             UZI_AMMO_OFFSET = 0x68 + (levelIndex * 0x40);
@@ -837,36 +607,57 @@ namespace TRR_SaveMaster
             return result;
         }
 
-        private int GetEntityBlockStart()
+        private int GetEntityBlockStart(bool isPrepatch)
         {
-            if (platform == Platform.PC)
+            if (isPrepatch)
             {
+                if (platform == Platform.PC)
+                {
+                    return ENTITY_BLOCK_START_PC_PREPATCH;
+                }
+                else if (platform == Platform.PlayStation4)
+                {
+                    return ENTITY_BLOCK_START_PS4_PREPATCH;
+                }
+                else if (platform == Platform.NintendoSwitch)
+                {
+                    return ENTITY_BLOCK_START_NS_PREPATCH;
+                }
+
+                return ENTITY_BLOCK_START_PC_PREPATCH;
+            }
+            else
+            {
+                if (platform == Platform.PC)
+                {
+                    return ENTITY_BLOCK_START_PC;
+                }
+                else if (platform == Platform.Android)
+                {
+                    return ENTITY_BLOCK_START_ANDROID;
+                }
+                else if (platform == Platform.PlayStation4)
+                {
+                    return ENTITY_BLOCK_START_PS4;
+                }
+
                 return ENTITY_BLOCK_START_PC;
             }
-            else if (platform == Platform.Android)
-            {
-                return ENTITY_BLOCK_START_ANDROID;
-            }
-            else if (platform == Platform.PlayStation4)
-            {
-                return ENTITY_BLOCK_START_PS4;
-            }
-
-            return ENTITY_BLOCK_START_PC;
         }
 
         private void DetermineDynamicOffsets(byte[] fileData)
         {
             bool isChallengeMode = IsChallengeMode(fileData);
             bool isNativePatch5 = IsNativePatch5Format(fileData);
+            bool isPrepatch = IsPrepatchSavegameFile(fileData);
             byte levelIndex = GetLevelIndex(fileData);
 
             var baseList = TR3EntityCache.LevelObjectIdsByLevel[levelIndex];
             var levelObjectIds = new List<int>(baseList);
 
-            sgBufferCursor = GetEntityBlockStart();
+            sgBufferCursor = GetEntityBlockStart(isPrepatch);
 
-            if (isChallengeMode && isNativePatch5)
+            if (isChallengeMode && isNativePatch5 && !isPrepatch)
             {
                 byte enemyNumbers = GetChallengeModeEnemyNumbers(fileData);
                 byte enemyType = GetChallengeModeEnemyType(fileData);
@@ -884,7 +675,7 @@ namespace TRR_SaveMaster
             int gLevelStateEntryCount = TR3EntityCache.LevelStateEntryCounts[levelIndex];
             sgBufferCursor += gLevelStateEntryCount * 2;
 
-            if (isNativePatch5)
+            if (isNativePatch5 && !isPrepatch)
             {
                 sgBufferCursor += 4;
             }
@@ -893,7 +684,7 @@ namespace TRR_SaveMaster
             {
                 int objectId = levelObjectIds[itemIndex];
 
-                if (isNativePatch5)
+                if (isNativePatch5 && !isPrepatch)
                 {
                     sgBufferCursor += 4;
                 }
@@ -1031,7 +822,7 @@ namespace TRR_SaveMaster
             if (maxHealthSetting == 6) return (UInt16)2000;
             if (maxHealthSetting == 7) return (UInt16)5000;
 
-            return (UInt16)1000;
+            return MAX_HEALTH_VALUE_DEFAULT;
         }
 
         private byte GetChallengeModeEnemyNumbers(byte[] fileData)
@@ -1185,32 +976,18 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + SHOTGUN_AMMO_OFFSET, ammo);
 
-            if (!isPrepatch)
+            if (shotgunAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || shotgunAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
             {
-                if (shotgunAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || shotgunAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
-                {
-                    return;
-                }
-
-                if (isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, 0);
-                }
+                return;
             }
-            else
+
+            if (isPresent)
             {
-                if (isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, 0);
-                }
+                WriteInt32ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, (Int32)ammo);
+            }
+            else if (!isPresent)
+            {
+                WriteInt32ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, 0);
             }
         }
 
@@ -1218,32 +995,18 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + DEAGLE_AMMO_OFFSET, ammo);
 
-            if (!isPrepatch)
+            if (deagleAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || deagleAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
             {
-                if (deagleAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || deagleAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
-                {
-                    return;
-                }
-
-                if (isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + deagleAmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + deagleAmmoOffset2, 0);
-                }
+                return;
             }
-            else
+
+            if (isPresent)
             {
-                if (isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + deagleAmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + deagleAmmoOffset2, 0);
-                }
+                WriteInt32ToBuffer(fileData, savegameOffset + deagleAmmoOffset2, (Int32)ammo);
+            }
+            else if (!isPresent)
+            {
+                WriteInt32ToBuffer(fileData, savegameOffset + deagleAmmoOffset2, 0);
             }
         }
 
@@ -1251,32 +1014,18 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + UZI_AMMO_OFFSET, ammo);
 
-            if (!isPrepatch)
+            if (uziAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || uziAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
             {
-                if (uziAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || uziAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
-                {
-                    return;
-                }
-
-                if (isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + uziAmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + uziAmmoOffset2, 0);
-                }
+                return;
             }
-            else
+
+            if (isPresent)
             {
-                if (isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + uziAmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + uziAmmoOffset2, 0);
-                }
+                WriteInt32ToBuffer(fileData, savegameOffset + uziAmmoOffset2, (Int32)ammo);
+            }
+            else if (!isPresent)
+            {
+                WriteInt32ToBuffer(fileData, savegameOffset + uziAmmoOffset2, 0);
             }
         }
 
@@ -1284,32 +1033,18 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + GRENADE_LAUNCHER_AMMO_OFFSET, ammo);
 
-            if (!isPrepatch)
+            if (grenadeLauncherAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || grenadeLauncherAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
             {
-                if (grenadeLauncherAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || grenadeLauncherAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
-                {
-                    return;
-                }
-
-                if (isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + grenadeLauncherAmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + grenadeLauncherAmmoOffset2, 0);
-                }
+                return;
             }
-            else
+
+            if (isPresent)
             {
-                if (isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + grenadeLauncherAmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + grenadeLauncherAmmoOffset2, 0);
-                }
+                WriteInt32ToBuffer(fileData, savegameOffset + grenadeLauncherAmmoOffset2, (Int32)ammo);
+            }
+            else if (!isPresent)
+            {
+                WriteInt32ToBuffer(fileData, savegameOffset + grenadeLauncherAmmoOffset2, 0);
             }
         }
 
@@ -1317,32 +1052,18 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + MP5_AMMO_OFFSET, ammo);
 
-            if (!isPrepatch)
+            if (mp5AmmoOffset2 < AMMO_WRITE_LOWER_BOUND || mp5AmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
             {
-                if (mp5AmmoOffset2 < AMMO_WRITE_LOWER_BOUND || mp5AmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
-                {
-                    return;
-                }
-
-                if (isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + mp5AmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + mp5AmmoOffset2, 0);
-                }
+                return;
             }
-            else
+
+            if (isPresent)
             {
-                if (isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + mp5AmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + mp5AmmoOffset2, 0);
-                }
+                WriteInt32ToBuffer(fileData, savegameOffset + mp5AmmoOffset2, (Int32)ammo);
+            }
+            else if (!isPresent)
+            {
+                WriteInt32ToBuffer(fileData, savegameOffset + mp5AmmoOffset2, 0);
             }
         }
 
@@ -1350,32 +1071,18 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + ROCKET_LAUNCHER_AMMO_OFFSET, ammo);
 
-            if (!isPrepatch)
+            if (rocketLauncherAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || rocketLauncherAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
             {
-                if (rocketLauncherAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || rocketLauncherAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
-                {
-                    return;
-                }
-
-                if (isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + rocketLauncherAmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + rocketLauncherAmmoOffset2, 0);
-                }
+                return;
             }
-            else
+
+            if (isPresent)
             {
-                if (isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + rocketLauncherAmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + rocketLauncherAmmoOffset2, 0);
-                }
+                WriteInt32ToBuffer(fileData, savegameOffset + rocketLauncherAmmoOffset2, (Int32)ammo);
+            }
+            else if (!isPresent)
+            {
+                WriteInt32ToBuffer(fileData, savegameOffset + rocketLauncherAmmoOffset2, 0);
             }
         }
 
@@ -1383,22 +1090,12 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + HARPOON_GUN_AMMO_OFFSET, ammo);
 
-            if (!isPrepatch)
+            if (harpoonGunAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || harpoonGunAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
             {
-                if (harpoonGunAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || harpoonGunAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
-                {
-                    return;
-                }
+                return;
+            }
 
-                WriteInt32ToBuffer(fileData, savegameOffset + harpoonGunAmmoOffset2, (Int32)ammo);
-            }
-            else
-            {
-                if (secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + harpoonGunAmmoOffset2, (Int32)ammo);
-                }
-            }
+            WriteInt32ToBuffer(fileData, savegameOffset + harpoonGunAmmoOffset2, (Int32)ammo);
         }
 
         public void DisplayGameInfo(byte[] fileData, CheckBox chkPistols, CheckBox chkShotgun, CheckBox chkDeagle, CheckBox chkUzis,
@@ -1410,6 +1107,7 @@ namespace TRR_SaveMaster
             Label lblCollectibleCrystals)
         {
             DetermineOffsets(fileData);
+            DetermineDynamicOffsets(fileData);
 
             bool isPrepatch = IsPrepatchSavegameFile(fileData);
             bool isChallengeMode = IsChallengeMode(fileData);
@@ -1470,11 +1168,6 @@ namespace TRR_SaveMaster
 
             chkHarpoonGun.Checked = IsHarpoonGunPresent(fileData);
 
-            if (!isPrepatch)
-            {
-                DetermineDynamicOffsets(fileData);
-            }
-
             int healthOffset = GetHealthOffset(fileData, true);
 
             if (healthOffset != -1)
@@ -1504,6 +1197,7 @@ namespace TRR_SaveMaster
             NumericUpDown nudMP5Ammo, NumericUpDown nudUziAmmo, TrackBar trbHealth, NumericUpDown nudCollectibleCrystals)
         {
             DetermineOffsets(fileData);
+            DetermineDynamicOffsets(fileData);
 
             WriteSaveNumber(fileData, (Int32)nudSaveNumber.Value);
             WriteNumFlares(fileData, (byte)nudFlares.Value);
@@ -1526,34 +1220,10 @@ namespace TRR_SaveMaster
             byte levelIndex = GetLevelIndex(fileData);
             bool isPrepatch = IsPrepatchSavegameFile(fileData);
 
-            if (!isPrepatch)
-            {
-                DetermineDynamicOffsets(fileData);
+            int entityBlockStart = GetEntityBlockStart(isPrepatch);
 
-                int entityBlockStart = GetEntityBlockStart();
-
-                AMMO_WRITE_LOWER_BOUND = entityBlockStart;
-                AMMO_WRITE_UPPER_BOUND = SAVEGAME_SIZE - 4;
-            }
-            else
-            {
-                secondaryAmmoIndex = GetSecondaryAmmoIndex(fileData);
-
-                if (secondaryAmmoIndex != -1)
-                {
-                    Dictionary<byte, int[]> ammoIndexData = platform == Platform.PC ? ammoIndexDataPC : ammoIndexDataConsole;
-
-                    int baseSecondaryAmmoOffset = ammoIndexData[levelIndex][0];
-
-                    deagleAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0xAC);
-                    uziAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0xA4);
-                    shotgunAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x9C);
-                    harpoonGunAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x94);
-                    rocketLauncherAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x8C);
-                    grenadeLauncherAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x84);
-                    mp5AmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x7C);
-                }
-            }
+            AMMO_WRITE_LOWER_BOUND = entityBlockStart;
+            AMMO_WRITE_UPPER_BOUND = SAVEGAME_SIZE - 4;
 
             WriteShotgunAmmo(fileData, chkShotgun.Checked, (UInt16)(nudShotgunAmmo.Value * 6), isPrepatch);
             WriteDeagleAmmo(fileData, chkDeagle.Checked, (UInt16)nudDeagleAmmo.Value, isPrepatch);
@@ -1574,37 +1244,6 @@ namespace TRR_SaveMaster
             }
 
             File.WriteAllBytes(savegamePath, fileData);
-        }
-
-        private bool IsKnownByteFlagPattern(byte byteFlag1, byte byteFlag2, byte byteFlag3, byte byteFlag4)
-        {
-            if (byteFlag1 == 0x02 && byteFlag2 == 0x00 && byteFlag3 == 0x02 && byteFlag4 == 0x00) return true;  // Standing
-            if (byteFlag1 == 0x13 && byteFlag2 == 0x00 && byteFlag3 == 0x13 && byteFlag4 == 0x00) return true;  // Climbing
-            if (byteFlag1 == 0x21 && byteFlag2 == 0x00 && byteFlag3 == 0x21 && byteFlag4 == 0x00) return true;  // On water
-            if (byteFlag1 == 0x0D && byteFlag2 == 0x00 && byteFlag3 == 0x0D && byteFlag4 == 0x00) return true;  // Underwater
-            if (byteFlag1 == 0x12 && byteFlag2 == 0x00 && byteFlag3 == 0x12 && byteFlag4 == 0x00) return true;  // Swimming
-            if (byteFlag1 == 0x17 && byteFlag2 == 0x00 && byteFlag3 == 0x02 && byteFlag4 == 0x00) return true;  // Rolling
-            if (byteFlag1 == 0x41 && byteFlag2 == 0x00 && byteFlag3 == 0x02 && byteFlag4 == 0x00) return true;  // Walking through water
-            if (byteFlag1 == 0x22 && byteFlag2 == 0x00 && byteFlag3 == 0x22 && byteFlag4 == 0x00) return true;  // Wading through water
-            if (byteFlag1 == 0x01 && byteFlag2 == 0x00 && byteFlag3 == 0x02 && byteFlag4 == 0x00) return true;  // Running forward
-            if (byteFlag1 == 0x03 && byteFlag2 == 0x00 && byteFlag3 == 0x03 && byteFlag4 == 0x00) return true;  // Jumping forward
-            if (byteFlag1 == 0x49 && byteFlag2 == 0x00 && byteFlag3 == 0x01 && byteFlag4 == 0x00) return true;  // Sprinting
-            if (byteFlag1 == 0x20 && byteFlag2 == 0x00 && byteFlag3 == 0x20 && byteFlag4 == 0x00) return true;  // Sliding backward
-            if (byteFlag1 == 0x18 && byteFlag2 == 0x00 && byteFlag3 == 0x18 && byteFlag4 == 0x00) return true;  // Sliding downhill
-            if (byteFlag1 == 0x47 && byteFlag2 == 0x00 && byteFlag3 == 0x47 && byteFlag4 == 0x00) return true;  // Crouching
-            if (byteFlag1 == 0x50 && byteFlag2 == 0x00 && byteFlag3 == 0x50 && byteFlag4 == 0x00) return true;  // Kneeling
-            if (byteFlag1 == 0x51 && byteFlag2 == 0x00 && byteFlag3 == 0x50 && byteFlag4 == 0x00) return true;  // Crawling forward
-            if (byteFlag1 == 0x2A && byteFlag2 == 0x00 && byteFlag3 == 0x02 && byteFlag4 == 0x00) return true;  // Using puzzle item
-            if (byteFlag1 == 0x09 && byteFlag2 == 0x00 && byteFlag3 == 0x09 && byteFlag4 == 0x00) return true;  // Freefalling
-            if (byteFlag1 == 0x0F && byteFlag2 == 0x00 && byteFlag3 == 0x0F && byteFlag4 == 0x00) return true;  // Quad Bike
-            if (byteFlag1 == 0x08 && byteFlag2 == 0x00 && byteFlag3 == 0x08 && byteFlag4 == 0x00) return true;  // Quad Bike
-            if (byteFlag1 == 0x05 && byteFlag2 == 0x00 && byteFlag3 == 0x05 && byteFlag4 == 0x00) return true;  // UPV
-            if (byteFlag1 == 0x01 && byteFlag2 == 0x00 && byteFlag3 == 0x01 && byteFlag4 == 0x00) return true;  // Kayak or Boat
-            if (byteFlag1 == 0x03 && byteFlag2 == 0x00 && byteFlag3 == 0x01 && byteFlag4 == 0x00) return true;  // Kayak or Boat
-            if (byteFlag1 == 0x06 && byteFlag2 == 0x00 && byteFlag3 == 0x06 && byteFlag4 == 0x00) return true;  // Mine Cart
-            if (byteFlag1 == 0x0C && byteFlag2 == 0x00 && byteFlag3 == 0x0C && byteFlag4 == 0x00) return true;  // Mine Cart
-
-            return false;
         }
 
         public bool IsLaraInVehicle(int healthOffset, byte[] fileData)
@@ -1635,51 +1274,6 @@ namespace TRR_SaveMaster
             if (byteFlag1 == 0x09 && byteFlag2 == 0x00 && byteFlag3 == 0x09 && byteFlag4 == 0x00) return true;
 
             return false;
-        }
-
-        private int GetSecondaryAmmoIndex(byte[] fileData)
-        {
-            byte levelIndex = GetLevelIndex(fileData);
-
-            Dictionary<byte, int[]> ammoIndexData = platform == Platform.PC ? ammoIndexDataPC : ammoIndexDataConsole;
-
-            if (ammoIndexData.ContainsKey(levelIndex))
-            {
-                int[] indexData = ammoIndexData[levelIndex];
-
-                int[] offsets1 = new int[indexData.Length];
-                int[] offsets2 = new int[indexData.Length];
-
-                for (int index = 0; index < MAX_ACTIVE_ENTITY_AI_COUNT; index++)
-                {
-                    Array.Copy(indexData, offsets1, indexData.Length);
-
-                    for (int i = 0; i < indexData.Length; i++)
-                    {
-                        offsets2[i] = offsets1[i] + 0xA;
-
-                        offsets1[i] += savegameOffset + (index * ENTITY_AI_BLOCK_SIZE);
-                        offsets2[i] += savegameOffset + (index * ENTITY_AI_BLOCK_SIZE);
-                    }
-
-                    if (offsets1.All(offset => fileData[offset] == 0xFF))
-                    {
-                        return index;
-                    }
-
-                    if (offsets2.All(offset => fileData[offset] == 0xFF))
-                    {
-                        return index;
-                    }
-                }
-            }
-
-            return -1;
-        }
-
-        private int GetSecondaryAmmoOffset(int baseOffset)
-        {
-            return baseOffset + (secondaryAmmoIndex * ENTITY_AI_BLOCK_SIZE);
         }
 
         public void SetPlatform(Platform platform)

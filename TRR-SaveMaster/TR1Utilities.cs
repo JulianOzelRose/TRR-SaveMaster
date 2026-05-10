@@ -148,26 +148,26 @@ namespace TRR_SaveMaster
             Buffer.BlockCopy(bytes, 0, buffer, offset, 2);
         }
 
-        public int GetHealthOffset(byte[] fileData = null, bool areOffsetsDetermined = false)
+        public int GetHealthOffset(byte[] savegameData = null, bool areOffsetsDetermined = false)
         {
-            if (fileData == null)
+            if (savegameData == null)
             {
-                fileData = File.ReadAllBytes(savegamePath);
+                savegameData = File.ReadAllBytes(savegamePath);
             }
 
-            bool isPrepatch = IsPrepatchSavegameFile(fileData);
-            bool isChallengeMode = IsChallengeMode(fileData);
+            bool isPrepatch = IsPrepatchSavegameFile(savegameData);
+            bool isChallengeMode = IsChallengeMode(savegameData);
 
             if (!isPrepatch && !areOffsetsDetermined)
             {
-                DetermineDynamicOffsets(fileData);
+                DetermineDynamicOffsets(savegameData);
             }
 
-            MAX_HEALTH_VALUE = (isChallengeMode && !isPrepatch) ? GetChallengeModeMaxHealth(fileData) : MAX_HEALTH_VALUE_DEFAULT;
+            MAX_HEALTH_VALUE = (isChallengeMode && !isPrepatch) ? GetChallengeModeMaxHealth(savegameData) : MAX_HEALTH_VALUE_DEFAULT;
 
             if (HEALTH_OFFSET != -1)
             {
-                UInt16 value = BitConverter.ToUInt16(fileData, savegameOffset + HEALTH_OFFSET);
+                UInt16 value = BitConverter.ToUInt16(savegameData, savegameOffset + HEALTH_OFFSET);
 
                 if (value >= MIN_HEALTH_VALUE && value <= MAX_HEALTH_VALUE)
                 {
@@ -857,7 +857,7 @@ namespace TRR_SaveMaster
             if (maxHealthSetting == 6) return (UInt16)2000;
             if (maxHealthSetting == 7) return (UInt16)5000;
 
-            return (UInt16)1000;
+            return MAX_HEALTH_VALUE_DEFAULT;
         }
 
         private byte GetChallengeModeEnemyNumbers(byte[] fileData)

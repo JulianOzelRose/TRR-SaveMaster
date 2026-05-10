@@ -107,21 +107,20 @@ namespace TRR_SaveMaster
         private const int ENTITY_BLOCK_START_PC = 0x6BC;
         private const int ENTITY_BLOCK_START_ANDROID = 0x6F3;
         private const int ENTITY_BLOCK_START_PS4 = 0x6B8;
+        private const int ENTITY_BLOCK_START_PC_PREPATCH = 0x6A2;
+        private const int ENTITY_BLOCK_START_PS4_PREPATCH = 0x69E;
+        private const int ENTITY_BLOCK_START_NS_PREPATCH = 0x69E;
 
         // Health
         private const UInt16 MAX_HEALTH_VALUE_DEFAULT = 1000;
         private const UInt16 MIN_HEALTH_VALUE = 1;
         private UInt16 MAX_HEALTH_VALUE = MAX_HEALTH_VALUE_DEFAULT;
-        private int MAX_HEALTH_OFFSET;
-        private int MIN_HEALTH_OFFSET;
         private int HEALTH_OFFSET;
 
         // Misc
         private Platform platform;
         private string savegamePath;
         private int savegameOffset;
-        private int secondaryAmmoIndex = -1;
-        private const int MAX_ENTITY_COUNT = 50;
         private const int ENTITY_AI_BLOCK_SIZE = 0xC;
         private int AMMO_WRITE_LOWER_BOUND;
         private int AMMO_WRITE_UPPER_BOUND;
@@ -155,60 +154,6 @@ namespace TRR_SaveMaster
             { 23,  "Nightmare in Vegas"         },
         };
 
-        private readonly Dictionary<byte, int[]> ammoIndexDataPC = new Dictionary<byte, int[]>
-        {
-            {  1, new int[] { 0x19BA, 0x19BB, 0x19BC, 0x19BD } },   // The Great Wall
-            {  2, new int[] { 0x1CFC, 0x1CFD, 0x1CFE, 0x1CFF } },   // Venice
-            {  3, new int[] { 0x1F10, 0x1F11, 0x1F12, 0x1F13 } },   // Bartoli's Hideout
-            {  4, new int[] { 0x2A16, 0x2A17, 0x2A18, 0x2A19 } },   // Opera House
-            {  5, new int[] { 0x1AEE, 0x1AEF, 0x1AF0, 0x1AF1 } },   // Offshore Rig
-            {  6, new int[] { 0x1EBC, 0x1EBD, 0x1EBE, 0x1EBF } },   // Diving Area
-            {  7, new int[] { 0x1410, 0x1411, 0x1412, 0x1413 } },   // 40 Fathoms
-            {  8, new int[] { 0x2598, 0x2599, 0x259A, 0x259B } },   // Wreck of the Maria Doria
-            {  9, new int[] { 0x17C2, 0x17C3, 0x17C4, 0x17C5 } },   // Living Quarters
-            { 10, new int[] { 0x1C0E, 0x1C0F, 0x1C10, 0x1C11 } },   // The Deck
-            { 11, new int[] { 0x1F62, 0x1F63, 0x1F64, 0x1F65 } },   // Tibetan Foothills
-            { 12, new int[] { 0x2B56, 0x2B57, 0x2B58, 0x2B59 } },   // Barkhang Monastery
-            { 13, new int[] { 0x2282, 0x2283, 0x2284, 0x2285 } },   // Catacombs of the Talion
-            { 14, new int[] { 0x1DEE, 0x1DEF, 0x1DF0, 0x1DF1 } },   // Ice Palace
-            { 15, new int[] { 0x2CB2, 0x2CB3, 0x2CB4, 0x2CB5 } },   // Temple of Xian
-            { 16, new int[] { 0x1E42, 0x1E43, 0x1E44, 0x1E45 } },   // Floating Islands
-            { 17, new int[] { 0x157C, 0x157D, 0x157E, 0x157F } },   // The Dragon's Lair
-            { 18, new int[] { 0x1AB0, 0x1AB1, 0x1AB2, 0x1AB3 } },   // Home Sweet Home
-            { 19, new int[] { 0x2CFA, 0x2CFB, 0x2CFC, 0x2CFD } },   // The Cold War
-            { 20, new int[] { 0x2CF2, 0x2CF3, 0x2CF4, 0x2CF5 } },   // Fool's Gold
-            { 21, new int[] { 0x2AF0, 0x2AF1, 0x2AF2, 0x2AF3 } },   // Furnace of the Gods
-            { 22, new int[] { 0x210A, 0x210B, 0x210C, 0x210D } },   // Kingdom
-            { 23, new int[] { 0x2354, 0x2355, 0x2356, 0x2357 } },   // Nightmare in Vegas
-        };
-
-        private readonly Dictionary<byte, int[]> ammoIndexDataConsole = new Dictionary<byte, int[]>
-        {
-            {  1, new int[] { 0x19B6, 0x19B7, 0x19B8, 0x19B9 } },   // The Great Wall
-            {  2, new int[] { 0x1CF8, 0x1CF9, 0x1CFA, 0x1CFB } },   // Venice
-            {  3, new int[] { 0x1F0C, 0x1F0D, 0x1F0E, 0x1F0F } },   // Bartoli's Hideout
-            {  4, new int[] { 0x2A12, 0x2A13, 0x2A14, 0x2A15 } },   // Opera House
-            {  5, new int[] { 0x1AEA, 0x1AEB, 0x1AEC, 0x1AED } },   // Offshore Rig
-            {  6, new int[] { 0x1EB8, 0x1EB9, 0x1EBA, 0x1EBB } },   // Diving Area
-            {  7, new int[] { 0x140C, 0x140D, 0x140E, 0x140F } },   // 40 Fathoms
-            {  8, new int[] { 0x2594, 0x2595, 0x2596, 0x2597 } },   // Wreck of the Maria Doria
-            {  9, new int[] { 0x17BE, 0x17BF, 0x17C0, 0x17C1 } },   // Living Quarters
-            { 10, new int[] { 0x1C0A, 0x1C0A, 0x1C0B, 0x1C0E } },   // The Deck
-            { 11, new int[] { 0x1F5E, 0x1F5F, 0x1F60, 0x1F61 } },   // Tibetan Foothills
-            { 12, new int[] { 0x2B52, 0x2B53, 0x2B54, 0x2B55 } },   // Barkhang Monastery
-            { 13, new int[] { 0x227E, 0x227F, 0x2280, 0x2281 } },   // Catacombs of the Talion
-            { 14, new int[] { 0x1DEA, 0x1DEB, 0x1DEC, 0x1DED } },   // Ice Palace
-            { 15, new int[] { 0x2CAE, 0x2CAB, 0x2CAC, 0x2CAD } },   // Temple of Xian
-            { 16, new int[] { 0x1E3E, 0x1E3F, 0x1E40, 0x1E41 } },   // Floating Islands
-            { 17, new int[] { 0x1578, 0x1579, 0x157A, 0x157B } },   // The Dragon's Lair
-            { 18, new int[] { 0x1AAC, 0x1AAB, 0x1AAC, 0x1AAD } },   // Home Sweet Home
-            { 19, new int[] { 0x2CF6, 0x2CF7, 0x2CF8, 0x2CF9 } },   // The Cold War
-            { 20, new int[] { 0x2CEE, 0x2CEF, 0x2CF0, 0x2CF1 } },   // Fool's Gold
-            { 21, new int[] { 0x2AEC, 0x2AED, 0x2AEE, 0x2AEF } },   // Furnace of the Gods
-            { 22, new int[] { 0x2106, 0x2107, 0x2108, 0x2109 } },   // Kingdom
-            { 23, new int[] { 0x2350, 0x2351, 0x2352, 0x2353 } },   // Nightmare in Vegas
-        };
-
         private void WriteInt32ToBuffer(byte[] buffer, int offset, int value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
@@ -228,204 +173,50 @@ namespace TRR_SaveMaster
                 savegameData = File.ReadAllBytes(savegamePath);
             }
 
+            if (!areOffsetsDetermined)
+            {
+                DetermineDynamicOffsets(savegameData);
+            }
+
             bool isPrepatch = IsPrepatchSavegameFile(savegameData);
 
             if (!isPrepatch)
             {
                 bool isChallengeMode = IsChallengeMode(savegameData);
                 MAX_HEALTH_VALUE = isChallengeMode ? GetChallengeModeMaxHealth(savegameData) : MAX_HEALTH_VALUE_DEFAULT;
-
-                if (!areOffsetsDetermined)
-                {
-                    DetermineDynamicOffsets(savegameData);
-                }
-
-                UInt16 value = BitConverter.ToUInt16(savegameData, savegameOffset + HEALTH_OFFSET);
-
-                if (value >= MIN_HEALTH_VALUE && value <= MAX_HEALTH_VALUE)
-                {
-                    return savegameOffset + HEALTH_OFFSET;
-                }
-
-                return -1;
             }
             else
             {
                 MAX_HEALTH_VALUE = MAX_HEALTH_VALUE_DEFAULT;
-
-                for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset += ENTITY_AI_BLOCK_SIZE)
-                {
-                    int valueIndex = savegameOffset + offset;
-
-                    if (valueIndex + 2 >= savegameData.Length)
-                    {
-                        break;
-                    }
-
-                    UInt16 value = BitConverter.ToUInt16(savegameData, valueIndex);
-
-                    if (value >= MIN_HEALTH_VALUE && value <= MAX_HEALTH_VALUE)
-                    {
-                        int flagIndex1 = savegameOffset + offset - 10;
-                        int flagIndex2 = savegameOffset + offset - 9;
-                        int flagIndex3 = savegameOffset + offset - 8;
-                        int flagIndex4 = savegameOffset + offset - 7;
-
-                        if (flagIndex4 >= savegameData.Length)
-                        {
-                            continue;
-                        }
-
-                        byte byteFlag1 = savegameData[flagIndex1];
-                        byte byteFlag2 = savegameData[flagIndex2];
-                        byte byteFlag3 = savegameData[flagIndex3];
-                        byte byteFlag4 = savegameData[flagIndex4];
-
-                        if (IsKnownByteFlagPattern(byteFlag1, byteFlag2, byteFlag3, byteFlag4))
-                        {
-                            return savegameOffset + offset;
-                        }
-                    }
-                }
-
-                return -1;
             }
+
+            UInt16 value = BitConverter.ToUInt16(savegameData, savegameOffset + HEALTH_OFFSET);
+
+            if (value >= MIN_HEALTH_VALUE && value <= MAX_HEALTH_VALUE)
+            {
+                return savegameOffset + HEALTH_OFFSET;
+            }
+
+            return -1;
         }
 
         public void DetermineOffsets(byte[] fileData)
         {
             bool isPrepatch = IsPrepatchSavegameFile(fileData);
-            byte levelIndex;
 
             if (isPrepatch)
             {
+                BASE_SAVEGAME_OFFSET_TR2 = BASE_SAVEGAME_OFFSET_TR2_PREPATCH;
+                MAX_SAVEGAME_OFFSET_TR2 = MAX_SAVEGAME_OFFSET_TR2_PREPATCH;
+                SAVEGAME_SIZE = SAVEGAME_SIZE_PREPATCH;
                 LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PREPATCH;
-                levelIndex = GetLevelIndex(fileData);
-
-                if (levelIndex == 1)        // The Great Wall
-                {
-                    MIN_HEALTH_OFFSET = 0xB64;
-                    MAX_HEALTH_OFFSET = 0xBAC;
-                }
-                else if (levelIndex == 2)   // Venice
-                {
-                    MIN_HEALTH_OFFSET = 0x7FA;
-                    MAX_HEALTH_OFFSET = 0x7FA;
-                }
-                else if (levelIndex == 3)   // Bartoli's Hideout
-                {
-                    MIN_HEALTH_OFFSET = 0x1734;
-                    MAX_HEALTH_OFFSET = 0x1764;
-                }
-                else if (levelIndex == 4)   // Opera House
-                {
-                    MIN_HEALTH_OFFSET = 0x1E20;
-                    MAX_HEALTH_OFFSET = 0x1E38;
-                }
-                else if (levelIndex == 5)   // Offshore Rig
-                {
-                    MIN_HEALTH_OFFSET = 0xAC4;
-                    MAX_HEALTH_OFFSET = 0xADC;
-                }
-                else if (levelIndex == 6)   // Diving Area
-                {
-                    MIN_HEALTH_OFFSET = 0x12DE;
-                    MAX_HEALTH_OFFSET = 0x131A;
-                }
-                else if (levelIndex == 7)   // 40 Fathoms
-                {
-                    MIN_HEALTH_OFFSET = 0x7FC;
-                    MAX_HEALTH_OFFSET = 0x7FC;
-                }
-                else if (levelIndex == 8)   // Wreck of the Maria Doria
-                {
-                    MIN_HEALTH_OFFSET = 0x238E;
-                    MAX_HEALTH_OFFSET = 0x242A;
-                }
-                else if (levelIndex == 9)   // Living Quarters
-                {
-                    MIN_HEALTH_OFFSET = 0x90A;
-                    MAX_HEALTH_OFFSET = 0x90A;
-                }
-                else if (levelIndex == 10)  // The Deck
-                {
-                    MIN_HEALTH_OFFSET = 0xBAC;
-                    MAX_HEALTH_OFFSET = 0xBF4;
-                }
-                else if (levelIndex == 11)  // Tibetan Foothills
-                {
-                    MIN_HEALTH_OFFSET = 0x12E4;
-                    MAX_HEALTH_OFFSET = 0x1314;
-                }
-                else if (levelIndex == 12)  // Barkhang Monastery
-                {
-                    MIN_HEALTH_OFFSET = 0x2522;
-                    MAX_HEALTH_OFFSET = 0x25FA;
-                }
-                else if (levelIndex == 13)  // Catacombs of the Talion
-                {
-                    MIN_HEALTH_OFFSET = 0x7F8;
-                    MAX_HEALTH_OFFSET = 0x7F8;
-                }
-                else if (levelIndex == 14)  // Ice Palace
-                {
-                    MIN_HEALTH_OFFSET = 0xE2A;
-                    MAX_HEALTH_OFFSET = 0xE4E;
-                }
-                else if (levelIndex == 15)  // Temple of Xian
-                {
-                    MIN_HEALTH_OFFSET = 0x2A7A;
-                    MAX_HEALTH_OFFSET = 0x2AC2;
-                }
-                else if (levelIndex == 16)  // Floating Islands
-                {
-                    MIN_HEALTH_OFFSET = 0x9CC;
-                    MAX_HEALTH_OFFSET = 0x9D8;
-                }
-                else if (levelIndex == 17)  // The Dragon's Lair
-                {
-                    MIN_HEALTH_OFFSET = 0xF78;
-                    MAX_HEALTH_OFFSET = 0xFC0;
-                }
-                else if (levelIndex == 18)  // Home Sweet Home
-                {
-                    MIN_HEALTH_OFFSET = 0xE86;
-                    MAX_HEALTH_OFFSET = 0xF2E;
-                }
-                else if (levelIndex == 19)  // The Cold War
-                {
-                    MIN_HEALTH_OFFSET = 0x1626;
-                    MAX_HEALTH_OFFSET = 0x1656;
-                }
-                else if (levelIndex == 20)  // Fool's Gold
-                {
-                    MIN_HEALTH_OFFSET = 0x1D80;
-                    MAX_HEALTH_OFFSET = 0x1DBC;
-                }
-                else if (levelIndex == 21)  // Furnace of the Gods
-                {
-                    MIN_HEALTH_OFFSET = 0x1FD4;
-                    MAX_HEALTH_OFFSET = 0x2064;
-                }
-                else if (levelIndex == 22)  // Kingdom
-                {
-                    MIN_HEALTH_OFFSET = 0x91A;
-                    MAX_HEALTH_OFFSET = 0x926;
-                }
-                else if (levelIndex == 23)  // Nightmare in Vegas
-                {
-                    MIN_HEALTH_OFFSET = 0xDDA;
-                    MAX_HEALTH_OFFSET = 0xDF2;
-                }
-
-                if (platform != Platform.PC)
-                {
-                    MIN_HEALTH_OFFSET -= 4;
-                    MAX_HEALTH_OFFSET -= 4;
-                }
             }
             else
             {
+                BASE_SAVEGAME_OFFSET_TR2 = BASE_SAVEGAME_OFFSET_TR2_PATCH5;
+                MAX_SAVEGAME_OFFSET_TR2 = MAX_SAVEGAME_OFFSET_TR2_PATCH5;
+                SAVEGAME_SIZE = SAVEGAME_SIZE_PATCH5;
+
                 if (platform == Platform.PC)
                 {
                     LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PC;
@@ -458,7 +249,7 @@ namespace TRR_SaveMaster
                 }
             }
 
-            levelIndex = GetLevelIndex(fileData);
+            byte levelIndex = GetLevelIndex(fileData);
 
             AUTOMATIC_PISTOLS_AMMO_OFFSET = 0x12 + (levelIndex * 0x30);
             UZI_AMMO_OFFSET = 0x14 + (levelIndex * 0x30);
@@ -501,7 +292,7 @@ namespace TRR_SaveMaster
             if (maxHealthSetting == 6) return (UInt16)2000;
             if (maxHealthSetting == 7) return (UInt16)5000;
 
-            return (UInt16)1000;
+            return MAX_HEALTH_VALUE_DEFAULT;
         }
 
         private byte GetChallengeModeEnemyNumbers(byte[] fileData)
@@ -584,75 +375,6 @@ namespace TRR_SaveMaster
             return BitConverter.ToUInt16(fileData, healthOffset);
         }
 
-        private int GetSecondaryAmmoIndex(byte[] fileData)
-        {
-            byte levelIndex = GetLevelIndex(fileData);
-
-            Dictionary<byte, int[]> ammoIndexData = platform == Platform.PC ? ammoIndexDataPC : ammoIndexDataConsole;
-
-            if (ammoIndexData.ContainsKey(levelIndex))
-            {
-                int[] indexData = ammoIndexData[levelIndex];
-
-                int[] offsets1 = new int[indexData.Length];
-                int[] offsets2 = new int[indexData.Length];
-
-                for (int index = 0; index < MAX_ENTITY_COUNT; index++)
-                {
-                    Array.Copy(indexData, offsets1, indexData.Length);
-
-                    for (int i = 0; i < indexData.Length; i++)
-                    {
-                        offsets2[i] = offsets1[i] + 0xA;
-
-                        offsets1[i] += savegameOffset + (index * ENTITY_AI_BLOCK_SIZE);
-                        offsets2[i] += savegameOffset + (index * ENTITY_AI_BLOCK_SIZE);
-                    }
-
-                    if (offsets1.All(offset => fileData[offset] == 0xFF))
-                    {
-                        return index;
-                    }
-
-                    if (offsets2.All(offset => fileData[offset] == 0xFF))
-                    {
-                        return index;
-                    }
-                }
-            }
-
-            return -1;
-        }
-
-        private int GetSecondaryAmmoOffset(int baseOffset)
-        {
-            return baseOffset + (secondaryAmmoIndex * ENTITY_AI_BLOCK_SIZE);
-        }
-
-        private bool IsKnownByteFlagPattern(byte byteFlag1, byte byteFlag2, byte byteFlag3, byte byteFlag4)
-        {
-            if (byteFlag1 == 0x02 && byteFlag2 == 0x00 && byteFlag3 == 0x02 && byteFlag4 == 0x00) return true;  // Standing
-            if (byteFlag1 == 0x13 && byteFlag2 == 0x00 && byteFlag3 == 0x13 && byteFlag4 == 0x00) return true;  // Climbing
-            if (byteFlag1 == 0x21 && byteFlag2 == 0x00 && byteFlag3 == 0x21 && byteFlag4 == 0x00) return true;  // On water
-            if (byteFlag1 == 0x0D && byteFlag2 == 0x00 && byteFlag3 == 0x0D && byteFlag4 == 0x00) return true;  // Underwater
-            if (byteFlag1 == 0x12 && byteFlag2 == 0x00 && byteFlag3 == 0x12 && byteFlag4 == 0x00) return true;  // Swimming
-            if (byteFlag1 == 0x17 && byteFlag2 == 0x00 && byteFlag3 == 0x02 && byteFlag4 == 0x00) return true;  // Rolling
-            if (byteFlag1 == 0x41 && byteFlag2 == 0x00 && byteFlag3 == 0x02 && byteFlag4 == 0x00) return true;  // Walking through water
-            if (byteFlag1 == 0x22 && byteFlag2 == 0x00 && byteFlag3 == 0x22 && byteFlag4 == 0x00) return true;  // Wading through water
-            if (byteFlag1 == 0x01 && byteFlag2 == 0x00 && byteFlag3 == 0x02 && byteFlag4 == 0x00) return true;  // Running forward
-            if (byteFlag1 == 0x03 && byteFlag2 == 0x00 && byteFlag3 == 0x03 && byteFlag4 == 0x00) return true;  // Jumping forward
-            if (byteFlag1 == 0x20 && byteFlag2 == 0x00 && byteFlag3 == 0x20 && byteFlag4 == 0x00) return true;  // Sliding backward
-            if (byteFlag1 == 0x18 && byteFlag2 == 0x00 && byteFlag3 == 0x18 && byteFlag4 == 0x00) return true;  // Sliding downhill
-            if (byteFlag1 == 0x2A && byteFlag2 == 0x00 && byteFlag3 == 0x02 && byteFlag4 == 0x00) return true;  // Using puzzle item
-            if (byteFlag1 == 0x09 && byteFlag2 == 0x00 && byteFlag3 == 0x09 && byteFlag4 == 0x00) return true;  // Freefalling
-            if (byteFlag1 == 0x01 && byteFlag2 == 0x00 && byteFlag3 == 0x01 && byteFlag4 == 0x00) return true;  // Motorboat
-            if (byteFlag1 == 0x05 && byteFlag2 == 0x00 && byteFlag3 == 0x05 && byteFlag4 == 0x00) return true;  // Motorboat
-            if (byteFlag1 == 0x08 && byteFlag2 == 0x00 && byteFlag3 == 0x08 && byteFlag4 == 0x00) return true;  // Snowmobile
-            if (byteFlag1 == 0x04 && byteFlag2 == 0x00 && byteFlag3 == 0x04 && byteFlag4 == 0x00) return true;  // Snowmobile
-
-            return false;
-        }
-
         public bool IsLaraInVehicle(int healthOffset, byte[] fileData)
         {
             byte byteFlag1 = fileData[healthOffset - 10];
@@ -719,32 +441,18 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + SHOTGUN_AMMO_OFFSET, ammo);
 
-            if (!isPrepatch)
+            if (shotgunAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || shotgunAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
             {
-                if (shotgunAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || shotgunAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
-                {
-                    return;
-                }
-
-                if (isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, 0);
-                }
+                return;
             }
-            else
+
+            if (isPresent)
             {
-                if (isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, 0);
-                }
+                WriteInt32ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, (Int32)ammo);
+            }
+            else if (!isPresent)
+            {
+                WriteInt32ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, 0);
             }
         }
 
@@ -752,32 +460,18 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + AUTOMATIC_PISTOLS_AMMO_OFFSET, ammo);
 
-            if (!isPrepatch)
+            if (automaticPistolsAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || automaticPistolsAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
             {
-                if (automaticPistolsAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || automaticPistolsAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
-                {
-                    return;
-                }
-
-                if (isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, 0);
-                }
+                return;
             }
-            else
+
+            if (isPresent)
             {
-                if (isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, 0);
-                }
+                WriteInt32ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, (Int32)ammo);
+            }
+            else if (!isPresent)
+            {
+                WriteInt32ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, 0);
             }
         }
 
@@ -785,32 +479,18 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + UZI_AMMO_OFFSET, ammo);
 
-            if (!isPrepatch)
+            if (uziAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || uziAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
             {
-                if (uziAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || uziAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
-                {
-                    return;
-                }
-
-                if (isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + uziAmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + uziAmmoOffset2, 0);
-                }
+                return;
             }
-            else
+
+            if (isPresent)
             {
-                if (isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + uziAmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + uziAmmoOffset2, 0);
-                }
+                WriteInt32ToBuffer(fileData, savegameOffset + uziAmmoOffset2, (Int32)ammo);
+            }
+            else if (!isPresent)
+            {
+                WriteInt32ToBuffer(fileData, savegameOffset + uziAmmoOffset2, 0);
             }
         }
 
@@ -818,32 +498,18 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + M16_AMMO_OFFSET, ammo);
 
-            if (!isPrepatch)
+            if (m16AmmoOffset2 < AMMO_WRITE_LOWER_BOUND || m16AmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
             {
-                if (m16AmmoOffset2 < AMMO_WRITE_LOWER_BOUND || m16AmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
-                {
-                    return;
-                }
-
-                if (isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + m16AmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + m16AmmoOffset2, 0);
-                }
+                return;
             }
-            else
+
+            if (isPresent)
             {
-                if (isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + m16AmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + m16AmmoOffset2, 0);
-                }
+                WriteInt32ToBuffer(fileData, savegameOffset + m16AmmoOffset2, (Int32)ammo);
+            }
+            else if (!isPresent)
+            {
+                WriteInt32ToBuffer(fileData, savegameOffset + m16AmmoOffset2, 0);
             }
         }
 
@@ -851,32 +517,18 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + GRENADE_LAUNCHER_AMMO_OFFSET, ammo);
 
-            if (!isPrepatch)
+            if (grenadeLauncherAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || grenadeLauncherAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
             {
-                if (grenadeLauncherAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || grenadeLauncherAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
-                {
-                    return;
-                }
-
-                if (isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + grenadeLauncherAmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + grenadeLauncherAmmoOffset2, 0);
-                }
+                return;
             }
-            else
+
+            if (isPresent)
             {
-                if (isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + grenadeLauncherAmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + grenadeLauncherAmmoOffset2, 0);
-                }
+                WriteInt32ToBuffer(fileData, savegameOffset + grenadeLauncherAmmoOffset2, (Int32)ammo);
+            }
+            else if (!isPresent)
+            {
+                WriteInt32ToBuffer(fileData, savegameOffset + grenadeLauncherAmmoOffset2, 0);
             }
         }
 
@@ -884,32 +536,18 @@ namespace TRR_SaveMaster
         {
             WriteUInt16ToBuffer(fileData, savegameOffset + HARPOON_GUN_AMMO_OFFSET, ammo);
 
-            if (!isPrepatch)
+            if (harpoonGunAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || harpoonGunAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
             {
-                if (harpoonGunAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || harpoonGunAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
-                {
-                    return;
-                }
-
-                if (isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + harpoonGunAmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + harpoonGunAmmoOffset2, 0);
-                }
+                return;
             }
-            else
+
+            if (isPresent)
             {
-                if (isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + harpoonGunAmmoOffset2, (Int32)ammo);
-                }
-                else if (!isPresent && secondaryAmmoIndex != -1)
-                {
-                    WriteInt32ToBuffer(fileData, savegameOffset + harpoonGunAmmoOffset2, 0);
-                }
+                WriteInt32ToBuffer(fileData, savegameOffset + harpoonGunAmmoOffset2, (Int32)ammo);
+            }
+            else if (!isPresent)
+            {
+                WriteInt32ToBuffer(fileData, savegameOffset + harpoonGunAmmoOffset2, 0);
             }
         }
 
@@ -1312,36 +950,57 @@ namespace TRR_SaveMaster
             return result;
         }
 
-        private int GetEntityBlockStart()
+        private int GetEntityBlockStart(bool isPrepatch)
         {
-            if (platform == Platform.PC)
+            if (isPrepatch)
             {
+                if (platform == Platform.PC)
+                {
+                    return ENTITY_BLOCK_START_PC_PREPATCH;
+                }
+                else if (platform == Platform.PlayStation4)
+                {
+                    return ENTITY_BLOCK_START_PS4_PREPATCH;
+                }
+                else if (platform == Platform.NintendoSwitch)
+                {
+                    return ENTITY_BLOCK_START_NS_PREPATCH;
+                }
+
+                return ENTITY_BLOCK_START_PC_PREPATCH;
+            }
+            else
+            {
+                if (platform == Platform.PC)
+                {
+                    return ENTITY_BLOCK_START_PC;
+                }
+                else if (platform == Platform.Android)
+                {
+                    return ENTITY_BLOCK_START_ANDROID;
+                }
+                else if (platform == Platform.PlayStation4)
+                {
+                    return ENTITY_BLOCK_START_PS4;
+                }
+
                 return ENTITY_BLOCK_START_PC;
             }
-            else if (platform == Platform.Android)
-            {
-                return ENTITY_BLOCK_START_ANDROID;
-            }
-            else if (platform == Platform.PlayStation4)
-            {
-                return ENTITY_BLOCK_START_PS4;
-            }
-
-            return ENTITY_BLOCK_START_PC;
         }
 
         private void DetermineDynamicOffsets(byte[] fileData)
         {
             bool isChallengeMode = IsChallengeMode(fileData);
             bool isNativePatch5 = IsNativePatch5Format(fileData);
+            bool isPrepatch = IsPrepatchSavegameFile(fileData);
             byte levelIndex = GetLevelIndex(fileData);
 
             var baseList = TR2EntityCache.LevelObjectIdsByLevel[levelIndex];
             var levelObjectIds = new List<int>(baseList);
 
-            sgBufferCursor = GetEntityBlockStart();
+            sgBufferCursor = GetEntityBlockStart(isPrepatch);
 
-            if (isChallengeMode && isNativePatch5)
+            if (isChallengeMode && isNativePatch5 && !isPrepatch)
             {
                 byte enemyNumbers = GetChallengeModeEnemyNumbers(fileData);
                 byte enemyType = GetChallengeModeEnemyType(fileData);
@@ -1359,7 +1018,7 @@ namespace TRR_SaveMaster
             int gLevelStateEntryCount = TR2EntityCache.LevelStateEntryCounts[levelIndex];
             sgBufferCursor += gLevelStateEntryCount * 2;
 
-            if (isNativePatch5)
+            if (isNativePatch5 && !isPrepatch)
             {
                 sgBufferCursor += 4;
             }
@@ -1368,7 +1027,7 @@ namespace TRR_SaveMaster
             {
                 int objectId = levelObjectIds[itemIndex];
 
-                if (isNativePatch5)
+                if (isNativePatch5 && !isPrepatch)
                 {
                     sgBufferCursor += 4;
                 }
@@ -1448,6 +1107,7 @@ namespace TRR_SaveMaster
             NumericUpDown nudLargeMedipacks, TrackBar trbHealth, Label lblHealth, Label lblHealthError)
         {
             DetermineOffsets(fileData);
+            DetermineDynamicOffsets(fileData);
 
             bool isPrepatch = IsPrepatchSavegameFile(fileData);
             bool isChallengeMode = IsChallengeMode(fileData);
@@ -1512,11 +1172,6 @@ namespace TRR_SaveMaster
                 chkHarpoonGun.Checked = (weaponsConfigNum & WEAPON_HARPOON_GUN) != 0;
             }
 
-            if (!isPrepatch)
-            {
-                DetermineDynamicOffsets(fileData);
-            }
-
             int healthOffset = GetHealthOffset(fileData, true);
 
             if (healthOffset != -1)
@@ -1544,6 +1199,9 @@ namespace TRR_SaveMaster
             NumericUpDown nudUziAmmo, NumericUpDown nudM16Ammo, NumericUpDown nudGrenadeLauncherAmmo, NumericUpDown nudHarpoonGunAmmo,
             NumericUpDown nudShotgunAmmo, TrackBar trbHealth)
         {
+            DetermineOffsets(fileData);
+            DetermineDynamicOffsets(fileData);
+
             WriteSaveNumber(fileData, (Int32)nudSaveNumber.Value);
             WriteNumSmallMedipacks(fileData, (byte)nudSmallMedipacks.Value);
             WriteNumLargeMedipacks(fileData, (byte)nudLargeMedipacks.Value);
@@ -1564,33 +1222,10 @@ namespace TRR_SaveMaster
             byte levelIndex = GetLevelIndex(fileData);
             bool isPrepatch = IsPrepatchSavegameFile(fileData);
 
-            if (!isPrepatch)
-            {
-                DetermineDynamicOffsets(fileData);
+            int entityBlockStart = GetEntityBlockStart(isPrepatch);
 
-                int entityBlockStart = GetEntityBlockStart();
-
-                AMMO_WRITE_LOWER_BOUND = entityBlockStart;
-                AMMO_WRITE_UPPER_BOUND = SAVEGAME_SIZE - 4;
-            }
-            else
-            {
-                secondaryAmmoIndex = GetSecondaryAmmoIndex(fileData);
-
-                if (secondaryAmmoIndex != -1)
-                {
-                    Dictionary<byte, int[]> ammoIndexData = platform == Platform.PC ? ammoIndexDataPC : ammoIndexDataConsole;
-
-                    int baseSecondaryAmmoOffset = ammoIndexData[levelIndex][0];
-
-                    automaticPistolsAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0xAC);
-                    uziAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0xA4);
-                    shotgunAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x9C);
-                    harpoonGunAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x94);
-                    grenadeLauncherAmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x8C);
-                    m16AmmoOffset2 = GetSecondaryAmmoOffset(baseSecondaryAmmoOffset - 0x7C);
-                }
-            }
+            AMMO_WRITE_LOWER_BOUND = entityBlockStart;
+            AMMO_WRITE_UPPER_BOUND = SAVEGAME_SIZE - 4;
 
             if (levelIndex == 18)       // Home Sweet Home
             {
