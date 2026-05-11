@@ -1,38 +1,52 @@
 # Tomb Raider I-VI Remastered Savegame Editor
-This is a savegame editor for Tomb Raider I-VI Remastered. With this editor, you can edit items, health, weapons, ammunition, statistics, and position.
-This editor is compatible with PC, PS4, Nintendo Switch, and Android savegames. However, console format Tomb Raider I-III savegames must be decrypted first.
-You can find more information on how to do that [here](https://github.com/JulianOzelRose/TombExtract/issues/1#issuecomment-1978837071).
-For instructions on how to download and use this editor, scroll down to the section below. If you are interested in reverse engineering, there is a technical portion on the bottom section of this README.
-For a tool that allows you to transfer individual savegames between files, convert savegames to PC/PS4/Nintendo Switch format, and reorder/delete savegames, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
+An open source, cross-platform savegame editor for Tomb Raider I-VI Remastered. Main features are listed below. The next section contains
+instructions on how to edit savegames from platforms other than PC. If you are interested in reverse engineering, there is a technical portion
+on the bottom section of this README. For a tool that allows you to import savegames, convert to PC/PS4/Android/Nintendo Switch format,
+and reorder/delete savegames, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
-ℹ️ **Patch 5 Compatibility**<br>
-The latest version of this editor is compatible with Patch 5 savegames and backwards compatible with pre-patch savegames for Tomb Raider I-III.
+### Features
+- 🎒 Edit Inventory & Items
+- 🔫 Edit Weapons & Ammo
+- ❤️ Edit Health
+- 📍 Edit Position / Teleport
+- 📊 Edit Statistics
+- 🔓 Edit Unlocks & Progression
+- 👕 Edit Outfits
+- 🗑️ Savegame Deletion
+- 🖥️ Cross-Platform Compatibility (PC/PS4/Android/Nintendo Switch)
+- 🔄 Patch 5 Compatible & Backwards Compatible with Pre-Patch Savegames
 
+<br>
 <img width="723" height="640" alt="TRR-SaveMaster-UI" src="https://github.com/user-attachments/assets/10325c35-7f31-4f6d-8c0b-53e5b3aa4a36" />
 
 ## Installation and use
 To download and use this savegame editor, simply navigate to the [Releases](https://github.com/JulianOzelRose/TRR-SaveMaster/releases) page,
 then download the .exe file of the latest version under "Assets". You can save it anywhere on your computer. Once downloaded, open the file.
 The editor will then prompt you to select your savegame path, click "Yes". The editor should automatically open to your TRX/TRX2 folder.
-Once here, simply navigate to the numeric folder that represents your Steam Community ID. If you have multiple accounts with Tomb Raider Remastered, there may be multiple folders.
+Once there, simply navigate to the numeric folder that represents your Steam Community ID. If you have multiple accounts with Tomb Raider Remastered, there may be multiple folders.
 
-By default, this savegame editor assumes PC format of savegames. To change the savegame platform, click "Settings", then "Platform", then select your savegame platform.
-Current supported platforms are PC, PS4, Nintendo Switch, and Android. PS4 and Nintendo Switch savegames are not yet supported for Patch 5 savegames.
 Once the savegames are populated in the editor, you can select them using the combo box labeled "Savegame" in the top-right corner.
 The editor will automatically refresh savegame data when switching tabs or clicking the savegame combo box. If another savegame is added and not displaying,
-you can click File -> 'Refresh savegame list' to re-populate the savegames. Once you are done making changes, click "Save" to apply them. Because the game caches savegames into memory,
-you must restart your game in order for the changes to take effect.
+you can click "File" -> "Refresh savegame list" to re-populate the savegames.
 
-This savegame editor has an auto backup feature, which will automatically create backups of your savegame file before writing. It is enabled by default. You can toggle this feature on or
-off by clicking "File", then checking "Backup before saving". The backup will be saved in the same directory as your savegame file, with `.bak` suffixed to the file name. It is highly recommended that you
-leave this feature enabled. While this savegame editor has been thoroughly tested and employs error handling to prevent faulty writes, no system is perfect.
-Regular backups can safeguard your progress in the event of unforeseen issues or errors during the editing process. If you would like to manually create a backup of your savegame file,
-you can also do this by clicking "File" then "Create backup".
+Once you are done making changes, click "Save" to apply them. Because the game caches savegames into memory, you must restart your game in order for the changes to take effect.
+
+## Editing savegames from other platforms
+By default, this savegame editor assumes PC format of savegames. To change the savegame platform, click "Settings" -> "Platform", then select your savegame platform.
+
+Current supported platforms for Tomb Raider I-III Patch 5 are PC, PS4, and Android. Nintendo Switch savegames are not yet supported for Tomb Raider I-III Patch 5 savegames.
+All platforms are supported for Tomb Raider IV-VI.
+
+Console format (PS4/NS) savegames must be decrypted first. You can find more information on how to do that [here](https://github.com/JulianOzelRose/TombExtract/issues/1#issuecomment-1978837071).
+
+For Android, accessing the savegame file requires a rooted device. Rooting your device may void your warranty and can introduce security risks, so it is generally not recommended.
+However, editing Android savegames is still possible if your device is rooted.
 
 ## Using the Position Editor
 <img width="359" height="344" alt="PositionForm-UI" src="https://github.com/user-attachments/assets/1454e3c1-964b-406c-ace3-a6b138761625" />
+<br>
 
-This savegame editor includes a Position Editor feature. To use it, click "Edit," then select "Position." For Lara's coordinates to be correctly parsed, the health bytes must be located. If the health bytes cannot be found, try saving the game while Lara is standing. Once in the Position Editor menu, you can teleport to pre-determined coordinates, such as the start of the level, end of the level or secret locations.  
+This savegame editor includes a Position Editor feature. To use it, click "Edit" -> "Position." For Lara's coordinates to be correctly parsed, the health bytes must be located. If the health bytes cannot be found, try saving the game while Lara is standing. Once in the Position Editor menu, you can teleport to pre-determined coordinates, such as the start of the level, the end of the level, or secret locations.  
 
 - The **X-coordinate** represents Lara's horizontal position in the game. Decreasing its value moves her to the left, while increasing it moves her to the right.  
 - The **Y-coordinate** represents Lara's vertical position in the game. Decreasing it moves her up, while increasing it moves her down.  
@@ -41,16 +55,32 @@ This savegame editor includes a Position Editor feature. To use it, click "Edit,
 - The **Room/Zone** value represents the unique room number/loaded zone that Lara or Kurtis is currently located in.
 
 It's essential that the Room/Zone number matches Lara's current coordinates; otherwise, the game will not interpret her position correctly. Click "Save" in this menu to apply changes, or "Cancel" to retain Lara's current
-position.
+position. If you try to teleport while Lara is interacting with a puzzle, it may result in the game crashing.
 
 ## Using the Statistics Editor
 <img width="391" height="419" alt="StatisticsForm-UI" src="https://github.com/user-attachments/assets/22d976c7-3df2-4efe-948c-74ac9b143c88" />
+<br>
 
 This savegame editor also includes a Statistics Editor feature. To use it, click "Edit," then select "Statistics." For Tomb Raider I-III and VI, the statistics displayed are level-specific, meaning each level has its own separate stats such as time taken,
 enemies killed, and secrets found. For Tomb Raider IV and V, the statistics are global, meaning they track cumulative progress across all levels, including total playtime, total kills, and total pickups.
 
+## Unlocks and Outfits
+<img width="337" height="363" alt="image" src="https://github.com/user-attachments/assets/a92aba63-5c5c-4ff4-aea2-7871471d5619" />
+<br>
+<img width="286" height="418" alt="image" src="https://github.com/user-attachments/assets/94eb28b4-8e3d-41cd-8d83-e86213548551" />
+<br>
+To access the Unlocks Editor, click "Edit" -> "Unlocks".
+
+From here, you can:
+- Unlock game completion for Tomb Raider I-VI
+- Unlock NG+ access
+- Unlock Society of Raiders
+- Edit outfits
+
+
 ## Dark Mode
 <img width="723" height="618" alt="DarkMode-UI" src="https://github.com/user-attachments/assets/76a00668-5a68-4ef3-87ac-fd141ee62b58" />
+<br>
 
 If you prefer a darker interface, you can enable Dark Mode from the Settings menu at the top of the program.
 Please note that Dark Mode may not display correctly when using very high or very low DPI settings.
@@ -60,13 +90,13 @@ This section details the technical aspects of reverse engineering the savegames 
 Savegames for expansions are stored in the same slots as the original game. Each savegame slot for each game begins at a specific offset in the file, with a maximum of 32
 slots per game. See the table below.
 
-| Game                               | Offset  |
-|:-----------------------------------|:--------|
-| Tomb Raider I                      | 0x02000 |
-| Tomb Raider II                     | 0x72000 |
-| Tomb Raider III                    | 0xE2000 |
+| Game                               | Offset   |
+|:-----------------------------------|:---------|
+| Tomb Raider I                      | 0x002000 |
+| Tomb Raider II                     | 0x0D2000 |
+| Tomb Raider III                    | 0x1A2000 |
 
-Because each savegame has a constant size of 0x3800 bytes, that value can be used as an iterator when cycling through savegames.
+Because each savegame has a constant size of 0x6800 bytes, that value can be used as an iterator when cycling through savegames.
 When a savegame slot is occupied, the value at offset `0x004` is set to 1. When a savegame slot is empty,
 the value is 0. See the code below.
 
@@ -85,11 +115,13 @@ for (int i = 0; i < MAX_SAVEGAMES; i++)
         string levelName = levelNames[levelIndex];
         int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR3) / SAVEGAME_SIZE;
         GameMode gameMode = fileData[currentSavegameOffset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
+        bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1 && !isPrepatch;
 
-        Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode);
+        Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode, false, isChallengeMode);
+
         cmbSavegames.Items.Add(savegame);
 
-        numSaves++;
+        numSavegames++;
     }
 }
 ```
@@ -101,8 +133,8 @@ So when calculating, you will have to add them to the base savegame offset.
 #### Tomb Raider I
 | Offset    | Type    | Description        |
 |:----------|:--------|:-------------------|
-| 0x004     | UInt8   | Slot Occupied      |
-| 0x008     | UInt8   | Game Mode          |
+| 0x004     | Int32   | Slot Status        |
+| 0x008     | Int32   | New Game+          |
 | 0x00C     | Int32   | Save Number        |
 | 0x4C2     | UInt16  | Magnum Ammo 1      |
 | 0x4C4     | UInt16  | Uzi Ammo 1         |
@@ -124,8 +156,8 @@ So when calculating, you will have to add them to the base savegame offset.
 #### Tomb Raider II
 | Offset    | Type    | Description        |
 |:----------|:--------|:-------------------|
-| 0x004     | UInt8   | Slot Occupied      |
-| 0x008     | UInt8   | Game Mode          |
+| 0x004     | Int32   | Slot Status        |
+| 0x008     | Int32   | New Game+          |
 | 0x00C     | Int32   | Save Number        |
 | 0x610     | Int32   | Time Taken         |
 | 0x614     | Int32   | Ammo Used          |
@@ -140,8 +172,8 @@ So when calculating, you will have to add them to the base savegame offset.
 #### Tomb Raider III
 | Offset    | Type    | Description        |
 |:----------|:--------|:-------------------|
-| 0x004     | UInt8   | Slot Occupied      |
-| 0x008     | UInt8   | Game Mode          |
+| 0x004     | Int32   | Slot Status        |
+| 0x008     | Int32   | New Game+          |
 | 0x00C     | Int32   | Save Number        |
 | 0x8A4     | Int32   | Crystals Found     |
 | 0x8A8     | Int32   | Crystals Used      |
@@ -154,72 +186,6 @@ So when calculating, you will have to add them to the base savegame offset.
 | 0x8C2     | Int8    | Pickups            |
 | 0x8C3     | Int8    | Medi Packs Used    |
 | 0x8D6     | UInt8   | Level Index        |
-
-## Using heuristics to find the health offset
-In all 3 games, health is stored as a UInt16 value ranging from 1 (lowest health possible) to 1000 (maximum health). Because
-health is dynamically allocated, it is necessary to use heuristics to determine its location. The health offset tends to shift
-to a higher address when additional entities become active, and to a lower address as entities become inactive or die.
-
-Because health is always stored right next to character movement data, it is possible to determine the current health offset
-by checking the surrounding data for character movement byte flags. The algorithm below is for Tomb Raider III health detection.
-First, it iterates through the predetermined health offset range for the level. Next, it checks if the value of the current offset
-falls within a valid health range (1 to 1000 inclusive). If the value falls within a valid range, it performs one more heuristic check
-by examining the surrounding data for character movement byte flags. If a valid pattern is found, the offset is returned as the
-current health offset.
-
-This algorithm is able to determine the correct health offset ~96% of the time. Although it is theoretically possible to increase
-the detection rate by adding more character movement byte flags, doing so would result in false positives, as certain character movement
-byte flags coincide with null padding or other unrelated data.
-
-```
-public int GetHealthOffset()
-{
-    byte[] savegameData;
-
-    using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Read, FileShare.Read))
-    {
-        savegameData = new byte[fs.Length];
-        fs.Read(savegameData, 0, savegameData.Length);
-    }
-
-    for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset++)
-    {
-        int valueIndex = savegameOffset + offset;
-
-        if (valueIndex + 1 >= savegameData.Length)
-        {
-            break;
-        }
-
-        UInt16 value = BitConverter.ToUInt16(savegameData, valueIndex);
-
-        if (value >= MIN_HEALTH_VALUE && value <= MAX_HEALTH_VALUE)
-        {
-            int flagIndex1 = savegameOffset + offset - 7;
-            int flagIndex2 = savegameOffset + offset - 6;
-            int flagIndex3 = savegameOffset + offset - 5;
-            int flagIndex4 = savegameOffset + offset - 4;
-
-            if (flagIndex4 >= savegameData.Length)
-            {
-                continue;
-            }
-
-            byte byteFlag1 = savegameData[flagIndex1];
-            byte byteFlag2 = savegameData[flagIndex2];
-            byte byteFlag3 = savegameData[flagIndex3];
-            byte byteFlag4 = savegameData[flagIndex4];
-
-            if (IsKnownByteFlagPattern(byteFlag1, byteFlag2, byteFlag3, byteFlag4))
-            {
-                return savegameOffset + offset;
-            }
-        }
-    }
-
-    return -1;
-}
-```
 
 ## Using bitwise to determine and write weapons present
 In all 3 games, weapons information is stored on a single offset, referred to in this editor's code as `weaponsConfigNum`. It has a base number of 1,
@@ -296,17 +262,22 @@ level -- so there is no need to recalculate them once they have been determined 
 zeroes the secondary ammo bytes to free its address space. See the code below.
 
 ```
-private void WriteShotgunAmmo(byte[] fileData, bool isPresent, UInt16 ammo)
+private void WriteShotgunAmmo(byte[] fileData, bool isPresent, UInt16 ammo, bool isPrepatch)
 {
     WriteUInt16ToBuffer(fileData, savegameOffset + SHOTGUN_AMMO_OFFSET, ammo);
 
+    if (!isPrepatch && (shotgunAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || shotgunAmmoOffset2 > AMMO_WRITE_UPPER_BOUND))
+    {
+        return;
+    }
+
     if (isPresent)
     {
-        WriteUInt16ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, ammo);
+        WriteInt32ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, (Int32)ammo);
     }
     else
     {
-        WriteUInt16ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, 0);
+        WriteInt32ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, 0);
     }
 }
 ```
@@ -338,7 +309,6 @@ SHOTGUN_AMMO_OFFSET = 0x16 + (levelIndex * 0x30);
 M16_AMMO_OFFSET = 0x18 + (levelIndex * 0x30);
 GRENADE_LAUNCHER_AMMO_OFFSET = 0x1A + (levelIndex * 0x30);
 HARPOON_GUN_AMMO_OFFSET = 0x1C + (levelIndex * 0x30);
-
 SMALL_MEDIPACK_OFFSET = 0x1E + (levelIndex * 0x30);
 LARGE_MEDIPACK_OFFSET = 0x1F + (levelIndex * 0x30);
 FLARES_OFFSET = 0x21 + (levelIndex * 0x30);
@@ -406,13 +376,18 @@ private void WriteAutomaticPistolsAmmo(byte[] fileData, bool isPresent, UInt16 a
 {
     WriteUInt16ToBuffer(fileData, savegameOffset + AUTOMATIC_PISTOLS_AMMO_OFFSET, ammo);
 
-    if (isPresent && secondaryAmmoIndex != -1)
+    if (automaticPistolsAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || automaticPistolsAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
     {
-        WriteUInt16ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, ammo);
+        return;
     }
-    else if (!isPresent && secondaryAmmoIndex != -1)
+
+    if (isPresent)
     {
-        WriteUInt16ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, 0);
+        WriteInt32ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, (Int32)ammo);
+    }
+    else
+    {
+        WriteInt32ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, 0);
     }
 }
 ```
@@ -512,13 +487,18 @@ private void WriteRocketLauncherAmmo(byte[] fileData, bool isPresent, UInt16 amm
 {
     WriteUInt16ToBuffer(fileData, savegameOffset + ROCKET_LAUNCHER_AMMO_OFFSET, ammo);
 
-    if (isPresent && secondaryAmmoIndex != -1)
+    if (rocketLauncherAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || rocketLauncherAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
     {
-        WriteUInt16ToBuffer(fileData, savegameOffset + rocketLauncherAmmoOffset2, ammo);
+        return;
     }
-    else if (!isPresent && secondaryAmmoIndex != -1)
+
+    if (isPresent)
     {
-        WriteUInt16ToBuffer(fileData, savegameOffset + rocketLauncherAmmoOffset2, 0);
+        WriteInt32ToBuffer(fileData, savegameOffset + rocketLauncherAmmoOffset2, (Int32)ammo);
+    }
+    else
+    {
+        WriteInt32ToBuffer(fileData, savegameOffset + rocketLauncherAmmoOffset2, 0);
     }
 }
 ```
@@ -540,7 +520,7 @@ Below are the offset tables for Tomb Raider IV-VI. With the exception of health,
 |:----------|:--------|:------------------------|
 | 0x004     | Int32   | Slot Status             |
 | 0x008     | Int32   | Save Number             |
-| 0x01C     | Int32   | Game Mode               |
+| 0x01C     | Int32   | New Game+               |
 | 0x26F     | UInt8   | Level Index             |
 | 0x1BE     | UInt16  | Small Medipack          |
 | 0x1C0     | UInt16  | Large Medipack          |
@@ -576,7 +556,7 @@ Below are the offset tables for Tomb Raider IV-VI. With the exception of health,
 |:----------|:--------|:-----------------------------|
 | 0x004     | Int32   | Slot Status                  |
 | 0x008     | Int32   | Save Number                  |
-| 0x01C     | Int32   | Game Mode                    |
+| 0x01C     | Int32   | New Game+                    |
 | 0x26F     | UInt8   | Level Index                  |
 | 0x1BE     | UInt16  | Small Medipack               |
 | 0x1C0     | UInt16  | Large Medipack               |
@@ -616,7 +596,7 @@ Below are the offset tables for Tomb Raider IV-VI. With the exception of health,
 | 0x254     | UInt8   | Chocobars Found              |
 | 0x256     | UInt16  | Kills                        |
 | 0x258     | UInt8   | Health Restored              |
-| 0x35C     | Int32   | Game Mode                    |
+| 0x35C     | Int32   | New Game+                    |
 | 0x364     | Int32   | Compressed Block Size        |
 
 ## Tomb Raider IV savegame format
