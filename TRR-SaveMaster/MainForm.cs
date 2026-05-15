@@ -3567,7 +3567,7 @@ namespace TRR_SaveMaster
                     $"Are you sure you wish to delete '{savegameToDelete}'?",
                     "Confirmation",
                     MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
+                    MessageBoxIcon.Warning);
 
                 if (result == DialogResult.Yes)
                 {
