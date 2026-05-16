@@ -524,7 +524,7 @@ namespace TRR_SaveMaster
                 nudPickups.Maximum = nudPickupsMax.Value;
 
                 nudCrystalsFound.Enabled = false;
-                nudCrystalsUsed.Enabled = selectedSavegame.Mode == GameMode.Plus;
+                nudCrystalsUsed.Enabled = selectedSavegame.IsNewGamePlus;
             }
             else if (SELECTED_TAB == TAB_TR2)
             {
@@ -546,7 +546,7 @@ namespace TRR_SaveMaster
                 nudPickups.Maximum = nudPickupsMax.Value;
 
                 nudCrystalsFound.Enabled = true;
-                nudCrystalsUsed.Enabled = selectedSavegame.Mode == GameMode.Plus;
+                nudCrystalsUsed.Enabled = selectedSavegame.IsNewGamePlus;
             }
             else if (SELECTED_TAB == TAB_TR4)
             {
@@ -673,7 +673,7 @@ namespace TRR_SaveMaster
                 nudSecretsFound.Maximum = nudSecretsFoundMax.Value;
                 nudPickups.Maximum = nudPickupsMax.Value;
 
-                nudCrystalsUsed.Enabled = selectedSavegame.Mode == GameMode.Plus;
+                nudCrystalsUsed.Enabled = selectedSavegame.IsNewGamePlus;
             }
             else if (SELECTED_TAB == TAB_TR2)
             {
@@ -691,7 +691,7 @@ namespace TRR_SaveMaster
                 nudSecretsFound.Maximum = nudSecretsFoundMax.Value;
                 nudPickups.Maximum = nudPickupsMax.Value;
 
-                nudCrystalsUsed.Enabled = selectedSavegame.Mode == GameMode.Plus;
+                nudCrystalsUsed.Enabled = selectedSavegame.IsNewGamePlus;
             }
             else if (SELECTED_TAB == TAB_TR6)
             {
@@ -796,7 +796,7 @@ namespace TRR_SaveMaster
                 fileData = File.ReadAllBytes(savegamePath);
             }
 
-            return fileData[savegameOffset + SLOT_STATUS_OFFSET] != 0;
+            return BitConverter.ToInt32(fileData, savegameOffset + SLOT_STATUS_OFFSET) != 0;
         }
 
         private byte GetLevelIndex(byte[] fileData = null)

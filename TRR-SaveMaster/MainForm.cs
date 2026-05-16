@@ -2899,7 +2899,7 @@ namespace TRR_SaveMaster
             {
                 string savegamePath = IsTRXTabSelected() ? savegamePathTRX : savegamePathTRX2;
 
-                bool savegamePresent = false;
+                bool isSavegamePresent = false;
 
                 if (!File.Exists(savegamePath))
                 {
@@ -2926,35 +2926,35 @@ namespace TRR_SaveMaster
                 if (tabGame.SelectedIndex == TAB_TR1 && cmbSavegamesTR1.SelectedIndex != -1)
                 {
                     selectedSavegame = cmbSavegamesTR1.Items[cmbSavegamesTR1.SelectedIndex] as Savegame;
-                    savegamePresent = tr1Utilities.IsSavegamePresent(fileData);
+                    isSavegamePresent = tr1Utilities.IsSavegamePresent(fileData);
                 }
                 else if (tabGame.SelectedIndex == TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1)
                 {
                     selectedSavegame = cmbSavegamesTR2.Items[cmbSavegamesTR2.SelectedIndex] as Savegame;
-                    savegamePresent = tr2Utilities.IsSavegamePresent(fileData);
+                    isSavegamePresent = tr2Utilities.IsSavegamePresent(fileData);
                 }
                 else if (tabGame.SelectedIndex == TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1)
                 {
                     selectedSavegame = cmbSavegamesTR3.Items[cmbSavegamesTR3.SelectedIndex] as Savegame;
-                    savegamePresent = tr3Utilities.IsSavegamePresent(fileData);
+                    isSavegamePresent = tr3Utilities.IsSavegamePresent(fileData);
                 }
                 else if (tabGame.SelectedIndex == TAB_TR4 && cmbSavegamesTR4.SelectedIndex != -1)
                 {
                     selectedSavegame = cmbSavegamesTR4.Items[cmbSavegamesTR4.SelectedIndex] as Savegame;
-                    savegamePresent = tr4Utilities.IsSavegamePresent(fileData);
+                    isSavegamePresent = tr4Utilities.IsSavegamePresent(fileData);
                 }
                 else if (tabGame.SelectedIndex == TAB_TR5 && cmbSavegamesTR5.SelectedIndex != -1)
                 {
                     selectedSavegame = cmbSavegamesTR5.Items[cmbSavegamesTR5.SelectedIndex] as Savegame;
-                    savegamePresent = tr5Utilities.IsSavegamePresent(fileData);
+                    isSavegamePresent = tr5Utilities.IsSavegamePresent(fileData);
                 }
                 else if (tabGame.SelectedIndex == TAB_TR6 && cmbSavegamesTR6.SelectedIndex != -1)
                 {
                     selectedSavegame = cmbSavegamesTR6.Items[cmbSavegamesTR6.SelectedIndex] as Savegame;
-                    savegamePresent = tr6Utilities.IsSavegamePresent(fileData);
+                    isSavegamePresent = tr6Utilities.IsSavegamePresent(fileData);
                 }
 
-                if (!savegamePresent)
+                if (!isSavegamePresent)
                 {
                     SystemSounds.Hand.Play();
 

@@ -343,7 +343,7 @@ namespace TRR_SaveMaster
                 fileData = File.ReadAllBytes(savegamePath);
             }
 
-            return fileData[savegameOffset + SLOT_STATUS_OFFSET] != 0;
+            return BitConverter.ToInt32(fileData, savegameOffset + SLOT_STATUS_OFFSET) != 0;
         }
 
         private byte GetLevelIndex(byte[] fileData = null)

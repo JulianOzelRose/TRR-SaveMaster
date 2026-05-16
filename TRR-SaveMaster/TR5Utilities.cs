@@ -10,7 +10,7 @@ namespace TRR_SaveMaster
         // Savegame constants & offsets
         private const int SLOT_STATUS_OFFSET = 0x004;
         private const int SAVE_NUMBER_OFFSET = 0x008;
-        private const int GAME_MODE_OFFSET = 0x01C;
+        private const int NEW_GAME_PLUS_OFFSET = 0x01C;
         private const int LEVEL_INDEX_OFFSET = 0x26F;
         private const int BASE_SAVEGAME_OFFSET_TR5 = 0x14AE00;
         private const int MAX_SAVEGAME_OFFSET_TR5 = 0x33BB10;
@@ -942,14 +942,14 @@ namespace TRR_SaveMaster
 
         public bool IsSavegamePresent(byte[] fileData)
         {
-            return fileData[savegameOffset + SLOT_STATUS_OFFSET] != 0;
+            return BitConverter.ToInt32(fileData, savegameOffset + SLOT_STATUS_OFFSET) != 0;
         }
 
         public void UpdateDisplayName(Savegame savegame, byte[] fileData)
         {
-            bool savegamePresent = fileData[savegame.Offset + SLOT_STATUS_OFFSET] != 0;
+            bool isSavegamePresent = BitConverter.ToInt32(fileData, savegame.Offset + SLOT_STATUS_OFFSET) != 0;
 
-            if (savegamePresent)
+            if (isSavegamePresent)
             {
                 byte levelIndex = fileData[savegame.Offset + LEVEL_INDEX_OFFSET];
                 Int32 saveNumber = BitConverter.ToInt32(fileData, savegame.Offset + SAVE_NUMBER_OFFSET);
@@ -957,9 +957,9 @@ namespace TRR_SaveMaster
                 if (levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                 {
                     string levelName = levelNames[levelIndex];
-                    GameMode gameMode = fileData[savegame.Offset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
+                    bool isNewGamePlus = BitConverter.ToInt32(fileData, savegame.Offset + NEW_GAME_PLUS_OFFSET) != 0;
 
-                    savegame.UpdateDisplayName(levelName, saveNumber, gameMode);
+                    savegame.UpdateDisplayName(levelName, saveNumber, isNewGamePlus);
                 }
             }
         }
@@ -979,12 +979,11 @@ namespace TRR_SaveMaster
 
                 if (currentSavegameOffset < MAX_SAVEGAME_OFFSET_TR5)
                 {
-                    byte slotStatus = fileData[currentSavegameOffset + SLOT_STATUS_OFFSET];
                     byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
                     Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
-                    bool savegamePresent = slotStatus != 0;
+                    bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + SLOT_STATUS_OFFSET) != 0;
 
-                    if (savegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
+                    if (isSavegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                     {
                         int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR5) / SAVEGAME_SIZE;
 
@@ -1002,9 +1001,9 @@ namespace TRR_SaveMaster
                         if (!savegameExists)
                         {
                             string levelName = levelNames[levelIndex];
-                            GameMode gameMode = fileData[currentSavegameOffset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
+                            bool isNewGamePlus = BitConverter.ToInt32(fileData, currentSavegameOffset + NEW_GAME_PLUS_OFFSET) != 0;
 
-                            Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode);
+                            Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, isNewGamePlus);
                             cmbSavegames.Items.Add(savegame);
                         }
                     }
@@ -1015,31 +1014,30 @@ namespace TRR_SaveMaster
         public void PopulateSavegames(ComboBox cmbSavegames)
         {
             byte[] fileData = File.ReadAllBytes(savegamePath);
-            int numSaves = 0;
+            int numSavegames = 0;
 
             for (int i = 0; i < MAX_SAVEGAMES; i++)
             {
                 int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR5 + (i * SAVEGAME_SIZE);
 
-                byte slotStatus = fileData[currentSavegameOffset + SLOT_STATUS_OFFSET];
                 byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
                 Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
-                bool savegamePresent = slotStatus != 0;
+                bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + SLOT_STATUS_OFFSET) != 0;
 
-                if (savegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
+                if (isSavegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                 {
                     string levelName = levelNames[levelIndex];
                     int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR5) / SAVEGAME_SIZE;
-                    GameMode gameMode = fileData[currentSavegameOffset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
+                    bool isNewGamePlus = BitConverter.ToInt32(fileData, currentSavegameOffset + NEW_GAME_PLUS_OFFSET) != 0;
 
-                    Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode);
+                    Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, isNewGamePlus);
                     cmbSavegames.Items.Add(savegame);
 
-                    numSaves++;
+                    numSavegames++;
                 }
             }
 
-            if (numSaves > 0)
+            if (numSavegames > 0)
             {
                 cmbSavegames.SelectedIndex = 0;
             }
