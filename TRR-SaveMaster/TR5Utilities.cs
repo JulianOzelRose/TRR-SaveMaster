@@ -49,12 +49,15 @@ namespace TRR_SaveMaster
         // Health
         private const UInt16 MAX_HEALTH_VALUE = 1000;
         private const UInt16 MIN_HEALTH_VALUE = 1;
-        private int MAX_HEALTH_OFFSET;
-        private int MIN_HEALTH_OFFSET;
+        private int HEALTH_OFFSET;
+
+        // Entity block constant
+        private const int ENTITY_STREAM_OFFSET = 0x474;
 
         // Misc
         private int savegameOffset;
         private string savegamePath;
+        private int sgBufferCursor;
 
         // Level names
         private readonly Dictionary<byte, string> levelNames = new Dictionary<byte, string>()
@@ -86,119 +89,160 @@ namespace TRR_SaveMaster
             Buffer.BlockCopy(bytes, 0, buffer, offset, 2);
         }
 
-        public int GetHealthOffset(byte[] savegameData = null)
+        public int GetHealthOffset(byte[] savegameData = null, bool areOffsetsDetermined = false)
         {
             if (savegameData == null)
             {
                 savegameData = File.ReadAllBytes(savegamePath);
             }
 
-            for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset++)
+            if (!areOffsetsDetermined)
             {
-                int valueIndex = savegameOffset + offset;
+                DetermineDynamicOffsets(savegameData);
+            }
 
-                if (valueIndex + 1 >= savegameData.Length)
-                {
-                    break;
-                }
-
-                UInt16 value = BitConverter.ToUInt16(savegameData, valueIndex);
+            if (HEALTH_OFFSET != -1)
+            {
+                UInt16 value = BitConverter.ToUInt16(savegameData, savegameOffset + HEALTH_OFFSET);
 
                 if (value >= MIN_HEALTH_VALUE && value <= MAX_HEALTH_VALUE)
                 {
-                    int flagIndex1 = savegameOffset + offset - 7;
-                    int flagIndex2 = savegameOffset + offset - 6;
-                    int flagIndex3 = savegameOffset + offset - 5;
-                    int flagIndex4 = savegameOffset + offset - 4;
-
-                    if (flagIndex4 >= savegameData.Length)
-                    {
-                        continue;
-                    }
-
-                    byte byteFlag1 = savegameData[flagIndex1];
-                    byte byteFlag2 = savegameData[flagIndex2];
-                    byte byteFlag3 = savegameData[flagIndex3];
-                    byte byteFlag4 = savegameData[flagIndex4];
-
-                    if (IsKnownByteFlagPattern(byteFlag1, byteFlag2, byteFlag3, byteFlag4))
-                    {
-                        return savegameOffset + offset;
-                    }
+                    return savegameOffset + HEALTH_OFFSET;
                 }
             }
 
             return -1;
         }
 
-        public void DetermineOffsets(byte[] fileData)
+        private void DetermineDynamicOffsets(byte[] fileData)
         {
             byte levelIndex = GetLevelIndex(fileData);
 
-            if (levelIndex == 1)        // Streets of Rome
+            // Cursor start
+            sgBufferCursor = 0xB;
+
+            // Initial fixed blocks
+            sgBufferCursor += 0x1E;
+            sgBufferCursor += 0x11F;
+
+            if (TR5EntityCache.EligibleStaticMeshCounts.TryGetValue(levelIndex, out int eligibleStaticMeshCount))
             {
-                MIN_HEALTH_OFFSET = 0x623;
-                MAX_HEALTH_OFFSET = 0x627;
+                sgBufferCursor += ((eligibleStaticMeshCount + 15) / 16) * 2;
             }
-            else if (levelIndex == 2)   // Trajan's Markets
+
+            // Post-room metadata
+            sgBufferCursor += 0x05;
+
+            if (TR5EntityCache.LevelCameraCounts.TryGetValue(levelIndex, out int cameraCount))
             {
-                MIN_HEALTH_OFFSET = 0x6B7;
-                MAX_HEALTH_OFFSET = 0x886;
+                sgBufferCursor += cameraCount * 0x02;
             }
-            else if (levelIndex == 3)   // The Colosseum
+
+            if (TR5EntityCache.LevelSpotcamCounts.TryGetValue(levelIndex, out int spotcamCount))
             {
-                MIN_HEALTH_OFFSET = 0x605;
-                MAX_HEALTH_OFFSET = 0x886;
+                sgBufferCursor += spotcamCount * 0x02;
             }
-            else if (levelIndex == 4)   // The Base
+
+            List<TR5Object> tr5Objects = TR5EntityCache.TR5ObjectsByLevel[levelIndex];
+
+            for (int itemIndex = 0; itemIndex < tr5Objects.Count; itemIndex++)
             {
-                MIN_HEALTH_OFFSET = 0x752;
-                MAX_HEALTH_OFFSET = 0xBC9;
-            }
-            else if (levelIndex == 5)   // The Submarine
-            {
-                MIN_HEALTH_OFFSET = 0x6E2;
-                MAX_HEALTH_OFFSET = 0x921;
-            }
-            else if (levelIndex == 6)   // Deepsea Dive
-            {
-                MIN_HEALTH_OFFSET = 0x3F8;
-                MAX_HEALTH_OFFSET = 0xB52;
-            }
-            else if (levelIndex == 7)   // Sinking Submarine
-            {
-                MIN_HEALTH_OFFSET = 0x9A3;
-                MAX_HEALTH_OFFSET = 0xC1E;
-            }
-            else if (levelIndex == 8)   // Gallows Tree
-            {
-                MIN_HEALTH_OFFSET = 0x63B;
-                MAX_HEALTH_OFFSET = 0x71C;
-            }
-            else if (levelIndex == 9)   // Labyrinth
-            {
-                MIN_HEALTH_OFFSET = 0x693;
-                MAX_HEALTH_OFFSET = 0x813;
-            }
-            else if (levelIndex == 10)  // Old Mill
-            {
-                MIN_HEALTH_OFFSET = 0x659;
-                MAX_HEALTH_OFFSET = 0x8C9;
-            }
-            else if (levelIndex == 11)  // The 13th Floor
-            {
-                MIN_HEALTH_OFFSET = 0x65B;
-                MAX_HEALTH_OFFSET = 0x65D;
-            }
-            else if (levelIndex == 12)  // Escape with the Iris
-            {
-                MIN_HEALTH_OFFSET = 0xAC2;
-                MAX_HEALTH_OFFSET = 0x1BD7;
-            }
-            else if (levelIndex == 14)  // Red Alert!
-            {
-                MIN_HEALTH_OFFSET = 0x727;
-                MAX_HEALTH_OFFSET = 0x8C3;
+                TR5Object tr5Object = tr5Objects[itemIndex];
+
+                UInt32 itemFlags = BitConverter.ToUInt32(fileData, savegameOffset + ENTITY_STREAM_OFFSET + sgBufferCursor);
+                sgBufferCursor += 0x04;
+
+                if (tr5Object.ObjectId == 0)
+                {
+                    Console.WriteLine($"Lara DWORD: 0x{itemFlags:X}");
+                }
+
+                if ((itemFlags & 0x200) != 0)
+                {
+                    continue;
+                }
+
+                if (((itemFlags & 0x800) == 0))
+                {
+                    continue;
+                }
+
+                // Save position
+                if ((tr5Object.Flags00 & 0x08) != 0)
+                {
+                    sgBufferCursor += 0x09;
+
+                    if ((itemFlags & 0x01) != 0)
+                    {
+                        sgBufferCursor += 0x02;
+                    }
+
+                    if ((itemFlags & 0x02) != 0)
+                    {
+                        sgBufferCursor += 0x02;
+                    }
+
+                    if ((itemFlags & 0x20) != 0)
+                    {
+                        sgBufferCursor += 0x02;
+                    }
+
+                    if ((itemFlags & 0x40) != 0)
+                    {
+                        sgBufferCursor += 0x02;
+                    }
+                }
+
+                // Save animation
+                if ((tr5Object.Flags00 & 0x40) != 0)
+                {
+                    sgBufferCursor += tr5Object.ObjectId == 0 ? 0x07 : 0x06;
+                }
+
+                // Health
+                if (((itemFlags & 0x400) != 0))
+                {
+                    if (tr5Object.ObjectId == 0)
+                    {
+                        HEALTH_OFFSET = sgBufferCursor + ENTITY_STREAM_OFFSET;
+                        return;
+                    }
+
+                    sgBufferCursor += 0x02;
+                }
+
+                // Extended item flags
+                if ((tr5Object.Flags00 & 0x20) != 0)
+                {
+                    UInt32 extendedFlags = BitConverter.ToUInt32(fileData, savegameOffset + ENTITY_STREAM_OFFSET + sgBufferCursor);
+
+                    sgBufferCursor += 0x24;
+
+                    if ((itemFlags & 0x80) != 0)
+                    {
+                        sgBufferCursor += 0x02;
+                    }
+
+                    if ((itemFlags & 0x100) != 0)
+                    {
+                        sgBufferCursor += 0x02;
+                    }
+
+                    if (((tr5Object.Flags00 & 0x02) != 0) || ((uint)(tr5Object.ObjectId - 0xA4) < 5))
+                    {
+                        sgBufferCursor += 0x02;
+                    }
+
+                    if ((extendedFlags & 0x80000000) != 0)
+                    {
+                        sgBufferCursor += 0x49;
+                    }
+                }
+
+                if ((tr5Object.ObjectFlags & 0x2000) != 0)
+                {
+                    sgBufferCursor += 0x0C;
+                }
             }
         }
 
@@ -480,7 +524,7 @@ namespace TRR_SaveMaster
 
         private void WriteHealthValue(byte[] fileData, UInt16 newHealth)
         {
-            int healthOffset = GetHealthOffset();
+            int healthOffset = GetHealthOffset(fileData, true);
 
             if (healthOffset != -1)
             {
@@ -752,7 +796,7 @@ namespace TRR_SaveMaster
             NumericUpDown nudShotgunNormalAmmo, NumericUpDown nudShotgunWideshotAmmo, TrackBar trbHealth, Label lblHealth,
             Label lblHealthError)
         {
-            DetermineOffsets(fileData);
+            DetermineDynamicOffsets(fileData);
 
             nudSaveNumber.Value = GetSaveNumber(fileData);
             nudSmallMedipacks.Value = GetNumSmallMedipacks(fileData);
@@ -806,7 +850,7 @@ namespace TRR_SaveMaster
                 nudDeagleAmmo.Value = 0;
             }
 
-            int healthOffset = GetHealthOffset();
+            int healthOffset = GetHealthOffset(fileData, true);
 
             if (healthOffset != -1)
             {
@@ -834,7 +878,7 @@ namespace TRR_SaveMaster
             NumericUpDown nudDeagleAmmo, NumericUpDown nudUziAmmo, NumericUpDown nudHKGunAmmo, NumericUpDown nudGrapplingGunAmmo,
             NumericUpDown nudShotgunNormalAmmo, NumericUpDown nudShotgunWideshotAmmo, TrackBar trbHealth)
         {
-            DetermineOffsets(fileData);
+            DetermineDynamicOffsets(fileData);
 
             byte prevHKGunFlag = GetHKGunFlag(fileData);
 
@@ -886,35 +930,6 @@ namespace TRR_SaveMaster
             }
 
             File.WriteAllBytes(savegamePath, fileData);
-        }
-
-        private bool IsKnownByteFlagPattern(byte byteFlag1, byte byteFlag2, byte byteFlag3, byte byteFlag4)
-        {
-            if (byteFlag1 == 0x02 && byteFlag2 == 0x02 && byteFlag3 == 0x00 && byteFlag4 == 0x52) return true;  // Standing
-            if (byteFlag1 == 0x02 && byteFlag2 == 0x02 && byteFlag3 == 0x00 && byteFlag4 == 0x67) return true;  // Standing
-            if (byteFlag1 == 0x02 && byteFlag2 == 0x02 && byteFlag3 == 0x47 && byteFlag4 == 0x67) return true;  // Standing
-            if (byteFlag1 == 0x50 && byteFlag2 == 0x50 && byteFlag3 == 0x00 && byteFlag4 == 0x07) return true;  // Crawling
-            if (byteFlag1 == 0x50 && byteFlag2 == 0x50 && byteFlag3 == 0x47 && byteFlag4 == 0x07) return true;  // Crawling
-            if (byteFlag1 == 0x47 && byteFlag2 == 0x47 && byteFlag3 == 0x00 && byteFlag4 == 0xDE) return true;  // Crouching
-            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x06) return true;  // Running forward
-            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0xF4) return true;  // Sprinting
-            if (byteFlag1 == 0x03 && byteFlag2 == 0x03 && byteFlag3 == 0x00 && byteFlag4 == 0x4D) return true;  // Jumping forward
-            if (byteFlag1 == 0x17 && byteFlag2 == 0x02 && byteFlag3 == 0x00 && byteFlag4 == 0x93) return true;  // Rolling
-            if (byteFlag1 == 0x13 && byteFlag2 == 0x13 && byteFlag3 == 0x00 && byteFlag4 == 0x61) return true;  // Climbing
-            if (byteFlag1 == 0x2A && byteFlag2 == 0x00 && byteFlag3 == 0x00 && byteFlag4 == 0x83) return true;  // Using puzzle item
-            if (byteFlag1 == 0x2B && byteFlag2 == 0x00 && byteFlag3 == 0x00 && byteFlag4 == 0x86) return true;  // Using puzzle item
-            if (byteFlag1 == 0x21 && byteFlag2 == 0x21 && byteFlag3 == 0x00 && byteFlag4 == 0x6E) return true;  // On water
-            if (byteFlag1 == 0x21 && byteFlag2 == 0x21 && byteFlag3 == 0x00 && byteFlag4 == 0x75) return true;  // Wading through water
-            if (byteFlag1 == 0x0D && byteFlag2 == 0x0D && byteFlag3 == 0x00 && byteFlag4 == 0x6C) return true;  // Underwater
-            if (byteFlag1 == 0x0D && byteFlag2 == 0x12 && byteFlag3 == 0x00 && byteFlag4 == 0x6C) return true;  // Underwater
-            if (byteFlag1 == 0x12 && byteFlag2 == 0x12 && byteFlag3 == 0x00 && byteFlag4 == 0xC6) return true;  // Swimming forward
-            if (byteFlag1 == 0x12 && byteFlag2 == 0x0D && byteFlag3 == 0x00 && byteFlag4 == 0xC8) return true;  // Swimming forward
-            if (byteFlag1 == 0x18 && byteFlag2 == 0x18 && byteFlag3 == 0x00 && byteFlag4 == 0x46) return true;  // Sliding downhill
-            if (byteFlag1 == 0x09 && byteFlag2 == 0x09 && byteFlag3 == 0x00 && byteFlag4 == 0x17) return true;  // Freefalling
-            if (byteFlag1 == 0x09 && byteFlag2 == 0x09 && byteFlag3 == 0x47 && byteFlag4 == 0x17) return true;  // Freefalling
-            if (byteFlag1 == 0x02 && byteFlag2 == 0x02 && byteFlag3 == 0x00 && byteFlag4 == 0x18) return true;  // Fall recovery
-
-            return false;
         }
 
         public bool IsLaraFreefalling(int healthOffset, byte[] fileData)
