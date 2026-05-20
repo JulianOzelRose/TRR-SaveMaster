@@ -195,8 +195,6 @@ namespace TRR_SaveMaster
                     itemCount = reader.ReadByte();
                     sgBufferCursor += 0x1;
 
-                    //Debug.WriteLine($"{(characterIndex == 0 ? "Lara" : "Kurtis")} Inventory Item Count = {itemCount}");
-
                     // If there are items for this character, process each one
                     if (itemCount != 0)
                     {
@@ -219,8 +217,6 @@ namespace TRR_SaveMaster
                             itemQuantity = reader.ReadInt32();
                             sgBufferCursor += 0x4;
 
-                            //Debug.WriteLine($"Item: ClassID=0x{itemClassID:X}, Type={itemType}, Quantity={itemQuantity}, Quantity_Offset=0x{(sgBufferCursor - 4):X}");
-
                             InventoryItem inventoryItem = new InventoryItem(itemClassID, itemType, itemQuantity);
 
                             if (characterIndex == 0)
@@ -241,8 +237,6 @@ namespace TRR_SaveMaster
 
                 INVENTORY_END_OFFSET = sgBufferCursor;
                 PLAYER_HEALTH_OFFSET_2 = sgBufferCursor;
-
-                //Debug.WriteLine($"INVENTORY_END_OFFSET = 0x{sgBufferCursor:X}");
 
                 //======================================================//
                 //  Post-inventory data

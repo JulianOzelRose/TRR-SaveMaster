@@ -152,11 +152,6 @@ namespace TRR_SaveMaster
                 UInt32 itemFlags = BitConverter.ToUInt32(fileData, savegameOffset + ENTITY_STREAM_OFFSET + sgBufferCursor);
                 sgBufferCursor += 0x04;
 
-                if (tr5Object.ObjectId == 0)
-                {
-                    Console.WriteLine($"Lara DWORD: 0x{itemFlags:X}");
-                }
-
                 if ((itemFlags & 0x200) != 0)
                 {
                     continue;
