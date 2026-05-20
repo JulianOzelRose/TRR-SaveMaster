@@ -39,7 +39,7 @@
             // 
             this.btnPrimary.DialogResult = System.Windows.Forms.DialogResult.Yes;
             this.btnPrimary.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPrimary.Location = new System.Drawing.Point(206, 84);
+            this.btnPrimary.Location = new System.Drawing.Point(226, 84);
             this.btnPrimary.Name = "btnPrimary";
             this.btnPrimary.Size = new System.Drawing.Size(80, 25);
             this.btnPrimary.TabIndex = 1;
@@ -50,7 +50,7 @@
             // 
             this.btnSecondary.DialogResult = System.Windows.Forms.DialogResult.No;
             this.btnSecondary.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSecondary.Location = new System.Drawing.Point(292, 84);
+            this.btnSecondary.Location = new System.Drawing.Point(312, 84);
             this.btnSecondary.Name = "btnSecondary";
             this.btnSecondary.Size = new System.Drawing.Size(80, 25);
             this.btnSecondary.TabIndex = 2;
@@ -82,7 +82,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(384, 121);
+            this.ClientSize = new System.Drawing.Size(404, 121);
             this.Controls.Add(this.lblMessage);
             this.Controls.Add(this.picIcon);
             this.Controls.Add(this.btnSecondary);
