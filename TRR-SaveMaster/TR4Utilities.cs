@@ -50,15 +50,23 @@ namespace TRR_SaveMaster
         // Health
         private const UInt16 MAX_HEALTH_VALUE = 1000;
         private const UInt16 MIN_HEALTH_VALUE = 1;
-        private int MAX_HEALTH_OFFSET;
-        private int MIN_HEALTH_OFFSET;
-        private const byte FULL_HEALTH_TOGGLE_BYTE = 0x08;          // Toggle byte when health is full (not stored)
-        private const byte PARTIAL_HEALTH_TOGGLE_BYTE = 0x0C;       // Toggle byte when health is partial (stored)
-        private const byte TOGGLE_DELTA = 0x04;                     // Difference between full and partial toggle bytes
+        private const UInt32 ITEM_HEALTH_SERIALIZED_STATE = 0x400;
+        private bool IS_LARA_HEALTH_SERIALIZED = true;
+        private int LARA_DWORD_OFFSET = -1;
+        private int HEALTH_OFFSET = -1;
+
+        // Hub-related
+        private const int HUB_LEVEL_COUNT = 10;
+        private const int HUB_LEVEL_IDS_OFFSET = 0x1FC;
+        private const int HUB_OFFSET_TABLE_OFFSET = 0x206;
+
+        // Entity block constant
+        private const int ENTITY_STREAM_OFFSET = 0x474;
 
         // Misc
         private string savegamePath;
         private int savegameOffset;
+        private int sgBufferCursor;
 
         // Level names
         private readonly Dictionary<byte, string> levelNames = new Dictionary<byte, string>()
@@ -99,11 +107,16 @@ namespace TRR_SaveMaster
             { 36, "Inside the Great Pyramid"        },
             { 37, "Temple of Horus"                 },
             { 38, "Temple of Horus"                 },
-            { 39, "The Times Office"                },
             { 40, "The Times Exclusive"             },
         };
 
         private void WriteInt32ToBuffer(byte[] buffer, int offset, int value)
+        {
+            byte[] bytes = BitConverter.GetBytes(value);
+            Buffer.BlockCopy(bytes, 0, buffer, offset, 4);
+        }
+
+        private void WriteUInt32ToBuffer(byte[] buffer, int offset, uint value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
             Buffer.BlockCopy(bytes, 0, buffer, offset, 4);
@@ -115,260 +128,198 @@ namespace TRR_SaveMaster
             Buffer.BlockCopy(bytes, 0, buffer, offset, 2);
         }
 
-        public int GetHealthOffset(byte[] savegameData = null)
+        public int GetHealthOffset(byte[] savegameData = null, bool areOffsetsDetermined = false)
         {
             if (savegameData == null)
             {
                 savegameData = File.ReadAllBytes(savegamePath);
             }
 
-            for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset++)
+            if (!areOffsetsDetermined)
             {
-                int valueIndex = savegameOffset + offset;
+                DetermineDynamicOffsets(savegameData);
+            }
 
-                if (valueIndex + 1 >= savegameData.Length)
-                {
-                    break;
-                }
-
-                UInt16 value = BitConverter.ToUInt16(savegameData, valueIndex);
+            if (HEALTH_OFFSET != -1)
+            {
+                UInt16 value = BitConverter.ToUInt16(savegameData, savegameOffset + HEALTH_OFFSET);
 
                 if ((value >= MIN_HEALTH_VALUE && value < MAX_HEALTH_VALUE) || value == 0)
                 {
-                    int flagIndex1 = savegameOffset + offset - 7;
-                    int flagIndex2 = savegameOffset + offset - 6;
-                    int flagIndex3 = savegameOffset + offset - 5;
-                    int flagIndex4 = savegameOffset + offset - 4;
-
-                    if (flagIndex4 >= savegameData.Length)
-                    {
-                        continue;
-                    }
-
-                    byte byteFlag1 = savegameData[flagIndex1];
-                    byte byteFlag2 = savegameData[flagIndex2];
-                    byte byteFlag3 = savegameData[flagIndex3];
-                    byte byteFlag4 = savegameData[flagIndex4];
-
-                    bool isKnownByteFlagPattern = IsKnownByteFlagPattern(byteFlag1, byteFlag2, byteFlag3, byteFlag4);
-
-                    if (isKnownByteFlagPattern)
-                    {
-                        if (value != 0)
-                        {
-                            return savegameOffset + offset;
-                        }
-                        else
-                        {
-                            int toggleIndex = savegameOffset + offset - 0x13;
-
-                            if (toggleIndex < 0 || toggleIndex >= savegameData.Length)
-                            {
-                                continue;
-                            }
-
-                            byte toggleByte = savegameData[toggleIndex];
-
-                            if (toggleByte == FULL_HEALTH_TOGGLE_BYTE)
-                            {
-                                return savegameOffset + offset;
-                            }
-                        }
-                    }
+                    return savegameOffset + HEALTH_OFFSET;
                 }
             }
 
             return -1;
         }
 
-        public void DetermineOffsets(byte[] fileData)
+        private int GetVirtualCursorStartOffset(byte[] fileData, byte levelIndex)
+        {
+            for (int i = 0; i < HUB_LEVEL_COUNT; i++)
+            {
+                byte hubLevel = fileData[savegameOffset + HUB_LEVEL_IDS_OFFSET + i];
+
+                if (hubLevel == levelIndex)
+                {
+                    return BitConverter.ToUInt16(fileData, savegameOffset + HUB_OFFSET_TABLE_OFFSET + (i * 2));
+                }
+            }
+
+            return 0;
+        }
+
+        private void DetermineDynamicOffsets(byte[] fileData)
         {
             byte levelIndex = GetLevelIndex(fileData);
 
-            if (levelIndex == 1)        // Angkor Wat
+            // Reset health detection vars
+            HEALTH_OFFSET = -1;
+            LARA_DWORD_OFFSET = -1;
+
+            // Cursor starts
+            sgBufferCursor = 0;
+            int virtualCursorStart = GetVirtualCursorStartOffset(fileData, levelIndex);
+
+            // Initial fixed blocks
+            sgBufferCursor += 0xB;
+            sgBufferCursor += 0x20;
+            sgBufferCursor += 0x11F;
+
+            if (TR4EntityCache.EligibleStaticMeshCounts.TryGetValue(levelIndex, out int eligibleStaticMeshCount))
             {
-                MIN_HEALTH_OFFSET = 0x682;
-                MAX_HEALTH_OFFSET = 0x684;
+                sgBufferCursor += ((eligibleStaticMeshCount + 15) / 16) * 2;
             }
-            else if (levelIndex == 2)   // Race for the Iris
+
+            // Post-static-mesh flags block
+            sgBufferCursor += 0x04;
+
+            if (TR4EntityCache.LevelCameraCounts.TryGetValue(levelIndex, out int cameraCount))
             {
-                MIN_HEALTH_OFFSET = 0xE5C;
-                MAX_HEALTH_OFFSET = 0x192A;
+                sgBufferCursor += cameraCount * 0x02;
             }
-            else if (levelIndex == 3)   // Tomb of Seth
+
+            if (TR4EntityCache.LevelSpotcamCounts.TryGetValue(levelIndex, out int spotcamCount))
             {
-                MIN_HEALTH_OFFSET = 0x7C4;
-                MAX_HEALTH_OFFSET = 0x98A;
+                sgBufferCursor += spotcamCount * 0x02;
             }
-            else if (levelIndex == 4)   // Burial Chambers
+
+            List<TR4Object> tr4Objects = TR4EntityCache.TR4ObjectsByLevel[levelIndex];
+
+            for (int itemIndex = 0; itemIndex < tr4Objects.Count; itemIndex++)
             {
-                MIN_HEALTH_OFFSET = 0x808;
-                MAX_HEALTH_OFFSET = 0xE4D;
-            }
-            else if (levelIndex == 5)   // Valley of the Kings
-            {
-                MIN_HEALTH_OFFSET = 0x5F0;
-                MAX_HEALTH_OFFSET = 0x1627;
-            }
-            else if (levelIndex == 6)   // KV5
-            {
-                MIN_HEALTH_OFFSET = 0x94E;
-                MAX_HEALTH_OFFSET = 0xF34;
-            }
-            else if (levelIndex == 7)   // Temple of Karnak
-            {
-                MIN_HEALTH_OFFSET = 0x612;
-                MAX_HEALTH_OFFSET = 0x109F;
-            }
-            else if (levelIndex == 8)   // The Great Hypostyle Wall
-            {
-                MIN_HEALTH_OFFSET = 0xC6C;
-                MAX_HEALTH_OFFSET = 0x1D56;
-            }
-            else if (levelIndex == 9)   // Sacred Lake
-            {
-                MIN_HEALTH_OFFSET = 0x7EE;
-                MAX_HEALTH_OFFSET = 0x1D1C;
-            }
-            else if (levelIndex == 11)  // Tomb of Semerkhet
-            {
-                MIN_HEALTH_OFFSET = 0xDCD;
-                MAX_HEALTH_OFFSET = 0x3116;
-            }
-            else if (levelIndex == 12)  // Guardian of Semerkhet
-            {
-                MIN_HEALTH_OFFSET = 0x75F;
-                MAX_HEALTH_OFFSET = 0x1E9D;
-            }
-            else if (levelIndex == 13)  // Desert Railroad
-            {
-                MIN_HEALTH_OFFSET = 0x654;
-                MAX_HEALTH_OFFSET = 0x6A2;
-            }
-            else if (levelIndex == 14)  // Alexandria
-            {
-                MIN_HEALTH_OFFSET = 0x5DE;
-                MAX_HEALTH_OFFSET = 0x3F6B;
-            }
-            else if (levelIndex == 15)  // Coastal Ruins
-            {
-                MIN_HEALTH_OFFSET = 0x978;
-                MAX_HEALTH_OFFSET = 0x386D;
-            }
-            else if (levelIndex == 16)  // Pharos, Temple of Isis
-            {
-                MIN_HEALTH_OFFSET = 0x73A;
-                MAX_HEALTH_OFFSET = 0x4BC2;
-            }
-            else if (levelIndex == 17)  // Cleopatra's Palaces
-            {
-                MIN_HEALTH_OFFSET = 0x688;
-                MAX_HEALTH_OFFSET = 0x5305;
-            }
-            else if (levelIndex == 18)  // Catacombs
-            {
-                MIN_HEALTH_OFFSET = 0x5F0;
-                MAX_HEALTH_OFFSET = 0x24F5;
-            }
-            else if (levelIndex == 19)  // Temple of Poseidon
-            {
-                MIN_HEALTH_OFFSET = 0x8F3;
-                MAX_HEALTH_OFFSET = 0x2B2E;
-            }
-            else if (levelIndex == 20)  // The Lost Library
-            {
-                MIN_HEALTH_OFFSET = 0xE7B;
-                MAX_HEALTH_OFFSET = 0x3FE7;
-            }
-            else if (levelIndex == 21)  // Hall of Demetrius
-            {
-                MIN_HEALTH_OFFSET = 0x5FA;
-                MAX_HEALTH_OFFSET = 0x3E94;
-            }
-            else if (levelIndex == 22)  // City of the Dead
-            {
-                MIN_HEALTH_OFFSET = 0x651;
-                MAX_HEALTH_OFFSET = 0x76A;
-            }
-            else if (levelIndex == 23)  // Trenches
-            {
-                MIN_HEALTH_OFFSET = 0xB74;
-                MAX_HEALTH_OFFSET = 0x2645;
-            }
-            else if (levelIndex == 24)  // Chambers of Tulun
-            {
-                MIN_HEALTH_OFFSET = 0xDAC;
-                MAX_HEALTH_OFFSET = 0x1848;
-            }
-            else if (levelIndex == 25)  // Street Bazaar
-            {
-                MIN_HEALTH_OFFSET = 0x6DD;
-                MAX_HEALTH_OFFSET = 0x2736;
-            }
-            else if (levelIndex == 26)  // Citadel Gate
-            {
-                MIN_HEALTH_OFFSET = 0x77A;
-                MAX_HEALTH_OFFSET = 0x19CA;
-            }
-            else if (levelIndex == 27)  // Citadel
-            {
-                MIN_HEALTH_OFFSET = 0x8EA;
-                MAX_HEALTH_OFFSET = 0x1070;
-            }
-            else if (levelIndex == 28)  // The Sphinx Complex
-            {
-                MIN_HEALTH_OFFSET = 0x64B;
-                MAX_HEALTH_OFFSET = 0x1880;
-            }
-            else if (levelIndex == 30)  // Underneath the Sphinx
-            {
-                MIN_HEALTH_OFFSET = 0x9C4;
-                MAX_HEALTH_OFFSET = 0x1199;
-            }
-            else if (levelIndex == 31)  // Menkaure's Pyramid
-            {
-                MIN_HEALTH_OFFSET = 0x5FC;
-                MAX_HEALTH_OFFSET = 0x2307;
-            }
-            else if (levelIndex == 32)  // Inside Menkaure's Pyramid
-            {
-                MIN_HEALTH_OFFSET = 0x8BA;
-                MAX_HEALTH_OFFSET = 0x2AE9;
-            }
-            else if (levelIndex == 33)  // The Mastabas
-            {
-                MIN_HEALTH_OFFSET = 0xA8C;
-                MAX_HEALTH_OFFSET = 0x44AE;
-            }
-            else if (levelIndex == 34)  // The Great Pyramid
-            {
-                MIN_HEALTH_OFFSET = 0x69A;
-                MAX_HEALTH_OFFSET = 0x500C;
-            }
-            else if (levelIndex == 35)  // Khufu's Queens Pyramids
-            {
-                MIN_HEALTH_OFFSET = 0xA6B;
-                MAX_HEALTH_OFFSET = 0x55F1;
-            }
-            else if (levelIndex == 36)  // Inside the Great Pyramid
-            {
-                MIN_HEALTH_OFFSET = 0x612;
-                MAX_HEALTH_OFFSET = 0x5D36;
-            }
-            else if (levelIndex == 37)  // Temple of Horus
-            {
-                MIN_HEALTH_OFFSET = 0x88B;
-                MAX_HEALTH_OFFSET = 0x79CF;
-            }
-            else if (levelIndex == 38)  // Temple of Horus (Part 2)
-            {
-                MIN_HEALTH_OFFSET = 0x9ED;
-                MAX_HEALTH_OFFSET = 0x8B04;
-            }
-            else if (levelIndex == 40)  // The Times Exclusive
-            {
-                MIN_HEALTH_OFFSET = 0x9F2;
-                MAX_HEALTH_OFFSET = 0xFCD;
+                TR4Object tr4Object = tr4Objects[itemIndex];
+
+                int itemFlagsOffset = ENTITY_STREAM_OFFSET + virtualCursorStart + sgBufferCursor;
+                int itemFlagsAbsoluteOffset = savegameOffset + itemFlagsOffset;
+
+                UInt32 itemFlags = BitConverter.ToUInt32(fileData, itemFlagsAbsoluteOffset);
+                sgBufferCursor += 0x04;
+
+                // Deleted / killed item marker
+                if ((itemFlags & 0x200) != 0)
+                {
+                    continue;
+                }
+
+                // No serialized item state
+                if ((itemFlags & 0x800) == 0)
+                {
+                    continue;
+                }
+
+                // Save position
+                if ((tr4Object.Flags00 & 0x08) != 0)
+                {
+                    sgBufferCursor += 0x09;
+
+                    if ((itemFlags & 0x01) != 0)
+                    {
+                        sgBufferCursor += 0x02;
+                    }
+
+                    if ((itemFlags & 0x02) != 0)
+                    {
+                        sgBufferCursor += 0x02;
+                    }
+
+                    if ((itemFlags & 0x20) != 0)
+                    {
+                        sgBufferCursor += 0x02;
+                    }
+
+                    if ((itemFlags & 0x40) != 0)
+                    {
+                        sgBufferCursor += 0x02;
+                    }
+                }
+
+                // Save animation
+                if ((tr4Object.Flags00 & 0x40) != 0)
+                {
+                    sgBufferCursor += tr4Object.ObjectId == 0 ? 0x07 : 0x06;
+                }
+
+                // Health / hit points
+                bool hasHealthField = (itemFlags & 0x400) != 0;
+
+                if (tr4Object.ObjectId == 0)
+                {
+                    HEALTH_OFFSET = ENTITY_STREAM_OFFSET + virtualCursorStart + sgBufferCursor;
+                    IS_LARA_HEALTH_SERIALIZED = hasHealthField;
+                    LARA_DWORD_OFFSET = itemFlagsOffset;
+                    return;
+                }
+
+                if (hasHealthField)
+                {
+                    sgBufferCursor += 0x02;
+                }
+
+                // Extended item flags
+                if ((tr4Object.Flags00 & 0x20) != 0)
+                {
+                    UInt32 extendedFlags = BitConverter.ToUInt32(fileData, savegameOffset + ENTITY_STREAM_OFFSET + virtualCursorStart + sgBufferCursor);
+
+                    sgBufferCursor += 0x24;
+
+                    if ((itemFlags & 0x80) != 0)
+                    {
+                        sgBufferCursor += 0x02;
+                    }
+
+                    if ((itemFlags & 0x100) != 0)
+                    {
+                        sgBufferCursor += 0x02;
+                    }
+
+                    if ((tr4Object.Flags00 & 0x02) != 0)
+                    {
+                        sgBufferCursor += 0x02;
+                    }
+
+                    // Creature / AI data block
+                    if ((extendedFlags & 0x80000000) != 0)
+                    {
+                        sgBufferCursor += 0x49;
+                    }
+                }
+
+                // Save mesh / extra object data
+                if ((tr4Object.ObjectFlags & 0x2000) != 0)
+                {
+                    sgBufferCursor += 0x0C;
+                }
+
+                // TR4-specific object data blocks
+                if (tr4Object.ObjectId == 0x1F)
+                {
+                    sgBufferCursor += 0x28;
+                }
+
+                if (tr4Object.ObjectId == 0x20)
+                {
+                    sgBufferCursor += 0x30;
+                }
             }
         }
 
@@ -464,14 +415,12 @@ namespace TRR_SaveMaster
 
         private UInt16 GetHealthValue(byte[] fileData, int healthOffset)
         {
-            UInt16 rawHealth = BitConverter.ToUInt16(fileData, healthOffset);
-
-            if (rawHealth != 0)
+            if (!IS_LARA_HEALTH_SERIALIZED)
             {
-                return rawHealth;
+                return MAX_HEALTH_VALUE;
             }
 
-            return MAX_HEALTH_VALUE;
+            return BitConverter.ToUInt16(fileData, healthOffset);
         }
 
         private bool IsPistolsPresent(byte[] fileData)
@@ -659,38 +608,38 @@ namespace TRR_SaveMaster
             WriteUInt16ToBuffer(fileData, savegameOffset + CROSSBOW_EXPLOSIVE_AMMO_OFFSET, ammo);
         }
 
-        private void WriteHealthValue(byte[] fileData, UInt16 newHealth)
+        private byte[] WriteHealthValue(byte[] fileData, UInt16 newHealth)
         {
-            int healthOffset = GetHealthOffset();
+            int healthOffset = GetHealthOffset(fileData, true);
 
             if (healthOffset != -1)
             {
-                int toggleOffset = healthOffset - 0x13;
-                byte currentToggle = fileData[toggleOffset];
+                int laraDwordOffset = savegameOffset + LARA_DWORD_OFFSET;
+                UInt32 laraDword = BitConverter.ToUInt32(fileData, laraDwordOffset);
 
-                bool currentlyFull = (currentToggle == FULL_HEALTH_TOGGLE_BYTE);
-                bool currentlyPartial = (currentToggle == PARTIAL_HEALTH_TOGGLE_BYTE);
-                bool newIsPartial = newHealth < MAX_HEALTH_VALUE;
+                bool isPacked = (laraDword & ITEM_HEALTH_SERIALIZED_STATE) == 0;
+                bool shouldPack = newHealth == MAX_HEALTH_VALUE;
 
-
-                if (currentlyFull && newIsPartial)
+                if (isPacked && !shouldPack)
                 {
                     // Full health -> Partial health
-                    fileData[toggleOffset] = (byte)(currentToggle + TOGGLE_DELTA);
-                    WriteUInt16ToBuffer(fileData, healthOffset, newHealth);
+                    UInt32 unpackedDword = laraDword | ITEM_HEALTH_SERIALIZED_STATE;
+                    WriteUInt32ToBuffer(fileData, laraDwordOffset, unpackedDword);
+
                     ShiftBytesRight(ref fileData, healthOffset);
+                    WriteUInt16ToBuffer(fileData, healthOffset, newHealth);
                 }
-                else if (currentlyPartial && !newIsPartial)
+                else if (!isPacked && shouldPack)
                 {
                     // Partial health -> Full health
-                    fileData[toggleOffset] = (byte)(currentToggle - TOGGLE_DELTA);
-                    WriteUInt16ToBuffer(fileData, healthOffset, 0);
+                    UInt32 packedDword = laraDword & ~ITEM_HEALTH_SERIALIZED_STATE;
+                    WriteUInt32ToBuffer(fileData, laraDwordOffset, packedDword);
+
                     ShiftBytesLeft(ref fileData, healthOffset);
                 }
-                else if (currentlyFull && !newIsPartial)
+                else if (isPacked && shouldPack)
                 {
-                    // Already full health
-                    WriteUInt16ToBuffer(fileData, healthOffset, 0);
+                    // Already full health, no-op
                 }
                 else
                 {
@@ -698,6 +647,8 @@ namespace TRR_SaveMaster
                     WriteUInt16ToBuffer(fileData, healthOffset, newHealth);
                 }
             }
+
+            return fileData;
         }
 
         private void ShiftBytesRight(ref byte[] fileData, int healthOffset)
@@ -706,7 +657,7 @@ namespace TRR_SaveMaster
 
             Array.Resize(ref fileData, fileData.Length + 2);
 
-            for (int i = boundary - 1; i >= healthOffset + 2; i--)
+            for (int i = boundary - 1; i >= healthOffset; i--)
             {
                 fileData[i + 2] = fileData[i];
             }
@@ -716,7 +667,7 @@ namespace TRR_SaveMaster
         {
             int boundary = savegameOffset + SAVEGAME_SIZE;
 
-            for (int i = healthOffset + 2; i < boundary - 2; i++)
+            for (int i = healthOffset; i < boundary - 2; i++)
             {
                 fileData[i] = fileData[i + 2];
             }
@@ -732,7 +683,7 @@ namespace TRR_SaveMaster
             NumericUpDown nudGrenadeGunNormalAmmo, NumericUpDown nudGrenadeGunSuperAmmo, NumericUpDown nudCrossbowPoisonAmmo,
             NumericUpDown nudCrossbowExplosiveAmmo)
         {
-            DetermineOffsets(fileData);
+            DetermineDynamicOffsets(fileData);
 
             nudSaveNumber.Value = GetSaveNumber(fileData);
             nudSmallMedipacks.Value = GetNumSmallMedipacks(fileData);
@@ -774,7 +725,7 @@ namespace TRR_SaveMaster
                 nudGoldenSkulls.Value = 0;
             }
 
-            int healthOffset = GetHealthOffset();
+            int healthOffset = GetHealthOffset(fileData, true);
 
             if (healthOffset != -1)
             {
@@ -803,6 +754,8 @@ namespace TRR_SaveMaster
             NumericUpDown nudGrenadeGunFlashAmmo, NumericUpDown nudCrossbowNormalAmmo, NumericUpDown nudCrossbowPoisonAmmo, NumericUpDown nudCrossbowExplosiveAmmo,
             TrackBar trbHealth)
         {
+            DetermineDynamicOffsets(fileData);
+
             byte prevCrossbowFlag = GetCrossbowFlag(fileData);
             byte prevRevolverFlag = GetRevolverFlag(fileData);
 
@@ -836,49 +789,10 @@ namespace TRR_SaveMaster
 
             if (trbHealth.Enabled)
             {
-                WriteHealthValue(fileData, (UInt16)trbHealth.Value);
+                fileData = WriteHealthValue(fileData, (UInt16)trbHealth.Value);
             }
 
             File.WriteAllBytes(savegamePath, fileData);
-        }
-
-        private bool IsKnownByteFlagPattern(byte byteFlag1, byte byteFlag2, byte byteFlag3, byte byteFlag4)
-        {
-            if (byteFlag1 == 0x02 && byteFlag2 == 0x02 && byteFlag3 == 0x00 && byteFlag4 == 0x52) return true;  // Standing
-            if (byteFlag1 == 0x02 && byteFlag2 == 0x02 && byteFlag3 == 0x00 && byteFlag4 == 0x67) return true;  // Standing
-            if (byteFlag1 == 0x02 && byteFlag2 == 0x02 && byteFlag3 == 0x47 && byteFlag4 == 0x67) return true;  // Standing
-            if (byteFlag1 == 0x50 && byteFlag2 == 0x50 && byteFlag3 == 0x00 && byteFlag4 == 0x07) return true;  // Crawling
-            if (byteFlag1 == 0x50 && byteFlag2 == 0x50 && byteFlag3 == 0x47 && byteFlag4 == 0x07) return true;  // Crawling
-            if (byteFlag1 == 0x47 && byteFlag2 == 0x47 && byteFlag3 == 0x00 && byteFlag4 == 0xDE) return true;  // Crouching
-            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x06) return true;  // Running forward
-            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0xF4) return true;  // Sprinting
-            if (byteFlag1 == 0x03 && byteFlag2 == 0x03 && byteFlag3 == 0x00 && byteFlag4 == 0x4D) return true;  // Jumping forward
-            if (byteFlag1 == 0x17 && byteFlag2 == 0x02 && byteFlag3 == 0x00 && byteFlag4 == 0x93) return true;  // Rolling
-            if (byteFlag1 == 0x13 && byteFlag2 == 0x13 && byteFlag3 == 0x00 && byteFlag4 == 0x61) return true;  // Climbing
-            if (byteFlag1 == 0x2A && byteFlag2 == 0x00 && byteFlag3 == 0x00 && byteFlag4 == 0x83) return true;  // Using puzzle item
-            if (byteFlag1 == 0x2B && byteFlag2 == 0x00 && byteFlag3 == 0x00 && byteFlag4 == 0x86) return true;  // Using puzzle item
-            if (byteFlag1 == 0x21 && byteFlag2 == 0x21 && byteFlag3 == 0x00 && byteFlag4 == 0x6E) return true;  // On water
-            if (byteFlag1 == 0x21 && byteFlag2 == 0x21 && byteFlag3 == 0x00 && byteFlag4 == 0x75) return true;  // Wading through water
-            if (byteFlag1 == 0x0D && byteFlag2 == 0x0D && byteFlag3 == 0x00 && byteFlag4 == 0x6C) return true;  // Underwater
-            if (byteFlag1 == 0x0D && byteFlag2 == 0x12 && byteFlag3 == 0x00 && byteFlag4 == 0x6C) return true;  // Underwater
-            if (byteFlag1 == 0x12 && byteFlag2 == 0x12 && byteFlag3 == 0x00 && byteFlag4 == 0xC6) return true;  // Swimming forward
-            if (byteFlag1 == 0x12 && byteFlag2 == 0x0D && byteFlag3 == 0x00 && byteFlag4 == 0xC8) return true;  // Swimming forward
-            if (byteFlag1 == 0x18 && byteFlag2 == 0x18 && byteFlag3 == 0x00 && byteFlag4 == 0x46) return true;  // Sliding downhill
-            if (byteFlag1 == 0x09 && byteFlag2 == 0x09 && byteFlag3 == 0x00 && byteFlag4 == 0x17) return true;  // Freefalling
-            if (byteFlag1 == 0x00 && byteFlag2 == 0x00 && byteFlag3 == 0x00 && byteFlag4 == 0x40) return true;  // Jeep
-            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x34) return true;  // Jeep
-            if (byteFlag1 == 0x0B && byteFlag2 == 0x0B && byteFlag3 == 0x00 && byteFlag4 == 0x38) return true;  // Jeep
-            if (byteFlag1 == 0x0B && byteFlag2 == 0x0C && byteFlag3 == 0x00 && byteFlag4 == 0x38) return true;  // Jeep
-            if (byteFlag1 == 0x0C && byteFlag2 == 0x0C && byteFlag3 == 0x47 && byteFlag4 == 0x3A) return true;  // Jeep
-            if (byteFlag1 == 0x00 && byteFlag2 == 0x47 && byteFlag3 == 0x47 && byteFlag4 == 0x40) return true;  // Jeep
-            if (byteFlag1 == 0x0F && byteFlag2 == 0x0F && byteFlag3 == 0x00 && byteFlag4 == 0x34) return true;  // Motorbike
-            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x24) return true;  // Motorbike
-            if (byteFlag1 == 0x08 && byteFlag2 == 0x08 && byteFlag3 == 0x00 && byteFlag4 == 0x38) return true;  // Motorbike
-            if (byteFlag1 == 0x08 && byteFlag2 == 0x08 && byteFlag3 == 0x00 && byteFlag4 == 0x39) return true;  // Motorbike
-            if (byteFlag1 == 0x11 && byteFlag2 == 0x11 && byteFlag3 == 0x00 && byteFlag4 == 0x3A) return true;  // Motorbike
-            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x27) return true;  // Motorbike
-
-            return false;
         }
 
         public bool IsLaraInVehicle(int healthOffset, byte[] fileData)

@@ -3195,7 +3195,6 @@ namespace TRR_SaveMaster
                         return;
                     }
 
-                    tr4Utilities.DetermineOffsets(fileData);
                     int healthOffset = tr4Utilities.GetHealthOffset(fileData);
 
                     if (healthOffset == -1)

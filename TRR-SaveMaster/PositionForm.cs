@@ -211,7 +211,6 @@ namespace TRR_SaveMaster
             }
             else if (IsTR4Savegame())
             {
-                tr4Utilities.DetermineOffsets(fileData);
                 return tr4Utilities.GetHealthOffset(fileData);
             }
             else if (IsTR5Savegame())
