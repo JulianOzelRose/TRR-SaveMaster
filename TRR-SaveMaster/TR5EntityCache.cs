@@ -4,23 +4,6 @@ namespace TRR_SaveMaster
 {
     public class TR5EntityCache
     {
-        public static readonly Dictionary<byte, int> LevelRoomCounts = new Dictionary<byte, int>()
-        {
-            {  1, 242 },    // Streets of Rome
-            {  2, 252 },    // Trajan's Markets
-            {  3, 130 },    // The Colosseum
-            {  4, 169 },    // The Base
-            {  5, 195 },    // The Submarine
-            {  6, 137 },    // Deepsea Dive
-            {  7, 191 },    // Sinking Submarine
-            {  8, 243 },    // Gallows Tree
-            {  9, 254 },    // Labyrinth
-            { 10, 211 },    // Old Mill
-            { 11, 165 },    // The 13th Floor
-            { 12, 179 },    // Escape with the Iris
-            { 14, 218 },    // Red Alert!
-        };
-
         public static readonly Dictionary<byte, int> EligibleStaticMeshCounts = new Dictionary<byte, int>()
         {
             {  1, 3  },     // Streets of Rome
