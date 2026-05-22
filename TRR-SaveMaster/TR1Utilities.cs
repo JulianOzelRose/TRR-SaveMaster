@@ -738,11 +738,17 @@ namespace TRR_SaveMaster
             bool isNativePatch5 = IsNativePatch5Format(fileData);
             byte levelIndex = GetLevelIndex(fileData);
 
+            // Entity & ID lists
             var baseList = TR1EntityCache.LevelObjectIdsByLevel[levelIndex];
             var levelObjectIds = new List<int>(baseList);
 
+            // Reset health offset
+            HEALTH_OFFSET = -1;
+
+            // Cursor start
             sgBufferCursor = GetEntityBlockStart();
 
+            // Challenge Mode param block
             if (isChallengeMode && isNativePatch5)
             {
                 byte enemyNumbers = GetChallengeModeEnemyNumbers(fileData);
@@ -754,8 +760,8 @@ namespace TRR_SaveMaster
                 sgBufferCursor += 0x0C;
             }
 
+            // Fixed blocks
             sgBufferCursor += 4;
-
             sgBufferCursor += 0x118;
 
             int gLevelStateEntryCount = TR1EntityCache.LevelStateEntryCounts[levelIndex];

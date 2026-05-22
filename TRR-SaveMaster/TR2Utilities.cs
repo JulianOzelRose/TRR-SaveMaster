@@ -115,7 +115,7 @@ namespace TRR_SaveMaster
         private const UInt16 MAX_HEALTH_VALUE_DEFAULT = 1000;
         private const UInt16 MIN_HEALTH_VALUE = 1;
         private UInt16 MAX_HEALTH_VALUE = MAX_HEALTH_VALUE_DEFAULT;
-        private int HEALTH_OFFSET;
+        private int HEALTH_OFFSET = -1;
 
         // Misc
         private Platform platform;
@@ -995,11 +995,17 @@ namespace TRR_SaveMaster
             bool isPrepatch = IsPrepatchSavegameFile(fileData);
             byte levelIndex = GetLevelIndex(fileData);
 
+            // Entity & ID lists
             var baseList = TR2EntityCache.LevelObjectIdsByLevel[levelIndex];
             var levelObjectIds = new List<int>(baseList);
 
+            // Reset health offset
+            HEALTH_OFFSET = -1;
+
+            // Cursor start
             sgBufferCursor = GetEntityBlockStart(isPrepatch);
 
+            // Challenge Mode param block
             if (isChallengeMode && isNativePatch5 && !isPrepatch)
             {
                 byte enemyNumbers = GetChallengeModeEnemyNumbers(fileData);
@@ -1011,8 +1017,8 @@ namespace TRR_SaveMaster
                 sgBufferCursor += 0x0C;
             }
 
+            // Fixed blocks
             sgBufferCursor += 4;
-
             sgBufferCursor += 0x118;
 
             int gLevelStateEntryCount = TR2EntityCache.LevelStateEntryCounts[levelIndex];

@@ -49,7 +49,7 @@ namespace TRR_SaveMaster
         // Health
         private const UInt16 MAX_HEALTH_VALUE = 1000;
         private const UInt16 MIN_HEALTH_VALUE = 1;
-        private int HEALTH_OFFSET;
+        private int HEALTH_OFFSET = -1;
 
         // Entity block constant
         private const int ENTITY_STREAM_OFFSET = 0x474;
@@ -117,6 +117,9 @@ namespace TRR_SaveMaster
         private void DetermineDynamicOffsets(byte[] fileData)
         {
             byte levelIndex = GetLevelIndex(fileData);
+
+            // Reset health offset
+            HEALTH_OFFSET = -1;
 
             // Cursor start
             sgBufferCursor = 0xB;
