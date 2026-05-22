@@ -3229,22 +3229,6 @@ namespace TRR_SaveMaster
                         return;
                     }
 
-                    if (tr4Utilities.IsLaraFreefalling(healthOffset, fileData))
-                    {
-                        SystemSounds.Exclamation.Play();
-
-                        string warningMessage = $"Cannot edit position while Lara is freefalling.";
-
-                        ThemedMessageBox.Show(
-                            this,
-                            warningMessage,
-                            "Cannot Edit Position",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning);
-
-                        return;
-                    }
-
                     selectedSavegame = cmbSavegamesTR4.Items[cmbSavegamesTR4.SelectedIndex] as Savegame;
                 }
                 else if (tabGame.SelectedIndex == TAB_TR5 && cmbSavegamesTR5.SelectedIndex != -1)
@@ -3279,22 +3263,6 @@ namespace TRR_SaveMaster
                             this,
                             warningMessage,
                             "Position Not Found",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning);
-
-                        return;
-                    }
-
-                    if (tr5Utilities.IsLaraFreefalling(healthOffset, fileData))
-                    {
-                        SystemSounds.Exclamation.Play();
-
-                        string warningMessage = $"Cannot edit position while Lara is freefalling.";
-
-                        ThemedMessageBox.Show(
-                            this,
-                            warningMessage,
-                            "Cannot Edit Position",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning);
 

@@ -731,24 +731,6 @@ namespace TRR_SaveMaster
                         }
                     }
 
-                    if (IsLaraFreefalling(healthOffset, fileData) && !IsTRXSavegame())
-                    {
-                        System.Media.SystemSounds.Asterisk.Play();
-
-                        string warningMessage = $"Cannot edit position while Lara is freefalling.";
-
-                        ThemedMessageBox.Show(
-                            this,
-                            warningMessage,
-                            "Warning",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning);
-
-                        DisableButtons();
-                        this.Close();
-                        return;
-                    }
-
                     DeterminePositionOffsets(healthOffset);
                 }
 
@@ -893,24 +875,6 @@ namespace TRR_SaveMaster
 
                     if (IsLaraFreefalling(healthOffset, fileData))
                     {
-                        if (!IsTRXSavegame())
-                        {
-                            System.Media.SystemSounds.Asterisk.Play();
-
-                            string warningMessage = $"Cannot edit position while Lara is freefalling.";
-
-                            ThemedMessageBox.Show(
-                                this,
-                                warningMessage,
-                                "Warning",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning);
-
-                            DisableButtons();
-                            this.Close();
-                            return;
-                        }
-
                         SetLaraStanding(healthOffset, fileData);
                     }
 
