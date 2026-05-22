@@ -142,9 +142,14 @@ namespace TRR_SaveMaster
 
             if (HEALTH_OFFSET != -1)
             {
+                if (!IS_LARA_HEALTH_SERIALIZED)
+                {
+                    return savegameOffset + HEALTH_OFFSET;
+                }
+
                 UInt16 value = BitConverter.ToUInt16(savegameData, savegameOffset + HEALTH_OFFSET);
 
-                if ((value >= MIN_HEALTH_VALUE && value < MAX_HEALTH_VALUE) || value == 0)
+                if (value >= MIN_HEALTH_VALUE && value < MAX_HEALTH_VALUE)
                 {
                     return savegameOffset + HEALTH_OFFSET;
                 }
