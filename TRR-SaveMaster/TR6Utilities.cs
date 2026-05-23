@@ -116,7 +116,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        public void DetermineOffsets(byte[] fileData)
+        public void DetermineDynamicOffsets(byte[] fileData)
         {
             Int32 savegameVersion = GetSavegameVersion(fileData);
             Int32 compressedBlockSize = GetCompressedBlockSize(fileData);
@@ -125,7 +125,8 @@ namespace TRR_SaveMaster
             decompressedBuffer = new byte[0];   // Clear buffer
             decompressedBuffer = Unpack(compressedBlockData);
 
-            sgBufferCursor = 0x4;    // Skip past "TOMB" signature
+            // Cursor start
+            sgBufferCursor = 0x4;
 
             using (MemoryStream ms = new MemoryStream(decompressedBuffer))
             using (BinaryReader reader = new BinaryReader(ms))
@@ -147,7 +148,6 @@ namespace TRR_SaveMaster
                 sgBufferCursor += 0x8;
 
                 FxLoad(reader);
-
                 AudioLoad(reader);
                 MapPickupLoad(reader, savegameVersion);
             }
@@ -1371,7 +1371,7 @@ namespace TRR_SaveMaster
 
         public void DisplayGameInfo(byte[] fileData, TrackBar trbHealth, Label lblHealth, Label lblHealthError, NumericUpDown nudCash, NumericUpDown nudSaveNumber)
         {
-            DetermineOffsets(fileData);
+            DetermineDynamicOffsets(fileData);
 
             nudSaveNumber.Value = GetSaveNumber(fileData);
 

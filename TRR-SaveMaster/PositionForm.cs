@@ -681,7 +681,7 @@ namespace TRR_SaveMaster
                 {
                     if (decompressedBuffer == null)
                     {
-                        tr6Utilities.DetermineOffsets(fileData);
+                        tr6Utilities.DetermineDynamicOffsets(fileData);
                         decompressedBuffer = tr6Utilities.GetDecompressedBuffer();
                     }
 
