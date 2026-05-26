@@ -11,7 +11,6 @@ namespace TRR_SaveMaster
     public partial class PositionForm : Form
     {
         // Offsets
-        private const int SLOT_STATUS_OFFSET = 0x004;
         private const int COMPRESSED_BLOCK_START_OFFSET = 0x36C;
         private const int COMPRESSED_BLOCK_SIZE_OFFSET = 0x364;
         private int LEVEL_INDEX_OFFSET;
@@ -37,14 +36,6 @@ namespace TRR_SaveMaster
         private readonly TR4Utilities tr4Utilities = new TR4Utilities();
         private readonly TR5Utilities tr5Utilities = new TR5Utilities();
         private readonly TR6Utilities tr6Utilities = new TR6Utilities();
-
-        // Tabs
-        private const int TAB_TR1 = 0;
-        private const int TAB_TR2 = 1;
-        private const int TAB_TR3 = 2;
-        private const int TAB_TR4 = 3;
-        private const int TAB_TR5 = 4;
-        private const int TAB_TR6 = 5;
 
         // Savegame
         private Savegame selectedSavegame;
@@ -277,7 +268,7 @@ namespace TRR_SaveMaster
             }
             else if (IsTR4Savegame() || IsTR5Savegame())
             {
-                // Standing flags (not sufficient)
+                // Standing flags
                 fileData[healthOffset - 7] = 0x02;
                 fileData[healthOffset - 6] = 0x02;
                 fileData[healthOffset - 5] = 0x00;
@@ -341,7 +332,7 @@ namespace TRR_SaveMaster
                 fileData = File.ReadAllBytes(savegamePath);
             }
 
-            return BitConverter.ToInt32(fileData, savegameOffset + SLOT_STATUS_OFFSET) != 0;
+            return BitConverter.ToInt32(fileData, savegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
         }
 
         private byte GetLevelIndex(byte[] fileData = null)
@@ -616,37 +607,37 @@ namespace TRR_SaveMaster
 
         private bool IsTRXSavegame()
         {
-            return SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR2 || SELECTED_TAB == TAB_TR3;
+            return SELECTED_TAB == Globals.TAB_TR1 || SELECTED_TAB == Globals.TAB_TR2 || SELECTED_TAB == Globals.TAB_TR3;
         }
 
         private bool IsTR1Savegame()
         {
-            return SELECTED_TAB == TAB_TR1;
+            return SELECTED_TAB == Globals.TAB_TR1;
         }
 
         private bool IsTR2Savegame()
         {
-            return SELECTED_TAB == TAB_TR2;
+            return SELECTED_TAB == Globals.TAB_TR2;
         }
 
         private bool IsTR3Savegame()
         {
-            return SELECTED_TAB == TAB_TR3;
+            return SELECTED_TAB == Globals.TAB_TR3;
         }
 
         private bool IsTR4Savegame()
         {
-            return SELECTED_TAB == TAB_TR4;
+            return SELECTED_TAB == Globals.TAB_TR4;
         }
 
         private bool IsTR5Savegame()
         {
-            return SELECTED_TAB == TAB_TR5;
+            return SELECTED_TAB == Globals.TAB_TR5;
         }
 
         private bool IsTR6Savegame()
         {
-            return SELECTED_TAB == TAB_TR6;
+            return SELECTED_TAB == Globals.TAB_TR6;
         }
 
         private void DisplayCoordinates()
@@ -661,12 +652,10 @@ namespace TRR_SaveMaster
                 {
                     SystemSounds.Hand.Play();
 
-                    string errorMessage = $"Savegame no longer present.";
-
                     ThemedMessageBox.Show(
                         this,
-                        errorMessage,
-                        "Error",
+                        Globals.DIALOG_MSG_SAVEGAME_NOT_FOUND,
+                        Globals.DIALOG_TITLE_ERROR,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
 
@@ -696,12 +685,10 @@ namespace TRR_SaveMaster
                     {
                         System.Media.SystemSounds.Asterisk.Play();
 
-                        string warningMessage = $"Unable to locate position data. Try saving the game while Lara is standing.";
-
                         ThemedMessageBox.Show(
                             this,
-                            warningMessage,
-                            "Position Not Found",
+                            Globals.DIALOG_MSG_POSITION_NOT_FOUND,
+                            Globals.DIALOG_TITLE_POSITION_NOT_FOUND,
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning);
 
@@ -716,12 +703,10 @@ namespace TRR_SaveMaster
                         {
                             System.Media.SystemSounds.Asterisk.Play();
 
-                            string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
-
                             ThemedMessageBox.Show(
                                 this,
-                                warningMessage,
-                                "Cannot Edit Position",
+                                Globals.DIALOG_MSG_CANNOT_EDIT_POSITION_IN_VEHICLE,
+                                Globals.DIALOG_TITLE_CANNOT_EDIT_POSITION,
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Warning);
 
@@ -784,14 +769,14 @@ namespace TRR_SaveMaster
             }
             catch (Exception ex)
             {
-                slblStatus.Text = $"Error loading savegame position data";
+                slblStatus.Text = Globals.STATUS_MSG_POSITION_READ_ERROR;
 
                 SystemSounds.Hand.Play();
 
                 ThemedMessageBox.Show(
                     this,
                     ex.Message,
-                    "Error",
+                    Globals.DIALOG_TITLE_ERROR,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
@@ -811,12 +796,10 @@ namespace TRR_SaveMaster
                 {
                     SystemSounds.Hand.Play();
 
-                    string errorMessage = $"Savegame no longer present.";
-
                     ThemedMessageBox.Show(
                         this,
-                        errorMessage,
-                        "Error",
+                        Globals.DIALOG_MSG_SAVEGAME_NOT_FOUND,
+                        Globals.DIALOG_TITLE_ERROR,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
 
@@ -838,12 +821,10 @@ namespace TRR_SaveMaster
                     {
                         System.Media.SystemSounds.Asterisk.Play();
 
-                        string warningMessage = $"Unable to locate position data. Try saving the game while Lara is standing.";
-
                         ThemedMessageBox.Show(
                             this,
-                            warningMessage,
-                            "Position Not Found",
+                            Globals.DIALOG_MSG_POSITION_NOT_FOUND,
+                            Globals.DIALOG_TITLE_POSITION_NOT_FOUND,
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning);
 
@@ -858,12 +839,10 @@ namespace TRR_SaveMaster
                         {
                             System.Media.SystemSounds.Asterisk.Play();
 
-                            string warningMessage = $"Cannot edit position while Lara is in a vehicle.";
-
                             ThemedMessageBox.Show(
                                 this,
-                                warningMessage,
-                                "Cannot Edit Position",
+                                Globals.DIALOG_MSG_CANNOT_EDIT_POSITION_IN_VEHICLE,
+                                Globals.DIALOG_TITLE_CANNOT_EDIT_POSITION,
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Warning);
 
@@ -955,18 +934,18 @@ namespace TRR_SaveMaster
                 DisableButtons();
                 UpdateSavegameDisplayName(fileData);
 
-                slblStatus.Text = $"Successfully patched position data of savegame: '{selectedSavegame}'";
+                slblStatus.Text = $"{Globals.STATUS_MSG_POSITION_WRITE_SUCCESS} '{selectedSavegame}'";
             }
             catch (Exception ex)
             {
-                slblStatus.Text = $"Error writing to savegame position data";
+                slblStatus.Text = Globals.STATUS_MSG_POSITION_WRITE_ERROR;
 
                 SystemSounds.Hand.Play();
 
                 ThemedMessageBox.Show(
                     this,
                     ex.Message,
-                    "Error",
+                    Globals.DIALOG_TITLE_ERROR,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
@@ -978,8 +957,8 @@ namespace TRR_SaveMaster
             {
                 DialogResult result = ThemedMessageBox.Show(
                     this,
-                    $"Would you like to apply changes to the savegame?",
-                    "Confirmation",
+                    Globals.DIALOG_MSG_CONFIRM_SAVEGAME_CHANGES,
+                    Globals.DIALOG_TITLE_CONFIRMATION,
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
 

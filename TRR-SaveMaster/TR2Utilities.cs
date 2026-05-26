@@ -9,8 +9,6 @@ namespace TRR_SaveMaster
     class TR2Utilities
     {
         // Static offsets
-        private const int SAVEFILE_VERSION_OFFSET = 0x000;
-        private const int SLOT_STATUS_OFFSET = 0x004;
         private const int NEW_GAME_PLUS_OFFSET = 0x008;
         private const int SAVE_NUMBER_OFFSET = 0x00C;
         private const int LEVEL_INDEX_OFFSET_PREPATCH = 0x628;
@@ -26,9 +24,6 @@ namespace TRR_SaveMaster
         private int CHALLENGE_MODE_MAX_HEALTH_OFFSET;
         private int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET;
         private int CHALLENGE_MODE_ENEMY_TYPE_OFFSET;
-
-        // Savegame constants
-        private const int MAX_SAVEGAMES = 32;
 
         // PC offsets
         private const int LEVEL_INDEX_OFFSET_PC = 0x628;
@@ -58,16 +53,10 @@ namespace TRR_SaveMaster
         private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PS4 = 0x6C5;
 
         // Patch-dependent
-        private const int SAVEGAME_SIZE_PREPATCH = 0x3800;
-        private const int SAVEGAME_SIZE_PATCH5 = 0x6800;
         private const int BASE_SAVEGAME_OFFSET_TR2_PREPATCH = 0x72000;
         private const int BASE_SAVEGAME_OFFSET_TR2_PATCH5 = 0xD2000;
         private const int MAX_SAVEGAME_OFFSET_TR2_PREPATCH = 0xE2000;
         private const int MAX_SAVEGAME_OFFSET_TR2_PATCH5 = 0x19B800;
-
-        // Patch-related signatures
-        private const byte SAVEFILE_PREPATCH = 0x3B;
-        private const byte SAVEFILE_PATCH5 = 0x3C;
 
         // Static offsets (per level)
         private int SMALL_MEDIPACK_OFFSET;
@@ -97,11 +86,6 @@ namespace TRR_SaveMaster
         private const byte WEAPON_M16 = 32;
         private const byte WEAPON_GRENADE_LAUNCHER = 64;
         private const byte WEAPON_HARPOON_GUN = 128;
-
-        // Challenge Mode constants
-        private const byte CHALLENGE_MODE_ENEMY_NUMBERS_NORMAL = 3;
-        private const byte CHALLENGE_MODE_ENEMY_TYPE_NORMAL = 2;
-        private const byte CHALLENGE_MODE_ENEMY_TYPE_RANDOMIZER = 5;
 
         // Entity block starts
         private const int ENTITY_BLOCK_START_PC = 0x6BC;
@@ -208,14 +192,14 @@ namespace TRR_SaveMaster
             {
                 BASE_SAVEGAME_OFFSET_TR2 = BASE_SAVEGAME_OFFSET_TR2_PREPATCH;
                 MAX_SAVEGAME_OFFSET_TR2 = MAX_SAVEGAME_OFFSET_TR2_PREPATCH;
-                SAVEGAME_SIZE = SAVEGAME_SIZE_PREPATCH;
+                SAVEGAME_SIZE = Globals.SAVEGAME_SIZE_TRX_PREPATCH;
                 LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PREPATCH;
             }
             else
             {
                 BASE_SAVEGAME_OFFSET_TR2 = BASE_SAVEGAME_OFFSET_TR2_PATCH5;
                 MAX_SAVEGAME_OFFSET_TR2 = MAX_SAVEGAME_OFFSET_TR2_PATCH5;
-                SAVEGAME_SIZE = SAVEGAME_SIZE_PATCH5;
+                SAVEGAME_SIZE = Globals.SAVEGAME_SIZE_TRX_PATCH5;
 
                 if (platform == Platform.PC)
                 {
@@ -265,7 +249,7 @@ namespace TRR_SaveMaster
 
         private bool IsPrepatchSavegameFile(byte[] fileData)
         {
-            return fileData[SAVEFILE_VERSION_OFFSET] == SAVEFILE_PREPATCH;
+            return fileData[Globals.SAVEFILE_VERSION_OFFSET] == Globals.SAVEFILE_TRX_PREPATCH;
         }
 
         private bool IsNativePatch5Format(byte[] fileData)
@@ -631,7 +615,7 @@ namespace TRR_SaveMaster
             var removalSet = new HashSet<int>();
 
             // Only applies to EN modes below Normal
-            if (enemyNumbers >= CHALLENGE_MODE_ENEMY_NUMBERS_NORMAL)
+            if (enemyNumbers >= Globals.CHALLENGE_MODE_ENEMY_NUMBERS_NORMAL)
             {
                 return removalSet;
             }
@@ -730,7 +714,7 @@ namespace TRR_SaveMaster
             byte levelIndex,
             byte enemyNumbers)
         {
-            if (enemyNumbers <= CHALLENGE_MODE_ENEMY_NUMBERS_NORMAL)
+            if (enemyNumbers <= Globals.CHALLENGE_MODE_ENEMY_NUMBERS_NORMAL)
             {
                 return;
             }
@@ -821,7 +805,7 @@ namespace TRR_SaveMaster
                 result[82] = 0x88;
             }
 
-            if (enemyNumbers <= CHALLENGE_MODE_ENEMY_NUMBERS_NORMAL && enemyType == CHALLENGE_MODE_ENEMY_TYPE_NORMAL)
+            if (enemyNumbers <= Globals.CHALLENGE_MODE_ENEMY_NUMBERS_NORMAL && enemyType == Globals.CHALLENGE_MODE_ENEMY_TYPE_NORMAL)
             {
                 return tail != null ? result.Concat(tail).ToList() : result;
             }
@@ -836,7 +820,7 @@ namespace TRR_SaveMaster
                 return tail != null ? result.Concat(tail).ToList() : result;
             }
 
-            if (addCount <= 0 && enemyType == CHALLENGE_MODE_ENEMY_TYPE_NORMAL)
+            if (addCount <= 0 && enemyType == Globals.CHALLENGE_MODE_ENEMY_TYPE_NORMAL)
             {
                 return tail != null ? result.Concat(tail).ToList() : result;
             }
@@ -845,7 +829,7 @@ namespace TRR_SaveMaster
 
             if (!TR2EntityCache.TR2ObjectsByLevel.TryGetValue(levelIndex, out var levelObjects))
             {
-                if (enemyType != CHALLENGE_MODE_ENEMY_TYPE_RANDOMIZER)
+                if (enemyType != Globals.CHALLENGE_MODE_ENEMY_TYPE_RANDOMIZER)
                 {
                     return tail != null ? result.Concat(tail).ToList() : result;
                 }
@@ -854,7 +838,7 @@ namespace TRR_SaveMaster
             // ===================================
             // EN APPEND FIRST
             // ===================================
-            if (enemyNumbers > CHALLENGE_MODE_ENEMY_NUMBERS_NORMAL)
+            if (enemyNumbers > Globals.CHALLENGE_MODE_ENEMY_NUMBERS_NORMAL)
             {
                 ApplyAddEnemies(result, levelIndex, enemyNumbers);
             }
@@ -862,7 +846,7 @@ namespace TRR_SaveMaster
             // ===================================
             // SINGLE ET MUTATION PASS (FULL LIST)
             // ===================================
-            if (enemyType != CHALLENGE_MODE_ENEMY_TYPE_NORMAL)
+            if (enemyType != Globals.CHALLENGE_MODE_ENEMY_TYPE_NORMAL)
             {
                 var catType = enemyType;
 
@@ -873,7 +857,7 @@ namespace TRR_SaveMaster
 
                 Dictionary<string, string> catMapping = null;
 
-                if (enemyType != CHALLENGE_MODE_ENEMY_TYPE_RANDOMIZER)
+                if (enemyType != Globals.CHALLENGE_MODE_ENEMY_TYPE_RANDOMIZER)
                 {
                     if (!TR2EntityCache.ChallengeModeCatMapping.TryGetValue(enemyType, out catMapping))
                     {
@@ -920,7 +904,7 @@ namespace TRR_SaveMaster
                     int gateRoll = NextRNG() % 100;
                     if (sourceEntry.Weight < gateRoll) continue;
 
-                    string targetCat = enemyType == CHALLENGE_MODE_ENEMY_TYPE_RANDOMIZER ? sourceCat : catMapping[sourceCat];
+                    string targetCat = enemyType == Globals.CHALLENGE_MODE_ENEMY_TYPE_RANDOMIZER ? sourceCat : catMapping[sourceCat];
 
                     if (!catGroups.TryGetValue(targetCat, out var targetEntries)) continue;
 
@@ -1011,7 +995,6 @@ namespace TRR_SaveMaster
                 byte enemyNumbers = GetChallengeModeEnemyNumbers(fileData);
                 byte enemyType = GetChallengeModeEnemyType(fileData);
                 Int32 challengeModeRNGSeed = GetChallengeModeRNGSeed(fileData);
-
                 levelObjectIds = ApplyChallengeModeMutations(levelObjectIds, levelIndex, enemyNumbers, enemyType, challengeModeRNGSeed);
 
                 sgBufferCursor += 0x0C;
@@ -1040,15 +1023,15 @@ namespace TRR_SaveMaster
 
                 if (!TR2EntityCache.TR2ObjectsByLevel.TryGetValue(levelIndex, out var levelObjects))
                 {
-                    throw new Exception($"FATAL: Missing level definition for level {levelIndex}.");
+                    throw new Exception($"{Globals.ERROR_MSG_MISSING_LEVEL_DEFINITION} {levelIndex}.");
                 }
 
                 if (!levelObjects.TryGetValue(objectId, out var tr2Object))
                 {
-                    throw new Exception($"FATAL: Missing object definition (object ID: 0x{objectId:X}).");
+                    throw new Exception($"{Globals.ERROR_MSG_MISSING_OBJECT_DEFINITION} (object ID: 0x{objectId:X}).");
                 }
 
-                if (tr2Object.ObjectId == 0)
+                if (tr2Object.ObjectId == Globals.LARA_ENTITY_ID)
                 {
                     HEALTH_OFFSET = sgBufferCursor + 0x28;
                 }
@@ -1278,12 +1261,12 @@ namespace TRR_SaveMaster
 
         public bool IsSavegamePresent(byte[] fileData)
         {
-            return BitConverter.ToInt32(fileData, savegameOffset + SLOT_STATUS_OFFSET) != 0;
+            return BitConverter.ToInt32(fileData, savegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
         }
 
         public void UpdateDisplayName(Savegame savegame, byte[] fileData)
         {
-            bool isSavegamePresent = BitConverter.ToInt32(fileData, savegame.Offset + SLOT_STATUS_OFFSET) != 0;
+            bool isSavegamePresent = BitConverter.ToInt32(fileData, savegame.Offset + Globals.SLOT_STATUS_OFFSET) != 0;
 
             if (isSavegamePresent)
             {
@@ -1304,7 +1287,7 @@ namespace TRR_SaveMaster
 
         public void PopulateEmptySlots(ComboBox cmbSavegames)
         {
-            if (cmbSavegames.Items.Count == MAX_SAVEGAMES)
+            if (cmbSavegames.Items.Count == Globals.MAX_SAVEGAMES)
             {
                 return;
             }
@@ -1312,7 +1295,7 @@ namespace TRR_SaveMaster
             byte[] fileData = File.ReadAllBytes(savegamePath);
             bool isPrepatch = IsPrepatchSavegameFile(fileData);
 
-            for (int i = cmbSavegames.Items.Count; i < MAX_SAVEGAMES; i++)
+            for (int i = cmbSavegames.Items.Count; i < Globals.MAX_SAVEGAMES; i++)
             {
                 int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR2 + (i * SAVEGAME_SIZE);
 
@@ -1321,7 +1304,7 @@ namespace TRR_SaveMaster
                     byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
                     Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
 
-                    bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + SLOT_STATUS_OFFSET) != 0;
+                    bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
 
                     if (isSavegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                     {
@@ -1363,14 +1346,14 @@ namespace TRR_SaveMaster
             {
                 BASE_SAVEGAME_OFFSET_TR2 = BASE_SAVEGAME_OFFSET_TR2_PREPATCH;
                 MAX_SAVEGAME_OFFSET_TR2 = MAX_SAVEGAME_OFFSET_TR2_PREPATCH;
-                SAVEGAME_SIZE = SAVEGAME_SIZE_PREPATCH;
+                SAVEGAME_SIZE = Globals.SAVEGAME_SIZE_TRX_PREPATCH;
                 LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PREPATCH;
             }
             else
             {
                 BASE_SAVEGAME_OFFSET_TR2 = BASE_SAVEGAME_OFFSET_TR2_PATCH5;
                 MAX_SAVEGAME_OFFSET_TR2 = MAX_SAVEGAME_OFFSET_TR2_PATCH5;
-                SAVEGAME_SIZE = SAVEGAME_SIZE_PATCH5;
+                SAVEGAME_SIZE = Globals.SAVEGAME_SIZE_TRX_PATCH5;
 
                 if (platform == Platform.PC)
                 {
@@ -1389,13 +1372,13 @@ namespace TRR_SaveMaster
                 }
             }
 
-            for (int i = 0; i < MAX_SAVEGAMES; i++)
+            for (int i = 0; i < Globals.MAX_SAVEGAMES; i++)
             {
                 int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR2 + (i * SAVEGAME_SIZE);
 
                 byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
                 Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
-                bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + SLOT_STATUS_OFFSET) != 0;
+                bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
 
                 if (isSavegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                 {

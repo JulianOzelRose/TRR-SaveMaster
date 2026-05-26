@@ -146,14 +146,14 @@ namespace TRR_SaveMaster
             }
             catch (Exception ex)
             {
-                slblStatus.Text = $"Error loading outfits data";
+                slblStatus.Text = Globals.STATUS_MSG_OUTFITS_READ_ERROR;
 
                 SystemSounds.Hand.Play();
 
                 ThemedMessageBox.Show(
                     this,
                     ex.Message,
-                    "Error",
+                    Globals.DIALOG_TITLE_ERROR,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
@@ -233,19 +233,19 @@ namespace TRR_SaveMaster
                     File.WriteAllBytes(savegamePath, fileData);
 
                     DisableButtons();
-                    slblStatus.Text = $"Successfully patched outfits data";
+                    slblStatus.Text = Globals.STATUS_MSG_OUTFITS_WRITE_SUCCESS;
                 }
             }
             catch (Exception ex)
             {
-                slblStatus.Text = $"Error writing to outfits data";
+                slblStatus.Text = Globals.STATUS_MSG_OUTFITS_WRITE_ERROR;
 
                 SystemSounds.Hand.Play();
 
                 ThemedMessageBox.Show(
                     this,
                     ex.Message,
-                    "Error",
+                    Globals.DIALOG_TITLE_ERROR,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
@@ -300,8 +300,8 @@ namespace TRR_SaveMaster
             {
                 DialogResult result = ThemedMessageBox.Show(
                     this,
-                    $"Would you like to apply changes to the savegame?",
-                    "Confirmation",
+                    Globals.DIALOG_MSG_CONFIRM_SAVEGAME_CHANGES,
+                    Globals.DIALOG_TITLE_CONFIRMATION,
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
 

@@ -10,15 +10,12 @@ namespace TRR_SaveMaster
     internal class TR6Utilities
     {
         // Savegame constants & offsets
-        private const int SLOT_STATUS_OFFSET = 0x004;
         private const int SAVEGAME_VERSION_OFFSET = 0x008;
         private const int LEVEL_INDEX_OFFSET = 0x014;
         private const int SAVE_NUMBER_OFFSET = 0x11C;
         private const int NEW_GAME_PLUS_OFFSET = 0x35C;
         private const int BASE_SAVEGAME_OFFSET_TR6 = 0x293C00;
         private const int MAX_SAVEGAME_OFFSET_TR6 = 0x484910;
-        private const int SAVEGAME_SIZE = 0xA470;
-        private const int MAX_SAVEGAMES = 32;
 
         // Compressed block offsets & constants
         private const int COMPRESSED_BLOCK_START_OFFSET = 0x36C;
@@ -887,8 +884,7 @@ namespace TRR_SaveMaster
             }
             else
             {
-                string errorMessage = $"Invalid LZW header. Savegame is possibly corrupt.";
-                throw new Exception(errorMessage);
+                throw new Exception(Globals.ERROR_MSG_INVALID_LZW_HEADER);
             }
         }
 
@@ -1411,8 +1407,7 @@ namespace TRR_SaveMaster
         {
             if (decompressedBuffer == null || decompressedBuffer.Length == 0)
             {
-                string errorMessage = $"Savegame buffer is null or empty.";
-                throw new Exception(errorMessage);
+                throw new Exception(Globals.ERROR_MSG_SAVEGAME_BUFFER_NULL_OR_EMPTY);
             }
 
             try
@@ -1527,7 +1522,7 @@ namespace TRR_SaveMaster
             }
             catch (Exception ex)
             {
-                string errorMessage = $"Error while writing to buffer: {ex.Message}.";
+                string errorMessage = $"{Globals.ERROR_MSG_SAVEGAME_BUFFER_WRITE_ERROR} {ex.Message}.";
                 throw new Exception(errorMessage);
             }
         }
@@ -1560,12 +1555,12 @@ namespace TRR_SaveMaster
 
         public bool IsSavegamePresent(byte[] fileData)
         {
-            return BitConverter.ToInt32(fileData, savegameOffset + SLOT_STATUS_OFFSET) != 0;
+            return BitConverter.ToInt32(fileData, savegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
         }
 
         public void UpdateDisplayName(Savegame savegame, byte[] fileData)
         {
-            bool isSavegamePresent = BitConverter.ToInt32(fileData, savegame.Offset + SLOT_STATUS_OFFSET) != 0;
+            bool isSavegamePresent = BitConverter.ToInt32(fileData, savegame.Offset + Globals.SLOT_STATUS_OFFSET) != 0;
 
             if (isSavegamePresent)
             {
@@ -1584,26 +1579,26 @@ namespace TRR_SaveMaster
 
         public void PopulateEmptySlots(ComboBox cmbSavegames)
         {
-            if (cmbSavegames.Items.Count == MAX_SAVEGAMES)
+            if (cmbSavegames.Items.Count == Globals.MAX_SAVEGAMES)
             {
                 return;
             }
 
             byte[] fileData = File.ReadAllBytes(savegamePath);
 
-            for (int i = cmbSavegames.Items.Count; i < MAX_SAVEGAMES; i++)
+            for (int i = cmbSavegames.Items.Count; i < Globals.MAX_SAVEGAMES; i++)
             {
-                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR6 + (i * SAVEGAME_SIZE);
+                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR6 + (i * Globals.SAVEGAME_SIZE_TRX2);
 
                 if (currentSavegameOffset < MAX_SAVEGAME_OFFSET_TR6)
                 {
                     byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
                     Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
-                    bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + SLOT_STATUS_OFFSET) != 0;
+                    bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
 
                     if (isSavegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                     {
-                        int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR6) / SAVEGAME_SIZE;
+                        int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR6) / Globals.SAVEGAME_SIZE_TRX2;
 
                         bool savegameExists = false;
 
@@ -1634,19 +1629,19 @@ namespace TRR_SaveMaster
             byte[] fileData = File.ReadAllBytes(savegamePath);
             int numSavegames = 0;
 
-            for (int i = 0; i < MAX_SAVEGAMES; i++)
+            for (int i = 0; i < Globals.MAX_SAVEGAMES; i++)
             {
-                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR6 + (i * SAVEGAME_SIZE);
+                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR6 + (i * Globals.SAVEGAME_SIZE_TRX2);
 
                 byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
                 Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
 
-                bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + SLOT_STATUS_OFFSET) != 0;
+                bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
 
                 if (isSavegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
                 {
                     string levelName = levelNames[levelIndex];
-                    int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR6) / SAVEGAME_SIZE;
+                    int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR6) / Globals.SAVEGAME_SIZE_TRX2;
                     bool isNewGamePlus = BitConverter.ToInt32(fileData, currentSavegameOffset + NEW_GAME_PLUS_OFFSET) != 0;
 
                     Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, isNewGamePlus, true);

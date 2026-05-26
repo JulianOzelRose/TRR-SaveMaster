@@ -10,7 +10,6 @@ namespace TRR_SaveMaster
     public partial class StatisticsForm : Form
     {
         // Offsets
-        private const int SLOT_STATUS_OFFSET = 0x004;
         private int LEVEL_INDEX_OFFSET;
         private int CRYSTALS_FOUND_OFFSET;
         private int CRYSTALS_USED_OFFSET;
@@ -230,14 +229,6 @@ namespace TRR_SaveMaster
         private readonly TR5Utilities tr5Utilities = new TR5Utilities();
         private readonly TR6Utilities tr6Utilities = new TR6Utilities();
 
-        // Tabs
-        private const int TAB_TR1 = 0;
-        private const int TAB_TR2 = 1;
-        private const int TAB_TR3 = 2;
-        private const int TAB_TR4 = 3;
-        private const int TAB_TR5 = 4;
-        private const int TAB_TR6 = 5;
-
         // Misc
         private Savegame selectedSavegame;
         private string savegamePath;
@@ -291,7 +282,7 @@ namespace TRR_SaveMaster
 
         private void DetermineOffsets()
         {
-            if (SELECTED_TAB == TAB_TR1)
+            if (SELECTED_TAB == Globals.TAB_TR1)
             {
                 if (isPrepatch)
                 {
@@ -349,7 +340,7 @@ namespace TRR_SaveMaster
                     }
                 }
             }
-            else if (SELECTED_TAB == TAB_TR2)
+            else if (SELECTED_TAB == Globals.TAB_TR2)
             {
                 if (isPrepatch)
                 {
@@ -403,7 +394,7 @@ namespace TRR_SaveMaster
                     }
                 }
             }
-            else if (SELECTED_TAB == TAB_TR3)
+            else if (SELECTED_TAB == Globals.TAB_TR3)
             {
                 if (isPrepatch)
                 {
@@ -465,7 +456,7 @@ namespace TRR_SaveMaster
                     }
                 }
             }
-            else if (SELECTED_TAB == TAB_TR4)
+            else if (SELECTED_TAB == Globals.TAB_TR4)
             {
                 LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR4;
                 TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR4;
@@ -481,7 +472,7 @@ namespace TRR_SaveMaster
                 TIMESTAMP_MINUTES_OFFSET = TIMESTAMP_MINUTES_OFFSET_TR4;
                 TIMESTAMP_SECONDS_OFFSET = TIMESTAMP_SECONDS_OFFSET_TR4;
             }
-            else if (SELECTED_TAB == TAB_TR5)
+            else if (SELECTED_TAB == Globals.TAB_TR5)
             {
                 LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR5;
                 TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR5;
@@ -496,7 +487,7 @@ namespace TRR_SaveMaster
                 TIMESTAMP_MINUTES_OFFSET = TIMESTAMP_MINUTES_OFFSET_TR5;
                 TIMESTAMP_SECONDS_OFFSET = TIMESTAMP_SECONDS_OFFSET_TR5;
             }
-            else if (SELECTED_TAB == TAB_TR6)
+            else if (SELECTED_TAB == Globals.TAB_TR6)
             {
                 LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR6;
                 DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR6;
@@ -515,7 +506,7 @@ namespace TRR_SaveMaster
         {
             byte levelIndex = GetLevelIndex();
 
-            if (SELECTED_TAB == TAB_TR1)
+            if (SELECTED_TAB == Globals.TAB_TR1)
             {
                 nudSecretsFoundMax.Value = secretsFoundMaxTR1.TryGetValue(levelIndex, out var secretsMax) ? secretsMax : 0;
                 nudPickupsMax.Value = pickupsFoundMaxTR1.TryGetValue(levelIndex, out var pickupsMax) ? pickupsMax : 0;
@@ -526,7 +517,7 @@ namespace TRR_SaveMaster
                 nudCrystalsFound.Enabled = false;
                 nudCrystalsUsed.Enabled = selectedSavegame.IsNewGamePlus;
             }
-            else if (SELECTED_TAB == TAB_TR2)
+            else if (SELECTED_TAB == Globals.TAB_TR2)
             {
                 nudSecretsFoundMax.Value = secretsFoundMaxTR2.TryGetValue(levelIndex, out var secretsMax) ? secretsMax : 0;
                 nudPickupsMax.Value = pickupsFoundMaxTR2.TryGetValue(levelIndex, out var pickupsMax) ? pickupsMax : 0;
@@ -537,7 +528,7 @@ namespace TRR_SaveMaster
                 nudCrystalsFound.Enabled = false;
                 nudCrystalsUsed.Enabled = false;
             }
-            else if (SELECTED_TAB == TAB_TR3)
+            else if (SELECTED_TAB == Globals.TAB_TR3)
             {
                 nudSecretsFoundMax.Value = secretsFoundMaxTR3.TryGetValue(levelIndex, out var secretsMax) ? secretsMax : 0;
                 nudPickupsMax.Value = pickupsFoundMaxTR3.TryGetValue(levelIndex, out var pickupsMax) ? pickupsMax : 0;
@@ -548,7 +539,7 @@ namespace TRR_SaveMaster
                 nudCrystalsFound.Enabled = true;
                 nudCrystalsUsed.Enabled = selectedSavegame.IsNewGamePlus;
             }
-            else if (SELECTED_TAB == TAB_TR4)
+            else if (SELECTED_TAB == Globals.TAB_TR4)
             {
                 nudAmmoUsed.Maximum = Int16.MaxValue;
                 nudAmmoUsed.Minimum = Int16.MinValue;
@@ -587,7 +578,7 @@ namespace TRR_SaveMaster
 
                 lblSlash.Visible = false;
             }
-            else if (SELECTED_TAB == TAB_TR5)
+            else if (SELECTED_TAB == Globals.TAB_TR5)
             {
                 nudAmmoUsed.Maximum = Int16.MaxValue;
                 nudAmmoUsed.Minimum = Int16.MinValue;
@@ -621,7 +612,7 @@ namespace TRR_SaveMaster
 
                 lblSlash.Visible = false;
             }
-            else if (SELECTED_TAB == TAB_TR6)
+            else if (SELECTED_TAB == Globals.TAB_TR6)
             {
                 nudAmmoUsed.Maximum = Int32.MaxValue;
                 nudAmmoUsed.Minimum = 0;
@@ -665,7 +656,7 @@ namespace TRR_SaveMaster
         {
             byte levelIndex = GetLevelIndex(fileData);
 
-            if (SELECTED_TAB == TAB_TR1)
+            if (SELECTED_TAB == Globals.TAB_TR1)
             {
                 nudSecretsFoundMax.Value = secretsFoundMaxTR1.TryGetValue(levelIndex, out var secretsMax) ? secretsMax : 0;
                 nudPickupsMax.Value = pickupsFoundMaxTR1.TryGetValue(levelIndex, out var pickupsMax) ? pickupsMax : 0;
@@ -675,7 +666,7 @@ namespace TRR_SaveMaster
 
                 nudCrystalsUsed.Enabled = selectedSavegame.IsNewGamePlus;
             }
-            else if (SELECTED_TAB == TAB_TR2)
+            else if (SELECTED_TAB == Globals.TAB_TR2)
             {
                 nudSecretsFoundMax.Value = secretsFoundMaxTR2.TryGetValue(levelIndex, out var secretsMax) ? secretsMax : 0;
                 nudPickupsMax.Value = pickupsFoundMaxTR2.TryGetValue(levelIndex, out var pickupsMax) ? pickupsMax : 0;
@@ -683,7 +674,7 @@ namespace TRR_SaveMaster
                 nudSecretsFound.Maximum = nudSecretsFoundMax.Value;
                 nudPickups.Maximum = nudPickupsMax.Value;
             }
-            else if (SELECTED_TAB == TAB_TR3)
+            else if (SELECTED_TAB == Globals.TAB_TR3)
             {
                 nudSecretsFoundMax.Value = secretsFoundMaxTR3.TryGetValue(levelIndex, out var secretsMax) ? secretsMax : 0;
                 nudPickupsMax.Value = pickupsFoundMaxTR3.TryGetValue(levelIndex, out var pickupsMax) ? pickupsMax : 0;
@@ -693,7 +684,7 @@ namespace TRR_SaveMaster
 
                 nudCrystalsUsed.Enabled = selectedSavegame.IsNewGamePlus;
             }
-            else if (SELECTED_TAB == TAB_TR6)
+            else if (SELECTED_TAB == Globals.TAB_TR6)
             {
                 nudPickupsMax.Value = pickupsFoundMaxTR6.TryGetValue(levelIndex, out var pickupsMax) ? pickupsMax : 0;
                 nudPickups.Maximum = nudPickupsMax.Value;
@@ -708,27 +699,27 @@ namespace TRR_SaveMaster
 
         private void UpdateSavegameDisplayName(byte[] fileData)
         {
-            if (SELECTED_TAB == TAB_TR1)
+            if (SELECTED_TAB == Globals.TAB_TR1)
             {
                 tr1Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
-            else if (SELECTED_TAB == TAB_TR2)
+            else if (SELECTED_TAB == Globals.TAB_TR2)
             {
                 tr2Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
-            else if (SELECTED_TAB == TAB_TR3)
+            else if (SELECTED_TAB == Globals.TAB_TR3)
             {
                 tr3Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
-            else if (SELECTED_TAB == TAB_TR4)
+            else if (SELECTED_TAB == Globals.TAB_TR4)
             {
                 tr4Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
-            else if (SELECTED_TAB == TAB_TR5)
+            else if (SELECTED_TAB == Globals.TAB_TR5)
             {
                 tr5Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
-            else if (SELECTED_TAB == TAB_TR6)
+            else if (SELECTED_TAB == Globals.TAB_TR6)
             {
                 tr6Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
@@ -738,12 +729,12 @@ namespace TRR_SaveMaster
 
         private bool IsTRXSavegame()
         {
-            return SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR2 || SELECTED_TAB == TAB_TR3;
+            return SELECTED_TAB == Globals.TAB_TR1 || SELECTED_TAB == Globals.TAB_TR2 || SELECTED_TAB == Globals.TAB_TR3;
         }
 
         private bool HasDynamicParams()
         {
-            return SELECTED_TAB == TAB_TR1 || SELECTED_TAB == TAB_TR2 || SELECTED_TAB == TAB_TR3 || SELECTED_TAB == TAB_TR6;
+            return SELECTED_TAB == Globals.TAB_TR1 || SELECTED_TAB == Globals.TAB_TR2 || SELECTED_TAB == Globals.TAB_TR3 || SELECTED_TAB == Globals.TAB_TR6;
         }
 
         private void WriteInt32ToBuffer(byte[] buffer, int offset, int value)
@@ -796,7 +787,7 @@ namespace TRR_SaveMaster
                 fileData = File.ReadAllBytes(savegamePath);
             }
 
-            return BitConverter.ToInt32(fileData, savegameOffset + SLOT_STATUS_OFFSET) != 0;
+            return BitConverter.ToInt32(fileData, savegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
         }
 
         private byte GetLevelIndex(byte[] fileData = null)
@@ -821,12 +812,10 @@ namespace TRR_SaveMaster
                 {
                     SystemSounds.Hand.Play();
 
-                    string errorMessage = $"Savegame no longer present.";
-
                     ThemedMessageBox.Show(
                         this,
-                        errorMessage,
-                        "Error",
+                        Globals.DIALOG_MSG_SAVEGAME_NOT_FOUND,
+                        Globals.DIALOG_TITLE_ERROR,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
 
@@ -864,7 +853,7 @@ namespace TRR_SaveMaster
                     DisplayDistanceTravelledTRX(fileData);
                     DisplayTimeTaken(fileData);
                 }
-                else if (SELECTED_TAB == TAB_TR4 || SELECTED_TAB == TAB_TR5)
+                else if (SELECTED_TAB == Globals.TAB_TR4 || SELECTED_TAB == Globals.TAB_TR5)
                 {
                     nudSecretsFound.Value = GetNumSecretsFoundTRX2(fileData);
                     nudMedipacksUsed.Value = GetNumMedipacksUsedTRX2(fileData);
@@ -879,7 +868,7 @@ namespace TRR_SaveMaster
                         nudVesselsBroken.Value = GetNumVesselsBroken(fileData);
                     }
                 }
-                else if (SELECTED_TAB == TAB_TR6)
+                else if (SELECTED_TAB == Globals.TAB_TR6)
                 {
                     nudAmmoUsed.Value = GetAmmoUsedTR6(fileData);
                     nudMedipacksUsed.Value = GetHealthRestored(fileData);
@@ -895,14 +884,14 @@ namespace TRR_SaveMaster
             }
             catch (Exception ex)
             {
-                slblStatus.Text = $"Error loading savegame statistics";
+                slblStatus.Text = Globals.STATUS_MSG_STATISTICS_READ_ERROR;
 
                 SystemSounds.Hand.Play();
 
                 ThemedMessageBox.Show(
                     this,
                     ex.Message,
-                    "Error",
+                    Globals.DIALOG_TITLE_ERROR,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
@@ -1271,12 +1260,10 @@ namespace TRR_SaveMaster
                 {
                     SystemSounds.Hand.Play();
 
-                    string errorMessage = $"Savegame no longer present.";
-
                     ThemedMessageBox.Show(
                         this,
-                        errorMessage,
-                        "Error",
+                        Globals.DIALOG_MSG_SAVEGAME_NOT_FOUND,
+                        Globals.DIALOG_TITLE_ERROR,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
 
@@ -1313,7 +1300,7 @@ namespace TRR_SaveMaster
                         WriteNumCrystalsUsed(fileData, (Int32)nudCrystalsUsed.Value);
                     }
                 }
-                else if (SELECTED_TAB == TAB_TR4 || SELECTED_TAB == TAB_TR5)
+                else if (SELECTED_TAB == Globals.TAB_TR4 || SELECTED_TAB == Globals.TAB_TR5)
                 {
                     WriteAmmoUsedTRX2(fileData, (Int16)nudAmmoUsed.Value);
                     WriteNumKillsTRX2(fileData, (UInt16)nudKills.Value);
@@ -1329,7 +1316,7 @@ namespace TRR_SaveMaster
                         WriteVesselsBroken(fileData, (Int32)nudVesselsBroken.Value);
                     }
                 }
-                else if (SELECTED_TAB == TAB_TR6)
+                else if (SELECTED_TAB == Globals.TAB_TR6)
                 {
                     WriteAmmoUsedTR6(fileData, (Int16)nudAmmoUsed.Value);
                     WriteHealthRestored(fileData, (byte)nudMedipacksUsed.Value);
@@ -1353,18 +1340,18 @@ namespace TRR_SaveMaster
                     UpdateDynamicParams(fileData);
                 }
 
-                slblStatus.Text = $"Successfully patched statistics of savegame: '{selectedSavegame}'";
+                slblStatus.Text = $"{Globals.STATUS_MSG_STATISTICS_WRITE_SUCCESS} '{selectedSavegame}'";
             }
             catch (Exception ex)
             {
-                slblStatus.Text = $"Error writing to savegame statistics";
+                slblStatus.Text = Globals.STATUS_MSG_STATISTICS_WRITE_ERROR;
 
                 SystemSounds.Hand.Play();
 
                 ThemedMessageBox.Show(
                     this,
                     ex.Message,
-                    "Error",
+                    Globals.DIALOG_TITLE_ERROR,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
@@ -1376,8 +1363,8 @@ namespace TRR_SaveMaster
             {
                 DialogResult result = ThemedMessageBox.Show(
                     this,
-                    $"Would you like to apply changes to the savegame?",
-                    "Confirmation",
+                    Globals.DIALOG_MSG_CONFIRM_SAVEGAME_CHANGES,
+                    Globals.DIALOG_TITLE_CONFIRMATION,
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
 

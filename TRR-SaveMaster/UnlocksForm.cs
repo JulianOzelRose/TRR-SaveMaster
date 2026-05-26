@@ -9,7 +9,6 @@ namespace TRR_SaveMaster
     public partial class UnlocksForm : Form
     {
         // Offsets
-        private const int SAVEFILE_VERSION_OFFSET = 0x000;
         private const int TR1_COMPLETED_OFFSET = 0x18C;
         private const int TR2_COMPLETED_OFFSET = 0x190;
         private const int TR3_COMPLETED_OFFSET = 0x194;
@@ -22,10 +21,6 @@ namespace TRR_SaveMaster
         // Flags
         private const byte RAIDERS_MASK_TRX = 0x80;
         private const byte RAIDERS_MASK_TRX2 = 0x20;
-
-        // Patch-related signatures
-        private const byte SAVEFILE_PREPATCH = 0x3B;
-        private const byte SAVEFILE_PATCH5 = 0x3C;
 
         // Misc
         private MainForm mainForm;
@@ -83,7 +78,7 @@ namespace TRR_SaveMaster
 
         private bool IsPrepatchSavegameFile(byte[] fileData)
         {
-            return fileData[SAVEFILE_VERSION_OFFSET] == SAVEFILE_PREPATCH;
+            return fileData[Globals.SAVEFILE_VERSION_OFFSET] == Globals.SAVEFILE_TRX_PREPATCH;
         }
 
         private void DisplayData()
@@ -116,14 +111,14 @@ namespace TRR_SaveMaster
             }
             catch (Exception ex)
             {
-                slblStatus.Text = $"Error loading savegame globals";
+                slblStatus.Text = Globals.STATUS_MSG_GLOBALS_READ_ERROR;
 
                 SystemSounds.Hand.Play();
 
                 ThemedMessageBox.Show(
                     this,
                     ex.Message,
-                    "Error",
+                    Globals.DIALOG_TITLE_ERROR,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
@@ -204,19 +199,19 @@ namespace TRR_SaveMaster
                 if (wroteSomething)
                 {
                     DisableButtons();
-                    slblStatus.Text = $"Successfully patched savegame globals";
+                    slblStatus.Text = Globals.STATUS_MSG_GLOBALS_WRITE_SUCCESS;
                 }
             }
             catch (Exception ex)
             {
-                slblStatus.Text = $"Error writing to savegame globals";
+                slblStatus.Text = Globals.STATUS_MSG_GLOBALS_WRITE_ERROR;
 
                 SystemSounds.Hand.Play();
 
                 ThemedMessageBox.Show(
                     this,
                     ex.Message,
-                    "Error",
+                    Globals.DIALOG_TITLE_ERROR,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
@@ -230,8 +225,8 @@ namespace TRR_SaveMaster
             {
                 DialogResult result = ThemedMessageBox.Show(
                     this,
-                    $"Would you like to apply changes to the savegame?",
-                    "Confirmation",
+                    Globals.DIALOG_MSG_CONFIRM_SAVEGAME_CHANGES,
+                    Globals.DIALOG_TITLE_CONFIRMATION,
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
 
