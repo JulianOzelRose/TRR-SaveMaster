@@ -28,6 +28,23 @@ namespace TRR_SaveMaster
                     return platform.ToString();
             }
         }
+
+        public static Platform FromFriendlyString(string platform)
+        {
+            switch (platform)
+            {
+                case "PC":
+                    return Platform.PC;
+                case "PS4":
+                    return Platform.PlayStation4;
+                case "Nintendo Switch":
+                    return Platform.NintendoSwitch;
+                case "Android":
+                    return Platform.Android;
+                default:
+                    return Platform.PC;
+            }
+        }
     }
 
     public class Savegame

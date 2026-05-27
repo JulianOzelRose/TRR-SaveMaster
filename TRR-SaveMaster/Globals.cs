@@ -2,10 +2,19 @@
 {
     public class Globals
     {
-        // Config file name & window title
+        // Application metadata & configuration
         public const string WINDOW_TITLE = "Tomb Raider I-VI Remastered Savegame Editor";
         public const string CONFIG_FILE_NAME = "TRR-SaveMaster.ini";
         public const string VERSION = "2.80";
+
+        // Config file keys
+        public const string CONFIG_KEY_TRX_PATH = "TRXPath=";
+        public const string CONFIG_KEY_TRX2_PATH = "TRX2Path=";
+        public const string CONFIG_KEY_AUTO_BACKUP = "AutoBackup=";
+        public const string CONFIG_KEY_PLATFORM = "Platform=";
+        public const string CONFIG_KEY_STATUS_BAR = "StatusBar=";
+        public const string CONFIG_KEY_TR6_INVENTORY_TOGGLE = "ShowInventoryToggleTR6=";
+        public const string CONFIG_KEY_DARK_MODE = "DarkMode=";
 
         // Tab IDs
         public const int TAB_TR1 = 0;

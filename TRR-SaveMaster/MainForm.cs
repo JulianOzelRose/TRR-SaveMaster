@@ -849,57 +849,37 @@ namespace TRR_SaveMaster
 
                 foreach (string line in lines)
                 {
-                    if (line.StartsWith("TRXPath="))
+                    if (line.StartsWith(Globals.CONFIG_KEY_TRX_PATH))
                     {
-                        string directoryPath = line.Substring("TRXPath=".Length);
+                        string directoryPath = line.Substring(Globals.CONFIG_KEY_TRX_PATH.Length);
 
                         savegamePathTRXRaw = directoryPath;
                         savegamePathTRX = Environment.ExpandEnvironmentVariables(directoryPath);
                     }
-                    else if (line.StartsWith("TRX2Path="))
+                    else if (line.StartsWith(Globals.CONFIG_KEY_TRX2_PATH))
                     {
-                        string directoryPath = line.Substring("TRX2Path=".Length);
+                        string directoryPath = line.Substring(Globals.CONFIG_KEY_TRX2_PATH.Length);
 
                         savegamePathTRX2Raw = directoryPath;
                         savegamePathTRX2 = Environment.ExpandEnvironmentVariables(directoryPath);
                     }
-                    else if (line.StartsWith("AutoBackup="))
+                    else if (line.StartsWith(Globals.CONFIG_KEY_AUTO_BACKUP))
                     {
                         bool autoBackup;
 
-                        if (bool.TryParse(line.Substring("AutoBackup=".Length), out autoBackup))
+                        if (bool.TryParse(line.Substring(Globals.CONFIG_KEY_AUTO_BACKUP.Length), out autoBackup))
                         {
                             tsmiBackupBeforeSaving.Checked = autoBackup;
                         }
                     }
-                    else if (line.StartsWith("Platform="))
+                    else if (line.StartsWith(Globals.CONFIG_KEY_PLATFORM))
                     {
-                        string platform = line.Substring("Platform=".Length);
-
-                        if (platform == "PC")
-                        {
-                            SetPlatform(Platform.PC);
-                        }
-                        else if (platform == "PS4")
-                        {
-                            SetPlatform(Platform.PlayStation4);
-                        }
-                        else if (platform == "NintendoSwitch")
-                        {
-                            SetPlatform(Platform.NintendoSwitch);
-                        }
-                        else if (platform == "Android")
-                        {
-                            SetPlatform(Platform.Android);
-                        }
-                        else
-                        {
-                            SetPlatform(Platform.PC);
-                        }
+                        string platform = line.Substring(Globals.CONFIG_KEY_PLATFORM.Length);
+                        SetPlatform(PlatformExtensions.FromFriendlyString(platform));
                     }
-                    else if (line.StartsWith("StatusBar"))
+                    else if (line.StartsWith(Globals.CONFIG_KEY_STATUS_BAR))
                     {
-                        if (bool.TryParse(line.Substring("StatusBar=".Length), out bool statusBar))
+                        if (bool.TryParse(line.Substring(Globals.CONFIG_KEY_STATUS_BAR.Length), out bool statusBar))
                         {
                             tsmiStatusBar.Checked = statusBar;
                             ssrStatusStrip.Visible = statusBar;
@@ -911,17 +891,17 @@ namespace TRR_SaveMaster
                             }
                         }
                     }
-                    else if (line.StartsWith("ShowInventoryToggleTR6="))
+                    else if (line.StartsWith(Globals.CONFIG_KEY_TR6_INVENTORY_TOGGLE))
                     {
-                        if (bool.TryParse(line.Substring("ShowInventoryToggleTR6=".Length), out bool showToggle))
+                        if (bool.TryParse(line.Substring(Globals.CONFIG_KEY_TR6_INVENTORY_TOGGLE.Length), out bool showToggle))
                         {
                             tsmiShowInventoryToggleTR6.Checked = showToggle;
                             tsmiShowInventoryToggleTR6_Click(null, EventArgs.Empty);
                         }
                     }
-                    else if (line.StartsWith("DarkMode="))
+                    else if (line.StartsWith(Globals.CONFIG_KEY_DARK_MODE))
                     {
-                        if (bool.TryParse(line.Substring("DarkMode=".Length), out bool darkMode) && darkMode)
+                        if (bool.TryParse(line.Substring(Globals.CONFIG_KEY_DARK_MODE.Length), out bool darkMode) && darkMode)
                         {
                             ApplyDarkMode();
                             tsmiDarkMode.Checked = true;
@@ -940,33 +920,13 @@ namespace TRR_SaveMaster
             string rootFolder = AppDomain.CurrentDomain.BaseDirectory;
             string filePath = Path.Combine(rootFolder, Globals.CONFIG_FILE_NAME);
 
-            string content = $"TRXPath={savegamePathTRXRaw ?? savegamePathTRX}\n";
-            content += $"TRX2Path={savegamePathTRX2Raw ?? savegamePathTRX2}\n";
-            content += $"AutoBackup={tsmiBackupBeforeSaving.Checked}\n";
-            content += $"StatusBar={tsmiStatusBar.Checked}\n";
-            content += $"DarkMode={tsmiDarkMode.Checked}\n";
-            content += $"ShowInventoryToggleTR6={tsmiShowInventoryToggleTR6.Checked}\n";
-
-            string platform = "";
-
-            if (tsmiPC.Checked)
-            {
-                platform = "PC";
-            }
-            else if (tsmiPlayStation4.Checked)
-            {
-                platform = "PS4";
-            }
-            else if (tsmiNintendoSwitch.Checked)
-            {
-                platform = "NintendoSwitch";
-            }
-            else if (tsmiAndroid.Checked)
-            {
-                platform = "Android";
-            }
-
-            content += $"Platform={platform}";
+            string content = $"{Globals.CONFIG_KEY_TRX_PATH}{savegamePathTRXRaw ?? savegamePathTRX}\n";
+            content += $"{Globals.CONFIG_KEY_TRX2_PATH}{savegamePathTRX2Raw ?? savegamePathTRX2}\n";
+            content += $"{Globals.CONFIG_KEY_AUTO_BACKUP}{tsmiBackupBeforeSaving.Checked}\n";
+            content += $"{Globals.CONFIG_KEY_STATUS_BAR}{tsmiStatusBar.Checked}\n";
+            content += $"{Globals.CONFIG_KEY_DARK_MODE}{tsmiDarkMode.Checked}\n";
+            content += $"{Globals.CONFIG_KEY_TR6_INVENTORY_TOGGLE}{tsmiShowInventoryToggleTR6.Checked}\n";
+            content += $"{Globals.CONFIG_KEY_PLATFORM}{platform.ToFriendlyString()}";
 
             File.WriteAllText(filePath, content);
         }
