@@ -105,5 +105,17 @@
         public const string ERROR_MSG_SAVEGAME_BUFFER_WRITE_ERROR = "Error while writing to buffer:";
         public const string ERROR_MSG_MISSING_LEVEL_DEFINITION = "FATAL: Missing level definition for level";
         public const string ERROR_MSG_MISSING_OBJECT_DEFINITION = "FATAL: Missing object definition";
+
+        // Tooltip text
+        public const string TOOLTIP_TEXT_X_COORDINATE_LARA = "Represents horizontal position in game. Decreasing moves Lara to the left, increasing moves her to the right.";
+        public const string TOOLTIP_TEXT_X_COORDINATE_KURTIS = "Represents horizontal position in game. Decreasing moves Kurtis to the left, increasing moves him to the right.";
+        public const string TOOLTIP_TEXT_Y_COORDINATE_LARA = "Represents vertical position in game. Increasing moves Lara up, decreasing moves her down.";
+        public const string TOOLTIP_TEXT_Y_COORDINATE_KURTIS = "Represents vertical position in game. Increasing moves Kurtis up, decreasing moves him down.";
+        public const string TOOLTIP_TEXT_Z_COORDINATE_LARA = "Represents depth position in game. Increasing moves Lara backwards, decreasing moves her forwards.";
+        public const string TOOLTIP_TEXT_Z_COORDINATE_KURTIS = "Represents depth position in game. Increasing moves Kurtis backwards, decreasing moves him forwards.";
+        public const string TOOLTIP_TEXT_ORIENTATION_LARA = "Represents the direction Lara is facing in degrees. Valid range is -180 to 180.";
+        public const string TOOLTIP_TEXT_ORIENTATION_KURTIS = "Represents the direction Kurtis is facing in degrees. Valid range is -180 to 180.";
+        public const string TOOLTIP_TEXT_ROOM_LARA = "Represents the active zone Lara is in. Zones control which parts of the level are loaded and rendered.";
+        public const string TOOLTIP_TEXT_ROOM_KURTIS = "Represents the active zone Kurtis is in. Zones control which parts of the level are loaded and rendered.";
     }
 }

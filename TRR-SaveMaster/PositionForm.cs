@@ -19,11 +19,14 @@ namespace TRR_SaveMaster
         private int Z_COORDINATE_OFFSET;
         private int ORIENTATION_OFFSET;
         private int ROOM_OFFSET;
-        private const int LEVEL_INDEX_OFFSET_TR1_PC = 0x62C;
+        private const int LEVEL_INDEX_OFFSET_TR1_PREPATCH = 0x62C;
+        private const int LEVEL_INDEX_OFFSET_TR1_PC_PS4 = 0x62C;
         private const int LEVEL_INDEX_OFFSET_TR1_ANDROID = 0x65C;
-        private const int LEVEL_INDEX_OFFSET_TR2_PC = 0x628;
+        private const int LEVEL_INDEX_OFFSET_TR2_PREPATCH = 0x628;
+        private const int LEVEL_INDEX_OFFSET_TR2_PC_PS4 = 0x628;
         private const int LEVEL_INDEX_OFFSET_TR2_ANDROID = 0x658;
-        private const int LEVEL_INDEX_OFFSET_TR3_PC = 0x8D6;
+        private const int LEVEL_INDEX_OFFSET_TR3_PREPATCH = 0x8D6;
+        private const int LEVEL_INDEX_OFFSET_TR3_PC_PS4 = 0x8D6;
         private const int LEVEL_INDEX_OFFSET_TR3_ANDROID = 0x916;
         private const int LEVEL_INDEX_OFFSET_TR4 = 0x26F;
         private const int LEVEL_INDEX_OFFSET_TR5 = 0x26F;
@@ -50,8 +53,9 @@ namespace TRR_SaveMaster
         private bool backupBeforeSaving = false;
         private int SELECTED_TAB;
         private byte[] decompressedBuffer = null;
+        private bool isPrepatch;
 
-        public PositionForm(MainForm mainForm, ToolStripStatusLabel slblStatus, bool backupBeforeSaving, string savegamePath, int SELECTED_TAB, Platform platform)
+        public PositionForm(MainForm mainForm, ToolStripStatusLabel slblStatus, bool backupBeforeSaving, string savegamePath, int SELECTED_TAB, Platform platform, bool isPrepatch)
         {
             InitializeComponent();
 
@@ -61,6 +65,7 @@ namespace TRR_SaveMaster
             this.SELECTED_TAB = SELECTED_TAB;
             this.mainForm = mainForm;
             this.platform = platform;
+            this.isPrepatch = isPrepatch;
         }
 
         private void PositionForm_Load(object sender, EventArgs e)
@@ -93,15 +98,36 @@ namespace TRR_SaveMaster
         {
             if (IsTR1Savegame())
             {
-                LEVEL_INDEX_OFFSET = platform == Platform.Android ? LEVEL_INDEX_OFFSET_TR1_ANDROID : LEVEL_INDEX_OFFSET_TR1_PC;
+                if (isPrepatch)
+                {
+                    LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR1_PREPATCH;
+                }
+                else
+                {
+                    LEVEL_INDEX_OFFSET = platform == Platform.Android ? LEVEL_INDEX_OFFSET_TR1_ANDROID : LEVEL_INDEX_OFFSET_TR1_PC_PS4;
+                }
             }
             else if (IsTR2Savegame())
             {
-                LEVEL_INDEX_OFFSET = platform == Platform.Android ? LEVEL_INDEX_OFFSET_TR2_ANDROID : LEVEL_INDEX_OFFSET_TR2_PC;
+                if (isPrepatch)
+                {
+                    LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR2_PREPATCH;
+                }
+                else
+                {
+                    LEVEL_INDEX_OFFSET = platform == Platform.Android ? LEVEL_INDEX_OFFSET_TR2_ANDROID : LEVEL_INDEX_OFFSET_TR2_PC_PS4;
+                }
             }
             else if (IsTR3Savegame())
             {
-                LEVEL_INDEX_OFFSET = platform == Platform.Android ? LEVEL_INDEX_OFFSET_TR3_ANDROID : LEVEL_INDEX_OFFSET_TR3_PC;
+                if (isPrepatch)
+                {
+                    LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR3_PREPATCH;
+                }
+                else
+                {
+                    LEVEL_INDEX_OFFSET = platform == Platform.Android ? LEVEL_INDEX_OFFSET_TR3_ANDROID : LEVEL_INDEX_OFFSET_TR3_PC_PS4;
+                }
             }
             else if (IsTR4Savegame())
             {
@@ -582,12 +608,12 @@ namespace TRR_SaveMaster
         {
             bool isPlayerKurtis = IsPlayerKurtis();
 
-            string xCoordinateToolTipText = $"Represents horizontal position in game. Decreasing moves {(isPlayerKurtis ? "Kurtis" : "Lara")} to the left, increasing moves {(isPlayerKurtis ? "him" : "her")} to the right.";
-            string yCoordinateToolTipText = $"Represents vertical position in game. Increasing moves {(isPlayerKurtis ? "Kurtis" : "Lara")} up, decreasing moves {(isPlayerKurtis ? "him" : "her")} down.";
-            string zCoordinateToolTipText = $"Represents depth position in game. Increasing moves {(isPlayerKurtis ? "Kurtis" : "Lara")} backwards, decreasing moves {(isPlayerKurtis ? "him" : "her")} forwards.";
-            string orientationToolTipText = $"Represents the direction {(isPlayerKurtis ? "Kurtis" : "Lara")} is facing in degrees. Valid range is -180 to 180.";
-            string roomToolTipText = $"Represents the active zone {(isPlayerKurtis ? "Kurtis" : "Lara")} is in. Zones control which parts of the level are loaded and rendered.";
-            string roomLabelText = $"Zone:";
+            string xCoordinateToolTipText = isPlayerKurtis ? Globals.TOOLTIP_TEXT_X_COORDINATE_KURTIS : Globals.TOOLTIP_TEXT_X_COORDINATE_LARA;
+            string yCoordinateToolTipText = isPlayerKurtis ? Globals.TOOLTIP_TEXT_Y_COORDINATE_KURTIS : Globals.TOOLTIP_TEXT_Y_COORDINATE_LARA;
+            string zCoordinateToolTipText = isPlayerKurtis ? Globals.TOOLTIP_TEXT_Z_COORDINATE_KURTIS : Globals.TOOLTIP_TEXT_Z_COORDINATE_LARA;
+            string orientationToolTipText = isPlayerKurtis ? Globals.TOOLTIP_TEXT_ORIENTATION_KURTIS : Globals.TOOLTIP_TEXT_ORIENTATION_LARA;
+            string roomToolTipText = isPlayerKurtis ? Globals.TOOLTIP_TEXT_ROOM_KURTIS : Globals.TOOLTIP_TEXT_ROOM_LARA;
+            string roomLabelText = "Zone:";
 
             tipPosition.SetToolTip(picInfoXCoordinate, xCoordinateToolTipText);
             tipPosition.SetToolTip(picInfoYCoordinate, yCoordinateToolTipText);

@@ -1113,6 +1113,7 @@ namespace TRR_SaveMaster
 
             if (levelIndex == 18)       // Home Sweet Home
             {
+                nudShotgunAmmo.Value = GetShotgunAmmo(fileData);
                 nudAutomaticPistolsAmmo.Value = 0;
                 nudUziAmmo.Value = 0;
                 nudM16Ammo.Value = 0;
@@ -1121,6 +1122,7 @@ namespace TRR_SaveMaster
             }
             else if (levelIndex == 23)  // Nightmare in Vegas
             {
+                nudShotgunAmmo.Value = GetShotgunAmmo(fileData);
                 nudAutomaticPistolsAmmo.Value = GetAutomaticPistolsAmmo(fileData);
                 nudUziAmmo.Value = GetUziAmmo(fileData);
                 nudM16Ammo.Value = 0;
@@ -1129,14 +1131,13 @@ namespace TRR_SaveMaster
             }
             else
             {
+                nudShotgunAmmo.Value = GetShotgunAmmo(fileData);
                 nudAutomaticPistolsAmmo.Value = GetAutomaticPistolsAmmo(fileData);
                 nudUziAmmo.Value = GetUziAmmo(fileData);
                 nudM16Ammo.Value = GetM16Ammo(fileData);
                 nudGrenadeLauncherAmmo.Value = GetGrenadeLauncherAmmo(fileData);
                 nudHarpoonGunAmmo.Value = GetHarpoonGunAmmo(fileData);
             }
-
-            nudShotgunAmmo.Value = GetShotgunAmmo(fileData);
 
             byte weaponsConfigNum = GetWeaponsConfigNum(fileData);
 

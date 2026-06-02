@@ -1513,8 +1513,8 @@ namespace TRR_SaveMaster
 
                     ThemedMessageBox.Show(
                         this,
-                        $"{ex.Message}",
-                        "Error",
+                        ex.Message,
+                        Globals.DIALOG_TITLE_ERROR,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 }
@@ -2199,7 +2199,7 @@ namespace TRR_SaveMaster
                     ThemedMessageBox.Show(
                         this,
                         ex.Message,
-                        "Error",
+                        Globals.DIALOG_TITLE_ERROR,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 }
@@ -2837,7 +2837,7 @@ namespace TRR_SaveMaster
                 }
 
                 byte[] fileData = File.ReadAllBytes(savegamePath);
-                bool isPrepatch = IsPrepatchSavegameFileTRX(fileData);
+                bool isPrepatch = IsTRXTabSelected() ? IsPrepatchSavegameFileTRX(fileData) : true;
 
                 StatisticsForm statisticsForm = new StatisticsForm(this, slblStatus, tsmiBackupBeforeSaving.Checked, savegamePath, tabGame.SelectedIndex, platform, isPrepatch);
                 Savegame selectedSavegame = null;
@@ -2903,7 +2903,7 @@ namespace TRR_SaveMaster
 
                 ThemedMessageBox.Show(
                     this,
-                    $"{ex.Message}",
+                    ex.Message,
                     Globals.DIALOG_TITLE_ERROR,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -2930,10 +2930,11 @@ namespace TRR_SaveMaster
                     return;
                 }
 
-                PositionForm positionForm = new PositionForm(this, slblStatus, tsmiBackupBeforeSaving.Checked, savegamePath, tabGame.SelectedIndex, platform);
-                Savegame selectedSavegame = null;
-
                 byte[] fileData = File.ReadAllBytes(savegamePath);
+                bool isPrepatch = IsTRXTabSelected() ? IsPrepatchSavegameFileTRX(fileData) : true;
+
+                PositionForm positionForm = new PositionForm(this, slblStatus, tsmiBackupBeforeSaving.Checked, savegamePath, tabGame.SelectedIndex, platform, isPrepatch);
+                Savegame selectedSavegame = null;
 
                 if (tabGame.SelectedIndex == Globals.TAB_TR1 && cmbSavegamesTR1.SelectedIndex != -1)
                 {
@@ -3196,7 +3197,7 @@ namespace TRR_SaveMaster
 
                 ThemedMessageBox.Show(
                     this,
-                    $"{ex.Message}",
+                    ex.Message,
                     Globals.DIALOG_TITLE_ERROR,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -3415,9 +3416,11 @@ namespace TRR_SaveMaster
             {
                 System.Media.SystemSounds.Asterisk.Play();
 
+                string confirmationMessage = $"{Globals.DIALOG_MSG_CONFIRM_SAVEGAME_DELETE} '{savegameToDelete}'?";
+
                 DialogResult result = ThemedMessageBox.Show(
                     this,
-                    $"{Globals.DIALOG_MSG_CONFIRM_SAVEGAME_DELETE} '{savegameToDelete}'?",
+                    confirmationMessage,
                     Globals.DIALOG_TITLE_CONFIRMATION,
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning);

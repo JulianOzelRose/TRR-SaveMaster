@@ -781,6 +781,11 @@ namespace TRR_SaveMaster
             return BitConverter.ToInt32(fileData, savegameOffset + NEW_GAME_PLUS_OFFSET) != 0;
         }
 
+        private bool IsTheLostArtifact(byte levelIndex)
+        {
+            return levelIndex >= 21;
+        }
+
         private bool IsPrepatchSavegameFile(byte[] fileData)
         {
             return fileData[Globals.SAVEFILE_VERSION_OFFSET] == Globals.SAVEFILE_TRX_PREPATCH;
@@ -1097,9 +1102,11 @@ namespace TRR_SaveMaster
             DetermineOffsets(fileData);
             DetermineDynamicOffsets(fileData);
 
+            byte levelIndex = GetLevelIndex(fileData);
             bool isPrepatch = IsPrepatchSavegameFile(fileData);
             bool isChallengeMode = IsChallengeMode(fileData);
             bool isNewGamePlus = IsNewGamePlus(fileData);
+            bool isTheLostArtifact = IsTheLostArtifact(levelIndex);
 
             MAX_HEALTH_VALUE = (isChallengeMode && !isPrepatch) ? GetChallengeModeMaxHealth(fileData) : MAX_HEALTH_VALUE_DEFAULT;
             trbHealth.Maximum = MAX_HEALTH_VALUE;
@@ -1116,7 +1123,7 @@ namespace TRR_SaveMaster
             nudMP5Ammo.Value = GetMP5Ammo(fileData);
             nudUziAmmo.Value = GetUziAmmo(fileData);
 
-            if (GetLevelIndex(fileData) >= 21)
+            if (isTheLostArtifact)
             {
                 nudCollectibleCrystals.Enabled = false;
                 lblCollectibleCrystals.Visible = false;
@@ -1208,6 +1215,7 @@ namespace TRR_SaveMaster
 
             byte levelIndex = GetLevelIndex(fileData);
             bool isPrepatch = IsPrepatchSavegameFile(fileData);
+            bool isTheLostArtifact = IsTheLostArtifact(levelIndex);
 
             int entityBlockStart = GetEntityBlockStart(isPrepatch);
 
@@ -1222,7 +1230,7 @@ namespace TRR_SaveMaster
             WriteMP5Ammo(fileData, chkMP5.Checked, (UInt16)nudMP5Ammo.Value);
             WriteUziAmmo(fileData, chkUzis.Checked, (UInt16)nudUziAmmo.Value);
 
-            if (levelIndex < 21)
+            if (!isTheLostArtifact)
             {
                 WriteNumCollectibleCrystals(fileData, (byte)nudCollectibleCrystals.Value);
             }
