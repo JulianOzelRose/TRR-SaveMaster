@@ -223,6 +223,8 @@ namespace TRR_SaveMaster
         {
             if (btnSave.Enabled)
             {
+                System.Media.SystemSounds.Asterisk.Play();
+
                 DialogResult result = ThemedMessageBox.Show(
                     this,
                     Globals.DIALOG_MSG_CONFIRM_SAVEGAME_CHANGES,
