@@ -468,7 +468,7 @@ namespace TRR_SaveMaster
 
         private void PromptBrowseSavegamePathTRX()
         {
-            System.Media.SystemSounds.Asterisk.Play();
+            SystemSounds.Asterisk.Play();
 
             DialogResult result = ThemedMessageBox.Show(
                 this,
@@ -485,7 +485,7 @@ namespace TRR_SaveMaster
 
         private void PromptBrowseSavegamePathTRX2()
         {
-            System.Media.SystemSounds.Asterisk.Play();
+            SystemSounds.Asterisk.Play();
 
             DialogResult result = ThemedMessageBox.Show(
                 this,
@@ -975,7 +975,7 @@ namespace TRR_SaveMaster
         {
             if (tabGame.SelectedIndex == Globals.TAB_TR1 && cmbSavegamesTR1.SelectedIndex != -1 && btnSaveTR1.Enabled)
             {
-                System.Media.SystemSounds.Asterisk.Play();
+                SystemSounds.Asterisk.Play();
 
                 DialogResult result = ThemedMessageBox.Show(
                     this,
@@ -993,7 +993,7 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == Globals.TAB_TR2 && cmbSavegamesTR2.SelectedIndex != -1 && btnSaveTR2.Enabled)
             {
-                System.Media.SystemSounds.Asterisk.Play();
+                SystemSounds.Asterisk.Play();
 
                 DialogResult result = ThemedMessageBox.Show(
                     this,
@@ -1011,7 +1011,7 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == Globals.TAB_TR3 && cmbSavegamesTR3.SelectedIndex != -1 && btnSaveTR3.Enabled)
             {
-                System.Media.SystemSounds.Asterisk.Play();
+                SystemSounds.Asterisk.Play();
 
                 DialogResult result = ThemedMessageBox.Show(
                     this,
@@ -1029,7 +1029,7 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == Globals.TAB_TR4 && cmbSavegamesTR4.SelectedIndex != -1 && btnSaveTR4.Enabled)
             {
-                System.Media.SystemSounds.Asterisk.Play();
+                SystemSounds.Asterisk.Play();
 
                 DialogResult result = ThemedMessageBox.Show(
                     this,
@@ -1047,7 +1047,7 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == Globals.TAB_TR5 && cmbSavegamesTR5.SelectedIndex != -1 && btnSaveTR5.Enabled)
             {
-                System.Media.SystemSounds.Asterisk.Play();
+                SystemSounds.Asterisk.Play();
 
                 DialogResult result = ThemedMessageBox.Show(
                     this,
@@ -1065,7 +1065,7 @@ namespace TRR_SaveMaster
             }
             else if (tabGame.SelectedIndex == Globals.TAB_TR6 && cmbSavegamesTR6.SelectedIndex != -1 && btnSaveTR6.Enabled)
             {
-                System.Media.SystemSounds.Asterisk.Play();
+                SystemSounds.Asterisk.Play();
 
                 DialogResult result = ThemedMessageBox.Show(
                     this,
@@ -1085,7 +1085,7 @@ namespace TRR_SaveMaster
 
         private DialogResult PromptApplyChanges()
         {
-            System.Media.SystemSounds.Asterisk.Play();
+            SystemSounds.Asterisk.Play();
 
             return ThemedMessageBox.Show(
                 this,
@@ -1356,7 +1356,7 @@ namespace TRR_SaveMaster
 
             if (previousSelectedSavegameTR1 != null && btnSaveTR1.Enabled)
             {
-                System.Media.SystemSounds.Asterisk.Play();
+                SystemSounds.Asterisk.Play();
 
                 DialogResult result = ThemedMessageBox.Show(
                     this,
@@ -1384,7 +1384,7 @@ namespace TRR_SaveMaster
 
             if (previousSelectedSavegameTR2 != null && btnSaveTR2.Enabled)
             {
-                System.Media.SystemSounds.Asterisk.Play();
+                SystemSounds.Asterisk.Play();
 
                 DialogResult result = ThemedMessageBox.Show(
                     this,
@@ -1412,7 +1412,7 @@ namespace TRR_SaveMaster
 
             if (previousSelectedSavegameTR3 != null && btnSaveTR3.Enabled)
             {
-                System.Media.SystemSounds.Asterisk.Play();
+                SystemSounds.Asterisk.Play();
 
                 DialogResult result = ThemedMessageBox.Show(
                     this,
@@ -1440,7 +1440,7 @@ namespace TRR_SaveMaster
 
             if (previousSelectedSavegameTR4 != null && btnSaveTR4.Enabled)
             {
-                System.Media.SystemSounds.Asterisk.Play();
+                SystemSounds.Asterisk.Play();
 
                 DialogResult result = ThemedMessageBox.Show(
                     this,
@@ -1468,7 +1468,7 @@ namespace TRR_SaveMaster
 
             if (previousSelectedSavegameTR5 != null && btnSaveTR5.Enabled)
             {
-                System.Media.SystemSounds.Asterisk.Play();
+                SystemSounds.Asterisk.Play();
 
                 DialogResult result = ThemedMessageBox.Show(
                     this,
@@ -1496,7 +1496,7 @@ namespace TRR_SaveMaster
 
             if (previousSelectedSavegameTR6 != null && btnSaveTR6.Enabled)
             {
-                System.Media.SystemSounds.Asterisk.Play();
+                SystemSounds.Asterisk.Play();
 
                 DialogResult result = ThemedMessageBox.Show(
                     this,
@@ -3440,7 +3440,7 @@ namespace TRR_SaveMaster
 
             if (savegameToDelete != null)
             {
-                System.Media.SystemSounds.Asterisk.Play();
+                SystemSounds.Asterisk.Play();
 
                 string confirmationMessage = $"{Globals.DIALOG_MSG_CONFIRM_SAVEGAME_DELETE} '{savegameToDelete}'?";
 

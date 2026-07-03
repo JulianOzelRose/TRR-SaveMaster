@@ -1361,7 +1361,7 @@ namespace TRR_SaveMaster
         {
             if (btnSave.Enabled)
             {
-                System.Media.SystemSounds.Asterisk.Play();
+                SystemSounds.Asterisk.Play();
 
                 DialogResult result = ThemedMessageBox.Show(
                     this,

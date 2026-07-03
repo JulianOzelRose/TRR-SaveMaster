@@ -709,7 +709,7 @@ namespace TRR_SaveMaster
 
                     if (healthOffset == -1)
                     {
-                        System.Media.SystemSounds.Asterisk.Play();
+                        SystemSounds.Asterisk.Play();
 
                         ThemedMessageBox.Show(
                             this,
@@ -727,7 +727,7 @@ namespace TRR_SaveMaster
                     {
                         if (IsLaraInVehicle(healthOffset, fileData))
                         {
-                            System.Media.SystemSounds.Asterisk.Play();
+                            SystemSounds.Asterisk.Play();
 
                             ThemedMessageBox.Show(
                                 this,
@@ -845,7 +845,7 @@ namespace TRR_SaveMaster
 
                     if (healthOffset == -1)
                     {
-                        System.Media.SystemSounds.Asterisk.Play();
+                        SystemSounds.Asterisk.Play();
 
                         ThemedMessageBox.Show(
                             this,
@@ -863,7 +863,7 @@ namespace TRR_SaveMaster
                     {
                         if (IsLaraInVehicle(healthOffset, fileData))
                         {
-                            System.Media.SystemSounds.Asterisk.Play();
+                            SystemSounds.Asterisk.Play();
 
                             ThemedMessageBox.Show(
                                 this,
@@ -981,7 +981,7 @@ namespace TRR_SaveMaster
         {
             if (btnSave.Enabled)
             {
-                System.Media.SystemSounds.Asterisk.Play();
+                SystemSounds.Asterisk.Play();
 
                 DialogResult result = ThemedMessageBox.Show(
                     this,
