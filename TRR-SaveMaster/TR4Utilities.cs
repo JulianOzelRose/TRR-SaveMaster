@@ -63,6 +63,7 @@ namespace TRR_SaveMaster
         // Misc
         private string savegamePath;
         private int savegameOffset;
+        private const int LARA_VEHICLE_ITEM_OFFSET = 0x5A;
         private int sgBufferCursor;
 
         // Level names
@@ -797,37 +798,9 @@ namespace TRR_SaveMaster
             File.WriteAllBytes(savegamePath, fileData);
         }
 
-        public bool IsLaraInVehicle(int healthOffset, byte[] fileData)
+        public bool IsLaraInVehicle(byte[] fileData)
         {
-            byte byteFlag1 = fileData[healthOffset - 7];
-            byte byteFlag2 = fileData[healthOffset - 6];
-            byte byteFlag3 = fileData[healthOffset - 5];
-            byte byteFlag4 = fileData[healthOffset - 4];
-
-            if (byteFlag1 == 0x00 && byteFlag2 == 0x00 && byteFlag3 == 0x00 && byteFlag4 == 0x40) return true;  // Jeep
-            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x34) return true;  // Jeep
-            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x47 && byteFlag4 == 0x34) return true;  // Jeep
-            if (byteFlag1 == 0x0B && byteFlag2 == 0x0B && byteFlag3 == 0x00 && byteFlag4 == 0x38) return true;  // Jeep
-            if (byteFlag1 == 0x0B && byteFlag2 == 0x0C && byteFlag3 == 0x00 && byteFlag4 == 0x38) return true;  // Jeep
-            if (byteFlag1 == 0x0C && byteFlag2 == 0x0C && byteFlag3 == 0x47 && byteFlag4 == 0x3A) return true;  // Jeep
-            if (byteFlag1 == 0x00 && byteFlag2 == 0x47 && byteFlag3 == 0x47 && byteFlag4 == 0x40) return true;  // Jeep
-            if (byteFlag1 == 0x0F && byteFlag2 == 0x0F && byteFlag3 == 0x00 && byteFlag4 == 0x34) return true;  // Motorbike
-            if (byteFlag1 == 0x0F && byteFlag2 == 0x0F && byteFlag3 == 0x00 && byteFlag4 == 0x3A) return true;  // Motorbike
-            if (byteFlag1 == 0x0F && byteFlag2 == 0x0F && byteFlag3 == 0x00 && byteFlag4 == 0x3F) return true;  // Motorbike
-            if (byteFlag1 == 0x0F && byteFlag2 == 0x0F && byteFlag3 == 0x47 && byteFlag4 == 0x34) return true;  // Motorbike
-            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x24) return true;  // Motorbike
-            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x37) return true;  // Motorbike
-            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x2A) return true;  // Motorbike
-            if (byteFlag1 == 0x01 && byteFlag2 == 0x0F && byteFlag3 == 0x00 && byteFlag4 == 0x42) return true;  // Motorbike
-            if (byteFlag1 == 0x08 && byteFlag2 == 0x08 && byteFlag3 == 0x00 && byteFlag4 == 0x38) return true;  // Motorbike
-            if (byteFlag1 == 0x08 && byteFlag2 == 0x08 && byteFlag3 == 0x00 && byteFlag4 == 0x43) return true;  // Motorbike
-            if (byteFlag1 == 0x08 && byteFlag2 == 0x08 && byteFlag3 == 0x00 && byteFlag4 == 0x3E) return true;  // Motorbike
-            if (byteFlag1 == 0x08 && byteFlag2 == 0x08 && byteFlag3 == 0x00 && byteFlag4 == 0x39) return true;  // Motorbike
-            if (byteFlag1 == 0x11 && byteFlag2 == 0x11 && byteFlag3 == 0x00 && byteFlag4 == 0x3A) return true;  // Motorbike
-            if (byteFlag1 == 0x11 && byteFlag2 == 0x11 && byteFlag3 == 0x00 && byteFlag4 == 0x40) return true;  // Motorbike
-            if (byteFlag1 == 0x01 && byteFlag2 == 0x01 && byteFlag3 == 0x00 && byteFlag4 == 0x27) return true;  // Motorbike
-
-            return false;
+            return BitConverter.ToInt16(fileData, savegameOffset + LARA_VEHICLE_ITEM_OFFSET) != -1;
         }
 
         public bool IsLaraFreefalling(int healthOffset, byte[] fileData)

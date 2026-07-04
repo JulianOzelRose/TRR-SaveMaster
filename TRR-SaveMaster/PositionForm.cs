@@ -242,15 +242,15 @@ namespace TRR_SaveMaster
         {
             if (IsTR2Savegame())
             {
-                return tr2Utilities.IsLaraInVehicle(healthOffset, fileData);
+                return tr2Utilities.IsLaraInVehicle(fileData);
             }
             else if (IsTR3Savegame())
             {
-                return tr3Utilities.IsLaraInVehicle(healthOffset, fileData);
+                return tr3Utilities.IsLaraInVehicle(fileData);
             }
             else if (IsTR4Savegame())
             {
-                return tr4Utilities.IsLaraInVehicle(healthOffset, fileData);
+                return tr4Utilities.IsLaraInVehicle(fileData);
             }
 
             return false;

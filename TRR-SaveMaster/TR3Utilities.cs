@@ -111,6 +111,7 @@ namespace TRR_SaveMaster
         private const int ENTITY_AI_BLOCK_SIZE = 0x1A;
         private int AMMO_WRITE_LOWER_BOUND;
         private int AMMO_WRITE_UPPER_BOUND;
+        private int LARA_VEHICLE_ITEM_OFFSET;
         private int sgBufferCursor = 0;
         private int rngState;
 
@@ -767,6 +768,8 @@ namespace TRR_SaveMaster
                 }
             }
 
+            LARA_VEHICLE_ITEM_OFFSET = sgBufferCursor + 0x4C;
+
             deagleAmmoOffset2 = sgBufferCursor + 0x16C;
             uziAmmoOffset2 = sgBufferCursor + 0x174;
             shotgunAmmoOffset2 = sgBufferCursor + 0x17C;
@@ -1243,22 +1246,9 @@ namespace TRR_SaveMaster
             File.WriteAllBytes(savegamePath, fileData);
         }
 
-        public bool IsLaraInVehicle(int healthOffset, byte[] fileData)
+        public bool IsLaraInVehicle(byte[] fileData)
         {
-            byte byteFlag1 = fileData[healthOffset - 10];
-            byte byteFlag2 = fileData[healthOffset - 9];
-            byte byteFlag3 = fileData[healthOffset - 8];
-            byte byteFlag4 = fileData[healthOffset - 7];
-
-            if (byteFlag1 == 0x0F && byteFlag2 == 0x00 && byteFlag3 == 0x0F && byteFlag4 == 0x00) return true;  // Quad Bike
-            if (byteFlag1 == 0x08 && byteFlag2 == 0x00 && byteFlag3 == 0x08 && byteFlag4 == 0x00) return true;  // Quad Bike
-            if (byteFlag1 == 0x05 && byteFlag2 == 0x00 && byteFlag3 == 0x05 && byteFlag4 == 0x00) return true;  // UPV
-            if (byteFlag1 == 0x01 && byteFlag2 == 0x00 && byteFlag3 == 0x01 && byteFlag4 == 0x00) return true;  // Kayak or Boat
-            if (byteFlag1 == 0x03 && byteFlag2 == 0x00 && byteFlag3 == 0x01 && byteFlag4 == 0x00) return true;  // Kayak or Boat
-            if (byteFlag1 == 0x06 && byteFlag2 == 0x00 && byteFlag3 == 0x06 && byteFlag4 == 0x00) return true;  // Mine Cart
-            if (byteFlag1 == 0x0C && byteFlag2 == 0x00 && byteFlag3 == 0x0C && byteFlag4 == 0x00) return true;  // Mine Cart
-
-            return false;
+            return BitConverter.ToInt16(fileData, savegameOffset + LARA_VEHICLE_ITEM_OFFSET) != -1;
         }
 
         public bool IsLaraFreefalling(int healthOffset, byte[] fileData)

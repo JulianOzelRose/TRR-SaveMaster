@@ -108,6 +108,7 @@ namespace TRR_SaveMaster
         private const int ENTITY_AI_BLOCK_SIZE = 0xC;
         private int AMMO_WRITE_LOWER_BOUND;
         private int AMMO_WRITE_UPPER_BOUND;
+        private int LARA_VEHICLE_ITEM_OFFSET;
         private int sgBufferCursor = 0;
         private int rngState;
 
@@ -359,19 +360,9 @@ namespace TRR_SaveMaster
             return BitConverter.ToUInt16(fileData, healthOffset);
         }
 
-        public bool IsLaraInVehicle(int healthOffset, byte[] fileData)
+        public bool IsLaraInVehicle(byte[] fileData)
         {
-            byte byteFlag1 = fileData[healthOffset - 10];
-            byte byteFlag2 = fileData[healthOffset - 9];
-            byte byteFlag3 = fileData[healthOffset - 8];
-            byte byteFlag4 = fileData[healthOffset - 7];
-
-            if (byteFlag1 == 0x01 && byteFlag2 == 0x00 && byteFlag3 == 0x01 && byteFlag4 == 0x00) return true;  // Motorboat
-            if (byteFlag1 == 0x05 && byteFlag2 == 0x00 && byteFlag3 == 0x05 && byteFlag4 == 0x00) return true;  // Motorboat
-            if (byteFlag1 == 0x08 && byteFlag2 == 0x00 && byteFlag3 == 0x08 && byteFlag4 == 0x00) return true;  // Snowmobile
-            if (byteFlag1 == 0x04 && byteFlag2 == 0x00 && byteFlag3 == 0x04 && byteFlag4 == 0x00) return true;  // Snowmobile
-
-            return false;
+            return BitConverter.ToInt16(fileData, savegameOffset + LARA_VEHICLE_ITEM_OFFSET) != -1;
         }
 
         public bool IsLaraFreefalling(int healthOffset, byte[] fileData)
@@ -1079,6 +1070,8 @@ namespace TRR_SaveMaster
                     sgBufferCursor += 0x08;
                 }
             }
+
+            LARA_VEHICLE_ITEM_OFFSET = sgBufferCursor + 0x2C;
 
             automaticPistolsAmmoOffset2 = sgBufferCursor + 0x14C;
             uziAmmoOffset2 = sgBufferCursor + 0x154;

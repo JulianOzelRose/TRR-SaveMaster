@@ -3034,7 +3034,7 @@ namespace TRR_SaveMaster
                         return;
                     }
 
-                    if (tr2Utilities.IsLaraInVehicle(healthOffset, fileData))
+                    if (tr2Utilities.IsLaraInVehicle(fileData))
                     {
                         SystemSounds.Exclamation.Play();
 
@@ -3085,7 +3085,7 @@ namespace TRR_SaveMaster
                         return;
                     }
 
-                    if (tr3Utilities.IsLaraInVehicle(healthOffset, fileData))
+                    if (tr3Utilities.IsLaraInVehicle(fileData))
                     {
                         SystemSounds.Exclamation.Play();
 
@@ -3135,7 +3135,7 @@ namespace TRR_SaveMaster
                         return;
                     }
 
-                    if (tr4Utilities.IsLaraInVehicle(healthOffset, fileData))
+                    if (tr4Utilities.IsLaraInVehicle(fileData))
                     {
                         SystemSounds.Exclamation.Play();
 
