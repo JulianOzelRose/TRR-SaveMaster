@@ -59,7 +59,7 @@ namespace TRR_SaveMaster
         private const int TIME_TAKEN_OFFSET_TR1_PREPATCH = 0x614;
 
         // TR1 offsets (Android)
-        private const int STATISTICS_ARRAY_BASE_OFFSET_TR1_ANDROID = 0x20;
+        private const int STATISTICS_ARRAY_BASE_OFFSET_TR1_ANDROID = 0x80;
         private const int LEVEL_INDEX_OFFSET_TR1_ANDROID = 0x65C;
         private const int CRYSTALS_USED_OFFSET_TR1_ANDROID = 0x640;
         private const int AMMO_USED_OFFSET_TR1_ANDROID = 0x648;
@@ -109,7 +109,7 @@ namespace TRR_SaveMaster
         private const int TIME_TAKEN_OFFSET_TR2_PREPATCH = 0x610;
 
         // TR2 offsets (Android)
-        private const int STATISTICS_ARRAY_BASE_OFFSET_TR2_ANDROID = 0x24;
+        private const int STATISTICS_ARRAY_BASE_OFFSET_TR2_ANDROID = 0x84;
         private const int LEVEL_INDEX_OFFSET_TR2_ANDROID = 0x658;
         private const int AMMO_USED_OFFSET_TR2_ANDROID = 0x644;
         private const int HITS_OFFSET_TR2_ANDROID = 0x648;
@@ -161,7 +161,7 @@ namespace TRR_SaveMaster
         private const int MEDIPACKS_USED_OFFSET_TR3_PREPATCH = 0x8C3;
 
         // TR3 offsets (Android)
-        private const int STATISTICS_ARRAY_BASE_OFFSET_TR3_ANDROID = 0x80;
+        private const int STATISTICS_ARRAY_BASE_OFFSET_TR3_ANDROID = 0x100;
         private const int LEVEL_INDEX_OFFSET_TR3_ANDROID = 0x916;
         private const int CRYSTALS_FOUND_OFFSET_TR3_ANDROID = 0x8E4;
         private const int CRYSTALS_USED_OFFSET_TR3_ANDROID = 0x8E8;
