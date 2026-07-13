@@ -97,7 +97,7 @@ namespace TRR_SaveMaster
         private int sgBufferCursor = 0;
         private int rngState;
 
-        private readonly Dictionary<byte, string> levelNames = new Dictionary<byte, string>()
+        public readonly Dictionary<byte, string> levelNames = new Dictionary<byte, string>()
         {
             { 1,  "Caves"                   },
             { 2,  "City of Vilcabamba"      },

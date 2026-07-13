@@ -117,5 +117,15 @@
         public const string TOOLTIP_TEXT_ORIENTATION_KURTIS = "Represents the direction Kurtis is facing in degrees. Valid range is -180 to 180.";
         public const string TOOLTIP_TEXT_ROOM_LARA = "Represents the active zone Lara is in. Zones control which parts of the level are loaded and rendered.";
         public const string TOOLTIP_TEXT_ROOM_KURTIS = "Represents the active zone Kurtis is in. Zones control which parts of the level are loaded and rendered.";
+        public const string TOOLTIP_TEXT_STATISTICS_DROPDOWN_TRX = "Select which level's statistics to view or edit.\n\nCurrent Level edits the active level.\nOther entries edit statistics for completed levels.";
+        public const string TOOLTIP_TEXT_STATISTICS_DROPDOWN_TR6 = "Select which statistics to view or edit.\n\nCurrent Level edits the active level.\nFinal Statistics edits the game's cumulative statistics.";
+
+        // Label text
+        public const string LABEL_TEXT_AMMO_USED = "Ammo Used:";
+        public const string LABEL_TEXT_HEALTH_PACKS_USED = "Health Packs Used:";
+        public const string LABEL_TEXT_HEALTH_RESTORED = "Health Restored:";
+        public const string LABEL_TEXT_FORWARD_SLASH = "/";
+        public const string LABEL_TEXT_UNIT_METER = "m";
+        public const string LABEL_TEXT_UNIT_KILOMETER = "km";
     }
 }
