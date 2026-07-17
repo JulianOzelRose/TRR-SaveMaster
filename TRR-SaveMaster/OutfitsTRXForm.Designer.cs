@@ -1,6 +1,6 @@
 ﻿namespace TRR_SaveMaster
 {
-    partial class OutfitsForm
+    partial class OutfitsTRXForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OutfitsForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OutfitsTRXForm));
             this.btnClose = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
@@ -680,8 +680,8 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Edit Outfits";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OutfitsForm_FormClosing);
-            this.Load += new System.EventHandler(this.OutfitsForm_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OutfitsTRXForm_FormClosing);
+            this.Load += new System.EventHandler(this.OutfitsTRXForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

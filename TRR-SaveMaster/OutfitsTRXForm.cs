@@ -6,7 +6,7 @@ using static TRR_SaveMaster.MainForm;
 
 namespace TRR_SaveMaster
 {
-    public partial class OutfitsForm : Form
+    public partial class OutfitsTRXForm : Form
     {
         // Base start of outfit bitfield
         private const int OUTFITS_BASE_OFFSET = 0x250;
@@ -65,7 +65,7 @@ namespace TRR_SaveMaster
         // Paths
         private string savegamePath;
 
-        public OutfitsForm(ToolStripStatusLabel slblStatus, bool backupBeforeSaving, string savegamePath)
+        public OutfitsTRXForm(ToolStripStatusLabel slblStatus, bool backupBeforeSaving, string savegamePath)
         {
             InitializeComponent();
 
@@ -74,7 +74,7 @@ namespace TRR_SaveMaster
             this.savegamePath = savegamePath;
         }
 
-        private void OutfitsForm_Load(object sender, EventArgs e)
+        private void OutfitsTRXForm_Load(object sender, EventArgs e)
         {
             if (ThemeUtilities.DARK_MODE_ENABLED)
             {
@@ -85,7 +85,7 @@ namespace TRR_SaveMaster
             DisplayData();
         }
 
-        private void OutfitsForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void OutfitsTRXForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             ConfirmChanges();
         }

@@ -82,11 +82,17 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="OutfitsForm.cs">
+    <Compile Include="OutfitsTRX2Form.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OutfitsForm.Designer.cs">
-      <DependentUpon>OutfitsForm.cs</DependentUpon>
+    <Compile Include="OutfitsTRX2Form.Designer.cs">
+      <DependentUpon>OutfitsTRX2Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OutfitsTRXForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OutfitsTRXForm.Designer.cs">
+      <DependentUpon>OutfitsTRXForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PositionForm.cs">
       <SubType>Form</SubType>
@@ -141,8 +147,11 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OutfitsForm.resx">
-      <DependentUpon>OutfitsForm.cs</DependentUpon>
+    <EmbeddedResource Include="OutfitsTRX2Form.resx">
+      <DependentUpon>OutfitsTRX2Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OutfitsTRXForm.resx">
+      <DependentUpon>OutfitsTRXForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PositionForm.resx">
       <DependentUpon>PositionForm.cs</DependentUpon>

@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UnlocksForm));
             this.grpTRX = new System.Windows.Forms.GroupBox();
+            this.btnOutfitsTRX = new System.Windows.Forms.Button();
             this.chkSocietyOfRaidersJoinedTRX = new System.Windows.Forms.CheckBox();
             this.chkTR3Completed = new System.Windows.Forms.CheckBox();
             this.chkTR2Completed = new System.Windows.Forms.CheckBox();
@@ -42,14 +43,14 @@
             this.chkTR6Completed = new System.Windows.Forms.CheckBox();
             this.chkTR5Completed = new System.Windows.Forms.CheckBox();
             this.chkTR4Completed = new System.Windows.Forms.CheckBox();
-            this.btnOutfits = new System.Windows.Forms.Button();
+            this.btnOutfitsTRX2 = new System.Windows.Forms.Button();
             this.grpTRX.SuspendLayout();
             this.grpTRX2.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpTRX
             // 
-            this.grpTRX.Controls.Add(this.btnOutfits);
+            this.grpTRX.Controls.Add(this.btnOutfitsTRX);
             this.grpTRX.Controls.Add(this.chkSocietyOfRaidersJoinedTRX);
             this.grpTRX.Controls.Add(this.chkTR3Completed);
             this.grpTRX.Controls.Add(this.chkTR2Completed);
@@ -61,6 +62,18 @@
             this.grpTRX.TabIndex = 0;
             this.grpTRX.TabStop = false;
             this.grpTRX.Text = "Tomb Raider I-III";
+            // 
+            // btnOutfitsTRX
+            // 
+            this.btnOutfitsTRX.Enabled = false;
+            this.btnOutfitsTRX.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOutfitsTRX.Location = new System.Drawing.Point(223, 105);
+            this.btnOutfitsTRX.Name = "btnOutfitsTRX";
+            this.btnOutfitsTRX.Size = new System.Drawing.Size(75, 23);
+            this.btnOutfitsTRX.TabIndex = 7;
+            this.btnOutfitsTRX.Text = "Outfits";
+            this.btnOutfitsTRX.UseVisualStyleBackColor = true;
+            this.btnOutfitsTRX.Click += new System.EventHandler(this.btnOutfitsTRX_Click);
             // 
             // chkSocietyOfRaidersJoinedTRX
             // 
@@ -147,6 +160,7 @@
             // 
             // grpTRX2
             // 
+            this.grpTRX2.Controls.Add(this.btnOutfitsTRX2);
             this.grpTRX2.Controls.Add(this.chkSocietyOfRaidersJoinedTRX2);
             this.grpTRX2.Controls.Add(this.chkTR6Completed);
             this.grpTRX2.Controls.Add(this.chkTR5Completed);
@@ -207,17 +221,17 @@
             this.chkTR4Completed.UseVisualStyleBackColor = true;
             this.chkTR4Completed.CheckedChanged += new System.EventHandler(this.chkTR4Completed_CheckedChanged);
             // 
-            // btnOutfits
+            // btnOutfitsTRX2
             // 
-            this.btnOutfits.Enabled = false;
-            this.btnOutfits.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOutfits.Location = new System.Drawing.Point(223, 105);
-            this.btnOutfits.Name = "btnOutfits";
-            this.btnOutfits.Size = new System.Drawing.Size(75, 23);
-            this.btnOutfits.TabIndex = 7;
-            this.btnOutfits.Text = "Outfits";
-            this.btnOutfits.UseVisualStyleBackColor = true;
-            this.btnOutfits.Click += new System.EventHandler(this.btnOutfits_Click);
+            this.btnOutfitsTRX2.Enabled = false;
+            this.btnOutfitsTRX2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOutfitsTRX2.Location = new System.Drawing.Point(223, 105);
+            this.btnOutfitsTRX2.Name = "btnOutfitsTRX2";
+            this.btnOutfitsTRX2.Size = new System.Drawing.Size(75, 23);
+            this.btnOutfitsTRX2.TabIndex = 8;
+            this.btnOutfitsTRX2.Text = "Outfits";
+            this.btnOutfitsTRX2.UseVisualStyleBackColor = true;
+            this.btnOutfitsTRX2.Click += new System.EventHandler(this.btnOutfitsTRX2_Click);
             // 
             // UnlocksForm
             // 
@@ -264,6 +278,7 @@
         private System.Windows.Forms.CheckBox chkTR6Completed;
         private System.Windows.Forms.CheckBox chkTR5Completed;
         private System.Windows.Forms.CheckBox chkTR4Completed;
-        private System.Windows.Forms.Button btnOutfits;
+        private System.Windows.Forms.Button btnOutfitsTRX;
+        private System.Windows.Forms.Button btnOutfitsTRX2;
     }
 }

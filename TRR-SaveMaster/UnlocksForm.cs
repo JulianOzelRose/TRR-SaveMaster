@@ -96,7 +96,7 @@ namespace TRR_SaveMaster
                     chkTR2Completed.Checked = BitConverter.ToInt32(fileDataTRX, TR2_COMPLETED_OFFSET) != 0;
                     chkTR3Completed.Checked = BitConverter.ToInt32(fileDataTRX, TR3_COMPLETED_OFFSET) != 0;
                     chkSocietyOfRaidersJoinedTRX.Checked = (fileDataTRX[SOCIETY_OF_RAIDERS_OFFSET_TRX] & RAIDERS_MASK_TRX) != 0;
-                    btnOutfits.Enabled = !isPrepatch;
+                    btnOutfitsTRX.Enabled = !isPrepatch;
                 }
 
                 if (!string.IsNullOrEmpty(savegamePathTRX2) && File.Exists(savegamePathTRX2))
@@ -107,6 +107,7 @@ namespace TRR_SaveMaster
                     chkTR5Completed.Checked = BitConverter.ToInt32(fileDataTRX2, TR5_COMPLETED_OFFSET) != 0;
                     chkTR6Completed.Checked = BitConverter.ToInt32(fileDataTRX2, TR6_COMPLETED_OFFSET) != 0;
                     chkSocietyOfRaidersJoinedTRX2.Checked = (fileDataTRX2[SOCIETY_OF_RAIDERS_OFFSET_TRX2] & RAIDERS_MASK_TRX2) != 0;
+                    btnOutfitsTRX2.Enabled = true;
                 }
             }
             catch (Exception ex)
@@ -295,11 +296,24 @@ namespace TRR_SaveMaster
             Buffer.BlockCopy(bytes, 0, buffer, offset, 4);
         }
 
-        private void btnOutfits_Click(object sender, EventArgs e)
+        private void btnOutfitsTRX_Click(object sender, EventArgs e)
         {
-            OutfitsForm outfitsForm = new OutfitsForm(slblStatus, backupBeforeSaving, savegamePathTRX);
-            outfitsForm.TopMost = TopMost;
-            outfitsForm.ShowDialog(this);
+            OutfitsTRXForm outfitsTRXForm = new OutfitsTRXForm(slblStatus, backupBeforeSaving, savegamePathTRX);
+            outfitsTRXForm.TopMost = TopMost;
+            outfitsTRXForm.ShowDialog(this);
+
+            DisableButtons();
+            DisplayData();
+        }
+
+        private void btnOutfitsTRX2_Click(object sender, EventArgs e)
+        {
+            OutfitsTRX2Form outfitsTRX2Form = new OutfitsTRX2Form(slblStatus, backupBeforeSaving, savegamePathTRX2);
+            outfitsTRX2Form.TopMost = TopMost;
+            outfitsTRX2Form.ShowDialog(this);
+
+            DisableButtons();
+            DisplayData();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
