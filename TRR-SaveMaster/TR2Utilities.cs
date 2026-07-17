@@ -1059,6 +1059,15 @@ namespace TRR_SaveMaster
                     }
 
                     sgBufferCursor += increment;
+
+                    bool mutatesTargetEntity = (u2 & 0x06) == 0x04;
+
+                    if (mutatesTargetEntity &&
+                        TR2EntityCache.ControllerTargetEntitiesByLevel.TryGetValue(levelIndex, out var controllerTargets) &&
+                        controllerTargets.TryGetValue(itemIndex, out int targetItemIndex))
+                    {
+                        levelObjectIds[targetItemIndex] = 0x0D;
+                    }
                 }
 
                 if (objectId == 0x0D || objectId == 0x0E)

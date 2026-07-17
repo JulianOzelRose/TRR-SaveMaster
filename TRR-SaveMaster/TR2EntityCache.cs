@@ -1687,6 +1687,28 @@ namespace TRR_SaveMaster
             },
         };
 
+        public static readonly Dictionary<int, Dictionary<int, int>> ControllerTargetEntitiesByLevel = new Dictionary<int, Dictionary<int, int>>
+        {
+            [11] = new Dictionary<int, int>     // Tibetan Foothills
+            {
+                { 52, 108 },
+                { 83, 109 },
+                { 84, 110 },
+                { 88, 111 }
+            },
+            [19] = new Dictionary<int, int>     // The Cold War
+            {
+                { 35, 189 },
+                { 188, 190 }
+            },
+            [20] = new Dictionary<int, int>     // Fool's Gold
+            {
+                { 101, 190 },
+                { 102, 191 },
+                { 122, 192 }
+            }
+        };
+
         public static readonly Dictionary<int, List<int>> LevelObjectIdsByLevel = new Dictionary<int, List<int>>
         {
             {
