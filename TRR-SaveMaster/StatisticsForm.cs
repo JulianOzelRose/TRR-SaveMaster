@@ -1167,14 +1167,17 @@ namespace TRR_SaveMaster
         {
             if (SELECTED_TAB == Globals.TAB_TR1)
             {
+                tr1Utilities.DetermineOffsets(fileData);
                 tr1Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
             else if (SELECTED_TAB == Globals.TAB_TR2)
             {
+                tr2Utilities.DetermineOffsets(fileData);
                 tr2Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
             else if (SELECTED_TAB == Globals.TAB_TR3)
             {
+                tr3Utilities.DetermineOffsets(fileData);
                 tr3Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
             else if (SELECTED_TAB == Globals.TAB_TR4)
