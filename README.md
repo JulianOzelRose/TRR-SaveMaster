@@ -1,7 +1,7 @@
 # Tomb Raider I-VI Remastered Savegame Editor
-An open source, cross-platform savegame editor for Tomb Raider I-VI Remastered. Main features are listed below. The next section contains
-instructions on how to edit savegames from platforms other than PC. If you are interested in reverse engineering, there is a technical portion
-on the bottom section of this README. For a tool that allows you to import savegames, convert to PC/PS4/Android/Nintendo Switch format,
+An open source savegame editor for Tomb Raider I-VI Remastered. Main features are listed below. The next section contains
+basic use instructions as well as how to edit savegames from platforms other than PC. If you are interested in reverse engineering, there is a technical portion
+on the bottom section of this README. For a tool that allows you to import savegames, convert to PC/PS4/Android/NS format,
 and reorder/delete savegames, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
 ### Features
@@ -10,23 +10,22 @@ and reorder/delete savegames, check out [TombExtract](https://github.com/JulianO
 - ❤️ Edit Health
 - 📍 Edit Position / Teleport
 - 📊 Edit Statistics
-- 🔓 Edit Unlocks & Progression
-- 👕 Edit Outfits
+- 🔓 Unlock NG+ & Outfits
 - 🗑️ Savegame Deletion
-- 🖥️ Cross-Platform Compatibility (PC/PS4/Android/Nintendo Switch)
-- 🔄 Patch 5 Compatible & Backwards Compatible with Pre-Patch Savegames
+- 🖥️ Cross-Platform Compatibility (PC/PS4/Android/NS)
+- 🔄 Patch 5 & Pre-Patch Compatible
 
 <br>
-<img width="723" height="640" alt="TRR-SaveMaster-UI" src="https://github.com/user-attachments/assets/10325c35-7f31-4f6d-8c0b-53e5b3aa4a36" />
+<img width="723" height="640" alt="MainForm" src="https://github.com/user-attachments/assets/256a1653-9961-4d64-8ea7-e49f1925c45b" />
 
 ## Installation and use
-To download and use this savegame editor, simply navigate to the [Releases](https://github.com/JulianOzelRose/TRR-SaveMaster/releases) page,
-then download the .exe file of the latest version under "Assets". You can save it anywhere on your computer. Once downloaded, open the file.
-The editor will then prompt you to select your savegame path, click "Yes". The editor should automatically open to your TRX/TRX2 folder.
-Once there, simply navigate to the numeric folder that represents your Steam Community ID. If you have multiple accounts with Tomb Raider Remastered, there may be multiple folders.
+To download and use this savegame editor, navigate to the [Releases](https://github.com/JulianOzelRose/TRR-SaveMaster/releases) page,
+then download the `.exe` file of the latest version under "Assets". You can save it anywhere on your computer. Once downloaded, open the file.
+The editor will then prompt you to select your savegame path, click "Yes". The editor will automatically open to your `TRX/TRX2` folder.
+Once there, navigate to the numeric folder that represents your Steam Community ID. If you have multiple accounts with Tomb Raider Remastered, there may be multiple folders.
 
-Once the savegames are populated in the editor, you can select them using the combo box labeled "Savegame" in the top-right corner.
-The editor will automatically refresh savegame data when switching tabs or clicking the savegame combo box. If another savegame is added and not displaying,
+Once the savegames are populated in the editor, you can select them using the dropdown labeled "Savegame" in the top-right corner.
+The editor will automatically refresh savegame data when switching tabs or clicking the savegame dropdown. If another savegame is added and not displaying,
 you can click "File" -> "Refresh savegame list" to re-populate the savegames.
 
 Once you are done making changes, click "Save" to apply them. Because the game caches savegames into memory, you must restart your game in order for the changes to take effect.
@@ -46,7 +45,8 @@ However, editing Android savegames is still possible if your device is rooted.
 <img width="359" height="344" alt="PositionForm-UI" src="https://github.com/user-attachments/assets/1454e3c1-964b-406c-ace3-a6b138761625" />
 <br>
 
-This savegame editor includes a Position Editor feature. To use it, click "Edit" -> "Position." For Lara's coordinates to be correctly parsed, the health bytes must be located. If the health bytes cannot be found, try saving the game while Lara is standing. Once in the Position Editor menu, you can teleport to pre-determined coordinates, such as the start of the level, the end of the level, or secret locations.  
+This savegame editor includes a Position Editor feature. To use it, click "Edit" -> "Position".
+Once in the Position Editor menu, you can teleport to pre-determined coordinates, such as the start of the level, the end of the level, or secret locations.  
 
 - The **X-coordinate** represents Lara's horizontal position in the game. Decreasing its value moves her to the left, while increasing it moves her to the right.  
 - The **Y-coordinate** represents Lara's vertical position in the game. Decreasing it moves her up, while increasing it moves her down.  
@@ -54,28 +54,29 @@ This savegame editor includes a Position Editor feature. To use it, click "Edit"
 - The **Orientation** value determines the direction Lara is facing, measured in degrees.
 - The **Room/Zone** value represents the unique room number/loaded zone that Lara or Kurtis is currently located in.
 
-It's essential that the Room/Zone number matches Lara's current coordinates; otherwise, the game will not interpret her position correctly. Click "Save" in this menu to apply changes, or "Cancel" to retain Lara's current
-position. If you try to teleport while Lara is interacting with a puzzle, it may result in the game crashing.
+It's essential that the Room/Zone number matches Lara's current coordinates. Otherwise, the game will not interpret her position correctly. Click "Save" in this menu to apply changes, or "Cancel" to retain Lara's current
+position. Position cannot be edited while Lara is in a vehicle. If you try to teleport while Lara is interacting with a puzzle, it may result in the game crashing.
 
 ## Using the Statistics Editor
-<img width="391" height="419" alt="StatisticsForm-UI" src="https://github.com/user-attachments/assets/22d976c7-3df2-4efe-948c-74ac9b143c88" />
+<img width="391" height="502" alt="StatisticsForm" src="https://github.com/user-attachments/assets/8f508537-43a0-4093-83a8-a3ccf5370cc3" />
 <br>
 
-This savegame editor also includes a Statistics Editor feature. To use it, click "Edit," then select "Statistics." For Tomb Raider I-III and VI, the statistics displayed are level-specific, meaning each level has its own separate stats such as time taken,
-enemies killed, and secrets found. For Tomb Raider IV and V, the statistics are global, meaning they track cumulative progress across all levels, including total playtime, total kills, and total pickups.
+This savegame editor also includes a Statistics Editor feature. To use it, click "Edit," then select "Statistics".<br>
+
+For Tomb Raider I-III, use the level dropdown to choose which level's statistics to edit. "Current Level" represents the level currently being played, while selecting any other level allows you to edit the statistics recorded for that completed level.
+For Tomb Raider VI, use the dropdown to switch between "Current Level" statistics and "Final Statistics", which represent the cumulative statistics for the entire playthrough.
+For Tomb Raider IV and V, the statistics are global rather than level-specific, meaning they track cumulative progress across the entire game, including total playtime, total kills, and total pickups.
 
 ## Unlocks and Outfits
-<img width="337" height="363" alt="image" src="https://github.com/user-attachments/assets/a92aba63-5c5c-4ff4-aea2-7871471d5619" />
+<img width="337" height="363" alt="UnlocksForm" src="https://github.com/user-attachments/assets/8b9f129d-8b08-44d5-abe5-16122f55383e" />
 <br>
-<img width="286" height="418" alt="image" src="https://github.com/user-attachments/assets/94eb28b4-8e3d-41cd-8d83-e86213548551" />
-<br>
+
 To access the Unlocks Editor, click "Edit" -> "Unlocks".
 
 From here, you can:
-- Unlock game completion for Tomb Raider I-VI
-- Unlock NG+ access
+- Unlock New Game+
 - Unlock Society of Raiders
-- Edit outfits
+- Unlock Outfits
 
 
 ## Dark Mode
@@ -101,24 +102,22 @@ When a savegame slot is occupied, the value at offset `0x004` is set to 1. When 
 the value is 0. See the code below.
 
 ```
-for (int i = 0; i < MAX_SAVEGAMES; i++)
+for (int i = 0; i < Globals.MAX_SAVEGAMES; i++)
 {
     int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR3 + (i * SAVEGAME_SIZE);
 
-    byte slotStatus = fileData[currentSavegameOffset + SLOT_STATUS_OFFSET];
     byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
     Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
-    bool savegamePresent = slotStatus != 0;
+    bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
 
-    if (savegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
+    if (isSavegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
     {
         string levelName = levelNames[levelIndex];
         int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR3) / SAVEGAME_SIZE;
-        GameMode gameMode = fileData[currentSavegameOffset + GAME_MODE_OFFSET] == 0 ? GameMode.Normal : GameMode.Plus;
+        bool isNewGamePlus = BitConverter.ToInt32(fileData, currentSavegameOffset + NEW_GAME_PLUS_OFFSET) != 0;
         bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1 && !isPrepatch;
 
-        Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, gameMode, false, isChallengeMode);
-
+        Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, isNewGamePlus, false, isChallengeMode);
         cmbSavegames.Items.Add(savegame);
 
         numSavegames++;
@@ -187,321 +186,385 @@ So when calculating, you will have to add them to the base savegame offset.
 | 0x8C3     | Int8    | Medi Packs Used    |
 | 0x8D6     | UInt8   | Level Index        |
 
-## Using bitwise to determine and write weapons present
-In all 3 games, weapons information is stored on a single offset, referred to in this editor's code as `weaponsConfigNum`. It has a base number of 1,
-which indicates no weapons present. Each weapon added corresponds to a unique byte flag, which can be found in the sections below. To determine which weapons
-are present in inventory, you can use bitwise on the weapons configuration number. The code below demonstrates how this can be done for Tomb Raider II.
+## Tomb Raider I Deserializer
+### Pre-Entity Data
+The Tomb Raider I deserializer starts at a fixed offset, which depends on the savegame platform and version. It first checks for the savegame version flag and the Challenge Mode flag.
+If the respective flags show Patch 5 and Challenge Mode, it then reads an extra `0xC` bytes for the Challenge Mode parameter block. After several fixed reads, it then reads level state entries
+from the savegame in a loop, each 2-byte integers. If the savegame is native Patch 5, an additional DWORD is read.
 
 ```
-private const byte WEAPON_PISTOLS = 2;
-private const byte WEAPON_AUTOMATIC_PISTOLS = 4;
-private const byte WEAPON_UZIS = 8;
-private const byte WEAPON_SHOTGUN = 16;
-private const byte WEAPON_M16 = 32;
-private const byte WEAPON_GRENADE_LAUNCHER = 64;
-private const byte WEAPON_HARPOON_GUN = 128;
+sgBufferCursor = GetEntityBlockStart();
 
-byte weaponsConfigNum = GetWeaponsConfigNum(fileData);
-
-if (weaponsConfigNum == 1)
+if (isChallengeMode && isNativePatch5)
 {
-    chkPistols.Checked = false;
-    chkAutomaticPistols.Checked = false;
-    chkUzis.Checked = false;
-    chkShotgun.Checked = false;
-    chkM16.Checked = false;
-    chkGrenadeLauncher.Checked = false;
-    chkHarpoonGun.Checked = false;
+    byte enemyNumbers = GetChallengeModeEnemyNumbers(fileData);
+    byte enemyType = GetChallengeModeEnemyType(fileData);
+    Int32 challengeModeRNGSeed = GetChallengeModeRNGSeed(fileData);
+    levelObjectIds = ApplyChallengeModeMutations(levelObjectIds, levelIndex, enemyNumbers, enemyType, challengeModeRNGSeed);
+
+    sgBufferCursor += 0x0C;
 }
-else
+
+sgBufferCursor += 4;
+sgBufferCursor += 0x118;
+
+int gLevelStateEntryCount = TR1EntityCache.LevelStateEntryCounts[levelIndex];
+sgBufferCursor += gLevelStateEntryCount * 2;
+
+if (isNativePatch5)
 {
-    chkPistols.Checked = (weaponsConfigNum & WEAPON_PISTOLS) != 0;
-    chkAutomaticPistols.Checked = (weaponsConfigNum & WEAPON_AUTOMATIC_PISTOLS) != 0;
-    chkUzis.Checked = (weaponsConfigNum & WEAPON_UZIS) != 0;
-    chkShotgun.Checked = (weaponsConfigNum & WEAPON_SHOTGUN) != 0;
-    chkM16.Checked = (weaponsConfigNum & WEAPON_M16) != 0;
-    chkGrenadeLauncher.Checked = (weaponsConfigNum & WEAPON_GRENADE_LAUNCHER) != 0;
-    chkHarpoonGun.Checked = (weaponsConfigNum & WEAPON_HARPOON_GUN) != 0;
+    sgBufferCursor += 4;
 }
 ```
 
-When writing to this variable, the logic is the same, but only in reverse. Begin with the
-base number of 1, and increment conditionally based on which weapons are checkmarked in the interface.
-See the code blow.
+### Entity Loop
+Then, the entity deserializer loop begins. For native Patch 5 savegames, an additional DWORD is read for each entity.
+It then performs a series of bitmask checks for each entity type, and reads additional data accordingly.
+Health is located by identifying Lara's entity (ID 0) and recording the offset `0x28` within her entity block.
+After the loop ends, additional Lara info is deserialized, which is where the secondary ammo data is stored.
+<br>
 
 ```
-byte newWeaponsConfigNum = 1;
-
-if (chkPistols.Checked) newWeaponsConfigNum += WEAPON_PISTOLS;
-if (chkAutomaticPistols.Checked) newWeaponsConfigNum += WEAPON_AUTOMATIC_PISTOLS;
-if (chkUzis.Checked) newWeaponsConfigNum += WEAPON_UZIS;
-if (chkShotgun.Checked) newWeaponsConfigNum += WEAPON_SHOTGUN;
-if (chkM16.Checked) newWeaponsConfigNum += WEAPON_M16;
-if (chkGrenadeLauncher.Checked) newWeaponsConfigNum += WEAPON_GRENADE_LAUNCHER;
-if (chkHarpoonGun.Checked) newWeaponsConfigNum += WEAPON_HARPOON_GUN;
-
-WriteWeaponsConfigNum(fileData, newWeaponsConfigNum);
-```
-
-
-## Tomb Raider I savegame format
-Because almost all of the offsets in Tomb Raider I are static, it is the most straightforward game to reverse of the trilogy. Weapons inventory configuration
-is stored on a single offset, referred to in this editor's code as `weaponsConfigNum`. It has a base number of 1, which indicates no weapons present.
-You can use bitwise to determine which weapons are present in inventory. Each weapon corresponds to a specific byte flag. See the table blow.
-
-| Weapon   | Byte flag |
-|:---------|:----------|
-| Pistols  | 2         |
-| Magnums  | 4         |
-| Uzis     | 8         |
-| Shotgun  | 16        |
-
-Ammunition is stored on up to two offsets. If a weapon is not equipped, it is only stored on one offset (primary). If the weapon is equipped, it is stored on
-both offsets (primary and secondary). The primary offsets in Tomb Raider I are static. While the secondary offsets are dynamic, they only vary based on the
-level -- so there is no need to recalculate them once they have been determined based on the level index. When removing a weapon from inventory, the editor
-zeroes the secondary ammo bytes to free its address space. See the code below.
-
-```
-private void WriteShotgunAmmo(byte[] fileData, bool isPresent, UInt16 ammo, bool isPrepatch)
+for (int itemIndex = 0; itemIndex < levelObjectIds.Count; itemIndex++)
 {
-    WriteUInt16ToBuffer(fileData, savegameOffset + SHOTGUN_AMMO_OFFSET, ammo);
+    int objectId = levelObjectIds[itemIndex];
 
-    if (!isPrepatch && (shotgunAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || shotgunAmmoOffset2 > AMMO_WRITE_UPPER_BOUND))
+    if (isNativePatch5)
     {
-        return;
+        sgBufferCursor += 4;
     }
 
-    if (isPresent)
+    if (!TR1EntityCache.TR1ObjectsByLevel.TryGetValue(levelIndex, out var levelObjects))
     {
-        WriteInt32ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, (Int32)ammo);
+        throw new Exception($"{Globals.ERROR_MSG_MISSING_LEVEL_DEFINITION} {levelIndex}.");
     }
-    else
+
+    if (!levelObjects.TryGetValue(objectId, out var tr1Object))
     {
-        WriteInt32ToBuffer(fileData, savegameOffset + shotgunAmmoOffset2, 0);
+        throw new Exception($"{Globals.ERROR_MSG_MISSING_OBJECT_DEFINITION} (object ID: 0x{objectId:X}).");
     }
+
+    if (tr1Object.ObjectId == Globals.LARA_ENTITY_ID)
+    {
+        HEALTH_OFFSET = sgBufferCursor + 0x28;
+    }
+
+    if ((tr1Object.Flags00 & 0x08) != 0)
+    {
+        sgBufferCursor += 0x1A;
+    }
+
+    if ((tr1Object.Flags00 & 0x40) != 0)
+    {
+        sgBufferCursor += 10;
+    }
+
+    if ((tr1Object.Flags00 & 0x10) != 0)
+    {
+        sgBufferCursor += 0x02;
+    }
+
+    if ((tr1Object.Flags00 & 0x20) != 0)
+    {
+        bool has02 = (tr1Object.Flags00 & 0x02) != 0;
+        sgBufferCursor += has02 ? 0x10 : 0x04;
+    }
+
+    if ((tr1Object.Flags00 & 0x20) != 0)
+    {
+        sgBufferCursor += 0x10;
+    }
+}
+
+magnumAmmoOffset2 = sgBufferCursor + 0x14C;
+uziAmmoOffset2 = sgBufferCursor + 0x154;
+shotgunAmmoOffset2 = sgBufferCursor + 0x15C;
+```
+
+## Tomb Raider II Deserializer
+### Pre-Entity Data
+The Tomb Raider II deserializer also starts at a fixed offset, which depends on the savegame platform and version. It first checks for the savegame version flag and the Challenge Mode flag.
+If the respective flags show Patch 5 and Challenge Mode, it then reads an extra `0xC` bytes for the Challenge Mode parameter block.
+After several fixed reads, it then reads level state entries from the savegame in a loop, each 2-byte integers. If the savegame is native Patch 5, an additional DWORD is read.
+
+```
+sgBufferCursor = GetEntityBlockStart(isPrepatch);
+
+if (isChallengeMode && isNativePatch5 && !isPrepatch)
+{
+    byte enemyNumbers = GetChallengeModeEnemyNumbers(fileData);
+    byte enemyType = GetChallengeModeEnemyType(fileData);
+    Int32 challengeModeRNGSeed = GetChallengeModeRNGSeed(fileData);
+    levelObjectIds = ApplyChallengeModeMutations(levelObjectIds, levelIndex, enemyNumbers, enemyType, challengeModeRNGSeed);
+
+    sgBufferCursor += 0x0C;
+}
+
+sgBufferCursor += 4;
+sgBufferCursor += 0x118;
+
+int gLevelStateEntryCount = TR2EntityCache.LevelStateEntryCounts[levelIndex];
+sgBufferCursor += gLevelStateEntryCount * 2;
+
+if (isNativePatch5 && !isPrepatch)
+{
+    sgBufferCursor += 4;
 }
 ```
 
-## Tomb Raider II savegame format
-Reversing Tomb Raider II presents more challenges than Tomb Raider I. This is because most of the game's offsets are dynamic. However, weapons are stored in the
-same fashion as they are in Tomb Raider I; on a single offset. You can use bitwise to extract which weapons are present in inventory the same way as in Tomb Raider I.
-See the table below for weapon byte flags.
+### Entity Loop
+Next is the entity deserializer loop. It is structurally similar to the Tomb Raider I entity loop, with some differences in deserializing actor data.
+For native Patch 5 savegames, an additional DWORD is read for each entity. It then performs a series of bitmask checks for each entity type, and reads additional data accordingly.
+Health is located by identifying Lara's entity (ID 0) and recording the offset `0x28` within her entity block.
 
-| Weapon           | Byte flag        |
-|:-----------------|:-----------------|
-| Pistols          | 2                |
-| Automatic Pistols| 4                |
-| Uzis             | 8                |
-| Shotgun          | 16               |
-| M16              | 32               |
-| Grenade Launcher | 64               |
-| Harpoon Gun      | 128              |
+The base size of the `0x20` actor block depends on the `0x02` flag. If the entity's AI-active bit is set, an additional AI block is present and the cursor is advanced by `0xC` bytes.
+Certain entities mutate the runtime object ID of another entity during deserialization. When this condition is detected, the target entity's object ID is updated to `0xD` for the rest of the deserializer.
+Several objects also have special handling at the tail of the loop, as additional data is deserialized from them specifically.
 
-There are very few static offsets in Tomb Raider II savegames; just level index, save number, and statistics are stored statically. Everything else must
-be calculated dynamically. This can be done based on just the level index. See the code below.
+After the loop ends, additional Lara info is deserialized, which is where the secondary ammo data and Lara's vehicle status (`LARA_VEHICLE_ITEM_OFFSET`) is stored.
+<br>
 
 ```
-byte levelIndex = GetLevelIndex(fileData);
-
-AUTOMATIC_PISTOLS_AMMO_OFFSET = 0x12 + (levelIndex * 0x30);
-UZI_AMMO_OFFSET = 0x14 + (levelIndex * 0x30);
-SHOTGUN_AMMO_OFFSET = 0x16 + (levelIndex * 0x30);
-M16_AMMO_OFFSET = 0x18 + (levelIndex * 0x30);
-GRENADE_LAUNCHER_AMMO_OFFSET = 0x1A + (levelIndex * 0x30);
-HARPOON_GUN_AMMO_OFFSET = 0x1C + (levelIndex * 0x30);
-SMALL_MEDIPACK_OFFSET = 0x1E + (levelIndex * 0x30);
-LARGE_MEDIPACK_OFFSET = 0x1F + (levelIndex * 0x30);
-FLARES_OFFSET = 0x21 + (levelIndex * 0x30);
-WEAPONS_CONFIG_NUM_OFFSET = 0x3C + (levelIndex * 0x30);
-```
-
-Note that the ammunition offsets calculated in that code snippet are just the primary ammo offsets. Secondary ammo offsets must be calculated in a different manner. Not
-only are the secondary ammo offsets allocated dynamically based on the level, they are also dynamically allocated throughout a level. In other words, they shift.
-In order to calculate the secondary ammo offsets, you need to find the ammo index. The ammo index is correlated with the number of active entities in the game. If there
-are 0 entities, the index is 0. If there are 2 entities, the index is 2, and so on.
-
-There is a 4-byte array consisting of `{0xFF, 0xFF, 0xFF, 0xFF}` that precedes the null padding of the savegame and shifts consistently along with the secondary ammo offsets.
-This array's location can be used to calculate both the base secondary ammo offsets, as well as the secondary ammo index itself. While the distance is mostly consistent,
-there are some exceptions. Each index corresponds to two possible locations of the 0xFF array. The second location is +0xA bytes away from the first. See the code below.
-
-```
-private int GetSecondaryAmmoIndex(byte[] fileData)
+for (int itemIndex = 0; itemIndex < levelObjectIds.Count; itemIndex++)
 {
-    byte levelIndex = GetLevelIndex(fileData);
+    int objectId = levelObjectIds[itemIndex];
 
-    Dictionary<byte, int[]> ammoIndexData = platform == Platform.PC ? ammoIndexDataPC : ammoIndexDataConsole;
-
-    if (ammoIndexData.ContainsKey(levelIndex))
+    if (isNativePatch5 && !isPrepatch)
     {
-        int[] indexData = ammoIndexData[levelIndex];
+        sgBufferCursor += 4;
+    }
 
-        int[] offsets1 = new int[indexData.Length];
-        int[] offsets2 = new int[indexData.Length];
+    if (!TR2EntityCache.TR2ObjectsByLevel.TryGetValue(levelIndex, out var levelObjects))
+    {
+        throw new Exception($"{Globals.ERROR_MSG_MISSING_LEVEL_DEFINITION} {levelIndex}.");
+    }
 
-        for (int index = 0; index < MAX_ENTITY_COUNT; index++)
+    if (!levelObjects.TryGetValue(objectId, out var tr2Object))
+    {
+        throw new Exception($"{Globals.ERROR_MSG_MISSING_OBJECT_DEFINITION} (object ID: 0x{objectId:X}).");
+    }
+
+    if (tr2Object.ObjectId == Globals.LARA_ENTITY_ID)
+    {
+        HEALTH_OFFSET = sgBufferCursor + 0x28;
+    }
+
+    if ((tr2Object.Flags00 & 0x08) != 0)
+    {
+        sgBufferCursor += 0x1A;
+    }
+
+    if ((tr2Object.Flags00 & 0x40) != 0)
+    {
+        sgBufferCursor += 0x0A;
+    }
+
+    if ((tr2Object.Flags00 & 0x10) != 0)
+    {
+        sgBufferCursor += 0x02;
+    }
+
+    if ((tr2Object.Flags00 & 0x20) != 0)
+    {
+        int blockStart = sgBufferCursor;
+        bool has02 = (tr2Object.Flags00 & 0x02) != 0;
+
+        ushort u2 = BitConverter.ToUInt16(fileData, savegameOffset + blockStart + (has02 ? 4 : 2));
+
+        bool isEntityAIActive = has02 && (u2 & 0x0080) != 0;
+
+        int increment = has02 ? 0x16 : 0x14;
+
+        if (isEntityAIActive)
         {
-            Array.Copy(indexData, offsets1, indexData.Length);
+            increment += ENTITY_AI_BLOCK_SIZE;
+        }
 
-            for (int i = 0; i < indexData.Length; i++)
-            {
-                offsets2[i] = offsets1[i] + 0xA;
+        sgBufferCursor += increment;
 
-                offsets1[i] += savegameOffset + (index * 0xC);
-                offsets2[i] += savegameOffset + (index * 0xC);
-            }
+        bool mutatesTargetEntity = (u2 & 0x06) == 0x04;
 
-            if (offsets1.All(offset => fileData[offset] == 0xFF))
-            {
-                return index;
-            }
-
-            if (offsets2.All(offset => fileData[offset] == 0xFF))
-            {
-                return index;
-            }
+        if (mutatesTargetEntity &&
+            TR2EntityCache.ControllerTargetEntitiesByLevel.TryGetValue(levelIndex, out var controllerTargets) &&
+            controllerTargets.TryGetValue(itemIndex, out int targetItemIndex))
+        {
+            levelObjectIds[targetItemIndex] = 0x0D;
         }
     }
 
-    return -1;
+    if (objectId == 0x0D || objectId == 0x0E)
+    {
+        sgBufferCursor += 0x18;
+    }
+    else if (objectId == 0x41)
+    {
+        sgBufferCursor += 0x08;
+    }
+}
+
+LARA_VEHICLE_ITEM_OFFSET = sgBufferCursor + 0x2C;
+
+automaticPistolsAmmoOffset2 = sgBufferCursor + 0x14C;
+uziAmmoOffset2 = sgBufferCursor + 0x154;
+shotgunAmmoOffset2 = sgBufferCursor + 0x15C;
+harpoonGunAmmoOffset2 = sgBufferCursor + 0x164;
+grenadeLauncherAmmoOffset2 = sgBufferCursor + 0x16C;
+m16AmmoOffset2 = sgBufferCursor + 0x17C;
+```
+
+## Tomb Raider III Deserializer
+### Pre-Entity Data
+The Tomb Raider III deserializer is very similar to the Tomb Raider II deserializer.
+It also starts at a fixed offset, which depends on the savegame platform and version. It first checks for the savegame version flag and the Challenge Mode flag.
+If the respective flags show Patch 5 and Challenge Mode, it then reads an extra `0xC` bytes for the Challenge Mode parameter block.
+After several fixed reads, it then reads level state entries from the savegame in a loop, each 2-byte integers. If the savegame is native Patch 5, an additional DWORD is read.
+
+```
+sgBufferCursor = GetEntityBlockStart(isPrepatch);
+
+if (isChallengeMode && isNativePatch5 && !isPrepatch)
+{
+    byte enemyNumbers = GetChallengeModeEnemyNumbers(fileData);
+    byte enemyType = GetChallengeModeEnemyType(fileData);
+    Int32 challengeModeRNGSeed = GetChallengeModeRNGSeed(fileData);
+    levelObjectIds = ApplyChallengeModeMutations(levelObjectIds, levelIndex, enemyNumbers, enemyType, challengeModeRNGSeed);
+
+    sgBufferCursor += 0x0C;
+}
+
+sgBufferCursor += 4;
+sgBufferCursor += 0x118;
+
+int gLevelStateEntryCount = TR3EntityCache.LevelStateEntryCounts[levelIndex];
+sgBufferCursor += gLevelStateEntryCount * 2;
+
+if (isNativePatch5 && !isPrepatch)
+{
+    sgBufferCursor += 4;
 }
 ```
 
-Once the secondary ammo index has been determined, all that remains is to calculate the offsets and write the ammo values. Similar to the Tomb Raider I
-implementation, the editor also zeroes the secondary ammo bytes when removing a weapon to free its address space. However, due to the dynamic
-nature of the ammo index in Tomb Raider II, it is important to account for edge cases where the ammo index cannot be found. In such cases, the editor
-only writes to the primary offset to avoid corrupting the savegame.
+
+### Entity Loop
+Next is the entity deserializer loop. It is structurally similar to the Tomb Raider II entity loop.
+For native Patch 5 savegames, an additional DWORD is read for each entity. It then performs a series of bitmask checks for each entity type, and reads additional data accordingly.
+Health is located by identifying Lara's entity (ID 0) and recording the offset `0x28` within her entity block.
+
+The base size of the `0x20` actor block depends on the `0x02` flag. If the entity's AI-active bit is set, an additional AI block is present and the cursor is advanced by `0xA` bytes.
+In Tomb Raider III's deserializer, more objects have special handling at the tail of the loop.
+
+After the loop ends, additional Lara info is deserialized, which is where the secondary ammo data and Lara's vehicle status (`LARA_VEHICLE_ITEM_OFFSET`) is stored.
 
 ```
-private void WriteAutomaticPistolsAmmo(byte[] fileData, bool isPresent, UInt16 ammo)
+for (int itemIndex = 0; itemIndex < levelObjectIds.Count; itemIndex++)
 {
-    WriteUInt16ToBuffer(fileData, savegameOffset + AUTOMATIC_PISTOLS_AMMO_OFFSET, ammo);
+    int objectId = levelObjectIds[itemIndex];
 
-    if (automaticPistolsAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || automaticPistolsAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
+    if (isNativePatch5 && !isPrepatch)
     {
-        return;
+        sgBufferCursor += 4;
     }
 
-    if (isPresent)
+    if (!TR3EntityCache.TR3ObjectsByLevel.TryGetValue(levelIndex, out var levelObjects))
     {
-        WriteInt32ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, (Int32)ammo);
+        throw new Exception($"{Globals.ERROR_MSG_MISSING_LEVEL_DEFINITION} {levelIndex}.");
     }
-    else
+
+    if (!levelObjects.TryGetValue(objectId, out var tr3Object))
     {
-        WriteInt32ToBuffer(fileData, savegameOffset + automaticPistolsAmmoOffset2, 0);
+        throw new Exception($"{Globals.ERROR_MSG_MISSING_OBJECT_DEFINITION} (object ID: 0x{objectId:X}).");
     }
-}
-```
 
-## Tomb Raider III savegame format
-Similar to Tomb Raider II, most of the offsets in Tomb Raider III are dynamic. The only exceptions are the save number, the level index, and the statistics.
-You can calculate most of the remaining offsets based on the level index, just as with Tomb Raider II. See the code below.
-
-```
-byte levelIndex = GetLevelIndex(fileData);
-
-DEAGLE_AMMO_OFFSET = 0x66 + (levelIndex * 0x40);
-UZI_AMMO_OFFSET = 0x68 + (levelIndex * 0x40);
-SHOTGUN_AMMO_OFFSET = 0x6A + (levelIndex * 0x40);
-MP5_AMMO_OFFSET = 0x6C + (levelIndex * 0x40);
-ROCKET_LAUNCHER_AMMO_OFFSET = 0x6E + (levelIndex * 0x40);
-HARPOON_GUN_AMMO_OFFSET = 0x70 + (levelIndex * 0x40);
-GRENADE_LAUNCHER_AMMO_OFFSET = 0x72 + (levelIndex * 0x40);
-SMALL_MEDIPACK_OFFSET = 0x74 + (levelIndex * 0x40);
-LARGE_MEDIPACK_OFFSET = 0x75 + (levelIndex * 0x40);
-FLARES_OFFSET = 0x77 + (levelIndex * 0x40);
-COLLECTIBLE_CRYSTALS_OFFSET = 0x78 + (levelIndex * 0x40);
-WEAPONS_CONFIG_NUM_OFFSET = 0xA0 + (levelIndex * 0x40);
-HARPOON_GUN_OFFSET = 0xA1 + (levelIndex * 0x40);
-```
-
-Weapons information is also stored on a single offset, the same as with Tomb Raider II. The only exception is the Harpoon Gun, which is stored
-on its own offset as a boolean value, +1 byte away from the weapons configuration number. You can use bitwise to extract which weapons are present
-in inventory along with the byte flags. See the table below for Tomb Raider III weapon byte flags.
-
-| Weapon           | Byte flag        |
-|:-----------------|:-----------------|
-| Pistols          | 2                |
-| Desert Eagle     | 4                |
-| Uzis             | 8                |
-| Shotgun          | 16               |
-| MP5              | 32               |
-| Rocket Launcher  | 64               |
-| Grenade Launcher | 128              |
-
-Ammunition is stored in a similar fashion to Tomb Raider II. The logic of a primary offset and secondary offset still apply; unequipped weapons
-only store ammo on the primary offset, and equipped weapons store ammo on both offsets. The only exception seems to be the Harpoon Gun, which stores
-its ammo values on both offsets, whether equipped or not. The secondary ammo index also correlates with the number of active entities, and the index
-can be determined by the location of the `{0xFF, 0xFF, 0xFF, 0xFF}` array.
-
-The ammo index in Tomb Raider III typically shifts by a value of 0x1A. However, much like in Tomb Raider II, there are some exceptions to this pattern. Each index corresponds to
-two possible locations of the 0xFF array, the second array being +0xA bytes from the first array. See the code below for calculating the secondary ammo index.
-
-```
-private int GetSecondaryAmmoIndex(byte[] fileData)
-{
-    byte levelIndex = GetLevelIndex(fileData);
-
-    Dictionary<byte, int[]> ammoIndexData = platform == Platform.PC ? ammoIndexDataPC : ammoIndexDataConsole;
-
-    if (ammoIndexData.ContainsKey(levelIndex))
+    if (tr3Object.ObjectId == Globals.LARA_ENTITY_ID)
     {
-        int[] indexData = ammoIndexData[levelIndex];
+        HEALTH_OFFSET = sgBufferCursor + 0x28;
+    }
 
-        int[] offsets1 = new int[indexData.Length];
-        int[] offsets2 = new int[indexData.Length];
+    if ((tr3Object.Flags00 & 0x08) != 0)
+    {
+        sgBufferCursor += 0x1A;
+    }
 
-        for (int index = 0; index < MAX_ENTITY_COUNT; index++)
+    if ((tr3Object.Flags00 & 0x40) != 0)
+    {
+        sgBufferCursor += 0x0A;
+    }
+
+    if ((tr3Object.Flags00 & 0x10) != 0)
+    {
+        sgBufferCursor += 0x02;
+    }
+
+    if ((tr3Object.Flags00 & 0x20) != 0)
+    {
+        int blockStart = sgBufferCursor;
+        bool has02 = (tr3Object.Flags00 & 0x02) != 0;
+
+        int increment = has02 ? 0x18 : 0x16;
+
+        short aiWord = BitConverter.ToInt16(fileData, savegameOffset + blockStart + 6);
+        bool isEntityAIActive = aiWord < 0 && (aiWord & 0x00FF) != 0;
+
+        if (isEntityAIActive)
         {
-            Array.Copy(indexData, offsets1, indexData.Length);
-
-            for (int i = 0; i < indexData.Length; i++)
-            {
-                offsets2[i] = offsets1[i] + 0xA;
-
-                offsets1[i] += savegameOffset + (index * 0x1A);
-                offsets2[i] += savegameOffset + (index * 0x1A);
-            }
-
-            if (offsets1.All(offset => fileData[offset] == 0xFF))
-            {
-                return index;
-            }
-
-            if (offsets2.All(offset => fileData[offset] == 0xFF))
-            {
-                return index;
-            }
+            increment += ENTITY_AI_BLOCK_SIZE;
         }
+
+        sgBufferCursor += increment;
     }
 
-    return -1;
+    if ((tr3Object.Flags00 & 0x80) != 0)
+    {
+        sgBufferCursor += 0x4;
+    }
+
+    if (objectId == 0x12)
+    {
+        sgBufferCursor += 0x8;
+    }
+
+    if (objectId == 0xF)
+    {
+        sgBufferCursor += 0x1C;
+    }
+
+    if (objectId == 0xE)
+    {
+        sgBufferCursor += 0x30;
+    }
+
+    if (objectId == 0x11)
+    {
+        sgBufferCursor += 0x20;
+    }
+
+    if (objectId == 0x10)
+    {
+        sgBufferCursor += 0x2C;
+    }
+
+    if (objectId == 0x13)
+    {
+        sgBufferCursor += 0x10;
+    }
+
+    if (objectId == 0x123)
+    {
+        sgBufferCursor += 0x2;
+    }
 }
+
+LARA_VEHICLE_ITEM_OFFSET = sgBufferCursor + 0x4C;
+
+deagleAmmoOffset2 = sgBufferCursor + 0x16C;
+uziAmmoOffset2 = sgBufferCursor + 0x174;
+shotgunAmmoOffset2 = sgBufferCursor + 0x17C;
+harpoonGunAmmoOffset2 = sgBufferCursor + 0x184;
+rocketLauncherAmmoOffset2 = sgBufferCursor + 0x18C;
+grenadeLauncherAmmoOffset2 = sgBufferCursor + 0x194;
+mp5AmmoOffset2 = sgBufferCursor + 0x19C;
 ```
 
-Once the secondary ammo index has been determined and the offsets have been calculated, the process of writing to the ammo offsets is the same as in Tomb Raider II.
-When removing a weapon, the secondary ammo bytes must be zeroed to free up its address space. If the ammo index cannot be determined, the editor will only write
-to the primary offset to avoid corrupting the savegame.
-
-```
-private void WriteRocketLauncherAmmo(byte[] fileData, bool isPresent, UInt16 ammo)
-{
-    WriteUInt16ToBuffer(fileData, savegameOffset + ROCKET_LAUNCHER_AMMO_OFFSET, ammo);
-
-    if (rocketLauncherAmmoOffset2 < AMMO_WRITE_LOWER_BOUND || rocketLauncherAmmoOffset2 > AMMO_WRITE_UPPER_BOUND)
-    {
-        return;
-    }
-
-    if (isPresent)
-    {
-        WriteInt32ToBuffer(fileData, savegameOffset + rocketLauncherAmmoOffset2, (Int32)ammo);
-    }
-    else
-    {
-        WriteInt32ToBuffer(fileData, savegameOffset + rocketLauncherAmmoOffset2, 0);
-    }
-}
-```
 
 ## Tomb Raider IV-VI Remastered Savegame Format
 This section details the technical aspects of reverse engineering the savegames of the Tomb Raider IV-VI Remastered trilogy. Like the first trilogy, all savegames are stored in the `savegame.dat` file.
@@ -599,82 +662,318 @@ Below are the offset tables for Tomb Raider IV-VI. With the exception of health,
 | 0x35C     | Int32   | New Game+                    |
 | 0x364     | Int32   | Compressed Block Size        |
 
-## Tomb Raider IV savegame format
-Tomb Raider IV is based on a heavily modified version of the engine that the first three games use. There are some similarities, but since it contains
-less dynamic data, it is easier to decipher the data structures. Weapons are all stored on static offsets for Tomb Raider IV, in UInt8 format. `0x9` is
-the 'present' flag, and `0xD` is the 'present with sight' flag.
-
-Like Tomb Raider I-III, the health offset is always stored after the character animation data.
-However, Tomb Raider IV health is conditionally stored on the savegame, depending on whether or not it is full (or 'default') or partial. In other words,
-a full health value (1000) will never be stored on the savegame. Its presence is indicated by a byte flag which is stored 0x13 bytes before the health offset. 
-
-| Flag      | Meaning        |
-|:----------|:---------------|
-| 0x008     | Full health    |
-| 0x00C     | Partial health |
-
-Because of this, it is not enough to simply write the new health value and change the flag accordingly. If you are switching from partial health to full health,
-the game will no longer be expecting the health bytes to be stored on the buffer. Therefore, the bytes proceeding the health offset must be shifted accordingly.
-See the code below.
+## Tomb Raider IV Deserializer
+### Pre-Entity Data
+The Tomb Raider IV deserializer begins by reading several fixed blocks. It then deserializes static mesh counts,
+then post-static mesh flags, then camera data, and spotcam data.
 
 ```
-private void WriteHealthValue(byte[] fileData, UInt16 newHealth)
+sgBufferCursor += 0xB;
+sgBufferCursor += 0x20;
+sgBufferCursor += 0x11F;
+
+if (TR4EntityCache.EligibleStaticMeshCounts.TryGetValue(levelIndex, out int eligibleStaticMeshCount))
 {
-    int healthOffset = GetHealthOffset();
+    sgBufferCursor += ((eligibleStaticMeshCount + 15) / 16) * 2;
+}
 
-    if (healthOffset != -1)
+sgBufferCursor += 0x04;
+
+if (TR4EntityCache.LevelCameraCounts.TryGetValue(levelIndex, out int cameraCount))
+{
+    sgBufferCursor += cameraCount * 0x02;
+}
+
+if (TR4EntityCache.LevelSpotcamCounts.TryGetValue(levelIndex, out int spotcamCount))
+{
+    sgBufferCursor += spotcamCount * 0x02;
+}
+```
+
+### Entity Loop
+The entity loop for Tomb Raider IV is considerably more complex than those of the first three games. Each entity begins with a set of runtime flags that determine whether it should be deserialized and which data blocks are present.
+Lara's health offset is calculated when her entity is encountered, with the presence of the health field determined by the corresponding runtime flag.
+
+Near the end of the loop, additional runtime and object flags control the deserialization of creature-specific data. Finally, several object IDs receive special-case handling with additional serialized data.
+
+```
+for (int itemIndex = 0; itemIndex < tr4Objects.Count; itemIndex++)
+{
+    TR4Object tr4Object = tr4Objects[itemIndex];
+
+    int itemFlagsOffset = ENTITY_STREAM_OFFSET + virtualCursorStart + sgBufferCursor;
+    int itemFlagsAbsoluteOffset = savegameOffset + itemFlagsOffset;
+
+    UInt32 itemFlags = BitConverter.ToUInt32(fileData, itemFlagsAbsoluteOffset);
+    sgBufferCursor += 0x04;
+
+    if ((itemFlags & 0x200) != 0)
     {
-        int toggleOffset = healthOffset - 0x13;
-        byte currentToggle = fileData[toggleOffset];
+        continue;
+    }
 
-        bool currentlyFull = (currentToggle == FULL_HEALTH_TOGGLE_BYTE);
-        bool currentlyPartial = (currentToggle == PARTIAL_HEALTH_TOGGLE_BYTE);
-        bool newIsPartial = newHealth < MAX_HEALTH_VALUE;
+    if ((itemFlags & 0x800) == 0)
+    {
+        continue;
+    }
 
+    if ((tr4Object.Flags00 & 0x08) != 0)
+    {
+        sgBufferCursor += 0x09;
 
-        if (currentlyFull && newIsPartial)
+        if ((itemFlags & 0x01) != 0)
         {
-            // Full health -> Partial health
-            fileData[toggleOffset] = (byte)(currentToggle + TOGGLE_DELTA);
-            WriteUInt16ToBuffer(fileData, healthOffset, newHealth);
-            ShiftBytesRight(ref fileData, healthOffset);
+            sgBufferCursor += 0x02;
         }
-        else if (currentlyPartial && !newIsPartial)
+
+        if ((itemFlags & 0x02) != 0)
         {
-            // Partial health -> Full health
-            fileData[toggleOffset] = (byte)(currentToggle - TOGGLE_DELTA);
-            WriteUInt16ToBuffer(fileData, healthOffset, 0);
-            ShiftBytesLeft(ref fileData, healthOffset);
+            sgBufferCursor += 0x02;
         }
-        else if (currentlyFull && !newIsPartial)
+
+        if ((itemFlags & 0x20) != 0)
         {
-            // Already full health
-            WriteUInt16ToBuffer(fileData, healthOffset, 0);
+            sgBufferCursor += 0x02;
         }
-        else
+
+        if ((itemFlags & 0x40) != 0)
         {
-            // Partial health -> Partial health
-            WriteUInt16ToBuffer(fileData, healthOffset, newHealth);
+            sgBufferCursor += 0x02;
         }
+    }
+
+    if ((tr4Object.Flags00 & 0x40) != 0)
+    {
+        sgBufferCursor += tr4Object.ObjectId == Globals.LARA_ENTITY_ID ? 0x07 : 0x06;
+    }
+
+    bool hasHealthField = (itemFlags & 0x400) != 0;
+
+    if (tr4Object.ObjectId == Globals.LARA_ENTITY_ID)
+    {
+        HEALTH_OFFSET = ENTITY_STREAM_OFFSET + virtualCursorStart + sgBufferCursor;
+        IS_LARA_HEALTH_SERIALIZED = hasHealthField;
+        LARA_DWORD_OFFSET = itemFlagsOffset;
+        return;
+    }
+
+    if (hasHealthField)
+    {
+        sgBufferCursor += 0x02;
+    }
+
+    if ((tr4Object.Flags00 & 0x20) != 0)
+    {
+        UInt32 extendedFlags = BitConverter.ToUInt32(fileData, savegameOffset + ENTITY_STREAM_OFFSET + virtualCursorStart + sgBufferCursor);
+
+        sgBufferCursor += 0x24;
+
+        if ((itemFlags & 0x80) != 0)
+        {
+            sgBufferCursor += 0x02;
+        }
+
+        if ((itemFlags & 0x100) != 0)
+        {
+            sgBufferCursor += 0x02;
+        }
+
+        if ((tr4Object.Flags00 & 0x02) != 0)
+        {
+            sgBufferCursor += 0x02;
+        }
+
+        if ((extendedFlags & 0x80000000) != 0)
+        {
+            sgBufferCursor += 0x49;
+        }
+    }
+
+    if ((tr4Object.ObjectFlags & 0x2000) != 0)
+    {
+        sgBufferCursor += 0x0C;
+    }
+
+    if (tr4Object.ObjectId == 0x1F)
+    {
+        sgBufferCursor += 0x28;
+    }
+
+    if (tr4Object.ObjectId == 0x20)
+    {
+        sgBufferCursor += 0x30;
     }
 }
 ```
 
-## Tomb Raider V savegame format
-The engine used by Tomb Raider V is virtually identical to the Tomb Raider IV engine. This is reflected in the savegames, where almost everything is the
-same; weapons stored statically as UInt8, and ammo stored statically as UInt16. The only difference between the Tomb Raider IV and V savegame format is
-the manner in which health is stored. Tomb Raider V does not conditionally store health based on whether it is full or not. Health is instead stored regardless
-of its value. Like Tomb Raider IV and the previous titles, health is also stored proceeding the character animation data, so this can be used to detect the dynamic offset.
+## Tomb Raider V Deserializer
+### Pre-Entity Data
+Similar to that of the previous title, the Tomb Raider V deserializer begins by reading several fixed blocks, followed by static mesh counts.
+Next, it reads camera counts and spotcam counts.
 
-## Tomb Raider VI savegame format
+```
+sgBufferCursor = 0xB;
+
+sgBufferCursor += 0x1E;
+sgBufferCursor += 0x11F;
+
+if (TR5EntityCache.EligibleStaticMeshCounts.TryGetValue(levelIndex, out int eligibleStaticMeshCount))
+{
+    sgBufferCursor += ((eligibleStaticMeshCount + 15) / 16) * 2;
+}
+
+sgBufferCursor += 0x05;
+
+if (TR5EntityCache.LevelCameraCounts.TryGetValue(levelIndex, out int cameraCount))
+{
+    sgBufferCursor += cameraCount * 0x02;
+}
+
+if (TR5EntityCache.LevelSpotcamCounts.TryGetValue(levelIndex, out int spotcamCount))
+{
+    sgBufferCursor += spotcamCount * 0x02;
+}
+```
+
+### Entity Loop
+The Tomb Raider V entity loop is nearly identical to Tomb Raider IV's. It uses the same runtime flag checks to determine which data blocks are present, calculates Lara's health offset when her entity is encountered, and conditionally deserializes creature-specific data.
+The primary differences are a handful of game-specific object checks and flag conditions.
+
+```
+for (int itemIndex = 0; itemIndex < tr5Objects.Count; itemIndex++)
+{
+    TR5Object tr5Object = tr5Objects[itemIndex];
+
+    UInt32 itemFlags = BitConverter.ToUInt32(fileData, savegameOffset + ENTITY_STREAM_OFFSET + sgBufferCursor);
+    sgBufferCursor += 0x04;
+
+    if ((itemFlags & 0x200) != 0)
+    {
+        continue;
+    }
+
+    if (((itemFlags & 0x800) == 0))
+    {
+        continue;
+    }
+
+    if ((tr5Object.Flags00 & 0x08) != 0)
+    {
+        sgBufferCursor += 0x09;
+
+        if ((itemFlags & 0x01) != 0)
+        {
+            sgBufferCursor += 0x02;
+        }
+
+        if ((itemFlags & 0x02) != 0)
+        {
+            sgBufferCursor += 0x02;
+        }
+
+        if ((itemFlags & 0x20) != 0)
+        {
+            sgBufferCursor += 0x02;
+        }
+
+        if ((itemFlags & 0x40) != 0)
+        {
+            sgBufferCursor += 0x02;
+        }
+    }
+
+    if ((tr5Object.Flags00 & 0x40) != 0)
+    {
+        sgBufferCursor += tr5Object.ObjectId == Globals.LARA_ENTITY_ID ? 0x07 : 0x06;
+    }
+
+    if (((itemFlags & 0x400) != 0))
+    {
+        if (tr5Object.ObjectId == Globals.LARA_ENTITY_ID)
+        {
+            HEALTH_OFFSET = sgBufferCursor + ENTITY_STREAM_OFFSET;
+            return;
+        }
+
+        sgBufferCursor += 0x02;
+    }
+
+    if ((tr5Object.Flags00 & 0x20) != 0)
+    {
+        UInt32 extendedFlags = BitConverter.ToUInt32(fileData, savegameOffset + ENTITY_STREAM_OFFSET + sgBufferCursor);
+
+        sgBufferCursor += 0x24;
+
+        if ((itemFlags & 0x80) != 0)
+        {
+            sgBufferCursor += 0x02;
+        }
+
+        if ((itemFlags & 0x100) != 0)
+        {
+            sgBufferCursor += 0x02;
+        }
+
+        if (((tr5Object.Flags00 & 0x02) != 0) || ((uint)(tr5Object.ObjectId - 0xA4) < 5))
+        {
+            sgBufferCursor += 0x02;
+        }
+
+        if ((extendedFlags & 0x80000000) != 0)
+        {
+            sgBufferCursor += 0x49;
+        }
+    }
+
+    if ((tr5Object.ObjectFlags & 0x2000) != 0)
+    {
+        sgBufferCursor += 0x0C;
+    }
+}
+```
+
+## Tomb Raider VI Deserializer
 Tomb Raider VI uses a markedly different engine than the previous five releases. The header mainly stores savegame metadata, such as the save number, level number, timestamp,
 and the statistics data. The rest of the savegame data is compressed using a customized variant of the lossless [LZW](https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Welch) compression algorithm.
-The compressed portion of the savegame data begins at offset `0x36C` of the header.
+The compressed portion of the savegame data begins at offset `0x36C` of the header. This is what the deserializer parses. Because 3D animation state entity data is stored in the savegame, the Tomb Raider VI
+is notably more complex than those of the previous five games.
 
-The inventory block is typically the main block of interest. However, the inventory block is stored at the end of the buffer. There are no pointers that point to the inventory start offset.
-Therefore, the only way to accurately determine the inventory offset is to replicate every read operation that the game performs to reach the inventory block. The game does perform some conditional reads
-based on savegame data, so the conditional reads need to be properly replicated. The game also performs conditional reads based on entity data that is allocated at runtime. This is the most challenging aspect
-of reversing the Tomb Raider VI format. Below is a table of the compressed buffer structure.
+```
+Int32 savegameVersion = GetSavegameVersion(fileData);
+Int32 compressedBlockSize = GetCompressedBlockSize(fileData);
+byte[] compressedBlockData = ReadBytes(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, compressedBlockSize);
+
+decompressedBuffer = new byte[0];
+decompressedBuffer = Unpack(compressedBlockData);
+
+sgBufferCursor = 0x4;
+
+using (MemoryStream ms = new MemoryStream(decompressedBuffer))
+using (BinaryReader reader = new BinaryReader(ms))
+{
+    reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
+    sgCurrentLevel = reader.ReadByte();
+    sgBufferCursor += 0x1;
+
+    sgBufferCursor += 0x4;
+
+    LoadCachedEntities();
+
+    InvLoad(reader);
+    MapLoad(reader);
+    CamLoad();
+    CamLoad();
+    CamLoad();
+
+    sgBufferCursor += 0x8;
+
+    FxLoad(reader);
+    AudioLoad(reader);
+    MapPickupLoad(reader, savegameVersion);
+}
+```
+
+### Deserialized Blocks
 
 | Block           | Size             |
 |:----------------|:-----------------|
@@ -690,40 +989,147 @@ of reversing the Tomb Raider VI format. Below is a table of the compressed buffe
 | Inv2            | Dynamic          |
 
 First is the header block (not to be confused with the savegame header outside the compressed buffer) which stores a static "TOMB" signature string, followed by the level (UInt8), and the loaded zone (Int32).
-Next is the `Inv` block, which stores more game state metadata such as cash and conversation flags. Next is the `Map` block, which is by far the largest and most dynamic. The bulleted list below depicts the hierarchy in
-which entities are stored/loaded in the Map block.
+Next is the `Inv` block, which stores more game state metadata such as cash and conversation flags. The subsequent blocks are dynamic and more complex.
 
-1. **Actors**
-2. **Objects**
-3. **Triggers**
-4. **Emitters**
-5. **Water**
-6. **Audio Locators**
-7. **Rooms**
-
-With the exception of Water, all of these entities are allocated at runtime. Since the game performs conditional reads based on the properties of the runtime entities, it is also necessary to reverse engineer the
-game's WAD file format (GMX), specifically for the properties needed for the conditional reads. Namely, the APB values for Actors and Objects, the 'active flag' for the Actors, and whether or
-not a specific Actor is the active player. For Triggers, Emitters, and Audio Locators, only the entity count is needed.
-
-The `Inv2` block stores the inventory data for both Lara and Kurtis, as well as the active player's health. The item counts are stored as UInt8 values. The actual inventory array of the respective player is stored
-immediately after the item count. Lara's inventory array is stored first, then Kurtis' inventory is stored after. Below is how the inventory item struct looks for Tomb Raider VI.
+### `MapLoad`
+Next is the `Map` block, which is by far the largest and most dynamic. First, static map globals are loaded. Next, actor data is deserialized, then objects, then triggers, then emmiters.
+Water data is then deserialized, followed by audio locators and room data.
 
 ```
-struct InventoryItem
+private void MapLoad(BinaryReader reader)
 {
-    uint16_t ClassId;
-    int Type;
-    int Quantity;
-};
+    MapLoadGlobals(reader);
+
+    for (int i = 0; i < actors.Count; i++)
+    {
+        MapActorLoad(reader, actors[i], i);
+    }
+
+    for (int i = 0; i < objects.Count; i++)
+    {
+        MapObjLoad(reader, objects[i]);
+    }
+
+    for (int i = 0; i < NUM_TRIGGERS; i++)
+    {
+        MapTrigLoad(reader);
+    }
+
+    for (int i = 0; i < NUM_EMITTERS; i++)
+    {
+        MapEmitterLoad(reader);
+    }
+
+    reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
+    Int16 puVar11 = reader.ReadInt16();
+    sgBufferCursor += 0x2;
+
+    if (puVar11 != 0)
+    {
+        int index = 0;
+
+        do
+        {
+            sgBufferCursor += 0x4;
+            MapLoadBaseNode();
+            sgBufferCursor += 0x2;
+            index = index + 1;
+        } while (index < puVar11);
+    }
+
+    for (int i = 0; i < NUM_AUDIO_LOCATORS; i++)
+    {
+        MapLoadBaseNode();
+    }
+
+    for (int i = 0; i < rooms.Count; i++)
+    {
+        if (rooms[i].RoomMeta != 0)
+        {
+            sgBufferCursor += 0x4;
+        }
+    }
+
+    return;
+}
 ```
 
-The `ClassId` field represents the unique ID associated with the specific item. The `Type` field represents which inventory field the item will be stored in (i.e. Health, Item, Weapons, Notebook). Below is a table
-that shows what `Type` corresponds to.
+### `MapActorLoad`
+This function is responsible for deserializing actor data. It begins by checking if the active bit flag is set. It exits the function early if it is set.  
+If the actor is the player, a special loading sequence is run (`PlayLoad()`). Special handling is also executed for boss entities. Finally, APB (animation data)
+is deserialized if the condition byte is set.
 
-| Type       | Description      |
-|:-----------|:-----------------|
-| -1         | Notebook Item    |
-| 2          | Item             |
-| 3          | Weapon           |
-| 4          | Health Item      |
-| 7          | Ammo             |
+```
+private void MapActorLoad(BinaryReader reader, EntityMock actor, int actorIndex)
+{
+    if ((actor.ActiveFlag & 0x400000) != 0)
+    {
+        return;
+    }
+
+    bool isPlayer = actor.IsPlayable;
+
+    if (isPlayer)
+    {
+        PLAYER_BASE_OFFSET = sgBufferCursor;
+    }
+
+    MapLoadBaseNode();
+
+    sgBufferCursor += 0x4;
+
+    if (isPlayer)
+    {
+        PlayLoad(reader);
+        PLAYER_HEALTH_OFFSET = sgBufferCursor;
+        sgBufferCursor += 0x4;
+    }
+    else
+    {
+        if (!ShouldLoadBoss(actorIndex))
+        {
+            reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
+            int offset35CValue = reader.ReadInt16();
+            sgBufferCursor += 0x2;
+
+            sgBufferCursor += 0xA;
+
+            if (((ushort)(offset35CValue - 300) < 200) || (sgCurrentLevel == 0x13))
+            {
+                PathLoad(reader);
+            }
+
+            BoneControlLoad(reader);
+            BoneControlLoad(reader);
+            BoneControlLoad(reader);
+            BoneControlLoad(reader);
+
+            reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
+            float health = reader.ReadSingle();
+            sgBufferCursor += 0x4;
+
+            sgBufferCursor += 0x1;
+        }
+        else
+        {
+            BossLoad(reader);
+        }
+    }
+
+    sgBufferCursor += 0x4;
+
+    reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
+    byte condByte = reader.ReadByte();
+    sgBufferCursor += 0x1;
+
+    if (condByte != 0)
+    {
+        APB_Load(reader, actor);
+
+        if ((actor.ActiveFlag & 0x8000000) != 0)
+        {
+            sgBufferCursor += 0xC0;
+        }
+    }
+}
+```
