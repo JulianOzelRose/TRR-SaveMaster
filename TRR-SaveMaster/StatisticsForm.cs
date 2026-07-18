@@ -276,6 +276,7 @@ namespace TRR_SaveMaster
         private Platform platform;
         private bool isPrepatch;
         private const byte FINAL_STATISTICS = 0xFF;
+        private bool distanceTravelledDirty;
 
         private int STATISTICS_ARRAY_BASE_OFFSET;
         private int STATISTICS_ARRAY_STRIDE;
@@ -1385,6 +1386,7 @@ namespace TRR_SaveMaster
         private void DisplayStatistics()
         {
             isLoading = true;
+            distanceTravelledDirty = false;
 
             try
             {
@@ -1434,7 +1436,7 @@ namespace TRR_SaveMaster
                     nudPickups.Value = GetNumPickupsTRX2(fileData);
                     nudAmmoUsed.Value = GetAmmoUsedTRX2(fileData);
                     DisplayDistanceTravelledTRX2(fileData);
-                    DisplayTimeTaken(fileData);
+                    DisplayTimeTakenTR45(fileData);
 
                     if (nudVesselsBroken.Enabled)
                     {
@@ -1469,28 +1471,24 @@ namespace TRR_SaveMaster
         {
             UInt32 distanceTravelledRaw = GetDistanceTravelled(fileData, levelIndex);
 
-            decimal distanceTravelledMeters = distanceTravelledRaw / 445;
-            decimal distanceToShow;
+            UInt32 distanceTravelledMeters = distanceTravelledRaw / 445;
 
             if (distanceTravelledMeters >= 1000)
             {
-                decimal distanceInKilometers = (decimal)distanceTravelledMeters / 1000.0m;
-                distanceToShow = decimal.Floor(distanceInKilometers * 100) / 100;
+                decimal distanceToShow = (distanceTravelledMeters / 1000) + ((distanceTravelledMeters % 100) / 100.0m);
 
                 nudDistanceTravelled.DecimalPlaces = 2;
                 nudDistanceTravelled.Increment = 0.01m;
+                nudDistanceTravelled.Value = distanceToShow;
                 lblDistanceTravelledUnit.Text = Globals.LABEL_TEXT_UNIT_KILOMETER;
             }
             else
             {
-                distanceToShow = distanceTravelledMeters;
-
                 nudDistanceTravelled.DecimalPlaces = 0;
                 nudDistanceTravelled.Increment = 1;
+                nudDistanceTravelled.Value = distanceTravelledMeters;
                 lblDistanceTravelledUnit.Text = Globals.LABEL_TEXT_UNIT_METER;
             }
-
-            nudDistanceTravelled.Value = distanceToShow;
         }
 
         private void DisplayDistanceTravelledTRX2(byte[] fileData)
@@ -1523,7 +1521,7 @@ namespace TRR_SaveMaster
             nudDistanceTravelled.Value = distanceTravelledMeters;
         }
 
-        private void DisplayTimeTaken(byte[] fileData)
+        private void DisplayTimeTakenTR45(byte[] fileData)
         {
             Int32 timeTakenRaw = GetTimeTaken(fileData);
             Int32 timeTakenSeconds = timeTakenRaw / 30;
@@ -1960,7 +1958,7 @@ namespace TRR_SaveMaster
             WriteInt32ToBuffer(fileData, recordOffset + CRYSTALS_USED_ARRAY_OFFSET, value);
         }
 
-        private void WriteTimeTaken(byte[] fileData, Int32 value)
+        private void WriteTimeTakenTR45(byte[] fileData, Int32 value)
         {
             WriteInt32ToBuffer(fileData, savegameOffset + TIME_TAKEN_OFFSET, value);
         }
@@ -2004,24 +2002,32 @@ namespace TRR_SaveMaster
 
         private void WriteDistanceTravelledTRX(byte[] fileData, decimal value, byte? levelIndex = null)
         {
+            UInt32 distanceTravelledRaw;
+
             bool isMeter = lblDistanceTravelledUnit.Text == Globals.LABEL_TEXT_UNIT_METER;
 
-            if (!isMeter)
+            if (isMeter)
             {
-                value *= 1000;
+                distanceTravelledRaw = (UInt32)(value * 445);
             }
+            else
+            {
+                Int32 wholeKilometers = decimal.ToInt32(decimal.Truncate(value));
+                Int32 fraction = decimal.ToInt32((value - wholeKilometers) * 100);
 
-            value *= 445;
+                UInt32 distanceTravelledMeters = (UInt32)(wholeKilometers * 1000 + fraction);
+                distanceTravelledRaw = distanceTravelledMeters * 445;
+            }
 
             if (levelIndex == null)
             {
-                WriteUInt32ToBuffer(fileData, savegameOffset + DISTANCE_TRAVELLED_OFFSET, (UInt32)value);
+                WriteUInt32ToBuffer(fileData, savegameOffset + DISTANCE_TRAVELLED_OFFSET, distanceTravelledRaw);
                 return;
             }
 
             int recordOffset = savegameOffset + STATISTICS_ARRAY_BASE_OFFSET + ((levelIndex.Value - 1) * STATISTICS_ARRAY_STRIDE);
 
-            WriteUInt32ToBuffer(fileData, recordOffset + DISTANCE_TRAVELLED_ARRAY_OFFSET, (UInt32)value);
+            WriteUInt32ToBuffer(fileData, recordOffset + DISTANCE_TRAVELLED_ARRAY_OFFSET, distanceTravelledRaw);
         }
 
         private void WriteDistanceTravelledTRX2(byte[] fileData, decimal value)
@@ -2067,8 +2073,12 @@ namespace TRR_SaveMaster
             WriteNumPickupsTRX(fileData, (sbyte)nudPickups.Value);
             WriteNumMedipacksUsedTRX(fileData, (sbyte)(nudMedipacksUsed.Value * 2));
             WriteTimeTakenTRX(fileData, (Int32)(nudHours.Value * 3600 + nudMinutes.Value * 60 + nudSeconds.Value) * 30);
-            WriteDistanceTravelledTRX(fileData, (decimal)nudDistanceTravelled.Value);
             WriteNumSecretsFoundTRX(fileData, (UInt16)nudSecretsFound.Value);
+
+            if (distanceTravelledDirty)
+            {
+                WriteDistanceTravelledTRX(fileData, (decimal)nudDistanceTravelled.Value);
+            }
 
             if (nudCrystalsFound.Enabled)
             {
@@ -2192,7 +2202,7 @@ namespace TRR_SaveMaster
                     WriteNumPickupsTRX2(fileData, (Int32)nudPickups.Value);
                     WriteNumMedipacksUsedTRX2(fileData, (byte)nudMedipacksUsed.Value);
                     WriteNumSecretsFoundTRX2(fileData, (byte)nudSecretsFound.Value);
-                    WriteTimeTaken(fileData, (Int32)(nudHours.Value * 3600 + nudMinutes.Value * 60 + nudSeconds.Value) * 30);
+                    WriteTimeTakenTR45(fileData, (Int32)(nudHours.Value * 3600 + nudMinutes.Value * 60 + nudSeconds.Value) * 30);
                     WriteTimeTakenToTimestamp(fileData, (Int32)(nudHours.Value * 3600 + nudMinutes.Value * 60 + nudSeconds.Value) * 30);
                     WriteDistanceTravelledTRX2(fileData, (decimal)nudDistanceTravelled.Value);
 
@@ -2209,6 +2219,8 @@ namespace TRR_SaveMaster
                 File.WriteAllBytes(savegamePath, fileData);
 
                 DisableButtons();
+
+                distanceTravelledDirty = false;
 
                 UpdateSavegameDisplayName(fileData);
 
@@ -2391,6 +2403,7 @@ namespace TRR_SaveMaster
         {
             if (!isLoading)
             {
+                distanceTravelledDirty = true;
                 EnableButtons();
             }
         }
@@ -2527,6 +2540,7 @@ namespace TRR_SaveMaster
         {
             if (char.IsDigit(e.KeyChar))
             {
+                distanceTravelledDirty = true;
                 EnableButtons();
             }
         }
