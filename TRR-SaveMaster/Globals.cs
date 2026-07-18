@@ -5,7 +5,7 @@
         // Application metadata & configuration
         public const string WINDOW_TITLE = "Tomb Raider I-VI Remastered Savegame Editor";
         public const string CONFIG_FILE_NAME = "TRR-SaveMaster.ini";
-        public const string VERSION = "2.80";
+        public const string VERSION = "2.85";
 
         // Config file keys
         public const string CONFIG_KEY_TRX_PATH = "TRXPath=";
