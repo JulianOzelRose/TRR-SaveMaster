@@ -2118,7 +2118,7 @@ namespace TRR_SaveMaster
 
         private void WriteTR6CurrentLevelStatistics(byte[] fileData)
         {
-            WriteAmmoUsedTR6(fileData, (Int16)nudAmmoUsed.Value);
+            WriteAmmoUsedTR6(fileData, (Int32)nudAmmoUsed.Value);
             WriteHealthRestoredTR6(fileData, (byte)nudMedipacksUsed.Value);
             WriteNumHitsTR6(fileData, (Int32)nudHits.Value);
             WriteNumKillsTR6(fileData, (UInt16)nudKills.Value);
@@ -2126,12 +2126,12 @@ namespace TRR_SaveMaster
             WriteNumHealthItemsFoundTR6(fileData, (UInt16)nudHealthItemsFound.Value);
             WriteNumChocobarsFoundTR6(fileData, (byte)nudChocobarsFound.Value);
             WriteDistanceTravelledTR6(fileData, (decimal)nudDistanceTravelled.Value);
-            WriteTimeTakenTR6(fileData, (Int32)(nudHours.Value * 3600 + nudMinutes.Value * 60 + nudSeconds.Value) * 60);
+            WriteTimeTakenTR6(fileData, (Int32)(nudHours.Value * 3600 + nudMinutes.Value * 60 + nudSeconds.Value));
         }
 
         private void WriteTR6FinalStatistics(byte[] fileData)
         {
-            WriteAmmoUsedTR6(fileData, (Int16)nudAmmoUsed.Value, true);
+            WriteAmmoUsedTR6(fileData, (Int32)nudAmmoUsed.Value, true);
             WriteHealthRestoredTR6(fileData, (byte)nudMedipacksUsed.Value, true);
             WriteNumHitsTR6(fileData, (Int32)nudHits.Value, true);
             WriteNumKillsTR6(fileData, (UInt16)nudKills.Value, true);
