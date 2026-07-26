@@ -117,22 +117,16 @@
     </Compile>
     <Compile Include="ThemeUtilities.cs" />
     <Compile Include="TR1EntityCache.cs" />
-    <Compile Include="TR1Models.cs" />
     <Compile Include="TR1Utilities.cs" />
     <Compile Include="TR2EntityCache.cs" />
-    <Compile Include="TR2Models.cs" />
     <Compile Include="TR2Utilities.cs" />
     <Compile Include="TR3EntityCache.cs" />
-    <Compile Include="TR3Models.cs" />
     <Compile Include="TR3Utilities.cs" />
     <Compile Include="TR4EntityCache.cs" />
-    <Compile Include="TR4Models.cs" />
     <Compile Include="TR4Utilities.cs" />
     <Compile Include="TR5EntityCache.cs" />
-    <Compile Include="TR5Models.cs" />
     <Compile Include="TR5Utilities.cs" />
     <Compile Include="TR6EntityCache.cs" />
-    <Compile Include="TR6EntityMock.cs" />
     <Compile Include="TR6Inventory.cs" />
     <Compile Include="TR6Utilities.cs" />
     <Compile Include="UnlocksForm.cs">

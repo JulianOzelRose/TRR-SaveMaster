@@ -2,6 +2,28 @@
 
 namespace TRR_SaveMaster
 {
+    public class EntityMock
+    {
+        // Types and IDs
+        public int ID { get; set; }
+        public int EntityType { get; set; }
+        public int ObjTypeID { get; set; }
+
+        // APB values
+        public int APB_Loop_Counter { get; set; }
+        public int Second_APB_Value { get; set; }
+
+        // Other flags
+        public bool IsPlayable { get; set; }
+        public int ActiveFlag { get; set; }
+        public int RoomMeta { get; set; }
+
+        public EntityMock()
+        {
+
+        }
+    }
+
     public class TR6EntityCache
     {
         public static int GetNumEmitters(byte sgCurrentLevel)
@@ -4814,6 +4836,5 @@ namespace TRR_SaveMaster
 
             return new List<EntityMock>();
         }
-
     }
 }
