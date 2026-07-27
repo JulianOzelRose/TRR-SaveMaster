@@ -337,18 +337,32 @@ namespace TRR_SaveMaster
             Buffer.BlockCopy(bytes, 0, buffer, offset, 2);
         }
 
-        private Int16 GetOrientation(byte[] fileData)
+        private double GetOrientation(byte[] fileData)
         {
             Int16 rawValue = BitConverter.ToInt16(fileData, ORIENTATION_OFFSET);
-            double degrees = rawValue * 180.0 / Int16.MaxValue;
 
-            return (degrees >= 0) ? (Int16)degrees : (Int16)(-degrees);
+            if (rawValue == short.MinValue)
+            {
+                return -180.0;
+            }
+
+            return rawValue * 180.0 / short.MaxValue;
         }
 
-        private void WriteOrientation(byte[] fileData, Int16 value)
+        private byte GetRoom(byte[] fileData)
         {
-            Int16 rawValue = (Int16)(value * Int16.MaxValue / 180.0);
+            return fileData[ROOM_OFFSET];
+        }
+
+        private void WriteOrientation(byte[] fileData, double value)
+        {
+            short rawValue = (short)Math.Round(value * short.MaxValue / 180.0);
             WriteInt16ToBuffer(fileData, ORIENTATION_OFFSET, rawValue);
+        }
+
+        private void WriteRoom(byte[] fileData, byte room)
+        {
+            fileData[ROOM_OFFSET] = room;
         }
 
         private bool IsSavegamePresent(byte[] fileData = null)
@@ -593,10 +607,6 @@ namespace TRR_SaveMaster
                 nudZCoordinate.Maximum = 9999999;
                 nudZCoordinate.Minimum = -9999999;
 
-                nudOrientation.DecimalPlaces = 2;
-                nudOrientation.Maximum = 180;
-                nudOrientation.Minimum = -180;
-
                 nudRoom.Maximum = Int32.MaxValue;
                 nudRoom.Minimum = 0;
 
@@ -754,16 +764,16 @@ namespace TRR_SaveMaster
                     nudXCoordinate.Value = BitConverter.ToInt32(fileData, X_COORDINATE_OFFSET);
                     nudYCoordinate.Value = BitConverter.ToInt32(fileData, Y_COORDINATE_OFFSET);
                     nudZCoordinate.Value = BitConverter.ToInt32(fileData, Z_COORDINATE_OFFSET);
-                    nudOrientation.Value = GetOrientation(fileData);
-                    nudRoom.Value = fileData[ROOM_OFFSET];
+                    nudOrientation.Value = (decimal)GetOrientation(fileData);
+                    nudRoom.Value = GetRoom(fileData);
                 }
                 else if (IsTR4Savegame() || IsTR5Savegame())
                 {
                     nudXCoordinate.Value = BitConverter.ToUInt16(fileData, X_COORDINATE_OFFSET);
                     nudYCoordinate.Value = BitConverter.ToInt16(fileData, Y_COORDINATE_OFFSET);
                     nudZCoordinate.Value = BitConverter.ToUInt16(fileData, Z_COORDINATE_OFFSET);
-                    nudOrientation.Value = GetOrientation(fileData);
-                    nudRoom.Value = fileData[ROOM_OFFSET];
+                    nudOrientation.Value = (decimal)GetOrientation(fileData);
+                    nudRoom.Value = GetRoom(fileData);
                 }
                 else if (IsTR6Savegame())
                 {
@@ -902,16 +912,16 @@ namespace TRR_SaveMaster
                     WriteInt32ToBuffer(fileData, X_COORDINATE_OFFSET, (Int32)nudXCoordinate.Value);
                     WriteInt32ToBuffer(fileData, Y_COORDINATE_OFFSET, (Int32)nudYCoordinate.Value);
                     WriteInt32ToBuffer(fileData, Z_COORDINATE_OFFSET, (Int32)nudZCoordinate.Value);
-                    WriteOrientation(fileData, (Int16)nudOrientation.Value);
-                    fileData[ROOM_OFFSET] = (byte)nudRoom.Value;
+                    WriteOrientation(fileData, (double)nudOrientation.Value);
+                    WriteRoom(fileData, (byte)nudRoom.Value);
                 }
                 else if (IsTR4Savegame() || IsTR5Savegame())
                 {
                     WriteUInt16ToBuffer(fileData, X_COORDINATE_OFFSET, (UInt16)nudXCoordinate.Value);
                     WriteInt16ToBuffer(fileData, Y_COORDINATE_OFFSET, (Int16)nudYCoordinate.Value);
                     WriteUInt16ToBuffer(fileData, Z_COORDINATE_OFFSET, (UInt16)nudZCoordinate.Value);
-                    WriteOrientation(fileData, (Int16)nudOrientation.Value);
-                    fileData[ROOM_OFFSET] = (byte)nudRoom.Value;
+                    WriteOrientation(fileData, (double)nudOrientation.Value);
+                    WriteRoom(fileData, (byte)nudRoom.Value);
                 }
                 else if (IsTR6Savegame())
                 {
@@ -1081,7 +1091,7 @@ namespace TRR_SaveMaster
             nudXCoordinate.Value = startOfLevelCoordinates[0];
             nudYCoordinate.Value = startOfLevelCoordinates[1];
             nudZCoordinate.Value = startOfLevelCoordinates[2];
-            nudOrientation.Value = (Int16)startOfLevelCoordinates[3];
+            nudOrientation.Value = (decimal)startOfLevelCoordinates[3];
             nudRoom.Value = (byte)startOfLevelCoordinates[4];
         }
 
@@ -1141,7 +1151,7 @@ namespace TRR_SaveMaster
             nudXCoordinate.Value = endOfLevelCoordinates[0];
             nudYCoordinate.Value = endOfLevelCoordinates[1];
             nudZCoordinate.Value = endOfLevelCoordinates[2];
-            nudOrientation.Value = (Int16)endOfLevelCoordinates[3];
+            nudOrientation.Value = (decimal)endOfLevelCoordinates[3];
             nudRoom.Value = (byte)endOfLevelCoordinates[4];
         }
 
@@ -1179,7 +1189,7 @@ namespace TRR_SaveMaster
             nudXCoordinate.Value = secret1Coordinates[0];
             nudYCoordinate.Value = secret1Coordinates[1];
             nudZCoordinate.Value = secret1Coordinates[2];
-            nudOrientation.Value = (Int16)secret1Coordinates[3];
+            nudOrientation.Value = (decimal)secret1Coordinates[3];
             nudRoom.Value = (byte)secret1Coordinates[4];
         }
 
@@ -1217,7 +1227,7 @@ namespace TRR_SaveMaster
             nudXCoordinate.Value = secret2Coordinates[0];
             nudYCoordinate.Value = secret2Coordinates[1];
             nudZCoordinate.Value = secret2Coordinates[2];
-            nudOrientation.Value = (Int16)secret2Coordinates[3];
+            nudOrientation.Value = (decimal)secret2Coordinates[3];
             nudRoom.Value = (byte)secret2Coordinates[4];
         }
 
@@ -1255,7 +1265,7 @@ namespace TRR_SaveMaster
             nudXCoordinate.Value = secret3Coordinates[0];
             nudYCoordinate.Value = secret3Coordinates[1];
             nudZCoordinate.Value = secret3Coordinates[2];
-            nudOrientation.Value = (Int16)secret3Coordinates[3];
+            nudOrientation.Value = (decimal)secret3Coordinates[3];
             nudRoom.Value = (byte)secret3Coordinates[4];
         }
 
@@ -1285,7 +1295,7 @@ namespace TRR_SaveMaster
             nudXCoordinate.Value = secret4Coordinates[0];
             nudYCoordinate.Value = secret4Coordinates[1];
             nudZCoordinate.Value = secret4Coordinates[2];
-            nudOrientation.Value = (Int16)secret4Coordinates[3];
+            nudOrientation.Value = (decimal)secret4Coordinates[3];
             nudRoom.Value = (byte)secret4Coordinates[4];
         }
 
@@ -1315,7 +1325,7 @@ namespace TRR_SaveMaster
             nudXCoordinate.Value = secret5Coordinates[0];
             nudYCoordinate.Value = secret5Coordinates[1];
             nudZCoordinate.Value = secret5Coordinates[2];
-            nudOrientation.Value = (Int16)secret5Coordinates[3];
+            nudOrientation.Value = (decimal)secret5Coordinates[3];
             nudRoom.Value = (byte)secret5Coordinates[4];
         }
 
@@ -1341,7 +1351,7 @@ namespace TRR_SaveMaster
             nudXCoordinate.Value = secret6Coordinates[0];
             nudYCoordinate.Value = secret6Coordinates[1];
             nudZCoordinate.Value = secret6Coordinates[2];
-            nudOrientation.Value = (Int16)secret6Coordinates[3];
+            nudOrientation.Value = (decimal)secret6Coordinates[3];
             nudRoom.Value = (byte)secret6Coordinates[4];
         }
 
@@ -1363,7 +1373,7 @@ namespace TRR_SaveMaster
             nudXCoordinate.Value = secret7Coordinates[0];
             nudYCoordinate.Value = secret7Coordinates[1];
             nudZCoordinate.Value = secret7Coordinates[2];
-            nudOrientation.Value = (Int16)secret7Coordinates[3];
+            nudOrientation.Value = (decimal)secret7Coordinates[3];
             nudRoom.Value = (byte)secret7Coordinates[4];
         }
 
@@ -1385,7 +1395,7 @@ namespace TRR_SaveMaster
             nudXCoordinate.Value = secret8Coordinates[0];
             nudYCoordinate.Value = secret8Coordinates[1];
             nudZCoordinate.Value = secret8Coordinates[2];
-            nudOrientation.Value = (Int16)secret8Coordinates[3];
+            nudOrientation.Value = (decimal)secret8Coordinates[3];
             nudRoom.Value = (byte)secret8Coordinates[4];
         }
 
@@ -1496,33 +1506,33 @@ namespace TRR_SaveMaster
         {
             { 1,  new Int32[] { 64176, 5376, 26090, 0, 35       } },    // The Great Wall
             { 2,  new Int32[] { 58880, 0, 23188, 0, 0           } },    // Venice
-            { 3,  new Int32[] { 72523, 4608, 41024, 270, 106    } },    // Bartoli's Hideout
+            { 3,  new Int32[] { 72523, 4608, 41024, -90, 106    } },    // Bartoli's Hideout
             { 4,  new Int32[] { 79360, 2816, 31212, 0, 35       } },    // Opera House
             { 5,  new Int32[] { 46592, -1536, 90624, 90, 4      } },    // Offshore Rig
             { 6,  new Int32[] { 49664, -256, 57856, 180, 37     } },    // Diving Area
             { 7,  new Int32[] { 28160, -4096, 41472, 90, 0      } },    // 40 Fathoms
             { 8,  new Int32[] { 66048, -4352, 29184, 0, 113     } },    // Wreck of the Maria Doria
-            { 9,  new Int32[] { 92672, 5376, 79360, 270, 4      } },    // Living Quarters
+            { 9,  new Int32[] { 92672, 5376, 79360, -90, 4      } },    // Living Quarters
             { 10, new Int32[] { 48640, -2048, 52736, 90, 40     } },    // The Deck
             { 11, new Int32[] { 95322, -256, 17920, 90, 76      } },    // Tibetan Foothills
-            { 12, new Int32[] { 96768, 3455, 16896, 270, 128    } },    // Barkhang Monastery
+            { 12, new Int32[] { 96768, 3455, 16896, -90, 128    } },    // Barkhang Monastery
             { 13, new Int32[] { 3584, -5632, 36352, 90, 0       } },    // Catacombs of the Talion
             { 14, new Int32[] { 61952, 7936, 66048, 0, 42       } },    // Ice Palace
             { 15, new Int32[] { 7680, -22784, 81408, 180, 190   } },    // Temple of Xian
-            { 16, new Int32[] { 82432, -9216, 55808, 270, 8     } },    // Floating Islands
+            { 16, new Int32[] { 82432, -9216, 55808, -90, 8     } },    // Floating Islands
             { 17, new Int32[] { 73216, -9472, 78336, 180, 17    } },    // The Dragon's Lair
             { 18, new Int32[] { 34304, 256, 62976, 180, 52      } },    // Home Sweet Home
-            { 19, new Int32[] { 88576, -3828, 57856, 270, 32    } },    // The Cold War
-            { 20, new Int32[] { 80384, 5888, 54784, 270, 53     } },    // Fool's Gold
+            { 19, new Int32[] { 88576, -3828, 57856, -90, 32    } },    // The Cold War
+            { 20, new Int32[] { 80384, 5888, 54784, -90, 53     } },    // Fool's Gold
             { 21, new Int32[] { 68096, -10166, 24064, 180, 65   } },    // Furnace of the Gods
-            { 22, new Int32[] { 38400, 0, 48640, 270, 0         } },    // Kingdom
+            { 22, new Int32[] { 38400, 0, 48640, -90, 0         } },    // Kingdom
             { 23, new Int32[] { 66048, -256, 50688, 90, 28      } },    // Nightmare in Vegas
         };
 
         private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR3 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 28160, -256, 28160, 0, 4        } },    // Jungle
-            { 2,  new Int32[] { 94720, -512, 26112, 270, 18     } },    // Temple Ruins
+            { 2,  new Int32[] { 94720, -512, 26112, -90, 18     } },    // Temple Ruins
             { 3,  new Int32[] { 84480, -256, 58880, 0, 1        } },    // The River Ganges
             { 4,  new Int32[] { 3584, -15360, 47616, 90, 20     } },    // Caves of Kaliya
             { 5,  new Int32[] { 18944, 1280, 18603, 0, 7        } },    // Costal Village
@@ -1531,20 +1541,20 @@ namespace TRR_SaveMaster
             { 8,  new Int32[] { 46592, -8839, 59928, 180, 0     } },    // Temple of Puna
             { 9,  new Int32[] { 41472, -21504, 41472, 90, 52    } },    // Thames Wharf
             { 10, new Int32[] { 71587, -10309, 98816, 90, 157   } },    // Aldwych
-            { 11, new Int32[] { 81408, -17920, 39424, 270, 36   } },    // Lud's Gate
-            { 12, new Int32[] { 51712, 0, 50688, 270, 4         } },    // City
+            { 11, new Int32[] { 81408, -17920, 39424, -90, 36   } },    // Lud's Gate
+            { 12, new Int32[] { 51712, 0, 50688, -90, 4         } },    // City
             { 13, new Int32[] { 23040, -1183, 5858, 0, 0        } },    // Nevada Desert
-            { 14, new Int32[] { 17334, 0, 23294, 270, 2         } },    // High Security Compound
+            { 14, new Int32[] { 17334, 0, 23294, -90, 2         } },    // High Security Compound
             { 15, new Int32[] { 64000, 3072, 52736, 0, 31       } },    // Area 51
             { 16, new Int32[] { 32256, -3713, 4608, 0, 12       } },    // Antarctica
             { 17, new Int32[] { 59904, 1024, 25088, 90, 40      } },    // RX-Tech Mines
-            { 18, new Int32[] { 98816, 0, 69120, 270, 9         } },    // Lost City of Tinnos
-            { 19, new Int32[] { 61952, -512, 62976, 270, 5      } },    // Meteorite Cavern
-            { 20, new Int32[] { 57306, -17125, 55808, 270, 40   } },    // All Hallows
-            { 21, new Int32[] { 92672, -3072, 41472, 290, 107   } },    // Highland Fling
+            { 18, new Int32[] { 98816, 0, 69120, -90, 9         } },    // Lost City of Tinnos
+            { 19, new Int32[] { 61952, -512, 62976, -90, 5      } },    // Meteorite Cavern
+            { 20, new Int32[] { 57306, -17125, 55808, -90, 40   } },    // All Hallows
+            { 21, new Int32[] { 92672, -3072, 41472, -70, 107   } },    // Highland Fling
             { 22, new Int32[] { 25088, -5120, 61952, 0, 77      } },    // Willard's Lair
             { 23, new Int32[] { 41472, 6912, 73216, 135, 24     } },    // Shakespeare Cliff
-            { 24, new Int32[] { 61952, 128, 25088, 270, 1       } },    // Sleeping with the Fishes
+            { 24, new Int32[] { 61952, 128, 25088, -90, 1       } },    // Sleeping with the Fishes
             { 25, new Int32[] { 78261, 6363, 47471, 180, 27     } },    // It's a Madhouse!
             { 26, new Int32[] { 44544, 4864, 51101, 180, 68     } },    // Reunion
         };
@@ -1552,11 +1562,11 @@ namespace TRR_SaveMaster
         private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR4 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 2816, 640, 43264, 159, 20       } },    // Angkor Wat
-            { 2,  new Int32[] { 44297, -256, 9984, 270, 33      } },    // Race for the Iris
-            { 3,  new Int32[] { 45312, -7296, 12544, 270, 36    } },    // The Tomb of Seth
-            { 4,  new Int32[] { 1384, -2176, 17664, 270, 7      } },    // Burial Chambers
-            { 5,  new Int32[] { 46336, -448, 20224, 270, 2      } },    // Valley of the Kings
-            { 6,  new Int32[] { 9483, 2816, 46336, 270, 23      } },    // KV5
+            { 2,  new Int32[] { 44297, -256, 9984, -90, 33      } },    // Race for the Iris
+            { 3,  new Int32[] { 45312, -7296, 12544, -90, 36    } },    // The Tomb of Seth
+            { 4,  new Int32[] { 1384, -2176, 17664, -90, 7      } },    // Burial Chambers
+            { 5,  new Int32[] { 46336, -448, 20224, -90, 2      } },    // Valley of the Kings
+            { 6,  new Int32[] { 9483, 2816, 46336, -90, 23      } },    // KV5
             { 7,  new Int32[] { 44764, 0, 23276, 0, 0           } },    // Temple of Karnak
             { 8,  new Int32[] { 46336, 1024, 11419, 0, 48       } },    // The Great Hypostyle Hall
             { 9,  new Int32[] { 35072, 1152, 24231, 0, 86       } },    // Sacred Lake
@@ -1565,36 +1575,36 @@ namespace TRR_SaveMaster
             { 13, new Int32[] { 10496, -384, 26880, 90, 1       } },    // Desert Railroad
             { 14, new Int32[] { 14080, -2560, 16128, 45, 0      } },    // Alexandria
             { 15, new Int32[] { 12032, -2944, 22784, 88, 110    } },    // Coastal Ruins
-            { 16, new Int32[] { 34291, -3456, 22845, 270, 13    } },    // Pharos, Temple of Isis
-            { 17, new Int32[] { 19712, -2688, 19200, 270, 17    } },    // Cleopatra's Palaces
+            { 16, new Int32[] { 34291, -3456, 22845, -90, 13    } },    // Pharos, Temple of Isis
+            { 17, new Int32[] { 19712, -2688, 19200, -90, 17    } },    // Cleopatra's Palaces
             { 18, new Int32[] { 33536, -7040, 25344, 180, 6     } },    // Catacombs
             { 19, new Int32[] { 42752, -384, 28928, 180, 106    } },    // Temple of Poseidon
             { 20, new Int32[] { 22272, -1024, 24320, 0, 160     } },    // The Lost Library
             { 21, new Int32[] { 28928, -512, 28416, 90, 16      } },    // Hall of Demetrius
-            { 22, new Int32[] { 25856, 512, 15616, 270, 25      } },    // City of the Dead
+            { 22, new Int32[] { 25856, 512, 15616, -90, 25      } },    // City of the Dead
             { 23, new Int32[] { 22272, 768, 15080, 0, 107       } },    // Trenches
             { 24, new Int32[] { 25320, 0, 16640, 90, 70         } },    // Chambers of Tulun
             { 25, new Int32[] { 25856, -1792, 24832, 90, 44     } },    // Street Bazaar
             { 26, new Int32[] { 26880, -1920, 36608, 0, 98      } },    // Citadel Gate
             { 27, new Int32[] { 35072, 128, 19712, 0, 141       } },    // Citadel
-            { 28, new Int32[] { 42240, 63, 21760, 270, 32       } },    // The Sphinx Complex
+            { 28, new Int32[] { 42240, 63, 21760, -90, 32       } },    // The Sphinx Complex
             { 30, new Int32[] { 35584, -448, 6912, 0, 14        } },    // Underneath the Sphinx
             { 31, new Int32[] { 27392, -1152, 24320, 180, 63    } },    // Menkaure's Pyramid
             { 32, new Int32[] { 25344, -5568, 32512, 0, 61      } },    // Inside Menkaure's Pyramid
             { 33, new Int32[] { 6400, -4225, 5888, 90, 114      } },    // The Mastabas
-            { 34, new Int32[] { 27904, -2560, 25344, 270, 106   } },    // The Great Pyramid
+            { 34, new Int32[] { 27904, -2560, 25344, -90, 106   } },    // The Great Pyramid
             { 35, new Int32[] { 18688, -3969, 28928, 180, 50    } },    // Khufu's Queens Pyramids
             { 36, new Int32[] { 6912, -9408, 4864, 0, 0         } },    // Inside the Great Pyramid
-            { 37, new Int32[] { 5888, 1024, 7936, 270, 33       } },    // Temple of Horus
-            { 38, new Int32[] { 10496, 15232, 7936, 270, 85     } },    // Temple of Horus (Part 2)
+            { 37, new Int32[] { 5888, 1024, 7936, -90, 33       } },    // Temple of Horus
+            { 38, new Int32[] { 10496, 15232, 7936, -90, 85     } },    // Temple of Horus (Part 2)
             { 40, new Int32[] { 50406, -1152, 13077, 180, 26    } },    // The Times Exclusive
         };
 
         private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR5 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 23296, 0, 15616, 0, 0           } },    // Streets of Rome
-            { 2,  new Int32[] { 45824, 0, 21248, 270, 50        } },    // Trajan's Markets
-            { 3,  new Int32[] { 45334, 2304, 26368, 270, 20     } },    // The Colosseum
+            { 2,  new Int32[] { 45824, 0, 21248, -90, 50        } },    // Trajan's Markets
+            { 3,  new Int32[] { 45334, 2304, 26368, -90, 20     } },    // The Colosseum
             { 4,  new Int32[] { 17664, -2048, 14798, 0, 99      } },    // The Base
             { 5,  new Int32[] { 28975, 4480, 26880, 90, 23      } },    // The Submarine
             { 6,  new Int32[] { 7805, 27411, 60283, 0, 11       } },    // Deepsea Dive
@@ -1602,7 +1612,7 @@ namespace TRR_SaveMaster
             { 8,  new Int32[] { 29440, 64, 16128, 0, 70         } },    // Gallows Tree
             { 9,  new Int32[] { 24320, 3840, 14080, 0, 5        } },    // Labyrinth
             { 10, new Int32[] { 39168, 2751, 20829, 0, 18       } },    // Old Mill
-            { 11, new Int32[] { 19735, 0, 19200, 270, 3         } },    // The 13th Floor
+            { 11, new Int32[] { 19735, 0, 19200, -90, 3         } },    // The 13th Floor
             { 12, new Int32[] { 14592, -12032, 23296, 90, 129   } },    // Escape with the Iris
             { 14, new Int32[] { 26880, 4992, 38656, 180, 8      } },    // Red Alert!
         };
@@ -1649,23 +1659,23 @@ namespace TRR_SaveMaster
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR1 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 42911, 7168, 81358, 0, 11       } },    // Caves
-            { 2,  new Int32[] { 10380, -1024, 29124, 270, 87    } },    // City of Vilcabamba
+            { 2,  new Int32[] { 10380, -1024, 29124, -90, 87    } },    // City of Vilcabamba
             { 3,  new Int32[] { 39962, 5895, 75273, 90, 50      } },    // Lost Valley
             { 4,  new Int32[] { 39061, 0, 60703, 0, 9           } },    // Tomb of Qualopec
-            { 5,  new Int32[] { 29142, 23296, 38357, 270, 46    } },    // St. Francis' Folly
+            { 5,  new Int32[] { 29142, 23296, 38357, -90, 46    } },    // St. Francis' Folly
             { 6,  new Int32[] { 35304, -2304, 65138, 0, 40      } },    // Colosseum
-            { 7,  new Int32[] { 19557, -4608, 19861, 270, 1     } },    // Palace Midas
+            { 7,  new Int32[] { 19557, -4608, 19861, -90, 1     } },    // Palace Midas
             { 8,  new Int32[] { 40451, -5888, 35460, 180, 61    } },    // The Cistern
             { 9,  new Int32[] { 32276, 3840, 94965, 0, 112      } },    // Tomb of Tihocan
             { 10, new Int32[] { 44506, -3072, 37787, 180, 33    } },    // City of Khamoon
-            { 11, new Int32[] { 26058, -256, 21387, 270, 9      } },    // Obelisk of Khamoon
+            { 11, new Int32[] { 26058, -256, 21387, -90, 9      } },    // Obelisk of Khamoon
             { 12, new Int32[] { 24941, 3072, 53569, 0, 61       } },    // Sanctuary of the Scion
-            { 13, new Int32[] { 32857, -8704, 93170, 270, 82    } },    // Natla's Mines
+            { 13, new Int32[] { 32857, -8704, 93170, -90, 82    } },    // Natla's Mines
             { 14, new Int32[] { 50073, -18688, 45543, 90, 50    } },    // Atlantis
-            { 15, new Int32[] { 44711, 0, 72603, 270, 59        } },    // The Great Pyramid
-            { 16, new Int32[] { 68525, -1813, 73212, 270, 78    } },    // Return to Egypt
+            { 15, new Int32[] { 44711, 0, 72603, -90, 59        } },    // The Great Pyramid
+            { 16, new Int32[] { 68525, -1813, 73212, -90, 78    } },    // Return to Egypt
             { 17, new Int32[] { 31973, -15104, 61952, 90, 105   } },    // Temple of the Cat
-            { 18, new Int32[] { 45157, -3584, 37302, 270, 65    } },    // Atlantean Stronghold
+            { 18, new Int32[] { 45157, -3584, 37302, -90, 65    } },    // Atlantean Stronghold
             { 19, new Int32[] { 41573, 11264, 43109, 180, 9     } },    // The Hive
         };
 
@@ -1674,7 +1684,7 @@ namespace TRR_SaveMaster
             { 1,  new Int32[] { 88689, 20480, 68958, 180, 65    } },    // The Great Wall
             { 2,  new Int32[] { 25184, 251, 78543, 0, 154       } },    // Venice
             { 3,  new Int32[] { 40544, -1024, 37470, 0, 138     } },    // Bartoli's Hideout
-            { 4,  new Int32[] { 53514, 6912, 49394, 270, 121    } },    // Opera House
+            { 4,  new Int32[] { 53514, 6912, 49394, -90, 121    } },    // Opera House
             { 5,  new Int32[] { 38438, -256, 27539, 180, 70     } },    // Offshore Rig
             { 6,  new Int32[] { 54742, 3072, 61941, 90, 5       } },    // Diving Area
             { 7,  new Int32[] { 81295, -3584, 46423, 0, 50      } },    // 40 Fathoms
@@ -1682,10 +1692,10 @@ namespace TRR_SaveMaster
             { 9,  new Int32[] { 67684, -1818, 35154, 90, 42     } },    // Living Quarters
             { 10, new Int32[] { 35485, 1792, 15873, 130, 105    } },    // The Deck
             { 11, new Int32[] { 11722, 15616, 32039, 0, 146     } },    // Tibetan Foothills
-            { 12, new Int32[] { 27388, 768, 22043, 270, 44      } },    // Barkhang Monastery
-            { 13, new Int32[] { 51564, 7936, 65955, 270, 52     } },    // Catacombs of the Talion
+            { 12, new Int32[] { 27388, 768, 22043, -90, 44      } },    // Barkhang Monastery
+            { 13, new Int32[] { 51564, 7936, 65955, -90, 52     } },    // Catacombs of the Talion
             { 14, new Int32[] { 57937, 9984, 30156, 0, 127      } },    // Ice Palace
-            { 15, new Int32[] { 17027, -24415, 61925, 270, 33   } },    // Temple of Xian
+            { 15, new Int32[] { 17027, -24415, 61925, -90, 33   } },    // Temple of Xian
             { 16, new Int32[] { 21984, -7424, 65024, 180, 40    } },    // Floating Islands
             { 17, new Int32[] { 51123, -7187, 28285, 180, 22    } },    // The Dragon's Lair
             { 19, new Int32[] { 51066, -10239, 21074, 180, 90   } },    // The Cold War
@@ -1695,28 +1705,28 @@ namespace TRR_SaveMaster
 
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR3 = new Dictionary<byte, Int32[]>
         {
-            { 1,  new Int32[] { 22601, 23808, 70671, 270, 132   } },    // Jungle
+            { 1,  new Int32[] { 22601, 23808, 70671, -90, 132   } },    // Jungle
             { 2,  new Int32[] { 10895, 2304, 70849, 0, 214      } },    // Temple Ruins
             { 3,  new Int32[] { 43585, 5888, 68146, 180, 167    } },    // The River Ganges
             { 4,  new Int32[] { 41083, -4864, 52861, 90, 24     } },    // Caves of Kaliya
             { 5,  new Int32[] { 73241, -5120, 79274, 180, 191   } },    // Costal Village
             { 6,  new Int32[] { 77776, -1792, 60997, 0, 41      } },    // Crash Site
-            { 7,  new Int32[] { 57195, 13056, 72148, 270, 96    } },    // Madubu Gorge
+            { 7,  new Int32[] { 57195, 13056, 72148, -90, 96    } },    // Madubu Gorge
             { 8,  new Int32[] { 51739, -8811, 57985, 0, 28      } },    // Temple of Puna
             { 9,  new Int32[] { 55907, -21504, 45565, 0, 0      } },    // Thames Wharf
-            { 10, new Int32[] { 55028, 2560, 34299, 270, 104    } },    // Aldwych
+            { 10, new Int32[] { 55028, 2560, 34299, -90, 104    } },    // Aldwych
             { 11, new Int32[] { 34488, -28160, 48438, 90, 207   } },    // Lud's Gate
-            { 12, new Int32[] { 37989, -12032, 53019, 270, 14   } },    // City
+            { 12, new Int32[] { 37989, -12032, 53019, -90, 14   } },    // City
             { 13, new Int32[] { 47088, -3072, 66099, 90, 113    } },    // Nevada Desert
             { 14, new Int32[] { 55160, 0, 65196, 120, 96        } },    // High Security Compound
             { 15, new Int32[] { 44438, -7424, 35311, 0, 18      } },    // Area 51
             { 16, new Int32[] { 44748, -7168, 60733, 180, 80    } },    // Antarctica
-            { 17, new Int32[] { 9606, 0, 16931, 270, 3          } },    // RX-Tech Mines
+            { 17, new Int32[] { 9606, 0, 16931, -90, 3          } },    // RX-Tech Mines
             { 18, new Int32[] { 28077, 4608, 38480, 90, 211     } },    // Lost City of Tinnos
-            { 19, new Int32[] { 22709, 0, 27287, 270, 29        } },    // Meteorite Cavern
-            { 20, new Int32[] { 33698, 1536, 38769, 270, 6      } },    // All Hallows
+            { 19, new Int32[] { 22709, 0, 27287, -90, 29        } },    // Meteorite Cavern
+            { 20, new Int32[] { 33698, 1536, 38769, -90, 6      } },    // All Hallows
             { 21, new Int32[] { 47664, -5120, 67966, 0, 100     } },    // Highland Fling
-            { 22, new Int32[] { 77238, -3840, 18147, 270, 55    } },    // Willard's Lair
+            { 22, new Int32[] { 77238, -3840, 18147, -90, 55    } },    // Willard's Lair
             { 23, new Int32[] { 87565, 15126, 42498, 0, 104     } },    // Shakespeare Cliff
             { 24, new Int32[] { 68708, -13568, 41653, 90, 111   } },    // Sleeping with the Fishes
             { 25, new Int32[] { 94093, 5632, 34368, 90, 133     } },    // It's a Madhouse!
@@ -1725,10 +1735,10 @@ namespace TRR_SaveMaster
 
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR4 = new Dictionary<byte, Int32[]>
         {
-            { 1,  new Int32[] { 33824, 616, 16352, 270, 119     } },    // Angkor Wat
+            { 1,  new Int32[] { 33824, 616, 16352, -90, 119     } },    // Angkor Wat
             { 2,  new Int32[] { 26312, -1664, 15834, 3, 115     } },    // Race for the Iris
             { 3,  new Int32[] { 3828, 1920, 25657, 0, 57        } },    // The Tomb of Seth
-            { 4,  new Int32[] { 4235, -1885, 49922, 260, 125    } },    // Burial Chambers
+            { 4,  new Int32[] { 4235, -1885, 49922, -100, 125   } },    // Burial Chambers
             { 5,  new Int32[] { 18664, -514, 8188, 70, 4        } },    // Valley of the Kings
             { 6,  new Int32[] { 28153, -1797, 18299, 0, 22      } },    // KV5
             { 7,  new Int32[] { 30968, 627, 25549, 1, 7         } },    // Temple of Karnak
@@ -1738,29 +1748,29 @@ namespace TRR_SaveMaster
             { 12, new Int32[] { 14513, -416, 20941, 4, 24       } },    // Guardian of Semerkhet
             { 14, new Int32[] { 26353, -2944, 16679, 178, 76    } },    // Alexandria
             { 15, new Int32[] { 23811, -3712, 10524, 176, 154   } },    // Coastal Ruins
-            { 16, new Int32[] { 18282, -2688, 27283, 270, 39    } },    // Pharos, Temple of Isis
+            { 16, new Int32[] { 18282, -2688, 27283, -90, 39    } },    // Pharos, Temple of Isis
             { 17, new Int32[] { 36308, -4352, 28192, 175, 10    } },    // Cleopatra's Palaces
             { 18, new Int32[] { 11971, 0, 24454, 177, 79        } },    // Catacombs
             { 20, new Int32[] { 33295, -640, 25167, 87, 15      } },    // The Lost Library
             { 21, new Int32[] { 35011, -1280, 31945, 87, 10     } },    // Hall of Demetrius
-            { 24, new Int32[] { 17812, -1152, 26793, 270, 138   } },    // Chambers of Tulun
+            { 24, new Int32[] { 17812, -1152, 26793, -90, 138   } },    // Chambers of Tulun
             { 26, new Int32[] { 26843, -1920, 36441, 180, 98    } },    // Citadel Gate
             { 28, new Int32[] { 25554, 1008, 26047, 0, 95       } },    // The Sphinx Complex
-            { 30, new Int32[] { 20089, -512, 27821, 270, 132    } },    // Underneath the Sphinx
+            { 30, new Int32[] { 20089, -512, 27821, -90, 132    } },    // Underneath the Sphinx
             { 31, new Int32[] { 25998, -6669, 35357, 1, 110     } },    // Menkaure's Pyramid
             { 32, new Int32[] { 43658, 640, 13339, 178, 13      } },    // Inside Menkaure's Pyramid
-            { 33, new Int32[] { 26383, -2296, 21790, 270, 128   } },    // The Mastabas
-            { 34, new Int32[] { 18512, -7044, 40835, 270, 89    } },    // The Great Pyramid
+            { 33, new Int32[] { 26383, -2296, 21790, -90, 128   } },    // The Mastabas
+            { 34, new Int32[] { 18512, -7044, 40835, -90, 89    } },    // The Great Pyramid
             { 35, new Int32[] { 17370, -6969, 45209, 89, 168    } },    // Khufu's Queens Pyramids
-            { 36, new Int32[] { 5137, 1024, 21236, 270, 119     } },    // Inside the Great Pyramid
+            { 36, new Int32[] { 5137, 1024, 21236, -90, 119     } },    // Inside the Great Pyramid
             { 38, new Int32[] { 27513, 4547, 7903, 84, 13       } },    // Temple of Horus (Part 2)
             { 40, new Int32[] { 14088, -4992, 12337, 0, 47      } },    // The Times Exclusive
         };
 
         private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR5 = new Dictionary<byte, Int32[]>
         {
-            { 2,  new Int32[] { 22793, -128, 13556, 270, 70     } },    // Trajan's Markets
-            { 3,  new Int32[] { 27715, 3968, 35054, 260, 70     } },    // The Colosseum     
+            { 2,  new Int32[] { 22793, -128, 13556, -90, 70     } },    // Trajan's Markets
+            { 3,  new Int32[] { 27715, 3968, 35054, -100, 70    } },    // The Colosseum     
             { 8,  new Int32[] { 24827, 0, 15994, 172, 1         } },    // Gallows Tree
             { 9,  new Int32[] { 21710, 4736, 17666, 90, 169     } },    // Labyrinth
             { 11, new Int32[] { 17121, -384, 18961, 176, 154    } },    // The 13th Floor
@@ -1795,17 +1805,17 @@ namespace TRR_SaveMaster
         {
             { 1,  new Int32[] { 89465, 1016, 37019, 0, 5        } },    // Caves
             { 2,  new Int32[] { 66881, 3072, 44181, 1, 88       } },    // City of Vilcabamba
-            { 3,  new Int32[] { 37308, 1536, 3995, 270, 31      } },    // Lost Valley
+            { 3,  new Int32[] { 37308, 1536, 3995, -90, 31      } },    // Lost Valley
             { 4,  new Int32[] { 65434, 4608, 73827, 8, 39       } },    // Tomb of Qualopec
             { 5,  new Int32[] { 29795, -8448, 32308, 90, 52     } },    // St. Francis' Folly
             { 6,  new Int32[] { 75101, -2814, 50682, 117, 10    } },    // Colosseum
-            { 7,  new Int32[] { 57552, -12032, 67054, 270, 59   } },    // Palace Midas
+            { 7,  new Int32[] { 57552, -12032, 67054, -90, 59   } },    // Palace Midas
             { 8,  new Int32[] { 27175, -10240, 61860, 49, 3     } },    // The Cistern
             { 9,  new Int32[] { 43345, 0, 70223, 91, 6          } },    // Tomb of Tihocan
             { 10, new Int32[] { 60516, -1899, 23902, 149, 40    } },    // City of Khamoon
             { 11, new Int32[] { 54587, -5888, 46552, 94, 80     } },    // Obelisk of Khamoon
             { 12, new Int32[] { 45565, -8832, 59275, 175, 11    } },    // Sanctuary of the Scion
-            { 13, new Int32[] { 62365, -12800, 37547, 270, 103  } },    // Natla's Mines
+            { 13, new Int32[] { 62365, -12800, 37547, -90, 103  } },    // Natla's Mines
             { 14, new Int32[] { 59959, 11520, 41885, 180, 5     } },    // Atlantis
             { 15, new Int32[] { 63344, -13568, 18967, 87, 63    } },    // The Great Pyramid
             { 16, new Int32[] { 38387, -473, 20641, 0, 46       } },    // Return to Egypt
@@ -1817,20 +1827,20 @@ namespace TRR_SaveMaster
         private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR1 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 67735, -2560, 50275, 0, 28      } },    // Caves
-            { 2,  new Int32[] { 71580, -1024, 19332, 280, 21    } },    // City of Vilcabamba
+            { 2,  new Int32[] { 71580, -1024, 19332, -80, 21    } },    // City of Vilcabamba
             { 3,  new Int32[] { 40838, -512, 2973, 180, 31      } },    // Lost Valley
-            { 4,  new Int32[] { 64593, 6400, 78743, 270, 4      } },    // Tomb of Qualopec
+            { 4,  new Int32[] { 64593, 6400, 78743, -90, 4      } },    // Tomb of Qualopec
             { 5,  new Int32[] { 37989, 8448, 34258, 90, 11      } },    // St. Francis' Folly
-            { 6,  new Int32[] { 63509, -3846, 55197, 190, 2     } },    // Colosseum
+            { 6,  new Int32[] { 63509, -3846, 55197, -170, 2    } },    // Colosseum
             { 7,  new Int32[] { 32315, -11008, 56421, 174, 49   } },    // Palace Midas
             { 8,  new Int32[] { 46075, 1456, 54580, 67, 0       } },    // The Cistern
             { 9,  new Int32[] { 23040, 1024, 59293, 180, 12     } },    // Tomb of Tihocan
-            { 10, new Int32[] { 53092, -4430, 26176, 270, 41    } },    // City of Khamoon
+            { 10, new Int32[] { 53092, -4430, 26176, -90, 41    } },    // City of Khamoon
             { 11, new Int32[] { 49473, -8448, 61349, 179, 42    } },    // Obelisk of Khamoon
-            { 13, new Int32[] { 78312, 4352, 53417, 270, 47     } },    // Natla's Mines
-            { 14, new Int32[] { 54373, 6341, 50569, 270, 20     } },    // Atlantis
+            { 13, new Int32[] { 78312, 4352, 53417, -90, 47     } },    // Natla's Mines
+            { 14, new Int32[] { 54373, 6341, 50569, -90, 20     } },    // Atlantis
             { 15, new Int32[] { 29320, -9472, 33893, 0, 23      } },    // The Great Pyramid
-            { 16, new Int32[] { 91236, 0, 9741, 270, 21         } },    // Return to Egypt
+            { 16, new Int32[] { 91236, 0, 9741, -90, 21         } },    // Return to Egypt
             { 17, new Int32[] { 67782, -6912, 60815, 168, 27    } },    // Temple of the Cat
             { 18, new Int32[] { 13925, -12388, 48591, 84, 64    } },    // Atlantean Stronghold
         };
@@ -1840,17 +1850,17 @@ namespace TRR_SaveMaster
             { 1,  new Int32[] { 14851, 6912, 93351, 0, 26       } },    // Caves
             { 2,  new Int32[] { 12001, -3072, 18955, 145, 79    } },    // City of Vilcabamba
             { 3,  new Int32[] { 63589, -1953, 5497, 55, 65      } },    // Lost Valley
-            { 4,  new Int32[] { 39571, 7361, 56790, 270, 17     } },    // Tomb of Qualopec
+            { 4,  new Int32[] { 39571, 7361, 56790, -90, 17     } },    // Tomb of Qualopec
             { 5,  new Int32[] { 41883, 11009, 34304, 90, 12     } },    // St. Francis' Folly
             { 6,  new Int32[] { 58764, -8448, 19345, 178, 51    } },    // Colosseum
             { 7,  new Int32[] { 64984, 0, 59627, 1, 71          } },    // Palace Midas
             { 8,  new Int32[] { 42441, -5632, 47848, 168, 81    } },    // The Cistern
             { 10, new Int32[] { 56764, 4352, 30621, 138, 54     } },    // City of Khamoon
             { 11, new Int32[] { 49985, -7680, 56421, 158, 42    } },    // Obelisk of Khamoon
-            { 13, new Int32[] { 62071, 9082, 80579, 270, 102    } },    // Natla's Mines
+            { 13, new Int32[] { 62071, 9082, 80579, -90, 102    } },    // Natla's Mines
             { 14, new Int32[] { 51922, -8960, 33654, 168, 100   } },    // Atlantis
             { 15, new Int32[] { 67934, 0, 51728, 88, 64         } },    // The Great Pyramid
-            { 16, new Int32[] { 88997, -6460, 15962, 270, 20    } },    // Return to Egypt
+            { 16, new Int32[] { 88997, -6460, 15962, -90, 20    } },    // Return to Egypt
             { 17, new Int32[] { 50082, 0, 90793, 5, 72          } },    // Temple of the Cat
         };
 
@@ -1871,7 +1881,7 @@ namespace TRR_SaveMaster
             { 1,  new Int32[] { 62441, 853, 36520, 91, 38       } },    // The Great Wall
             { 2,  new Int32[] { 44124, 0, 29131, 86, 58         } },    // Venice
             { 3,  new Int32[] { 71123, 512, 35977, 18, 107      } },    // Bartoli's Hideout
-            { 4,  new Int32[] { 63389, 6400, 36188, 260, 187    } },    // Opera House
+            { 4,  new Int32[] { 63389, 6400, 36188, -100, 187   } },    // Opera House
             { 5,  new Int32[] { 21892, 1645, 94204, 175, 77     } },    // Offshore Rig
             { 6,  new Int32[] { 28165, 3840, 63589, 8, 48       } },    // Diving Area
             { 7,  new Int32[] { 66812, -5888, 76596, 19, 20     } },    // 40 Fathoms
@@ -1882,9 +1892,9 @@ namespace TRR_SaveMaster
             { 12, new Int32[] { 31425, 0, 49835, 179, 159       } },    // Barkhang Monastery
             { 13, new Int32[] { 11877, -3840, 41759, 132, 5     } },    // Catacombs of the Talion
             { 14, new Int32[] { 68019, 5632, 90211, 0, 106      } },    // Ice Palace
-            { 15, new Int32[] { 18333, 13312, 55781, 270, 162   } },    // Temple of Xian
+            { 15, new Int32[] { 18333, 13312, 55781, -90, 162   } },    // Temple of Xian
             { 16, new Int32[] { 73238, -7157, 69341, 171, 3     } },    // Floating Islands
-            { 19, new Int32[] { 87600, 2749, 67225, 270, 31     } },    // The Cold War
+            { 19, new Int32[] { 87600, 2749, 67225, -90, 31     } },    // The Cold War
             { 21, new Int32[] { 57801, -4608, 8924, 147, 13     } },    // Furnace of the Gods
             { 22, new Int32[] { 45545, 6912, 63918, 164, 35     } },    // Kingdom
             { 23, new Int32[] { 47626, 15360, 85915, 1, 76      } },    // Nightmare in Vegas
@@ -1893,15 +1903,15 @@ namespace TRR_SaveMaster
         private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR2 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 41293, 7168, 60959, 84, 54      } },    // The Great Wall
-            { 2,  new Int32[] { 37749, 5101, 16083, 270, 126    } },    // Venice
+            { 2,  new Int32[] { 37749, 5101, 16083, -90, 126    } },    // Venice
             { 3,  new Int32[] { 41282, 8604, 34215, 16, 51      } },    // Bartoli's Hideout
-            { 4,  new Int32[] { 68940, 7681, 49695, 270, 46     } },    // Opera House
+            { 4,  new Int32[] { 68940, 7681, 49695, -90, 46     } },    // Opera House
             { 5,  new Int32[] { 21119, -8704, 71287, 0, 50      } },    // Offshore Rig
             { 6,  new Int32[] { 58785, 3484, 87611, 178, 11     } },    // Diving Area
             { 7,  new Int32[] { 89974, -4105, 71062, 113, 33    } },    // 40 Fathoms
             { 8,  new Int32[] { 58921, 1792, 101125, 179, 13    } },    // Wreck of the Maria Doria
             { 9,  new Int32[] { 54990, 1024, 73829, 180, 62     } },    // Living Quarters
-            { 10, new Int32[] { 34640, -5220, 57976, 270, 93    } },    // The Deck
+            { 10, new Int32[] { 34640, -5220, 57976, -90, 93    } },    // The Deck
             { 11, new Int32[] { 31114, -1280, 96376, 2, 14      } },    // Tibetan Foothills
             { 12, new Int32[] { 45446, 924, 35353, 80, 6        } },    // Barkhang Monastery
             { 13, new Int32[] { 6727, -1024, 59718, 169, 94     } },    // Catacombs of the Talion
@@ -1919,18 +1929,18 @@ namespace TRR_SaveMaster
         {
             { 1,  new Int32[] { 86384, 26112, 74257, 89, 79     } },    // The Great Wall
             { 2,  new Int32[] { 62357, -1792, 61898, 30, 91     } },    // Venice
-            { 3,  new Int32[] { 38114, 256, 34146, 270, 131     } },    // Bartoli's Hideout
+            { 3,  new Int32[] { 38114, 256, 34146, -90, 131     } },    // Bartoli's Hideout
             { 4,  new Int32[] { 77923, 1024, 45436, 90, 189     } },    // Opera House
             { 5,  new Int32[] { 38419, 6144, 57147, 153, 109    } },    // Offshore Rig
             { 6,  new Int32[] { 52543, 5632, 57736, 170, 78     } },    // Diving Area
-            { 7,  new Int32[] { 74657, -3940, 46640, 270, 68    } },    // 40 Fathoms
-            { 8,  new Int32[] { 41079, 0, 48630, 270, 11        } },    // Wreck of the Maria Doria
+            { 7,  new Int32[] { 74657, -3940, 46640, -90, 68    } },    // 40 Fathoms
+            { 8,  new Int32[] { 41079, 0, 48630, -90, 11        } },    // Wreck of the Maria Doria
             { 9,  new Int32[] { 45270, 2769, 72180, 12, 32      } },    // Living Quarters
-            { 10, new Int32[] { 27770, -4096, 38488, 270, 82    } },    // The Deck
+            { 10, new Int32[] { 27770, -4096, 38488, -90, 82    } },    // The Deck
             { 11, new Int32[] { 76230, 10496, 19632, 78, 144    } },    // Tibetan Foothills
             { 12, new Int32[] { 46738, -2560, 24111, 90, 100    } },    // Barkhang Monastery
             { 13, new Int32[] { 45575, 1792, 67974, 161, 49     } },    // Catacombs of the Talion
-            { 14, new Int32[] { 45954, 11008, 29150, 270, 7     } },    // Ice Palace
+            { 14, new Int32[] { 45954, 11008, 29150, -90, 7     } },    // Ice Palace
             { 15, new Int32[] { 46485, 14848, 23391, 166, 121   } },    // Temple of Xian
             { 16, new Int32[] { 35373, -10240, 54882, 177, 41   } },    // Floating Islands
             { 19, new Int32[] { 21998, -4096, 17069, 175, 81    } },    // The Cold War
@@ -1942,10 +1952,10 @@ namespace TRR_SaveMaster
 
         private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR3 = new Dictionary<byte, Int32[]>
         {
-            { 1,  new Int32[] { 27465, 2939, 32501, 270, 21     } },    // Jungle
+            { 1,  new Int32[] { 27465, 2939, 32501, -90, 21     } },    // Jungle
             { 2,  new Int32[] { 60023, 8192, 62828, 2, 87       } },    // Temple Ruins
-            { 3,  new Int32[] { 86619, 768, 34715, 270, 18      } },    // The River Ganges
-            { 5,  new Int32[] { 11365, -768, 34715, 270, 2      } },    // Coastal Village
+            { 3,  new Int32[] { 86619, 768, 34715, -90, 18      } },    // The River Ganges
+            { 5,  new Int32[] { 11365, -768, 34715, -90, 2      } },    // Coastal Village
             { 6,  new Int32[] { 32667, -1280, 82377, 90, 93     } },    // Crash Site
             { 7,  new Int32[] { 72603 , -21096, 33487, 35, 18   } },    // Madubu Gorge
             { 8,  new Int32[] { 30315, -18176, 59491, 0, 11     } },    // Temple of Puna
@@ -1956,10 +1966,10 @@ namespace TRR_SaveMaster
             { 13, new Int32[] { 33380, -256, 32125, 4, 18       } },    // Nevada Desert
             { 14, new Int32[] { 1549, -512, 38499, 179, 54      } },    // High Security Compound
             { 15, new Int32[] { 41790, 3584, 62022, 85, 62      } },    // Area 51
-            { 16, new Int32[] { 21105, -6045, 28890, 270, 163   } },    // Antarctica
-            { 17, new Int32[] { 45957, 3840, 49662, 270, 186    } },    // RX-Tech Mines
+            { 16, new Int32[] { 21105, -6045, 28890, -90, 163   } },    // Antarctica
+            { 17, new Int32[] { 45957, 3840, 49662, -90, 186    } },    // RX-Tech Mines
             { 18, new Int32[] { 80392, -3966, 58467, 0, 46      } },    // Lost City of Tinnos
-            { 21, new Int32[] { 42907, -11570, 52496, 270, 45   } },    // Highland Fling
+            { 21, new Int32[] { 42907, -11570, 52496, -90, 45   } },    // Highland Fling
             { 22, new Int32[] { 53637, 8704, 77308, 85, 102     } },    // Willard's Lair
             { 23, new Int32[] { 35369, -6400, 55195, 2, 36      } },    // Shakespeare Cliff
             { 24, new Int32[] { 68917, 2305, 56601, 176, 59     } },    // Sleeping with the Fishes
@@ -1972,16 +1982,16 @@ namespace TRR_SaveMaster
             { 2,  new Int32[] { 42667, 3840, 19841, 88, 181     } },    // Temple Ruins
             { 3,  new Int32[] { 91465, 282, 32869, 0, 22        } },    // The River Ganges
             { 5,  new Int32[] { 14231, -7168, 76215, 148, 15    } },    // Coastal Village
-            { 6,  new Int32[] { 36965, -1766, 53380, 270, 53    } },    // Crash Site
+            { 6,  new Int32[] { 36965, -1766, 53380, -90, 53    } },    // Crash Site
             { 7,  new Int32[] { 80943, -24293, 20684, 91, 14    } },    // Madubu Gorge
             { 9,  new Int32[] { 39666, -12288, 45979, 0, 96     } },    // Thames Wharf
             { 10, new Int32[] { 67012, -1059, 52362, 179, 57    } },    // Aldwych
             { 11, new Int32[] { 62643, -20736, 31265, 90, 17    } },    // Lud's Gate
-            { 13, new Int32[] { 42909, 1280, 50651, 270, 33     } },    // Nevada Desert
+            { 13, new Int32[] { 42909, 1280, 50651, -90, 33     } },    // Nevada Desert
             { 14, new Int32[] { 82138, -256, 7431, 82, 177      } },    // High Security Compound
-            { 15, new Int32[] { 13285, 2816, 55926, 270, 55     } },    // Area 51
-            { 16, new Int32[] { 51567, -6400, 26044, 270, 190   } },    // Antarctica
-            { 18, new Int32[] { 33893, -4864, 51729, 270, 59    } },    // Lost City of Tinnos
+            { 15, new Int32[] { 13285, 2816, 55926, -90, 55     } },    // Area 51
+            { 16, new Int32[] { 51567, -6400, 26044, -90, 190   } },    // Antarctica
+            { 18, new Int32[] { 33893, -4864, 51729, -90, 59    } },    // Lost City of Tinnos
             { 21, new Int32[] { 54784, -4864, 72134, 0, 112     } },    // Highland Fling
             { 22, new Int32[] { 67056, -512, 72603, 1, 1        } },    // Willard's Lair
             { 23, new Int32[] { 25079, 2204, 52325, 179, 67     } },    // Shakespeare Cliff
@@ -1992,7 +2002,7 @@ namespace TRR_SaveMaster
         private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR3 = new Dictionary<byte, Int32[]>
         {
             { 1,  new Int32[] { 19099, 24064, 58269, 180, 135   } },    // Jungle
-            { 2,  new Int32[] { 56421, 1280, 93662, 270, 125    } },    // Temple Ruins
+            { 2,  new Int32[] { 56421, 1280, 93662, -90, 125    } },    // Temple Ruins
             { 3,  new Int32[] { 56788, -3840, 25499, 1, 113     } },    // The River Ganges
             { 5,  new Int32[] { 25035, -6384, 87999, 179, 124   } },    // Coastal Village
             { 6,  new Int32[] { 70551, -6886, 27749, 162, 60    } },    // Crash Site
@@ -2000,10 +2010,10 @@ namespace TRR_SaveMaster
             { 9,  new Int32[] { 44229, -19968, 51885, 180, 62   } },    // Thames Wharf
             { 11, new Int32[] { 43394, -22016, 28800, 177, 68   } },    // Lud's Gate
             { 13, new Int32[] { 13068, -3328, 47205, 178, 48    } },    // Nevada Desert
-            { 15, new Int32[] { 46603, -6656, 41077, 270, 42    } },    // Area 51
+            { 15, new Int32[] { 46603, -6656, 41077, -90, 42    } },    // Area 51
             { 16, new Int32[] { 40442, -5120, 19822, 4, 201     } },    // Antarctica
             { 17, new Int32[] { 13597, 3656, 29356, 1, 5        } },    // RX-Tech Mines
-            { 18, new Int32[] { 47934, 6144, 47565, 270, 156    } },    // Lost City of Tinnos
+            { 18, new Int32[] { 47934, 6144, 47565, -90, 156    } },    // Lost City of Tinnos
             { 21, new Int32[] { 14530, -3999, 65507, 91, 120    } },    // Highland Fling
             { 22, new Int32[] { 66929, -5888, 30246, 84, 81     } },    // Willard's Lair
             { 23, new Int32[] { 74467, 17921, 38413, 10, 110    } },    // Shakespeare Cliff
@@ -2013,12 +2023,12 @@ namespace TRR_SaveMaster
 
         private readonly Dictionary<byte, Int32[]> secret4CoordinatesTR3 = new Dictionary<byte, Int32[]>
         {
-            { 1,  new Int32[] { 95333, 18944, 70002, 270, 77    } },    // Jungle
-            { 2,  new Int32[] { 40459, 6968, 96815, 270, 142    } },    // Temple Ruins
+            { 1,  new Int32[] { 95333, 18944, 70002, -90, 77    } },    // Jungle
+            { 2,  new Int32[] { 40459, 6968, 96815, -90, 142    } },    // Temple Ruins
             { 3,  new Int32[] { 33999, -5562, 64020, 122, 173   } },    // The River Ganges
             { 5,  new Int32[] { 26928, -659, 71547, 0, 156      } },    // Coastal Village
             { 9,  new Int32[] { 55908, -21504, 45568, 90, 0     } },    // Thames Wharf
-            { 11, new Int32[] { 71581, -18432, 25031, 270, 54   } },    // Lud's Gate
+            { 11, new Int32[] { 71581, -18432, 25031, -90, 54   } },    // Lud's Gate
         };
 
         private readonly Dictionary<byte, Int32[]> secret5CoordinatesTR3 = new Dictionary<byte, Int32[]>
@@ -2043,9 +2053,9 @@ namespace TRR_SaveMaster
             {  6, new Int32[] { 5924, -640, 11314, 179, 63      } },    // KV5
             {  7, new Int32[] { 40397, 0, 18257, 90, 16         } },    // Temple of Karnak
             {  9, new Int32[] { 27900, 3140, 6404, 90, 46       } },    // Sacred Lake
-            { 11, new Int32[] { 31282, -1408, 26932, 270, 18    } },    // Tomb of Semerkhet
+            { 11, new Int32[] { 31282, -1408, 26932, -90, 18    } },    // Tomb of Semerkhet
             { 12, new Int32[] { 33650, -1024, 16846, 180, 63    } },    // Guardian of Semerkhet
-            { 13, new Int32[] { 44494, -768, 26384, 270, 146    } },    // Desert Railroad
+            { 13, new Int32[] { 44494, -768, 26384, -90, 146    } },    // Desert Railroad
             { 14, new Int32[] { 22276, -3072, 18641, 176, 20    } },    // Alexandria
             { 17, new Int32[] { 31465, -2560, 38132, 0, 1       } },    // Cleopatra's Palaces
             { 18, new Int32[] { 16665, -2560, 21760, 0, 64      } },    // Catacombs
@@ -2059,24 +2069,24 @@ namespace TRR_SaveMaster
             { 31, new Int32[] { 25367, -8192, 34051, 71, 118    } },    // Menkaure's Pyramid
             { 32, new Int32[] { 43181, -896, 16118, 180, 116    } },    // Inside Menkaure's Pyramid
             { 33, new Int32[] { 11314, -1664, 5888, 90, 29      } },    // The Mastabas
-            { 34, new Int32[] { 23152, -1664, 26883, 270, 43    } },    // The Great Pyramid
+            { 34, new Int32[] { 23152, -1664, 26883, -90, 43    } },    // The Great Pyramid
             { 35, new Int32[] { 12032, -2688, 18784, 180, 129   } },    // Khufu's Queens Pyramids
             { 36, new Int32[] { 7414, -3328, 14093, 175, 4      } },    // Inside the Great Pyramid
-            { 40, new Int32[] { 49381, -4263, 11622, 270, 44    } },    // The Times Exclusive
+            { 40, new Int32[] { 49381, -4263, 11622, -90, 44    } },    // The Times Exclusive
         };
 
         private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR4 = new Dictionary<byte, Int32[]>
         {
             {  1, new Int32[] { 8473, 2944, 32486, 87, 144      } },    // Angkor Wat
-            {  3, new Int32[] { 20639, 3072, 20212, 270, 58     } },    // The Tomb of Seth
+            {  3, new Int32[] { 20639, 3072, 20212, -90, 58     } },    // The Tomb of Seth
             {  6, new Int32[] { 21553, -4224, 14575, 90, 33     } },    // KV5
             {  7, new Int32[] { 29107, 3200, 30158, 180, 91     } },    // Temple of Karnak
-            { 11, new Int32[] { 40398, -2560, 36009, 270, 51    } },    // Tomb of Semerkhet
+            { 11, new Int32[] { 40398, -2560, 36009, -90, 51    } },    // Tomb of Semerkhet
             { 12, new Int32[] { 38321, 512, 23245, 87, 57       } },    // Guardian of Semerkhet
             { 18, new Int32[] { 23349, -6656, 32446, 81, 86     } },    // Catacombs
             { 20, new Int32[] { 8403, 3200, 18783, 176, 180     } },    // The Lost Library
             { 24, new Int32[] { 27707, -1024, 25709, 110, 88    } },    // Chambers of Tulun
-            { 27, new Int32[] { 27598, 2944, 44841, 270, 72     } },    // Citadel
+            { 27, new Int32[] { 27598, 2944, 44841, -90, 72     } },    // Citadel
             { 40, new Int32[] { 31286, -1280, 22784, 90, 50     } },    // The Times Exclusive
         };
 
@@ -2087,7 +2097,7 @@ namespace TRR_SaveMaster
             {  4, new Int32[] { 16053, 128, 37837, 180, 89      } },    // Burial Chambers
             {  5, new Int32[] { 14898, 2432, 17100, 90, 38      } },    // Valley of the Kings
             {  6, new Int32[] { 28360, -256, 2982, 180, 87      } },    // KV5
-            {  7, new Int32[] { 29854, 3256, 32659, 270, 75     } },    // Temple of Karnak
+            {  7, new Int32[] { 29854, 3256, 32659, -90, 75     } },    // Temple of Karnak
             { 11, new Int32[] { 33681, 5504, 25506, 170, 26     } },    // Tomb of Semerkhet
             { 18, new Int32[] { 22735, -6144, 32972, 81, 56     } },    // Catacombs
             { 20, new Int32[] { 26455, 512, 17719, 0, 37        } },    // The Lost Library
@@ -2100,13 +2110,13 @@ namespace TRR_SaveMaster
             {  4, new Int32[] { 15821, 512, 40181, 90, 111      } },    // Burial Chambers
             {  7, new Int32[] { 33742, -1024, 35099, 0, 71      } },    // Temple of Karnak
             { 11, new Int32[] { 31281, 11776, 28126, 90, 111    } },    // Tomb of Semerkhet
-            { 18, new Int32[] { 20132, -2048, 37603, 270, 37    } },    // Catacombs
+            { 18, new Int32[] { 20132, -2048, 37603, -90, 37    } },    // Catacombs
         };
 
         private readonly Dictionary<byte, Int32[]> secret5CoordinatesTR4 = new Dictionary<byte, Int32[]>
         {
             {  1, new Int32[] { 28917, -1920, 29431, 134, 91    } },    // Angkor Wat
-            {  3, new Int32[] { 3992, -1314, 26487, 270, 13     } },    // The Tomb of Seth
+            {  3, new Int32[] { 3992, -1314, 26487, -90, 13     } },    // The Tomb of Seth
             {  4, new Int32[] { 7117, -768, 43639, 115, 54      } },    // Burial Chambers
             { 11, new Int32[] { 24332, 11008, 17695, 178, 128   } },    // Tomb of Semerkhet
         };
@@ -2114,7 +2124,7 @@ namespace TRR_SaveMaster
         private readonly Dictionary<byte, Int32[]> secret6CoordinatesTR4 = new Dictionary<byte, Int32[]>
         {
             {  1, new Int32[] { 44294, 384, 30474, 101, 158     } },    // Angkor Wat
-            { 11, new Int32[] { 27832, 14848, 16719, 270, 194   } },    // Tomb of Semerkhet
+            { 11, new Int32[] { 27832, 14848, 16719, -90, 194   } },    // Tomb of Semerkhet
         };
 
         private readonly Dictionary<byte, Int32[]> secret7CoordinatesTR4 = new Dictionary<byte, Int32[]>
@@ -2136,7 +2146,7 @@ namespace TRR_SaveMaster
             {  5, new Int32[] { 33783, 3840, 26797, 92, 5       } },    // The Submarine
             {  7, new Int32[] { 30841, 2048, 23005, 158, 115    } },    // Sinking Submarine
             {  8, new Int32[] { 25284, 3072, 21690, 36, 53      } },    // Gallows Tree
-            {  9, new Int32[] { 21068, 3840, 10496, 270, 162    } },    // Labyrinth
+            {  9, new Int32[] { 21068, 3840, 10496, -90, 162    } },    // Labyrinth
             { 10, new Int32[] { 35365, 2176, 14548, 100, 199    } },    // Old Mill
             { 11, new Int32[] { 17672, 896, 16585, 92, 6        } },    // The 13th Floor
             { 12, new Int32[] { 18629, -7680, 36575, 84, 148    } },    // Escape with the Iris
@@ -2149,26 +2159,26 @@ namespace TRR_SaveMaster
             {  3, new Int32[] { 15629, 768, 17392, 10, 81       } },    // The Colosseum
             {  4, new Int32[] { 11313, -2688, 13654, 90, 146    } },    // The Base
             {  5, new Int32[] { 26969, 512, 20345, 180, 19      } },    // The Submarine
-            {  7, new Int32[] { 25853, 512, 33508, 270, 54      } },    // Sinking Submarine
+            {  7, new Int32[] { 25853, 512, 33508, -90, 54      } },    // Sinking Submarine
             {  8, new Int32[] { 32955, 3456, 31319, 37, 114     } },    // Gallows Tree
-            {  9, new Int32[] { 19319, 9344, 22196, 270, 103    } },    // Labyrinth
+            {  9, new Int32[] { 19319, 9344, 22196, -90, 103    } },    // Labyrinth
             { 10, new Int32[] { 13390, 5248, 22085, 173, 188    } },    // Old Mill
             { 11, new Int32[] { 12231, -2560, 26784, 85, 143    } },    // The 13th Floor
             { 12, new Int32[] { 24075, 0, 34033, 96, 122        } },    // Escape with the Iris
-            { 14, new Int32[] { 44033, -128, 29863, 270, 78     } },    // Red Alert!
+            { 14, new Int32[] { 44033, -128, 29863, -90, 78     } },    // Red Alert!
         };
 
         private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR5 = new Dictionary<byte, Int32[]>
         {
-            {  2, new Int32[] { 35974, 0, 23808, 270, 219       } },    // Trajan's Markets
+            {  2, new Int32[] { 35974, 0, 23808, -90, 219       } },    // Trajan's Markets
             {  3, new Int32[] { 33565, 3968, 35597, 12, 120     } },    // The Colosseum
             {  4, new Int32[] { 9931, 1024, 25864, 90, 76       } },    // The Base
             {  5, new Int32[] { 34369, -256, 30870, 90, 15      } },    // The Submarine
-            {  8, new Int32[] { 16166, 5632, 28435, 270, 206    } },    // Gallows Tree
+            {  8, new Int32[] { 16166, 5632, 28435, -90, 206    } },    // Gallows Tree
             {  9, new Int32[] { 18674, 6016, 25793, 1, 251      } },    // Labyrinth
             { 10, new Int32[] { 14059, 5248, 14798, 180, 197    } },    // Old Mill
             { 11, new Int32[] { 17217, 128, 29881, 2, 136       } },    // The 13th Floor
-            { 12, new Int32[] { 22888, -3072, 35215, 270, 167   } },    // Escape with the Iris
+            { 12, new Int32[] { 22888, -3072, 35215, -90, 167   } },    // Escape with the Iris
             { 14, new Int32[] { 14106, 256, 20740, 87, 216      } },    // Red Alert!
         };
     }

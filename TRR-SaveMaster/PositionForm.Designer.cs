@@ -234,16 +234,27 @@ namespace TRR_SaveMaster
             this.picInfoOrientation.Size = new System.Drawing.Size(20, 20);
             this.picInfoOrientation.TabIndex = 13;
             this.picInfoOrientation.TabStop = false;
-            this.tipPosition.SetToolTip(this.picInfoOrientation, "Represents the direction Lara is facing in degrees. Valid range is 0 - 359.");
+            this.tipPosition.SetToolTip(this.picInfoOrientation, "Represents the direction Lara is facing in degrees. Valid range is -180 to 180.");
             // 
             // nudOrientation
             // 
-            this.nudOrientation.Location = new System.Drawing.Point(219, 103);
-            this.nudOrientation.Maximum = new decimal(new int[] {
-            359,
+            this.nudOrientation.DecimalPlaces = 2;
+            this.nudOrientation.Increment = new decimal(new int[] {
+            10,
             0,
             0,
             0});
+            this.nudOrientation.Location = new System.Drawing.Point(219, 103);
+            this.nudOrientation.Maximum = new decimal(new int[] {
+            180,
+            0,
+            0,
+            0});
+            this.nudOrientation.Minimum = new decimal(new int[] {
+            180,
+            0,
+            0,
+            -2147483648});
             this.nudOrientation.Name = "nudOrientation";
             this.nudOrientation.Size = new System.Drawing.Size(70, 23);
             this.nudOrientation.TabIndex = 7;
