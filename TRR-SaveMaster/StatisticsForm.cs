@@ -350,6 +350,68 @@ namespace TRR_SaveMaster
             FinalStatistics
         }
 
+        public StatisticsForm(MainForm mainForm, ToolStripStatusLabel slblStatus, bool backupBeforeSaving, string savegamePath, int SELECTED_TAB, Platform platform, bool isPrepatch)
+        {
+            InitializeComponent();
+
+            this.slblStatus = slblStatus;
+            this.backupBeforeSaving = backupBeforeSaving;
+            this.savegamePath = savegamePath;
+            this.SELECTED_TAB = SELECTED_TAB;
+            this.mainForm = mainForm;
+            this.platform = platform;
+            this.isPrepatch = isPrepatch;
+        }
+
+        private void StatisticsForm_Load(object sender, EventArgs e)
+        {
+            if (ThemeUtilities.DARK_MODE_ENABLED)
+            {
+                ThemeUtilities.ApplyDarkMode(this);
+                ThemeUtilities.ApplyDarkTitleBar(this);
+
+                picInfoStatisticsDropdown.Image = Resources.ToolTip_Image_DarkMode;
+            }
+
+            DetermineOffsets();
+
+            try
+            {
+                if (ShouldShowLevelSelect())
+                {
+                    PopulateStatisticsDropdown();
+                    SetTooltipText();
+                }
+                else
+                {
+                    HideLevelSelectUI();
+                    this.CenterToParent();
+                }
+
+                SetParams();
+                DisplayStatistics();
+            }
+            catch (Exception ex)
+            {
+                SystemSounds.Hand.Play();
+
+                ThemedMessageBox.Show(
+                    this,
+                    ex.Message,
+                    Globals.DIALOG_TITLE_ERROR,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                this.Close();
+            }
+        }
+
+        private void StatisticsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ConfirmChanges();
+            mainForm.RefreshGameInfoConditionally();
+        }
+
         private void PopulateStatisticsDropdown()
         {
             cmbStatistics.Items.Clear();
@@ -474,52 +536,6 @@ namespace TRR_SaveMaster
             }
 
             return false;
-        }
-
-        public StatisticsForm(MainForm mainForm, ToolStripStatusLabel slblStatus, bool backupBeforeSaving, string savegamePath, int SELECTED_TAB, Platform platform, bool isPrepatch)
-        {
-            InitializeComponent();
-
-            this.slblStatus = slblStatus;
-            this.backupBeforeSaving = backupBeforeSaving;
-            this.savegamePath = savegamePath;
-            this.SELECTED_TAB = SELECTED_TAB;
-            this.mainForm = mainForm;
-            this.platform = platform;
-            this.isPrepatch = isPrepatch;
-        }
-
-        private void StatisticsForm_Load(object sender, EventArgs e)
-        {
-            if (ThemeUtilities.DARK_MODE_ENABLED)
-            {
-                ThemeUtilities.ApplyDarkMode(this);
-                ThemeUtilities.ApplyDarkTitleBar(this);
-
-                picInfoStatisticsDropdown.Image = Resources.ToolTip_Image_DarkMode;
-            }
-
-            DetermineOffsets();
-
-            if (ShouldShowLevelSelect())
-            {
-                PopulateStatisticsDropdown();
-                SetTooltipText();
-            }
-            else
-            {
-                HideLevelSelectUI();
-                this.CenterToParent();
-            }
-
-            SetParams();
-            DisplayStatistics();
-        }
-
-        private void StatisticsForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            ConfirmChanges();
-            mainForm.RefreshGameInfoConditionally();
         }
 
         public void SetSavegame(Savegame savegame)
