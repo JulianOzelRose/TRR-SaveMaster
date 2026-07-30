@@ -82,10 +82,26 @@ namespace TRR_SaveMaster
                 picInfoZCoordinate.Image = Resources.ToolTip_Image_DarkMode;
             }
 
-            DetermineLevelIndexOffset();
-            SetNUDRanges();
-            InitializeUtilConstructors();
-            DisplayCoordinates();
+            try
+            {
+                DetermineLevelIndexOffset();
+                SetNUDRanges();
+                InitializeUtilConstructors();
+                DisplayCoordinates();
+            }
+            catch (Exception ex)
+            {
+                SystemSounds.Hand.Play();
+
+                ThemedMessageBox.Show(
+                    this,
+                    ex.Message,
+                    Globals.DIALOG_TITLE_ERROR,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                this.Close();
+            }
         }
 
         private void PositionForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -404,9 +420,9 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void EnableEndOfLevelButtonConditionally()
+        private void EnableEndOfLevelButtonConditionally(byte[] fileData)
         {
-            byte levelIndex = GetLevelIndex();
+            byte levelIndex = GetLevelIndex(fileData);
 
             if (IsTR1Savegame())
             {
@@ -434,9 +450,9 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void EnableStartOfLevelButtonConditionally()
+        private void EnableStartOfLevelButtonConditionally(byte[] fileData)
         {
-            byte levelIndex = GetLevelIndex();
+            byte levelIndex = GetLevelIndex(fileData);
 
             if (IsTR1Savegame())
             {
@@ -464,9 +480,9 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void EnableSecretButtonsConditionally()
+        private void EnableSecretButtonsConditionally(byte[] fileData)
         {
-            byte levelIndex = GetLevelIndex();
+            byte levelIndex = GetLevelIndex(fileData);
 
             if (IsTR1Savegame())
             {
@@ -755,9 +771,9 @@ namespace TRR_SaveMaster
                     DeterminePositionOffsets(healthOffset);
                 }
 
-                EnableStartOfLevelButtonConditionally();
-                EnableEndOfLevelButtonConditionally();
-                EnableSecretButtonsConditionally();
+                EnableStartOfLevelButtonConditionally(fileData);
+                EnableEndOfLevelButtonConditionally(fileData);
+                EnableSecretButtonsConditionally(fileData);
 
                 if (IsTRXSavegame())
                 {
@@ -896,9 +912,9 @@ namespace TRR_SaveMaster
                     DeterminePositionOffsets(healthOffset);
                 }
 
-                EnableStartOfLevelButtonConditionally();
-                EnableEndOfLevelButtonConditionally();
-                EnableSecretButtonsConditionally();
+                EnableStartOfLevelButtonConditionally(fileData);
+                EnableEndOfLevelButtonConditionally(fileData);
+                EnableSecretButtonsConditionally(fileData);
 
                 if (backupBeforeSaving)
                 {
@@ -1037,366 +1053,506 @@ namespace TRR_SaveMaster
 
         private void btnStartOfLevel_Click(object sender, EventArgs e)
         {
-            byte levelIndex = GetLevelIndex();
-
-            if (IsTR6Savegame())
+            try
             {
-                if (startOfLevelCoordinatesTR6.ContainsKey(levelIndex))
-                {
-                    float[] startOfLevelCoordinatesFloat = startOfLevelCoordinatesTR6[levelIndex];
+                byte levelIndex = GetLevelIndex();
 
-                    if (startOfLevelCoordinatesFloat.Length < 5)
+                if (IsTR6Savegame())
+                {
+                    if (startOfLevelCoordinatesTR6.ContainsKey(levelIndex))
                     {
-                        return;
+                        float[] startOfLevelCoordinatesFloat = startOfLevelCoordinatesTR6[levelIndex];
+
+                        if (startOfLevelCoordinatesFloat.Length < 5)
+                        {
+                            return;
+                        }
+
+                        nudXCoordinate.Value = (decimal)startOfLevelCoordinatesFloat[0];
+                        nudYCoordinate.Value = (decimal)startOfLevelCoordinatesFloat[1];
+                        nudZCoordinate.Value = (decimal)startOfLevelCoordinatesFloat[2];
+                        nudOrientation.Value = (decimal)startOfLevelCoordinatesFloat[3];
+                        nudRoom.Value = (Int32)startOfLevelCoordinatesFloat[4];
                     }
 
-                    nudXCoordinate.Value = (decimal)startOfLevelCoordinatesFloat[0];
-                    nudYCoordinate.Value = (decimal)startOfLevelCoordinatesFloat[1];
-                    nudZCoordinate.Value = (decimal)startOfLevelCoordinatesFloat[2];
-                    nudOrientation.Value = (decimal)startOfLevelCoordinatesFloat[3];
-                    nudRoom.Value = (Int32)startOfLevelCoordinatesFloat[4];
+                    return;
                 }
 
-                return;
-            }
+                Int32[] startOfLevelCoordinates = new Int32[4];
 
-            Int32[] startOfLevelCoordinates = new Int32[4];
+                if (IsTR1Savegame() && startOfLevelCoordinatesTR1.ContainsKey(levelIndex))
+                {
+                    startOfLevelCoordinates = startOfLevelCoordinatesTR1[levelIndex];
+                }
+                else if (IsTR2Savegame() && startOfLevelCoordinatesTR2.ContainsKey(levelIndex))
+                {
+                    startOfLevelCoordinates = startOfLevelCoordinatesTR2[levelIndex];
+                }
+                else if (IsTR3Savegame() && startOfLevelCoordinatesTR3.ContainsKey(levelIndex))
+                {
+                    startOfLevelCoordinates = startOfLevelCoordinatesTR3[levelIndex];
+                }
+                else if (IsTR4Savegame() && startOfLevelCoordinatesTR4.ContainsKey(levelIndex))
+                {
+                    startOfLevelCoordinates = startOfLevelCoordinatesTR4[levelIndex];
+                }
+                else if (IsTR5Savegame() && startOfLevelCoordinatesTR5.ContainsKey(levelIndex))
+                {
+                    startOfLevelCoordinates = startOfLevelCoordinatesTR5[levelIndex];
+                }
 
-            if (IsTR1Savegame() && startOfLevelCoordinatesTR1.ContainsKey(levelIndex))
-            {
-                startOfLevelCoordinates = startOfLevelCoordinatesTR1[levelIndex];
-            }
-            else if (IsTR2Savegame() && startOfLevelCoordinatesTR2.ContainsKey(levelIndex))
-            {
-                startOfLevelCoordinates = startOfLevelCoordinatesTR2[levelIndex];
-            }
-            else if (IsTR3Savegame() && startOfLevelCoordinatesTR3.ContainsKey(levelIndex))
-            {
-                startOfLevelCoordinates = startOfLevelCoordinatesTR3[levelIndex];
-            }
-            else if (IsTR4Savegame() && startOfLevelCoordinatesTR4.ContainsKey(levelIndex))
-            {
-                startOfLevelCoordinates = startOfLevelCoordinatesTR4[levelIndex];
-            }
-            else if (IsTR5Savegame() && startOfLevelCoordinatesTR5.ContainsKey(levelIndex))
-            {
-                startOfLevelCoordinates = startOfLevelCoordinatesTR5[levelIndex];
-            }
+                if (startOfLevelCoordinates.Length < 5)
+                {
+                    return;
+                }
 
-            if (startOfLevelCoordinates.Length < 5)
-            {
-                return;
+                nudXCoordinate.Value = startOfLevelCoordinates[0];
+                nudYCoordinate.Value = startOfLevelCoordinates[1];
+                nudZCoordinate.Value = startOfLevelCoordinates[2];
+                nudOrientation.Value = (decimal)startOfLevelCoordinates[3];
+                nudRoom.Value = (byte)startOfLevelCoordinates[4];
             }
+            catch (Exception ex)
+            {
+                SystemSounds.Hand.Play();
 
-            nudXCoordinate.Value = startOfLevelCoordinates[0];
-            nudYCoordinate.Value = startOfLevelCoordinates[1];
-            nudZCoordinate.Value = startOfLevelCoordinates[2];
-            nudOrientation.Value = (decimal)startOfLevelCoordinates[3];
-            nudRoom.Value = (byte)startOfLevelCoordinates[4];
+                ThemedMessageBox.Show(
+                    this,
+                    ex.Message,
+                    Globals.DIALOG_TITLE_ERROR,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         private void btnEndOfLevel_Click(object sender, EventArgs e)
         {
-            byte levelIndex = GetLevelIndex();
-
-            if (IsTR6Savegame())
+            try
             {
-                if (endOfLevelCoordinatesTR6.ContainsKey(levelIndex))
-                {
-                    float[] endOfLevelCoordinatesFloat = endOfLevelCoordinatesTR6[levelIndex];
+                byte levelIndex = GetLevelIndex();
 
-                    if (endOfLevelCoordinatesFloat.Length < 5)
+                if (IsTR6Savegame())
+                {
+                    if (endOfLevelCoordinatesTR6.ContainsKey(levelIndex))
                     {
-                        return;
+                        float[] endOfLevelCoordinatesFloat = endOfLevelCoordinatesTR6[levelIndex];
+
+                        if (endOfLevelCoordinatesFloat.Length < 5)
+                        {
+                            return;
+                        }
+
+                        nudXCoordinate.Value = (decimal)endOfLevelCoordinatesFloat[0];
+                        nudYCoordinate.Value = (decimal)endOfLevelCoordinatesFloat[1];
+                        nudZCoordinate.Value = (decimal)endOfLevelCoordinatesFloat[2];
+                        nudOrientation.Value = (decimal)endOfLevelCoordinatesFloat[3];
+                        nudRoom.Value = (Int32)endOfLevelCoordinatesFloat[4];
                     }
 
-                    nudXCoordinate.Value = (decimal)endOfLevelCoordinatesFloat[0];
-                    nudYCoordinate.Value = (decimal)endOfLevelCoordinatesFloat[1];
-                    nudZCoordinate.Value = (decimal)endOfLevelCoordinatesFloat[2];
-                    nudOrientation.Value = (decimal)endOfLevelCoordinatesFloat[3];
-                    nudRoom.Value = (Int32)endOfLevelCoordinatesFloat[4];
+                    return;
                 }
 
-                return;
-            }
+                Int32[] endOfLevelCoordinates = new Int32[4];
 
-            Int32[] endOfLevelCoordinates = new Int32[4];
+                if (IsTR1Savegame() && endOfLevelCoordinatesTR1.ContainsKey(levelIndex))
+                {
+                    endOfLevelCoordinates = endOfLevelCoordinatesTR1[levelIndex];
+                }
+                else if (IsTR2Savegame() && endOfLevelCoordinatesTR2.ContainsKey(levelIndex))
+                {
+                    endOfLevelCoordinates = endOfLevelCoordinatesTR2[levelIndex];
+                }
+                else if (IsTR3Savegame() && endOfLevelCoordinatesTR3.ContainsKey(levelIndex))
+                {
+                    endOfLevelCoordinates = endOfLevelCoordinatesTR3[levelIndex];
+                }
+                else if (IsTR4Savegame() && endOfLevelCoordinatesTR4.ContainsKey(levelIndex))
+                {
+                    endOfLevelCoordinates = endOfLevelCoordinatesTR4[levelIndex];
+                }
+                else if (IsTR5Savegame() && endOfLevelCoordinatesTR5.ContainsKey(levelIndex))
+                {
+                    endOfLevelCoordinates = endOfLevelCoordinatesTR5[levelIndex];
+                }
 
-            if (IsTR1Savegame() && endOfLevelCoordinatesTR1.ContainsKey(levelIndex))
-            {
-                endOfLevelCoordinates = endOfLevelCoordinatesTR1[levelIndex];
-            }
-            else if (IsTR2Savegame() && endOfLevelCoordinatesTR2.ContainsKey(levelIndex))
-            {
-                endOfLevelCoordinates = endOfLevelCoordinatesTR2[levelIndex];
-            }
-            else if (IsTR3Savegame() && endOfLevelCoordinatesTR3.ContainsKey(levelIndex))
-            {
-                endOfLevelCoordinates = endOfLevelCoordinatesTR3[levelIndex];
-            }
-            else if (IsTR4Savegame() && endOfLevelCoordinatesTR4.ContainsKey(levelIndex))
-            {
-                endOfLevelCoordinates = endOfLevelCoordinatesTR4[levelIndex];
-            }
-            else if (IsTR5Savegame() && endOfLevelCoordinatesTR5.ContainsKey(levelIndex))
-            {
-                endOfLevelCoordinates = endOfLevelCoordinatesTR5[levelIndex];
-            }
+                if (endOfLevelCoordinates.Length < 5)
+                {
+                    return;
+                }
 
-            if (endOfLevelCoordinates.Length < 5)
-            {
-                return;
+                nudXCoordinate.Value = endOfLevelCoordinates[0];
+                nudYCoordinate.Value = endOfLevelCoordinates[1];
+                nudZCoordinate.Value = endOfLevelCoordinates[2];
+                nudOrientation.Value = (decimal)endOfLevelCoordinates[3];
+                nudRoom.Value = (byte)endOfLevelCoordinates[4];
             }
+            catch (Exception ex)
+            {
+                SystemSounds.Hand.Play();
 
-            nudXCoordinate.Value = endOfLevelCoordinates[0];
-            nudYCoordinate.Value = endOfLevelCoordinates[1];
-            nudZCoordinate.Value = endOfLevelCoordinates[2];
-            nudOrientation.Value = (decimal)endOfLevelCoordinates[3];
-            nudRoom.Value = (byte)endOfLevelCoordinates[4];
+                ThemedMessageBox.Show(
+                    this,
+                    ex.Message,
+                    Globals.DIALOG_TITLE_ERROR,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         private void btnSecret1_Click(object sender, EventArgs e)
         {
-            byte levelIndex = GetLevelIndex();
-            Int32[] secret1Coordinates = new Int32[4];
+            try
+            {
+                byte levelIndex = GetLevelIndex();
+                Int32[] secret1Coordinates = new Int32[4];
 
-            if (IsTR1Savegame() && secret1CoordinatesTR1.ContainsKey(levelIndex))
-            {
-                secret1Coordinates = secret1CoordinatesTR1[levelIndex];
-            }
-            else if (IsTR2Savegame() && secret1CoordinatesTR2.ContainsKey(levelIndex))
-            {
-                secret1Coordinates = secret1CoordinatesTR2[levelIndex];
-            }
-            else if (IsTR3Savegame() && secret1CoordinatesTR3.ContainsKey(levelIndex))
-            {
-                secret1Coordinates = secret1CoordinatesTR3[levelIndex];
-            }
-            else if (IsTR4Savegame() && secret1CoordinatesTR4.ContainsKey(levelIndex))
-            {
-                secret1Coordinates = secret1CoordinatesTR4[levelIndex];
-            }
-            else if (IsTR5Savegame() && secret1CoordinatesTR5.ContainsKey(levelIndex))
-            {
-                secret1Coordinates = secret1CoordinatesTR5[levelIndex];
-            }
+                if (IsTR1Savegame() && secret1CoordinatesTR1.ContainsKey(levelIndex))
+                {
+                    secret1Coordinates = secret1CoordinatesTR1[levelIndex];
+                }
+                else if (IsTR2Savegame() && secret1CoordinatesTR2.ContainsKey(levelIndex))
+                {
+                    secret1Coordinates = secret1CoordinatesTR2[levelIndex];
+                }
+                else if (IsTR3Savegame() && secret1CoordinatesTR3.ContainsKey(levelIndex))
+                {
+                    secret1Coordinates = secret1CoordinatesTR3[levelIndex];
+                }
+                else if (IsTR4Savegame() && secret1CoordinatesTR4.ContainsKey(levelIndex))
+                {
+                    secret1Coordinates = secret1CoordinatesTR4[levelIndex];
+                }
+                else if (IsTR5Savegame() && secret1CoordinatesTR5.ContainsKey(levelIndex))
+                {
+                    secret1Coordinates = secret1CoordinatesTR5[levelIndex];
+                }
 
-            if (secret1Coordinates.Length < 5)
-            {
-                return;
-            }
+                if (secret1Coordinates.Length < 5)
+                {
+                    return;
+                }
 
-            nudXCoordinate.Value = secret1Coordinates[0];
-            nudYCoordinate.Value = secret1Coordinates[1];
-            nudZCoordinate.Value = secret1Coordinates[2];
-            nudOrientation.Value = (decimal)secret1Coordinates[3];
-            nudRoom.Value = (byte)secret1Coordinates[4];
+                nudXCoordinate.Value = secret1Coordinates[0];
+                nudYCoordinate.Value = secret1Coordinates[1];
+                nudZCoordinate.Value = secret1Coordinates[2];
+                nudOrientation.Value = (decimal)secret1Coordinates[3];
+                nudRoom.Value = (byte)secret1Coordinates[4];
+            }
+            catch (Exception ex)
+            {
+                SystemSounds.Hand.Play();
+
+                ThemedMessageBox.Show(
+                    this,
+                    ex.Message,
+                    Globals.DIALOG_TITLE_ERROR,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         private void btnSecret2_Click(object sender, EventArgs e)
         {
-            byte levelIndex = GetLevelIndex();
-            Int32[] secret2Coordinates = new Int32[4];
+            try
+            {
+                byte levelIndex = GetLevelIndex();
+                Int32[] secret2Coordinates = new Int32[4];
 
-            if (IsTR1Savegame() && secret2CoordinatesTR1.ContainsKey(levelIndex))
-            {
-                secret2Coordinates = secret2CoordinatesTR1[levelIndex];
-            }
-            else if (IsTR2Savegame() && secret2CoordinatesTR2.ContainsKey(levelIndex))
-            {
-                secret2Coordinates = secret2CoordinatesTR2[levelIndex];
-            }
-            else if (IsTR3Savegame() && secret2CoordinatesTR3.ContainsKey(levelIndex))
-            {
-                secret2Coordinates = secret2CoordinatesTR3[levelIndex];
-            }
-            else if (IsTR4Savegame() && secret2CoordinatesTR4.ContainsKey(levelIndex))
-            {
-                secret2Coordinates = secret2CoordinatesTR4[levelIndex];
-            }
-            else if (IsTR5Savegame() && secret2CoordinatesTR5.ContainsKey(levelIndex))
-            {
-                secret2Coordinates = secret2CoordinatesTR5[levelIndex];
-            }
+                if (IsTR1Savegame() && secret2CoordinatesTR1.ContainsKey(levelIndex))
+                {
+                    secret2Coordinates = secret2CoordinatesTR1[levelIndex];
+                }
+                else if (IsTR2Savegame() && secret2CoordinatesTR2.ContainsKey(levelIndex))
+                {
+                    secret2Coordinates = secret2CoordinatesTR2[levelIndex];
+                }
+                else if (IsTR3Savegame() && secret2CoordinatesTR3.ContainsKey(levelIndex))
+                {
+                    secret2Coordinates = secret2CoordinatesTR3[levelIndex];
+                }
+                else if (IsTR4Savegame() && secret2CoordinatesTR4.ContainsKey(levelIndex))
+                {
+                    secret2Coordinates = secret2CoordinatesTR4[levelIndex];
+                }
+                else if (IsTR5Savegame() && secret2CoordinatesTR5.ContainsKey(levelIndex))
+                {
+                    secret2Coordinates = secret2CoordinatesTR5[levelIndex];
+                }
 
-            if (secret2Coordinates.Length < 5)
-            {
-                return;
-            }
+                if (secret2Coordinates.Length < 5)
+                {
+                    return;
+                }
 
-            nudXCoordinate.Value = secret2Coordinates[0];
-            nudYCoordinate.Value = secret2Coordinates[1];
-            nudZCoordinate.Value = secret2Coordinates[2];
-            nudOrientation.Value = (decimal)secret2Coordinates[3];
-            nudRoom.Value = (byte)secret2Coordinates[4];
+                nudXCoordinate.Value = secret2Coordinates[0];
+                nudYCoordinate.Value = secret2Coordinates[1];
+                nudZCoordinate.Value = secret2Coordinates[2];
+                nudOrientation.Value = (decimal)secret2Coordinates[3];
+                nudRoom.Value = (byte)secret2Coordinates[4];
+            }
+            catch (Exception ex)
+            {
+                SystemSounds.Hand.Play();
+
+                ThemedMessageBox.Show(
+                    this,
+                    ex.Message,
+                    Globals.DIALOG_TITLE_ERROR,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         private void btnSecret3_Click(object sender, EventArgs e)
         {
-            byte levelIndex = GetLevelIndex();
-            Int32[] secret3Coordinates = new Int32[4];
+            try
+            {
+                byte levelIndex = GetLevelIndex();
+                Int32[] secret3Coordinates = new Int32[4];
 
-            if (IsTR1Savegame() && secret3CoordinatesTR1.ContainsKey(levelIndex))
-            {
-                secret3Coordinates = secret3CoordinatesTR1[levelIndex];
-            }
-            else if (IsTR2Savegame() && secret3CoordinatesTR2.ContainsKey(levelIndex))
-            {
-                secret3Coordinates = secret3CoordinatesTR2[levelIndex];
-            }
-            else if (IsTR3Savegame() && secret3CoordinatesTR3.ContainsKey(levelIndex))
-            {
-                secret3Coordinates = secret3CoordinatesTR3[levelIndex];
-            }
-            else if (IsTR4Savegame() && secret3CoordinatesTR4.ContainsKey(levelIndex))
-            {
-                secret3Coordinates = secret3CoordinatesTR4[levelIndex];
-            }
-            else if (IsTR5Savegame() && secret3CoordinatesTR5.ContainsKey(levelIndex))
-            {
-                secret3Coordinates = secret3CoordinatesTR5[levelIndex];
-            }
+                if (IsTR1Savegame() && secret3CoordinatesTR1.ContainsKey(levelIndex))
+                {
+                    secret3Coordinates = secret3CoordinatesTR1[levelIndex];
+                }
+                else if (IsTR2Savegame() && secret3CoordinatesTR2.ContainsKey(levelIndex))
+                {
+                    secret3Coordinates = secret3CoordinatesTR2[levelIndex];
+                }
+                else if (IsTR3Savegame() && secret3CoordinatesTR3.ContainsKey(levelIndex))
+                {
+                    secret3Coordinates = secret3CoordinatesTR3[levelIndex];
+                }
+                else if (IsTR4Savegame() && secret3CoordinatesTR4.ContainsKey(levelIndex))
+                {
+                    secret3Coordinates = secret3CoordinatesTR4[levelIndex];
+                }
+                else if (IsTR5Savegame() && secret3CoordinatesTR5.ContainsKey(levelIndex))
+                {
+                    secret3Coordinates = secret3CoordinatesTR5[levelIndex];
+                }
 
-            if (secret3Coordinates.Length < 5)
-            {
-                return;
-            }
+                if (secret3Coordinates.Length < 5)
+                {
+                    return;
+                }
 
-            nudXCoordinate.Value = secret3Coordinates[0];
-            nudYCoordinate.Value = secret3Coordinates[1];
-            nudZCoordinate.Value = secret3Coordinates[2];
-            nudOrientation.Value = (decimal)secret3Coordinates[3];
-            nudRoom.Value = (byte)secret3Coordinates[4];
+                nudXCoordinate.Value = secret3Coordinates[0];
+                nudYCoordinate.Value = secret3Coordinates[1];
+                nudZCoordinate.Value = secret3Coordinates[2];
+                nudOrientation.Value = (decimal)secret3Coordinates[3];
+                nudRoom.Value = (byte)secret3Coordinates[4];
+            }
+            catch (Exception ex)
+            {
+                SystemSounds.Hand.Play();
+
+                ThemedMessageBox.Show(
+                    this,
+                    ex.Message,
+                    Globals.DIALOG_TITLE_ERROR,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         private void btnSecret4_Click(object sender, EventArgs e)
         {
-            byte levelIndex = GetLevelIndex();
-            Int32[] secret4Coordinates = new Int32[4];
+            try
+            {
+                byte levelIndex = GetLevelIndex();
+                Int32[] secret4Coordinates = new Int32[4];
 
-            if (IsTR1Savegame() && secret4CoordinatesTR1.ContainsKey(levelIndex))
-            {
-                secret4Coordinates = secret4CoordinatesTR1[levelIndex];
-            }
-            else if (IsTR3Savegame() && secret4CoordinatesTR3.ContainsKey(levelIndex))
-            {
-                secret4Coordinates = secret4CoordinatesTR3[levelIndex];
-            }
-            else if (IsTR4Savegame() && secret4CoordinatesTR4.ContainsKey(levelIndex))
-            {
-                secret4Coordinates = secret4CoordinatesTR4[levelIndex];
-            }
+                if (IsTR1Savegame() && secret4CoordinatesTR1.ContainsKey(levelIndex))
+                {
+                    secret4Coordinates = secret4CoordinatesTR1[levelIndex];
+                }
+                else if (IsTR3Savegame() && secret4CoordinatesTR3.ContainsKey(levelIndex))
+                {
+                    secret4Coordinates = secret4CoordinatesTR3[levelIndex];
+                }
+                else if (IsTR4Savegame() && secret4CoordinatesTR4.ContainsKey(levelIndex))
+                {
+                    secret4Coordinates = secret4CoordinatesTR4[levelIndex];
+                }
 
-            if (secret4Coordinates.Length < 5)
-            {
-                return;
-            }
+                if (secret4Coordinates.Length < 5)
+                {
+                    return;
+                }
 
-            nudXCoordinate.Value = secret4Coordinates[0];
-            nudYCoordinate.Value = secret4Coordinates[1];
-            nudZCoordinate.Value = secret4Coordinates[2];
-            nudOrientation.Value = (decimal)secret4Coordinates[3];
-            nudRoom.Value = (byte)secret4Coordinates[4];
+                nudXCoordinate.Value = secret4Coordinates[0];
+                nudYCoordinate.Value = secret4Coordinates[1];
+                nudZCoordinate.Value = secret4Coordinates[2];
+                nudOrientation.Value = (decimal)secret4Coordinates[3];
+                nudRoom.Value = (byte)secret4Coordinates[4];
+            }
+            catch (Exception ex)
+            {
+                SystemSounds.Hand.Play();
+
+                ThemedMessageBox.Show(
+                    this,
+                    ex.Message,
+                    Globals.DIALOG_TITLE_ERROR,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         private void btnSecret5_Click(object sender, EventArgs e)
         {
-            byte levelIndex = GetLevelIndex();
-            Int32[] secret5Coordinates = new Int32[4];
+            try
+            {
+                byte levelIndex = GetLevelIndex();
+                Int32[] secret5Coordinates = new Int32[4];
 
-            if (IsTR1Savegame() && secret5CoordinatesTR1.ContainsKey(levelIndex))
-            {
-                secret5Coordinates = secret5CoordinatesTR1[levelIndex];
-            }
-            else if (IsTR3Savegame() && secret5CoordinatesTR3.ContainsKey(levelIndex))
-            {
-                secret5Coordinates = secret5CoordinatesTR3[levelIndex];
-            }
-            else if (IsTR4Savegame() && secret5CoordinatesTR4.ContainsKey(levelIndex))
-            {
-                secret5Coordinates = secret5CoordinatesTR4[levelIndex];
-            }
+                if (IsTR1Savegame() && secret5CoordinatesTR1.ContainsKey(levelIndex))
+                {
+                    secret5Coordinates = secret5CoordinatesTR1[levelIndex];
+                }
+                else if (IsTR3Savegame() && secret5CoordinatesTR3.ContainsKey(levelIndex))
+                {
+                    secret5Coordinates = secret5CoordinatesTR3[levelIndex];
+                }
+                else if (IsTR4Savegame() && secret5CoordinatesTR4.ContainsKey(levelIndex))
+                {
+                    secret5Coordinates = secret5CoordinatesTR4[levelIndex];
+                }
 
-            if (secret5Coordinates.Length < 5)
-            {
-                return;
-            }
+                if (secret5Coordinates.Length < 5)
+                {
+                    return;
+                }
 
-            nudXCoordinate.Value = secret5Coordinates[0];
-            nudYCoordinate.Value = secret5Coordinates[1];
-            nudZCoordinate.Value = secret5Coordinates[2];
-            nudOrientation.Value = (decimal)secret5Coordinates[3];
-            nudRoom.Value = (byte)secret5Coordinates[4];
+                nudXCoordinate.Value = secret5Coordinates[0];
+                nudYCoordinate.Value = secret5Coordinates[1];
+                nudZCoordinate.Value = secret5Coordinates[2];
+                nudOrientation.Value = (decimal)secret5Coordinates[3];
+                nudRoom.Value = (byte)secret5Coordinates[4];
+            }
+            catch (Exception ex)
+            {
+                SystemSounds.Hand.Play();
+
+                ThemedMessageBox.Show(
+                    this,
+                    ex.Message,
+                    Globals.DIALOG_TITLE_ERROR,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         private void btnSecret6_Click(object sender, EventArgs e)
         {
-            byte levelIndex = GetLevelIndex();
-            Int32[] secret6Coordinates = new Int32[4];
-
-            if (IsTR3Savegame() && secret6CoordinatesTR3.ContainsKey(levelIndex))
+            try
             {
-                secret6Coordinates = secret6CoordinatesTR3[levelIndex];
-            }
-            else if (IsTR4Savegame() && secret6CoordinatesTR4.ContainsKey(levelIndex))
-            {
-                secret6Coordinates = secret6CoordinatesTR4[levelIndex];
-            }
+                byte levelIndex = GetLevelIndex();
+                Int32[] secret6Coordinates = new Int32[4];
 
-            if (secret6Coordinates.Length < 5)
-            {
-                return;
-            }
+                if (IsTR3Savegame() && secret6CoordinatesTR3.ContainsKey(levelIndex))
+                {
+                    secret6Coordinates = secret6CoordinatesTR3[levelIndex];
+                }
+                else if (IsTR4Savegame() && secret6CoordinatesTR4.ContainsKey(levelIndex))
+                {
+                    secret6Coordinates = secret6CoordinatesTR4[levelIndex];
+                }
 
-            nudXCoordinate.Value = secret6Coordinates[0];
-            nudYCoordinate.Value = secret6Coordinates[1];
-            nudZCoordinate.Value = secret6Coordinates[2];
-            nudOrientation.Value = (decimal)secret6Coordinates[3];
-            nudRoom.Value = (byte)secret6Coordinates[4];
+                if (secret6Coordinates.Length < 5)
+                {
+                    return;
+                }
+
+                nudXCoordinate.Value = secret6Coordinates[0];
+                nudYCoordinate.Value = secret6Coordinates[1];
+                nudZCoordinate.Value = secret6Coordinates[2];
+                nudOrientation.Value = (decimal)secret6Coordinates[3];
+                nudRoom.Value = (byte)secret6Coordinates[4];
+            }
+            catch (Exception ex)
+            {
+                SystemSounds.Hand.Play();
+
+                ThemedMessageBox.Show(
+                    this,
+                    ex.Message,
+                    Globals.DIALOG_TITLE_ERROR,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         private void btnSecret7_Click(object sender, EventArgs e)
         {
-            byte levelIndex = GetLevelIndex();
-            Int32[] secret7Coordinates = new Int32[4];
-
-            if (IsTR4Savegame() && secret7CoordinatesTR4.ContainsKey(levelIndex))
+            try
             {
-                secret7Coordinates = secret7CoordinatesTR4[levelIndex];
-            }
+                byte levelIndex = GetLevelIndex();
+                Int32[] secret7Coordinates = new Int32[4];
 
-            if (secret7Coordinates.Length < 5)
+                if (IsTR4Savegame() && secret7CoordinatesTR4.ContainsKey(levelIndex))
+                {
+                    secret7Coordinates = secret7CoordinatesTR4[levelIndex];
+                }
+
+                if (secret7Coordinates.Length < 5)
+                {
+                    return;
+                }
+
+                nudXCoordinate.Value = secret7Coordinates[0];
+                nudYCoordinate.Value = secret7Coordinates[1];
+                nudZCoordinate.Value = secret7Coordinates[2];
+                nudOrientation.Value = (decimal)secret7Coordinates[3];
+                nudRoom.Value = (byte)secret7Coordinates[4];
+            }
+            catch (Exception ex)
             {
-                return;
-            }
+                SystemSounds.Hand.Play();
 
-            nudXCoordinate.Value = secret7Coordinates[0];
-            nudYCoordinate.Value = secret7Coordinates[1];
-            nudZCoordinate.Value = secret7Coordinates[2];
-            nudOrientation.Value = (decimal)secret7Coordinates[3];
-            nudRoom.Value = (byte)secret7Coordinates[4];
+                ThemedMessageBox.Show(
+                    this,
+                    ex.Message,
+                    Globals.DIALOG_TITLE_ERROR,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         private void btnSecret8_Click(object sender, EventArgs e)
         {
-            byte levelIndex = GetLevelIndex();
-            Int32[] secret8Coordinates = new Int32[4];
-
-            if (IsTR4Savegame() && secret8CoordinatesTR4.ContainsKey(levelIndex))
+            try
             {
-                secret8Coordinates = secret8CoordinatesTR4[levelIndex];
-            }
+                byte levelIndex = GetLevelIndex();
+                Int32[] secret8Coordinates = new Int32[4];
 
-            if (secret8Coordinates.Length < 5)
+                if (IsTR4Savegame() && secret8CoordinatesTR4.ContainsKey(levelIndex))
+                {
+                    secret8Coordinates = secret8CoordinatesTR4[levelIndex];
+                }
+
+                if (secret8Coordinates.Length < 5)
+                {
+                    return;
+                }
+
+                nudXCoordinate.Value = secret8Coordinates[0];
+                nudYCoordinate.Value = secret8Coordinates[1];
+                nudZCoordinate.Value = secret8Coordinates[2];
+                nudOrientation.Value = (decimal)secret8Coordinates[3];
+                nudRoom.Value = (byte)secret8Coordinates[4];
+            }
+            catch (Exception ex)
             {
-                return;
-            }
+                SystemSounds.Hand.Play();
 
-            nudXCoordinate.Value = secret8Coordinates[0];
-            nudYCoordinate.Value = secret8Coordinates[1];
-            nudZCoordinate.Value = secret8Coordinates[2];
-            nudOrientation.Value = (decimal)secret8Coordinates[3];
-            nudRoom.Value = (byte)secret8Coordinates[4];
+                ThemedMessageBox.Show(
+                    this,
+                    ex.Message,
+                    Globals.DIALOG_TITLE_ERROR,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         private void nudXCoordinate_ValueChanged(object sender, EventArgs e)
