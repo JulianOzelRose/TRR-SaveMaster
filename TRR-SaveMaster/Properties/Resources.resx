@@ -133,4 +133,82 @@
   <data name="About_Background_DarkMode" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\About_Background_DarkMode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="AdvancedSettings_Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\AdvancedSettings_Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AdvancedSettings_Image_DarkMode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\AdvancedSettings_Image_DarkMode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Backup_Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Backup_Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Backup_Image_DarkMode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Backup_Image_DarkMode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bug_Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Bug_Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bug_Image_DarkMode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Bug_Image_DarkMode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Delete_Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Delete_Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Delete_Image_DarkMode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Delete_Image_DarkMode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Exit_Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Exit_Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Exit_Image_DarkMode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Exit_Image_DarkMode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Folder_Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Folder_Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Folder_Image_DarkMode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Folder_Image_DarkMode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Help_Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Help_Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Help_Image_DarkMode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Help_Image_DarkMode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Platform_Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Platform_Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Platform_Image_DarkMode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Platform_Image_DarkMode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Position_Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Position_Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Position_Image_DarkMode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Position_Image_DarkMode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="README_Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\README_Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="README_Image_DarkMode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\README_Image_DarkMode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Refresh_Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Refresh_Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Refresh_Image_DarkMode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Refresh_Image_DarkMode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Statistics_Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Statistics_Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Statistics_Image_DarkMode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Statistics_Image_DarkMode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Unlocks_Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Unlocks_Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Unlocks_Image_DarkMode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Unlocks_Image_DarkMode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

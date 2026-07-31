@@ -3,6 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Media;
 using System.Windows.Forms;
+using TRR_SaveMaster.Properties;
 
 namespace TRR_SaveMaster
 {
@@ -128,6 +129,33 @@ namespace TRR_SaveMaster
             }
         }
 
+        private void ApplyLightMode()
+        {
+            ThemeUtilities.ApplyLightMode(this);
+
+            tabGame.DrawItem -= tabGame_DrawItem;
+            tabGame.DrawMode = TabDrawMode.Normal;
+            this.BackColor = SystemColors.Control;
+
+            tsmiBrowseTRXSavegamePath.Image = Resources.Folder_Image;
+            tsmiBrowseTRX2SavegamePath.Image = Resources.Folder_Image;
+            tsmiCreateBackup.Image = Resources.Backup_Image;
+            tsmiRefreshSavegameList.Image = Resources.Refresh_Image;
+            tsmiExit.Image = Resources.Exit_Image;
+            tsmiUnlocks.Image = Resources.Unlocks_Image;
+            tsmiStatistics.Image = Resources.Statistics_Image;
+            tsmiPosition.Image = Resources.Position_Image;
+            tsmiDeleteSavegame.Image = Resources.Delete_Image;
+            tsmiPlatform.Image = Resources.Platform_Image;
+            tsmiAdvanced.Image = Resources.AdvancedSettings_Image;
+            tsmiViewReadme.Image = Resources.README_Image;
+            tsmiReportBug.Image = Resources.Bug_Image;
+            tsmiAbout.Image = Resources.Help_Image;
+
+            ThemeUtilities.ApplyLightTitleBar(this);
+            ThemeUtilities.DARK_MODE_ENABLED = false;
+        }
+
         private void ApplyDarkMode()
         {
             ThemeUtilities.ApplyDarkMode(this);
@@ -136,6 +164,21 @@ namespace TRR_SaveMaster
             tabGame.DrawMode = TabDrawMode.OwnerDrawFixed;
             tabGame.DrawItem -= tabGame_DrawItem;
             tabGame.DrawItem += tabGame_DrawItem;
+
+            tsmiBrowseTRXSavegamePath.Image = Resources.Folder_Image_DarkMode;
+            tsmiBrowseTRX2SavegamePath.Image = Resources.Folder_Image_DarkMode;
+            tsmiCreateBackup.Image = Resources.Backup_Image_DarkMode;
+            tsmiRefreshSavegameList.Image = Resources.Refresh_Image_DarkMode;
+            tsmiExit.Image = Resources.Exit_Image_DarkMode;
+            tsmiUnlocks.Image = Resources.Unlocks_Image_DarkMode;
+            tsmiStatistics.Image = Resources.Statistics_Image_DarkMode;
+            tsmiPosition.Image = Resources.Position_Image_DarkMode;
+            tsmiDeleteSavegame.Image = Resources.Delete_Image_DarkMode;
+            tsmiPlatform.Image = Resources.Platform_Image_DarkMode;
+            tsmiAdvanced.Image = Resources.AdvancedSettings_Image_DarkMode;
+            tsmiViewReadme.Image = Resources.README_Image_DarkMode;
+            tsmiReportBug.Image = Resources.Bug_Image_DarkMode;
+            tsmiAbout.Image = Resources.Help_Image_DarkMode;
 
             ThemeUtilities.DARK_MODE_ENABLED = true;
         }
@@ -150,18 +193,6 @@ namespace TRR_SaveMaster
                 cp.ExStyle |= WS_EX_COMPOSITED;
                 return cp;
             }
-        }
-
-        private void ApplyLightMode()
-        {
-            ThemeUtilities.ApplyLightMode(this);
-
-            tabGame.DrawItem -= tabGame_DrawItem;
-            tabGame.DrawMode = TabDrawMode.Normal;
-            this.BackColor = SystemColors.Control;
-
-            ThemeUtilities.ApplyLightTitleBar(this);
-            ThemeUtilities.DARK_MODE_ENABLED = false;
         }
 
         private byte GetSaveFileVersion(byte[] fileData)
