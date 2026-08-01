@@ -273,16 +273,6 @@ namespace TRR_SaveMaster.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap README_Image_DarkMode {
-            get {
-                object obj = ResourceManager.GetObject("README_Image_DarkMode", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Refresh_Image {
             get {
                 object obj = ResourceManager.GetObject("Refresh_Image", resourceCulture);

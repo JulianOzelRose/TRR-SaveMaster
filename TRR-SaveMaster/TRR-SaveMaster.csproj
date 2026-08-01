@@ -206,7 +206,6 @@
     <Content Include="Images\Position_Image.png" />
     <Content Include="Images\Position_Image_DarkMode.png" />
     <Content Include="Images\README_Image.png" />
-    <Content Include="Images\README_Image_DarkMode.png" />
     <Content Include="Images\Refresh_Image.png" />
     <Content Include="Images\Refresh_Image_DarkMode.png" />
     <Content Include="Images\Statistics_Image.png" />

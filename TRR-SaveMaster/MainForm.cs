@@ -148,7 +148,6 @@ namespace TRR_SaveMaster
             tsmiDeleteSavegame.Image = Resources.Delete_Image;
             tsmiPlatform.Image = Resources.Platform_Image;
             tsmiAdvanced.Image = Resources.AdvancedSettings_Image;
-            tsmiViewReadme.Image = Resources.README_Image;
             tsmiReportBug.Image = Resources.Bug_Image;
             tsmiAbout.Image = Resources.Help_Image;
 
@@ -176,7 +175,6 @@ namespace TRR_SaveMaster
             tsmiDeleteSavegame.Image = Resources.Delete_Image_DarkMode;
             tsmiPlatform.Image = Resources.Platform_Image_DarkMode;
             tsmiAdvanced.Image = Resources.AdvancedSettings_Image_DarkMode;
-            tsmiViewReadme.Image = Resources.README_Image_DarkMode;
             tsmiReportBug.Image = Resources.Bug_Image_DarkMode;
             tsmiAbout.Image = Resources.Help_Image_DarkMode;
 
