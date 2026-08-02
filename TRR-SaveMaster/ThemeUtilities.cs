@@ -23,6 +23,7 @@ namespace TRR_SaveMaster
         public static Color SeparatorColor = Color.FromArgb(70, 70, 70);
 
         public static bool DARK_MODE_ENABLED = false;
+        public static bool DARK_MODE_FLAT_STYLE_CHECKBOX_ENABLED = true;
 
         private class DarkToolStripColorTable : ProfessionalColorTable
         {
@@ -88,7 +89,7 @@ namespace TRR_SaveMaster
                 }
                 else if (control is CheckBox checkbox)
                 {
-                    checkbox.FlatStyle = FlatStyle.Flat;
+                    checkbox.FlatStyle = DARK_MODE_FLAT_STYLE_CHECKBOX_ENABLED ? FlatStyle.Flat : FlatStyle.Standard;
                     checkbox.Paint -= DarkDisabledCheckBox_Paint;
                     checkbox.Paint += DarkDisabledCheckBox_Paint;
                 }

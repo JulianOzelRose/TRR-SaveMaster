@@ -312,6 +312,7 @@ namespace TRR_SaveMaster
             this.tsmiAdvanced = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAllowUnsafeMaxValuesTR6 = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiShowInventoryToggleTR6 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiUseFlatCheckBoxDarkMode = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSettingsSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiStatusBar = new System.Windows.Forms.ToolStripMenuItem();
@@ -3750,7 +3751,7 @@ namespace TRR_SaveMaster
             this.tsmiPC.CheckOnClick = true;
             this.tsmiPC.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiPC.Name = "tsmiPC";
-            this.tsmiPC.Size = new System.Drawing.Size(180, 22);
+            this.tsmiPC.Size = new System.Drawing.Size(162, 22);
             this.tsmiPC.Text = "PC";
             this.tsmiPC.CheckedChanged += new System.EventHandler(this.tsmiPC_CheckedChanged);
             // 
@@ -3758,7 +3759,7 @@ namespace TRR_SaveMaster
             // 
             this.tsmiPlayStation4.CheckOnClick = true;
             this.tsmiPlayStation4.Name = "tsmiPlayStation4";
-            this.tsmiPlayStation4.Size = new System.Drawing.Size(180, 22);
+            this.tsmiPlayStation4.Size = new System.Drawing.Size(162, 22);
             this.tsmiPlayStation4.Text = "PlayStation 4";
             this.tsmiPlayStation4.CheckedChanged += new System.EventHandler(this.tsmiPlayStation4_CheckedChanged);
             // 
@@ -3766,7 +3767,7 @@ namespace TRR_SaveMaster
             // 
             this.tsmiNintendoSwitch.CheckOnClick = true;
             this.tsmiNintendoSwitch.Name = "tsmiNintendoSwitch";
-            this.tsmiNintendoSwitch.Size = new System.Drawing.Size(180, 22);
+            this.tsmiNintendoSwitch.Size = new System.Drawing.Size(162, 22);
             this.tsmiNintendoSwitch.Text = "Nintendo Switch";
             this.tsmiNintendoSwitch.CheckedChanged += new System.EventHandler(this.tsmiNintendoSwitch_CheckedChanged);
             // 
@@ -3774,7 +3775,7 @@ namespace TRR_SaveMaster
             // 
             this.tsmiAndroid.CheckOnClick = true;
             this.tsmiAndroid.Name = "tsmiAndroid";
-            this.tsmiAndroid.Size = new System.Drawing.Size(180, 22);
+            this.tsmiAndroid.Size = new System.Drawing.Size(162, 22);
             this.tsmiAndroid.Text = "Android";
             this.tsmiAndroid.CheckedChanged += new System.EventHandler(this.tsmiAndroid_CheckedChanged);
             // 
@@ -3782,7 +3783,8 @@ namespace TRR_SaveMaster
             // 
             this.tsmiAdvanced.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiAllowUnsafeMaxValuesTR6,
-            this.tsmiShowInventoryToggleTR6});
+            this.tsmiShowInventoryToggleTR6,
+            this.tsmiUseFlatCheckBoxDarkMode});
             this.tsmiAdvanced.Image = global::TRR_SaveMaster.Properties.Resources.AdvancedSettings_Image;
             this.tsmiAdvanced.Name = "tsmiAdvanced";
             this.tsmiAdvanced.Size = new System.Drawing.Size(180, 22);
@@ -3792,17 +3794,28 @@ namespace TRR_SaveMaster
             // 
             this.tsmiAllowUnsafeMaxValuesTR6.CheckOnClick = true;
             this.tsmiAllowUnsafeMaxValuesTR6.Name = "tsmiAllowUnsafeMaxValuesTR6";
-            this.tsmiAllowUnsafeMaxValuesTR6.Size = new System.Drawing.Size(402, 22);
-            this.tsmiAllowUnsafeMaxValuesTR6.Text = "Allow unsafe max values for Tomb Raider VI (may crash game)";
+            this.tsmiAllowUnsafeMaxValuesTR6.Size = new System.Drawing.Size(304, 22);
+            this.tsmiAllowUnsafeMaxValuesTR6.Text = "Allow unsafe max values for Tomb Raider VI";
             this.tsmiAllowUnsafeMaxValuesTR6.Click += new System.EventHandler(this.tsmiAllowUnsafeMaxValuesTR6_Click);
             // 
             // tsmiShowInventoryToggleTR6
             // 
             this.tsmiShowInventoryToggleTR6.CheckOnClick = true;
             this.tsmiShowInventoryToggleTR6.Name = "tsmiShowInventoryToggleTR6";
-            this.tsmiShowInventoryToggleTR6.Size = new System.Drawing.Size(402, 22);
+            this.tsmiShowInventoryToggleTR6.Size = new System.Drawing.Size(304, 22);
             this.tsmiShowInventoryToggleTR6.Text = "Show inventory toggle for Tomb Raider VI";
             this.tsmiShowInventoryToggleTR6.Click += new System.EventHandler(this.tsmiShowInventoryToggleTR6_Click);
+            // 
+            // tsmiUseFlatCheckBoxDarkMode
+            // 
+            this.tsmiUseFlatCheckBoxDarkMode.Checked = true;
+            this.tsmiUseFlatCheckBoxDarkMode.CheckOnClick = true;
+            this.tsmiUseFlatCheckBoxDarkMode.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiUseFlatCheckBoxDarkMode.Enabled = false;
+            this.tsmiUseFlatCheckBoxDarkMode.Name = "tsmiUseFlatCheckBoxDarkMode";
+            this.tsmiUseFlatCheckBoxDarkMode.Size = new System.Drawing.Size(304, 22);
+            this.tsmiUseFlatCheckBoxDarkMode.Text = "Use flat style checkboxes for Dark Mode";
+            this.tsmiUseFlatCheckBoxDarkMode.CheckedChanged += new System.EventHandler(this.tsmiUseFlatCheckBoxDarkMode_CheckedChanged);
             // 
             // tsmiSettingsSeparator
             // 
@@ -3854,7 +3867,7 @@ namespace TRR_SaveMaster
             // 
             this.tsmiViewReadme.Image = global::TRR_SaveMaster.Properties.Resources.README_Image;
             this.tsmiViewReadme.Name = "tsmiViewReadme";
-            this.tsmiViewReadme.Size = new System.Drawing.Size(180, 22);
+            this.tsmiViewReadme.Size = new System.Drawing.Size(148, 22);
             this.tsmiViewReadme.Text = "View README";
             this.tsmiViewReadme.Click += new System.EventHandler(this.tsmiViewReadme_Click);
             // 
@@ -3862,7 +3875,7 @@ namespace TRR_SaveMaster
             // 
             this.tsmiReportBug.Image = global::TRR_SaveMaster.Properties.Resources.Bug_Image;
             this.tsmiReportBug.Name = "tsmiReportBug";
-            this.tsmiReportBug.Size = new System.Drawing.Size(180, 22);
+            this.tsmiReportBug.Size = new System.Drawing.Size(148, 22);
             this.tsmiReportBug.Text = "Report a Bug";
             this.tsmiReportBug.Click += new System.EventHandler(this.tsmiReportBug_Click);
             // 
@@ -3870,7 +3883,7 @@ namespace TRR_SaveMaster
             // 
             this.tsmiAbout.Image = global::TRR_SaveMaster.Properties.Resources.Help_Image;
             this.tsmiAbout.Name = "tsmiAbout";
-            this.tsmiAbout.Size = new System.Drawing.Size(180, 22);
+            this.tsmiAbout.Size = new System.Drawing.Size(148, 22);
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
             // 
@@ -4324,6 +4337,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.ToolStripMenuItem tsmiUnlocks;
         private System.Windows.Forms.ToolStripMenuItem tsmiDarkMode;
         private System.Windows.Forms.ToolStripMenuItem tsmiAndroid;
+        private System.Windows.Forms.ToolStripMenuItem tsmiUseFlatCheckBoxDarkMode;
     }
 }
 

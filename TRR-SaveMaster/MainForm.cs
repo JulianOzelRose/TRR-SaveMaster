@@ -131,6 +131,8 @@ namespace TRR_SaveMaster
 
         private void ApplyLightMode()
         {
+            ThemeUtilities.DARK_MODE_ENABLED = false;
+            ThemeUtilities.ApplyLightTitleBar(this);
             ThemeUtilities.ApplyLightMode(this);
 
             tabGame.DrawItem -= tabGame_DrawItem;
@@ -151,14 +153,14 @@ namespace TRR_SaveMaster
             tsmiReportBug.Image = Resources.Bug_Image;
             tsmiAbout.Image = Resources.Help_Image;
 
-            ThemeUtilities.ApplyLightTitleBar(this);
-            ThemeUtilities.DARK_MODE_ENABLED = false;
+            tsmiUseFlatCheckBoxDarkMode.Enabled = false;
         }
 
         private void ApplyDarkMode()
         {
-            ThemeUtilities.ApplyDarkMode(this);
+            ThemeUtilities.DARK_MODE_ENABLED = true;
             ThemeUtilities.ApplyDarkTitleBar(this);
+            ThemeUtilities.ApplyDarkMode(this);
 
             tabGame.DrawMode = TabDrawMode.OwnerDrawFixed;
             tabGame.DrawItem -= tabGame_DrawItem;
@@ -178,7 +180,7 @@ namespace TRR_SaveMaster
             tsmiReportBug.Image = Resources.Bug_Image_DarkMode;
             tsmiAbout.Image = Resources.Help_Image_DarkMode;
 
-            ThemeUtilities.DARK_MODE_ENABLED = true;
+            tsmiUseFlatCheckBoxDarkMode.Enabled = true;
         }
 
         protected override CreateParams CreateParams
@@ -876,6 +878,8 @@ namespace TRR_SaveMaster
             {
                 string[] lines = File.ReadAllLines(filePath);
 
+                bool darkMode = false;
+
                 foreach (string line in lines)
                 {
                     if (line.StartsWith(Globals.CONFIG_KEY_TRX_PATH))
@@ -930,12 +934,24 @@ namespace TRR_SaveMaster
                     }
                     else if (line.StartsWith(Globals.CONFIG_KEY_DARK_MODE))
                     {
-                        if (bool.TryParse(line.Substring(Globals.CONFIG_KEY_DARK_MODE.Length), out bool darkMode) && darkMode)
+                        if (bool.TryParse(line.Substring(Globals.CONFIG_KEY_DARK_MODE.Length), out darkMode) && darkMode)
                         {
-                            ApplyDarkMode();
                             tsmiDarkMode.Checked = true;
                         }
                     }
+                    else if (line.StartsWith(Globals.CONFIG_KEY_FLAT_CHECKBOX_DARK_MODE))
+                    {
+                        if (bool.TryParse(line.Substring(Globals.CONFIG_KEY_FLAT_CHECKBOX_DARK_MODE.Length), out bool flatCheckboxes))
+                        {
+                            ThemeUtilities.DARK_MODE_FLAT_STYLE_CHECKBOX_ENABLED = flatCheckboxes;
+                            tsmiUseFlatCheckBoxDarkMode.Checked = flatCheckboxes;
+                        }
+                    }
+                }
+
+                if (darkMode)
+                {
+                    ApplyDarkMode();
                 }
             }
             else
@@ -954,6 +970,7 @@ namespace TRR_SaveMaster
             content += $"{Globals.CONFIG_KEY_AUTO_BACKUP}{tsmiBackupBeforeSaving.Checked}\n";
             content += $"{Globals.CONFIG_KEY_STATUS_BAR}{tsmiStatusBar.Checked}\n";
             content += $"{Globals.CONFIG_KEY_DARK_MODE}{tsmiDarkMode.Checked}\n";
+            content += $"{Globals.CONFIG_KEY_FLAT_CHECKBOX_DARK_MODE}{tsmiUseFlatCheckBoxDarkMode.Checked}\n";
             content += $"{Globals.CONFIG_KEY_TR6_INVENTORY_TOGGLE}{tsmiShowInventoryToggleTR6.Checked}\n";
             content += $"{Globals.CONFIG_KEY_PLATFORM}{platform.ToFriendlyString()}";
 
@@ -2795,6 +2812,16 @@ namespace TRR_SaveMaster
             else
             {
                 ApplyLightMode();
+            }
+        }
+
+        private void tsmiUseFlatCheckBoxDarkMode_CheckedChanged(object sender, EventArgs e)
+        {
+            ThemeUtilities.DARK_MODE_FLAT_STYLE_CHECKBOX_ENABLED = tsmiUseFlatCheckBoxDarkMode.Checked;
+
+            if (ThemeUtilities.DARK_MODE_ENABLED)
+            {
+                ThemeUtilities.ApplyDarkMode(this);
             }
         }
 

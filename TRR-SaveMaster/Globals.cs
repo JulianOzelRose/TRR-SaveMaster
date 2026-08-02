@@ -15,6 +15,7 @@
         public const string CONFIG_KEY_STATUS_BAR = "StatusBar=";
         public const string CONFIG_KEY_TR6_INVENTORY_TOGGLE = "ShowInventoryToggleTR6=";
         public const string CONFIG_KEY_DARK_MODE = "DarkMode=";
+        public const string CONFIG_KEY_FLAT_CHECKBOX_DARK_MODE = "FlatCheckBoxDarkMode=";
 
         // Tab IDs
         public const int TAB_TR1 = 0;
