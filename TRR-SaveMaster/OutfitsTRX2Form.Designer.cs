@@ -65,7 +65,7 @@
             // btnClose
             // 
             this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.Location = new System.Drawing.Point(66, 441);
+            this.btnClose.Location = new System.Drawing.Point(66, 435);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 10;
@@ -77,7 +77,7 @@
             // 
             this.btnCancel.Enabled = false;
             this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(147, 441);
+            this.btnCancel.Location = new System.Drawing.Point(147, 435);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 11;
@@ -89,7 +89,7 @@
             // 
             this.btnSave.Enabled = false;
             this.btnSave.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(228, 441);
+            this.btnSave.Location = new System.Drawing.Point(228, 435);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 12;
@@ -125,7 +125,7 @@
             this.grpTombRaider45.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpTombRaider45.Location = new System.Drawing.Point(13, 5);
             this.grpTombRaider45.Name = "grpTombRaider45";
-            this.grpTombRaider45.Size = new System.Drawing.Size(290, 361);
+            this.grpTombRaider45.Size = new System.Drawing.Size(290, 355);
             this.grpTombRaider45.TabIndex = 13;
             this.grpTombRaider45.TabStop = false;
             this.grpTombRaider45.Text = "Tomb Raider IV-V";
@@ -133,7 +133,7 @@
             // btnUnlockAllTR45
             // 
             this.btnUnlockAllTR45.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUnlockAllTR45.Location = new System.Drawing.Point(107, 321);
+            this.btnUnlockAllTR45.Location = new System.Drawing.Point(107, 315);
             this.btnUnlockAllTR45.Name = "btnUnlockAllTR45";
             this.btnUnlockAllTR45.Size = new System.Drawing.Size(75, 23);
             this.btnUnlockAllTR45.TabIndex = 60;
@@ -387,7 +387,7 @@
             // 
             this.grpTombRaider6.Controls.Add(this.chkAllTR6Outfits);
             this.grpTombRaider6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpTombRaider6.Location = new System.Drawing.Point(13, 372);
+            this.grpTombRaider6.Location = new System.Drawing.Point(13, 366);
             this.grpTombRaider6.Name = "grpTombRaider6";
             this.grpTombRaider6.Size = new System.Drawing.Size(290, 63);
             this.grpTombRaider6.TabIndex = 14;
@@ -409,7 +409,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(316, 473);
+            this.ClientSize = new System.Drawing.Size(316, 467);
             this.Controls.Add(this.grpTombRaider6);
             this.Controls.Add(this.grpTombRaider45);
             this.Controls.Add(this.btnClose);
