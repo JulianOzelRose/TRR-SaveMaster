@@ -1276,10 +1276,9 @@ namespace TRR_SaveMaster
                 Int16 levelIndex = BitConverter.ToInt16(fileData, savegame.Offset + LEVEL_INDEX_OFFSET);
                 Int32 saveNumber = BitConverter.ToInt32(fileData, savegame.Offset + SAVE_NUMBER_OFFSET);
 
-                if (levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
+                if (levelNames.TryGetValue(levelIndex, out string levelName) && saveNumber >= 0)
                 {
                     bool isPrepatch = IsPrepatchSavegameFile(fileData);
-                    string levelName = levelNames[levelIndex];
                     bool isNewGamePlus = BitConverter.ToInt32(fileData, savegame.Offset + NEW_GAME_PLUS_OFFSET) != 0;
                     bool isChallengeMode = fileData[savegame.Offset + CHALLENGE_MODE_OFFSET] == 1 && !isPrepatch;
 
@@ -1309,7 +1308,7 @@ namespace TRR_SaveMaster
 
                     bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
 
-                    if (isSavegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
+                    if (isSavegamePresent && levelNames.TryGetValue(levelIndex, out string levelName) && saveNumber >= 0)
                     {
                         int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR2) / SAVEGAME_SIZE;
 
@@ -1326,7 +1325,6 @@ namespace TRR_SaveMaster
 
                         if (!savegameExists)
                         {
-                            string levelName = levelNames[levelIndex];
                             bool isNewGamePlus = BitConverter.ToInt32(fileData, currentSavegameOffset + NEW_GAME_PLUS_OFFSET) != 0;
                             bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1 && !isPrepatch;
 
@@ -1383,9 +1381,8 @@ namespace TRR_SaveMaster
                 Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
                 bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
 
-                if (isSavegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
+                if (isSavegamePresent && levelNames.TryGetValue(levelIndex, out string levelName) && saveNumber >= 0)
                 {
-                    string levelName = levelNames[levelIndex];
                     int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR2) / SAVEGAME_SIZE;
                     bool isNewGamePlus = BitConverter.ToInt32(fileData, currentSavegameOffset + NEW_GAME_PLUS_OFFSET) != 0;
                     bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1 && !isPrepatch;
