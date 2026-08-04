@@ -63,8 +63,7 @@ namespace TRR_SaveMaster
         private byte[] decompressedBuffer = null;
         private byte sgCurrentLevel = 0;
 
-        // Level names
-        private readonly Dictionary<byte, string> levelNames = new Dictionary<byte, string>()
+        private readonly Dictionary<int, string> levelNames = new Dictionary<int, string>()
         {
             {  0, "Parisian Back Streets"       },
             {  1, "Derelict Apartment Block"    },

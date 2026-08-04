@@ -336,7 +336,7 @@ namespace TRR_SaveMaster
         private class StatisticsTarget
         {
             public string DisplayName { get; set; }
-            public byte? LevelIndex { get; set; }
+            public int? LevelIndex { get; set; }
 
             public override string ToString()
             {
@@ -466,11 +466,11 @@ namespace TRR_SaveMaster
             PopulateStatisticsTargets(fileData, tr3Utilities.levelNames);
         }
 
-        private void PopulateStatisticsTargets(byte[] fileData, Dictionary<byte, string> levelNames)
+        private void PopulateStatisticsTargets(byte[] fileData, Dictionary<int, string> levelNames)
         {
-            byte currentLevel = GetLevelIndex(fileData);
+            int currentLevel = GetLevelIndex(fileData);
 
-            foreach (KeyValuePair<byte, string> level in levelNames.OrderByDescending(x => x.Key))
+            foreach (KeyValuePair<int, string> level in levelNames.OrderByDescending(x => x.Key))
             {
                 if (level.Key == currentLevel)
                 {
@@ -498,7 +498,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private bool IsLevelInCurrentCampaign(byte[] fileData, byte levelIndex)
+        private bool IsLevelInCurrentCampaign(byte[] fileData, int levelIndex)
         {
             bool expansion = IsExpansionCampaign(fileData);
 
@@ -520,7 +520,7 @@ namespace TRR_SaveMaster
 
         private bool IsExpansionCampaign(byte[] fileData)
         {
-            byte levelIndex = GetLevelIndex(fileData);
+            int levelIndex = GetLevelIndex(fileData);
 
             if (SELECTED_TAB == Globals.TAB_TR1)
             {
@@ -817,7 +817,7 @@ namespace TRR_SaveMaster
 
         private void SetParams()
         {
-            byte levelIndex = GetLevelIndex();
+            int levelIndex = GetLevelIndex();
 
             if (SELECTED_TAB == Globals.TAB_TR1)
             {
@@ -1000,7 +1000,7 @@ namespace TRR_SaveMaster
 
         private void UpdateDynamicParams(byte[] fileData)
         {
-            byte levelIndex = GetLevelIndex(fileData);
+            int levelIndex = GetLevelIndex(fileData);
 
             if (SELECTED_TAB == Globals.TAB_TR1)
             {
@@ -1045,7 +1045,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void UpdateDynamicParamsForLevel(byte levelIndex)
+        private void UpdateDynamicParamsForLevel(int levelIndex)
         {
             if (SELECTED_TAB == Globals.TAB_TR1)
             {
@@ -1290,11 +1290,16 @@ namespace TRR_SaveMaster
             return BitConverter.ToInt32(fileData, savegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
         }
 
-        private byte GetLevelIndex(byte[] fileData = null)
+        private int GetLevelIndex(byte[] fileData = null)
         {
             if (fileData == null)
             {
                 fileData = File.ReadAllBytes(savegamePath);
+            }
+
+            if (IsTRXSavegame())
+            {
+                return BitConverter.ToInt16(fileData, savegameOffset + LEVEL_INDEX_OFFSET);
             }
 
             return fileData[savegameOffset + LEVEL_INDEX_OFFSET];
@@ -1337,7 +1342,7 @@ namespace TRR_SaveMaster
             DisplayTimeTakenTRX(fileData);
         }
 
-        private void DisplayStatisticsRecord(byte[] fileData, byte levelIndex)
+        private void DisplayStatisticsRecord(byte[] fileData, int levelIndex)
         {
             nudSecretsFound.Value = GetNumSecretsFoundTRX(fileData, levelIndex);
             nudPickups.Value = GetNumPickupsTRX(fileData, levelIndex);
@@ -1486,7 +1491,7 @@ namespace TRR_SaveMaster
             isLoading = false;
         }
 
-        private void DisplayDistanceTravelledTRX(byte[] fileData, byte? levelIndex = null)
+        private void DisplayDistanceTravelledTRX(byte[] fileData, int? levelIndex = null)
         {
             UInt32 distanceTravelledRaw = GetDistanceTravelled(fileData, levelIndex);
 
@@ -1554,7 +1559,7 @@ namespace TRR_SaveMaster
             nudSeconds.Value = remainingSeconds;
         }
 
-        private void DisplayTimeTakenTRX(byte[] fileData, byte? levelIndex = null)
+        private void DisplayTimeTakenTRX(byte[] fileData, int? levelIndex = null)
         {
             Int32 timeTakenRaw = GetTimeTaken(fileData, levelIndex);
             Int32 timeTakenSeconds = timeTakenRaw / 30;
@@ -1602,7 +1607,7 @@ namespace TRR_SaveMaster
             return count;
         }
 
-        private Int32 GetAmmoUsedTRX(byte[] fileData, byte? levelIndex = null)
+        private Int32 GetAmmoUsedTRX(byte[] fileData, int? levelIndex = null)
         {
             if (levelIndex == null)
             {
@@ -1633,7 +1638,7 @@ namespace TRR_SaveMaster
             return BitConverter.ToInt32(fileData, savegameOffset + offset);
         }
 
-        private Int32 GetNumHitsTRX(byte[] fileData, byte? levelIndex = null)
+        private Int32 GetNumHitsTRX(byte[] fileData, int? levelIndex = null)
         {
             if (levelIndex == null)
             {
@@ -1645,7 +1650,7 @@ namespace TRR_SaveMaster
             return BitConverter.ToInt32(fileData, recordOffset + HITS_ARRAY_OFFSET);
         }
 
-        private Int32 GetNumKillsTRX(byte[] fileData, byte? levelIndex = null)
+        private Int32 GetNumKillsTRX(byte[] fileData, int? levelIndex = null)
         {
             if (levelIndex == null)
             {
@@ -1669,7 +1674,7 @@ namespace TRR_SaveMaster
             return BitConverter.ToUInt16(fileData, savegameOffset + offset);
         }
 
-        private UInt32 GetDistanceTravelled(byte[] fileData, byte? levelIndex = null)
+        private UInt32 GetDistanceTravelled(byte[] fileData, int? levelIndex = null)
         {
             if (levelIndex == null)
             {
@@ -1681,7 +1686,7 @@ namespace TRR_SaveMaster
             return BitConverter.ToUInt32(fileData, recordOffset + DISTANCE_TRAVELLED_ARRAY_OFFSET);
         }
 
-        private Int32 GetTimeTaken(byte[] fileData, byte? levelIndex = null)
+        private Int32 GetTimeTaken(byte[] fileData, int? levelIndex = null)
         {
             if (levelIndex == null)
             {
@@ -1693,7 +1698,7 @@ namespace TRR_SaveMaster
             return BitConverter.ToInt32(fileData, recordOffset + TIME_TAKEN_ARRAY_OFFSET);
         }
 
-        private UInt16 GetNumSecretsFoundTRX(byte[] fileData, byte? levelIndex = null)
+        private UInt16 GetNumSecretsFoundTRX(byte[] fileData, int? levelIndex = null)
         {
             UInt16 rawValue;
 
@@ -1715,7 +1720,7 @@ namespace TRR_SaveMaster
             return fileData[savegameOffset + SECRETS_FOUND_OFFSET];
         }
 
-        private sbyte GetNumPickupsTRX(byte[] fileData, byte? levelIndex = null)
+        private sbyte GetNumPickupsTRX(byte[] fileData, int? levelIndex = null)
         {
             if (levelIndex == null)
             {
@@ -1739,7 +1744,7 @@ namespace TRR_SaveMaster
             return BitConverter.ToInt32(fileData, savegameOffset + PICKUPS_OFFSET);
         }
 
-        private sbyte GetNumMedipacksUsedTRX(byte[] fileData, byte? levelIndex = null)
+        private sbyte GetNumMedipacksUsedTRX(byte[] fileData, int? levelIndex = null)
         {
             if (levelIndex == null)
             {
@@ -1777,7 +1782,7 @@ namespace TRR_SaveMaster
             return fileData[savegameOffset + offset];
         }
 
-        private Int32 GetNumCrystalsFoundTRX(byte[] fileData, byte? levelIndex = null)
+        private Int32 GetNumCrystalsFoundTRX(byte[] fileData, int? levelIndex = null)
         {
             if (levelIndex == null)
             {
@@ -1794,7 +1799,7 @@ namespace TRR_SaveMaster
             return BitConverter.ToInt32(fileData, savegameOffset + VESSELS_BROKEN_OFFSET);
         }
 
-        private Int32 GetNumCrystalsUsedTRX(byte[] fileData, byte? levelIndex = null)
+        private Int32 GetNumCrystalsUsedTRX(byte[] fileData, int? levelIndex = null)
         {
             if (levelIndex == null)
             {
@@ -1806,7 +1811,7 @@ namespace TRR_SaveMaster
             return BitConverter.ToInt32(fileData, recordOffset + CRYSTALS_USED_ARRAY_OFFSET);
         }
 
-        private void WriteAmmoUsedTRX(byte[] fileData, Int32 value, byte? levelIndex = null)
+        private void WriteAmmoUsedTRX(byte[] fileData, Int32 value, int? levelIndex = null)
         {
             if (levelIndex == null)
             {
@@ -1838,7 +1843,7 @@ namespace TRR_SaveMaster
             WriteInt32ToBuffer(fileData, savegameOffset + offset, value);
         }
 
-        private void WriteNumHitsTRX(byte[] fileData, Int32 value, byte? levelIndex = null)
+        private void WriteNumHitsTRX(byte[] fileData, Int32 value, int? levelIndex = null)
         {
             if (levelIndex == null)
             {
@@ -1851,7 +1856,7 @@ namespace TRR_SaveMaster
             WriteInt32ToBuffer(fileData, recordOffset + HITS_ARRAY_OFFSET, value);
         }
 
-        private void WriteNumKillsTRX(byte[] fileData, Int32 value, byte? levelIndex = null)
+        private void WriteNumKillsTRX(byte[] fileData, Int32 value, int? levelIndex = null)
         {
             if (levelIndex == null)
             {
@@ -1883,7 +1888,7 @@ namespace TRR_SaveMaster
             fileData[savegameOffset + offset] = value;
         }
 
-        private void WriteNumSecretsFoundTRX(byte[] fileData, UInt16 value, byte? levelIndex = null)
+        private void WriteNumSecretsFoundTRX(byte[] fileData, UInt16 value, int? levelIndex = null)
         {
             UInt16 rawValue = 0;
 
@@ -1908,7 +1913,7 @@ namespace TRR_SaveMaster
             fileData[savegameOffset + SECRETS_FOUND_OFFSET] = value;
         }
 
-        private void WriteNumPickupsTRX(byte[] fileData, sbyte value, byte? levelIndex = null)
+        private void WriteNumPickupsTRX(byte[] fileData, sbyte value, int? levelIndex = null)
         {
             if (levelIndex == null)
             {
@@ -1933,7 +1938,7 @@ namespace TRR_SaveMaster
             WriteUInt16ToBuffer(fileData, savegameOffset + offset, value);
         }
 
-        private void WriteNumMedipacksUsedTRX(byte[] fileData, sbyte value, byte? levelIndex = null)
+        private void WriteNumMedipacksUsedTRX(byte[] fileData, sbyte value, int? levelIndex = null)
         {
             if (levelIndex == null)
             {
@@ -1951,7 +1956,7 @@ namespace TRR_SaveMaster
             fileData[savegameOffset + MEDIPACKS_USED_OFFSET] = value;
         }
 
-        private void WriteNumCrystalsFoundTRX(byte[] fileData, Int32 value, byte? levelIndex = null)
+        private void WriteNumCrystalsFoundTRX(byte[] fileData, Int32 value, int? levelIndex = null)
         {
             if (levelIndex == null)
             {
@@ -1964,7 +1969,7 @@ namespace TRR_SaveMaster
             WriteInt32ToBuffer(fileData, recordOffset + CRYSTALS_FOUND_ARRAY_OFFSET, value);
         }
 
-        private void WriteNumCrystalsUsedTRX(byte[] fileData, Int32 value, byte? levelIndex = null)
+        private void WriteNumCrystalsUsedTRX(byte[] fileData, Int32 value, int? levelIndex = null)
         {
             if (levelIndex == null)
             {
@@ -1991,7 +1996,7 @@ namespace TRR_SaveMaster
             WriteInt32ToBuffer(fileData, savegameOffset + offset, value);
         }
 
-        private void WriteTimeTakenTRX(byte[] fileData, Int32 value, byte? levelIndex = null)
+        private void WriteTimeTakenTRX(byte[] fileData, Int32 value, int? levelIndex = null)
         {
             if (levelIndex == null)
             {
@@ -2019,7 +2024,7 @@ namespace TRR_SaveMaster
             WriteInt32ToBuffer(fileData, savegameOffset + TIMESTAMP_SECONDS_OFFSET, seconds);
         }
 
-        private void WriteDistanceTravelledTRX(byte[] fileData, decimal value, byte? levelIndex = null)
+        private void WriteDistanceTravelledTRX(byte[] fileData, decimal value, int? levelIndex = null)
         {
             UInt32 distanceTravelledRaw;
 
@@ -2110,7 +2115,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void WriteTRXStatisticsRecord(byte[] fileData, byte levelIndex)
+        private void WriteTRXStatisticsRecord(byte[] fileData, int levelIndex)
         {
             WriteAmmoUsedTRX(fileData, (Int32)nudAmmoUsed.Value, levelIndex);
             WriteNumHitsTRX(fileData, (Int32)nudHits.Value, levelIndex);
@@ -2605,7 +2610,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private readonly Dictionary<byte, int> secretsFoundMaxTR1 = new Dictionary<byte, int>
+        private readonly Dictionary<int, int> secretsFoundMaxTR1 = new Dictionary<int, int>
         {
             {  1, 3 },  // Caves
             {  2, 3 },  // City of Vilcabamba
@@ -2628,7 +2633,7 @@ namespace TRR_SaveMaster
             { 19, 1 },  // The Hive
         };
 
-        private readonly Dictionary<byte, int> secretsFoundMaxTR2 = new Dictionary<byte, int>
+        private readonly Dictionary<int, int> secretsFoundMaxTR2 = new Dictionary<int, int>
         {
             {  1, 3 },  // The Great Wall
             {  2, 3 },  // Venice
@@ -2655,7 +2660,7 @@ namespace TRR_SaveMaster
             { 23, 3 },  // Nightmare in Vegas
         };
 
-        private readonly Dictionary<byte, int> secretsFoundMaxTR3 = new Dictionary<byte, int>
+        private readonly Dictionary<int, int> secretsFoundMaxTR3 = new Dictionary<int, int>
         {
             {  1, 6 },  // Jungle
             {  2, 4 },  // Temple Ruins
@@ -2685,7 +2690,7 @@ namespace TRR_SaveMaster
             { 26, 0 },  // Reunion
         };
 
-        private readonly Dictionary<byte, int> pickupsFoundMaxTR3 = new Dictionary<byte, int>
+        private readonly Dictionary<int, int> pickupsFoundMaxTR3 = new Dictionary<int, int>
         {
             {  1, 33 }, // Jungle
             {  2, 43 }, // Temple Ruins
@@ -2715,7 +2720,7 @@ namespace TRR_SaveMaster
             { 26, 32 }, // Reunion
         };
 
-        private readonly Dictionary<byte, int> pickupsFoundMaxTR2 = new Dictionary<byte, int>
+        private readonly Dictionary<int, int> pickupsFoundMaxTR2 = new Dictionary<int, int>
         {
             {  1, 14 },  // The Great Wall
             {  2, 30 },  // Venice
@@ -2742,7 +2747,7 @@ namespace TRR_SaveMaster
             { 23, 75 },  // Nightmare in Vegas
         };
 
-        private readonly Dictionary<byte, int> pickupsFoundMaxTR1 = new Dictionary<byte, int>
+        private readonly Dictionary<int, int> pickupsFoundMaxTR1 = new Dictionary<int, int>
         {
             {  1, 7  },  // Caves
             {  2, 13 },  // City of Vilcabamba
@@ -2765,7 +2770,7 @@ namespace TRR_SaveMaster
             { 19, 60 },  // The Hive
         };
 
-        private readonly Dictionary<byte, int> pickupsFoundMaxTR6 = new Dictionary<byte, int>
+        private readonly Dictionary<int, int> pickupsFoundMaxTR6 = new Dictionary<int, int>
         {
             {  0, 19 },  // Parisian Back Streets
             {  1, 11 },  // Derelict Apartment Block
@@ -2804,7 +2809,7 @@ namespace TRR_SaveMaster
             { 34, 6  },  // The Breath of Hades
         };
 
-        private readonly Dictionary<byte, int> healthItemsFoundMaxTR6 = new Dictionary<byte, int>
+        private readonly Dictionary<int, int> healthItemsFoundMaxTR6 = new Dictionary<int, int>
         {
             {  0, 5  },  // Parisian Back Streets
             {  1, 3  },  // Derelict Apartment Block
@@ -2843,7 +2848,7 @@ namespace TRR_SaveMaster
             { 34, 1  },  // The Breath of Hades
         };
 
-        private readonly Dictionary<byte, int> chocobarsFoundMaxTR6 = new Dictionary<byte, int>
+        private readonly Dictionary<int, int> chocobarsFoundMaxTR6 = new Dictionary<int, int>
         {
             {  0, 3  },  // Parisian Back Streets
             {  1, 1  },  // Derelict Apartment Block

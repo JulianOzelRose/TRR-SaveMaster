@@ -66,8 +66,7 @@ namespace TRR_SaveMaster
         private const int LARA_VEHICLE_ITEM_OFFSET = 0x5A;
         private int sgBufferCursor;
 
-        // Level names
-        private readonly Dictionary<byte, string> levelNames = new Dictionary<byte, string>()
+        private readonly Dictionary<int, string> levelNames = new Dictionary<int, string>()
         {
             {  1, "Angkor Wat"                      },
             {  2, "Race for the Iris"               },

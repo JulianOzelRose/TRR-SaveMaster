@@ -56,8 +56,7 @@ namespace TRR_SaveMaster
         private string savegamePath;
         private int sgBufferCursor;
 
-        // Level names
-        private readonly Dictionary<byte, string> levelNames = new Dictionary<byte, string>()
+        private readonly Dictionary<int, string> levelNames = new Dictionary<int, string>()
         {
             {  1, "Streets of Rome"                      },
             {  2, "Trajan's Markets"                     },

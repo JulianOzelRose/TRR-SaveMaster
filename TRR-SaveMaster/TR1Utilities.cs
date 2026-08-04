@@ -97,7 +97,7 @@ namespace TRR_SaveMaster
         private int sgBufferCursor = 0;
         private int rngState;
 
-        public readonly Dictionary<byte, string> levelNames = new Dictionary<byte, string>()
+        public readonly Dictionary<int, string> levelNames = new Dictionary<int, string>()
         {
             { 1,  "Caves"                   },
             { 2,  "City of Vilcabamba"      },
@@ -173,7 +173,7 @@ namespace TRR_SaveMaster
                 SAVEGAME_SIZE = Globals.SAVEGAME_SIZE_TRX_PREPATCH;
                 LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PREPATCH;
 
-                byte levelIndex = GetLevelIndex(fileData);
+                Int16 levelIndex = GetLevelIndex(fileData);
 
                 if (levelIndex == 1)        // Caves
                 {
@@ -371,7 +371,7 @@ namespace TRR_SaveMaster
         private HashSet<int> BuildRemovalSet(
             List<int> entityIds,
             Dictionary<int, TR1Object> levelObjects,
-            byte levelIndex,
+            Int16 levelIndex,
             byte enemyNumbers)
         {
             var removalSet = new HashSet<int>();
@@ -473,7 +473,7 @@ namespace TRR_SaveMaster
 
         private void ApplyAddEnemies(
             List<int> result,
-            byte levelIndex,
+            Int16 levelIndex,
             byte enemyNumbers)
         {
             if (enemyNumbers <= Globals.CHALLENGE_MODE_ENEMY_NUMBERS_NORMAL)
@@ -557,7 +557,7 @@ namespace TRR_SaveMaster
             return (roll < 50) ? floor : floor + 1;
         }
 
-        private List<int> ApplyChallengeModeMutations(List<int> baseList, byte levelIndex, byte enemyNumbers, byte enemyType, Int32 seed)
+        private List<int> ApplyChallengeModeMutations(List<int> baseList, Int16 levelIndex, byte enemyNumbers, byte enemyType, Int32 seed)
         {
             var result = new List<int>(baseList);
 
@@ -720,7 +720,7 @@ namespace TRR_SaveMaster
         {
             bool isChallengeMode = IsChallengeMode(fileData);
             bool isNativePatch5 = IsNativePatch5Format(fileData);
-            byte levelIndex = GetLevelIndex(fileData);
+            Int16 levelIndex = GetLevelIndex(fileData);
 
             // Entity & ID lists
             var baseList = TR1EntityCache.LevelObjectIdsByLevel[levelIndex];
@@ -868,9 +868,9 @@ namespace TRR_SaveMaster
             return BitConverter.ToInt32(fileData, savegameOffset + SAVE_NUMBER_OFFSET);
         }
 
-        private byte GetLevelIndex(byte[] fileData)
+        private Int16 GetLevelIndex(byte[] fileData)
         {
-            return fileData[savegameOffset + LEVEL_INDEX_OFFSET];
+            return BitConverter.ToInt16(fileData, savegameOffset + LEVEL_INDEX_OFFSET);
         }
 
         private byte GetNumSmallMedipacks(byte[] fileData)
@@ -1142,7 +1142,7 @@ namespace TRR_SaveMaster
 
             if (isSavegamePresent)
             {
-                byte levelIndex = fileData[savegame.Offset + LEVEL_INDEX_OFFSET];
+                Int16 levelIndex = BitConverter.ToInt16(fileData, savegame.Offset + LEVEL_INDEX_OFFSET);
                 Int32 saveNumber = BitConverter.ToInt32(fileData, savegame.Offset + SAVE_NUMBER_OFFSET);
 
                 if (levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
@@ -1173,7 +1173,7 @@ namespace TRR_SaveMaster
 
                 if (currentSavegameOffset < MAX_SAVEGAME_OFFSET_TR1)
                 {
-                    byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
+                    Int16 levelIndex = BitConverter.ToInt16(fileData, currentSavegameOffset + LEVEL_INDEX_OFFSET);
                     Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
                     bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
 
@@ -1246,7 +1246,7 @@ namespace TRR_SaveMaster
             {
                 int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR1 + (i * SAVEGAME_SIZE);
 
-                byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
+                Int16 levelIndex = BitConverter.ToInt16(fileData, currentSavegameOffset + LEVEL_INDEX_OFFSET);
                 Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
                 bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
 

@@ -391,11 +391,16 @@ namespace TRR_SaveMaster
             return BitConverter.ToInt32(fileData, savegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
         }
 
-        private byte GetLevelIndex(byte[] fileData = null)
+        private int GetLevelIndex(byte[] fileData = null)
         {
             if (fileData == null)
             {
                 fileData = File.ReadAllBytes(savegamePath);
+            }
+
+            if (IsTRXSavegame())
+            {
+                return BitConverter.ToInt16(fileData, savegameOffset + LEVEL_INDEX_OFFSET);
             }
 
             return fileData[savegameOffset + LEVEL_INDEX_OFFSET];
@@ -422,7 +427,7 @@ namespace TRR_SaveMaster
 
         private void EnableEndOfLevelButtonConditionally(byte[] fileData)
         {
-            byte levelIndex = GetLevelIndex(fileData);
+            int levelIndex = GetLevelIndex(fileData);
 
             if (IsTR1Savegame())
             {
@@ -452,7 +457,7 @@ namespace TRR_SaveMaster
 
         private void EnableStartOfLevelButtonConditionally(byte[] fileData)
         {
-            byte levelIndex = GetLevelIndex(fileData);
+            int levelIndex = GetLevelIndex(fileData);
 
             if (IsTR1Savegame())
             {
@@ -482,7 +487,7 @@ namespace TRR_SaveMaster
 
         private void EnableSecretButtonsConditionally(byte[] fileData)
         {
-            byte levelIndex = GetLevelIndex(fileData);
+            int levelIndex = GetLevelIndex(fileData);
 
             if (IsTR1Savegame())
             {
@@ -651,7 +656,7 @@ namespace TRR_SaveMaster
 
         private bool IsPlayerKurtis()
         {
-            byte levelIndex = GetLevelIndex();
+            int levelIndex = GetLevelIndex();
 
             // The Sanitarium, Maximum Containment Area, Boaz Returns
             return levelIndex == 24 || levelIndex == 25 || levelIndex == 27;
@@ -1055,7 +1060,7 @@ namespace TRR_SaveMaster
         {
             try
             {
-                byte levelIndex = GetLevelIndex();
+                int levelIndex = GetLevelIndex();
 
                 if (IsTR6Savegame())
                 {
@@ -1129,7 +1134,7 @@ namespace TRR_SaveMaster
         {
             try
             {
-                byte levelIndex = GetLevelIndex();
+                int levelIndex = GetLevelIndex();
 
                 if (IsTR6Savegame())
                 {
@@ -1203,7 +1208,7 @@ namespace TRR_SaveMaster
         {
             try
             {
-                byte levelIndex = GetLevelIndex();
+                int levelIndex = GetLevelIndex();
                 Int32[] secret1Coordinates = new Int32[4];
 
                 if (IsTR1Savegame() && secret1CoordinatesTR1.ContainsKey(levelIndex))
@@ -1255,7 +1260,7 @@ namespace TRR_SaveMaster
         {
             try
             {
-                byte levelIndex = GetLevelIndex();
+                int levelIndex = GetLevelIndex();
                 Int32[] secret2Coordinates = new Int32[4];
 
                 if (IsTR1Savegame() && secret2CoordinatesTR1.ContainsKey(levelIndex))
@@ -1307,7 +1312,7 @@ namespace TRR_SaveMaster
         {
             try
             {
-                byte levelIndex = GetLevelIndex();
+                int levelIndex = GetLevelIndex();
                 Int32[] secret3Coordinates = new Int32[4];
 
                 if (IsTR1Savegame() && secret3CoordinatesTR1.ContainsKey(levelIndex))
@@ -1359,7 +1364,7 @@ namespace TRR_SaveMaster
         {
             try
             {
-                byte levelIndex = GetLevelIndex();
+                int levelIndex = GetLevelIndex();
                 Int32[] secret4Coordinates = new Int32[4];
 
                 if (IsTR1Savegame() && secret4CoordinatesTR1.ContainsKey(levelIndex))
@@ -1403,7 +1408,7 @@ namespace TRR_SaveMaster
         {
             try
             {
-                byte levelIndex = GetLevelIndex();
+                int levelIndex = GetLevelIndex();
                 Int32[] secret5Coordinates = new Int32[4];
 
                 if (IsTR1Savegame() && secret5CoordinatesTR1.ContainsKey(levelIndex))
@@ -1447,7 +1452,7 @@ namespace TRR_SaveMaster
         {
             try
             {
-                byte levelIndex = GetLevelIndex();
+                int levelIndex = GetLevelIndex();
                 Int32[] secret6Coordinates = new Int32[4];
 
                 if (IsTR3Savegame() && secret6CoordinatesTR3.ContainsKey(levelIndex))
@@ -1487,7 +1492,7 @@ namespace TRR_SaveMaster
         {
             try
             {
-                byte levelIndex = GetLevelIndex();
+                int levelIndex = GetLevelIndex();
                 Int32[] secret7Coordinates = new Int32[4];
 
                 if (IsTR4Savegame() && secret7CoordinatesTR4.ContainsKey(levelIndex))
@@ -1523,7 +1528,7 @@ namespace TRR_SaveMaster
         {
             try
             {
-                byte levelIndex = GetLevelIndex();
+                int levelIndex = GetLevelIndex();
                 Int32[] secret8Coordinates = new Int32[4];
 
                 if (IsTR4Savegame() && secret8CoordinatesTR4.ContainsKey(levelIndex))
@@ -1635,7 +1640,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR1 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> startOfLevelCoordinatesTR1 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 75264, 3072, 3584, 0, 0         } },    // Caves
             { 2,  new Int32[] { 78336, -1024, 12800, 0, 90      } },    // City of Vilcabamba
@@ -1658,7 +1663,7 @@ namespace TRR_SaveMaster
             { 19, new Int32[] { 32256, -3584, 44544, 180, 17    } },    // The Hive
         };
 
-        private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR2 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> startOfLevelCoordinatesTR2 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 64176, 5376, 26090, 0, 35       } },    // The Great Wall
             { 2,  new Int32[] { 58880, 0, 23188, 0, 0           } },    // Venice
@@ -1685,7 +1690,7 @@ namespace TRR_SaveMaster
             { 23, new Int32[] { 66048, -256, 50688, 90, 28      } },    // Nightmare in Vegas
         };
 
-        private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR3 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> startOfLevelCoordinatesTR3 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 28160, -256, 28160, 0, 4        } },    // Jungle
             { 2,  new Int32[] { 94720, -512, 26112, -90, 18     } },    // Temple Ruins
@@ -1715,7 +1720,7 @@ namespace TRR_SaveMaster
             { 26, new Int32[] { 44544, 4864, 51101, 180, 68     } },    // Reunion
         };
 
-        private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR4 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> startOfLevelCoordinatesTR4 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 2816, 640, 43264, 159, 20       } },    // Angkor Wat
             { 2,  new Int32[] { 44297, -256, 9984, -90, 33      } },    // Race for the Iris
@@ -1756,7 +1761,7 @@ namespace TRR_SaveMaster
             { 40, new Int32[] { 50406, -1152, 13077, 180, 26    } },    // The Times Exclusive
         };
 
-        private readonly Dictionary<byte, Int32[]> startOfLevelCoordinatesTR5 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> startOfLevelCoordinatesTR5 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 23296, 0, 15616, 0, 0           } },    // Streets of Rome
             { 2,  new Int32[] { 45824, 0, 21248, -90, 50        } },    // Trajan's Markets
@@ -1773,7 +1778,7 @@ namespace TRR_SaveMaster
             { 14, new Int32[] { 26880, 4992, 38656, 180, 8      } },    // Red Alert!
         };
 
-        private readonly Dictionary<byte, float[]> startOfLevelCoordinatesTR6 = new Dictionary<byte, float[]>
+        private readonly Dictionary<int, float[]> startOfLevelCoordinatesTR6 = new Dictionary<int, float[]>
         {
             { 0,  new float[] { -6487.60f, -124.20f, -8200.97f, -90.75f, 0      } },   // Parisian Back Streets
             { 1,  new float[] { -17204.62f, 1814.50f, -8654.09f, 85.50f, 0      } },   // Derelict Apartment Block
@@ -1812,7 +1817,7 @@ namespace TRR_SaveMaster
             { 34, new float[] { 2704.91f, -1931.75f, 12701.28f, 87.25f, 0       } },   // The Breath of Hades
         };
 
-        private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR1 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> endOfLevelCoordinatesTR1 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 42911, 7168, 81358, 0, 11       } },    // Caves
             { 2,  new Int32[] { 10380, -1024, 29124, -90, 87    } },    // City of Vilcabamba
@@ -1835,7 +1840,7 @@ namespace TRR_SaveMaster
             { 19, new Int32[] { 41573, 11264, 43109, 180, 9     } },    // The Hive
         };
 
-        private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR2 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> endOfLevelCoordinatesTR2 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 88689, 20480, 68958, 180, 65    } },    // The Great Wall
             { 2,  new Int32[] { 25184, 251, 78543, 0, 154       } },    // Venice
@@ -1859,7 +1864,7 @@ namespace TRR_SaveMaster
             { 21, new Int32[] { 81334, 3584, 80114, 180, 90     } },    // Furnace of the Gods
         };
 
-        private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR3 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> endOfLevelCoordinatesTR3 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 22601, 23808, 70671, -90, 132   } },    // Jungle
             { 2,  new Int32[] { 10895, 2304, 70849, 0, 214      } },    // Temple Ruins
@@ -1889,7 +1894,7 @@ namespace TRR_SaveMaster
             { 26, new Int32[] { 81708, 5376, 36764, 180, 62     } },    // Reunion
         };
 
-        private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR4 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> endOfLevelCoordinatesTR4 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 33824, 616, 16352, -90, 119     } },    // Angkor Wat
             { 2,  new Int32[] { 26312, -1664, 15834, 3, 115     } },    // Race for the Iris
@@ -1923,7 +1928,7 @@ namespace TRR_SaveMaster
             { 40, new Int32[] { 14088, -4992, 12337, 0, 47      } },    // The Times Exclusive
         };
 
-        private readonly Dictionary<byte, Int32[]> endOfLevelCoordinatesTR5 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> endOfLevelCoordinatesTR5 = new Dictionary<int, Int32[]>
         {
             { 2,  new Int32[] { 22793, -128, 13556, -90, 70     } },    // Trajan's Markets
             { 3,  new Int32[] { 27715, 3968, 35054, -100, 70    } },    // The Colosseum     
@@ -1933,7 +1938,7 @@ namespace TRR_SaveMaster
             { 14, new Int32[] { 25801, -1111, 19027, 178, 198   } },    // Red Alert!
         };
 
-        private readonly Dictionary<byte, float[]> endOfLevelCoordinatesTR6 = new Dictionary<byte, float[]>
+        private readonly Dictionary<int, float[]> endOfLevelCoordinatesTR6 = new Dictionary<int, float[]>
         {
             { 0,  new float[] { -13477.68f, 5245.79f, -7118.42f, 174.76f, 0     } },   // Parisian Back Streets
             { 1,  new float[] { -19369.14f, 8968.57f, -10987.17f, 0.00f, 0      } },   // Derelict Apartment Block
@@ -1957,7 +1962,7 @@ namespace TRR_SaveMaster
             { 30, new float[] { -16249.76f, 13378.75f, 14435.91f, 178.17f, 1    } },   // The Hall of Seasons
         };
 
-        private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR1 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret1CoordinatesTR1 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 89465, 1016, 37019, 0, 5        } },    // Caves
             { 2,  new Int32[] { 66881, 3072, 44181, 1, 88       } },    // City of Vilcabamba
@@ -1980,7 +1985,7 @@ namespace TRR_SaveMaster
             { 19, new Int32[] { 33897, 6400, 37136, 102, 2      } },    // The Hive
         };
 
-        private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR1 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret2CoordinatesTR1 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 67735, -2560, 50275, 0, 28      } },    // Caves
             { 2,  new Int32[] { 71580, -1024, 19332, -80, 21    } },    // City of Vilcabamba
@@ -2001,7 +2006,7 @@ namespace TRR_SaveMaster
             { 18, new Int32[] { 13925, -12388, 48591, 84, 64    } },    // Atlantean Stronghold
         };
 
-        private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR1 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret3CoordinatesTR1 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 14851, 6912, 93351, 0, 26       } },    // Caves
             { 2,  new Int32[] { 12001, -3072, 18955, 145, 79    } },    // City of Vilcabamba
@@ -2020,19 +2025,19 @@ namespace TRR_SaveMaster
             { 17, new Int32[] { 50082, 0, 90793, 5, 72          } },    // Temple of the Cat
         };
 
-        private readonly Dictionary<byte, Int32[]> secret4CoordinatesTR1 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret4CoordinatesTR1 = new Dictionary<int, Int32[]>
         {
             { 3,  new Int32[] { 37393, -389, 97165, 44, 9       } },    // Lost Valley
             { 5,  new Int32[] { 43759, 23552, 46400, 3, 60      } },    // St. Francis' Folly
             { 17, new Int32[] { 38269, -5888, 48350, 88, 93     } },    // Temple of the Cat
         };
 
-        private readonly Dictionary<byte, Int32[]> secret5CoordinatesTR1 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret5CoordinatesTR1 = new Dictionary<int, Int32[]>
         {
             { 3,  new Int32[] { 43411, -2304, 74652, 180, 14    } },    // Lost Valley
         };
 
-        private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR2 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret1CoordinatesTR2 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 62441, 853, 36520, 91, 38       } },    // The Great Wall
             { 2,  new Int32[] { 44124, 0, 29131, 86, 58         } },    // Venice
@@ -2056,7 +2061,7 @@ namespace TRR_SaveMaster
             { 23, new Int32[] { 47626, 15360, 85915, 1, 76      } },    // Nightmare in Vegas
         };
 
-        private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR2 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret2CoordinatesTR2 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 41293, 7168, 60959, 84, 54      } },    // The Great Wall
             { 2,  new Int32[] { 37749, 5101, 16083, -90, 126    } },    // Venice
@@ -2081,7 +2086,7 @@ namespace TRR_SaveMaster
             { 23, new Int32[] { 64940, 13312, 51962, 175, 46    } },    // Nightmare in Vegas
         };
 
-        private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR2 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret3CoordinatesTR2 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 86384, 26112, 74257, 89, 79     } },    // The Great Wall
             { 2,  new Int32[] { 62357, -1792, 61898, 30, 91     } },    // Venice
@@ -2106,7 +2111,7 @@ namespace TRR_SaveMaster
             { 23, new Int32[] { 34406, -256, 57823, 94, 6       } },    // Nightmare in Vegas
         };
 
-        private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR3 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret1CoordinatesTR3 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 27465, 2939, 32501, -90, 21     } },    // Jungle
             { 2,  new Int32[] { 60023, 8192, 62828, 2, 87       } },    // Temple Ruins
@@ -2132,7 +2137,7 @@ namespace TRR_SaveMaster
             { 25, new Int32[] { 57286, -256, 30032, 89, 89      } },    // It's a Madhouse!
         };
 
-        private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR3 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret2CoordinatesTR3 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 25391, 17313, 57665, 8, 17      } },    // Jungle
             { 2,  new Int32[] { 42667, 3840, 19841, 88, 181     } },    // Temple Ruins
@@ -2155,7 +2160,7 @@ namespace TRR_SaveMaster
             { 25, new Int32[] { 39282, -2304, 59755, 3, 107     } },    // It's a Madhouse!
         };
 
-        private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR3 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret3CoordinatesTR3 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 19099, 24064, 58269, 180, 135   } },    // Jungle
             { 2,  new Int32[] { 56421, 1280, 93662, -90, 125    } },    // Temple Ruins
@@ -2177,7 +2182,7 @@ namespace TRR_SaveMaster
             { 25, new Int32[] { 80449, 1792, 30034, 91, 50      } },    // It's a Madhouse!
         };
 
-        private readonly Dictionary<byte, Int32[]> secret4CoordinatesTR3 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret4CoordinatesTR3 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 95333, 18944, 70002, -90, 77    } },    // Jungle
             { 2,  new Int32[] { 40459, 6968, 96815, -90, 142    } },    // Temple Ruins
@@ -2187,7 +2192,7 @@ namespace TRR_SaveMaster
             { 11, new Int32[] { 71581, -18432, 25031, -90, 54   } },    // Lud's Gate
         };
 
-        private readonly Dictionary<byte, Int32[]> secret5CoordinatesTR3 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret5CoordinatesTR3 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 89422, 24064, 57445, 178, 76    } },    // Jungle
             { 3,  new Int32[] { 42075, 4810, 79061, 84, 162     } },    // The River Ganges
@@ -2195,13 +2200,13 @@ namespace TRR_SaveMaster
             { 11, new Int32[] { 46851, -3002, 37141, 16, 134    } },    // Lud's Gate
         };
 
-        private readonly Dictionary<byte, Int32[]> secret6CoordinatesTR3 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret6CoordinatesTR3 = new Dictionary<int, Int32[]>
         {
             { 1,  new Int32[] { 82252, 26624, 63587, 0, 99      } },    // Jungle
             { 11, new Int32[] { 56161, -2614, 22934, 16, 102    } },    // Lud's Gate
         };
 
-        private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR4 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret1CoordinatesTR4 = new Dictionary<int, Int32[]>
         {
             {  1, new Int32[] { 4325, 640, 41774, 173, 20       } },    // Angkor Wat
             {  3, new Int32[] { 33123, -2790, 18381, 4, 34      } },    // The Tomb of Seth
@@ -2231,7 +2236,7 @@ namespace TRR_SaveMaster
             { 40, new Int32[] { 49381, -4263, 11622, -90, 44    } },    // The Times Exclusive
         };
 
-        private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR4 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret2CoordinatesTR4 = new Dictionary<int, Int32[]>
         {
             {  1, new Int32[] { 8473, 2944, 32486, 87, 144      } },    // Angkor Wat
             {  3, new Int32[] { 20639, 3072, 20212, -90, 58     } },    // The Tomb of Seth
@@ -2246,7 +2251,7 @@ namespace TRR_SaveMaster
             { 40, new Int32[] { 31286, -1280, 22784, 90, 50     } },    // The Times Exclusive
         };
 
-        private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR4 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret3CoordinatesTR4 = new Dictionary<int, Int32[]>
         {
             {  1, new Int32[] { 19235, 1664, 26829, 3, 73       } },    // Angkor Wat
             {  3, new Int32[] { 15267, -1024, 17503, 175, 1     } },    // The Tomb of Seth
@@ -2259,7 +2264,7 @@ namespace TRR_SaveMaster
             { 20, new Int32[] { 26455, 512, 17719, 0, 37        } },    // The Lost Library
         };
 
-        private readonly Dictionary<byte, Int32[]> secret4CoordinatesTR4 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret4CoordinatesTR4 = new Dictionary<int, Int32[]>
         {
             {  1, new Int32[] { 28985, 2249, 24731, 29, 68      } },    // Angkor Wat
             {  3, new Int32[] { 15267, -1024, 17503, 175, 1     } },    // The Tomb of Seth
@@ -2269,7 +2274,7 @@ namespace TRR_SaveMaster
             { 18, new Int32[] { 20132, -2048, 37603, -90, 37    } },    // Catacombs
         };
 
-        private readonly Dictionary<byte, Int32[]> secret5CoordinatesTR4 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret5CoordinatesTR4 = new Dictionary<int, Int32[]>
         {
             {  1, new Int32[] { 28917, -1920, 29431, 134, 91    } },    // Angkor Wat
             {  3, new Int32[] { 3992, -1314, 26487, -90, 13     } },    // The Tomb of Seth
@@ -2277,23 +2282,23 @@ namespace TRR_SaveMaster
             { 11, new Int32[] { 24332, 11008, 17695, 178, 128   } },    // Tomb of Semerkhet
         };
 
-        private readonly Dictionary<byte, Int32[]> secret6CoordinatesTR4 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret6CoordinatesTR4 = new Dictionary<int, Int32[]>
         {
             {  1, new Int32[] { 44294, 384, 30474, 101, 158     } },    // Angkor Wat
             { 11, new Int32[] { 27832, 14848, 16719, -90, 194   } },    // Tomb of Semerkhet
         };
 
-        private readonly Dictionary<byte, Int32[]> secret7CoordinatesTR4 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret7CoordinatesTR4 = new Dictionary<int, Int32[]>
         {
             {  1, new Int32[] { 48359, 384, 31992, 89, 170      } },    // Angkor Wat
         };
 
-        private readonly Dictionary<byte, Int32[]> secret8CoordinatesTR4 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret8CoordinatesTR4 = new Dictionary<int, Int32[]>
         {
             {  1, new Int32[] { 38029, -256, 19192, 97, 42      } },    // Angkor Wat
         };
 
-        private readonly Dictionary<byte, Int32[]> secret1CoordinatesTR5 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret1CoordinatesTR5 = new Dictionary<int, Int32[]>
         {
             {  1, new Int32[] { 19160, 0, 13542, 178, 215       } },    // Streets of Rome
             {  2, new Int32[] { 42415, 1664, 17386, 150, 22     } },    // Trajan's Markets
@@ -2308,7 +2313,7 @@ namespace TRR_SaveMaster
             { 12, new Int32[] { 18629, -7680, 36575, 84, 148    } },    // Escape with the Iris
         };
 
-        private readonly Dictionary<byte, Int32[]> secret2CoordinatesTR5 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret2CoordinatesTR5 = new Dictionary<int, Int32[]>
         {
             {  1, new Int32[] { 23822, 0, 28862, 105, 217       } },    // Streets of Rome
             {  2, new Int32[] { 19233, 128, 21905, 22, 101      } },    // Trajan's Markets
@@ -2324,7 +2329,7 @@ namespace TRR_SaveMaster
             { 14, new Int32[] { 44033, -128, 29863, -90, 78     } },    // Red Alert!
         };
 
-        private readonly Dictionary<byte, Int32[]> secret3CoordinatesTR5 = new Dictionary<byte, Int32[]>
+        private readonly Dictionary<int, Int32[]> secret3CoordinatesTR5 = new Dictionary<int, Int32[]>
         {
             {  2, new Int32[] { 35974, 0, 23808, -90, 219       } },    // Trajan's Markets
             {  3, new Int32[] { 33565, 3968, 35597, 12, 120     } },    // The Colosseum
