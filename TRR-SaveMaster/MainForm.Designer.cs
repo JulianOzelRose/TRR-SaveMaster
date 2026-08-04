@@ -321,6 +321,7 @@ namespace TRR_SaveMaster
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiReportBug = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAdvancedSettingsSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR1)).BeginInit();
@@ -3784,6 +3785,7 @@ namespace TRR_SaveMaster
             this.tsmiAdvanced.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiAllowUnsafeMaxValuesTR6,
             this.tsmiShowInventoryToggleTR6,
+            this.tsmiAdvancedSettingsSeparator,
             this.tsmiUseFlatCheckBoxDarkMode});
             this.tsmiAdvanced.Image = global::TRR_SaveMaster.Properties.Resources.AdvancedSettings_Image;
             this.tsmiAdvanced.Name = "tsmiAdvanced";
@@ -3886,6 +3888,11 @@ namespace TRR_SaveMaster
             this.tsmiAbout.Size = new System.Drawing.Size(148, 22);
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
+            // 
+            // tsmiAdvancedSettingsSeparator
+            // 
+            this.tsmiAdvancedSettingsSeparator.Name = "tsmiAdvancedSettingsSeparator";
+            this.tsmiAdvancedSettingsSeparator.Size = new System.Drawing.Size(301, 6);
             // 
             // MainForm
             // 
@@ -4338,6 +4345,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.ToolStripMenuItem tsmiDarkMode;
         private System.Windows.Forms.ToolStripMenuItem tsmiAndroid;
         private System.Windows.Forms.ToolStripMenuItem tsmiUseFlatCheckBoxDarkMode;
+        private System.Windows.Forms.ToolStripSeparator tsmiAdvancedSettingsSeparator;
     }
 }
 
