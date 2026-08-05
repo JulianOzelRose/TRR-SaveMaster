@@ -11,26 +11,26 @@ namespace TRR_SaveMaster
     public partial class PositionForm : Form
     {
         // Offsets
-        private const int COMPRESSED_BLOCK_START_OFFSET = 0x36C;
-        private const int COMPRESSED_BLOCK_SIZE_OFFSET = 0x364;
+        private const int COMPRESSED_BLOCK_START_OFFSET = 0x368;
+        private const int COMPRESSED_BLOCK_SIZE_OFFSET = 0x360;
         private int LEVEL_INDEX_OFFSET;
         private int X_COORDINATE_OFFSET;
         private int Y_COORDINATE_OFFSET;
         private int Z_COORDINATE_OFFSET;
         private int ORIENTATION_OFFSET;
         private int ROOM_OFFSET;
-        private const int LEVEL_INDEX_OFFSET_TR1_PREPATCH = 0x62C;
-        private const int LEVEL_INDEX_OFFSET_TR1_PC_PS4 = 0x62C;
-        private const int LEVEL_INDEX_OFFSET_TR1_ANDROID = 0x65C;
-        private const int LEVEL_INDEX_OFFSET_TR2_PREPATCH = 0x628;
-        private const int LEVEL_INDEX_OFFSET_TR2_PC_PS4 = 0x628;
-        private const int LEVEL_INDEX_OFFSET_TR2_ANDROID = 0x658;
-        private const int LEVEL_INDEX_OFFSET_TR3_PREPATCH = 0x8D6;
-        private const int LEVEL_INDEX_OFFSET_TR3_PC_PS4 = 0x8D6;
-        private const int LEVEL_INDEX_OFFSET_TR3_ANDROID = 0x916;
-        private const int LEVEL_INDEX_OFFSET_TR4 = 0x26F;
-        private const int LEVEL_INDEX_OFFSET_TR5 = 0x26F;
-        private const int LEVEL_INDEX_OFFSET_TR6 = 0x14;
+        private const int LEVEL_INDEX_OFFSET_TR1_PREPATCH = 0x628;
+        private const int LEVEL_INDEX_OFFSET_TR1_PC_PS4 = 0x628;
+        private const int LEVEL_INDEX_OFFSET_TR1_ANDROID = 0x658;
+        private const int LEVEL_INDEX_OFFSET_TR2_PREPATCH = 0x624;
+        private const int LEVEL_INDEX_OFFSET_TR2_PC_PS4 = 0x624;
+        private const int LEVEL_INDEX_OFFSET_TR2_ANDROID = 0x654;
+        private const int LEVEL_INDEX_OFFSET_TR3_PREPATCH = 0x8D2;
+        private const int LEVEL_INDEX_OFFSET_TR3_PC_PS4 = 0x8D2;
+        private const int LEVEL_INDEX_OFFSET_TR3_ANDROID = 0x912;
+        private const int LEVEL_INDEX_OFFSET_TR4 = 0x26B;
+        private const int LEVEL_INDEX_OFFSET_TR5 = 0x26B;
+        private const int LEVEL_INDEX_OFFSET_TR6 = 0x10;
 
         // Utils
         private readonly TR1Utilities tr1Utilities = new TR1Utilities();
@@ -161,23 +161,28 @@ namespace TRR_SaveMaster
 
         private void InitializeUtilConstructors()
         {
+            byte[] fileData = File.ReadAllBytes(savegamePath);
+
             if (IsTR1Savegame())
             {
                 tr1Utilities.SetSavegamePath(savegamePath);
                 tr1Utilities.SetSavegameOffset(savegameOffset);
                 tr1Utilities.SetPlatform(platform);
+                tr1Utilities.DetermineOffsets(fileData);
             }
             else if (IsTR2Savegame())
             {
                 tr2Utilities.SetSavegamePath(savegamePath);
                 tr2Utilities.SetSavegameOffset(savegameOffset);
                 tr2Utilities.SetPlatform(platform);
+                tr2Utilities.DetermineOffsets(fileData);
             }
             else if (IsTR3Savegame())
             {
                 tr3Utilities.SetSavegamePath(savegamePath);
                 tr3Utilities.SetSavegameOffset(savegameOffset);
                 tr3Utilities.SetPlatform(platform);
+                tr3Utilities.DetermineOffsets(fileData);
             }
             else if (IsTR4Savegame())
             {

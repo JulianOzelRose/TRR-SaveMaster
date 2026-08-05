@@ -38,7 +38,7 @@
 
         // Savefile & savegame header
         public const int SAVEFILE_VERSION_OFFSET = 0x000;
-        public const int SLOT_STATUS_OFFSET = 0x004;
+        public const int SLOT_STATUS_OFFSET = 0x0;
         public const byte SAVEFILE_TRX_PREPATCH = 0x3B;
         public const byte SAVEFILE_TRX_PATCH5 = 0x3C;
         public const byte SAVEFILE_TRX2_FORMAT = 0x28;

@@ -33,210 +33,210 @@ namespace TRR_SaveMaster
         private int TIMESTAMP_SECONDS_OFFSET;
 
         // TR1 offsets (PC)
-        private const int STATISTICS_ARRAY_BASE_OFFSET_TR1_PC = 0x50;
-        private const int LEVEL_INDEX_OFFSET_TR1_PC = 0x62C;
-        private const int CRYSTALS_USED_OFFSET_TR1_PC = 0x610;
-        private const int AMMO_USED_OFFSET_TR1_PC = 0x618;
-        private const int HITS_OFFSET_TR1_PC = 0x61C;
-        private const int KILLS_OFFSET_TR1_PC = 0x620;
-        private const int SECRETS_FOUND_OFFSET_TR1_PC = 0x628;
-        private const int PICKUPS_OFFSET_TR1_PC = 0x62A;
-        private const int MEDIPACKS_USED_OFFSET_TR1_PC = 0x62B;
-        private const int DISTANCE_TRAVELLED_OFFSET_TR1_PC = 0x624;
-        private const int TIME_TAKEN_OFFSET_TR1_PC = 0x614;
+        private const int STATISTICS_ARRAY_BASE_OFFSET_TR1_PC = 0x4C;
+        private const int LEVEL_INDEX_OFFSET_TR1_PC = 0x628;
+        private const int CRYSTALS_USED_OFFSET_TR1_PC = 0x60C;
+        private const int AMMO_USED_OFFSET_TR1_PC = 0x614;
+        private const int HITS_OFFSET_TR1_PC = 0x618;
+        private const int KILLS_OFFSET_TR1_PC = 0x61C;
+        private const int SECRETS_FOUND_OFFSET_TR1_PC = 0x624;
+        private const int PICKUPS_OFFSET_TR1_PC = 0x626;
+        private const int MEDIPACKS_USED_OFFSET_TR1_PC = 0x627;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR1_PC = 0x620;
+        private const int TIME_TAKEN_OFFSET_TR1_PC = 0x610;
 
         // TR1 offsets (Prepatch)
-        private const int STATISTICS_ARRAY_BASE_OFFSET_TR1_PREPATCH = 0x50;
-        private const int LEVEL_INDEX_OFFSET_TR1_PREPATCH = 0x62C;
-        private const int CRYSTALS_USED_OFFSET_TR1_PREPATCH = 0x610;
-        private const int AMMO_USED_OFFSET_TR1_PREPATCH = 0x618;
-        private const int HITS_OFFSET_TR1_PREPATCH = 0x61C;
-        private const int KILLS_OFFSET_TR1_PREPATCH = 0x620;
-        private const int SECRETS_FOUND_OFFSET_TR1_PREPATCH = 0x628;
-        private const int PICKUPS_OFFSET_TR1_PREPATCH = 0x62A;
-        private const int MEDIPACKS_USED_OFFSET_TR1_PREPATCH = 0x62B;
-        private const int DISTANCE_TRAVELLED_OFFSET_TR1_PREPATCH = 0x624;
-        private const int TIME_TAKEN_OFFSET_TR1_PREPATCH = 0x614;
+        private const int STATISTICS_ARRAY_BASE_OFFSET_TR1_PREPATCH = 0x4C;
+        private const int LEVEL_INDEX_OFFSET_TR1_PREPATCH = 0x628;
+        private const int CRYSTALS_USED_OFFSET_TR1_PREPATCH = 0x60C;
+        private const int AMMO_USED_OFFSET_TR1_PREPATCH = 0x614;
+        private const int HITS_OFFSET_TR1_PREPATCH = 0x618;
+        private const int KILLS_OFFSET_TR1_PREPATCH = 0x61C;
+        private const int SECRETS_FOUND_OFFSET_TR1_PREPATCH = 0x624;
+        private const int PICKUPS_OFFSET_TR1_PREPATCH = 0x626;
+        private const int MEDIPACKS_USED_OFFSET_TR1_PREPATCH = 0x627;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR1_PREPATCH = 0x620;
+        private const int TIME_TAKEN_OFFSET_TR1_PREPATCH = 0x610;
 
         // TR1 offsets (Android)
-        private const int STATISTICS_ARRAY_BASE_OFFSET_TR1_ANDROID = 0x80;
-        private const int LEVEL_INDEX_OFFSET_TR1_ANDROID = 0x65C;
-        private const int CRYSTALS_USED_OFFSET_TR1_ANDROID = 0x640;
-        private const int AMMO_USED_OFFSET_TR1_ANDROID = 0x648;
-        private const int HITS_OFFSET_TR1_ANDROID = 0x64C;
-        private const int KILLS_OFFSET_TR1_ANDROID = 0x650;
-        private const int SECRETS_FOUND_OFFSET_TR1_ANDROID = 0x658;
-        private const int PICKUPS_OFFSET_TR1_ANDROID = 0x65A;
-        private const int MEDIPACKS_USED_OFFSET_TR1_ANDROID = 0x65B;
-        private const int DISTANCE_TRAVELLED_OFFSET_TR1_ANDROID = 0x654;
-        private const int TIME_TAKEN_OFFSET_TR1_ANDROID = 0x644;
+        private const int STATISTICS_ARRAY_BASE_OFFSET_TR1_ANDROID = 0x7C;
+        private const int LEVEL_INDEX_OFFSET_TR1_ANDROID = 0x658;
+        private const int CRYSTALS_USED_OFFSET_TR1_ANDROID = 0x63C;
+        private const int AMMO_USED_OFFSET_TR1_ANDROID = 0x644;
+        private const int HITS_OFFSET_TR1_ANDROID = 0x648;
+        private const int KILLS_OFFSET_TR1_ANDROID = 0x64C;
+        private const int SECRETS_FOUND_OFFSET_TR1_ANDROID = 0x654;
+        private const int PICKUPS_OFFSET_TR1_ANDROID = 0x656;
+        private const int MEDIPACKS_USED_OFFSET_TR1_ANDROID = 0x657;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR1_ANDROID = 0x650;
+        private const int TIME_TAKEN_OFFSET_TR1_ANDROID = 0x640;
 
         // TR1 offsets (PS4)
-        private const int STATISTICS_ARRAY_BASE_OFFSET_TR1_PS4 = 0x50;
-        private const int LEVEL_INDEX_OFFSET_TR1_PS4 = 0x62C;
-        private const int CRYSTALS_USED_OFFSET_TR1_PS4 = 0x610;
-        private const int AMMO_USED_OFFSET_TR1_PS4 = 0x618;
-        private const int HITS_OFFSET_TR1_PS4 = 0x61C;
-        private const int KILLS_OFFSET_TR1_PS4 = 0x620;
-        private const int SECRETS_FOUND_OFFSET_TR1_PS4 = 0x628;
-        private const int PICKUPS_OFFSET_TR1_PS4 = 0x62A;
-        private const int MEDIPACKS_USED_OFFSET_TR1_PS4 = 0x62B;
-        private const int DISTANCE_TRAVELLED_OFFSET_TR1_PS4 = 0x624;
-        private const int TIME_TAKEN_OFFSET_TR1_PS4 = 0x614;
+        private const int STATISTICS_ARRAY_BASE_OFFSET_TR1_PS4 = 0x4C;
+        private const int LEVEL_INDEX_OFFSET_TR1_PS4 = 0x628;
+        private const int CRYSTALS_USED_OFFSET_TR1_PS4 = 0x60C;
+        private const int AMMO_USED_OFFSET_TR1_PS4 = 0x614;
+        private const int HITS_OFFSET_TR1_PS4 = 0x618;
+        private const int KILLS_OFFSET_TR1_PS4 = 0x61C;
+        private const int SECRETS_FOUND_OFFSET_TR1_PS4 = 0x624;
+        private const int PICKUPS_OFFSET_TR1_PS4 = 0x626;
+        private const int MEDIPACKS_USED_OFFSET_TR1_PS4 = 0x627;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR1_PS4 = 0x620;
+        private const int TIME_TAKEN_OFFSET_TR1_PS4 = 0x610;
 
         // TR2 offsets (PC)
-        private const int STATISTICS_ARRAY_BASE_OFFSET_TR2_PC = 0x54;
-        private const int LEVEL_INDEX_OFFSET_TR2_PC = 0x628;
-        private const int AMMO_USED_OFFSET_TR2_PC = 0x614;
-        private const int HITS_OFFSET_TR2_PC = 0x618;
-        private const int KILLS_OFFSET_TR2_PC = 0x61C;
-        private const int SECRETS_FOUND_OFFSET_TR2_PC = 0x624;
-        private const int PICKUPS_OFFSET_TR2_PC = 0x626;
-        private const int MEDIPACKS_USED_OFFSET_TR2_PC = 0x627;
-        private const int DISTANCE_TRAVELLED_OFFSET_TR2_PC = 0x620;
-        private const int TIME_TAKEN_OFFSET_TR2_PC = 0x610;
+        private const int STATISTICS_ARRAY_BASE_OFFSET_TR2_PC = 0x50;
+        private const int LEVEL_INDEX_OFFSET_TR2_PC = 0x624;
+        private const int AMMO_USED_OFFSET_TR2_PC = 0x610;
+        private const int HITS_OFFSET_TR2_PC = 0x614;
+        private const int KILLS_OFFSET_TR2_PC = 0x618;
+        private const int SECRETS_FOUND_OFFSET_TR2_PC = 0x620;
+        private const int PICKUPS_OFFSET_TR2_PC = 0x622;
+        private const int MEDIPACKS_USED_OFFSET_TR2_PC = 0x623;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR2_PC = 0x61C;
+        private const int TIME_TAKEN_OFFSET_TR2_PC = 0x60C;
 
         // TR2 offsets (Prepatch)
-        private const int STATISTICS_ARRAY_BASE_OFFSET_TR2_PREPATCH = 0x54;
-        private const int LEVEL_INDEX_OFFSET_TR2_PREPATCH = 0x628;
-        private const int AMMO_USED_OFFSET_TR2_PREPATCH = 0x614;
-        private const int HITS_OFFSET_TR2_PREPATCH = 0x618;
-        private const int KILLS_OFFSET_TR2_PREPATCH = 0x61C;
-        private const int SECRETS_FOUND_OFFSET_TR2_PREPATCH = 0x624;
-        private const int PICKUPS_OFFSET_TR2_PREPATCH = 0x626;
-        private const int MEDIPACKS_USED_OFFSET_TR2_PREPATCH = 0x627;
-        private const int DISTANCE_TRAVELLED_OFFSET_TR2_PREPATCH = 0x620;
-        private const int TIME_TAKEN_OFFSET_TR2_PREPATCH = 0x610;
+        private const int STATISTICS_ARRAY_BASE_OFFSET_TR2_PREPATCH = 0x50;
+        private const int LEVEL_INDEX_OFFSET_TR2_PREPATCH = 0x624;
+        private const int AMMO_USED_OFFSET_TR2_PREPATCH = 0x610;
+        private const int HITS_OFFSET_TR2_PREPATCH = 0x614;
+        private const int KILLS_OFFSET_TR2_PREPATCH = 0x618;
+        private const int SECRETS_FOUND_OFFSET_TR2_PREPATCH = 0x620;
+        private const int PICKUPS_OFFSET_TR2_PREPATCH = 0x622;
+        private const int MEDIPACKS_USED_OFFSET_TR2_PREPATCH = 0x623;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR2_PREPATCH = 0x61C;
+        private const int TIME_TAKEN_OFFSET_TR2_PREPATCH = 0x60C;
 
         // TR2 offsets (Android)
-        private const int STATISTICS_ARRAY_BASE_OFFSET_TR2_ANDROID = 0x84;
-        private const int LEVEL_INDEX_OFFSET_TR2_ANDROID = 0x658;
-        private const int AMMO_USED_OFFSET_TR2_ANDROID = 0x644;
-        private const int HITS_OFFSET_TR2_ANDROID = 0x648;
-        private const int KILLS_OFFSET_TR2_ANDROID = 0x64C;
-        private const int SECRETS_FOUND_OFFSET_TR2_ANDROID = 0x654;
-        private const int PICKUPS_OFFSET_TR2_ANDROID = 0x656;
-        private const int MEDIPACKS_USED_OFFSET_TR2_ANDROID = 0x657;
-        private const int DISTANCE_TRAVELLED_OFFSET_TR2_ANDROID = 0x650;
-        private const int TIME_TAKEN_OFFSET_TR2_ANDROID = 0x640;
+        private const int STATISTICS_ARRAY_BASE_OFFSET_TR2_ANDROID = 0x80;
+        private const int LEVEL_INDEX_OFFSET_TR2_ANDROID = 0x654;
+        private const int AMMO_USED_OFFSET_TR2_ANDROID = 0x640;
+        private const int HITS_OFFSET_TR2_ANDROID = 0x644;
+        private const int KILLS_OFFSET_TR2_ANDROID = 0x648;
+        private const int SECRETS_FOUND_OFFSET_TR2_ANDROID = 0x650;
+        private const int PICKUPS_OFFSET_TR2_ANDROID = 0x652;
+        private const int MEDIPACKS_USED_OFFSET_TR2_ANDROID = 0x653;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR2_ANDROID = 0x64C;
+        private const int TIME_TAKEN_OFFSET_TR2_ANDROID = 0x63C;
 
         // TR2 offsets (PS4)
-        private const int STATISTICS_ARRAY_BASE_OFFSET_TR2_PS4 = 0x54;
-        private const int LEVEL_INDEX_OFFSET_TR2_PS4 = 0x628;
-        private const int AMMO_USED_OFFSET_TR2_PS4 = 0x614;
-        private const int HITS_OFFSET_TR2_PS4 = 0x618;
-        private const int KILLS_OFFSET_TR2_PS4 = 0x61C;
-        private const int SECRETS_FOUND_OFFSET_TR2_PS4 = 0x624;
-        private const int PICKUPS_OFFSET_TR2_PS4 = 0x626;
-        private const int MEDIPACKS_USED_OFFSET_TR2_PS4 = 0x627;
-        private const int DISTANCE_TRAVELLED_OFFSET_TR2_PS4 = 0x620;
-        private const int TIME_TAKEN_OFFSET_TR2_PS4 = 0x610;
+        private const int STATISTICS_ARRAY_BASE_OFFSET_TR2_PS4 = 0x50;
+        private const int LEVEL_INDEX_OFFSET_TR2_PS4 = 0x624;
+        private const int AMMO_USED_OFFSET_TR2_PS4 = 0x610;
+        private const int HITS_OFFSET_TR2_PS4 = 0x614;
+        private const int KILLS_OFFSET_TR2_PS4 = 0x618;
+        private const int SECRETS_FOUND_OFFSET_TR2_PS4 = 0x620;
+        private const int PICKUPS_OFFSET_TR2_PS4 = 0x622;
+        private const int MEDIPACKS_USED_OFFSET_TR2_PS4 = 0x623;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR2_PS4 = 0x61C;
+        private const int TIME_TAKEN_OFFSET_TR2_PS4 = 0x60C;
 
         // TR3 offsets (PC)
-        private const int STATISTICS_ARRAY_BASE_OFFSET_TR3_PC = 0xC0;
-        private const int LEVEL_INDEX_OFFSET_TR3_PC = 0x8D6;
-        private const int CRYSTALS_FOUND_OFFSET_TR3_PC = 0x8A4;
-        private const int CRYSTALS_USED_OFFSET_TR3_PC = 0x8A8;
-        private const int TIME_TAKEN_OFFSET_TR3_PC = 0x8AC;
-        private const int AMMO_USED_OFFSET_TR3_PC = 0x8B0;
-        private const int HITS_OFFSET_TR3_PC = 0x8B4;
-        private const int KILLS_OFFSET_TR3_PC = 0x8B8;
-        private const int DISTANCE_TRAVELLED_OFFSET_TR3_PC = 0x8BC;
-        private const int SECRETS_FOUND_OFFSET_TR3_PC = 0x8C0;
-        private const int PICKUPS_OFFSET_TR3_PC = 0x8C2;
-        private const int MEDIPACKS_USED_OFFSET_TR3_PC = 0x8C3;
+        private const int STATISTICS_ARRAY_BASE_OFFSET_TR3_PC = 0xBC;
+        private const int LEVEL_INDEX_OFFSET_TR3_PC = 0x8D2;
+        private const int CRYSTALS_FOUND_OFFSET_TR3_PC = 0x8A0;
+        private const int CRYSTALS_USED_OFFSET_TR3_PC = 0x8A4;
+        private const int TIME_TAKEN_OFFSET_TR3_PC = 0x8A8;
+        private const int AMMO_USED_OFFSET_TR3_PC = 0x8AC;
+        private const int HITS_OFFSET_TR3_PC = 0x8B0;
+        private const int KILLS_OFFSET_TR3_PC = 0x8B4;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR3_PC = 0x8B8;
+        private const int SECRETS_FOUND_OFFSET_TR3_PC = 0x8BC;
+        private const int PICKUPS_OFFSET_TR3_PC = 0x8BE;
+        private const int MEDIPACKS_USED_OFFSET_TR3_PC = 0x8BF;
 
         // TR3 offsets (Prepatch)
-        private const int STATISTICS_ARRAY_BASE_OFFSET_TR3_PREPATCH = 0xC0;
-        private const int LEVEL_INDEX_OFFSET_TR3_PREPATCH = 0x8D6;
-        private const int CRYSTALS_FOUND_OFFSET_TR3_PREPATCH = 0x8A4;
-        private const int CRYSTALS_USED_OFFSET_TR3_PREPATCH = 0x8A8;
-        private const int TIME_TAKEN_OFFSET_TR3_PREPATCH = 0x8AC;
-        private const int AMMO_USED_OFFSET_TR3_PREPATCH = 0x8B0;
-        private const int HITS_OFFSET_TR3_PREPATCH = 0x8B4;
-        private const int KILLS_OFFSET_TR3_PREPATCH = 0x8B8;
-        private const int DISTANCE_TRAVELLED_OFFSET_TR3_PREPATCH = 0x8BC;
-        private const int SECRETS_FOUND_OFFSET_TR3_PREPATCH = 0x8C0;
-        private const int PICKUPS_OFFSET_TR3_PREPATCH = 0x8C2;
-        private const int MEDIPACKS_USED_OFFSET_TR3_PREPATCH = 0x8C3;
+        private const int STATISTICS_ARRAY_BASE_OFFSET_TR3_PREPATCH = 0xBC;
+        private const int LEVEL_INDEX_OFFSET_TR3_PREPATCH = 0x8D2;
+        private const int CRYSTALS_FOUND_OFFSET_TR3_PREPATCH = 0x8A0;
+        private const int CRYSTALS_USED_OFFSET_TR3_PREPATCH = 0x8A4;
+        private const int TIME_TAKEN_OFFSET_TR3_PREPATCH = 0x8A8;
+        private const int AMMO_USED_OFFSET_TR3_PREPATCH = 0x8AC;
+        private const int HITS_OFFSET_TR3_PREPATCH = 0x8B0;
+        private const int KILLS_OFFSET_TR3_PREPATCH = 0x8B4;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR3_PREPATCH = 0x8B8;
+        private const int SECRETS_FOUND_OFFSET_TR3_PREPATCH = 0x8BC;
+        private const int PICKUPS_OFFSET_TR3_PREPATCH = 0x8BE;
+        private const int MEDIPACKS_USED_OFFSET_TR3_PREPATCH = 0x8BF;
 
         // TR3 offsets (Android)
-        private const int STATISTICS_ARRAY_BASE_OFFSET_TR3_ANDROID = 0x100;
-        private const int LEVEL_INDEX_OFFSET_TR3_ANDROID = 0x916;
-        private const int CRYSTALS_FOUND_OFFSET_TR3_ANDROID = 0x8E4;
-        private const int CRYSTALS_USED_OFFSET_TR3_ANDROID = 0x8E8;
-        private const int TIME_TAKEN_OFFSET_TR3_ANDROID = 0x8EC;
-        private const int AMMO_USED_OFFSET_TR3_ANDROID = 0x8F0;
-        private const int HITS_OFFSET_TR3_ANDROID = 0x8F4;
-        private const int KILLS_OFFSET_TR3_ANDROID = 0x8F8;
-        private const int DISTANCE_TRAVELLED_OFFSET_TR3_ANDROID = 0x8FC;
-        private const int SECRETS_FOUND_OFFSET_TR3_ANDROID = 0x900;
-        private const int PICKUPS_OFFSET_TR3_ANDROID = 0x902;
-        private const int MEDIPACKS_USED_OFFSET_TR3_ANDROID = 0x903;
+        private const int STATISTICS_ARRAY_BASE_OFFSET_TR3_ANDROID = 0xFC;
+        private const int LEVEL_INDEX_OFFSET_TR3_ANDROID = 0x912;
+        private const int CRYSTALS_FOUND_OFFSET_TR3_ANDROID = 0x8E0;
+        private const int CRYSTALS_USED_OFFSET_TR3_ANDROID = 0x8E4;
+        private const int TIME_TAKEN_OFFSET_TR3_ANDROID = 0x8E8;
+        private const int AMMO_USED_OFFSET_TR3_ANDROID = 0x8EC;
+        private const int HITS_OFFSET_TR3_ANDROID = 0x8F0;
+        private const int KILLS_OFFSET_TR3_ANDROID = 0x8F4;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR3_ANDROID = 0x8F8;
+        private const int SECRETS_FOUND_OFFSET_TR3_ANDROID = 0x8FC;
+        private const int PICKUPS_OFFSET_TR3_ANDROID = 0x8FE;
+        private const int MEDIPACKS_USED_OFFSET_TR3_ANDROID = 0x8FF;
 
         // TR3 offsets (PS4)
-        private const int STATISTICS_ARRAY_BASE_OFFSET_TR3_PS4 = 0xC0;
-        private const int LEVEL_INDEX_OFFSET_TR3_PS4 = 0x8D6;
-        private const int CRYSTALS_FOUND_OFFSET_TR3_PS4 = 0x8A4;
-        private const int CRYSTALS_USED_OFFSET_TR3_PS4 = 0x8A8;
-        private const int TIME_TAKEN_OFFSET_TR3_PS4 = 0x8AC;
-        private const int AMMO_USED_OFFSET_TR3_PS4 = 0x8B0;
-        private const int HITS_OFFSET_TR3_PS4 = 0x8B4;
-        private const int KILLS_OFFSET_TR3_PS4 = 0x8B8;
-        private const int DISTANCE_TRAVELLED_OFFSET_TR3_PS4 = 0x8BC;
-        private const int SECRETS_FOUND_OFFSET_TR3_PS4 = 0x8C0;
-        private const int PICKUPS_OFFSET_TR3_PS4 = 0x8C2;
-        private const int MEDIPACKS_USED_OFFSET_TR3_PS4 = 0x8C3;
+        private const int STATISTICS_ARRAY_BASE_OFFSET_TR3_PS4 = 0xBC;
+        private const int LEVEL_INDEX_OFFSET_TR3_PS4 = 0x8D2;
+        private const int CRYSTALS_FOUND_OFFSET_TR3_PS4 = 0x8A0;
+        private const int CRYSTALS_USED_OFFSET_TR3_PS4 = 0x8A4;
+        private const int TIME_TAKEN_OFFSET_TR3_PS4 = 0x8A8;
+        private const int AMMO_USED_OFFSET_TR3_PS4 = 0x8AC;
+        private const int HITS_OFFSET_TR3_PS4 = 0x8B0;
+        private const int KILLS_OFFSET_TR3_PS4 = 0x8B4;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR3_PS4 = 0x8B8;
+        private const int SECRETS_FOUND_OFFSET_TR3_PS4 = 0x8BC;
+        private const int PICKUPS_OFFSET_TR3_PS4 = 0x8BE;
+        private const int MEDIPACKS_USED_OFFSET_TR3_PS4 = 0x8BF;
 
         // TR4 offsets
-        private const int LEVEL_INDEX_OFFSET_TR4 = 0x26F;
-        private const int TIME_TAKEN_OFFSET_TR4 = 0x230;
-        private const int DISTANCE_TRAVELLED_OFFSET_TR4 = 0x234;
-        private const int AMMO_USED_OFFSET_TR4 = 0x238;
-        private const int PICKUPS_OFFSET_TR4 = 0x240;
-        private const int KILLS_OFFSET_TR4 = 0x244;
-        private const int SECRETS_FOUND_OFFSET_TR4 = 0x246;
-        private const int MEDIPACKS_USED_OFFSET_TR4 = 0x247;
-        private const int VESSELS_BROKEN_OFFSET_TR4 = 0x280;
-        private const int TIMESTAMP_DAYS_OFFSET_TR4 = 0x00C;
-        private const int TIMESTAMP_HOURS_OFFSET_TR4 = 0x010;
-        private const int TIMESTAMP_MINUTES_OFFSET_TR4 = 0x014;
-        private const int TIMESTAMP_SECONDS_OFFSET_TR4 = 0x018;
+        private const int LEVEL_INDEX_OFFSET_TR4 = 0x26B;
+        private const int TIME_TAKEN_OFFSET_TR4 = 0x22C;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR4 = 0x230;
+        private const int AMMO_USED_OFFSET_TR4 = 0x234;
+        private const int PICKUPS_OFFSET_TR4 = 0x23C;
+        private const int KILLS_OFFSET_TR4 = 0x240;
+        private const int SECRETS_FOUND_OFFSET_TR4 = 0x242;
+        private const int MEDIPACKS_USED_OFFSET_TR4 = 0x243;
+        private const int VESSELS_BROKEN_OFFSET_TR4 = 0x27C;
+        private const int TIMESTAMP_DAYS_OFFSET_TR4 = 0x008;
+        private const int TIMESTAMP_HOURS_OFFSET_TR4 = 0x00C;
+        private const int TIMESTAMP_MINUTES_OFFSET_TR4 = 0x010;
+        private const int TIMESTAMP_SECONDS_OFFSET_TR4 = 0x014;
 
         // TR5 offsets
-        private const int LEVEL_INDEX_OFFSET_TR5 = 0x26F;
-        private const int TIME_TAKEN_OFFSET_TR5 = 0x230;
-        private const int DISTANCE_TRAVELLED_OFFSET_TR5 = 0x234;
-        private const int AMMO_USED_OFFSET_TR5 = 0x238;
-        private const int PICKUPS_OFFSET_TR5 = 0x240;
-        private const int KILLS_OFFSET_TR5 = 0x244;
-        private const int SECRETS_FOUND_OFFSET_TR5 = 0x246;
-        private const int MEDIPACKS_USED_OFFSET_TR5 = 0x247;
-        private const int TIMESTAMP_DAYS_OFFSET_TR5 = 0x00C;
-        private const int TIMESTAMP_HOURS_OFFSET_TR5 = 0x010;
-        private const int TIMESTAMP_MINUTES_OFFSET_TR5 = 0x014;
-        private const int TIMESTAMP_SECONDS_OFFSET_TR5 = 0x018;
+        private const int LEVEL_INDEX_OFFSET_TR5 = 0x26B;
+        private const int TIME_TAKEN_OFFSET_TR5 = 0x22C;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR5 = 0x230;
+        private const int AMMO_USED_OFFSET_TR5 = 0x234;
+        private const int PICKUPS_OFFSET_TR5 = 0x23C;
+        private const int KILLS_OFFSET_TR5 = 0x240;
+        private const int SECRETS_FOUND_OFFSET_TR5 = 0x242;
+        private const int MEDIPACKS_USED_OFFSET_TR5 = 0x243;
+        private const int TIMESTAMP_DAYS_OFFSET_TR5 = 0x008;
+        private const int TIMESTAMP_HOURS_OFFSET_TR5 = 0x00C;
+        private const int TIMESTAMP_MINUTES_OFFSET_TR5 = 0x010;
+        private const int TIMESTAMP_SECONDS_OFFSET_TR5 = 0x014;
 
         // TR6 offsets
-        private const int LEVEL_INDEX_OFFSET_TR6 = 0x14;
-        private const int TIME_TAKEN_OFFSET_TR6 = 0x240;
-        private const int DISTANCE_TRAVELLED_OFFSET_TR6 = 0x244;
-        private const int AMMO_USED_OFFSET_TR6 = 0x248;
-        private const int HITS_OFFSET_TR6 = 0x24C;
-        private const int PICKUPS_OFFSET_TR6 = 0x250;
-        private const int HEALTH_ITEMS_FOUND_OFFSET_TR6 = 0x252;
-        private const int CHOCOBARS_FOUND_OFFSET_TR6 = 0x254;
-        private const int KILLS_OFFSET_TR6 = 0x256;
-        private const int MEDIPACKS_USED_OFFSET_TR6 = 0x258;
-        private const int TIME_TAKEN_OFFSET_FINAL_TR6 = 0x224;
-        private const int DISTANCE_TRAVELLED_OFFSET_FINAL_TR6 = 0x228;
-        private const int AMMO_USED_OFFSET_FINAL_TR6 = 0x22C;
-        private const int HITS_OFFSET_FINAL_TR6 = 0x230;
-        private const int PICKUPS_OFFSET_FINAL_TR6 = 0x234;
-        private const int HEALTH_ITEMS_FOUND_OFFSET_FINAL_TR6 = 0x236;
-        private const int CHOCOBARS_FOUND_OFFSET_FINAL_TR6 = 0x238;
-        private const int KILLS_OFFSET_FINAL_TR6 = 0x23A;
-        private const int MEDIPACKS_USED_OFFSET_FINAL_TR6 = 0x23C;
+        private const int LEVEL_INDEX_OFFSET_TR6 = 0x10;
+        private const int TIME_TAKEN_OFFSET_TR6 = 0x23C;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR6 = 0x240;
+        private const int AMMO_USED_OFFSET_TR6 = 0x244;
+        private const int HITS_OFFSET_TR6 = 0x248;
+        private const int PICKUPS_OFFSET_TR6 = 0x24C;
+        private const int HEALTH_ITEMS_FOUND_OFFSET_TR6 = 0x24E;
+        private const int CHOCOBARS_FOUND_OFFSET_TR6 = 0x250;
+        private const int KILLS_OFFSET_TR6 = 0x252;
+        private const int MEDIPACKS_USED_OFFSET_TR6 = 0x254;
+        private const int TIME_TAKEN_OFFSET_FINAL_TR6 = 0x220;
+        private const int DISTANCE_TRAVELLED_OFFSET_FINAL_TR6 = 0x224;
+        private const int AMMO_USED_OFFSET_FINAL_TR6 = 0x228;
+        private const int HITS_OFFSET_FINAL_TR6 = 0x22C;
+        private const int PICKUPS_OFFSET_FINAL_TR6 = 0x230;
+        private const int HEALTH_ITEMS_FOUND_OFFSET_FINAL_TR6 = 0x232;
+        private const int CHOCOBARS_FOUND_OFFSET_FINAL_TR6 = 0x234;
+        private const int KILLS_OFFSET_FINAL_TR6 = 0x236;
+        private const int MEDIPACKS_USED_OFFSET_FINAL_TR6 = 0x238;
 
         // Maxes (TR3)
         private const int MAX_PICKUPS_COASTAL_VILLAGE_TR3 = 30;
@@ -1183,16 +1183,19 @@ namespace TRR_SaveMaster
         {
             if (SELECTED_TAB == Globals.TAB_TR1)
             {
+                tr1Utilities.SetPlatform(platform);
                 tr1Utilities.DetermineOffsets(fileData);
                 tr1Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
             else if (SELECTED_TAB == Globals.TAB_TR2)
             {
+                tr2Utilities.SetPlatform(platform);
                 tr2Utilities.DetermineOffsets(fileData);
                 tr2Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }
             else if (SELECTED_TAB == Globals.TAB_TR3)
             {
+                tr3Utilities.SetPlatform(platform);
                 tr3Utilities.DetermineOffsets(fileData);
                 tr3Utilities.UpdateDisplayName(selectedSavegame, fileData);
             }

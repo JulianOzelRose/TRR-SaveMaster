@@ -8,9 +8,9 @@ namespace TRR_SaveMaster
     class TR3Utilities
     {
         // Static offsets
-        private const int NEW_GAME_PLUS_OFFSET = 0x008;
-        private const int SAVE_NUMBER_OFFSET = 0x00C;
-        private const int LEVEL_INDEX_OFFSET_PREPATCH = 0x8D6;
+        private const int NEW_GAME_PLUS_OFFSET = 0x004;
+        private const int SAVE_NUMBER_OFFSET = 0x008;
+        private const int LEVEL_INDEX_OFFSET_PREPATCH = 0x8D2;
 
         // Platform or patch-dependent offsets
         private int LEVEL_INDEX_OFFSET;
@@ -25,37 +25,37 @@ namespace TRR_SaveMaster
         private int CHALLENGE_MODE_ENEMY_TYPE_OFFSET;
 
         // PC offsets
-        private const int LEVEL_INDEX_OFFSET_PC = 0x8D6;
-        private const int SAVEGAME_VERSION_OFFSET_PC = 0x98C;
-        private const int CHALLENGE_MODE_RNG_SEED_OFFSET_PC = 0x994;
-        private const int CHALLENGE_MODE_OFFSET_PC = 0x990;
-        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_PC = 0x99E;
-        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PC = 0x9A2;
-        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PC = 0x9A5;
+        private const int LEVEL_INDEX_OFFSET_PC = 0x8D2;
+        private const int SAVEGAME_VERSION_OFFSET_PC = 0x988;
+        private const int CHALLENGE_MODE_RNG_SEED_OFFSET_PC = 0x990;
+        private const int CHALLENGE_MODE_OFFSET_PC = 0x98C;
+        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_PC = 0x99A;
+        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PC = 0x99E;
+        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PC = 0x9A1;
 
         // Android offsets
-        private const int LEVEL_INDEX_OFFSET_ANDROID = 0x916;
-        private const int SAVEGAME_VERSION_OFFSET_ANDROID = 0x9CC;
-        private const int CHALLENGE_MODE_RNG_SEED_OFFSET_ANDROID = 0x9D4;
-        private const int CHALLENGE_MODE_OFFSET_ANDROID = 0x9D0;
-        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_ANDROID = 0x9DE;
-        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_ANDROID = 0x9E2;
-        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_ANDROID = 0x9E5;
+        private const int LEVEL_INDEX_OFFSET_ANDROID = 0x912;
+        private const int SAVEGAME_VERSION_OFFSET_ANDROID = 0x9C8;
+        private const int CHALLENGE_MODE_RNG_SEED_OFFSET_ANDROID = 0x9D0;
+        private const int CHALLENGE_MODE_OFFSET_ANDROID = 0x9CC;
+        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_ANDROID = 0x9DA;
+        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_ANDROID = 0x9DE;
+        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_ANDROID = 0x9E1;
 
         // PS4 offsets
-        private const int LEVEL_INDEX_OFFSET_PS4 = 0x8D6;
-        private const int SAVEGAME_VERSION_OFFSET_PS4 = 0x98C;
-        private const int CHALLENGE_MODE_RNG_SEED_OFFSET_PS4 = 0x994;
-        private const int CHALLENGE_MODE_OFFSET_PS4 = 0x990;
-        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_PS4 = 0x99E;
-        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PS4 = 0x9A2;
-        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PS4 = 0x9A5;
+        private const int LEVEL_INDEX_OFFSET_PS4 = 0x8D2;
+        private const int SAVEGAME_VERSION_OFFSET_PS4 = 0x988;
+        private const int CHALLENGE_MODE_RNG_SEED_OFFSET_PS4 = 0x990;
+        private const int CHALLENGE_MODE_OFFSET_PS4 = 0x98C;
+        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_PS4 = 0x99A;
+        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PS4 = 0x99E;
+        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PS4 = 0x9A1;
 
         // Patch-dependent
-        private const int BASE_SAVEGAME_OFFSET_TR3_PREPATCH = 0xE2000;
-        private const int BASE_SAVEGAME_OFFSET_TR3_PATCH5 = 0x1A2000;
-        private const int MAX_SAVEGAME_OFFSET_TR3_PREPATCH = 0x152000;
-        private const int MAX_SAVEGAME_OFFSET_TR3_PATCH5 = 0x26B800;
+        private const int BASE_SAVEGAME_OFFSET_TR3_PREPATCH = 0xE2004;
+        private const int BASE_SAVEGAME_OFFSET_TR3_PATCH5 = 0x1A2004;
+        private const int MAX_SAVEGAME_OFFSET_TR3_PREPATCH = 0x152004;
+        private const int MAX_SAVEGAME_OFFSET_TR3_PATCH5 = 0x26B804;
 
         // Static offsets (per level)
         private int SMALL_MEDIPACK_OFFSET;
@@ -242,19 +242,19 @@ namespace TRR_SaveMaster
 
             Int16 levelIndex = GetLevelIndex(fileData);
 
-            DEAGLE_AMMO_OFFSET = 0x66 + (levelIndex * 0x40);
-            UZI_AMMO_OFFSET = 0x68 + (levelIndex * 0x40);
-            SHOTGUN_AMMO_OFFSET = 0x6A + (levelIndex * 0x40);
-            MP5_AMMO_OFFSET = 0x6C + (levelIndex * 0x40);
-            ROCKET_LAUNCHER_AMMO_OFFSET = 0x6E + (levelIndex * 0x40);
-            HARPOON_GUN_AMMO_OFFSET = 0x70 + (levelIndex * 0x40);
-            GRENADE_LAUNCHER_AMMO_OFFSET = 0x72 + (levelIndex * 0x40);
-            SMALL_MEDIPACK_OFFSET = 0x74 + (levelIndex * 0x40);
-            LARGE_MEDIPACK_OFFSET = 0x75 + (levelIndex * 0x40);
-            FLARES_OFFSET = 0x77 + (levelIndex * 0x40);
-            COLLECTIBLE_CRYSTALS_OFFSET = 0x78 + (levelIndex * 0x40);
-            WEAPONS_CONFIG_NUM_OFFSET = 0xA0 + (levelIndex * 0x40);
-            HARPOON_GUN_OFFSET = 0xA1 + (levelIndex * 0x40);
+            DEAGLE_AMMO_OFFSET = 0x62 + (levelIndex * 0x40);
+            UZI_AMMO_OFFSET = 0x64 + (levelIndex * 0x40);
+            SHOTGUN_AMMO_OFFSET = 0x66 + (levelIndex * 0x40);
+            MP5_AMMO_OFFSET = 0x68 + (levelIndex * 0x40);
+            ROCKET_LAUNCHER_AMMO_OFFSET = 0x6A + (levelIndex * 0x40);
+            HARPOON_GUN_AMMO_OFFSET = 0x6C + (levelIndex * 0x40);
+            GRENADE_LAUNCHER_AMMO_OFFSET = 0x6E + (levelIndex * 0x40);
+            SMALL_MEDIPACK_OFFSET = 0x70 + (levelIndex * 0x40);
+            LARGE_MEDIPACK_OFFSET = 0x71 + (levelIndex * 0x40);
+            FLARES_OFFSET = 0x73 + (levelIndex * 0x40);
+            COLLECTIBLE_CRYSTALS_OFFSET = 0x74 + (levelIndex * 0x40);
+            WEAPONS_CONFIG_NUM_OFFSET = 0x9C + (levelIndex * 0x40);
+            HARPOON_GUN_OFFSET = 0x9D + (levelIndex * 0x40);
         }
 
         private void SeedRNG(int seed)
@@ -691,7 +691,7 @@ namespace TRR_SaveMaster
 
                 if (tr3Object.ObjectId == Globals.LARA_ENTITY_ID)
                 {
-                    HEALTH_OFFSET = sgBufferCursor + 0x28;
+                    HEALTH_OFFSET = sgBufferCursor + 0x24;
                 }
 
                 if ((tr3Object.Flags00 & 0x08) != 0)
@@ -716,7 +716,7 @@ namespace TRR_SaveMaster
 
                     int increment = has02 ? 0x18 : 0x16;
 
-                    short aiWord = BitConverter.ToInt16(fileData, savegameOffset + blockStart + 6);
+                    short aiWord = BitConverter.ToInt16(fileData, savegameOffset + blockStart + 2);
                     bool isEntityAIActive = aiWord < 0 && (aiWord & 0x00FF) != 0;
 
                     if (isEntityAIActive)
@@ -768,15 +768,15 @@ namespace TRR_SaveMaster
                 }
             }
 
-            LARA_VEHICLE_ITEM_OFFSET = sgBufferCursor + 0x4C;
+            LARA_VEHICLE_ITEM_OFFSET = sgBufferCursor + 0x48;
 
-            deagleAmmoOffset2 = sgBufferCursor + 0x16C;
-            uziAmmoOffset2 = sgBufferCursor + 0x174;
-            shotgunAmmoOffset2 = sgBufferCursor + 0x17C;
-            harpoonGunAmmoOffset2 = sgBufferCursor + 0x184;
-            rocketLauncherAmmoOffset2 = sgBufferCursor + 0x18C;
-            grenadeLauncherAmmoOffset2 = sgBufferCursor + 0x194;
-            mp5AmmoOffset2 = sgBufferCursor + 0x19C;
+            deagleAmmoOffset2 = sgBufferCursor + 0x168;
+            uziAmmoOffset2 = sgBufferCursor + 0x170;
+            shotgunAmmoOffset2 = sgBufferCursor + 0x178;
+            harpoonGunAmmoOffset2 = sgBufferCursor + 0x180;
+            rocketLauncherAmmoOffset2 = sgBufferCursor + 0x188;
+            grenadeLauncherAmmoOffset2 = sgBufferCursor + 0x190;
+            mp5AmmoOffset2 = sgBufferCursor + 0x198;
         }
 
         private bool IsNewGamePlus(byte[] fileData)

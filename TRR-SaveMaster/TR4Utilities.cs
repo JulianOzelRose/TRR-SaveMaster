@@ -8,37 +8,37 @@ namespace TRR_SaveMaster
     class TR4Utilities
     {
         // Savegame constants & offsets
-        private const int SAVE_NUMBER_OFFSET = 0x008;
-        private const int NEW_GAME_PLUS_OFFSET = 0x01C;
-        private const int LEVEL_INDEX_OFFSET = 0x26F;
-        private const int BASE_SAVEGAME_OFFSET_TR4 = 0x2000;
-        private const int MAX_SAVEGAME_OFFSET_TR4 = 0x14AE00;
+        private const int SAVE_NUMBER_OFFSET = 0x004;
+        private const int NEW_GAME_PLUS_OFFSET = 0x018;
+        private const int LEVEL_INDEX_OFFSET = 0x26B;
+        private const int BASE_SAVEGAME_OFFSET_TR4 = 0x2004;
+        private const int MAX_SAVEGAME_OFFSET_TR4 = 0x14AE04;
 
         // Item offsets
-        private const int GOLDEN_SKULLS_OFFSET = 0x1A6;
-        private const int SMALL_MEDIPACK_OFFSET = 0x1BE;
-        private const int LARGE_MEDIPACK_OFFSET = 0x1C0;
-        private const int FLARES_OFFSET = 0x1C2;
+        private const int GOLDEN_SKULLS_OFFSET = 0x1A2;
+        private const int SMALL_MEDIPACK_OFFSET = 0x1BA;
+        private const int LARGE_MEDIPACK_OFFSET = 0x1BC;
+        private const int FLARES_OFFSET = 0x1BE;
 
         // Weapon offsets
-        private const int PISTOLS_OFFSET = 0x194;
-        private const int UZI_OFFSET = 0x195;
-        private const int SHOTGUN_OFFSET = 0x196;
-        private const int CROSSBOW_OFFSET = 0x197;
-        private const int GRENADE_GUN_OFFSET = 0x199;
-        private const int REVOLVER_OFFSET = 0x19A;
+        private const int PISTOLS_OFFSET = 0x190;
+        private const int UZI_OFFSET = 0x191;
+        private const int SHOTGUN_OFFSET = 0x192;
+        private const int CROSSBOW_OFFSET = 0x193;
+        private const int GRENADE_GUN_OFFSET = 0x195;
+        private const int REVOLVER_OFFSET = 0x196;
 
         // Ammo offsets
-        private const int UZI_AMMO_OFFSET = 0x1C6;
-        private const int REVOLVER_AMMO_OFFSET = 0x1C8;
-        private const int SHOTGUN_NORMAL_AMMO_OFFSET = 0x1CA;
-        private const int SHOTGUN_WIDESHOT_AMMO_OFFSET = 0x1CC;
-        private const int GRENADE_GUN_NORMAL_AMMO_OFFSET = 0x1D0;
-        private const int GRENADE_GUN_SUPER_AMMO_OFFSET = 0x1D2;
-        private const int GRENADE_GUN_FLASH_AMMO_OFFSET = 0x1D4;
-        private const int CROSSBOW_NORMAL_AMMO_OFFSET = 0x1D6;
-        private const int CROSSBOW_POISON_AMMO_OFFSET = 0x1D8;
-        private const int CROSSBOW_EXPLOSIVE_AMMO_OFFSET = 0x1DA;
+        private const int UZI_AMMO_OFFSET = 0x1C2;
+        private const int REVOLVER_AMMO_OFFSET = 0x1C4;
+        private const int SHOTGUN_NORMAL_AMMO_OFFSET = 0x1C6;
+        private const int SHOTGUN_WIDESHOT_AMMO_OFFSET = 0x1C8;
+        private const int GRENADE_GUN_NORMAL_AMMO_OFFSET = 0x1CC;
+        private const int GRENADE_GUN_SUPER_AMMO_OFFSET = 0x1CE;
+        private const int GRENADE_GUN_FLASH_AMMO_OFFSET = 0x1D0;
+        private const int CROSSBOW_NORMAL_AMMO_OFFSET = 0x1D2;
+        private const int CROSSBOW_POISON_AMMO_OFFSET = 0x1D4;
+        private const int CROSSBOW_EXPLOSIVE_AMMO_OFFSET = 0x1D6;
 
         // Weapon byte flags
         private const byte WEAPON_PRESENT = 0x9;
@@ -54,16 +54,16 @@ namespace TRR_SaveMaster
 
         // Hub-related
         private const int HUB_LEVEL_COUNT = 10;
-        private const int HUB_LEVEL_IDS_OFFSET = 0x1FC;
-        private const int HUB_OFFSET_TABLE_OFFSET = 0x206;
+        private const int HUB_LEVEL_IDS_OFFSET = 0x1F8;
+        private const int HUB_OFFSET_TABLE_OFFSET = 0x202;
 
         // Entity block constant
-        private const int ENTITY_STREAM_OFFSET = 0x474;
+        private const int ENTITY_STREAM_OFFSET = 0x470;
 
         // Misc
         private string savegamePath;
         private int savegameOffset;
-        private const int LARA_VEHICLE_ITEM_OFFSET = 0x5A;
+        private const int LARA_VEHICLE_ITEM_OFFSET = 0x56;
         private int sgBufferCursor;
 
         private readonly Dictionary<int, string> levelNames = new Dictionary<int, string>()

@@ -9,9 +9,9 @@ namespace TRR_SaveMaster
     class TR1Utilities
     {
         // Static offsets
-        private const int NEW_GAME_PLUS_OFFSET = 0x008;
-        private const int SAVE_NUMBER_OFFSET = 0x00C;
-        private const int LEVEL_INDEX_OFFSET_PREPATCH = 0x62C;
+        private const int NEW_GAME_PLUS_OFFSET = 0x004;
+        private const int SAVE_NUMBER_OFFSET = 0x008;
+        private const int LEVEL_INDEX_OFFSET_PREPATCH = 0x628;
 
         // Platform or patch-dependent offsets
         private int LEVEL_INDEX_OFFSET;
@@ -26,45 +26,45 @@ namespace TRR_SaveMaster
         private int CHALLENGE_MODE_ENEMY_TYPE_OFFSET;
 
         // PC offsets
-        private const int LEVEL_INDEX_OFFSET_PC = 0x62C;
-        private const int SAVEGAME_VERSION_OFFSET_PC = 0x6E4;
-        private const int CHALLENGE_MODE_RNG_SEED_OFFSET_PC = 0x6E8;
-        private const int CHALLENGE_MODE_OFFSET_PC = 0x6EC;
-        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_PC = 0x6F6;
-        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PC = 0x6FA;
-        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PC = 0x6FD;
+        private const int LEVEL_INDEX_OFFSET_PC = 0x628;
+        private const int SAVEGAME_VERSION_OFFSET_PC = 0x6E0;
+        private const int CHALLENGE_MODE_RNG_SEED_OFFSET_PC = 0x6E4;
+        private const int CHALLENGE_MODE_OFFSET_PC = 0x6E8;
+        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_PC = 0x6F2;
+        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PC = 0x6F6;
+        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PC = 0x6F9;
 
         // Android offsets
-        private const int LEVEL_INDEX_OFFSET_ANDROID = 0x65C;
-        private const int SAVEGAME_VERSION_OFFSET_ANDROID = 0x710;
-        private const int CHALLENGE_MODE_RNG_SEED_OFFSET_ANDROID = 0x714;
-        private const int CHALLENGE_MODE_OFFSET_ANDROID = 0x718;
-        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_ANDROID = 0x731;
-        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_ANDROID = 0x735;
-        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_ANDROID = 0x738;
+        private const int LEVEL_INDEX_OFFSET_ANDROID = 0x658;
+        private const int SAVEGAME_VERSION_OFFSET_ANDROID = 0x70C;
+        private const int CHALLENGE_MODE_RNG_SEED_OFFSET_ANDROID = 0x710;
+        private const int CHALLENGE_MODE_OFFSET_ANDROID = 0x714;
+        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_ANDROID = 0x72D;
+        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_ANDROID = 0x731;
+        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_ANDROID = 0x734;
 
         // PS4 offsets
-        private const int LEVEL_INDEX_OFFSET_PS4 = 0x62C;
-        private const int SAVEGAME_VERSION_OFFSET_PS4 = 0x6E0;
-        private const int CHALLENGE_MODE_RNG_SEED_OFFSET_PS4 = 0x6E4;
-        private const int CHALLENGE_MODE_OFFSET_PS4 = 0x6E8;
-        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_PS4 = 0x6F2;
-        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PS4 = 0x6F6;
-        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PS4 = 0x6F9;
+        private const int LEVEL_INDEX_OFFSET_PS4 = 0x628;
+        private const int SAVEGAME_VERSION_OFFSET_PS4 = 0x6DC;
+        private const int CHALLENGE_MODE_RNG_SEED_OFFSET_PS4 = 0x6E0;
+        private const int CHALLENGE_MODE_OFFSET_PS4 = 0x6E4;
+        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_PS4 = 0x6EE;
+        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PS4 = 0x6F2;
+        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PS4 = 0x6F5;
 
         // Patch-dependent
-        private const int BASE_SAVEGAME_OFFSET_TR1_PREPATCH = 0x2000;
-        private const int BASE_SAVEGAME_OFFSET_TR1_PATCH5 = 0x2000;
-        private const int MAX_SAVEGAME_OFFSET_TR1_PREPATCH = 0x72000;
-        private const int MAX_SAVEGAME_OFFSET_TR1_PATCH5 = 0xCB800;
+        private const int BASE_SAVEGAME_OFFSET_TR1_PREPATCH = 0x2004;
+        private const int BASE_SAVEGAME_OFFSET_TR1_PATCH5 = 0x2004;
+        private const int MAX_SAVEGAME_OFFSET_TR1_PREPATCH = 0x72004;
+        private const int MAX_SAVEGAME_OFFSET_TR1_PATCH5 = 0xCB804;
 
         // Static weapon offsets
-        private const int MAGNUM_AMMO_OFFSET = 0x4C2;
-        private const int UZI_AMMO_OFFSET = 0x4C4;
-        private const int SHOTGUN_AMMO_OFFSET = 0x4C6;
-        private const int SMALL_MEDIPACK_OFFSET = 0x4C8;
-        private const int LARGE_MEDIPACK_OFFSET = 0x4C9;
-        private const int WEAPONS_CONFIG_NUM_OFFSET = 0x4EC;
+        private const int MAGNUM_AMMO_OFFSET = 0x4BE;
+        private const int UZI_AMMO_OFFSET = 0x4C0;
+        private const int SHOTGUN_AMMO_OFFSET = 0x4C2;
+        private const int SMALL_MEDIPACK_OFFSET = 0x4C4;
+        private const int LARGE_MEDIPACK_OFFSET = 0x4C5;
+        private const int WEAPONS_CONFIG_NUM_OFFSET = 0x4E8;
 
         // Dynamic ammo offsets
         private int uziAmmoOffset2;
@@ -177,136 +177,136 @@ namespace TRR_SaveMaster
 
                 if (levelIndex == 1)        // Caves
                 {
-                    HEALTH_OFFSET = 0x825;
-                    magnumAmmoOffset2 = 0x1079;
-                    uziAmmoOffset2 = 0x1081;
-                    shotgunAmmoOffset2 = 0x1089;
+                    HEALTH_OFFSET = 0x821;
+                    magnumAmmoOffset2 = 0x1075;
+                    uziAmmoOffset2 = 0x107D;
+                    shotgunAmmoOffset2 = 0x1085;
                 }
                 else if (levelIndex == 2)   // City of Vilacamba
                 {
-                    HEALTH_OFFSET = 0x181D;
-                    magnumAmmoOffset2 = 0x1999;
-                    uziAmmoOffset2 = 0x19A1;
-                    shotgunAmmoOffset2 = 0x19A9;
+                    HEALTH_OFFSET = 0x1819;
+                    magnumAmmoOffset2 = 0x1995;
+                    uziAmmoOffset2 = 0x199D;
+                    shotgunAmmoOffset2 = 0x19A5;
                 }
                 else if (levelIndex == 3)   // Lost Valley
                 {
-                    HEALTH_OFFSET = 0x82D;
-                    magnumAmmoOffset2 = 0x1057;
-                    uziAmmoOffset2 = 0x105F;
-                    shotgunAmmoOffset2 = 0x1067;
+                    HEALTH_OFFSET = 0x829;
+                    magnumAmmoOffset2 = 0x1053;
+                    uziAmmoOffset2 = 0x105B;
+                    shotgunAmmoOffset2 = 0x1063;
                 }
                 else if (levelIndex == 4)   // Tomb of Qualopec
                 {
-                    HEALTH_OFFSET = 0xC41;
-                    magnumAmmoOffset2 = 0x137B;
-                    uziAmmoOffset2 = 0x1383;
-                    shotgunAmmoOffset2 = 0x138B;
+                    HEALTH_OFFSET = 0xC3D;
+                    magnumAmmoOffset2 = 0x1377;
+                    uziAmmoOffset2 = 0x137F;
+                    shotgunAmmoOffset2 = 0x1387;
                 }
                 else if (levelIndex == 5)   // St. Francis' Folly
                 {
-                    HEALTH_OFFSET = 0x1A39;
-                    magnumAmmoOffset2 = 0x1C55;
-                    uziAmmoOffset2 = 0x1C5D;
-                    shotgunAmmoOffset2 = 0x1C65;
+                    HEALTH_OFFSET = 0x1A35;
+                    magnumAmmoOffset2 = 0x1C51;
+                    uziAmmoOffset2 = 0x1C59;
+                    shotgunAmmoOffset2 = 0x1C61;
                 }
                 else if (levelIndex == 6)   // Colosseum
                 {
-                    HEALTH_OFFSET = 0xF4F;
-                    magnumAmmoOffset2 = 0x1747;
-                    uziAmmoOffset2 = 0x174F;
-                    shotgunAmmoOffset2 = 0x1757;
+                    HEALTH_OFFSET = 0xF4B;
+                    magnumAmmoOffset2 = 0x1743;
+                    uziAmmoOffset2 = 0x174B;
+                    shotgunAmmoOffset2 = 0x1753;
                 }
                 else if (levelIndex == 7)   // Palace Midas
                 {
-                    HEALTH_OFFSET = 0x82F;
-                    magnumAmmoOffset2 = 0x1C21;
-                    uziAmmoOffset2 = 0x1C29;
-                    shotgunAmmoOffset2 = 0x1C31;
+                    HEALTH_OFFSET = 0x82B;
+                    magnumAmmoOffset2 = 0x1C1D;
+                    uziAmmoOffset2 = 0x1C25;
+                    shotgunAmmoOffset2 = 0x1C2D;
                 }
                 else if (levelIndex == 8)   // The Cistern
                 {
-                    HEALTH_OFFSET = 0x197B;
-                    magnumAmmoOffset2 = 0x1B8D;
-                    uziAmmoOffset2 = 0x1B95;
-                    shotgunAmmoOffset2 = 0x1B9D;
+                    HEALTH_OFFSET = 0x1977;
+                    magnumAmmoOffset2 = 0x1B89;
+                    uziAmmoOffset2 = 0x1B91;
+                    shotgunAmmoOffset2 = 0x1B99;
                 }
                 else if (levelIndex == 9)   // Tomb of Tihocan
                 {
-                    HEALTH_OFFSET = 0xA29;
-                    magnumAmmoOffset2 = 0x168F;
-                    uziAmmoOffset2 = 0x1697;
-                    shotgunAmmoOffset2 = 0x169F;
+                    HEALTH_OFFSET = 0xA25;
+                    magnumAmmoOffset2 = 0x168B;
+                    uziAmmoOffset2 = 0x1693;
+                    shotgunAmmoOffset2 = 0x169B;
                 }
                 else if (levelIndex == 10)  // City of Khamoon
                 {
-                    HEALTH_OFFSET = 0x827;
-                    magnumAmmoOffset2 = 0x1557;
-                    uziAmmoOffset2 = 0x155F;
-                    shotgunAmmoOffset2 = 0x1567;
+                    HEALTH_OFFSET = 0x823;
+                    magnumAmmoOffset2 = 0x1553;
+                    uziAmmoOffset2 = 0x155B;
+                    shotgunAmmoOffset2 = 0x1563;
                 }
                 else if (levelIndex == 11)  // Obelisk of Khamoon
                 {
-                    HEALTH_OFFSET = 0xA8F;
-                    magnumAmmoOffset2 = 0x165F;
-                    uziAmmoOffset2 = 0x1667;
-                    shotgunAmmoOffset2 = 0x166F;
+                    HEALTH_OFFSET = 0xA8B;
+                    magnumAmmoOffset2 = 0x165B;
+                    uziAmmoOffset2 = 0x1663;
+                    shotgunAmmoOffset2 = 0x166B;
                 }
                 else if (levelIndex == 12)  // Sanctuary of the Scion
                 {
-                    HEALTH_OFFSET = 0x114F;
-                    magnumAmmoOffset2 = 0x1307;
-                    uziAmmoOffset2 = 0x130F;
-                    shotgunAmmoOffset2 = 0x1317;
+                    HEALTH_OFFSET = 0x114B;
+                    magnumAmmoOffset2 = 0x1303;
+                    uziAmmoOffset2 = 0x130B;
+                    shotgunAmmoOffset2 = 0x1313;
                 }
                 else if (levelIndex == 13)  // Natla's Mines
                 {
-                    HEALTH_OFFSET = 0x12D3;
-                    magnumAmmoOffset2 = 0x165D;
-                    uziAmmoOffset2 = 0x1665;
-                    shotgunAmmoOffset2 = 0x166D;
+                    HEALTH_OFFSET = 0x12CF;
+                    magnumAmmoOffset2 = 0x1659;
+                    uziAmmoOffset2 = 0x1661;
+                    shotgunAmmoOffset2 = 0x1669;
                 }
                 else if (levelIndex == 14)  // Atlantis
                 {
-                    HEALTH_OFFSET = 0xD0F;
-                    magnumAmmoOffset2 = 0x245B;
-                    uziAmmoOffset2 = 0x2463;
-                    shotgunAmmoOffset2 = 0x246B;
+                    HEALTH_OFFSET = 0xD0B;
+                    magnumAmmoOffset2 = 0x2457;
+                    uziAmmoOffset2 = 0x245F;
+                    shotgunAmmoOffset2 = 0x2467;
                 }
                 else if (levelIndex == 15)  // The Great Pyramid
                 {
-                    HEALTH_OFFSET = 0x10FD;
-                    magnumAmmoOffset2 = 0x17A1;
-                    uziAmmoOffset2 = 0x17A9;
-                    shotgunAmmoOffset2 = 0x17B1;
+                    HEALTH_OFFSET = 0x10F9;
+                    magnumAmmoOffset2 = 0x179D;
+                    uziAmmoOffset2 = 0x17A5;
+                    shotgunAmmoOffset2 = 0x17AD;
                 }
                 else if (levelIndex == 16)   // Return to Egypt
                 {
-                    HEALTH_OFFSET = 0x8F3;
-                    magnumAmmoOffset2 = 0x1F0D;
-                    uziAmmoOffset2 = 0x1F15;
-                    shotgunAmmoOffset2 = 0x1F1D;
+                    HEALTH_OFFSET = 0x8EF;
+                    magnumAmmoOffset2 = 0x1F09;
+                    uziAmmoOffset2 = 0x1F11;
+                    shotgunAmmoOffset2 = 0x1F19;
                 }
                 else if (levelIndex == 17)   // Temple of the Cat
                 {
-                    HEALTH_OFFSET = 0xE1D;
-                    magnumAmmoOffset2 = 0x25A9;
-                    uziAmmoOffset2 = 0x25B1;
-                    shotgunAmmoOffset2 = 0x25B9;
+                    HEALTH_OFFSET = 0xE19;
+                    magnumAmmoOffset2 = 0x25A5;
+                    uziAmmoOffset2 = 0x25AD;
+                    shotgunAmmoOffset2 = 0x25B5;
                 }
                 else if (levelIndex == 18)  // Atlantean Stronghold
                 {
-                    HEALTH_OFFSET = 0xE35;
-                    magnumAmmoOffset2 = 0x1EDB;
-                    uziAmmoOffset2 = 0x1EE3;
-                    shotgunAmmoOffset2 = 0x1EEB;
+                    HEALTH_OFFSET = 0xE31;
+                    magnumAmmoOffset2 = 0x1ED7;
+                    uziAmmoOffset2 = 0x1EDF;
+                    shotgunAmmoOffset2 = 0x1EE7;
                 }
                 else if (levelIndex == 19)  // The Hive
                 {
-                    HEALTH_OFFSET = 0x10DF;
-                    magnumAmmoOffset2 = 0x2723;
-                    uziAmmoOffset2 = 0x272B;
-                    shotgunAmmoOffset2 = 0x2733;
+                    HEALTH_OFFSET = 0x10DB;
+                    magnumAmmoOffset2 = 0x271F;
+                    uziAmmoOffset2 = 0x2727;
+                    shotgunAmmoOffset2 = 0x272F;
                 }
 
                 if (platform != Platform.PC)
@@ -776,7 +776,7 @@ namespace TRR_SaveMaster
 
                 if (tr1Object.ObjectId == Globals.LARA_ENTITY_ID)
                 {
-                    HEALTH_OFFSET = sgBufferCursor + 0x28;
+                    HEALTH_OFFSET = sgBufferCursor + 0x24;
                 }
 
                 if ((tr1Object.Flags00 & 0x08) != 0)
@@ -806,9 +806,9 @@ namespace TRR_SaveMaster
                 }
             }
 
-            magnumAmmoOffset2 = sgBufferCursor + 0x14C;
-            uziAmmoOffset2 = sgBufferCursor + 0x154;
-            shotgunAmmoOffset2 = sgBufferCursor + 0x15C;
+            magnumAmmoOffset2 = sgBufferCursor + 0x148;
+            uziAmmoOffset2 = sgBufferCursor + 0x150;
+            shotgunAmmoOffset2 = sgBufferCursor + 0x158;
         }
 
         private bool IsPrepatchSavegameFile(byte[] fileData)

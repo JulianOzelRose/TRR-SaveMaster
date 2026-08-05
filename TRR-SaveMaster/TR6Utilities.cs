@@ -10,16 +10,16 @@ namespace TRR_SaveMaster
     internal class TR6Utilities
     {
         // Savegame constants & offsets
-        private const int SAVEGAME_VERSION_OFFSET = 0x008;
-        private const int LEVEL_INDEX_OFFSET = 0x014;
-        private const int SAVE_NUMBER_OFFSET = 0x11C;
-        private const int NEW_GAME_PLUS_OFFSET = 0x35C;
-        private const int BASE_SAVEGAME_OFFSET_TR6 = 0x293C00;
-        private const int MAX_SAVEGAME_OFFSET_TR6 = 0x484910;
+        private const int SAVEGAME_VERSION_OFFSET = 0x004;
+        private const int LEVEL_INDEX_OFFSET = 0x010;
+        private const int SAVE_NUMBER_OFFSET = 0x118;
+        private const int NEW_GAME_PLUS_OFFSET = 0x358;
+        private const int BASE_SAVEGAME_OFFSET_TR6 = 0x293C04;
+        private const int MAX_SAVEGAME_OFFSET_TR6 = 0x484914;
 
         // Compressed block offsets & constants
-        private const int COMPRESSED_BLOCK_START_OFFSET = 0x36C;
-        private const int COMPRESSED_BLOCK_SIZE_OFFSET = 0x364;
+        private const int COMPRESSED_BLOCK_START_OFFSET = 0x368;
+        private const int COMPRESSED_BLOCK_SIZE_OFFSET = 0x360;
         private const int COMPRESSED_BLOCK_MAX_SIZE = 0xFFFFFF;
 
         // Entity Mocks

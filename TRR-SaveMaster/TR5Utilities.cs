@@ -8,35 +8,35 @@ namespace TRR_SaveMaster
     class TR5Utilities
     {
         // Savegame constants & offsets
-        private const int SAVE_NUMBER_OFFSET = 0x008;
-        private const int NEW_GAME_PLUS_OFFSET = 0x01C;
-        private const int LEVEL_INDEX_OFFSET = 0x26F;
-        private const int BASE_SAVEGAME_OFFSET_TR5 = 0x14AE00;
-        private const int MAX_SAVEGAME_OFFSET_TR5 = 0x33BB10;
+        private const int SAVE_NUMBER_OFFSET = 0x004;
+        private const int NEW_GAME_PLUS_OFFSET = 0x018;
+        private const int LEVEL_INDEX_OFFSET = 0x26B;
+        private const int BASE_SAVEGAME_OFFSET_TR5 = 0x14AE04;
+        private const int MAX_SAVEGAME_OFFSET_TR5 = 0x33BB14;
 
         // Item offsets
-        private const int SMALL_MEDIPACK_OFFSET = 0x1BE;
-        private const int LARGE_MEDIPACK_OFFSET = 0x1C0;
-        private const int FLARES_OFFSET = 0x1C2;
-        private const int SECRETS_OFFSET = 0x474;
+        private const int SMALL_MEDIPACK_OFFSET = 0x1BA;
+        private const int LARGE_MEDIPACK_OFFSET = 0x1BC;
+        private const int FLARES_OFFSET = 0x1BE;
+        private const int SECRETS_OFFSET = 0x470;
 
         // Ammo offsets
-        private const int UZI_AMMO_OFFSET = 0x1C6;
-        private const int REVOLVER_AMMO_OFFSET = 0x1C8;
-        private const int DEAGLE_AMMO_OFFSET = 0x1C8;
-        private const int SHOTGUN_NORMAL_AMMO_OFFSET = 0x1CA;
-        private const int SHOTGUN_WIDESHOT_AMMO_OFFSET = 0x1CC;
-        private const int HK_GUN_AMMO_OFFSET = 0x1CE;
-        private const int GRAPPLING_GUN_AMMO_OFFSET = 0x1D6;
+        private const int UZI_AMMO_OFFSET = 0x1C2;
+        private const int REVOLVER_AMMO_OFFSET = 0x1C4;
+        private const int DEAGLE_AMMO_OFFSET = 0x1C4;
+        private const int SHOTGUN_NORMAL_AMMO_OFFSET = 0x1C6;
+        private const int SHOTGUN_WIDESHOT_AMMO_OFFSET = 0x1C8;
+        private const int HK_GUN_AMMO_OFFSET = 0x1CA;
+        private const int GRAPPLING_GUN_AMMO_OFFSET = 0x1D2;
 
         // Weapon offsets
-        private const int PISTOLS_OFFSET = 0x194;
-        private const int UZI_OFFSET = 0x195;
-        private const int SHOTGUN_OFFSET = 0x196;
-        private const int GRAPPLING_GUN_OFFSET = 0x197;
-        private const int HK_GUN_OFFSET = 0x198;
-        private const int REVOLVER_OFFSET = 0x19A;
-        private const int DEAGLE_OFFSET = 0x19A;
+        private const int PISTOLS_OFFSET = 0x190;
+        private const int UZI_OFFSET = 0x191;
+        private const int SHOTGUN_OFFSET = 0x192;
+        private const int GRAPPLING_GUN_OFFSET = 0x193;
+        private const int HK_GUN_OFFSET = 0x194;
+        private const int REVOLVER_OFFSET = 0x196;
+        private const int DEAGLE_OFFSET = 0x196;
 
         // Weapon byte flags
         private const byte WEAPON_PRESENT = 0x9;
@@ -49,7 +49,7 @@ namespace TRR_SaveMaster
         private int HEALTH_OFFSET = -1;
 
         // Entity block constant
-        private const int ENTITY_STREAM_OFFSET = 0x474;
+        private const int ENTITY_STREAM_OFFSET = 0x470;
 
         // Misc
         private int savegameOffset;
