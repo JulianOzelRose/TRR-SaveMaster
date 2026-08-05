@@ -2211,15 +2211,22 @@ namespace TRR_SaveMaster
 
                 if (IsTRXSavegame())
                 {
-                    StatisticsTarget target = (StatisticsTarget)cmbStatistics.SelectedItem;
-
-                    if (target.LevelIndex == null)
+                    if (selectedSavegame.IsChallengeMode)
                     {
                         WriteTRXStatistics(fileData);
                     }
                     else
                     {
-                        WriteTRXStatisticsRecord(fileData, target.LevelIndex.Value);
+                        StatisticsTarget target = (StatisticsTarget)cmbStatistics.SelectedItem;
+
+                        if (target.LevelIndex == null)
+                        {
+                            WriteTRXStatistics(fileData);
+                        }
+                        else
+                        {
+                            WriteTRXStatisticsRecord(fileData, target.LevelIndex.Value);
+                        }
                     }
                 }
                 else if (SELECTED_TAB == Globals.TAB_TR4 || SELECTED_TAB == Globals.TAB_TR5)
