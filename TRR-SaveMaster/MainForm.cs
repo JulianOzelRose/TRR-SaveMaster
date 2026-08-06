@@ -195,9 +195,9 @@ namespace TRR_SaveMaster
             }
         }
 
-        private byte GetSaveFileVersion(byte[] fileData)
+        private UInt32 GetSaveFileVersion(byte[] fileData)
         {
-            return fileData[Globals.SAVEFILE_VERSION_OFFSET];
+            return BitConverter.ToUInt32(fileData, Globals.SAVEFILE_VERSION_OFFSET);
         }
 
         private void tabGame_DrawItem(object sender, DrawItemEventArgs e)
@@ -449,7 +449,7 @@ namespace TRR_SaveMaster
             byte[] fileData = File.ReadAllBytes(path);
 
             long saveFileSize = fileInfo.Length;
-            byte saveFileVersion = GetSaveFileVersion(fileData);
+            UInt32 saveFileVersion = GetSaveFileVersion(fileData);
 
             if (saveFileVersion == Globals.SAVEFILE_TRX_PREPATCH && saveFileSize >= Globals.SAVEFILE_SIZE_TRX_PREPATCH)
             {
@@ -470,7 +470,7 @@ namespace TRR_SaveMaster
             byte[] fileData = File.ReadAllBytes(path);
 
             long saveFileSize = fileInfo.Length;
-            byte saveFileVersion = GetSaveFileVersion(fileData);
+            UInt32 saveFileVersion = GetSaveFileVersion(fileData);
 
             if (saveFileVersion == Globals.SAVEFILE_TRX2_FORMAT && saveFileSize >= Globals.SAVEFILE_SIZE_TRX2)
             {
@@ -482,7 +482,7 @@ namespace TRR_SaveMaster
 
         private bool IsSavegameFileSupportedTRX(byte[] fileData)
         {
-            byte saveFileVersion = GetSaveFileVersion(fileData);
+            UInt32 saveFileVersion = GetSaveFileVersion(fileData);
 
             return saveFileVersion == Globals.SAVEFILE_TRX_PREPATCH || saveFileVersion == Globals.SAVEFILE_TRX_PATCH5;
         }
@@ -812,7 +812,7 @@ namespace TRR_SaveMaster
 
                 if (!isSupported && !hasShownTRXSaveFileUnsupportedMessage)
                 {
-                    byte saveFileVersion = GetSaveFileVersion(fileData);
+                    UInt32 saveFileVersion = GetSaveFileVersion(fileData);
 
                     SystemSounds.Exclamation.Play();
 
@@ -851,7 +851,7 @@ namespace TRR_SaveMaster
 
                 if (!isSupported && !hasShownTRX2SavegameUnsupportedMessage)
                 {
-                    byte saveFileVersion = GetSaveFileVersion(fileData);
+                    UInt32 saveFileVersion = GetSaveFileVersion(fileData);
 
                     SystemSounds.Exclamation.Play();
 

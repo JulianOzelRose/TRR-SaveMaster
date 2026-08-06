@@ -83,9 +83,9 @@ namespace TRR_SaveMaster
         private const int ENTITY_BLOCK_START_PS4 = 0x6EC;
 
         // Health
-        private const UInt16 MAX_HEALTH_VALUE_DEFAULT = 1000;
-        private const UInt16 MIN_HEALTH_VALUE = 1;
-        private UInt16 MAX_HEALTH_VALUE = MAX_HEALTH_VALUE_DEFAULT;
+        private const Int16 MAX_HEALTH_VALUE_DEFAULT = 1000;
+        private const Int16 MIN_HEALTH_VALUE = 1;
+        private Int16 MAX_HEALTH_VALUE = MAX_HEALTH_VALUE_DEFAULT;
         private int HEALTH_OFFSET = -1;
 
         // Misc
@@ -132,6 +132,12 @@ namespace TRR_SaveMaster
             Buffer.BlockCopy(bytes, 0, buffer, offset, 2);
         }
 
+        private void WriteInt16ToBuffer(byte[] buffer, int offset, Int16 value)
+        {
+            byte[] bytes = BitConverter.GetBytes(value);
+            Buffer.BlockCopy(bytes, 0, buffer, offset, 2);
+        }
+
         public int GetHealthOffset(byte[] savegameData = null, bool areOffsetsDetermined = false)
         {
             if (savegameData == null)
@@ -151,7 +157,7 @@ namespace TRR_SaveMaster
 
             if (HEALTH_OFFSET != -1)
             {
-                UInt16 value = BitConverter.ToUInt16(savegameData, savegameOffset + HEALTH_OFFSET);
+                Int16 value = BitConverter.ToInt16(savegameData, savegameOffset + HEALTH_OFFSET);
 
                 if (value >= MIN_HEALTH_VALUE && value <= MAX_HEALTH_VALUE)
                 {
@@ -740,7 +746,7 @@ namespace TRR_SaveMaster
                 Int32 challengeModeRNGSeed = GetChallengeModeRNGSeed(fileData);
                 levelObjectIds = ApplyChallengeModeMutations(levelObjectIds, levelIndex, enemyNumbers, enemyType, challengeModeRNGSeed);
 
-                sgBufferCursor += 0x0C;
+                sgBufferCursor += Globals.CHALLENGE_MODE_PARAM_BLOCK_SIZE;
             }
 
             // Fixed blocks
@@ -823,7 +829,7 @@ namespace TRR_SaveMaster
 
         private bool IsNativePatch5Format(byte[] fileData)
         {
-            Int32 savegameVersion = BitConverter.ToInt32(fileData, savegameOffset + SAVEGAME_VERSION_OFFSET);
+            UInt32 savegameVersion = BitConverter.ToUInt32(fileData, savegameOffset + SAVEGAME_VERSION_OFFSET);
             return savegameVersion >= 2;
         }
 
@@ -832,18 +838,18 @@ namespace TRR_SaveMaster
             return fileData[savegameOffset + CHALLENGE_MODE_OFFSET] == 1;
         }
 
-        public UInt16 GetChallengeModeMaxHealth(byte[] fileData)
+        public Int16 GetChallengeModeMaxHealth(byte[] fileData)
         {
             byte maxHealthSetting = fileData[savegameOffset + CHALLENGE_MODE_MAX_HEALTH_OFFSET];
 
-            if (maxHealthSetting == 0) return (UInt16)100;
-            if (maxHealthSetting == 1) return (UInt16)250;
-            if (maxHealthSetting == 2) return (UInt16)500;
-            if (maxHealthSetting == 3) return (UInt16)1000;
-            if (maxHealthSetting == 4) return (UInt16)1500;
-            if (maxHealthSetting == 5) return (UInt16)1750;
-            if (maxHealthSetting == 6) return (UInt16)2000;
-            if (maxHealthSetting == 7) return (UInt16)5000;
+            if (maxHealthSetting == 0) return (Int16)100;
+            if (maxHealthSetting == 1) return (Int16)250;
+            if (maxHealthSetting == 2) return (Int16)500;
+            if (maxHealthSetting == 3) return (Int16)1000;
+            if (maxHealthSetting == 4) return (Int16)1500;
+            if (maxHealthSetting == 5) return (Int16)1750;
+            if (maxHealthSetting == 6) return (Int16)2000;
+            if (maxHealthSetting == 7) return (Int16)5000;
 
             return MAX_HEALTH_VALUE_DEFAULT;
         }
@@ -903,9 +909,9 @@ namespace TRR_SaveMaster
             return BitConverter.ToUInt16(fileData, savegameOffset + UZI_AMMO_OFFSET);
         }
 
-        private UInt16 GetHealthValue(byte[] fileData, int healthOffset)
+        private Int16 GetHealthValue(byte[] fileData, int healthOffset)
         {
-            return BitConverter.ToUInt16(fileData, healthOffset);
+            return BitConverter.ToInt16(fileData, healthOffset);
         }
 
         private void WriteSaveNumber(byte[] fileData, Int32 value)
@@ -928,13 +934,13 @@ namespace TRR_SaveMaster
             fileData[savegameOffset + WEAPONS_CONFIG_NUM_OFFSET] = value;
         }
 
-        private void WriteHealthValue(byte[] fileData, UInt16 newHealth)
+        private void WriteHealthValue(byte[] fileData, Int16 newHealth)
         {
             int healthOffset = GetHealthOffset(fileData, true);
 
             if (healthOffset != -1)
             {
-                WriteUInt16ToBuffer(fileData, healthOffset, newHealth);
+                WriteInt16ToBuffer(fileData, healthOffset, newHealth);
             }
         }
 
@@ -1045,7 +1051,7 @@ namespace TRR_SaveMaster
 
             if (healthOffset != -1)
             {
-                UInt16 health = GetHealthValue(fileData, healthOffset);
+                Int16 health = GetHealthValue(fileData, healthOffset);
                 double healthPercentage = ((double)health / MAX_HEALTH_VALUE) * 100;
                 trbHealth.Value = health;
                 trbHealth.Enabled = true;
@@ -1098,7 +1104,7 @@ namespace TRR_SaveMaster
 
             if (trbHealth.Enabled)
             {
-                WriteHealthValue(fileData, (UInt16)trbHealth.Value);
+                WriteHealthValue(fileData, (Int16)trbHealth.Value);
             }
 
             File.WriteAllBytes(savegamePath, fileData);

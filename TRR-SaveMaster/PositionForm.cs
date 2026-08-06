@@ -951,8 +951,8 @@ namespace TRR_SaveMaster
                 }
                 else if (IsTR6Savegame())
                 {
-                    Int32 compressedBlockSize = BitConverter.ToInt32(fileData, savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
-                    byte[] compressedBlockData = ReadBytes(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, compressedBlockSize);
+                    UInt32 compressedBlockSize = BitConverter.ToUInt32(fileData, savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
+                    byte[] compressedBlockData = ReadBytes(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, (int)compressedBlockSize);
 
                     using (MemoryStream ms = new MemoryStream(decompressedBuffer))
                     using (BinaryWriter writer = new BinaryWriter(ms))
@@ -974,7 +974,7 @@ namespace TRR_SaveMaster
                     }
 
                     byte[] compressedBuffer = tr6Utilities.Pack(decompressedBuffer);
-                    Int32 compressedBufferSize = compressedBuffer.Length;
+                    UInt32 compressedBufferSize = (UInt32)compressedBuffer.Length;
 
                     // Write the compressed data to the savegame file
                     using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Write))

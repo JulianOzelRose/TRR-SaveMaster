@@ -1,4 +1,6 @@
-﻿namespace TRR_SaveMaster
+﻿using System;
+
+namespace TRR_SaveMaster
 {
     public class Globals
     {
@@ -39,11 +41,12 @@
         // Savefile & savegame header
         public const int SAVEFILE_VERSION_OFFSET = 0x000;
         public const int SLOT_STATUS_OFFSET = 0x0;
-        public const byte SAVEFILE_TRX_PREPATCH = 0x3B;
-        public const byte SAVEFILE_TRX_PATCH5 = 0x3C;
-        public const byte SAVEFILE_TRX2_FORMAT = 0x28;
+        public const UInt32 SAVEFILE_TRX_PREPATCH = 0x3B;
+        public const UInt32 SAVEFILE_TRX_PATCH5 = 0x3C;
+        public const UInt32 SAVEFILE_TRX2_FORMAT = 0x28;
 
         // Challenge Mode constants
+        public const int CHALLENGE_MODE_PARAM_BLOCK_SIZE = 0xC;
         public const byte CHALLENGE_MODE_ENEMY_NUMBERS_NORMAL = 3;
         public const byte CHALLENGE_MODE_ENEMY_TYPE_NORMAL = 2;
         public const byte CHALLENGE_MODE_ENEMY_TYPE_RANDOMIZER = 5;

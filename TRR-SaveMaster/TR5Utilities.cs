@@ -44,8 +44,8 @@ namespace TRR_SaveMaster
         private const byte WEAPON_PRESENT_WITH_SIGHT = 0xD;
 
         // Health
-        private const UInt16 MAX_HEALTH_VALUE = 1000;
-        private const UInt16 MIN_HEALTH_VALUE = 1;
+        private const Int16 MAX_HEALTH_VALUE = 1000;
+        private const Int16 MIN_HEALTH_VALUE = 1;
         private int HEALTH_OFFSET = -1;
 
         // Entity block constant
@@ -85,6 +85,12 @@ namespace TRR_SaveMaster
             Buffer.BlockCopy(bytes, 0, buffer, offset, 2);
         }
 
+        private void WriteInt16ToBuffer(byte[] buffer, int offset, Int16 value)
+        {
+            byte[] bytes = BitConverter.GetBytes(value);
+            Buffer.BlockCopy(bytes, 0, buffer, offset, 2);
+        }
+
         public int GetHealthOffset(byte[] savegameData = null, bool areOffsetsDetermined = false)
         {
             if (savegameData == null)
@@ -99,7 +105,7 @@ namespace TRR_SaveMaster
 
             if (HEALTH_OFFSET != -1)
             {
-                UInt16 value = BitConverter.ToUInt16(savegameData, savegameOffset + HEALTH_OFFSET);
+                Int16 value = BitConverter.ToInt16(savegameData, savegameOffset + HEALTH_OFFSET);
 
                 if (value >= MIN_HEALTH_VALUE && value <= MAX_HEALTH_VALUE)
                 {
@@ -320,9 +326,9 @@ namespace TRR_SaveMaster
             return fileData[savegameOffset + HK_GUN_OFFSET];
         }
 
-        private UInt16 GetHealthValue(byte[] fileData, int healthOffset)
+        private Int16 GetHealthValue(byte[] fileData, int healthOffset)
         {
-            return BitConverter.ToUInt16(fileData, healthOffset);
+            return BitConverter.ToInt16(fileData, healthOffset);
         }
 
         private bool IsPistolsPresent(byte[] fileData)
@@ -516,13 +522,13 @@ namespace TRR_SaveMaster
             WriteUInt16ToBuffer(fileData, savegameOffset + GRAPPLING_GUN_AMMO_OFFSET, ammo);
         }
 
-        private void WriteHealthValue(byte[] fileData, UInt16 newHealth)
+        private void WriteHealthValue(byte[] fileData, Int16 newHealth)
         {
             int healthOffset = GetHealthOffset(fileData, true);
 
             if (healthOffset != -1)
             {
-                WriteUInt16ToBuffer(fileData, healthOffset, newHealth);
+                WriteInt16ToBuffer(fileData, healthOffset, newHealth);
             }
         }
 
@@ -848,7 +854,7 @@ namespace TRR_SaveMaster
 
             if (healthOffset != -1)
             {
-                UInt16 health = GetHealthValue(fileData, healthOffset);
+                Int16 health = GetHealthValue(fileData, healthOffset);
                 double healthPercentage = ((double)health / MAX_HEALTH_VALUE) * 100;
                 trbHealth.Value = health;
                 trbHealth.Enabled = true;
@@ -920,7 +926,7 @@ namespace TRR_SaveMaster
 
             if (trbHealth.Enabled)
             {
-                WriteHealthValue(fileData, (UInt16)trbHealth.Value);
+                WriteHealthValue(fileData, (Int16)trbHealth.Value);
             }
 
             File.WriteAllBytes(savegamePath, fileData);
