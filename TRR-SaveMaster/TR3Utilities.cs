@@ -802,7 +802,7 @@ namespace TRR_SaveMaster
 
         private bool IsNativePatch5Format(byte[] fileData)
         {
-            Int32 savegameVersion = BitConverter.ToInt32(fileData, savegameOffset + SAVEGAME_VERSION_OFFSET);
+            UInt32 savegameVersion = BitConverter.ToUInt32(fileData, savegameOffset + SAVEGAME_VERSION_OFFSET);
             return savegameVersion >= 2;
         }
 

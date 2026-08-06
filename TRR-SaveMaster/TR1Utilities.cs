@@ -819,7 +819,7 @@ namespace TRR_SaveMaster
 
         private bool IsPrepatchSavegameFile(byte[] fileData)
         {
-            return fileData[Globals.SAVEFILE_VERSION_OFFSET] == Globals.SAVEFILE_TRX_PREPATCH;
+            return BitConverter.ToUInt32(fileData, Globals.SAVEFILE_VERSION_OFFSET) == Globals.SAVEFILE_TRX_PREPATCH;
         }
 
         private bool IsNewGamePlus(byte[] fileData)
