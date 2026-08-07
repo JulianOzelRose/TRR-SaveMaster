@@ -202,6 +202,7 @@ namespace TRR_SaveMaster
         private const int TIMESTAMP_HOURS_OFFSET_TR4 = 0x00C;
         private const int TIMESTAMP_MINUTES_OFFSET_TR4 = 0x010;
         private const int TIMESTAMP_SECONDS_OFFSET_TR4 = 0x014;
+        private const int GAME_FLAGS_OFFSET_TR4 = 0x278;
 
         // TR5 offsets
         private const int LEVEL_INDEX_OFFSET_TR5 = 0x26B;
@@ -242,8 +243,10 @@ namespace TRR_SaveMaster
         private const int MAX_PICKUPS_COASTAL_VILLAGE_TR3 = 30;
 
         // Maxes (TR4)
-        private const int MAX_PICKUPS_TR4 = 589;
-        private const int MAX_VESSELS_BROKEN_TR4 = 169;
+        private const int MAX_PICKUPS_TR4 = 568;
+        private const int MAX_PICKUPS_ALT_TR4 = 589;
+        private const int MAX_VESSELS_BROKEN_TR4 = 170;
+        private const int MAX_VESSELS_BROKEN_ALT_TR4 = 169;
         private const int MAX_SECRETS_FOUND_TR4 = 70;
 
         // Maxes (TR5)
@@ -276,6 +279,7 @@ namespace TRR_SaveMaster
         private Platform platform;
         private bool isPrepatch;
         private const byte FINAL_STATISTICS = 0xFF;
+        private const UInt32 STATS_MAX_FLAG_TR4 = 0x800;
         private bool distanceTravelledDirty;
 
         private int STATISTICS_ARRAY_BASE_OFFSET;
@@ -817,7 +821,8 @@ namespace TRR_SaveMaster
 
         private void SetParams()
         {
-            int levelIndex = GetLevelIndex();
+            byte[] fileData = File.ReadAllBytes(savegamePath);
+            int levelIndex = GetLevelIndex(fileData);
 
             if (SELECTED_TAB == Globals.TAB_TR1)
             {
@@ -871,10 +876,12 @@ namespace TRR_SaveMaster
             }
             else if (SELECTED_TAB == Globals.TAB_TR4)
             {
+                bool useAlternateStatsMax = ShouldUseAlternateStatsMaxTR4(fileData);
+
                 nudAmmoUsed.Maximum = Int16.MaxValue;
                 nudAmmoUsed.Minimum = Int16.MinValue;
 
-                nudPickups.Maximum = MAX_PICKUPS_TR4;
+                nudPickups.Maximum = useAlternateStatsMax ? MAX_PICKUPS_ALT_TR4 : MAX_PICKUPS_TR4;
                 nudPickups.Minimum = 0;
 
                 nudKills.Maximum = UInt16.MaxValue;
@@ -887,12 +894,12 @@ namespace TRR_SaveMaster
                 nudSecretsFound.Minimum = Byte.MinValue;
 
                 nudVesselsBroken.Enabled = true;
-                nudVesselsBroken.Maximum = MAX_VESSELS_BROKEN_TR4;
+                nudVesselsBroken.Maximum = useAlternateStatsMax ? MAX_VESSELS_BROKEN_ALT_TR4 : MAX_VESSELS_BROKEN_TR4;
 
-                nudPickupsMax.Maximum = MAX_PICKUPS_TR4;
+                nudPickupsMax.Maximum = useAlternateStatsMax ? MAX_PICKUPS_ALT_TR4 : MAX_PICKUPS_TR4;
                 nudSecretsFoundMax.Value = MAX_SECRETS_FOUND_TR4;
-                nudVesselsBrokenMax.Value = MAX_VESSELS_BROKEN_TR4;
-                nudPickupsMax.Value = MAX_PICKUPS_TR4;
+                nudVesselsBrokenMax.Value = useAlternateStatsMax ? MAX_VESSELS_BROKEN_ALT_TR4 : MAX_VESSELS_BROKEN_TR4;
+                nudPickupsMax.Value = useAlternateStatsMax ? MAX_PICKUPS_ALT_TR4 : MAX_PICKUPS_TR4;
 
                 nudCrystalsFound.Enabled = false;
                 nudCrystalsUsed.Enabled = false;
@@ -1031,6 +1038,16 @@ namespace TRR_SaveMaster
 
                 nudCrystalsUsed.Enabled = selectedSavegame.IsNewGamePlus;
                 lblCrystalsUsed.Enabled = selectedSavegame.IsNewGamePlus;
+            }
+            else if (SELECTED_TAB == Globals.TAB_TR4)
+            {
+                bool useAlternateStatsMax = ShouldUseAlternateStatsMaxTR4(fileData);
+
+                nudPickupsMax.Value = useAlternateStatsMax ? MAX_PICKUPS_ALT_TR4 : MAX_PICKUPS_TR4;
+                nudPickups.Maximum = nudPickupsMax.Value;
+
+                nudVesselsBrokenMax.Value = useAlternateStatsMax ? MAX_VESSELS_BROKEN_ALT_TR4 : MAX_VESSELS_BROKEN_TR4;
+                nudVesselsBroken.Maximum = nudVesselsBrokenMax.Value;
             }
             else if (SELECTED_TAB == Globals.TAB_TR6)
             {
@@ -1237,7 +1254,13 @@ namespace TRR_SaveMaster
 
         private bool HasDynamicParams()
         {
-            return SELECTED_TAB == Globals.TAB_TR1 || SELECTED_TAB == Globals.TAB_TR2 || SELECTED_TAB == Globals.TAB_TR3 || SELECTED_TAB == Globals.TAB_TR6;
+            return SELECTED_TAB == Globals.TAB_TR1 || SELECTED_TAB == Globals.TAB_TR2 || SELECTED_TAB == Globals.TAB_TR3 || SELECTED_TAB == Globals.TAB_TR4 || SELECTED_TAB == Globals.TAB_TR6;
+        }
+
+        private bool ShouldUseAlternateStatsMaxTR4(byte[] fileData)
+        {
+            UInt32 gameFlags = BitConverter.ToUInt32(fileData, savegameOffset + GAME_FLAGS_OFFSET_TR4);
+            return (gameFlags & STATS_MAX_FLAG_TR4) != 0;
         }
 
         private void WriteInt32ToBuffer(byte[] buffer, int offset, int value)
