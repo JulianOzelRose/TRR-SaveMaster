@@ -79,13 +79,13 @@ namespace TRR_SaveMaster
         private int automaticPistolsAmmoOffset2;
 
         // Weapon byte flags
-        private const byte WEAPON_PISTOLS = 2;
-        private const byte WEAPON_AUTOMATIC_PISTOLS = 4;
-        private const byte WEAPON_UZIS = 8;
-        private const byte WEAPON_SHOTGUN = 16;
-        private const byte WEAPON_M16 = 32;
-        private const byte WEAPON_GRENADE_LAUNCHER = 64;
-        private const byte WEAPON_HARPOON_GUN = 128;
+        private const byte WEAPON_PISTOLS = 0x2;
+        private const byte WEAPON_AUTOMATIC_PISTOLS = 0x4;
+        private const byte WEAPON_UZIS = 0x8;
+        private const byte WEAPON_SHOTGUN = 0x10;
+        private const byte WEAPON_M16 = 0x20;
+        private const byte WEAPON_GRENADE_LAUNCHER = 0x40;
+        private const byte WEAPON_HARPOON_GUN = 0x80;
 
         // Entity block starts
         private const int ENTITY_BLOCK_START_PC = 0x6BC;
@@ -1207,13 +1207,13 @@ namespace TRR_SaveMaster
 
             byte newWeaponsConfigNum = 1;
 
-            if (chkPistols.Checked) newWeaponsConfigNum += WEAPON_PISTOLS;
-            if (chkAutomaticPistols.Checked) newWeaponsConfigNum += WEAPON_AUTOMATIC_PISTOLS;
-            if (chkUzis.Checked) newWeaponsConfigNum += WEAPON_UZIS;
-            if (chkShotgun.Checked) newWeaponsConfigNum += WEAPON_SHOTGUN;
-            if (chkM16.Checked) newWeaponsConfigNum += WEAPON_M16;
-            if (chkGrenadeLauncher.Checked) newWeaponsConfigNum += WEAPON_GRENADE_LAUNCHER;
-            if (chkHarpoonGun.Checked) newWeaponsConfigNum += WEAPON_HARPOON_GUN;
+            if (chkPistols.Checked) newWeaponsConfigNum |= WEAPON_PISTOLS;
+            if (chkAutomaticPistols.Checked) newWeaponsConfigNum |= WEAPON_AUTOMATIC_PISTOLS;
+            if (chkUzis.Checked) newWeaponsConfigNum |= WEAPON_UZIS;
+            if (chkShotgun.Checked) newWeaponsConfigNum |= WEAPON_SHOTGUN;
+            if (chkM16.Checked) newWeaponsConfigNum |= WEAPON_M16;
+            if (chkGrenadeLauncher.Checked) newWeaponsConfigNum |= WEAPON_GRENADE_LAUNCHER;
+            if (chkHarpoonGun.Checked) newWeaponsConfigNum |= WEAPON_HARPOON_GUN;
 
             WriteWeaponsConfigNum(fileData, newWeaponsConfigNum);
 

@@ -63,7 +63,6 @@ namespace TRR_SaveMaster
         private int FLARES_OFFSET;
         private int WEAPONS_CONFIG_NUM_OFFSET;
         private int COLLECTIBLE_CRYSTALS_OFFSET;
-        private int HARPOON_GUN_OFFSET;
         private int DEAGLE_AMMO_OFFSET;
         private int HARPOON_GUN_AMMO_OFFSET;
         private int MP5_AMMO_OFFSET;
@@ -82,13 +81,14 @@ namespace TRR_SaveMaster
         private int shotgunAmmoOffset2;
 
         // Weapon byte flags
-        private const byte WEAPON_PISTOLS = 2;
-        private const byte WEAPON_DEAGLE = 4;
-        private const byte WEAPON_UZIS = 8;
-        private const byte WEAPON_SHOTGUN = 16;
-        private const byte WEAPON_MP5 = 32;
-        private const byte WEAPON_ROCKET_LAUNCHER = 64;
-        private const byte WEAPON_GRENADE_LAUNCHER = 128;
+        private const UInt16 WEAPON_PISTOLS = 0x2;
+        private const UInt16 WEAPON_DEAGLE = 0x4;
+        private const UInt16 WEAPON_UZIS = 0x8;
+        private const UInt16 WEAPON_SHOTGUN = 0x10;
+        private const UInt16 WEAPON_MP5 = 0x20;
+        private const UInt16 WEAPON_ROCKET_LAUNCHER = 0x40;
+        private const UInt16 WEAPON_GRENADE_LAUNCHER = 0x80;
+        private const UInt16 WEAPON_HARPOON_GUN = 0x100;
 
         // Entity block starts
         private const int ENTITY_BLOCK_START_PC = 0x998;
@@ -260,7 +260,6 @@ namespace TRR_SaveMaster
             FLARES_OFFSET = 0x73 + (levelIndex * 0x40);
             COLLECTIBLE_CRYSTALS_OFFSET = 0x74 + (levelIndex * 0x40);
             WEAPONS_CONFIG_NUM_OFFSET = 0x9C + (levelIndex * 0x40);
-            HARPOON_GUN_OFFSET = 0x9D + (levelIndex * 0x40);
         }
 
         private void SeedRNG(int seed)
@@ -872,9 +871,9 @@ namespace TRR_SaveMaster
             return fileData[savegameOffset + COLLECTIBLE_CRYSTALS_OFFSET];
         }
 
-        private byte GetWeaponsConfigNum(byte[] fileData)
+        private UInt16 GetWeaponsConfigNum(byte[] fileData)
         {
-            return fileData[savegameOffset + WEAPONS_CONFIG_NUM_OFFSET];
+            return BitConverter.ToUInt16(fileData, savegameOffset + WEAPONS_CONFIG_NUM_OFFSET);
         }
 
         private UInt16 GetShotgunAmmo(byte[] fileData)
@@ -917,11 +916,6 @@ namespace TRR_SaveMaster
             return BitConverter.ToInt16(fileData, healthOffset);
         }
 
-        private bool IsHarpoonGunPresent(byte[] fileData)
-        {
-            return fileData[savegameOffset + HARPOON_GUN_OFFSET] != 0;
-        }
-
         private void WriteSaveNumber(byte[] fileData, Int32 value)
         {
             WriteInt32ToBuffer(fileData, savegameOffset + SAVE_NUMBER_OFFSET, value);
@@ -947,9 +941,9 @@ namespace TRR_SaveMaster
             fileData[savegameOffset + COLLECTIBLE_CRYSTALS_OFFSET] = value;
         }
 
-        private void WriteWeaponsConfigNum(byte[] fileData, byte value)
+        private void WriteWeaponsConfigNum(byte[] fileData, UInt16 value)
         {
-            fileData[savegameOffset + WEAPONS_CONFIG_NUM_OFFSET] = value;
+            WriteUInt16ToBuffer(fileData, savegameOffset + WEAPONS_CONFIG_NUM_OFFSET, value);
         }
 
         private void WriteHealthValue(byte[] fileData, Int16 newHealth)
@@ -959,18 +953,6 @@ namespace TRR_SaveMaster
             if (healthOffset != -1)
             {
                 WriteInt16ToBuffer(fileData, healthOffset, newHealth);
-            }
-        }
-
-        private void WriteHarpoonGunPresent(byte[] fileData, bool isPresent)
-        {
-            if (isPresent)
-            {
-                fileData[savegameOffset + HARPOON_GUN_OFFSET] = 1;
-            }
-            else
-            {
-                fileData[savegameOffset + HARPOON_GUN_OFFSET] = 0;
             }
         }
 
@@ -1148,7 +1130,7 @@ namespace TRR_SaveMaster
                 nudCollectibleCrystals.Visible = true;
             }
 
-            byte weaponsConfigNum = GetWeaponsConfigNum(fileData);
+            UInt16 weaponsConfigNum = GetWeaponsConfigNum(fileData);
 
             if (weaponsConfigNum == 1)
             {
@@ -1159,6 +1141,7 @@ namespace TRR_SaveMaster
                 chkMP5.Checked = false;
                 chkRocketLauncher.Checked = false;
                 chkGrenadeLauncher.Checked = false;
+                chkHarpoonGun.Checked = false;
             }
             else
             {
@@ -1169,9 +1152,8 @@ namespace TRR_SaveMaster
                 chkMP5.Checked = (weaponsConfigNum & WEAPON_MP5) != 0;
                 chkRocketLauncher.Checked = (weaponsConfigNum & WEAPON_ROCKET_LAUNCHER) != 0;
                 chkGrenadeLauncher.Checked = (weaponsConfigNum & WEAPON_GRENADE_LAUNCHER) != 0;
+                chkHarpoonGun.Checked = (weaponsConfigNum & WEAPON_HARPOON_GUN) != 0;
             }
-
-            chkHarpoonGun.Checked = IsHarpoonGunPresent(fileData);
 
             int healthOffset = GetHealthOffset(fileData, true);
 
@@ -1209,18 +1191,18 @@ namespace TRR_SaveMaster
             WriteNumSmallMedipacks(fileData, (byte)nudSmallMedipacks.Value);
             WriteNumLargeMedipacks(fileData, (byte)nudLargeMedipacks.Value);
 
-            byte newWeaponsConfigNum = 1;
+            UInt16 newWeaponsConfigNum = 1;
 
-            if (chkPistols.Checked) newWeaponsConfigNum += WEAPON_PISTOLS;
-            if (chkDeagle.Checked) newWeaponsConfigNum += WEAPON_DEAGLE;
-            if (chkUzis.Checked) newWeaponsConfigNum += WEAPON_UZIS;
-            if (chkShotgun.Checked) newWeaponsConfigNum += WEAPON_SHOTGUN;
-            if (chkMP5.Checked) newWeaponsConfigNum += WEAPON_MP5;
-            if (chkRocketLauncher.Checked) newWeaponsConfigNum += WEAPON_ROCKET_LAUNCHER;
-            if (chkGrenadeLauncher.Checked) newWeaponsConfigNum += WEAPON_GRENADE_LAUNCHER;
+            if (chkPistols.Checked) newWeaponsConfigNum |= WEAPON_PISTOLS;
+            if (chkDeagle.Checked) newWeaponsConfigNum |= WEAPON_DEAGLE;
+            if (chkUzis.Checked) newWeaponsConfigNum |= WEAPON_UZIS;
+            if (chkShotgun.Checked) newWeaponsConfigNum |= WEAPON_SHOTGUN;
+            if (chkMP5.Checked) newWeaponsConfigNum |= WEAPON_MP5;
+            if (chkRocketLauncher.Checked) newWeaponsConfigNum |= WEAPON_ROCKET_LAUNCHER;
+            if (chkGrenadeLauncher.Checked) newWeaponsConfigNum |= WEAPON_GRENADE_LAUNCHER;
+            if (chkHarpoonGun.Checked) newWeaponsConfigNum |= WEAPON_HARPOON_GUN;
 
             WriteWeaponsConfigNum(fileData, newWeaponsConfigNum);
-            WriteHarpoonGunPresent(fileData, chkHarpoonGun.Checked);
 
             Int16 levelIndex = GetLevelIndex(fileData);
             bool isPrepatch = IsPrepatchSavegameFile(fileData);

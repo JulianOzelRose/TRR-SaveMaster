@@ -72,10 +72,10 @@ namespace TRR_SaveMaster
         private int magnumAmmoOffset2;
 
         // Weapon byte flags
-        private const byte WEAPON_PISTOLS = 2;
-        private const byte WEAPON_MAGNUMS = 4;
-        private const byte WEAPON_UZIS = 8;
-        private const byte WEAPON_SHOTGUN = 16;
+        private const byte WEAPON_PISTOLS = 0x2;
+        private const byte WEAPON_MAGNUMS = 0x4;
+        private const byte WEAPON_UZIS = 0x8;
+        private const byte WEAPON_SHOTGUN = 0x10;
 
         // Entity block starts
         private const int ENTITY_BLOCK_START_PC = 0x6F0;
@@ -1079,10 +1079,10 @@ namespace TRR_SaveMaster
 
             byte newWeaponsConfigNum = 1;
 
-            if (chkPistols.Checked) newWeaponsConfigNum += WEAPON_PISTOLS;
-            if (chkMagnums.Checked) newWeaponsConfigNum += WEAPON_MAGNUMS;
-            if (chkUzis.Checked) newWeaponsConfigNum += WEAPON_UZIS;
-            if (chkShotgun.Checked) newWeaponsConfigNum += WEAPON_SHOTGUN;
+            if (chkPistols.Checked) newWeaponsConfigNum |= WEAPON_PISTOLS;
+            if (chkMagnums.Checked) newWeaponsConfigNum |= WEAPON_MAGNUMS;
+            if (chkUzis.Checked) newWeaponsConfigNum |= WEAPON_UZIS;
+            if (chkShotgun.Checked) newWeaponsConfigNum |= WEAPON_SHOTGUN;
 
             WriteWeaponsConfigNum(fileData, newWeaponsConfigNum);
 
