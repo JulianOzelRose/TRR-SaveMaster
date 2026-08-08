@@ -238,6 +238,7 @@ namespace TRR_SaveMaster
         private const int CHOCOBARS_FOUND_OFFSET_FINAL_TR6 = 0x234;
         private const int KILLS_OFFSET_FINAL_TR6 = 0x236;
         private const int MEDIPACKS_USED_OFFSET_FINAL_TR6 = 0x238;
+        private const int GAME_FLAGS_OFFSET_TR6 = 0x258;
 
         // Maxes (TR3)
         private const int MAX_PICKUPS_COASTAL_VILLAGE_TR3 = 30;
@@ -255,9 +256,11 @@ namespace TRR_SaveMaster
 
         // Maxes (TR6)
         private const int PICKUPS_MAX_FINAL_TR6 = 320;
+        private const int PICKUPS_MAX_FINAL_PREPATCH_TR6 = 318;
         private const int PICKUPS_ALLOWED_MAX_FINAL_TR6 = 323;
         private const int HEALTH_ITEMS_FOUND_MAX_FINAL_TR6 = 70;
         private const int CHOCOBARS_FOUND_MAX_FINAL_TR6 = 20;
+        private const int CHOCOBARS_FOUND_MAX_FINAL_PREPATCH_TR6 = 19;
 
         // Utils
         private readonly TR1Utilities tr1Utilities = new TR1Utilities();
@@ -279,8 +282,11 @@ namespace TRR_SaveMaster
         private Platform platform;
         private bool isPrepatch;
         private const byte FINAL_STATISTICS = 0xFF;
-        private const UInt32 STATS_MAX_FLAG_TR4 = 0x800;
         private bool distanceTravelledDirty;
+
+        // Flags
+        private const UInt32 STATS_MAX_FLAG_TR4 = 0x800;
+        private const UInt32 STATS_PATCH_FLAG_TR6 = 0x08000000;
 
         private int STATISTICS_ARRAY_BASE_OFFSET;
         private int STATISTICS_ARRAY_STRIDE;
@@ -962,6 +968,8 @@ namespace TRR_SaveMaster
             }
             else if (SELECTED_TAB == Globals.TAB_TR6)
             {
+                bool usePatchedStatsMax = ShouldUsePatchedStatsMaxTR6(fileData);
+
                 nudAmmoUsed.Maximum = Int32.MaxValue;
                 nudAmmoUsed.Minimum = 0;
 
@@ -995,6 +1003,32 @@ namespace TRR_SaveMaster
 
                 nudChocobarsFoundMax.Value = chocobarsFoundMaxTR6.TryGetValue(levelIndex, out var chocobarsMax) ? chocobarsMax : 0;
                 nudChocobarsFound.Maximum = nudChocobarsFoundMax.Value;
+
+                if (!usePatchedStatsMax)
+                {
+                    if (levelIndex == 7)            // The Serpent Rouge
+                    {
+                        nudPickupsMax.Value += 1;
+                        nudPickups.Maximum = nudPickupsMax.Value;
+
+                        nudHealthItemsFoundMax.Value += 1;
+                        nudHealthItemsFound.Maximum = nudHealthItemsFoundMax.Value;
+
+                        nudChocobarsFoundMax.Value -= 1;
+                        nudChocobarsFound.Maximum = nudChocobarsFoundMax.Value;
+                    }
+                    else if (levelIndex == 0x0C)    // St. Aicard's Graveyard
+                    {
+                        nudPickupsMax.Value -= selectedSavegame.IsNewGamePlus ? 1 : 2;
+                        nudPickups.Maximum = nudPickupsMax.Value;
+
+                        if (!selectedSavegame.IsNewGamePlus)
+                        {
+                            nudHealthItemsFoundMax.Value -= 1;
+                            nudHealthItemsFound.Maximum = nudHealthItemsFoundMax.Value;
+                        }
+                    }
+                }
 
                 lblOf2.Text = Globals.LABEL_TEXT_FORWARD_SLASH;
 
@@ -1051,6 +1085,8 @@ namespace TRR_SaveMaster
             }
             else if (SELECTED_TAB == Globals.TAB_TR6)
             {
+                bool usePatchedStatsMax = ShouldUsePatchedStatsMaxTR6(fileData);
+
                 nudPickupsMax.Value = pickupsFoundMaxTR6.TryGetValue(levelIndex, out var pickupsMax) ? pickupsMax : 0;
                 nudPickups.Maximum = nudPickupsMax.Value;
 
@@ -1059,10 +1095,36 @@ namespace TRR_SaveMaster
 
                 nudChocobarsFoundMax.Value = chocobarsFoundMaxTR6.TryGetValue(levelIndex, out var chocobarsMax) ? chocobarsMax : 0;
                 nudChocobarsFound.Maximum = nudChocobarsFoundMax.Value;
+
+                if (!usePatchedStatsMax)
+                {
+                    if (levelIndex == 7)            // The Serpent Rouge
+                    {
+                        nudPickupsMax.Value += 1;
+                        nudPickups.Maximum = nudPickupsMax.Value;
+
+                        nudHealthItemsFoundMax.Value += 1;
+                        nudHealthItemsFound.Maximum = nudHealthItemsFoundMax.Value;
+
+                        nudChocobarsFoundMax.Value -= 1;
+                        nudChocobarsFound.Maximum = nudChocobarsFoundMax.Value;
+                    }
+                    else if (levelIndex == 0x0C)    // St. Aicard's Graveyard
+                    {
+                        nudPickupsMax.Value -= selectedSavegame.IsNewGamePlus ? 1 : 2;
+                        nudPickups.Maximum = nudPickupsMax.Value;
+
+                        if (!selectedSavegame.IsNewGamePlus)
+                        {
+                            nudHealthItemsFoundMax.Value -= 1;
+                            nudHealthItemsFound.Maximum = nudHealthItemsFoundMax.Value;
+                        }
+                    }
+                }
             }
         }
 
-        private void UpdateDynamicParamsForLevel(int levelIndex)
+        private void UpdateDynamicParamsForLevel(byte[] fileData, int levelIndex)
         {
             if (SELECTED_TAB == Globals.TAB_TR1)
             {
@@ -1092,20 +1154,21 @@ namespace TRR_SaveMaster
             {
                 StatisticsTarget target = (StatisticsTarget)cmbStatistics.SelectedItem;
                 bool finalStatistics = target.LevelIndex == FINAL_STATISTICS;
+                bool usePatchedStatsMax = ShouldUsePatchedStatsMaxTR6(fileData);
 
                 if (finalStatistics)
                 {
-                    nudPickupsMax.Maximum = PICKUPS_MAX_FINAL_TR6;
-                    nudPickupsMax.Value = PICKUPS_MAX_FINAL_TR6;
+                    nudPickupsMax.Maximum = usePatchedStatsMax ? PICKUPS_MAX_FINAL_TR6 : PICKUPS_MAX_FINAL_PREPATCH_TR6;
+                    nudPickupsMax.Value = usePatchedStatsMax ? PICKUPS_MAX_FINAL_TR6 : PICKUPS_MAX_FINAL_PREPATCH_TR6;
                     nudPickups.Maximum = PICKUPS_ALLOWED_MAX_FINAL_TR6;
 
                     nudHealthItemsFoundMax.Maximum = HEALTH_ITEMS_FOUND_MAX_FINAL_TR6;
                     nudHealthItemsFoundMax.Value = HEALTH_ITEMS_FOUND_MAX_FINAL_TR6;
                     nudHealthItemsFound.Maximum = HEALTH_ITEMS_FOUND_MAX_FINAL_TR6;
 
-                    nudChocobarsFoundMax.Maximum = CHOCOBARS_FOUND_MAX_FINAL_TR6;
-                    nudChocobarsFoundMax.Value = CHOCOBARS_FOUND_MAX_FINAL_TR6;
-                    nudChocobarsFound.Maximum = CHOCOBARS_FOUND_MAX_FINAL_TR6;
+                    nudChocobarsFoundMax.Maximum = usePatchedStatsMax ? CHOCOBARS_FOUND_MAX_FINAL_TR6 : CHOCOBARS_FOUND_MAX_FINAL_PREPATCH_TR6;
+                    nudChocobarsFoundMax.Value = usePatchedStatsMax ? CHOCOBARS_FOUND_MAX_FINAL_TR6 : CHOCOBARS_FOUND_MAX_FINAL_PREPATCH_TR6;
+                    nudChocobarsFound.Maximum = usePatchedStatsMax ? CHOCOBARS_FOUND_MAX_FINAL_TR6 : CHOCOBARS_FOUND_MAX_FINAL_PREPATCH_TR6;
                 }
                 else
                 {
@@ -1117,6 +1180,32 @@ namespace TRR_SaveMaster
 
                     nudChocobarsFoundMax.Value = chocobarsFoundMaxTR6.TryGetValue(levelIndex, out var chocobarsMax) ? chocobarsMax : 0;
                     nudChocobarsFound.Maximum = nudChocobarsFoundMax.Value;
+
+                    if (!usePatchedStatsMax)
+                    {
+                        if (levelIndex == 7)            // The Serpent Rouge
+                        {
+                            nudPickupsMax.Value += 1;
+                            nudPickups.Maximum = nudPickupsMax.Value;
+
+                            nudHealthItemsFoundMax.Value += 1;
+                            nudHealthItemsFound.Maximum = nudHealthItemsFoundMax.Value;
+
+                            nudChocobarsFoundMax.Value -= 1;
+                            nudChocobarsFound.Maximum = nudChocobarsFoundMax.Value;
+                        }
+                        else if (levelIndex == 0x0C)    // St. Aicard's Graveyard
+                        {
+                            nudPickupsMax.Value -= selectedSavegame.IsNewGamePlus ? 1 : 2;
+                            nudPickups.Maximum = nudPickupsMax.Value;
+
+                            if (!selectedSavegame.IsNewGamePlus)
+                            {
+                                nudHealthItemsFoundMax.Value -= 1;
+                                nudHealthItemsFound.Maximum = nudHealthItemsFoundMax.Value;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -1261,6 +1350,12 @@ namespace TRR_SaveMaster
         {
             UInt32 gameFlags = BitConverter.ToUInt32(fileData, savegameOffset + GAME_FLAGS_OFFSET_TR4);
             return (gameFlags & STATS_MAX_FLAG_TR4) != 0;
+        }
+
+        private bool ShouldUsePatchedStatsMaxTR6(byte[] fileData)
+        {
+            UInt32 gameFlags = BitConverter.ToUInt32(fileData, savegameOffset + GAME_FLAGS_OFFSET_TR6);
+            return (gameFlags & STATS_PATCH_FLAG_TR6) != 0;
         }
 
         private void WriteInt32ToBuffer(byte[] buffer, int offset, int value)
@@ -1466,7 +1561,7 @@ namespace TRR_SaveMaster
 
                     if (target?.LevelIndex != null)
                     {
-                        UpdateDynamicParamsForLevel(target.LevelIndex.Value);
+                        UpdateDynamicParamsForLevel(fileData, target.LevelIndex.Value);
                     }
                     else
                     {
@@ -2287,7 +2382,7 @@ namespace TRR_SaveMaster
 
                     if (target?.LevelIndex != null)
                     {
-                        UpdateDynamicParamsForLevel(target.LevelIndex.Value);
+                        UpdateDynamicParamsForLevel(fileData, target.LevelIndex.Value);
                     }
                     else
                     {
@@ -2812,12 +2907,12 @@ namespace TRR_SaveMaster
             {  4, 2  },  // Parisian Ghetto (Part 1)
             {  5, 0  },  // Parisian Ghetto (Part 2)
             {  6, 4  },  // Parisian Ghetto (Part 3)
-            {  7, 35 },  // The Serpent Rouge
+            {  7, 33 },  // The Serpent Rouge
             {  8, 9  },  // Rennes' Pawnshop
             {  9, 0  },  // Willowtree Herbalist
             { 10, 5  },  // St. Aicard's Church
             { 11, 2  },  // Cafe Metro
-            { 12, 7  },  // St. Aicard's Graveyard
+            { 12, 9  },  // St. Aicard's Graveyard
             { 13, 8  },  // Bouchard's Hideout
             { 14, 6  },  // Louvre Storm Drains
             { 15, 12 },  // Louvre Galleries
@@ -2851,12 +2946,12 @@ namespace TRR_SaveMaster
             {  4, 1  },  // Parisian Ghetto (Part 1)
             {  5, 0  },  // Parisian Ghetto (Part 2)
             {  6, 0  },  // Parisian Ghetto (Part 3)
-            {  7, 4  },  // The Serpent Rouge
+            {  7, 3  },  // The Serpent Rouge
             {  8, 0  },  // Rennes' Pawnshop
             {  9, 0  },  // Willowtree Herbalist
             { 10, 1  },  // St. Aicard's Church
             { 11, 0  },  // Cafe Metro
-            { 12, 3  },  // St. Aicard's Graveyard
+            { 12, 4  },  // St. Aicard's Graveyard
             { 13, 2  },  // Bouchard's Hideout
             { 14, 1  },  // Louvre Storm Drains
             { 15, 5  },  // Louvre Galleries
@@ -2890,7 +2985,7 @@ namespace TRR_SaveMaster
             {  4, 1  },  // Parisian Ghetto (Part 1)
             {  5, 0  },  // Parisian Ghetto (Part 2)
             {  6, 0  },  // Parisian Ghetto (Part 3)
-            {  7, 4  },  // The Serpent Rouge
+            {  7, 5  },  // The Serpent Rouge
             {  8, 0  },  // Rennes' Pawnshop
             {  9, 0  },  // Willowtree Herbalist
             { 10, 0  },  // St. Aicard's Church
