@@ -31,6 +31,7 @@ namespace TRR_SaveMaster
         private int TIMESTAMP_HOURS_OFFSET;
         private int TIMESTAMP_MINUTES_OFFSET;
         private int TIMESTAMP_SECONDS_OFFSET;
+        private int WORLD_STATE_OFFSET_TR3;
 
         // TR1 offsets (PC)
         private const int STATISTICS_ARRAY_BASE_OFFSET_TR1_PC = 0x4C;
@@ -145,6 +146,7 @@ namespace TRR_SaveMaster
         private const int SECRETS_FOUND_OFFSET_TR3_PC = 0x8BC;
         private const int PICKUPS_OFFSET_TR3_PC = 0x8BE;
         private const int MEDIPACKS_USED_OFFSET_TR3_PC = 0x8BF;
+        private const int WORLD_STATE_OFFSET_TR3_PC = 0x984;
 
         // TR3 offsets (Prepatch)
         private const int STATISTICS_ARRAY_BASE_OFFSET_TR3_PREPATCH = 0xBC;
@@ -159,6 +161,7 @@ namespace TRR_SaveMaster
         private const int SECRETS_FOUND_OFFSET_TR3_PREPATCH = 0x8BC;
         private const int PICKUPS_OFFSET_TR3_PREPATCH = 0x8BE;
         private const int MEDIPACKS_USED_OFFSET_TR3_PREPATCH = 0x8BF;
+        private const int WORLD_STATE_OFFSET_TR3_PREPATCH = 0x984;
 
         // TR3 offsets (Android)
         private const int STATISTICS_ARRAY_BASE_OFFSET_TR3_ANDROID = 0xFC;
@@ -173,6 +176,7 @@ namespace TRR_SaveMaster
         private const int SECRETS_FOUND_OFFSET_TR3_ANDROID = 0x8FC;
         private const int PICKUPS_OFFSET_TR3_ANDROID = 0x8FE;
         private const int MEDIPACKS_USED_OFFSET_TR3_ANDROID = 0x8FF;
+        private const int WORLD_STATE_OFFSET_TR3_ANDROID = 0x9C4;
 
         // TR3 offsets (PS4)
         private const int STATISTICS_ARRAY_BASE_OFFSET_TR3_PS4 = 0xBC;
@@ -187,6 +191,7 @@ namespace TRR_SaveMaster
         private const int SECRETS_FOUND_OFFSET_TR3_PS4 = 0x8BC;
         private const int PICKUPS_OFFSET_TR3_PS4 = 0x8BE;
         private const int MEDIPACKS_USED_OFFSET_TR3_PS4 = 0x8BF;
+        private const int WORLD_STATE_OFFSET_TR3_PS4 = 0x984;
 
         // TR4 offsets
         private const int LEVEL_INDEX_OFFSET_TR4 = 0x26B;
@@ -288,9 +293,24 @@ namespace TRR_SaveMaster
         private const UInt32 STATS_MAX_FLAG_TR4 = 0x800;
         private const UInt32 STATS_PATCH_FLAG_TR6 = 0x08000000;
 
+        // TR3 world masks & shifts
+        private const int WORLD_REQUIRED_SHIFT_TR3 = 2;
+        private const UInt32 WORLD_REQUIRED_MASK_TR3 = 0x07;
+        private const UInt32 TR3_WORLD_INDIA_COMPLETE_MASK = 0x20;
+        private const UInt32 TR3_WORLD_SOUTH_PACIFIC_COMPLETE_MASK = 0x40;
+        private const UInt32 TR3_WORLD_LONDON_COMPLETE_MASK = 0x80;
+        private const UInt32 TR3_WORLD_NEVADA_COMPLETE_MASK = 0x100;
+
+        // TR3 worlds
+        private const int TR3_WORLD_NONE = 0;
+        private const int TR3_WORLD_INDIA = 1;
+        private const int TR3_WORLD_SOUTH_PACIFIC = 2;
+        private const int TR3_WORLD_LONDON = 3;
+        private const int TR3_WORLD_NEVADA = 4;
+
+        // Statistics array offsets
         private int STATISTICS_ARRAY_BASE_OFFSET;
         private int STATISTICS_ARRAY_STRIDE;
-        private int LEVEL_STATE_ARRAY_OFFSET;
         private int SECRETS_FOUND_ARRAY_OFFSET;
         private int KILLS_ARRAY_OFFSET;
         private int HITS_ARRAY_OFFSET;
@@ -317,7 +337,6 @@ namespace TRR_SaveMaster
         private const int SECRETS_FOUND_ARRAY_OFFSET_TR1 = 0x18;
         private const int PICKUPS_ARRAY_OFFSET_TR1 = 0x1A;
         private const int MEDIPACKS_USED_ARRAY_OFFSET_TR1 = 0x1B;
-        private const int LEVEL_STATE_ARRAY_OFFSET_TR1 = 0x1C;
 
         // TR2 statistics array offsets
         private const int TIME_TAKEN_ARRAY_OFFSET_TR2 = 0x00;
@@ -328,7 +347,6 @@ namespace TRR_SaveMaster
         private const int SECRETS_FOUND_ARRAY_OFFSET_TR2 = 0x14;
         private const int PICKUPS_ARRAY_OFFSET_TR2 = 0x16;
         private const int MEDIPACKS_USED_ARRAY_OFFSET_TR2 = 0x17;
-        private const int LEVEL_STATE_ARRAY_OFFSET_TR2 = 0x18;
 
         // TR3 statistics array offsets
         private const int CRYSTALS_FOUND_ARRAY_OFFSET_TR3 = 0x00;
@@ -341,7 +359,6 @@ namespace TRR_SaveMaster
         private const int SECRETS_FOUND_ARRAY_OFFSET_TR3 = 0x1C;
         private const int PICKUPS_ARRAY_OFFSET_TR3 = 0x1E;
         private const int MEDIPACKS_USED_ARRAY_OFFSET_TR3 = 0x1F;
-        private const int LEVEL_STATE_ARRAY_OFFSET_TR3 = 0x20;
 
         private class StatisticsTarget
         {
@@ -353,6 +370,14 @@ namespace TRR_SaveMaster
                 return DisplayName;
             }
         }
+
+        private static readonly int[] TR1_UB_LEVEL_ORDER =
+        {
+            18, // Atlantean Stronghold
+            19, // The Hive
+            16, // Return to Egypt
+            17  // Temple of the Cat
+        };
 
         private enum TR6StatisticsTarget
         {
@@ -387,9 +412,11 @@ namespace TRR_SaveMaster
 
             try
             {
-                if (ShouldShowLevelSelect())
+                byte[] fileData = File.ReadAllBytes(savegamePath);
+
+                if (ShouldShowLevelSelect(fileData))
                 {
-                    PopulateStatisticsDropdown();
+                    PopulateStatisticsDropdown(fileData);
                     SetTooltipText();
                 }
                 else
@@ -398,8 +425,8 @@ namespace TRR_SaveMaster
                     this.CenterToParent();
                 }
 
-                SetParams();
-                DisplayStatistics();
+                SetParams(fileData);
+                DisplayStatistics(fileData);
             }
             catch (Exception ex)
             {
@@ -422,8 +449,13 @@ namespace TRR_SaveMaster
             mainForm.RefreshGameInfoConditionally();
         }
 
-        private void PopulateStatisticsDropdown()
+        private void PopulateStatisticsDropdown(byte[] fileData = null)
         {
+            if (fileData == null)
+            {
+                fileData = File.ReadAllBytes(savegamePath);
+            }
+
             cmbStatistics.Items.Clear();
 
             cmbStatistics.Items.Add(
@@ -432,8 +464,6 @@ namespace TRR_SaveMaster
                     DisplayName = "Current Level",
                     LevelIndex = null
                 });
-
-            byte[] fileData = File.ReadAllBytes(savegamePath);
 
             if (SELECTED_TAB == Globals.TAB_TR1)
             {
@@ -480,72 +510,171 @@ namespace TRR_SaveMaster
         {
             int currentLevel = GetLevelIndex(fileData);
 
-            foreach (KeyValuePair<int, string> level in levelNames.OrderByDescending(x => x.Key))
+            // Nightmare in Vegas is standalone
+            if (SELECTED_TAB == Globals.TAB_TR2 && currentLevel == 23)
             {
-                if (level.Key == currentLevel)
+                return;
+            }
+
+            // All Hallows is standalone
+            if (SELECTED_TAB == Globals.TAB_TR3 && currentLevel == 20)
+            {
+                return;
+            }
+
+            IEnumerable<KeyValuePair<int, string>> orderedLevels;
+
+            if (SELECTED_TAB == Globals.TAB_TR1 && currentLevel >= 16)
+            {
+                orderedLevels = TR1_UB_LEVEL_ORDER.Reverse().Select(levelIndex => new KeyValuePair<int, string>(levelIndex, levelNames[levelIndex]));
+            }
+            else
+            {
+                orderedLevels = levelNames.OrderByDescending(x => x.Key);
+            }
+
+            foreach (KeyValuePair<int, string> level in orderedLevels)
+            {
+                if (!IsPreviousLevel(fileData, level.Key, currentLevel))
                 {
                     continue;
                 }
 
-                if (!IsLevelInCurrentCampaign(fileData, level.Key))
-                {
-                    continue;
-                }
-
-                int recordOffset = savegameOffset + STATISTICS_ARRAY_BASE_OFFSET + ((level.Key - 1) * STATISTICS_ARRAY_STRIDE);
-
-                int stateFlag = fileData[recordOffset + LEVEL_STATE_ARRAY_OFFSET];
-
-                if (stateFlag > 2)
-                {
-                    cmbStatistics.Items.Add(
-                        new StatisticsTarget
-                        {
-                            DisplayName = level.Value,
-                            LevelIndex = level.Key
-                        });
-                }
+                cmbStatistics.Items.Add(
+                    new StatisticsTarget
+                    {
+                        DisplayName = level.Value,
+                        LevelIndex = level.Key
+                    });
             }
         }
 
-        private bool IsLevelInCurrentCampaign(byte[] fileData, int levelIndex)
+        private bool IsPreviousLevel(byte[] fileData, int levelIndex, int currentLevel)
         {
-            bool expansion = IsExpansionCampaign(fileData);
-
             if (SELECTED_TAB == Globals.TAB_TR1)
             {
-                return expansion ? levelIndex >= 16 : levelIndex <= 15;
-            }
-            else if (SELECTED_TAB == Globals.TAB_TR2)
-            {
-                return expansion ? levelIndex >= 19 : levelIndex <= 18;
-            }
-            else if (SELECTED_TAB == Globals.TAB_TR3)
-            {
-                return expansion ? levelIndex >= 21 : levelIndex <= 20;
+                return IsPreviousTR1Level(levelIndex, currentLevel);
             }
 
-            return true;
-        }
-
-        private bool IsExpansionCampaign(byte[] fileData)
-        {
-            int levelIndex = GetLevelIndex(fileData);
-
-            if (SELECTED_TAB == Globals.TAB_TR1)
+            if (SELECTED_TAB == Globals.TAB_TR2)
             {
-                return levelIndex >= 16;
+                return currentLevel >= 19 ? levelIndex >= 19 && levelIndex < currentLevel : levelIndex < currentLevel;
             }
-            else if (SELECTED_TAB == Globals.TAB_TR2)
+
+            if (SELECTED_TAB == Globals.TAB_TR3)
             {
-                return levelIndex >= 19;
-            }
-            else if (SELECTED_TAB == Globals.TAB_TR3)
-            {
-                return levelIndex >= 21;
+                return IsPreviousTR3Level(fileData, levelIndex, currentLevel);
             }
 
             return false;
+        }
+
+        private bool IsPreviousTR1Level(int levelIndex, int currentLevel)
+        {
+            // Main campaign is linear
+            if (currentLevel <= 15)
+            {
+                return levelIndex < currentLevel;
+            }
+
+            // Unfinished Business uses a non-linear level index order
+            int currentPosition = Array.IndexOf(TR1_UB_LEVEL_ORDER, currentLevel);
+            int candidatePosition = Array.IndexOf(TR1_UB_LEVEL_ORDER, levelIndex);
+
+            return currentPosition >= 0 && candidatePosition >= 0 && candidatePosition < currentPosition;
+        }
+
+        private bool IsPreviousTR3Level(byte[] fileData, int levelIndex, int currentLevel)
+        {
+            // Lost Artifact is linear
+            if (currentLevel >= 21)
+            {
+                return levelIndex >= 21 && levelIndex < currentLevel;
+            }
+
+            // All Hallows is standalone
+            if (currentLevel == 20)
+            {
+                return false;
+            }
+
+            // Exclude All Hallows and Lost Artifact from the main campaign
+            if (levelIndex >= 20)
+            {
+                return false;
+            }
+
+            // Antarctica is linear and occurs after all four selectable regions
+            if (currentLevel >= 16)
+            {
+                return levelIndex < currentLevel;
+            }
+
+            int candidateWorld = GetTR3World(levelIndex);
+            int currentWorld = GetTR3World(currentLevel);
+
+            // Earlier level within the region currently being played
+            if (candidateWorld == currentWorld)
+            {
+                return levelIndex < currentLevel;
+            }
+
+            // Otherwise it must belong to an already completed region
+            return IsTR3WorldComplete(fileData, candidateWorld);
+        }
+
+        private bool IsTR3WorldComplete(byte[] fileData, int world)
+        {
+            UInt32 worldState = BitConverter.ToUInt32(fileData, savegameOffset + WORLD_STATE_OFFSET_TR3);
+
+            switch (world)
+            {
+                case TR3_WORLD_INDIA:
+                    return (worldState & TR3_WORLD_INDIA_COMPLETE_MASK) != 0;
+
+                case TR3_WORLD_SOUTH_PACIFIC:
+                    return (worldState & TR3_WORLD_SOUTH_PACIFIC_COMPLETE_MASK) != 0;
+
+                case TR3_WORLD_LONDON:
+                    return (worldState & TR3_WORLD_LONDON_COMPLETE_MASK) != 0;
+
+                case TR3_WORLD_NEVADA:
+                    return (worldState & TR3_WORLD_NEVADA_COMPLETE_MASK) != 0;
+
+                default:
+                    return false;
+            }
+        }
+
+        private int GetTR3World(int levelIndex)
+        {
+            if (levelIndex <= 4)
+            {
+                return TR3_WORLD_INDIA;
+            }
+
+            if (levelIndex <= 8)
+            {
+                return TR3_WORLD_SOUTH_PACIFIC;
+            }
+
+            if (levelIndex <= 12)
+            {
+                return TR3_WORLD_LONDON;
+            }
+
+            if (levelIndex <= 15)
+            {
+                return TR3_WORLD_NEVADA;
+            }
+
+            return TR3_WORLD_NONE;
+        }
+
+        private int GetTR3WorldRequired(byte[] fileData)
+        {
+            UInt32 worldState = BitConverter.ToUInt32(fileData, savegameOffset + WORLD_STATE_OFFSET_TR3);
+            return (int)((worldState >> WORLD_REQUIRED_SHIFT_TR3) & WORLD_REQUIRED_MASK_TR3);
         }
 
         public void SetSavegame(Savegame savegame)
@@ -629,7 +758,6 @@ namespace TRR_SaveMaster
                 SECRETS_FOUND_ARRAY_OFFSET = SECRETS_FOUND_ARRAY_OFFSET_TR1;
                 PICKUPS_ARRAY_OFFSET = PICKUPS_ARRAY_OFFSET_TR1;
                 MEDIPACKS_USED_ARRAY_OFFSET = MEDIPACKS_USED_ARRAY_OFFSET_TR1;
-                LEVEL_STATE_ARRAY_OFFSET = LEVEL_STATE_ARRAY_OFFSET_TR1;
             }
             else if (SELECTED_TAB == Globals.TAB_TR2)
             {
@@ -698,7 +826,6 @@ namespace TRR_SaveMaster
                 SECRETS_FOUND_ARRAY_OFFSET = SECRETS_FOUND_ARRAY_OFFSET_TR2;
                 PICKUPS_ARRAY_OFFSET = PICKUPS_ARRAY_OFFSET_TR2;
                 MEDIPACKS_USED_ARRAY_OFFSET = MEDIPACKS_USED_ARRAY_OFFSET_TR2;
-                LEVEL_STATE_ARRAY_OFFSET = LEVEL_STATE_ARRAY_OFFSET_TR2;
             }
             else if (SELECTED_TAB == Globals.TAB_TR3)
             {
@@ -715,6 +842,7 @@ namespace TRR_SaveMaster
                     MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR3_PREPATCH;
                     DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR3_PREPATCH;
                     TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR3_PREPATCH;
+                    WORLD_STATE_OFFSET_TR3 = WORLD_STATE_OFFSET_TR3_PREPATCH;
                     STATISTICS_ARRAY_BASE_OFFSET = STATISTICS_ARRAY_BASE_OFFSET_TR3_PREPATCH;
                 }
                 else
@@ -732,6 +860,7 @@ namespace TRR_SaveMaster
                         MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR3_PC;
                         DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR3_PC;
                         TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR3_PC;
+                        WORLD_STATE_OFFSET_TR3 = WORLD_STATE_OFFSET_TR3_PC;
                         STATISTICS_ARRAY_BASE_OFFSET = STATISTICS_ARRAY_BASE_OFFSET_TR3_PC;
                     }
                     else if (platform == Platform.Android)
@@ -747,6 +876,7 @@ namespace TRR_SaveMaster
                         MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR3_ANDROID;
                         DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR3_ANDROID;
                         TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR3_ANDROID;
+                        WORLD_STATE_OFFSET_TR3 = WORLD_STATE_OFFSET_TR3_ANDROID;
                         STATISTICS_ARRAY_BASE_OFFSET = STATISTICS_ARRAY_BASE_OFFSET_TR3_ANDROID;
                     }
                     else if (platform == Platform.PlayStation4)
@@ -762,6 +892,7 @@ namespace TRR_SaveMaster
                         MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR3_PS4;
                         DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR3_PS4;
                         TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR3_PS4;
+                        WORLD_STATE_OFFSET_TR3 = WORLD_STATE_OFFSET_TR3_PS4;
                         STATISTICS_ARRAY_BASE_OFFSET = STATISTICS_ARRAY_BASE_OFFSET_TR3_PS4;
                     }
                 }
@@ -777,7 +908,6 @@ namespace TRR_SaveMaster
                 SECRETS_FOUND_ARRAY_OFFSET = SECRETS_FOUND_ARRAY_OFFSET_TR3;
                 PICKUPS_ARRAY_OFFSET = PICKUPS_ARRAY_OFFSET_TR3;
                 MEDIPACKS_USED_ARRAY_OFFSET = MEDIPACKS_USED_ARRAY_OFFSET_TR3;
-                LEVEL_STATE_ARRAY_OFFSET = LEVEL_STATE_ARRAY_OFFSET_TR3;
             }
             else if (SELECTED_TAB == Globals.TAB_TR4)
             {
@@ -825,9 +955,8 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void SetParams()
+        private void SetParams(byte[] fileData)
         {
-            byte[] fileData = File.ReadAllBytes(savegamePath);
             int levelIndex = GetLevelIndex(fileData);
 
             if (SELECTED_TAB == Globals.TAB_TR1)
@@ -1326,10 +1455,30 @@ namespace TRR_SaveMaster
             return SELECTED_TAB == Globals.TAB_TR1 || SELECTED_TAB == Globals.TAB_TR2 || SELECTED_TAB == Globals.TAB_TR3;
         }
 
-        private bool ShouldShowLevelSelect()
+        private bool ShouldShowLevelSelect(byte[] fileData)
         {
             if ((SELECTED_TAB == Globals.TAB_TR1 || SELECTED_TAB == Globals.TAB_TR2 || SELECTED_TAB == Globals.TAB_TR3) && !selectedSavegame.IsChallengeMode)
             {
+                int levelIndex = GetLevelIndex(fileData);
+
+                if (SELECTED_TAB == Globals.TAB_TR2)
+                {
+                    // Nightmare in Vegas is standalone
+                    if (levelIndex == 23)
+                    {
+                        return false;
+                    }
+                }
+
+                if (SELECTED_TAB == Globals.TAB_TR3)
+                {
+                    // All Hallows is standalone
+                    if (levelIndex == 20)
+                    {
+                        return false;
+                    }
+                }
+
                 return true;
             }
 
@@ -1528,14 +1677,17 @@ namespace TRR_SaveMaster
             DisplayTimeTakenTR6(fileData, true);
         }
 
-        private void DisplayStatistics()
+        private void DisplayStatistics(byte[] fileData = null)
         {
             isLoading = true;
             distanceTravelledDirty = false;
 
             try
             {
-                byte[] fileData = File.ReadAllBytes(savegamePath);
+                if (fileData == null)
+                {
+                    fileData = File.ReadAllBytes(savegamePath);
+                }
 
                 if (!IsSavegamePresent(fileData))
                 {
@@ -2329,7 +2481,7 @@ namespace TRR_SaveMaster
 
                 if (IsTRXSavegame())
                 {
-                    if (selectedSavegame.IsChallengeMode)
+                    if (!ShouldShowLevelSelect(fileData))
                     {
                         WriteTRXStatistics(fileData);
                     }
