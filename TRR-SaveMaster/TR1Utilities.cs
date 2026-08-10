@@ -71,11 +71,13 @@ namespace TRR_SaveMaster
         private int shotgunAmmoOffset2;
         private int magnumAmmoOffset2;
 
-        // Weapon byte flags
-        private const byte WEAPON_PISTOLS = 0x2;
-        private const byte WEAPON_MAGNUMS = 0x4;
-        private const byte WEAPON_UZIS = 0x8;
-        private const byte WEAPON_SHOTGUN = 0x10;
+        // Weapon flags
+        private const UInt16 WEAPON_AVAILABLE = 0x1;
+        private const UInt16 WEAPON_PISTOLS = 0x2;
+        private const UInt16 WEAPON_MAGNUMS = 0x4;
+        private const UInt16 WEAPON_UZIS = 0x8;
+        private const UInt16 WEAPON_SHOTGUN = 0x10;
+        private const UInt16 WEAPONS_MASK = WEAPON_PISTOLS | WEAPON_MAGNUMS | WEAPON_UZIS | WEAPON_SHOTGUN;
 
         // Entity block starts
         private const int ENTITY_BLOCK_START_PC = 0x6F0;
@@ -889,9 +891,9 @@ namespace TRR_SaveMaster
             return fileData[savegameOffset + LARGE_MEDIPACK_OFFSET];
         }
 
-        private byte GetWeaponsConfigNum(byte[] fileData)
+        private UInt16 GetWeaponsConfigNum(byte[] fileData)
         {
-            return fileData[savegameOffset + WEAPONS_CONFIG_NUM_OFFSET];
+            return BitConverter.ToUInt16(fileData, savegameOffset + WEAPONS_CONFIG_NUM_OFFSET);
         }
 
         private UInt16 GetShotgunAmmo(byte[] fileData)
@@ -929,9 +931,9 @@ namespace TRR_SaveMaster
             fileData[savegameOffset + LARGE_MEDIPACK_OFFSET] = value;
         }
 
-        private void WriteWeaponsConfigNum(byte[] fileData, byte value)
+        private void WriteWeaponsConfigNum(byte[] fileData, UInt16 value)
         {
-            fileData[savegameOffset + WEAPONS_CONFIG_NUM_OFFSET] = value;
+            WriteUInt16ToBuffer(fileData, savegameOffset + WEAPONS_CONFIG_NUM_OFFSET, value);
         }
 
         private void WriteHealthValue(byte[] fileData, Int16 newHealth)
@@ -1018,22 +1020,12 @@ namespace TRR_SaveMaster
             nudSmallMedipacks.Enabled = !isNewGamePlus;
             nudLargeMedipacks.Enabled = !isNewGamePlus;
 
-            byte weaponsConfigNum = GetWeaponsConfigNum(fileData);
+            UInt16 weaponsConfigNum = GetWeaponsConfigNum(fileData);
 
-            if (weaponsConfigNum == 1)
-            {
-                chkPistols.Checked = false;
-                chkMagnums.Checked = false;
-                chkUzis.Checked = false;
-                chkShotgun.Checked = false;
-            }
-            else
-            {
-                chkPistols.Checked = (weaponsConfigNum & WEAPON_PISTOLS) != 0;
-                chkMagnums.Checked = (weaponsConfigNum & WEAPON_MAGNUMS) != 0;
-                chkUzis.Checked = (weaponsConfigNum & WEAPON_UZIS) != 0;
-                chkShotgun.Checked = (weaponsConfigNum & WEAPON_SHOTGUN) != 0;
-            }
+            chkPistols.Checked = (weaponsConfigNum & WEAPON_PISTOLS) != 0;
+            chkMagnums.Checked = (weaponsConfigNum & WEAPON_MAGNUMS) != 0;
+            chkUzis.Checked = (weaponsConfigNum & WEAPON_UZIS) != 0;
+            chkShotgun.Checked = (weaponsConfigNum & WEAPON_SHOTGUN) != 0;
 
             nudSaveNumber.Value = GetSaveNumber(fileData);
             nudSmallMedipacks.Value = GetNumSmallMedipacks(fileData);
@@ -1077,7 +1069,10 @@ namespace TRR_SaveMaster
             WriteNumSmallMedipacks(fileData, (byte)nudSmallMedipacks.Value);
             WriteNumLargeMedipacks(fileData, (byte)nudLargeMedipacks.Value);
 
-            byte newWeaponsConfigNum = 1;
+            UInt16 newWeaponsConfigNum = GetWeaponsConfigNum(fileData);
+
+            newWeaponsConfigNum &= unchecked((UInt16)~WEAPONS_MASK);
+            newWeaponsConfigNum |= WEAPON_AVAILABLE;
 
             if (chkPistols.Checked) newWeaponsConfigNum |= WEAPON_PISTOLS;
             if (chkMagnums.Checked) newWeaponsConfigNum |= WEAPON_MAGNUMS;

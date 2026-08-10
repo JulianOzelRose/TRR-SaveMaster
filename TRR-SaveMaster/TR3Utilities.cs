@@ -80,7 +80,8 @@ namespace TRR_SaveMaster
         private int grenadeLauncherAmmoOffset2;
         private int shotgunAmmoOffset2;
 
-        // Weapon byte flags
+        // Weapon flags
+        private const UInt16 WEAPON_AVAILABLE = 0x1;
         private const UInt16 WEAPON_PISTOLS = 0x2;
         private const UInt16 WEAPON_DEAGLE = 0x4;
         private const UInt16 WEAPON_UZIS = 0x8;
@@ -89,6 +90,7 @@ namespace TRR_SaveMaster
         private const UInt16 WEAPON_ROCKET_LAUNCHER = 0x40;
         private const UInt16 WEAPON_GRENADE_LAUNCHER = 0x80;
         private const UInt16 WEAPON_HARPOON_GUN = 0x100;
+        private const UInt16 WEAPONS_MASK = WEAPON_PISTOLS | WEAPON_DEAGLE | WEAPON_UZIS | WEAPON_SHOTGUN | WEAPON_MP5 | WEAPON_ROCKET_LAUNCHER | WEAPON_GRENADE_LAUNCHER | WEAPON_HARPOON_GUN;
 
         // Entity block starts
         private const int ENTITY_BLOCK_START_PC = 0x998;
@@ -1132,28 +1134,14 @@ namespace TRR_SaveMaster
 
             UInt16 weaponsConfigNum = GetWeaponsConfigNum(fileData);
 
-            if (weaponsConfigNum == 1)
-            {
-                chkPistols.Checked = false;
-                chkDeagle.Checked = false;
-                chkUzis.Checked = false;
-                chkShotgun.Checked = false;
-                chkMP5.Checked = false;
-                chkRocketLauncher.Checked = false;
-                chkGrenadeLauncher.Checked = false;
-                chkHarpoonGun.Checked = false;
-            }
-            else
-            {
-                chkPistols.Checked = (weaponsConfigNum & WEAPON_PISTOLS) != 0;
-                chkDeagle.Checked = (weaponsConfigNum & WEAPON_DEAGLE) != 0;
-                chkUzis.Checked = (weaponsConfigNum & WEAPON_UZIS) != 0;
-                chkShotgun.Checked = (weaponsConfigNum & WEAPON_SHOTGUN) != 0;
-                chkMP5.Checked = (weaponsConfigNum & WEAPON_MP5) != 0;
-                chkRocketLauncher.Checked = (weaponsConfigNum & WEAPON_ROCKET_LAUNCHER) != 0;
-                chkGrenadeLauncher.Checked = (weaponsConfigNum & WEAPON_GRENADE_LAUNCHER) != 0;
-                chkHarpoonGun.Checked = (weaponsConfigNum & WEAPON_HARPOON_GUN) != 0;
-            }
+            chkPistols.Checked = (weaponsConfigNum & WEAPON_PISTOLS) != 0;
+            chkDeagle.Checked = (weaponsConfigNum & WEAPON_DEAGLE) != 0;
+            chkUzis.Checked = (weaponsConfigNum & WEAPON_UZIS) != 0;
+            chkShotgun.Checked = (weaponsConfigNum & WEAPON_SHOTGUN) != 0;
+            chkMP5.Checked = (weaponsConfigNum & WEAPON_MP5) != 0;
+            chkRocketLauncher.Checked = (weaponsConfigNum & WEAPON_ROCKET_LAUNCHER) != 0;
+            chkGrenadeLauncher.Checked = (weaponsConfigNum & WEAPON_GRENADE_LAUNCHER) != 0;
+            chkHarpoonGun.Checked = (weaponsConfigNum & WEAPON_HARPOON_GUN) != 0;
 
             int healthOffset = GetHealthOffset(fileData, true);
 
@@ -1191,7 +1179,10 @@ namespace TRR_SaveMaster
             WriteNumSmallMedipacks(fileData, (byte)nudSmallMedipacks.Value);
             WriteNumLargeMedipacks(fileData, (byte)nudLargeMedipacks.Value);
 
-            UInt16 newWeaponsConfigNum = 1;
+            UInt16 newWeaponsConfigNum = GetWeaponsConfigNum(fileData);
+
+            newWeaponsConfigNum &= unchecked((UInt16)~WEAPONS_MASK);
+            newWeaponsConfigNum |= WEAPON_AVAILABLE;
 
             if (chkPistols.Checked) newWeaponsConfigNum |= WEAPON_PISTOLS;
             if (chkDeagle.Checked) newWeaponsConfigNum |= WEAPON_DEAGLE;

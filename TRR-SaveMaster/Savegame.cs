@@ -50,14 +50,14 @@ namespace TRR_SaveMaster
     public class Savegame
     {
         public int Offset { get; set; }
-        public Int32 Number { get; set; }
+        public Int64 Number { get; set; }
         public int Slot { get; set; }
         public string Name { get; set; }
         public bool IsNewGamePlus { get; set; }
         public bool SaveNumberFirst { get; set; }
         public bool IsChallengeMode { get; set; }
 
-        public Savegame(int savegameOffset, int slot, Int32 saveNumber, string levelName, bool isNewGamePlus, bool saveNumberFirst = false, bool isChallengeMode = false)
+        public Savegame(int savegameOffset, int slot, Int64 saveNumber, string levelName, bool isNewGamePlus, bool saveNumberFirst = false, bool isChallengeMode = false)
         {
             Number = saveNumber;
             Name = levelName;
@@ -68,7 +68,7 @@ namespace TRR_SaveMaster
             IsChallengeMode = isChallengeMode;
         }
 
-        public void UpdateDisplayName(string levelName, Int32 saveNumber, bool isNewGamePlus, bool isChallengeMode = false)
+        public void UpdateDisplayName(string levelName, Int64 saveNumber, bool isNewGamePlus, bool isChallengeMode = false)
         {
             Name = levelName;
             Number = saveNumber;

@@ -114,7 +114,7 @@ namespace TRR_SaveMaster
 
         public void DetermineDynamicOffsets(byte[] fileData)
         {
-            Int32 savegameVersion = GetSavegameVersion(fileData);
+            UInt32 savegameVersion = GetSavegameVersion(fileData);
             UInt32 compressedBlockSize = GetCompressedBlockSize(fileData);
             byte[] compressedBlockData = ReadBytes(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, (int)compressedBlockSize);
 
@@ -149,14 +149,14 @@ namespace TRR_SaveMaster
             }
         }
 
-        private Int32 GetSavegameVersion(byte[] fileData)
+        private UInt32 GetSavegameVersion(byte[] fileData)
         {
-            return BitConverter.ToInt32(fileData, savegameOffset + SAVEGAME_VERSION_OFFSET);
+            return BitConverter.ToUInt32(fileData, savegameOffset + SAVEGAME_VERSION_OFFSET);
         }
 
-        private Int32 GetSaveNumber(byte[] fileData)
+        private UInt32 GetSaveNumber(byte[] fileData)
         {
-            return BitConverter.ToInt32(fileData, savegameOffset + SAVE_NUMBER_OFFSET);
+            return BitConverter.ToUInt32(fileData, savegameOffset + SAVE_NUMBER_OFFSET);
         }
 
         private UInt32 GetCompressedBlockSize(byte[] fileData)
@@ -274,7 +274,7 @@ namespace TRR_SaveMaster
             objects = TR6EntityCache.GetObjectArray(sgCurrentLevel);
         }
 
-        private void MapPickupLoad(BinaryReader reader, Int32 savegameVersion)
+        private void MapPickupLoad(BinaryReader reader, UInt32 savegameVersion)
         {
             bool isPickupLevel =
                 sgCurrentLevel == 0x04 || sgCurrentLevel == 0x05 || sgCurrentLevel == 0x06 ||
@@ -1416,7 +1416,7 @@ namespace TRR_SaveMaster
                 using (BinaryWriter writer = new BinaryWriter(fs))
                 {
                     fs.Seek(savegameOffset + SAVE_NUMBER_OFFSET, SeekOrigin.Begin);
-                    writer.Write((Int32)nudSaveNumber.Value);
+                    writer.Write((UInt32)nudSaveNumber.Value);
                 }
 
                 if (POST_INVENTORY_END_OFFSET > decompressedBuffer.Length)
@@ -1564,9 +1564,9 @@ namespace TRR_SaveMaster
             if (isSavegamePresent)
             {
                 byte levelIndex = fileData[savegame.Offset + LEVEL_INDEX_OFFSET];
-                Int32 saveNumber = BitConverter.ToInt32(fileData, savegame.Offset + SAVE_NUMBER_OFFSET);
+                UInt32 saveNumber = BitConverter.ToUInt32(fileData, savegame.Offset + SAVE_NUMBER_OFFSET);
 
-                if (levelNames.TryGetValue(levelIndex, out string levelName) && saveNumber >= 0)
+                if (levelNames.TryGetValue(levelIndex, out string levelName))
                 {
                     bool isNewGamePlus = BitConverter.ToInt32(fileData, savegame.Offset + NEW_GAME_PLUS_OFFSET) != 0;
 
@@ -1591,10 +1591,10 @@ namespace TRR_SaveMaster
                 if (currentSavegameOffset < MAX_SAVEGAME_OFFSET_TR6)
                 {
                     byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
-                    Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
+                    UInt32 saveNumber = BitConverter.ToUInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
                     bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
 
-                    if (isSavegamePresent && levelNames.TryGetValue(levelIndex, out string levelName) && saveNumber >= 0)
+                    if (isSavegamePresent && levelNames.TryGetValue(levelIndex, out string levelName))
                     {
                         int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR6) / Globals.SAVEGAME_SIZE_TRX2;
 
@@ -1631,11 +1631,11 @@ namespace TRR_SaveMaster
                 int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR6 + (i * Globals.SAVEGAME_SIZE_TRX2);
 
                 byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
-                Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
+                UInt32 saveNumber = BitConverter.ToUInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
 
                 bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
 
-                if (isSavegamePresent && levelNames.TryGetValue(levelIndex, out string levelName) && saveNumber >= 0)
+                if (isSavegamePresent && levelNames.TryGetValue(levelIndex, out string levelName))
                 {
                     int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR6) / Globals.SAVEGAME_SIZE_TRX2;
                     bool isNewGamePlus = BitConverter.ToInt32(fileData, currentSavegameOffset + NEW_GAME_PLUS_OFFSET) != 0;

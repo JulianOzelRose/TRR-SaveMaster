@@ -78,14 +78,16 @@ namespace TRR_SaveMaster
         private int uziAmmoOffset2;
         private int automaticPistolsAmmoOffset2;
 
-        // Weapon byte flags
-        private const byte WEAPON_PISTOLS = 0x2;
-        private const byte WEAPON_AUTOMATIC_PISTOLS = 0x4;
-        private const byte WEAPON_UZIS = 0x8;
-        private const byte WEAPON_SHOTGUN = 0x10;
-        private const byte WEAPON_M16 = 0x20;
-        private const byte WEAPON_GRENADE_LAUNCHER = 0x40;
-        private const byte WEAPON_HARPOON_GUN = 0x80;
+        // Weapon flags
+        private const UInt16 WEAPON_AVAILABLE = 0x1;
+        private const UInt16 WEAPON_PISTOLS = 0x2;
+        private const UInt16 WEAPON_AUTOMATIC_PISTOLS = 0x4;
+        private const UInt16 WEAPON_UZIS = 0x8;
+        private const UInt16 WEAPON_SHOTGUN = 0x10;
+        private const UInt16 WEAPON_M16 = 0x20;
+        private const UInt16 WEAPON_GRENADE_LAUNCHER = 0x40;
+        private const UInt16 WEAPON_HARPOON_GUN = 0x80;
+        private const UInt16 WEAPONS_MASK = WEAPON_PISTOLS | WEAPON_AUTOMATIC_PISTOLS | WEAPON_UZIS | WEAPON_SHOTGUN | WEAPON_M16 | WEAPON_GRENADE_LAUNCHER | WEAPON_HARPOON_GUN;
 
         // Entity block starts
         private const int ENTITY_BLOCK_START_PC = 0x6BC;
@@ -326,9 +328,9 @@ namespace TRR_SaveMaster
             return fileData[savegameOffset + FLARES_OFFSET];
         }
 
-        private byte GetWeaponsConfigNum(byte[] fileData)
+        private UInt16 GetWeaponsConfigNum(byte[] fileData)
         {
-            return fileData[savegameOffset + WEAPONS_CONFIG_NUM_OFFSET];
+            return BitConverter.ToUInt16(fileData, savegameOffset + WEAPONS_CONFIG_NUM_OFFSET);
         }
 
         private UInt16 GetShotgunAmmo(byte[] fileData)
@@ -403,9 +405,9 @@ namespace TRR_SaveMaster
             fileData[savegameOffset + FLARES_OFFSET] = value;
         }
 
-        private void WriteWeaponsConfigNum(byte[] fileData, byte value)
+        private void WriteWeaponsConfigNum(byte[] fileData, UInt16 value)
         {
-            fileData[savegameOffset + WEAPONS_CONFIG_NUM_OFFSET] = value;
+            WriteUInt16ToBuffer(fileData, savegameOffset + WEAPONS_CONFIG_NUM_OFFSET, value);
         }
 
         private void WriteHealthValue(byte[] fileData, Int16 newHealth)
@@ -1147,28 +1149,15 @@ namespace TRR_SaveMaster
                 nudHarpoonGunAmmo.Value = GetHarpoonGunAmmo(fileData);
             }
 
-            byte weaponsConfigNum = GetWeaponsConfigNum(fileData);
+            UInt16 weaponsConfigNum = GetWeaponsConfigNum(fileData);
 
-            if (weaponsConfigNum == 1)
-            {
-                chkPistols.Checked = false;
-                chkAutomaticPistols.Checked = false;
-                chkUzis.Checked = false;
-                chkShotgun.Checked = false;
-                chkM16.Checked = false;
-                chkGrenadeLauncher.Checked = false;
-                chkHarpoonGun.Checked = false;
-            }
-            else
-            {
-                chkPistols.Checked = (weaponsConfigNum & WEAPON_PISTOLS) != 0;
-                chkAutomaticPistols.Checked = (weaponsConfigNum & WEAPON_AUTOMATIC_PISTOLS) != 0;
-                chkUzis.Checked = (weaponsConfigNum & WEAPON_UZIS) != 0;
-                chkShotgun.Checked = (weaponsConfigNum & WEAPON_SHOTGUN) != 0;
-                chkM16.Checked = (weaponsConfigNum & WEAPON_M16) != 0;
-                chkGrenadeLauncher.Checked = (weaponsConfigNum & WEAPON_GRENADE_LAUNCHER) != 0;
-                chkHarpoonGun.Checked = (weaponsConfigNum & WEAPON_HARPOON_GUN) != 0;
-            }
+            chkPistols.Checked = (weaponsConfigNum & WEAPON_PISTOLS) != 0;
+            chkAutomaticPistols.Checked = (weaponsConfigNum & WEAPON_AUTOMATIC_PISTOLS) != 0;
+            chkUzis.Checked = (weaponsConfigNum & WEAPON_UZIS) != 0;
+            chkShotgun.Checked = (weaponsConfigNum & WEAPON_SHOTGUN) != 0;
+            chkM16.Checked = (weaponsConfigNum & WEAPON_M16) != 0;
+            chkGrenadeLauncher.Checked = (weaponsConfigNum & WEAPON_GRENADE_LAUNCHER) != 0;
+            chkHarpoonGun.Checked = (weaponsConfigNum & WEAPON_HARPOON_GUN) != 0;
 
             int healthOffset = GetHealthOffset(fileData, true);
 
@@ -1205,7 +1194,10 @@ namespace TRR_SaveMaster
             WriteNumLargeMedipacks(fileData, (byte)nudLargeMedipacks.Value);
             WriteNumFlares(fileData, (byte)nudFlares.Value);
 
-            byte newWeaponsConfigNum = 1;
+            UInt16 newWeaponsConfigNum = GetWeaponsConfigNum(fileData);
+
+            newWeaponsConfigNum &= unchecked((UInt16)~WEAPONS_MASK);
+            newWeaponsConfigNum |= WEAPON_AVAILABLE;
 
             if (chkPistols.Checked) newWeaponsConfigNum |= WEAPON_PISTOLS;
             if (chkAutomaticPistols.Checked) newWeaponsConfigNum |= WEAPON_AUTOMATIC_PISTOLS;
