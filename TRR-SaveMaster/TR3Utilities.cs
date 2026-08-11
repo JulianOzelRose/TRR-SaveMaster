@@ -33,14 +33,14 @@ namespace TRR_SaveMaster
         private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PC = 0x99E;
         private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PC = 0x9A1;
 
-        // Android offsets
-        private const int LEVEL_INDEX_OFFSET_ANDROID = 0x912;
-        private const int SAVEGAME_VERSION_OFFSET_ANDROID = 0x9C8;
-        private const int CHALLENGE_MODE_RNG_SEED_OFFSET_ANDROID = 0x9D0;
-        private const int CHALLENGE_MODE_OFFSET_ANDROID = 0x9CC;
-        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_ANDROID = 0x9DA;
-        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_ANDROID = 0x9DE;
-        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_ANDROID = 0x9E1;
+        // Mobile offsets
+        private const int LEVEL_INDEX_OFFSET_MOBILE = 0x912;
+        private const int SAVEGAME_VERSION_OFFSET_MOBILE = 0x9C8;
+        private const int CHALLENGE_MODE_RNG_SEED_OFFSET_MOBILE = 0x9D0;
+        private const int CHALLENGE_MODE_OFFSET_MOBILE = 0x9CC;
+        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_MOBILE = 0x9DA;
+        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_MOBILE = 0x9DE;
+        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_MOBILE = 0x9E1;
 
         // PS4 offsets
         private const int LEVEL_INDEX_OFFSET_PS4 = 0x8D2;
@@ -94,7 +94,7 @@ namespace TRR_SaveMaster
 
         // Entity block starts
         private const int ENTITY_BLOCK_START_PC = 0x998;
-        private const int ENTITY_BLOCK_START_ANDROID = 0x9E3;
+        private const int ENTITY_BLOCK_START_MOBILE = 0x9E3;
         private const int ENTITY_BLOCK_START_PS4 = 0x998;
         private const int ENTITY_BLOCK_START_PC_PREPATCH = 0x988;
         private const int ENTITY_BLOCK_START_PS4_PREPATCH = 0x986;
@@ -226,15 +226,15 @@ namespace TRR_SaveMaster
                     CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET = CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PC;
                     CHALLENGE_MODE_ENEMY_TYPE_OFFSET = CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PC;
                 }
-                else if (platform == Platform.Android)
+                else if (platform == Platform.Android || platform == Platform.iOS)
                 {
-                    LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_ANDROID;
-                    SAVEGAME_VERSION_OFFSET = SAVEGAME_VERSION_OFFSET_ANDROID;
-                    CHALLENGE_MODE_RNG_SEED_OFFSET = CHALLENGE_MODE_RNG_SEED_OFFSET_ANDROID;
-                    CHALLENGE_MODE_OFFSET = CHALLENGE_MODE_OFFSET_ANDROID;
-                    CHALLENGE_MODE_MAX_HEALTH_OFFSET = CHALLENGE_MODE_MAX_HEALTH_OFFSET_ANDROID;
-                    CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET = CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_ANDROID;
-                    CHALLENGE_MODE_ENEMY_TYPE_OFFSET = CHALLENGE_MODE_ENEMY_TYPE_OFFSET_ANDROID;
+                    LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_MOBILE;
+                    SAVEGAME_VERSION_OFFSET = SAVEGAME_VERSION_OFFSET_MOBILE;
+                    CHALLENGE_MODE_RNG_SEED_OFFSET = CHALLENGE_MODE_RNG_SEED_OFFSET_MOBILE;
+                    CHALLENGE_MODE_OFFSET = CHALLENGE_MODE_OFFSET_MOBILE;
+                    CHALLENGE_MODE_MAX_HEALTH_OFFSET = CHALLENGE_MODE_MAX_HEALTH_OFFSET_MOBILE;
+                    CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET = CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_MOBILE;
+                    CHALLENGE_MODE_ENEMY_TYPE_OFFSET = CHALLENGE_MODE_ENEMY_TYPE_OFFSET_MOBILE;
                 }
                 else if (platform == Platform.PlayStation4)
                 {
@@ -624,9 +624,9 @@ namespace TRR_SaveMaster
                 {
                     return ENTITY_BLOCK_START_PC;
                 }
-                else if (platform == Platform.Android)
+                else if (platform == Platform.Android || platform == Platform.iOS)
                 {
-                    return ENTITY_BLOCK_START_ANDROID;
+                    return ENTITY_BLOCK_START_MOBILE;
                 }
                 else if (platform == Platform.PlayStation4)
                 {
@@ -1355,10 +1355,10 @@ namespace TRR_SaveMaster
                     LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PC;
                     CHALLENGE_MODE_OFFSET = CHALLENGE_MODE_OFFSET_PC;
                 }
-                else if (platform == Platform.Android)
+                else if (platform == Platform.Android || platform == Platform.iOS)
                 {
-                    LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_ANDROID;
-                    CHALLENGE_MODE_OFFSET = CHALLENGE_MODE_OFFSET_ANDROID;
+                    LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_MOBILE;
+                    CHALLENGE_MODE_OFFSET = CHALLENGE_MODE_OFFSET_MOBILE;
                 }
                 else if (platform == Platform.PlayStation4)
                 {

@@ -309,6 +309,7 @@ namespace TRR_SaveMaster
             this.tsmiPlayStation4 = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiNintendoSwitch = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAndroid = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiIOS = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAdvanced = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAllowUnsafeMaxValuesTR6 = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiShowInventoryToggleTR6 = new System.Windows.Forms.ToolStripMenuItem();
@@ -3740,10 +3741,11 @@ namespace TRR_SaveMaster
             this.tsmiPC,
             this.tsmiPlayStation4,
             this.tsmiNintendoSwitch,
-            this.tsmiAndroid});
+            this.tsmiAndroid,
+            this.tsmiIOS});
             this.tsmiPlatform.Image = global::TRR_SaveMaster.Properties.Resources.Platform_Image;
             this.tsmiPlatform.Name = "tsmiPlatform";
-            this.tsmiPlatform.Size = new System.Drawing.Size(149, 22);
+            this.tsmiPlatform.Size = new System.Drawing.Size(180, 22);
             this.tsmiPlatform.Text = "Platform";
             // 
             // tsmiPC
@@ -3752,7 +3754,7 @@ namespace TRR_SaveMaster
             this.tsmiPC.CheckOnClick = true;
             this.tsmiPC.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiPC.Name = "tsmiPC";
-            this.tsmiPC.Size = new System.Drawing.Size(162, 22);
+            this.tsmiPC.Size = new System.Drawing.Size(180, 22);
             this.tsmiPC.Text = "PC";
             this.tsmiPC.CheckedChanged += new System.EventHandler(this.tsmiPC_CheckedChanged);
             // 
@@ -3760,7 +3762,7 @@ namespace TRR_SaveMaster
             // 
             this.tsmiPlayStation4.CheckOnClick = true;
             this.tsmiPlayStation4.Name = "tsmiPlayStation4";
-            this.tsmiPlayStation4.Size = new System.Drawing.Size(162, 22);
+            this.tsmiPlayStation4.Size = new System.Drawing.Size(180, 22);
             this.tsmiPlayStation4.Text = "PlayStation 4";
             this.tsmiPlayStation4.CheckedChanged += new System.EventHandler(this.tsmiPlayStation4_CheckedChanged);
             // 
@@ -3768,7 +3770,7 @@ namespace TRR_SaveMaster
             // 
             this.tsmiNintendoSwitch.CheckOnClick = true;
             this.tsmiNintendoSwitch.Name = "tsmiNintendoSwitch";
-            this.tsmiNintendoSwitch.Size = new System.Drawing.Size(162, 22);
+            this.tsmiNintendoSwitch.Size = new System.Drawing.Size(180, 22);
             this.tsmiNintendoSwitch.Text = "Nintendo Switch";
             this.tsmiNintendoSwitch.CheckedChanged += new System.EventHandler(this.tsmiNintendoSwitch_CheckedChanged);
             // 
@@ -3776,9 +3778,17 @@ namespace TRR_SaveMaster
             // 
             this.tsmiAndroid.CheckOnClick = true;
             this.tsmiAndroid.Name = "tsmiAndroid";
-            this.tsmiAndroid.Size = new System.Drawing.Size(162, 22);
+            this.tsmiAndroid.Size = new System.Drawing.Size(180, 22);
             this.tsmiAndroid.Text = "Android";
             this.tsmiAndroid.CheckedChanged += new System.EventHandler(this.tsmiAndroid_CheckedChanged);
+            // 
+            // tsmiIOS
+            // 
+            this.tsmiIOS.CheckOnClick = true;
+            this.tsmiIOS.Name = "tsmiIOS";
+            this.tsmiIOS.Size = new System.Drawing.Size(180, 22);
+            this.tsmiIOS.Text = "iOS";
+            this.tsmiIOS.CheckedChanged += new System.EventHandler(this.tsmiIOS_CheckedChanged);
             // 
             // tsmiAdvanced
             // 
@@ -3789,7 +3799,7 @@ namespace TRR_SaveMaster
             this.tsmiUseFlatCheckBoxDarkMode});
             this.tsmiAdvanced.Image = global::TRR_SaveMaster.Properties.Resources.AdvancedSettings_Image;
             this.tsmiAdvanced.Name = "tsmiAdvanced";
-            this.tsmiAdvanced.Size = new System.Drawing.Size(149, 22);
+            this.tsmiAdvanced.Size = new System.Drawing.Size(180, 22);
             this.tsmiAdvanced.Text = "Advanced";
             // 
             // tsmiAllowUnsafeMaxValuesTR6
@@ -3827,13 +3837,13 @@ namespace TRR_SaveMaster
             // tsmiSettingsSeparator
             // 
             this.tsmiSettingsSeparator.Name = "tsmiSettingsSeparator";
-            this.tsmiSettingsSeparator.Size = new System.Drawing.Size(146, 6);
+            this.tsmiSettingsSeparator.Size = new System.Drawing.Size(177, 6);
             // 
             // tsmiAlwaysOnTop
             // 
             this.tsmiAlwaysOnTop.CheckOnClick = true;
             this.tsmiAlwaysOnTop.Name = "tsmiAlwaysOnTop";
-            this.tsmiAlwaysOnTop.Size = new System.Drawing.Size(149, 22);
+            this.tsmiAlwaysOnTop.Size = new System.Drawing.Size(180, 22);
             this.tsmiAlwaysOnTop.Text = "Always on top";
             this.tsmiAlwaysOnTop.Click += new System.EventHandler(this.tsmiAlwaysOnTop_Click);
             // 
@@ -3843,7 +3853,7 @@ namespace TRR_SaveMaster
             this.tsmiStatusBar.CheckOnClick = true;
             this.tsmiStatusBar.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiStatusBar.Name = "tsmiStatusBar";
-            this.tsmiStatusBar.Size = new System.Drawing.Size(149, 22);
+            this.tsmiStatusBar.Size = new System.Drawing.Size(180, 22);
             this.tsmiStatusBar.Text = "Status Bar";
             this.tsmiStatusBar.Click += new System.EventHandler(this.tsmiStatusBar_Click);
             // 
@@ -3851,7 +3861,7 @@ namespace TRR_SaveMaster
             // 
             this.tsmiDarkMode.CheckOnClick = true;
             this.tsmiDarkMode.Name = "tsmiDarkMode";
-            this.tsmiDarkMode.Size = new System.Drawing.Size(149, 22);
+            this.tsmiDarkMode.Size = new System.Drawing.Size(180, 22);
             this.tsmiDarkMode.Text = "Dark Mode";
             this.tsmiDarkMode.Click += new System.EventHandler(this.tsmiDarkMode_Click);
             // 
@@ -4346,6 +4356,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.ToolStripMenuItem tsmiAndroid;
         private System.Windows.Forms.ToolStripMenuItem tsmiUseFlatCheckBoxDarkMode;
         private System.Windows.Forms.ToolStripSeparator tsmiAdvancedSettingsSeparator;
+        private System.Windows.Forms.ToolStripMenuItem tsmiIOS;
     }
 }
 

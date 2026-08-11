@@ -21,13 +21,13 @@ namespace TRR_SaveMaster
         private int ROOM_OFFSET;
         private const int LEVEL_INDEX_OFFSET_TR1_PREPATCH = 0x628;
         private const int LEVEL_INDEX_OFFSET_TR1_PC_PS4 = 0x628;
-        private const int LEVEL_INDEX_OFFSET_TR1_ANDROID = 0x658;
+        private const int LEVEL_INDEX_OFFSET_TR1_MOBILE = 0x658;
         private const int LEVEL_INDEX_OFFSET_TR2_PREPATCH = 0x624;
         private const int LEVEL_INDEX_OFFSET_TR2_PC_PS4 = 0x624;
-        private const int LEVEL_INDEX_OFFSET_TR2_ANDROID = 0x654;
+        private const int LEVEL_INDEX_OFFSET_TR2_MOBILE = 0x654;
         private const int LEVEL_INDEX_OFFSET_TR3_PREPATCH = 0x8D2;
         private const int LEVEL_INDEX_OFFSET_TR3_PC_PS4 = 0x8D2;
-        private const int LEVEL_INDEX_OFFSET_TR3_ANDROID = 0x912;
+        private const int LEVEL_INDEX_OFFSET_TR3_MOBILE = 0x912;
         private const int LEVEL_INDEX_OFFSET_TR4 = 0x26B;
         private const int LEVEL_INDEX_OFFSET_TR5 = 0x26B;
         private const int LEVEL_INDEX_OFFSET_TR6 = 0x10;
@@ -120,7 +120,7 @@ namespace TRR_SaveMaster
                 }
                 else
                 {
-                    LEVEL_INDEX_OFFSET = platform == Platform.Android ? LEVEL_INDEX_OFFSET_TR1_ANDROID : LEVEL_INDEX_OFFSET_TR1_PC_PS4;
+                    LEVEL_INDEX_OFFSET = (platform == Platform.Android || platform == Platform.iOS) ? LEVEL_INDEX_OFFSET_TR1_MOBILE : LEVEL_INDEX_OFFSET_TR1_PC_PS4;
                 }
             }
             else if (IsTR2Savegame())
@@ -131,7 +131,7 @@ namespace TRR_SaveMaster
                 }
                 else
                 {
-                    LEVEL_INDEX_OFFSET = platform == Platform.Android ? LEVEL_INDEX_OFFSET_TR2_ANDROID : LEVEL_INDEX_OFFSET_TR2_PC_PS4;
+                    LEVEL_INDEX_OFFSET = (platform == Platform.Android || platform == Platform.iOS) ? LEVEL_INDEX_OFFSET_TR2_MOBILE : LEVEL_INDEX_OFFSET_TR2_PC_PS4;
                 }
             }
             else if (IsTR3Savegame())
@@ -142,7 +142,7 @@ namespace TRR_SaveMaster
                 }
                 else
                 {
-                    LEVEL_INDEX_OFFSET = platform == Platform.Android ? LEVEL_INDEX_OFFSET_TR3_ANDROID : LEVEL_INDEX_OFFSET_TR3_PC_PS4;
+                    LEVEL_INDEX_OFFSET = (platform == Platform.Android || platform == Platform.iOS) ? LEVEL_INDEX_OFFSET_TR3_MOBILE : LEVEL_INDEX_OFFSET_TR3_PC_PS4;
                 }
             }
             else if (IsTR4Savegame())

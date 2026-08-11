@@ -643,16 +643,19 @@ namespace TRR_SaveMaster
             tsmiPlayStation4.CheckedChanged -= tsmiPlayStation4_CheckedChanged;
             tsmiNintendoSwitch.CheckedChanged -= tsmiNintendoSwitch_CheckedChanged;
             tsmiAndroid.CheckedChanged -= tsmiAndroid_CheckedChanged;
+            tsmiIOS.CheckedChanged -= tsmiIOS_CheckedChanged;
 
             tsmiPC.Checked = (platform == Platform.PC);
             tsmiPlayStation4.Checked = (platform == Platform.PlayStation4);
             tsmiNintendoSwitch.Checked = (platform == Platform.NintendoSwitch);
             tsmiAndroid.Checked = (platform == Platform.Android);
+            tsmiIOS.Checked = (platform == Platform.iOS);
 
             tsmiPC.CheckedChanged += tsmiPC_CheckedChanged;
             tsmiPlayStation4.CheckedChanged += tsmiPlayStation4_CheckedChanged;
             tsmiNintendoSwitch.CheckedChanged += tsmiNintendoSwitch_CheckedChanged;
             tsmiAndroid.CheckedChanged += tsmiAndroid_CheckedChanged;
+            tsmiIOS.CheckedChanged += tsmiIOS_CheckedChanged;
 
             this.platform = platform;
             this.Text = $"{Globals.WINDOW_TITLE} ({PlatformExtensions.ToFriendlyString(platform)})";
@@ -701,13 +704,13 @@ namespace TRR_SaveMaster
                 bool isPrepatch = IsPrepatchSavegameFileTRX(fileData);
 
                 // TRX (pre-patch) support: PC, PS4, NS
-                if (isPrepatch && platform != Platform.Android)
+                if (isPrepatch && (platform != Platform.Android && platform != Platform.iOS))
                 {
                     return;
                 }
 
-                // TRX (Patch 5) support: PC, Android, PS4
-                if (!isPrepatch && (platform == Platform.PC || platform == Platform.Android || platform == Platform.PlayStation4))
+                // TRX (Patch 5) support: PC, Android, PS4, iOS
+                if (!isPrepatch && (platform == Platform.PC || platform == Platform.Android || platform == Platform.PlayStation4 || platform == Platform.iOS))
                 {
                     return;
                 }
@@ -743,6 +746,7 @@ namespace TRR_SaveMaster
                 tsmiPlayStation4.Checked = false;
                 tsmiNintendoSwitch.Checked = false;
                 tsmiAndroid.Checked = false;
+                tsmiIOS.Checked = false;
 
                 this.platform = Platform.PC;
                 this.Text = $"{Globals.WINDOW_TITLE} ({PlatformExtensions.ToFriendlyString(Platform.PC)})";
@@ -750,7 +754,7 @@ namespace TRR_SaveMaster
             else if (IsTRX2TabSelected())
             {
                 // TRX2 support: PC, PS4, NS
-                if (platform != Platform.Android)
+                if (platform != Platform.Android && platform != Platform.iOS)
                 {
                     return;
                 }
@@ -3316,6 +3320,11 @@ namespace TRR_SaveMaster
             SetPlatform(Platform.Android);
         }
 
+        private void tsmiIOS_CheckedChanged(object sender, EventArgs e)
+        {
+            SetPlatform(Platform.iOS);
+        }
+
         private void tsmiEnableAllWeapons_Click(object sender, EventArgs e)
         {
             if (tabGame.SelectedIndex == Globals.TAB_TR1)
@@ -3618,6 +3627,7 @@ namespace TRR_SaveMaster
                 tsmiPlayStation4.Enabled = true;
                 tsmiNintendoSwitch.Enabled = true;
                 tsmiAndroid.Enabled = true;
+                tsmiIOS.Enabled = true;
             }
             else if (tabGame.SelectedIndex == Globals.TAB_TR2)
             {
@@ -3632,6 +3642,7 @@ namespace TRR_SaveMaster
                 tsmiPlayStation4.Enabled = true;
                 tsmiNintendoSwitch.Enabled = true;
                 tsmiAndroid.Enabled = true;
+                tsmiIOS.Enabled = true;
             }
             else if (tabGame.SelectedIndex == Globals.TAB_TR3)
             {
@@ -3646,6 +3657,7 @@ namespace TRR_SaveMaster
                 tsmiPlayStation4.Enabled = true;
                 tsmiNintendoSwitch.Enabled = true;
                 tsmiAndroid.Enabled = true;
+                tsmiIOS.Enabled = true;
             }
             else if (tabGame.SelectedIndex == Globals.TAB_TR4)
             {
@@ -3660,6 +3672,7 @@ namespace TRR_SaveMaster
                 tsmiPlayStation4.Enabled = true;
                 tsmiNintendoSwitch.Enabled = true;
                 tsmiAndroid.Enabled = false;
+                tsmiIOS.Enabled = false;
             }
             else if (tabGame.SelectedIndex == Globals.TAB_TR5)
             {
@@ -3674,6 +3687,7 @@ namespace TRR_SaveMaster
                 tsmiPlayStation4.Enabled = true;
                 tsmiNintendoSwitch.Enabled = true;
                 tsmiAndroid.Enabled = false;
+                tsmiIOS.Enabled = false;
             }
             else if (tabGame.SelectedIndex == Globals.TAB_TR6)
             {
@@ -3688,6 +3702,7 @@ namespace TRR_SaveMaster
                 tsmiPlayStation4.Enabled = true;
                 tsmiNintendoSwitch.Enabled = true;
                 tsmiAndroid.Enabled = false;
+                tsmiIOS.Enabled = false;
             }
         }
 

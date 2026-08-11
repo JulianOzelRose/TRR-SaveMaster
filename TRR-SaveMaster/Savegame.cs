@@ -7,7 +7,8 @@ namespace TRR_SaveMaster
         PC,
         PlayStation4,
         NintendoSwitch,
-        Android
+        Android,
+        iOS
     }
 
     public static class PlatformExtensions
@@ -24,6 +25,8 @@ namespace TRR_SaveMaster
                     return "Nintendo Switch";
                 case Platform.Android:
                     return "Android";
+                case Platform.iOS:
+                    return "iOS";
                 default:
                     return platform.ToString();
             }
@@ -41,6 +44,8 @@ namespace TRR_SaveMaster
                     return Platform.NintendoSwitch;
                 case "Android":
                     return Platform.Android;
+                case "iOS":
+                    return Platform.iOS;
                 default:
                     return Platform.PC;
             }
