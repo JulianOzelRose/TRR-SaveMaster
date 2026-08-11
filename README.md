@@ -4,7 +4,7 @@ basic use instructions as well as how to edit savegames from platforms other tha
 on the bottom section of this README. For a tool that allows you to import savegames, convert to PC/PS4/Android/NS format,
 and reorder/delete savegames, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
-### Features
+### ✨ Features
 - 🎒 Edit Inventory & Items
 - 🔫 Edit Weapons & Ammo
 - ❤️ Edit Health
@@ -12,7 +12,7 @@ and reorder/delete savegames, check out [TombExtract](https://github.com/JulianO
 - 📊 Edit Statistics
 - 🔓 Unlock NG+ & Outfits
 - 🗑️ Savegame Deletion
-- 🖥️ Cross-Platform Compatibility (PC/PS4/Android/NS)
+- 🖥️ Cross-Platform Compatibility (PC/PS4/Android/NS/iOS)
 - 🔄 Patch 5 & Pre-Patch Compatible
 
 <br>
@@ -38,11 +38,11 @@ All platforms are supported for Tomb Raider IV-VI.
 
 Console format (PS4/NS) savegames must be decrypted first. You can find more information on how to do that [here](https://github.com/JulianOzelRose/TombExtract/issues/1#issuecomment-1978837071).
 
-For Android, accessing the savegame file requires a rooted device. Rooting your device may void your warranty and can introduce security risks, so it is generally not recommended.
-However, editing Android savegames is still possible if your device is rooted.
+For mobile format (Android/iOS), accessing the savegame file requires a rooted device. Rooting your device may void your warranty and can introduce security risks, so it is generally not recommended.
+However, editing mobile savegames is still possible if your device is rooted.
 
 ## Using the Position Editor
-<img width="359" height="344" alt="PositionForm-UI" src="https://github.com/user-attachments/assets/1454e3c1-964b-406c-ace3-a6b138761625" />
+<img width="359" height="344" alt="PositionForm-UI" src="https://github.com/user-attachments/assets/19d932cf-6e2e-4812-aeb6-5de21b417c8f" />
 <br>
 
 This savegame editor includes a Position Editor feature. To use it, click "Edit" -> "Position".
@@ -58,7 +58,7 @@ It's essential that the Room/Zone number matches Lara's current coordinates. Oth
 position. Position cannot be edited while Lara is in a vehicle. If you try to teleport while Lara is interacting with a puzzle, it may result in the game crashing.
 
 ## Using the Statistics Editor
-<img width="391" height="502" alt="StatisticsForm" src="https://github.com/user-attachments/assets/8f508537-43a0-4093-83a8-a3ccf5370cc3" />
+<img width="391" height="502" alt="StatisticsForm-UI" src="https://github.com/user-attachments/assets/f8079c59-353f-46ec-b7f2-cbdc0ae1e48b" />
 <br>
 
 This savegame editor also includes a Statistics Editor feature. To use it, click "Edit," then select "Statistics".<br>
@@ -85,19 +85,20 @@ From here, you can:
 
 If you prefer a darker interface, you can enable Dark Mode from the Settings menu at the top of the program.
 Please note that Dark Mode may not display correctly when using very high or very low DPI settings.
+If you have trouble viewing the checkboxes on your display, you can try changing "Settings" -> "Advanced" -> "Use flat style checkboxes for Dark Mode".
 
 ## Tomb Raider I-III Remastered Savegame Format
 This section details the technical aspects of reverse engineering the savegames of the Tomb Raider I-III Remastered trilogy. All savegames are stored in the `savegame.dat` file.
 Savegames for expansions are stored in the same slots as the original game. Each savegame slot for each game begins at a specific offset in the file, with a maximum of 32
-slots per game. See the table below.
+slots per game. If you want to see a more detailed layout of the savegame format for Tomb Raider I-III, [this one](https://gist.github.com/Doliman100/2cc56dee0b73b5e344ae9468b29e12e9) is excellent.
 
 | Game                               | Offset   |
 |:-----------------------------------|:---------|
-| Tomb Raider I                      | 0x002000 |
-| Tomb Raider II                     | 0x0D2000 |
-| Tomb Raider III                    | 0x1A2000 |
+| Tomb Raider I                      | 0x002004 |
+| Tomb Raider II                     | 0x0D2004 |
+| Tomb Raider III                    | 0x1A2004 |
 
-Because each savegame has a constant size of 0x6800 bytes, that value can be used as an iterator when cycling through savegames.
+Because each savegame has a constant size of `0x6800` bytes, that value can be used as an iterator when cycling through savegames.
 When a savegame slot is occupied, the value at offset `0x004` is set to 1. When a savegame slot is empty,
 the value is 0. See the code below.
 
@@ -106,13 +107,12 @@ for (int i = 0; i < Globals.MAX_SAVEGAMES; i++)
 {
     int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR3 + (i * SAVEGAME_SIZE);
 
-    byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
+    Int16 levelIndex = BitConverter.ToInt16(fileData, currentSavegameOffset + LEVEL_INDEX_OFFSET);
     Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
     bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
 
-    if (isSavegamePresent && levelNames.ContainsKey(levelIndex) && saveNumber >= 0)
+    if (isSavegamePresent && levelNames.TryGetValue(levelIndex, out string levelName) && saveNumber >= 0)
     {
-        string levelName = levelNames[levelIndex];
         int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR3) / SAVEGAME_SIZE;
         bool isNewGamePlus = BitConverter.ToInt32(fileData, currentSavegameOffset + NEW_GAME_PLUS_OFFSET) != 0;
         bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1 && !isPrepatch;
@@ -132,32 +132,16 @@ So when calculating, you will have to add them to the base savegame offset.
 #### Tomb Raider I
 | Offset    | Type    | Description        |
 |:----------|:--------|:-------------------|
-| 0x004     | Int32   | Slot Status        |
-| 0x008     | Int32   | New Game+          |
-| 0x00C     | Int32   | Save Number        |
-| 0x4C2     | UInt16  | Magnum Ammo 1      |
-| 0x4C4     | UInt16  | Uzi Ammo 1         |
-| 0x4C6     | UInt16  | Shotgun Ammo 1     |
-| 0x4C8     | UInt8   | Small Medipack     |
-| 0x4C9     | UInt8   | Large Medipack     |
-| 0x4EC     | UInt8   | Weapons            |
-| 0x610     | Int32   | Crystals Used      |
-| 0x614     | Int32   | Time Taken         |
-| 0x618     | Int32   | Ammo Used          |
-| 0x61C     | Int32   | Hits               |
-| 0x620     | Int32   | Kills              |
-| 0x624     | UInt32  | Distance Travelled |
-| 0x628     | UInt16  | Secrets Found      |
-| 0x62A     | Int8    | Pickups            |
-| 0x62B     | Int8    | Medi Packs Used    |
-| 0x62C     | UInt8   | Level Index        |
-
-#### Tomb Raider II
-| Offset    | Type    | Description        |
-|:----------|:--------|:-------------------|
-| 0x004     | Int32   | Slot Status        |
-| 0x008     | Int32   | New Game+          |
-| 0x00C     | Int32   | Save Number        |
+| 0x000     | Int32   | Slot Status        |
+| 0x004     | Int32   | New Game+          |
+| 0x008     | Int32   | Save Number        |
+| 0x4BE     | UInt16  | Magnum Ammo 1      |
+| 0x4C0     | UInt16  | Uzi Ammo 1         |
+| 0x4C2     | UInt16  | Shotgun Ammo 1     |
+| 0x4C4     | UInt8   | Small Medipack     |
+| 0x4C5     | UInt8   | Large Medipack     |
+| 0x4E8     | UInt8   | Weapons            |
+| 0x60C     | Int32   | Crystals Used      |
 | 0x610     | Int32   | Time Taken         |
 | 0x614     | Int32   | Ammo Used          |
 | 0x618     | Int32   | Hits               |
@@ -166,25 +150,44 @@ So when calculating, you will have to add them to the base savegame offset.
 | 0x624     | UInt16  | Secrets Found      |
 | 0x626     | Int8    | Pickups            |
 | 0x627     | Int8    | Medi Packs Used    |
-| 0x628     | UInt8   | Level Index        |
+| 0x628     | Int16   | Level Index        |
+| 0x6E0     | UInt32  | Savegame Version   |
+
+#### Tomb Raider II
+| Offset    | Type    | Description        |
+|:----------|:--------|:-------------------|
+| 0x000     | Int32   | Slot Status        |
+| 0x004     | Int32   | New Game+          |
+| 0x008     | Int32   | Save Number        |
+| 0x60C     | Int32   | Time Taken         |
+| 0x610     | Int32   | Ammo Used          |
+| 0x614     | Int32   | Hits               |
+| 0x618     | Int32   | Kills              |
+| 0x61C     | UInt32  | Distance Travelled |
+| 0x620     | UInt16  | Secrets Found      |
+| 0x622     | Int8    | Pickups            |
+| 0x623     | Int8    | Medi Packs Used    |
+| 0x624     | Int16   | Level Index        |
+| 0x6A4     | UInt32  | Savegame Version   |
 
 #### Tomb Raider III
 | Offset    | Type    | Description        |
 |:----------|:--------|:-------------------|
-| 0x004     | Int32   | Slot Status        |
-| 0x008     | Int32   | New Game+          |
-| 0x00C     | Int32   | Save Number        |
-| 0x8A4     | Int32   | Crystals Found     |
-| 0x8A8     | Int32   | Crystals Used      |
-| 0x8AC     | Int32   | Time Taken         |
-| 0x8B0     | Int32   | Ammo Used          |
-| 0x8B4     | Int32   | Hits               |
-| 0x8B8     | Int32   | Kills              |
-| 0x8BC     | UInt32  | Distance Travelled |
-| 0x8C0     | UInt16  | Secrets Found      |
-| 0x8C2     | Int8    | Pickups            |
-| 0x8C3     | Int8    | Medi Packs Used    |
-| 0x8D6     | UInt8   | Level Index        |
+| 0x000     | Int32   | Slot Status        |
+| 0x004     | Int32   | New Game+          |
+| 0x008     | Int32   | Save Number        |
+| 0x8A0     | Int32   | Crystals Found     |
+| 0x8A4     | Int32   | Crystals Used      |
+| 0x8A8     | Int32   | Time Taken         |
+| 0x8AC     | Int32   | Ammo Used          |
+| 0x8B0     | Int32   | Hits               |
+| 0x8B4     | Int32   | Kills              |
+| 0x8B8     | UInt32  | Distance Travelled |
+| 0x8BC     | UInt16  | Secrets Found      |
+| 0x8BE     | Int8    | Pickups            |
+| 0x8BF     | Int8    | Medi Packs Used    |
+| 0x8D2     | Int16   | Level Index        |
+| 0x988     | UInt32  | Savegame Version   |
 
 ## Tomb Raider I Deserializer
 ### Pre-Entity Data
@@ -202,7 +205,7 @@ if (isChallengeMode && isNativePatch5)
     Int32 challengeModeRNGSeed = GetChallengeModeRNGSeed(fileData);
     levelObjectIds = ApplyChallengeModeMutations(levelObjectIds, levelIndex, enemyNumbers, enemyType, challengeModeRNGSeed);
 
-    sgBufferCursor += 0x0C;
+    sgBufferCursor += Globals.CHALLENGE_MODE_PARAM_BLOCK_SIZE;
 }
 
 sgBufferCursor += 4;
@@ -220,7 +223,7 @@ if (isNativePatch5)
 ### Entity Loop
 Then, the entity deserializer loop begins. For native Patch 5 savegames, an additional DWORD is read for each entity.
 It then performs a series of bitmask checks for each entity type, and reads additional data accordingly.
-Health is located by identifying Lara's entity (ID 0) and recording the offset `0x28` within her entity block.
+Health is located by identifying Lara's entity (ID 0) and recording the offset `0x24` within her entity block.
 After the loop ends, additional Lara info is deserialized, which is where the secondary ammo data is stored.
 <br>
 
@@ -246,7 +249,7 @@ for (int itemIndex = 0; itemIndex < levelObjectIds.Count; itemIndex++)
 
     if (tr1Object.ObjectId == Globals.LARA_ENTITY_ID)
     {
-        HEALTH_OFFSET = sgBufferCursor + 0x28;
+        HEALTH_OFFSET = sgBufferCursor + 0x24;
     }
 
     if ((tr1Object.Flags00 & 0x08) != 0)
@@ -276,9 +279,9 @@ for (int itemIndex = 0; itemIndex < levelObjectIds.Count; itemIndex++)
     }
 }
 
-magnumAmmoOffset2 = sgBufferCursor + 0x14C;
-uziAmmoOffset2 = sgBufferCursor + 0x154;
-shotgunAmmoOffset2 = sgBufferCursor + 0x15C;
+magnumAmmoOffset2 = sgBufferCursor + 0x148;
+uziAmmoOffset2 = sgBufferCursor + 0x150;
+shotgunAmmoOffset2 = sgBufferCursor + 0x158;
 ```
 
 ## Tomb Raider II Deserializer
@@ -297,7 +300,7 @@ if (isChallengeMode && isNativePatch5 && !isPrepatch)
     Int32 challengeModeRNGSeed = GetChallengeModeRNGSeed(fileData);
     levelObjectIds = ApplyChallengeModeMutations(levelObjectIds, levelIndex, enemyNumbers, enemyType, challengeModeRNGSeed);
 
-    sgBufferCursor += 0x0C;
+    sgBufferCursor += Globals.CHALLENGE_MODE_PARAM_BLOCK_SIZE;
 }
 
 sgBufferCursor += 4;
@@ -315,7 +318,7 @@ if (isNativePatch5 && !isPrepatch)
 ### Entity Loop
 Next is the entity deserializer loop. It is structurally similar to the Tomb Raider I entity loop, with some differences in deserializing actor data.
 For native Patch 5 savegames, an additional DWORD is read for each entity. It then performs a series of bitmask checks for each entity type, and reads additional data accordingly.
-Health is located by identifying Lara's entity (ID 0) and recording the offset `0x28` within her entity block.
+Health is located by identifying Lara's entity (ID 0) and recording the offset `0x24` within her entity block.
 
 The base size of the `0x20` actor block depends on the `0x02` flag. If the entity's AI-active bit is set, an additional AI block is present and the cursor is advanced by `0xC` bytes.
 Certain entities mutate the runtime object ID of another entity during deserialization. When this condition is detected, the target entity's object ID is updated to `0xD` for the rest of the deserializer.
@@ -346,7 +349,7 @@ for (int itemIndex = 0; itemIndex < levelObjectIds.Count; itemIndex++)
 
     if (tr2Object.ObjectId == Globals.LARA_ENTITY_ID)
     {
-        HEALTH_OFFSET = sgBufferCursor + 0x28;
+        HEALTH_OFFSET = sgBufferCursor + 0x24;
     }
 
     if ((tr2Object.Flags00 & 0x08) != 0)
@@ -369,7 +372,7 @@ for (int itemIndex = 0; itemIndex < levelObjectIds.Count; itemIndex++)
         int blockStart = sgBufferCursor;
         bool has02 = (tr2Object.Flags00 & 0x02) != 0;
 
-        ushort u2 = BitConverter.ToUInt16(fileData, savegameOffset + blockStart + (has02 ? 4 : 2));
+        ushort u2 = BitConverter.ToUInt16(fileData, savegameOffset + blockStart + (has02 ? 0 : -2));
 
         bool isEntityAIActive = has02 && (u2 & 0x0080) != 0;
 
@@ -402,14 +405,14 @@ for (int itemIndex = 0; itemIndex < levelObjectIds.Count; itemIndex++)
     }
 }
 
-LARA_VEHICLE_ITEM_OFFSET = sgBufferCursor + 0x2C;
+LARA_VEHICLE_ITEM_OFFSET = sgBufferCursor + 0x28;
 
-automaticPistolsAmmoOffset2 = sgBufferCursor + 0x14C;
-uziAmmoOffset2 = sgBufferCursor + 0x154;
-shotgunAmmoOffset2 = sgBufferCursor + 0x15C;
-harpoonGunAmmoOffset2 = sgBufferCursor + 0x164;
-grenadeLauncherAmmoOffset2 = sgBufferCursor + 0x16C;
-m16AmmoOffset2 = sgBufferCursor + 0x17C;
+automaticPistolsAmmoOffset2 = sgBufferCursor + 0x148;
+uziAmmoOffset2 = sgBufferCursor + 0x150;
+shotgunAmmoOffset2 = sgBufferCursor + 0x158;
+harpoonGunAmmoOffset2 = sgBufferCursor + 0x160;
+grenadeLauncherAmmoOffset2 = sgBufferCursor + 0x168;
+m16AmmoOffset2 = sgBufferCursor + 0x178;
 ```
 
 ## Tomb Raider III Deserializer
@@ -429,7 +432,7 @@ if (isChallengeMode && isNativePatch5 && !isPrepatch)
     Int32 challengeModeRNGSeed = GetChallengeModeRNGSeed(fileData);
     levelObjectIds = ApplyChallengeModeMutations(levelObjectIds, levelIndex, enemyNumbers, enemyType, challengeModeRNGSeed);
 
-    sgBufferCursor += 0x0C;
+    sgBufferCursor += Globals.CHALLENGE_MODE_PARAM_BLOCK_SIZE;
 }
 
 sgBufferCursor += 4;
@@ -448,7 +451,7 @@ if (isNativePatch5 && !isPrepatch)
 ### Entity Loop
 Next is the entity deserializer loop. It is structurally similar to the Tomb Raider II entity loop.
 For native Patch 5 savegames, an additional DWORD is read for each entity. It then performs a series of bitmask checks for each entity type, and reads additional data accordingly.
-Health is located by identifying Lara's entity (ID 0) and recording the offset `0x28` within her entity block.
+Health is located by identifying Lara's entity (ID 0) and recording the offset `0x24` within her entity block.
 
 The base size of the `0x20` actor block depends on the `0x02` flag. If the entity's AI-active bit is set, an additional AI block is present and the cursor is advanced by `0xA` bytes.
 In Tomb Raider III's deserializer, more objects have special handling at the tail of the loop.
@@ -477,7 +480,7 @@ for (int itemIndex = 0; itemIndex < levelObjectIds.Count; itemIndex++)
 
     if (tr3Object.ObjectId == Globals.LARA_ENTITY_ID)
     {
-        HEALTH_OFFSET = sgBufferCursor + 0x28;
+        HEALTH_OFFSET = sgBufferCursor + 0x24;
     }
 
     if ((tr3Object.Flags00 & 0x08) != 0)
@@ -502,7 +505,7 @@ for (int itemIndex = 0; itemIndex < levelObjectIds.Count; itemIndex++)
 
         int increment = has02 ? 0x18 : 0x16;
 
-        short aiWord = BitConverter.ToInt16(fileData, savegameOffset + blockStart + 6);
+        short aiWord = BitConverter.ToInt16(fileData, savegameOffset + blockStart + 2);
         bool isEntityAIActive = aiWord < 0 && (aiWord & 0x00FF) != 0;
 
         if (isEntityAIActive)
@@ -554,15 +557,15 @@ for (int itemIndex = 0; itemIndex < levelObjectIds.Count; itemIndex++)
     }
 }
 
-LARA_VEHICLE_ITEM_OFFSET = sgBufferCursor + 0x4C;
+LARA_VEHICLE_ITEM_OFFSET = sgBufferCursor + 0x48;
 
-deagleAmmoOffset2 = sgBufferCursor + 0x16C;
-uziAmmoOffset2 = sgBufferCursor + 0x174;
-shotgunAmmoOffset2 = sgBufferCursor + 0x17C;
-harpoonGunAmmoOffset2 = sgBufferCursor + 0x184;
-rocketLauncherAmmoOffset2 = sgBufferCursor + 0x18C;
-grenadeLauncherAmmoOffset2 = sgBufferCursor + 0x194;
-mp5AmmoOffset2 = sgBufferCursor + 0x19C;
+deagleAmmoOffset2 = sgBufferCursor + 0x168;
+uziAmmoOffset2 = sgBufferCursor + 0x170;
+shotgunAmmoOffset2 = sgBufferCursor + 0x178;
+harpoonGunAmmoOffset2 = sgBufferCursor + 0x180;
+rocketLauncherAmmoOffset2 = sgBufferCursor + 0x188;
+grenadeLauncherAmmoOffset2 = sgBufferCursor + 0x190;
+mp5AmmoOffset2 = sgBufferCursor + 0x198;
 ```
 
 
@@ -572,95 +575,96 @@ Each savegame slot for each game begins at a specific offset in the file, with a
 
 | Game                               | Offset   |
 |:-----------------------------------|:---------|
-| Tomb Raider IV                     | 0x002000 |
-| Tomb Raider V                      | 0x14AE00 |
-| Tomb Raider VI                     | 0x293C00 |
+| Tomb Raider IV                     | 0x002004 |
+| Tomb Raider V                      | 0x14AE04 |
+| Tomb Raider VI                     | 0x293C04 |
 
 Below are the offset tables for Tomb Raider IV-VI. With the exception of health, most of the offsets are static. For Tomb Raider VI, the table only shows the header offsets, as the savegame data is very dynamic.
 
 #### Tomb Raider IV
 | Offset    | Type    | Description             |
 |:----------|:--------|:------------------------|
-| 0x004     | Int32   | Slot Status             |
-| 0x008     | Int32   | Save Number             |
-| 0x01C     | Int32   | New Game+               |
-| 0x26F     | UInt8   | Level Index             |
-| 0x1BE     | UInt16  | Small Medipack          |
-| 0x1C0     | UInt16  | Large Medipack          |
-| 0x1C2     | UInt16  | Flares                  |
-| 0x194     | UInt8   | Pistols                 |
-| 0x195     | UInt8   | Uzi                     |
-| 0x196     | UInt8   | Shotgun                 |
-| 0x197     | UInt8   | Crossbow                |
-| 0x199     | UInt8   | Grenade Gun             |
-| 0x19A     | UInt8   | Revolver                |
-| 0x1C6     | UInt16  | Uzi Ammo                |
-| 0x1C8     | UInt16  | Revolver Ammo           |
-| 0x1CA     | UInt16  | Shotgun Normal Ammo     |
-| 0x1CC     | UInt16  | Shotgun Wideshot Ammo   |
-| 0x1D0     | UInt16  | Grenade Gun Normal Ammo |
-| 0x1D2     | UInt16  | Grenade Gun Super Ammo  |
-| 0x1D4     | UInt16  | Grenade Gun Flash Ammo  |
-| 0x1D6     | UInt16  | Crossbow Normal Ammo    |
-| 0x1D8     | UInt16  | Crossbow Poison Ammo    |
-| 0x1DA     | UInt16  | Crossbow Explosive Ammo |
-| 0x230     | Int32   | Time Taken              |
-| 0x234     | UInt32  | Distance Travelled      |
-| 0x238     | Int16   | Ammo Used               |
-| 0x240     | Int32   | Pickups                 |
-| 0x244     | UInt16  | Kills                   |
-| 0x246     | UInt8   | Secrets Found           |
-| 0x247     | UInt8   | Health Packs Used       |
-| 0x280     | Int32   | Vessels Broken          |
+| 0x000     | Int32   | Slot Status             |
+| 0x004     | Int32   | Save Number             |
+| 0x018     | Int32   | New Game+               |
+| 0x26B     | UInt8   | Level Index             |
+| 0x1BA     | UInt16  | Small Medipack          |
+| 0x1BC     | UInt16  | Large Medipack          |
+| 0x1BE     | UInt16  | Flares                  |
+| 0x190     | UInt8   | Pistols                 |
+| 0x191     | UInt8   | Uzi                     |
+| 0x192     | UInt8   | Shotgun                 |
+| 0x193     | UInt8   | Crossbow                |
+| 0x195     | UInt8   | Grenade Gun             |
+| 0x196     | UInt8   | Revolver                |
+| 0x1C2     | UInt16  | Uzi Ammo                |
+| 0x1C4     | UInt16  | Revolver Ammo           |
+| 0x1C6     | UInt16  | Shotgun Normal Ammo     |
+| 0x1C8     | UInt16  | Shotgun Wideshot Ammo   |
+| 0x1CC     | UInt16  | Grenade Gun Normal Ammo |
+| 0x1CE     | UInt16  | Grenade Gun Super Ammo  |
+| 0x1D0     | UInt16  | Grenade Gun Flash Ammo  |
+| 0x1D2     | UInt16  | Crossbow Normal Ammo    |
+| 0x1D4     | UInt16  | Crossbow Poison Ammo    |
+| 0x1D6     | UInt16  | Crossbow Explosive Ammo |
+| 0x22C     | Int32   | Time Taken              |
+| 0x230     | UInt32  | Distance Travelled      |
+| 0x234     | Int16   | Ammo Used               |
+| 0x23C     | Int32   | Pickups                 |
+| 0x240     | UInt16  | Kills                   |
+| 0x242     | UInt8   | Secrets Found           |
+| 0x243     | UInt8   | Health Packs Used       |
+| 0x27C     | Int32   | Vessels Broken          |
 
 
 #### Tomb Raider V
 | Offset    | Type    | Description                  |
 |:----------|:--------|:-----------------------------|
-| 0x004     | Int32   | Slot Status                  |
-| 0x008     | Int32   | Save Number                  |
-| 0x01C     | Int32   | New Game+                    |
-| 0x26F     | UInt8   | Level Index                  |
-| 0x1BE     | UInt16  | Small Medipack               |
-| 0x1C0     | UInt16  | Large Medipack               |
-| 0x1C2     | UInt16  | Flares                       |
-| 0x194     | UInt8   | Pistols                      |
-| 0x195     | UInt8   | Uzi                          |
-| 0x196     | UInt8   | Shotgun                      |
-| 0x197     | UInt8   | Grappling Gun                |
-| 0x198     | UInt8   | HK Gun                       |
-| 0x19A     | UInt8   | Revolver / Desert Eagle      |
-| 0x1C6     | UInt16  | Uzi Ammo                     |
-| 0x1C8     | UInt16  | Revolver / Desert Eagle Ammo |
-| 0x1CA     | UInt16  | Shotgun Normal Ammo          |
-| 0x1CC     | UInt16  | Shotgun Wideshot Ammo        |
-| 0x1CE     | UInt16  | HK Gun Ammo                  |
-| 0x1D6     | UInt16  | Grappling Gun Ammo           |
-| 0x230     | Int32   | Time Taken                   |
-| 0x234     | UInt32  | Distance Travelled           |
-| 0x238     | Int16   | Ammo Used                    |
-| 0x240     | Int32   | Pickups                      |
-| 0x244     | UInt16  | Kills                        |
-| 0x246     | UInt8   | Secrets Found                |
-| 0x247     | UInt8   | Health Packs Used            |
+| 0x000     | Int32   | Slot Status                  |
+| 0x004     | Int32   | Save Number                  |
+| 0x018     | Int32   | New Game+                    |
+| 0x26B     | UInt8   | Level Index                  |
+| 0x1BA     | UInt16  | Small Medipack               |
+| 0x1BC     | UInt16  | Large Medipack               |
+| 0x1BE     | UInt16  | Flares                       |
+| 0x190     | UInt8   | Pistols                      |
+| 0x191     | UInt8   | Uzi                          |
+| 0x192     | UInt8   | Shotgun                      |
+| 0x193     | UInt8   | Grappling Gun                |
+| 0x194     | UInt8   | HK Gun                       |
+| 0x196     | UInt8   | Revolver / Desert Eagle      |
+| 0x1C2     | UInt16  | Uzi Ammo                     |
+| 0x1C4     | UInt16  | Revolver / Desert Eagle Ammo |
+| 0x1C6     | UInt16  | Shotgun Normal Ammo          |
+| 0x1C8     | UInt16  | Shotgun Wideshot Ammo        |
+| 0x1CA     | UInt16  | HK Gun Ammo                  |
+| 0x1D2     | UInt16  | Grappling Gun Ammo           |
+| 0x22C     | Int32   | Time Taken                   |
+| 0x230     | UInt32  | Distance Travelled           |
+| 0x234     | Int16   | Ammo Used                    |
+| 0x23C     | Int32   | Pickups                      |
+| 0x240     | UInt16  | Kills                        |
+| 0x242     | UInt8   | Secrets Found                |
+| 0x243     | UInt8   | Health Packs Used            |
 
 #### Tomb Raider VI
 | Offset    | Type    | Description                  |
 |:----------|:--------|:-----------------------------|
-| 0x004     | Int32   | Slot Status                  |
-| 0x014     | UInt8   | Level Index                  |
-| 0x11C     | Int32   | Save Number                  |
-| 0x240     | Int32   | Time Taken                   |
-| 0x244     | UInt32  | Distance Travelled           |
-| 0x248     | Int32   | Ammo Used                    |
-| 0x24C     | Int32   | Hits                         |
-| 0x250     | UInt16  | Pickups                      |
-| 0x252     | UInt16  | Health Items Found           |
-| 0x254     | UInt8   | Chocobars Found              |
-| 0x256     | UInt16  | Kills                        |
-| 0x258     | UInt8   | Health Restored              |
-| 0x35C     | Int32   | New Game+                    |
-| 0x364     | Int32   | Compressed Block Size        |
+| 0x000     | Int32   | Slot Status                  |
+| 0x004     | UInt32  | Savegame Version             |
+| 0x010     | UInt8   | Level Index                  |
+| 0x118     | UInt32  | Save Number                  |
+| 0x23C     | Int32   | Time Taken                   |
+| 0x240     | UInt32  | Distance Travelled           |
+| 0x244     | Int32   | Ammo Used                    |
+| 0x248     | Int32   | Hits                         |
+| 0x24C     | UInt16  | Pickups                      |
+| 0x24E     | UInt16  | Health Items Found           |
+| 0x250     | UInt8   | Chocobars Found              |
+| 0x252     | UInt16  | Kills                        |
+| 0x254     | UInt8   | Health Restored              |
+| 0x358     | Int32   | New Game+                    |
+| 0x360     | UInt32  | Compressed Block Size        |
 
 ## Tomb Raider IV Deserializer
 ### Pre-Entity Data
@@ -939,13 +943,14 @@ The compressed portion of the savegame data begins at offset `0x36C` of the head
 is notably more complex than those of the previous five games.
 
 ```
-Int32 savegameVersion = GetSavegameVersion(fileData);
-Int32 compressedBlockSize = GetCompressedBlockSize(fileData);
-byte[] compressedBlockData = ReadBytes(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, compressedBlockSize);
+UInt32 savegameVersion = GetSavegameVersion(fileData);
+UInt32 compressedBlockSize = GetCompressedBlockSize(fileData);
+byte[] compressedBlockData = ReadBytes(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, (int)compressedBlockSize);
 
-decompressedBuffer = new byte[0];
+decompressedBuffer = new byte[0];   // Clear buffer
 decompressedBuffer = Unpack(compressedBlockData);
 
+// Cursor start
 sgBufferCursor = 0x4;
 
 using (MemoryStream ms = new MemoryStream(decompressedBuffer))
