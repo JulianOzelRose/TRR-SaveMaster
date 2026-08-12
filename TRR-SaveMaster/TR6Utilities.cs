@@ -13,6 +13,7 @@ namespace TRR_SaveMaster
         private const int SAVEGAME_VERSION_OFFSET = 0x004;
         private const int LEVEL_INDEX_OFFSET = 0x010;
         private const int SAVE_NUMBER_OFFSET = 0x118;
+        private const int SLOT_STATUS_OFFSET = 0x11C;
         private const int NEW_GAME_PLUS_OFFSET = 0x358;
         private const int BASE_SAVEGAME_OFFSET_TR6 = 0x293C04;
         private const int MAX_SAVEGAME_OFFSET_TR6 = 0x484914;
@@ -1554,12 +1555,12 @@ namespace TRR_SaveMaster
 
         public bool IsSavegamePresent(byte[] fileData)
         {
-            return BitConverter.ToInt32(fileData, savegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
+            return BitConverter.ToUInt32(fileData, savegameOffset + SLOT_STATUS_OFFSET) != 0;
         }
 
         public void UpdateDisplayName(Savegame savegame, byte[] fileData)
         {
-            bool isSavegamePresent = BitConverter.ToInt32(fileData, savegame.Offset + Globals.SLOT_STATUS_OFFSET) != 0;
+            bool isSavegamePresent = BitConverter.ToUInt32(fileData, savegame.Offset + SLOT_STATUS_OFFSET) != 0;
 
             if (isSavegamePresent)
             {
@@ -1592,7 +1593,7 @@ namespace TRR_SaveMaster
                 {
                     byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
                     UInt32 saveNumber = BitConverter.ToUInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
-                    bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
+                    bool isSavegamePresent = BitConverter.ToUInt32(fileData, currentSavegameOffset + SLOT_STATUS_OFFSET) != 0;
 
                     if (isSavegamePresent && levelNames.TryGetValue(levelIndex, out string levelName))
                     {
@@ -1633,7 +1634,7 @@ namespace TRR_SaveMaster
                 byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
                 UInt32 saveNumber = BitConverter.ToUInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
 
-                bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
+                bool isSavegamePresent = BitConverter.ToUInt32(fileData, currentSavegameOffset + SLOT_STATUS_OFFSET) != 0;
 
                 if (isSavegamePresent && levelNames.TryGetValue(levelIndex, out string levelName))
                 {

@@ -13,12 +13,14 @@ namespace TRR_SaveMaster
         // Offsets
         private const int COMPRESSED_BLOCK_START_OFFSET = 0x368;
         private const int COMPRESSED_BLOCK_SIZE_OFFSET = 0x360;
+        private int SLOT_STATUS_OFFSET;
         private int LEVEL_INDEX_OFFSET;
         private int X_COORDINATE_OFFSET;
         private int Y_COORDINATE_OFFSET;
         private int Z_COORDINATE_OFFSET;
         private int ORIENTATION_OFFSET;
         private int ROOM_OFFSET;
+        private const int SLOT_STATUS_OFFSET_DEFAULT = 0x0;
         private const int LEVEL_INDEX_OFFSET_TR1_PREPATCH = 0x628;
         private const int LEVEL_INDEX_OFFSET_TR1_PC_PS4 = 0x628;
         private const int LEVEL_INDEX_OFFSET_TR1_MOBILE = 0x658;
@@ -31,6 +33,7 @@ namespace TRR_SaveMaster
         private const int LEVEL_INDEX_OFFSET_TR4 = 0x26B;
         private const int LEVEL_INDEX_OFFSET_TR5 = 0x26B;
         private const int LEVEL_INDEX_OFFSET_TR6 = 0x10;
+        private const int SLOT_STATUS_OFFSET_TR6 = 0x11C;
 
         // Utils
         private readonly TR1Utilities tr1Utilities = new TR1Utilities();
@@ -84,7 +87,7 @@ namespace TRR_SaveMaster
 
             try
             {
-                DetermineLevelIndexOffset();
+                DetermineOffsets();
                 SetNUDRanges();
                 InitializeUtilConstructors();
                 DisplayCoordinates();
@@ -110,8 +113,10 @@ namespace TRR_SaveMaster
             mainForm.RefreshGameInfoConditionally();
         }
 
-        private void DetermineLevelIndexOffset()
+        private void DetermineOffsets()
         {
+            SLOT_STATUS_OFFSET = SLOT_STATUS_OFFSET_DEFAULT;
+
             if (IsTR1Savegame())
             {
                 if (isPrepatch)
@@ -156,6 +161,7 @@ namespace TRR_SaveMaster
             else if (IsTR6Savegame())
             {
                 LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR6;
+                SLOT_STATUS_OFFSET = SLOT_STATUS_OFFSET_TR6;
             }
         }
 
@@ -393,7 +399,12 @@ namespace TRR_SaveMaster
                 fileData = File.ReadAllBytes(savegamePath);
             }
 
-            return BitConverter.ToInt32(fileData, savegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
+            if (IsTR6Savegame())
+            {
+                return BitConverter.ToUInt32(fileData, savegameOffset + SLOT_STATUS_OFFSET) != 0;
+            }
+
+            return BitConverter.ToInt32(fileData, savegameOffset + SLOT_STATUS_OFFSET) != 0;
         }
 
         private int GetLevelIndex(byte[] fileData = null)

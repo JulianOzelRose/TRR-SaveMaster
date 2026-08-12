@@ -13,6 +13,7 @@ namespace TRR_SaveMaster
     public partial class StatisticsForm : Form
     {
         // Offsets
+        private int SLOT_STATUS_OFFSET;
         private int LEVEL_INDEX_OFFSET;
         private int CRYSTALS_FOUND_OFFSET;
         private int CRYSTALS_USED_OFFSET;
@@ -32,6 +33,9 @@ namespace TRR_SaveMaster
         private int TIMESTAMP_MINUTES_OFFSET;
         private int TIMESTAMP_SECONDS_OFFSET;
         private int WORLD_STATE_OFFSET_TR3;
+
+        // Common offsets (TR1-5)
+        private const int SLOT_STATUS_OFFSET_DEFAULT = 0x0;
 
         // TR1 offsets (PC)
         private const int STATISTICS_ARRAY_BASE_OFFSET_TR1_PC = 0x4C;
@@ -225,6 +229,7 @@ namespace TRR_SaveMaster
 
         // TR6 offsets
         private const int LEVEL_INDEX_OFFSET_TR6 = 0x10;
+        private const int SLOT_STATUS_OFFSET_TR6 = 0x11C;
         private const int TIME_TAKEN_OFFSET_TR6 = 0x23C;
         private const int DISTANCE_TRAVELLED_OFFSET_TR6 = 0x240;
         private const int AMMO_USED_OFFSET_TR6 = 0x244;
@@ -686,6 +691,8 @@ namespace TRR_SaveMaster
 
         private void DetermineOffsets()
         {
+            SLOT_STATUS_OFFSET = SLOT_STATUS_OFFSET_DEFAULT;
+
             if (SELECTED_TAB == Globals.TAB_TR1)
             {
                 if (isPrepatch)
@@ -943,6 +950,7 @@ namespace TRR_SaveMaster
             else if (SELECTED_TAB == Globals.TAB_TR6)
             {
                 LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR6;
+                SLOT_STATUS_OFFSET = SLOT_STATUS_OFFSET_TR6;
                 DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR6;
                 TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR6;
                 AMMO_USED_OFFSET = AMMO_USED_OFFSET_TR6;
@@ -1455,6 +1463,11 @@ namespace TRR_SaveMaster
             return SELECTED_TAB == Globals.TAB_TR1 || SELECTED_TAB == Globals.TAB_TR2 || SELECTED_TAB == Globals.TAB_TR3;
         }
 
+        private bool IsTR6Savegame()
+        {
+            return SELECTED_TAB == Globals.TAB_TR6;
+        }
+
         private bool ShouldShowLevelSelect(byte[] fileData)
         {
             if ((SELECTED_TAB == Globals.TAB_TR1 || SELECTED_TAB == Globals.TAB_TR2 || SELECTED_TAB == Globals.TAB_TR3) && !selectedSavegame.IsChallengeMode)
@@ -1557,7 +1570,12 @@ namespace TRR_SaveMaster
                 fileData = File.ReadAllBytes(savegamePath);
             }
 
-            return BitConverter.ToInt32(fileData, savegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
+            if (IsTR6Savegame())
+            {
+                return BitConverter.ToUInt32(fileData, savegameOffset + SLOT_STATUS_OFFSET) != 0;
+            }
+            
+            return BitConverter.ToInt32(fileData, savegameOffset + SLOT_STATUS_OFFSET) != 0;
         }
 
         private int GetLevelIndex(byte[] fileData = null)
