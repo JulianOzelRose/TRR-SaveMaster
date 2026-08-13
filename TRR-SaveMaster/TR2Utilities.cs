@@ -1031,11 +1031,6 @@ namespace TRR_SaveMaster
                     throw new Exception($"{Globals.ERROR_MSG_MISSING_OBJECT_DEFINITION} (object ID: 0x{objectId:X}).");
                 }
 
-                if (tr2Object.ObjectId == Globals.LARA_ENTITY_ID)
-                {
-                    HEALTH_OFFSET = sgBufferCursor + 0x24;
-                }
-
                 if ((tr2Object.Flags00 & 0x08) != 0)
                 {
                     sgBufferCursor += 0x1A;
@@ -1048,6 +1043,11 @@ namespace TRR_SaveMaster
 
                 if ((tr2Object.Flags00 & 0x10) != 0)
                 {
+                    if (tr2Object.ObjectId == Globals.LARA_ENTITY_ID)
+                    {
+                        HEALTH_OFFSET = sgBufferCursor;
+                    }
+
                     sgBufferCursor += 0x02;
                 }
 
