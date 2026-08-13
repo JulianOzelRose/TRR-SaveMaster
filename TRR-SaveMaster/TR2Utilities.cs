@@ -113,7 +113,7 @@ namespace TRR_SaveMaster
         private int AMMO_WRITE_UPPER_BOUND;
         private int LARA_VEHICLE_ITEM_OFFSET;
         private int sgBufferCursor = 0;
-        private int rngState;
+        private UInt32 rngState;
 
         public readonly Dictionary<int, string> levelNames = new Dictionary<int, string>()
         {
@@ -299,9 +299,9 @@ namespace TRR_SaveMaster
             return fileData[savegameOffset + CHALLENGE_MODE_ENEMY_TYPE_OFFSET];
         }
 
-        private Int32 GetChallengeModeRNGSeed(byte[] fileData)
+        private UInt32 GetChallengeModeRNGSeed(byte[] fileData)
         {
-            return BitConverter.ToInt32(fileData, savegameOffset + CHALLENGE_MODE_RNG_SEED_OFFSET);
+            return BitConverter.ToUInt32(fileData, savegameOffset + CHALLENGE_MODE_RNG_SEED_OFFSET);
         }
 
         private Int32 GetSaveNumber(byte[] fileData)
@@ -595,15 +595,15 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void SeedRNG(int seed)
+        private void SeedRNG(UInt32 seed)
         {
             rngState = seed;
         }
 
         private int NextRNG()
         {
-            rngState = rngState * 0x343FD + 0x269EC3;
-            return (rngState >> 0x10) & 0x7FFF;
+            rngState = unchecked(rngState * 0x343FDu + 0x269EC3u);
+            return (int)((rngState >> 0x10) & 0x7FFFu);
         }
 
         private HashSet<int> BuildRemovalSet(
@@ -787,7 +787,7 @@ namespace TRR_SaveMaster
             return (roll < 50) ? floor : floor + 1;
         }
 
-        private List<int> ApplyChallengeModeMutations(List<int> baseList, Int16 levelIndex, byte enemyNumbers, byte enemyType, Int32 seed)
+        private List<int> ApplyChallengeModeMutations(List<int> baseList, Int16 levelIndex, byte enemyNumbers, byte enemyType, UInt32 seed)
         {
             var result = new List<int>(baseList);
 
@@ -994,7 +994,7 @@ namespace TRR_SaveMaster
             {
                 byte enemyNumbers = GetChallengeModeEnemyNumbers(fileData);
                 byte enemyType = GetChallengeModeEnemyType(fileData);
-                Int32 challengeModeRNGSeed = GetChallengeModeRNGSeed(fileData);
+                UInt32 challengeModeRNGSeed = GetChallengeModeRNGSeed(fileData);
                 levelObjectIds = ApplyChallengeModeMutations(levelObjectIds, levelIndex, enemyNumbers, enemyType, challengeModeRNGSeed);
 
                 sgBufferCursor += Globals.CHALLENGE_MODE_PARAM_BLOCK_SIZE;
