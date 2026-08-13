@@ -9,11 +9,6 @@ namespace TRR_SaveMaster
         public string Name { get; set; } = "";
     }
 
-    public sealed class TR2LevelItem
-    {
-        public int ObjectId { get; set; }
-    }
-
     public sealed class TR2CatEntry
     {
         public int ObjectId { get; set; }

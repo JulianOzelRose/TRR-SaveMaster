@@ -9,11 +9,6 @@ namespace TRR_SaveMaster
         public string Name { get; set; } = "";
     }
 
-    public sealed class TR3LevelItem
-    {
-        public int ObjectId { get; set; }
-    }
-
     public sealed class TR3CatEntry
     {
         public int ObjectId { get; set; }
@@ -1111,6 +1106,13 @@ namespace TRR_SaveMaster
             [0x0046] = false,
             [0x0047] = true,
             [0x0049] = false,
+        };
+
+        public static readonly Dictionary<int, int[]> TR3EnemyFriendlyByLevel = new Dictionary<int, int[]>
+        {
+            [6] = new[] { 0x0025 },     // Crash Site
+            [11] = new[] { 0x0035 },    // Lud's Gate
+            [17] = new[] { 0x0032 },    // RX-Tech Mines
         };
 
         public static readonly Dictionary<byte, int> EnemyRemovalPercents = new Dictionary<byte, int>

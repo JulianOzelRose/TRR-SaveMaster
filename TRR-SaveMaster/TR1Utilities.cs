@@ -400,6 +400,10 @@ namespace TRR_SaveMaster
             {
                 int objectId = entityIds[i];
 
+                // Must be an intelligent object
+                if (!levelObjects.TryGetValue(objectId, out var obj)) continue;
+                if ((obj.Flags00 & 0x02) == 0) continue;
+
                 // Must exist in EnemyDefinitions
                 if (!TR1EntityCache.TR1EnemyRemovableByObjectId.TryGetValue(objectId, out bool removable)) continue;
 

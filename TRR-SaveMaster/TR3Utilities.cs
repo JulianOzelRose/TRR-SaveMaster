@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace TRR_SaveMaster
@@ -540,7 +541,11 @@ namespace TRR_SaveMaster
                     if (!levelObjects.TryGetValue(originalId, out var obj)) continue;
                     if ((obj.Flags00 & 0x02) == 0) continue;
 
-                    if (TR3EntityCache.TR3EnemyFriendlyByObjectId.TryGetValue(originalId, out bool isFriendly) && isFriendly)
+                    bool isFriendly =
+                        (TR3EntityCache.TR3EnemyFriendlyByObjectId.TryGetValue(originalId, out bool isUniversallyFriendly) && isUniversallyFriendly) ||
+                        (TR3EntityCache.TR3EnemyFriendlyByLevel.TryGetValue(levelIndex, out int[] friendlyIds) && friendlyIds.Contains(originalId));
+
+                    if (isFriendly)
                     {
                         continue;
                     }

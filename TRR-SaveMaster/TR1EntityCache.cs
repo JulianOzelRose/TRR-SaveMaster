@@ -9,11 +9,6 @@ namespace TRR_SaveMaster
         public string Name { get; set; } = "";
     }
 
-    public sealed class TR1LevelItem
-    {
-        public int ObjectId { get; set; }
-    }
-
     public sealed class TR1CatEntry
     {
         public int ObjectId { get; set; }
@@ -749,6 +744,10 @@ namespace TRR_SaveMaster
                 26, 27, 95,
                 118, 119, 120,
                 121, 122, 123
+            },
+            [19] = new HashSet<int>     // The Hive
+            {
+                94
             },
         };
 

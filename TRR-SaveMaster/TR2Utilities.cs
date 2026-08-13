@@ -638,6 +638,10 @@ namespace TRR_SaveMaster
                 // Skip unchangeable indices
                 if (TR2EntityCache.UnchangeableEntitiesByLevel.TryGetValue(levelIndex, out var locked) && locked.Contains(i)) continue;
 
+                // Must be intelligent
+                if (!levelObjects.TryGetValue(objectId, out var obj)) continue;
+                if ((obj.Flags00 & 0x02) == 0) continue;
+
                 candidates.Add(i);
             }
 
