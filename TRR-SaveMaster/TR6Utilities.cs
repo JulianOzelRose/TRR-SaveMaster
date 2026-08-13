@@ -116,7 +116,7 @@ namespace TRR_SaveMaster
         public void DetermineDynamicOffsets(byte[] fileData)
         {
             UInt32 savegameVersion = GetSavegameVersion(fileData);
-            UInt32 compressedBlockSize = GetCompressedBlockSize(fileData);
+            UInt64 compressedBlockSize = GetCompressedBlockSize(fileData);
             byte[] compressedBlockData = ReadBytes(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, (int)compressedBlockSize);
 
             decompressedBuffer = new byte[0];   // Clear buffer
@@ -160,9 +160,9 @@ namespace TRR_SaveMaster
             return BitConverter.ToUInt32(fileData, savegameOffset + SAVE_NUMBER_OFFSET);
         }
 
-        private UInt32 GetCompressedBlockSize(byte[] fileData)
+        private UInt64 GetCompressedBlockSize(byte[] fileData)
         {
-            return BitConverter.ToUInt32(fileData, savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
+            return BitConverter.ToUInt64(fileData, savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
         }
 
         private void ParseInventory()
@@ -1504,7 +1504,7 @@ namespace TRR_SaveMaster
 
                 // Compress the modified buffer
                 byte[] compressedBuffer = Pack(modifiedBuffer);
-                UInt32 compressedBufferSize = (UInt32)compressedBuffer.Length;
+                UInt64 compressedBufferSize = (UInt64)compressedBuffer.Length;
 
                 // Write the compressed data to the savegame file
                 using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Write))
