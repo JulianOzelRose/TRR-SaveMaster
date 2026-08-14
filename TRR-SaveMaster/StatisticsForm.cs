@@ -180,7 +180,7 @@ namespace TRR_SaveMaster
         private const int SECRETS_FOUND_OFFSET_TR3_MOBILE = 0x8FC;
         private const int PICKUPS_OFFSET_TR3_MOBILE = 0x8FE;
         private const int MEDIPACKS_USED_OFFSET_TR3_MOBILE = 0x8FF;
-        private const int WORLD_STATE_OFFSET_TR3_MOBILE = 0x9C4;
+        private const int WORLD_STATE_OFFSET_TR3_MOBILE = 0x9C2;
 
         // TR3 offsets (PS4)
         private const int STATISTICS_ARRAY_BASE_OFFSET_TR3_PS4 = 0xBC;

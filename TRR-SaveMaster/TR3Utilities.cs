@@ -40,9 +40,9 @@ namespace TRR_SaveMaster
         private const int SAVEGAME_VERSION_OFFSET_MOBILE = 0x9C8;
         private const int CHALLENGE_MODE_RNG_SEED_OFFSET_MOBILE = 0x9D0;
         private const int CHALLENGE_MODE_OFFSET_MOBILE = 0x9CC;
-        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_MOBILE = 0x9DA;
-        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_MOBILE = 0x9DE;
-        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_MOBILE = 0x9E1;
+        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_MOBILE = 0x9E5;
+        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_MOBILE = 0x9E9;
+        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_MOBILE = 0x9EC;
 
         // PS4 offsets
         private const int LEVEL_INDEX_OFFSET_PS4 = 0x8D2;
