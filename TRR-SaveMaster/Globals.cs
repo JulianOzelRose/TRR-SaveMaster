@@ -64,7 +64,7 @@ namespace TRR_SaveMaster
         public const string DIALOG_MSG_SAVEGAME_FILE_NOT_FOUND = "Could not find savegame file.";
         public const string DIALOG_MSG_SAVEGAME_NOT_FOUND = "Savegame no longer present.";
         public const string DIALOG_MSG_SAVEGAME_NOT_FOUND_REFRESH_REQUIRED = "Savegame no longer present. Press OK to refresh savegame list.";
-        public const string DIALOG_MSG_POSITION_NOT_FOUND = "Unable to locate position data. Try saving the game while Lara is standing.";
+        public const string DIALOG_MSG_POSITION_NOT_FOUND = "Unable to locate position data.";
         public const string DIALOG_MSG_CANNOT_EDIT_POSITION_IN_VEHICLE = "Cannot edit position while Lara is in a vehicle.";
         public const string DIALOG_MSG_INVALID_SAVEGAME_FILE_TRX = "Not a valid Tomb Raider I–III Remastered savegame file.";
         public const string DIALOG_MSG_INVALID_SAVEGAME_FILE_TRX2 = "Not a valid Tomb Raider IV–VI Remastered savegame file.";
