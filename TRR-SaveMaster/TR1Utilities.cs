@@ -13,45 +13,54 @@ namespace TRR_SaveMaster
         private const int NEW_GAME_PLUS_OFFSET = 0x004;
         private const int SAVE_NUMBER_OFFSET = 0x008;
         private const int LEVEL_INDEX_OFFSET_PREPATCH = 0x628;
+        private const int LARA_OUTFIT_OFFSET_PREPATCH = 0x6CC;
 
         // Platform or patch-dependent offsets
         private int LEVEL_INDEX_OFFSET;
         private int BASE_SAVEGAME_OFFSET_TR1;
         private int MAX_SAVEGAME_OFFSET_TR1;
         private int SAVEGAME_SIZE;
+        private int LARA_OUTFIT_OFFSET;
         private int SAVEGAME_VERSION_OFFSET;
         private int CHALLENGE_MODE_RNG_SEED_OFFSET;
         private int CHALLENGE_MODE_OFFSET;
         private int CHALLENGE_MODE_MAX_HEALTH_OFFSET;
         private int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET;
         private int CHALLENGE_MODE_ENEMY_TYPE_OFFSET;
+        private int CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET;
 
         // PC offsets
         private const int LEVEL_INDEX_OFFSET_PC = 0x628;
+        private const int LARA_OUTFIT_OFFSET_PC = 0x6CC;
         private const int SAVEGAME_VERSION_OFFSET_PC = 0x6E0;
         private const int CHALLENGE_MODE_RNG_SEED_OFFSET_PC = 0x6E4;
         private const int CHALLENGE_MODE_OFFSET_PC = 0x6E8;
         private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_PC = 0x6F2;
         private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PC = 0x6F6;
         private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PC = 0x6F9;
+        private const int CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET_PC = 0x6FB;
 
         // Mobile offsets
         private const int LEVEL_INDEX_OFFSET_MOBILE = 0x658;
+        private const int LARA_OUTFIT_OFFSET_MOBILE = 0x6F8;
         private const int SAVEGAME_VERSION_OFFSET_MOBILE = 0x70C;
         private const int CHALLENGE_MODE_RNG_SEED_OFFSET_MOBILE = 0x710;
         private const int CHALLENGE_MODE_OFFSET_MOBILE = 0x714;
         private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_MOBILE = 0x72D;
         private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_MOBILE = 0x731;
         private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_MOBILE = 0x734;
+        private const int CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET_MOBILE = 0x736;
 
         // PS4 offsets
         private const int LEVEL_INDEX_OFFSET_PS4 = 0x628;
+        private const int LARA_OUTFIT_OFFSET_PS4 = 0x6C8;
         private const int SAVEGAME_VERSION_OFFSET_PS4 = 0x6DC;
         private const int CHALLENGE_MODE_RNG_SEED_OFFSET_PS4 = 0x6E0;
         private const int CHALLENGE_MODE_OFFSET_PS4 = 0x6E4;
         private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_PS4 = 0x6EE;
         private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PS4 = 0x6F2;
         private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PS4 = 0x6F5;
+        private const int CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET_PS4 = 0x6F7;
 
         // Patch-dependent
         private const int BASE_SAVEGAME_OFFSET_TR1_PREPATCH = 0x2004;
@@ -181,6 +190,7 @@ namespace TRR_SaveMaster
                 MAX_SAVEGAME_OFFSET_TR1 = MAX_SAVEGAME_OFFSET_TR1_PREPATCH;
                 SAVEGAME_SIZE = Globals.SAVEGAME_SIZE_TRX_PREPATCH;
                 LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PREPATCH;
+                LARA_OUTFIT_OFFSET = LARA_OUTFIT_OFFSET_PREPATCH;
 
                 Int16 levelIndex = GetLevelIndex(fileData);
 
@@ -336,32 +346,38 @@ namespace TRR_SaveMaster
                 if (platform == Platform.PC)
                 {
                     LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PC;
+                    LARA_OUTFIT_OFFSET = LARA_OUTFIT_OFFSET_PC;
                     SAVEGAME_VERSION_OFFSET = SAVEGAME_VERSION_OFFSET_PC;
                     CHALLENGE_MODE_RNG_SEED_OFFSET = CHALLENGE_MODE_RNG_SEED_OFFSET_PC;
                     CHALLENGE_MODE_OFFSET = CHALLENGE_MODE_OFFSET_PC;
                     CHALLENGE_MODE_MAX_HEALTH_OFFSET = CHALLENGE_MODE_MAX_HEALTH_OFFSET_PC;
                     CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET = CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PC;
                     CHALLENGE_MODE_ENEMY_TYPE_OFFSET = CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PC;
+                    CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET = CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET_PC;
                 }
                 else if (platform == Platform.Android || platform == Platform.iOS)
                 {
                     LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_MOBILE;
+                    LARA_OUTFIT_OFFSET = LARA_OUTFIT_OFFSET_MOBILE;
                     SAVEGAME_VERSION_OFFSET = SAVEGAME_VERSION_OFFSET_MOBILE;
                     CHALLENGE_MODE_RNG_SEED_OFFSET = CHALLENGE_MODE_RNG_SEED_OFFSET_MOBILE;
                     CHALLENGE_MODE_OFFSET = CHALLENGE_MODE_OFFSET_MOBILE;
                     CHALLENGE_MODE_MAX_HEALTH_OFFSET = CHALLENGE_MODE_MAX_HEALTH_OFFSET_MOBILE;
                     CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET = CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_MOBILE;
                     CHALLENGE_MODE_ENEMY_TYPE_OFFSET = CHALLENGE_MODE_ENEMY_TYPE_OFFSET_MOBILE;
+                    CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET = CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET_MOBILE;
                 }
                 else if (platform == Platform.PlayStation4)
                 {
                     LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PS4;
+                    LARA_OUTFIT_OFFSET = LARA_OUTFIT_OFFSET_PS4;
                     SAVEGAME_VERSION_OFFSET = SAVEGAME_VERSION_OFFSET_PS4;
                     CHALLENGE_MODE_RNG_SEED_OFFSET = CHALLENGE_MODE_RNG_SEED_OFFSET_PS4;
                     CHALLENGE_MODE_OFFSET = CHALLENGE_MODE_OFFSET_PS4;
                     CHALLENGE_MODE_MAX_HEALTH_OFFSET = CHALLENGE_MODE_MAX_HEALTH_OFFSET_PS4;
                     CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET = CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PS4;
                     CHALLENGE_MODE_ENEMY_TYPE_OFFSET = CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PS4;
+                    CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET = CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET_PS4;
                 }
             }
         }
@@ -849,16 +865,37 @@ namespace TRR_SaveMaster
         {
             byte maxHealthSetting = fileData[savegameOffset + CHALLENGE_MODE_MAX_HEALTH_OFFSET];
 
-            if (maxHealthSetting == 0) return (Int16)100;
-            if (maxHealthSetting == 1) return (Int16)250;
-            if (maxHealthSetting == 2) return (Int16)500;
-            if (maxHealthSetting == 3) return (Int16)1000;
-            if (maxHealthSetting == 4) return (Int16)1500;
-            if (maxHealthSetting == 5) return (Int16)1750;
-            if (maxHealthSetting == 6) return (Int16)2000;
-            if (maxHealthSetting == 7) return (Int16)5000;
+            Int16 maxHealth;
 
-            return MAX_HEALTH_VALUE_DEFAULT;
+            if (maxHealthSetting == 0) maxHealth = 100;
+            else if (maxHealthSetting == 1) maxHealth = 250;
+            else if (maxHealthSetting == 2) maxHealth = 500;
+            else if (maxHealthSetting == 3) maxHealth = 1000;
+            else if (maxHealthSetting == 4) maxHealth = 1500;
+            else if (maxHealthSetting == 5) maxHealth = 1750;
+            else if (maxHealthSetting == 6) maxHealth = 2000;
+            else if (maxHealthSetting == 7) maxHealth = 5000;
+            else maxHealth = MAX_HEALTH_VALUE_DEFAULT;
+
+            bool useOutfitBonus = (fileData[savegameOffset + CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET] & 0x02) != 0;
+
+            if (useOutfitBonus)
+            {
+                Int32 outfit = BitConverter.ToInt32(fileData, savegameOffset + LARA_OUTFIT_OFFSET);
+                int outfitBonus = (outfit - 0x0F) / 3;
+
+                if (outfitBonus == 8)
+                {
+                    maxHealth = (Int16)(maxHealth * 0.5);
+                }
+
+                if (outfitBonus == 7)
+                {
+                    maxHealth = (Int16)(maxHealth * 1.25);
+                }
+            }
+
+            return maxHealth;
         }
 
         private byte GetChallengeModeEnemyNumbers(byte[] fileData)
