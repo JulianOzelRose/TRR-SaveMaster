@@ -165,7 +165,8 @@ namespace TRR_SaveMaster
         private const int SECRETS_FOUND_OFFSET_TR3_PREPATCH = 0x8BC;
         private const int PICKUPS_OFFSET_TR3_PREPATCH = 0x8BE;
         private const int MEDIPACKS_USED_OFFSET_TR3_PREPATCH = 0x8BF;
-        private const int WORLD_STATE_OFFSET_TR3_PREPATCH = 0x984;
+        private const int WORLD_STATE_OFFSET_TR3_PREPATCH_PC = 0x984;
+        private const int WORLD_STATE_OFFSET_TR3_PREPATCH_CONSOLE = 0x982;
 
         // TR3 offsets (Mobile)
         private const int STATISTICS_ARRAY_BASE_OFFSET_TR3_MOBILE = 0xFC;
@@ -298,9 +299,7 @@ namespace TRR_SaveMaster
         private const UInt32 STATS_MAX_FLAG_TR4 = 0x800;
         private const UInt32 STATS_PATCH_FLAG_TR6 = 0x08000000;
 
-        // TR3 world masks & shifts
-        private const int WORLD_REQUIRED_SHIFT_TR3 = 2;
-        private const UInt32 WORLD_REQUIRED_MASK_TR3 = 0x07;
+        // TR3 world masks
         private const UInt32 TR3_WORLD_INDIA_COMPLETE_MASK = 0x20;
         private const UInt32 TR3_WORLD_SOUTH_PACIFIC_COMPLETE_MASK = 0x40;
         private const UInt32 TR3_WORLD_LONDON_COMPLETE_MASK = 0x80;
@@ -676,12 +675,6 @@ namespace TRR_SaveMaster
             return TR3_WORLD_NONE;
         }
 
-        private int GetTR3WorldRequired(byte[] fileData)
-        {
-            UInt32 worldState = BitConverter.ToUInt32(fileData, savegameOffset + WORLD_STATE_OFFSET_TR3);
-            return (int)((worldState >> WORLD_REQUIRED_SHIFT_TR3) & WORLD_REQUIRED_MASK_TR3);
-        }
-
         public void SetSavegame(Savegame savegame)
         {
             selectedSavegame = savegame;
@@ -849,8 +842,16 @@ namespace TRR_SaveMaster
                     MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR3_PREPATCH;
                     DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR3_PREPATCH;
                     TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR3_PREPATCH;
-                    WORLD_STATE_OFFSET_TR3 = WORLD_STATE_OFFSET_TR3_PREPATCH;
                     STATISTICS_ARRAY_BASE_OFFSET = STATISTICS_ARRAY_BASE_OFFSET_TR3_PREPATCH;
+
+                    if (platform == Platform.PC)
+                    {
+                        WORLD_STATE_OFFSET_TR3 = WORLD_STATE_OFFSET_TR3_PREPATCH_PC;
+                    }
+                    else if (platform == Platform.NintendoSwitch || platform == Platform.PlayStation4)
+                    {
+                        WORLD_STATE_OFFSET_TR3 = WORLD_STATE_OFFSET_TR3_PREPATCH_CONSOLE;
+                    }
                 }
                 else
                 {
