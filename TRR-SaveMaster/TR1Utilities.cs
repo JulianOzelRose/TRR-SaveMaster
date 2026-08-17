@@ -1209,7 +1209,7 @@ namespace TRR_SaveMaster
             byte[] fileData = File.ReadAllBytes(savegamePath);
             bool isPrepatch = IsPrepatchSavegameFile(fileData);
 
-            for (int i = cmbSavegames.Items.Count; i < Globals.MAX_SAVEGAMES; i++)
+            for (int i = 0; i < Globals.MAX_SAVEGAMES; i++)
             {
                 int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR1 + (i * SAVEGAME_SIZE);
 
@@ -1239,7 +1239,15 @@ namespace TRR_SaveMaster
                             bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1 && !isPrepatch;
 
                             Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, isNewGamePlus, false, isChallengeMode);
-                            cmbSavegames.Items.Add(savegame);
+
+                            int insertIndex = 0;
+
+                            while (insertIndex < cmbSavegames.Items.Count && cmbSavegames.Items[insertIndex] is Savegame existingSavegame && existingSavegame.Slot < slot)
+                            {
+                                insertIndex++;
+                            }
+
+                            cmbSavegames.Items.Insert(insertIndex, savegame);
                         }
                     }
                 }

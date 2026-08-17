@@ -863,7 +863,7 @@ namespace TRR_SaveMaster
 
             byte[] fileData = File.ReadAllBytes(savegamePath);
 
-            for (int i = cmbSavegames.Items.Count; i < Globals.MAX_SAVEGAMES; i++)
+            for (int i = 0; i < Globals.MAX_SAVEGAMES; i++)
             {
                 int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR4 + (i * Globals.SAVEGAME_SIZE_TRX2);
 
@@ -893,7 +893,15 @@ namespace TRR_SaveMaster
                             bool isNewGamePlus = BitConverter.ToInt32(fileData, currentSavegameOffset + NEW_GAME_PLUS_OFFSET) != 0;
 
                             Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, isNewGamePlus);
-                            cmbSavegames.Items.Add(savegame);
+
+                            int insertIndex = 0;
+
+                            while (insertIndex < cmbSavegames.Items.Count && cmbSavegames.Items[insertIndex] is Savegame existingSavegame && existingSavegame.Slot < slot)
+                            {
+                                insertIndex++;
+                            }
+
+                            cmbSavegames.Items.Insert(insertIndex, savegame);
                         }
                     }
                 }
