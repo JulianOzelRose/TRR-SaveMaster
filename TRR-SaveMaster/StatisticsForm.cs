@@ -978,12 +978,6 @@ namespace TRR_SaveMaster
 
                 nudCrystalsFound.Enabled = false;
                 nudCrystalsUsed.Enabled = selectedSavegame.IsNewGamePlus;
-
-                lblCrystalsFound.Enabled = false;
-                lblCrystalsUsed.Enabled = selectedSavegame.IsNewGamePlus;
-                lblVesselsBroken.Enabled = false;
-                lblChocobarsFound.Enabled = false;
-                lblHealthItemsFound.Enabled = false;
             }
             else if (SELECTED_TAB == Globals.TAB_TR2)
             {
@@ -995,12 +989,6 @@ namespace TRR_SaveMaster
 
                 nudCrystalsFound.Enabled = false;
                 nudCrystalsUsed.Enabled = false;
-
-                lblCrystalsFound.Enabled = false;
-                lblCrystalsUsed.Enabled = false;
-                lblVesselsBroken.Enabled = false;
-                lblChocobarsFound.Enabled = false;
-                lblHealthItemsFound.Enabled = false;
             }
             else if (SELECTED_TAB == Globals.TAB_TR3)
             {
@@ -1012,11 +1000,6 @@ namespace TRR_SaveMaster
 
                 nudCrystalsFound.Enabled = true;
                 nudCrystalsUsed.Enabled = selectedSavegame.IsNewGamePlus;
-
-                lblCrystalsUsed.Enabled = selectedSavegame.IsNewGamePlus;
-                lblVesselsBroken.Enabled = false;
-                lblChocobarsFound.Enabled = false;
-                lblHealthItemsFound.Enabled = false;
             }
             else if (SELECTED_TAB == Globals.TAB_TR4)
             {
@@ -1058,11 +1041,6 @@ namespace TRR_SaveMaster
                 lblOf2.Text = Globals.LABEL_TEXT_FORWARD_SLASH;
 
                 lblSlash.Visible = false;
-
-                lblCrystalsFound.Enabled = false;
-                lblCrystalsUsed.Enabled = false;
-                lblChocobarsFound.Enabled = false;
-                lblHealthItemsFound.Enabled = false;
             }
             else if (SELECTED_TAB == Globals.TAB_TR5)
             {
@@ -1097,12 +1075,6 @@ namespace TRR_SaveMaster
                 lblOf2.Text = Globals.LABEL_TEXT_FORWARD_SLASH;
 
                 lblSlash.Visible = false;
-
-                lblCrystalsFound.Enabled = false;
-                lblCrystalsUsed.Enabled = false;
-                lblVesselsBroken.Enabled = false;
-                lblChocobarsFound.Enabled = false;
-                lblHealthItemsFound.Enabled = false;
             }
             else if (SELECTED_TAB == Globals.TAB_TR6)
             {
@@ -1169,11 +1141,6 @@ namespace TRR_SaveMaster
                 }
 
                 lblOf2.Text = Globals.LABEL_TEXT_FORWARD_SLASH;
-
-                lblCrystalsFound.Enabled = false;
-                lblCrystalsUsed.Enabled = false;
-                lblSecretsFound.Enabled = false;
-                lblVesselsBroken.Enabled = false;
             }
         }
 
@@ -1190,7 +1157,6 @@ namespace TRR_SaveMaster
                 nudPickups.Maximum = nudPickupsMax.Value;
 
                 nudCrystalsUsed.Enabled = selectedSavegame.IsNewGamePlus;
-                lblCrystalsUsed.Enabled = selectedSavegame.IsNewGamePlus;
             }
             else if (SELECTED_TAB == Globals.TAB_TR2)
             {
@@ -1209,7 +1175,6 @@ namespace TRR_SaveMaster
                 nudPickups.Maximum = levelIndex == 5 ? MAX_PICKUPS_COASTAL_VILLAGE_TR3 : nudPickupsMax.Value;
 
                 nudCrystalsUsed.Enabled = selectedSavegame.IsNewGamePlus;
-                lblCrystalsUsed.Enabled = selectedSavegame.IsNewGamePlus;
             }
             else if (SELECTED_TAB == Globals.TAB_TR4)
             {
