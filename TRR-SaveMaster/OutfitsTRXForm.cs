@@ -11,9 +11,6 @@ namespace TRR_SaveMaster
         // Base start of outfit bitfield
         private const int OUTFITS_BASE_OFFSET = 0x250;
 
-        // Mirror offset
-        private const int OUTFITS_MIRROR_DELTA = 0x04;
-
         // Individual bytes
         private const int OUTFITS_BYTE_0 = OUTFITS_BASE_OFFSET + 0;
         private const int OUTFITS_BYTE_1 = OUTFITS_BASE_OFFSET + 1;
@@ -262,16 +259,6 @@ namespace TRR_SaveMaster
             else
             {
                 data[offset] &= (byte)~mask;
-            }
-
-            // Mirror must always match
-            if (enabled)
-            {
-                data[offset + OUTFITS_MIRROR_DELTA] |= mask;
-            }
-            else
-            {
-                data[offset + OUTFITS_MIRROR_DELTA] &= (byte)~mask;
             }
         }
 
