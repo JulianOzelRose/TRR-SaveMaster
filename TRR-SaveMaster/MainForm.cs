@@ -704,13 +704,13 @@ namespace TRR_SaveMaster
                 bool isPrepatch = IsPrepatchSavegameFileTRX(fileData);
 
                 // TRX (pre-patch) support: PC, PS4, NS
-                if (isPrepatch && (platform != Platform.Android && platform != Platform.iOS))
+                if (isPrepatch && !platform.IsMobile())
                 {
                     return;
                 }
 
-                // TRX (Patch 5) support: PC, Android, PS4, iOS
-                if (!isPrepatch && (platform == Platform.PC || platform == Platform.Android || platform == Platform.PlayStation4 || platform == Platform.iOS))
+                // TRX (Patch 5) support: PC, Android, PS4, NS, iOS
+                if (!isPrepatch)
                 {
                     return;
                 }

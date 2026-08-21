@@ -76,18 +76,18 @@ namespace TRR_SaveMaster
         private const int DISTANCE_TRAVELLED_OFFSET_TR1_MOBILE = 0x650;
         private const int TIME_TAKEN_OFFSET_TR1_MOBILE = 0x640;
 
-        // TR1 offsets (PS4)
-        private const int STATISTICS_ARRAY_BASE_OFFSET_TR1_PS4 = 0x4C;
-        private const int LEVEL_INDEX_OFFSET_TR1_PS4 = 0x628;
-        private const int CRYSTALS_USED_OFFSET_TR1_PS4 = 0x60C;
-        private const int AMMO_USED_OFFSET_TR1_PS4 = 0x614;
-        private const int HITS_OFFSET_TR1_PS4 = 0x618;
-        private const int KILLS_OFFSET_TR1_PS4 = 0x61C;
-        private const int SECRETS_FOUND_OFFSET_TR1_PS4 = 0x624;
-        private const int PICKUPS_OFFSET_TR1_PS4 = 0x626;
-        private const int MEDIPACKS_USED_OFFSET_TR1_PS4 = 0x627;
-        private const int DISTANCE_TRAVELLED_OFFSET_TR1_PS4 = 0x620;
-        private const int TIME_TAKEN_OFFSET_TR1_PS4 = 0x610;
+        // TR1 offsets (Console)
+        private const int STATISTICS_ARRAY_BASE_OFFSET_TR1_CONSOLE = 0x4C;
+        private const int LEVEL_INDEX_OFFSET_TR1_CONSOLE = 0x628;
+        private const int CRYSTALS_USED_OFFSET_TR1_CONSOLE = 0x60C;
+        private const int AMMO_USED_OFFSET_TR1_CONSOLE = 0x614;
+        private const int HITS_OFFSET_TR1_CONSOLE = 0x618;
+        private const int KILLS_OFFSET_TR1_CONSOLE = 0x61C;
+        private const int SECRETS_FOUND_OFFSET_TR1_CONSOLE = 0x624;
+        private const int PICKUPS_OFFSET_TR1_CONSOLE = 0x626;
+        private const int MEDIPACKS_USED_OFFSET_TR1_CONSOLE = 0x627;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR1_CONSOLE = 0x620;
+        private const int TIME_TAKEN_OFFSET_TR1_CONSOLE = 0x610;
 
         // TR2 offsets (PC)
         private const int STATISTICS_ARRAY_BASE_OFFSET_TR2_PC = 0x50;
@@ -125,17 +125,17 @@ namespace TRR_SaveMaster
         private const int DISTANCE_TRAVELLED_OFFSET_TR2_MOBILE = 0x64C;
         private const int TIME_TAKEN_OFFSET_TR2_MOBILE = 0x63C;
 
-        // TR2 offsets (PS4)
-        private const int STATISTICS_ARRAY_BASE_OFFSET_TR2_PS4 = 0x50;
-        private const int LEVEL_INDEX_OFFSET_TR2_PS4 = 0x624;
-        private const int AMMO_USED_OFFSET_TR2_PS4 = 0x610;
-        private const int HITS_OFFSET_TR2_PS4 = 0x614;
-        private const int KILLS_OFFSET_TR2_PS4 = 0x618;
-        private const int SECRETS_FOUND_OFFSET_TR2_PS4 = 0x620;
-        private const int PICKUPS_OFFSET_TR2_PS4 = 0x622;
-        private const int MEDIPACKS_USED_OFFSET_TR2_PS4 = 0x623;
-        private const int DISTANCE_TRAVELLED_OFFSET_TR2_PS4 = 0x61C;
-        private const int TIME_TAKEN_OFFSET_TR2_PS4 = 0x60C;
+        // TR2 offsets (Console)
+        private const int STATISTICS_ARRAY_BASE_OFFSET_TR2_CONSOLE = 0x50;
+        private const int LEVEL_INDEX_OFFSET_TR2_CONSOLE = 0x624;
+        private const int AMMO_USED_OFFSET_TR2_CONSOLE = 0x610;
+        private const int HITS_OFFSET_TR2_CONSOLE = 0x614;
+        private const int KILLS_OFFSET_TR2_CONSOLE = 0x618;
+        private const int SECRETS_FOUND_OFFSET_TR2_CONSOLE = 0x620;
+        private const int PICKUPS_OFFSET_TR2_CONSOLE = 0x622;
+        private const int MEDIPACKS_USED_OFFSET_TR2_CONSOLE = 0x623;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR2_CONSOLE = 0x61C;
+        private const int TIME_TAKEN_OFFSET_TR2_CONSOLE = 0x60C;
 
         // TR3 offsets (PC)
         private const int STATISTICS_ARRAY_BASE_OFFSET_TR3_PC = 0xBC;
@@ -183,20 +183,20 @@ namespace TRR_SaveMaster
         private const int MEDIPACKS_USED_OFFSET_TR3_MOBILE = 0x8FF;
         private const int WORLD_STATE_OFFSET_TR3_MOBILE = 0x9C2;
 
-        // TR3 offsets (PS4)
-        private const int STATISTICS_ARRAY_BASE_OFFSET_TR3_PS4 = 0xBC;
-        private const int LEVEL_INDEX_OFFSET_TR3_PS4 = 0x8D2;
-        private const int CRYSTALS_FOUND_OFFSET_TR3_PS4 = 0x8A0;
-        private const int CRYSTALS_USED_OFFSET_TR3_PS4 = 0x8A4;
-        private const int TIME_TAKEN_OFFSET_TR3_PS4 = 0x8A8;
-        private const int AMMO_USED_OFFSET_TR3_PS4 = 0x8AC;
-        private const int HITS_OFFSET_TR3_PS4 = 0x8B0;
-        private const int KILLS_OFFSET_TR3_PS4 = 0x8B4;
-        private const int DISTANCE_TRAVELLED_OFFSET_TR3_PS4 = 0x8B8;
-        private const int SECRETS_FOUND_OFFSET_TR3_PS4 = 0x8BC;
-        private const int PICKUPS_OFFSET_TR3_PS4 = 0x8BE;
-        private const int MEDIPACKS_USED_OFFSET_TR3_PS4 = 0x8BF;
-        private const int WORLD_STATE_OFFSET_TR3_PS4 = 0x982;
+        // TR3 offsets (Console)
+        private const int STATISTICS_ARRAY_BASE_OFFSET_TR3_CONSOLE = 0xBC;
+        private const int LEVEL_INDEX_OFFSET_TR3_CONSOLE = 0x8D2;
+        private const int CRYSTALS_FOUND_OFFSET_TR3_CONSOLE = 0x8A0;
+        private const int CRYSTALS_USED_OFFSET_TR3_CONSOLE = 0x8A4;
+        private const int TIME_TAKEN_OFFSET_TR3_CONSOLE = 0x8A8;
+        private const int AMMO_USED_OFFSET_TR3_CONSOLE = 0x8AC;
+        private const int HITS_OFFSET_TR3_CONSOLE = 0x8B0;
+        private const int KILLS_OFFSET_TR3_CONSOLE = 0x8B4;
+        private const int DISTANCE_TRAVELLED_OFFSET_TR3_CONSOLE = 0x8B8;
+        private const int SECRETS_FOUND_OFFSET_TR3_CONSOLE = 0x8BC;
+        private const int PICKUPS_OFFSET_TR3_CONSOLE = 0x8BE;
+        private const int MEDIPACKS_USED_OFFSET_TR3_CONSOLE = 0x8BF;
+        private const int WORLD_STATE_OFFSET_TR3_CONSOLE = 0x982;
 
         // TR4 offsets
         private const int LEVEL_INDEX_OFFSET_TR4 = 0x26B;
@@ -718,7 +718,7 @@ namespace TRR_SaveMaster
                         TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR1_PC;
                         STATISTICS_ARRAY_BASE_OFFSET = STATISTICS_ARRAY_BASE_OFFSET_TR1_PC;
                     }
-                    else if (platform == Platform.Android || platform == Platform.iOS)
+                    else if (platform.IsMobile())
                     {
                         LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR1_MOBILE;
                         CRYSTALS_USED_OFFSET = CRYSTALS_USED_OFFSET_TR1_MOBILE;
@@ -732,19 +732,19 @@ namespace TRR_SaveMaster
                         TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR1_MOBILE;
                         STATISTICS_ARRAY_BASE_OFFSET = STATISTICS_ARRAY_BASE_OFFSET_TR1_MOBILE;
                     }
-                    else if (platform == Platform.PlayStation4)
+                    else if (platform.IsConsole())
                     {
-                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR1_PS4;
-                        CRYSTALS_USED_OFFSET = CRYSTALS_USED_OFFSET_TR1_PS4;
-                        AMMO_USED_OFFSET = AMMO_USED_OFFSET_TR1_PS4;
-                        HITS_OFFSET = HITS_OFFSET_TR1_PS4;
-                        KILLS_OFFSET = KILLS_OFFSET_TR1_PS4;
-                        SECRETS_FOUND_OFFSET = SECRETS_FOUND_OFFSET_TR1_PS4;
-                        PICKUPS_OFFSET = PICKUPS_OFFSET_TR1_PS4;
-                        MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR1_PS4;
-                        DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR1_PS4;
-                        TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR1_PS4;
-                        STATISTICS_ARRAY_BASE_OFFSET = STATISTICS_ARRAY_BASE_OFFSET_TR1_PS4;
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR1_CONSOLE;
+                        CRYSTALS_USED_OFFSET = CRYSTALS_USED_OFFSET_TR1_CONSOLE;
+                        AMMO_USED_OFFSET = AMMO_USED_OFFSET_TR1_CONSOLE;
+                        HITS_OFFSET = HITS_OFFSET_TR1_CONSOLE;
+                        KILLS_OFFSET = KILLS_OFFSET_TR1_CONSOLE;
+                        SECRETS_FOUND_OFFSET = SECRETS_FOUND_OFFSET_TR1_CONSOLE;
+                        PICKUPS_OFFSET = PICKUPS_OFFSET_TR1_CONSOLE;
+                        MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR1_CONSOLE;
+                        DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR1_CONSOLE;
+                        TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR1_CONSOLE;
+                        STATISTICS_ARRAY_BASE_OFFSET = STATISTICS_ARRAY_BASE_OFFSET_TR1_CONSOLE;
                     }
                 }
 
@@ -789,7 +789,7 @@ namespace TRR_SaveMaster
                         TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR2_PC;
                         STATISTICS_ARRAY_BASE_OFFSET = STATISTICS_ARRAY_BASE_OFFSET_TR2_PC;
                     }
-                    else if (platform == Platform.Android || platform == Platform.iOS)
+                    else if (platform.IsMobile())
                     {
                         LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR2_MOBILE;
                         AMMO_USED_OFFSET = AMMO_USED_OFFSET_TR2_MOBILE;
@@ -802,18 +802,18 @@ namespace TRR_SaveMaster
                         TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR2_MOBILE;
                         STATISTICS_ARRAY_BASE_OFFSET = STATISTICS_ARRAY_BASE_OFFSET_TR2_MOBILE;
                     }
-                    else if (platform == Platform.PlayStation4)
+                    else if (platform.IsConsole())
                     {
-                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR2_PS4;
-                        AMMO_USED_OFFSET = AMMO_USED_OFFSET_TR2_PS4;
-                        HITS_OFFSET = HITS_OFFSET_TR2_PS4;
-                        KILLS_OFFSET = KILLS_OFFSET_TR2_PS4;
-                        SECRETS_FOUND_OFFSET = SECRETS_FOUND_OFFSET_TR2_PS4;
-                        PICKUPS_OFFSET = PICKUPS_OFFSET_TR2_PS4;
-                        MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR2_PS4;
-                        DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR2_PS4;
-                        TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR2_PS4;
-                        STATISTICS_ARRAY_BASE_OFFSET = STATISTICS_ARRAY_BASE_OFFSET_TR2_PS4;
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR2_CONSOLE;
+                        AMMO_USED_OFFSET = AMMO_USED_OFFSET_TR2_CONSOLE;
+                        HITS_OFFSET = HITS_OFFSET_TR2_CONSOLE;
+                        KILLS_OFFSET = KILLS_OFFSET_TR2_CONSOLE;
+                        SECRETS_FOUND_OFFSET = SECRETS_FOUND_OFFSET_TR2_CONSOLE;
+                        PICKUPS_OFFSET = PICKUPS_OFFSET_TR2_CONSOLE;
+                        MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR2_CONSOLE;
+                        DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR2_CONSOLE;
+                        TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR2_CONSOLE;
+                        STATISTICS_ARRAY_BASE_OFFSET = STATISTICS_ARRAY_BASE_OFFSET_TR2_CONSOLE;
                     }
                 }
 
@@ -848,7 +848,7 @@ namespace TRR_SaveMaster
                     {
                         WORLD_STATE_OFFSET_TR3 = WORLD_STATE_OFFSET_TR3_PREPATCH_PC;
                     }
-                    else if (platform == Platform.NintendoSwitch || platform == Platform.PlayStation4)
+                    else if (platform.IsConsole())
                     {
                         WORLD_STATE_OFFSET_TR3 = WORLD_STATE_OFFSET_TR3_PREPATCH_CONSOLE;
                     }
@@ -871,7 +871,7 @@ namespace TRR_SaveMaster
                         WORLD_STATE_OFFSET_TR3 = WORLD_STATE_OFFSET_TR3_PC;
                         STATISTICS_ARRAY_BASE_OFFSET = STATISTICS_ARRAY_BASE_OFFSET_TR3_PC;
                     }
-                    else if (platform == Platform.Android || platform == Platform.iOS)
+                    else if (platform.IsMobile())
                     {
                         LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR3_MOBILE;
                         CRYSTALS_FOUND_OFFSET = CRYSTALS_FOUND_OFFSET_TR3_MOBILE;
@@ -887,21 +887,21 @@ namespace TRR_SaveMaster
                         WORLD_STATE_OFFSET_TR3 = WORLD_STATE_OFFSET_TR3_MOBILE;
                         STATISTICS_ARRAY_BASE_OFFSET = STATISTICS_ARRAY_BASE_OFFSET_TR3_MOBILE;
                     }
-                    else if (platform == Platform.PlayStation4)
+                    else if (platform.IsConsole())
                     {
-                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR3_PS4;
-                        CRYSTALS_FOUND_OFFSET = CRYSTALS_FOUND_OFFSET_TR3_PS4;
-                        CRYSTALS_USED_OFFSET = CRYSTALS_USED_OFFSET_TR3_PS4;
-                        AMMO_USED_OFFSET = AMMO_USED_OFFSET_TR3_PS4;
-                        HITS_OFFSET = HITS_OFFSET_TR3_PS4;
-                        KILLS_OFFSET = KILLS_OFFSET_TR3_PS4;
-                        SECRETS_FOUND_OFFSET = SECRETS_FOUND_OFFSET_TR3_PS4;
-                        PICKUPS_OFFSET = PICKUPS_OFFSET_TR3_PS4;
-                        MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR3_PS4;
-                        DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR3_PS4;
-                        TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR3_PS4;
-                        WORLD_STATE_OFFSET_TR3 = WORLD_STATE_OFFSET_TR3_PS4;
-                        STATISTICS_ARRAY_BASE_OFFSET = STATISTICS_ARRAY_BASE_OFFSET_TR3_PS4;
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR3_CONSOLE;
+                        CRYSTALS_FOUND_OFFSET = CRYSTALS_FOUND_OFFSET_TR3_CONSOLE;
+                        CRYSTALS_USED_OFFSET = CRYSTALS_USED_OFFSET_TR3_CONSOLE;
+                        AMMO_USED_OFFSET = AMMO_USED_OFFSET_TR3_CONSOLE;
+                        HITS_OFFSET = HITS_OFFSET_TR3_CONSOLE;
+                        KILLS_OFFSET = KILLS_OFFSET_TR3_CONSOLE;
+                        SECRETS_FOUND_OFFSET = SECRETS_FOUND_OFFSET_TR3_CONSOLE;
+                        PICKUPS_OFFSET = PICKUPS_OFFSET_TR3_CONSOLE;
+                        MEDIPACKS_USED_OFFSET = MEDIPACKS_USED_OFFSET_TR3_CONSOLE;
+                        DISTANCE_TRAVELLED_OFFSET = DISTANCE_TRAVELLED_OFFSET_TR3_CONSOLE;
+                        TIME_TAKEN_OFFSET = TIME_TAKEN_OFFSET_TR3_CONSOLE;
+                        WORLD_STATE_OFFSET_TR3 = WORLD_STATE_OFFSET_TR3_CONSOLE;
+                        STATISTICS_ARRAY_BASE_OFFSET = STATISTICS_ARRAY_BASE_OFFSET_TR3_CONSOLE;
                     }
                 }
 
@@ -1540,7 +1540,7 @@ namespace TRR_SaveMaster
             {
                 return BitConverter.ToUInt32(fileData, savegameOffset + SLOT_STATUS_OFFSET) != 0;
             }
-            
+
             return BitConverter.ToInt32(fileData, savegameOffset + SLOT_STATUS_OFFSET) != 0;
         }
 

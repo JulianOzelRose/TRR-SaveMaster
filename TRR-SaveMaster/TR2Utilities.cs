@@ -51,16 +51,16 @@ namespace TRR_SaveMaster
         private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_MOBILE = 0x6FC;
         private const int CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET_MOBILE = 0x6FE;
 
-        // PS4 offsets
-        private const int LEVEL_INDEX_OFFSET_PS4 = 0x624;
-        private const int LARA_OUTFIT_OFFSET_PS4 = 0x68C;
-        private const int SAVEGAME_VERSION_OFFSET_PS4 = 0x6A0;
-        private const int CHALLENGE_MODE_RNG_SEED_OFFSET_PS4 = 0x6A4;
-        private const int CHALLENGE_MODE_OFFSET_PS4 = 0x6A8;
-        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_PS4 = 0x6BA;
-        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PS4 = 0x6BE;
-        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PS4 = 0x6C1;
-        private const int CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET_PS4 = 0x6C3;
+        // Console offsets
+        private const int LEVEL_INDEX_OFFSET_CONSOLE = 0x624;
+        private const int LARA_OUTFIT_OFFSET_CONSOLE = 0x68C;
+        private const int SAVEGAME_VERSION_OFFSET_CONSOLE = 0x6A0;
+        private const int CHALLENGE_MODE_RNG_SEED_OFFSET_CONSOLE = 0x6A4;
+        private const int CHALLENGE_MODE_OFFSET_CONSOLE = 0x6A8;
+        private const int CHALLENGE_MODE_MAX_HEALTH_OFFSET_CONSOLE = 0x6BA;
+        private const int CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_CONSOLE = 0x6BE;
+        private const int CHALLENGE_MODE_ENEMY_TYPE_OFFSET_CONSOLE = 0x6C1;
+        private const int CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET_CONSOLE = 0x6C3;
 
         // Patch-dependent
         private const int BASE_SAVEGAME_OFFSET_TR2_PREPATCH = 0x72004;
@@ -102,10 +102,9 @@ namespace TRR_SaveMaster
         // Entity block starts
         private const int ENTITY_BLOCK_START_PC = 0x6BC;
         private const int ENTITY_BLOCK_START_MOBILE = 0x6F3;
-        private const int ENTITY_BLOCK_START_PS4 = 0x6B8;
+        private const int ENTITY_BLOCK_START_CONSOLE = 0x6B8;
         private const int ENTITY_BLOCK_START_PC_PREPATCH = 0x6A2;
-        private const int ENTITY_BLOCK_START_PS4_PREPATCH = 0x69E;
-        private const int ENTITY_BLOCK_START_NS_PREPATCH = 0x69E;
+        private const int ENTITY_BLOCK_START_CONSOLE_PREPATCH = 0x69E;
 
         // Health
         private const Int16 MAX_HEALTH_VALUE_DEFAULT = 1000;
@@ -233,7 +232,7 @@ namespace TRR_SaveMaster
                     CHALLENGE_MODE_ENEMY_TYPE_OFFSET = CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PC;
                     CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET = CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET_PC;
                 }
-                else if (platform == Platform.Android || platform == Platform.iOS)
+                else if (platform.IsMobile())
                 {
                     LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_MOBILE;
                     LARA_OUTFIT_OFFSET = LARA_OUTFIT_OFFSET_MOBILE;
@@ -245,17 +244,17 @@ namespace TRR_SaveMaster
                     CHALLENGE_MODE_ENEMY_TYPE_OFFSET = CHALLENGE_MODE_ENEMY_TYPE_OFFSET_MOBILE;
                     CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET = CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET_MOBILE;
                 }
-                else if (platform == Platform.PlayStation4)
+                else if (platform.IsConsole())
                 {
-                    LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PS4;
-                    LARA_OUTFIT_OFFSET = LARA_OUTFIT_OFFSET_PS4;
-                    SAVEGAME_VERSION_OFFSET = SAVEGAME_VERSION_OFFSET_PS4;
-                    CHALLENGE_MODE_RNG_SEED_OFFSET = CHALLENGE_MODE_RNG_SEED_OFFSET_PS4;
-                    CHALLENGE_MODE_OFFSET = CHALLENGE_MODE_OFFSET_PS4;
-                    CHALLENGE_MODE_MAX_HEALTH_OFFSET = CHALLENGE_MODE_MAX_HEALTH_OFFSET_PS4;
-                    CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET = CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_PS4;
-                    CHALLENGE_MODE_ENEMY_TYPE_OFFSET = CHALLENGE_MODE_ENEMY_TYPE_OFFSET_PS4;
-                    CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET = CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET_PS4;
+                    LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_CONSOLE;
+                    LARA_OUTFIT_OFFSET = LARA_OUTFIT_OFFSET_CONSOLE;
+                    SAVEGAME_VERSION_OFFSET = SAVEGAME_VERSION_OFFSET_CONSOLE;
+                    CHALLENGE_MODE_RNG_SEED_OFFSET = CHALLENGE_MODE_RNG_SEED_OFFSET_CONSOLE;
+                    CHALLENGE_MODE_OFFSET = CHALLENGE_MODE_OFFSET_CONSOLE;
+                    CHALLENGE_MODE_MAX_HEALTH_OFFSET = CHALLENGE_MODE_MAX_HEALTH_OFFSET_CONSOLE;
+                    CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET = CHALLENGE_MODE_ENEMY_NUMBERS_OFFSET_CONSOLE;
+                    CHALLENGE_MODE_ENEMY_TYPE_OFFSET = CHALLENGE_MODE_ENEMY_TYPE_OFFSET_CONSOLE;
+                    CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET = CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET_CONSOLE;
                 }
             }
 
@@ -983,13 +982,9 @@ namespace TRR_SaveMaster
                 {
                     return ENTITY_BLOCK_START_PC_PREPATCH;
                 }
-                else if (platform == Platform.PlayStation4)
+                else if (platform.IsConsole())
                 {
-                    return ENTITY_BLOCK_START_PS4_PREPATCH;
-                }
-                else if (platform == Platform.NintendoSwitch)
-                {
-                    return ENTITY_BLOCK_START_NS_PREPATCH;
+                    return ENTITY_BLOCK_START_CONSOLE_PREPATCH;
                 }
 
                 return ENTITY_BLOCK_START_PC_PREPATCH;
@@ -1000,13 +995,13 @@ namespace TRR_SaveMaster
                 {
                     return ENTITY_BLOCK_START_PC;
                 }
-                else if (platform == Platform.Android || platform == Platform.iOS)
+                else if (platform.IsMobile())
                 {
                     return ENTITY_BLOCK_START_MOBILE;
                 }
-                else if (platform == Platform.PlayStation4)
+                else if (platform.IsConsole())
                 {
-                    return ENTITY_BLOCK_START_PS4;
+                    return ENTITY_BLOCK_START_CONSOLE;
                 }
 
                 return ENTITY_BLOCK_START_PC;
@@ -1409,15 +1404,15 @@ namespace TRR_SaveMaster
                     LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PC;
                     CHALLENGE_MODE_OFFSET = CHALLENGE_MODE_OFFSET_PC;
                 }
-                else if (platform == Platform.Android || platform == Platform.iOS)
+                else if (platform.IsMobile())
                 {
                     LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_MOBILE;
                     CHALLENGE_MODE_OFFSET = CHALLENGE_MODE_OFFSET_MOBILE;
                 }
-                else if (platform == Platform.PlayStation4)
+                else if (platform.IsConsole())
                 {
-                    LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PS4;
-                    CHALLENGE_MODE_OFFSET = CHALLENGE_MODE_OFFSET_PS4;
+                    LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_CONSOLE;
+                    CHALLENGE_MODE_OFFSET = CHALLENGE_MODE_OFFSET_CONSOLE;
                 }
             }
 

@@ -11,8 +11,6 @@ namespace TRR_SaveMaster
     public partial class PositionForm : Form
     {
         // Offsets
-        private const int COMPRESSED_BLOCK_START_OFFSET = 0x368;
-        private const int COMPRESSED_BLOCK_SIZE_OFFSET = 0x360;
         private int SLOT_STATUS_OFFSET;
         private int LEVEL_INDEX_OFFSET;
         private int X_COORDINATE_OFFSET;
@@ -20,20 +18,27 @@ namespace TRR_SaveMaster
         private int Z_COORDINATE_OFFSET;
         private int ORIENTATION_OFFSET;
         private int ROOM_OFFSET;
+
+        // Platform, patch, or game-dependent offsets
         private const int SLOT_STATUS_OFFSET_DEFAULT = 0x0;
         private const int LEVEL_INDEX_OFFSET_TR1_PREPATCH = 0x628;
-        private const int LEVEL_INDEX_OFFSET_TR1_PC_PS4 = 0x628;
+        private const int LEVEL_INDEX_OFFSET_TR1_PC = 0x628;
+        private const int LEVEL_INDEX_OFFSET_TR1_CONSOLE = 0x628;
         private const int LEVEL_INDEX_OFFSET_TR1_MOBILE = 0x658;
         private const int LEVEL_INDEX_OFFSET_TR2_PREPATCH = 0x624;
-        private const int LEVEL_INDEX_OFFSET_TR2_PC_PS4 = 0x624;
+        private const int LEVEL_INDEX_OFFSET_TR2_PC = 0x624;
+        private const int LEVEL_INDEX_OFFSET_TR2_CONSOLE = 0x624;
         private const int LEVEL_INDEX_OFFSET_TR2_MOBILE = 0x654;
         private const int LEVEL_INDEX_OFFSET_TR3_PREPATCH = 0x8D2;
-        private const int LEVEL_INDEX_OFFSET_TR3_PC_PS4 = 0x8D2;
+        private const int LEVEL_INDEX_OFFSET_TR3_PC = 0x8D2;
+        private const int LEVEL_INDEX_OFFSET_TR3_CONSOLE = 0x8D2;
         private const int LEVEL_INDEX_OFFSET_TR3_MOBILE = 0x912;
         private const int LEVEL_INDEX_OFFSET_TR4 = 0x26B;
         private const int LEVEL_INDEX_OFFSET_TR5 = 0x26B;
         private const int LEVEL_INDEX_OFFSET_TR6 = 0x10;
         private const int SLOT_STATUS_OFFSET_TR6 = 0x11C;
+        private const int COMPRESSED_BLOCK_SIZE_OFFSET_TR6 = 0x360;
+        private const int COMPRESSED_BLOCK_START_OFFSET_TR6 = 0x368;
 
         // Utils
         private readonly TR1Utilities tr1Utilities = new TR1Utilities();
@@ -125,7 +130,18 @@ namespace TRR_SaveMaster
                 }
                 else
                 {
-                    LEVEL_INDEX_OFFSET = (platform == Platform.Android || platform == Platform.iOS) ? LEVEL_INDEX_OFFSET_TR1_MOBILE : LEVEL_INDEX_OFFSET_TR1_PC_PS4;
+                    if (platform == Platform.PC)
+                    {
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR1_PC;
+                    }
+                    else if (platform.IsMobile())
+                    {
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR1_MOBILE;
+                    }
+                    else if (platform.IsConsole())
+                    {
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR1_CONSOLE;
+                    }
                 }
             }
             else if (IsTR2Savegame())
@@ -136,7 +152,18 @@ namespace TRR_SaveMaster
                 }
                 else
                 {
-                    LEVEL_INDEX_OFFSET = (platform == Platform.Android || platform == Platform.iOS) ? LEVEL_INDEX_OFFSET_TR2_MOBILE : LEVEL_INDEX_OFFSET_TR2_PC_PS4;
+                    if (platform == Platform.PC)
+                    {
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR2_PC;
+                    }
+                    else if (platform.IsMobile())
+                    {
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR2_MOBILE;
+                    }
+                    else if (platform.IsConsole())
+                    {
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR2_CONSOLE;
+                    }
                 }
             }
             else if (IsTR3Savegame())
@@ -147,7 +174,18 @@ namespace TRR_SaveMaster
                 }
                 else
                 {
-                    LEVEL_INDEX_OFFSET = (platform == Platform.Android || platform == Platform.iOS) ? LEVEL_INDEX_OFFSET_TR3_MOBILE : LEVEL_INDEX_OFFSET_TR3_PC_PS4;
+                    if (platform == Platform.PC)
+                    {
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR3_PC;
+                    }
+                    else if (platform.IsMobile())
+                    {
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR3_MOBILE;
+                    }
+                    else if (platform.IsConsole())
+                    {
+                        LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_TR3_CONSOLE;
+                    }
                 }
             }
             else if (IsTR4Savegame())
@@ -962,8 +1000,8 @@ namespace TRR_SaveMaster
                 }
                 else if (IsTR6Savegame())
                 {
-                    UInt64 compressedBlockSize = BitConverter.ToUInt64(fileData, savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
-                    byte[] compressedBlockData = ReadBytes(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, (int)compressedBlockSize);
+                    UInt64 compressedBlockSize = BitConverter.ToUInt64(fileData, savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET_TR6);
+                    byte[] compressedBlockData = ReadBytes(savegameOffset + COMPRESSED_BLOCK_START_OFFSET_TR6, (int)compressedBlockSize);
 
                     using (MemoryStream ms = new MemoryStream(decompressedBuffer))
                     using (BinaryWriter writer = new BinaryWriter(ms))
@@ -991,10 +1029,10 @@ namespace TRR_SaveMaster
                     using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Write))
                     using (BinaryWriter writer = new BinaryWriter(fs))
                     {
-                        fs.Seek(savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET, SeekOrigin.Begin);
+                        fs.Seek(savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET_TR6, SeekOrigin.Begin);
                         writer.Write(compressedBufferSize);
 
-                        fs.Seek(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, SeekOrigin.Begin);
+                        fs.Seek(savegameOffset + COMPRESSED_BLOCK_START_OFFSET_TR6, SeekOrigin.Begin);
                         writer.Write(compressedBuffer);
                     }
                 }
