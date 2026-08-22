@@ -1115,6 +1115,49 @@ namespace TRR_SaveMaster
             [17] = new[] { 0x0032 },    // RX-Tech Mines
         };
 
+        public static readonly HashSet<int> TR3IntelligentEnemyObjectIds = new HashSet<int>
+        {
+            0x0014, // Tribesman with spiked ax
+            0x0015, // Tribesman with poison-dart gun
+            0x0016, // Dog
+            0x0017, // Rat
+            0x0019, // Killer whale
+            0x001A, // Scuba diver
+            0x001B, // Crow
+            0x001C, // Tiger
+            0x001D, // Vulture
+            0x001F, // Crawler mutant in closet
+            0x0020, // Crocodile
+            0x0022, // Compsognathus
+            0x0023, // Lizard thing
+            0x0024, // Puna
+            0x0025, // Mercenary
+            0x0120, // Raptor
+            0x0027, // RX-Tech red jacket
+            0x0028, // RX-Tech gun
+            0x0029, // Dog Antarctica
+            0x002A, // Crawler mutant
+            0x002C, // Tinnos wasp
+            0x002D, // Tinnos monster
+            0x002E, // Brute mutant
+            0x0031, // Willard spider
+            0x0032, // Flamethrower
+            0x0033, // London goon
+            0x0035, // Damned goon
+            0x0038, // London guard
+            0x0039, // Sophia
+            0x003C, // MP stick
+            0x003D, // MP gun
+            0x003E, // Prisoner
+            0x003F, // sighted MP
+            0x0040, // gun turret
+            0x0041, // dam guard
+            0x0045, // cobra
+            0x0046, // temple statue
+            0x0047, // monkey
+            0x0049  // Tony
+        };
+
         public static readonly Dictionary<byte, int> EnemyRemovalPercents = new Dictionary<byte, int>
         {
             { 0, -75 }, // Ghost Town
@@ -1210,8 +1253,8 @@ namespace TRR_SaveMaster
             {
                 0x0016, 0x0016, 0x0016, 0x003C, 0x003D, 0x003C, 0x003D, 0x003C, 0x003D, 0x003D,
                 0x0023, 0x0023, 0x0023, 0x0023, 0x0023, 0x0023, 0x0022, 0x0022, 0x0022, 0x0022,
-                0x0120, 0x003D, 0x003C, 0x003D, 0x003D, 0x0022, 0x0022, 0x0022, 0x0022, 0x0022,
-                0x0022, 0x0120
+                0x0025, 0x003D, 0x003C, 0x003D, 0x003D, 0x0022, 0x0022, 0x0022, 0x0022, 0x0022,
+                0x0022, 0x0025
             },
             [16] = new List<int> // Antarctica
             {

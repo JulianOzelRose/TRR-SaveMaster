@@ -109,7 +109,6 @@ namespace TRR_SaveMaster
         private const int ENTITY_BLOCK_START_CONSOLE = 0x998;
         private const int ENTITY_BLOCK_START_PC_PREPATCH = 0x988;
         private const int ENTITY_BLOCK_START_CONSOLE_PREPATCH = 0x986;
-        private const int ENTITY_BLOCK_START_NS_PREPATCH = 0x986;
 
         // Health
         private const Int16 MAX_HEALTH_VALUE_DEFAULT = 1000;
@@ -554,8 +553,12 @@ namespace TRR_SaveMaster
                 {
                     int originalId = result[i];
 
-                    if (!levelObjects.TryGetValue(originalId, out var obj)) continue;
-                    if ((obj.Flags00 & 0x02) == 0) continue;
+                    bool isIntelligent = TR3EntityCache.TR3IntelligentEnemyObjectIds.Contains(originalId);
+
+                    if (!isIntelligent)
+                    {
+                        continue;
+                    }
 
                     bool isFriendly =
                         (TR3EntityCache.TR3EnemyFriendlyByObjectId.TryGetValue(originalId, out bool isUniversallyFriendly) && isUniversallyFriendly) ||
@@ -609,7 +612,14 @@ namespace TRR_SaveMaster
                     foreach (var entry in targetEntries)
                     {
                         cumulative += entry.Meta2;
-                        if (pickRoll <= cumulative)
+
+                        bool isTargetFriendly =
+                            (TR3EntityCache.TR3EnemyFriendlyByObjectId.TryGetValue(entry.ObjectId, out bool targetFriendly) && targetFriendly) ||
+                            (TR3EntityCache.TR3EnemyFriendlyByLevel.TryGetValue(levelIndex, out int[] targetFriendlyIds) && targetFriendlyIds.Contains(entry.ObjectId));
+
+                        if (pickRoll <= cumulative &&
+                            entry.Meta2 != 0 &&
+                            !isTargetFriendly)
                         {
                             result[i] = entry.ObjectId;
                             break;
