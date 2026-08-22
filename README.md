@@ -1,7 +1,7 @@
 # Tomb Raider I-VI Remastered Savegame Editor
 An open source savegame editor for Tomb Raider I-VI Remastered. Main features are listed below. The next section contains
 basic use instructions as well as how to edit savegames from platforms other than PC. If you are interested in reverse engineering, there is a technical portion
-on the bottom section of this README. For a tool that allows you to import savegames, convert to PC/PS4/Android/NS format,
+on the bottom section of this README. For a tool that allows you to import savegames, convert to PC/PS4/Android/NS/iOS format,
 and reorder/delete savegames, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
 ### ✨ Features
@@ -18,11 +18,11 @@ and reorder/delete savegames, check out [TombExtract](https://github.com/JulianO
 <br>
 <img width="723" height="640" alt="MainForm" src="https://github.com/user-attachments/assets/256a1653-9961-4d64-8ea7-e49f1925c45b" />
 
-## Installation and use
+## 🛠️ Installation and Use
 To download and use this savegame editor, navigate to the [Releases](https://github.com/JulianOzelRose/TRR-SaveMaster/releases) page,
 then download the `.exe` file of the latest version under "Assets". You can save it anywhere on your computer. Once downloaded, open the file.
 The editor will then prompt you to select your savegame path, click "Yes". The editor will automatically open to your `TRX/TRX2` folder.
-Once there, navigate to the numeric folder that represents your Steam Community ID. If you have multiple accounts with Tomb Raider Remastered, there may be multiple folders.
+Once there, navigate to the numeric folder that represents your profile ID. If you have multiple accounts or installations of Tomb Raider Remastered, there may be multiple folders.
 
 Once the savegames are populated in the editor, you can select them using the dropdown labeled "Savegame" in the top-right corner.
 The editor will automatically refresh savegame data when switching tabs or clicking the savegame dropdown. If another savegame is added and not displaying,
@@ -30,10 +30,10 @@ you can click "File" -> "Refresh savegame list" to re-populate the savegames.
 
 Once you are done making changes, click "Save" to apply them. Because the game caches savegames into memory, you must restart your game in order for the changes to take effect.
 
-## Editing savegames from other platforms
+## 🖥️ Editing Savegames from Other Platforms
 By default, this savegame editor assumes PC format of savegames. To change the savegame platform, click "Settings" -> "Platform", then select your savegame platform.
 
-Current supported platforms for Tomb Raider I-III Patch 5 are PC, PS4, and Android. Nintendo Switch savegames are not yet supported for Tomb Raider I-III Patch 5 savegames.
+Current supported platforms for Tomb Raider I-III Patch 5 are PC, PS4, iOS and Android. Nintendo Switch savegames are not yet supported for Tomb Raider I-III Patch 5 savegames.
 All platforms are supported for Tomb Raider IV-VI.
 
 Console format (PS4/NS) savegames must be decrypted first. You can find more information on how to do that [here](https://github.com/JulianOzelRose/TombExtract/issues/1#issuecomment-1978837071).
@@ -41,7 +41,7 @@ Console format (PS4/NS) savegames must be decrypted first. You can find more inf
 For mobile format (Android/iOS), accessing the savegame file requires a rooted device. Rooting your device may void your warranty and can introduce security risks, so it is generally not recommended.
 However, editing mobile savegames is still possible if your device is rooted.
 
-## Using the Position Editor
+## 📍 Using the Position Editor
 <img width="359" height="344" alt="PositionForm-UI" src="https://github.com/user-attachments/assets/19d932cf-6e2e-4812-aeb6-5de21b417c8f" />
 <br>
 
@@ -57,7 +57,7 @@ Once in the Position Editor menu, you can teleport to pre-determined coordinates
 It's essential that the Room/Zone number matches Lara's current coordinates. Otherwise, the game will not interpret her position correctly. Click "Save" in this menu to apply changes, or "Cancel" to retain Lara's current
 position. Position cannot be edited while Lara is in a vehicle. If you try to teleport while Lara is interacting with a puzzle, it may result in the game crashing.
 
-## Using the Statistics Editor
+## 📊 Using the Statistics Editor
 <img width="391" height="502" alt="StatisticsForm-UI" src="https://github.com/user-attachments/assets/f8079c59-353f-46ec-b7f2-cbdc0ae1e48b" />
 <br>
 
@@ -67,7 +67,7 @@ For Tomb Raider I-III, use the level dropdown to choose which level's statistics
 For Tomb Raider VI, use the dropdown to switch between "Current Level" statistics and "Final Statistics", which represent the cumulative statistics for the entire playthrough.
 For Tomb Raider IV and V, the statistics are global rather than level-specific, meaning they track cumulative progress across the entire game, including total playtime, total kills, and total pickups.
 
-## Unlocks and Outfits
+## 🔓 Unlocks and Outfits
 <img width="337" height="363" alt="UnlocksForm" src="https://github.com/user-attachments/assets/8b9f129d-8b08-44d5-abe5-16122f55383e" />
 <br>
 
@@ -79,7 +79,7 @@ From here, you can:
 - Unlock Outfits
 
 
-## Dark Mode
+## 🌙 Dark Mode
 <img width="723" height="618" alt="DarkMode-UI" src="https://github.com/user-attachments/assets/76a00668-5a68-4ef3-87ac-fd141ee62b58" />
 <br>
 
@@ -87,7 +87,7 @@ If you prefer a darker interface, you can enable Dark Mode from the Settings men
 Please note that Dark Mode may not display correctly when using very high or very low DPI settings.
 If you have trouble viewing the checkboxes on your display, you can try changing "Settings" -> "Advanced" -> "Use flat style checkboxes for Dark Mode".
 
-## Tomb Raider I-III Remastered Savegame Format
+## 💾 Tomb Raider I-III Remastered Savegame Format
 This section details the technical aspects of reverse engineering the savegames of the Tomb Raider I-III Remastered trilogy. All savegames are stored in the `savegame.dat` file.
 Savegames for expansions are stored in the same slots as the original game. Each savegame slot for each game begins at a specific offset in the file, with a maximum of 32
 slots per game. If you want to see a more detailed layout of the savegame format for Tomb Raider I-III, [this one](https://gist.github.com/Doliman100/2cc56dee0b73b5e344ae9468b29e12e9) is excellent.
@@ -569,7 +569,7 @@ mp5AmmoOffset2 = sgBufferCursor + 0x198;
 ```
 
 
-## Tomb Raider IV-VI Remastered Savegame Format
+## 💾 Tomb Raider IV-VI Remastered Savegame Format
 This section details the technical aspects of reverse engineering the savegames of the Tomb Raider IV-VI Remastered trilogy. Like the first trilogy, all savegames are stored in the `savegame.dat` file.
 Each savegame slot for each game begins at a specific offset in the file, with a maximum of 32 slots per game. Each savegame has a fixed size of 0xA470 bytes. See the table below.
 
