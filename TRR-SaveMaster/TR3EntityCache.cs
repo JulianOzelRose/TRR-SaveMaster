@@ -7258,12 +7258,12 @@ namespace TRR_SaveMaster
                 [20] = new TR3Object
                 {
                     ObjectId = 20,
-                    Flags00 = 0x00,
+                    Flags00 = 0x7B,
                 },
                 [21] = new TR3Object
                 {
                     ObjectId = 21,
-                    Flags00 = 0x00,
+                    Flags00 = 0x7B,
                 },
                 [22] = new TR3Object
                 {
@@ -10724,12 +10724,12 @@ namespace TRR_SaveMaster
                 [20] = new TR3Object
                 {
                     ObjectId = 20,
-                    Flags00 = 0x00,
+                    Flags00 = 0x7B,
                 },
                 [21] = new TR3Object
                 {
                     ObjectId = 21,
-                    Flags00 = 0x00,
+                    Flags00 = 0x7B,
                 },
                 [22] = new TR3Object
                 {
@@ -14015,12 +14015,12 @@ namespace TRR_SaveMaster
                 [20] = new TR3Object
                 {
                     ObjectId = 20,
-                    Flags00 = 0x00,
+                    Flags00 = 0x7B,
                 },
                 [21] = new TR3Object
                 {
                     ObjectId = 21,
-                    Flags00 = 0x00,
+                    Flags00 = 0x7B,
                 },
                 [22] = new TR3Object
                 {
@@ -15853,12 +15853,12 @@ namespace TRR_SaveMaster
                 [20] = new TR3Object
                 {
                     ObjectId = 20,
-                    Flags00 = 0x00,
+                    Flags00 = 0x7B,
                 },
                 [21] = new TR3Object
                 {
                     ObjectId = 21,
-                    Flags00 = 0x00,
+                    Flags00 = 0x7B,
                 },
                 [22] = new TR3Object
                 {
@@ -17616,7 +17616,7 @@ namespace TRR_SaveMaster
                 [20] = new TR3Object
                 {
                     ObjectId = 20,
-                    Flags00 = 0x00,
+                    Flags00 = 0x7B,
                 },
                 [21] = new TR3Object
                 {
@@ -19454,12 +19454,12 @@ namespace TRR_SaveMaster
                 [20] = new TR3Object
                 {
                     ObjectId = 20,
-                    Flags00 = 0x00,
+                    Flags00 = 0x7B,
                 },
                 [21] = new TR3Object
                 {
                     ObjectId = 21,
-                    Flags00 = 0x00,
+                    Flags00 = 0x7B,
                 },
                 [22] = new TR3Object
                 {
@@ -23015,12 +23015,12 @@ namespace TRR_SaveMaster
                 [20] = new TR3Object
                 {
                     ObjectId = 20,
-                    Flags00 = 0x00,
+                    Flags00 = 0x7B,
                 },
                 [21] = new TR3Object
                 {
                     ObjectId = 21,
-                    Flags00 = 0x00,
+                    Flags00 = 0x7B,
                 },
                 [22] = new TR3Object
                 {
@@ -33738,12 +33738,12 @@ namespace TRR_SaveMaster
                 [20] = new TR3Object
                 {
                     ObjectId = 20,
-                    Flags00 = 0x00,
+                    Flags00 = 0x7B,
                 },
                 [21] = new TR3Object
                 {
                     ObjectId = 21,
-                    Flags00 = 0x00,
+                    Flags00 = 0x7B,
                 },
                 [22] = new TR3Object
                 {
@@ -35501,12 +35501,12 @@ namespace TRR_SaveMaster
                 [20] = new TR3Object
                 {
                     ObjectId = 20,
-                    Flags00 = 0x00,
+                    Flags00 = 0x7B,
                 },
                 [21] = new TR3Object
                 {
                     ObjectId = 21,
-                    Flags00 = 0x00,
+                    Flags00 = 0x7B,
                 },
                 [22] = new TR3Object
                 {
@@ -39127,12 +39127,12 @@ namespace TRR_SaveMaster
                 [20] = new TR3Object
                 {
                     ObjectId = 20,
-                    Flags00 = 0x00,
+                    Flags00 = 0x7B,
                 },
                 [21] = new TR3Object
                 {
                     ObjectId = 21,
-                    Flags00 = 0x00,
+                    Flags00 = 0x7B,
                 },
                 [22] = new TR3Object
                 {
