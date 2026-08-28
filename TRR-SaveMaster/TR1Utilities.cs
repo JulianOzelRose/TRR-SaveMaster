@@ -328,10 +328,9 @@ namespace TRR_SaveMaster
                     shotgunAmmoOffset2 = 0x272F;
                 }
 
-                if (platform != Platform.PC)
+                if (platform.IsConsole())
                 {
                     HEALTH_OFFSET -= 4;
-
                     magnumAmmoOffset2 -= 4;
                     uziAmmoOffset2 -= 4;
                     shotgunAmmoOffset2 -= 4;
