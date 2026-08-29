@@ -733,6 +733,25 @@ namespace TRR_SaveMaster
             sgBufferCursor += 0x6C;
         }
 
+        private static uint ReadUInt32ZeroPadded(byte[] data, int offset)
+        {
+            uint value = 0;
+
+            if (offset >= data.Length)
+            {
+                return 0;
+            }
+
+            int bytesAvailable = Math.Min(4, data.Length - offset);
+
+            for (int i = 0; i < bytesAvailable; i++)
+            {
+                value |= (uint)data[offset + i] << (i * 8);
+            }
+
+            return value;
+        }
+
         public byte[] Unpack(byte[] compressedData)
         {
             // The skip table
@@ -779,26 +798,16 @@ namespace TRR_SaveMaster
                     int shift_amt = uVar9 & 0x1F;
                     int byte_offset = (uVar9 >> 5) * 4 + (3 - uVar8);
 
-                    if (byte_offset + 4 > compressedData.Length)
-                    {
-                        Debug.WriteLine($"[UNPACK] Byte offset 0x{byte_offset:X} is out of bounds!");
-                        break;
-                    }
-
-                    uint uVar3 = BitConverter.ToUInt32(compressedData, byte_offset);
+                    uint uVar3 = ReadUInt32ZeroPadded(compressedData, byte_offset);
 
                     if (shift_amt != 0)
                     {
                         int sVar4 = shift_amt;
                         int next_offset = byte_offset + 4;
 
-                        if (next_offset + 4 > compressedData.Length)
-                        {
-                            Debug.WriteLine($"[UNPACK] Next offset 0x{next_offset:X} is out of bounds!");
-                            break;
-                        }
+                        uint nextWord = ReadUInt32ZeroPadded(compressedData, next_offset);
 
-                        uVar3 = (uVar3 >> sVar4) | (BitConverter.ToUInt32(compressedData, next_offset) << ((32 - sVar4) & 0x1F));
+                        uVar3 = (uVar3 >> sVar4) | (nextWord << ((32 - sVar4) & 0x1F));
                     }
 
                     uVar3 &= uVar10;
