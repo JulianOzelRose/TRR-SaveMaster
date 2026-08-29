@@ -2071,7 +2071,7 @@ namespace TRR_SaveMaster
 
                     File.SetAttributes(savegamePathTRX2, File.GetAttributes(savegamePathTRX2) & ~FileAttributes.ReadOnly);
 
-                    tr6Utilities.WriteChanges(nudCashTR6, trbHealthTR6, nudSaveNumberTR6);
+                    tr6Utilities.WriteChanges(fileData, nudCashTR6, trbHealthTR6, nudSaveNumberTR6);
 
                     // Reload updated header bytes
                     fileData = File.ReadAllBytes(savegamePathTRX2);

@@ -779,12 +779,7 @@ namespace TRR_SaveMaster
 
                 if (IsTR6Savegame())
                 {
-                    if (decompressedBuffer == null)
-                    {
-                        tr6Utilities.DetermineDynamicOffsets(fileData);
-                        decompressedBuffer = tr6Utilities.GetDecompressedBuffer();
-                    }
-
+                    tr6Utilities.DetermineDynamicOffsets(fileData);
                     int playerBaseOffset = tr6Utilities.GetPlayerBaseOffset();
                     DeterminePositionOffsetsTR6(playerBaseOffset);
                 }
@@ -852,6 +847,8 @@ namespace TRR_SaveMaster
                 }
                 else if (IsTR6Savegame())
                 {
+                    decompressedBuffer = tr6Utilities.GetDecompressedBuffer();
+
                     using (MemoryStream ms = new MemoryStream(decompressedBuffer))
                     using (BinaryReader reader = new BinaryReader(ms))
                     {
@@ -921,6 +918,7 @@ namespace TRR_SaveMaster
 
                 if (IsTR6Savegame())
                 {
+                    tr6Utilities.DetermineDynamicOffsets(fileData);
                     int playerBaseOffset = tr6Utilities.GetPlayerBaseOffset();
                     DeterminePositionOffsetsTR6(playerBaseOffset);
                 }
@@ -1000,8 +998,7 @@ namespace TRR_SaveMaster
                 }
                 else if (IsTR6Savegame())
                 {
-                    UInt64 compressedBlockSize = BitConverter.ToUInt64(fileData, savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET_TR6);
-                    byte[] compressedBlockData = ReadBytes(savegameOffset + COMPRESSED_BLOCK_START_OFFSET_TR6, (int)compressedBlockSize);
+                    decompressedBuffer = tr6Utilities.GetDecompressedBuffer();
 
                     using (MemoryStream ms = new MemoryStream(decompressedBuffer))
                     using (BinaryWriter writer = new BinaryWriter(ms))

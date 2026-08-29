@@ -119,7 +119,6 @@ namespace TRR_SaveMaster
             UInt64 compressedBlockSize = GetCompressedBlockSize(fileData);
             byte[] compressedBlockData = ReadBytes(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, (int)compressedBlockSize);
 
-            decompressedBuffer = new byte[0];   // Clear buffer
             decompressedBuffer = Unpack(compressedBlockData);
 
             // Cursor start
@@ -165,13 +164,16 @@ namespace TRR_SaveMaster
             return BitConverter.ToUInt64(fileData, savegameOffset + COMPRESSED_BLOCK_SIZE_OFFSET);
         }
 
-        private void ParseInventory()
+        private void ParseInventory(bool updateInventoryDisplay = true)
         {
             using (MemoryStream ms = new MemoryStream(decompressedBuffer))
             using (BinaryReader reader = new BinaryReader(ms))
             {
-                invLara.Clear();
-                invKurtis.Clear();
+                if (updateInventoryDisplay)
+                {
+                    invLara.Clear();
+                    invKurtis.Clear();
+                }
 
                 byte itemCount;
 
@@ -214,15 +216,18 @@ namespace TRR_SaveMaster
                             itemQuantity = reader.ReadInt32();
                             sgBufferCursor += 0x4;
 
-                            InventoryItem inventoryItem = new InventoryItem(itemClassID, itemType, itemQuantity);
+                            if (updateInventoryDisplay)
+                            {
+                                InventoryItem inventoryItem = new InventoryItem(itemClassID, itemType, itemQuantity);
 
-                            if (characterIndex == 0)
-                            {
-                                invLara.Add(inventoryItem);
-                            }
-                            else
-                            {
-                                invKurtis.Add(inventoryItem);
+                                if (characterIndex == 0)
+                                {
+                                    invLara.Add(inventoryItem);
+                                }
+                                else
+                                {
+                                    invKurtis.Add(inventoryItem);
+                                }
                             }
 
                             currentItemIndex++;
@@ -1412,15 +1417,13 @@ namespace TRR_SaveMaster
             }
         }
 
-        public void WriteChanges(NumericUpDown nudCash, TrackBar trbHealth, NumericUpDown nudSaveNumber)
+        public void WriteChanges(byte[] fileData, NumericUpDown nudCash, TrackBar trbHealth, NumericUpDown nudSaveNumber)
         {
-            if (decompressedBuffer == null || decompressedBuffer.Length == 0)
-            {
-                throw new Exception(Globals.ERROR_MSG_SAVEGAME_BUFFER_NULL_OR_EMPTY);
-            }
-
             try
             {
+                DetermineDynamicOffsets(fileData);
+                ParseInventory(false);
+
                 // Write save number to header
                 using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Write))
                 using (BinaryWriter writer = new BinaryWriter(fs))
@@ -1525,9 +1528,6 @@ namespace TRR_SaveMaster
                     fs.Seek(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, SeekOrigin.Begin);
                     writer.Write(compressedBuffer);
                 }
-
-                // Ensure any rewrites are done to the new buffer
-                decompressedBuffer = modifiedBuffer;
             }
             catch (Exception ex)
             {
