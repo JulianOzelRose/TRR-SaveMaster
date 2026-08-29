@@ -978,25 +978,45 @@ namespace TRR_SaveMaster
                 bool found = false;
                 uint step = (hashIndex == 0) ? 1u : (0x13FFu - hashIndex);
 
-                while (dictionary[hashIndex] != 0)
+                if (dictionary[hashIndex] != 0)
                 {
+                    // The game's initial hash-slot comparison uses signed correction
                     int entry = unchecked((int)dictionary[hashIndex]);
                     int adjusted = entry + ((entry >> 31) & 0xFFF);
+
                     if ((adjusted >> 12) == (int)combinedCode)
                     {
                         currentCode = (uint)(entry & 0xFFF);
                         found = true;
-                        break;
                     }
-
-                    // Apply probe arithmetic
-                    int tempIndex = (int)hashIndex - (int)step;
-                    if (tempIndex < 0)
+                    else
                     {
-                        tempIndex += 0x13FF; // wraparound
-                    }
+                        // Collision probes use a normal unsigned >> 12 comparison
+                        while (true)
+                        {
+                            int tempIndex = (int)hashIndex - (int)step;
+                            if (tempIndex < 0)
+                            {
+                                tempIndex += 0x13FF;
+                            }
 
-                    hashIndex = (uint)tempIndex;
+                            hashIndex = (uint)tempIndex;
+
+                            uint probeEntry = dictionary[hashIndex];
+
+                            if (probeEntry == 0)
+                            {
+                                break;
+                            }
+
+                            if ((probeEntry >> 12) == combinedCode)
+                            {
+                                currentCode = probeEntry & 0xFFF;
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
                 }
 
                 if (!found)
