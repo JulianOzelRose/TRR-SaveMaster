@@ -374,16 +374,6 @@ namespace TRR_SaveMaster
             grpSavegameCoordinates.Text = $"{selectedSavegame}";
         }
 
-        private byte[] ReadBytes(long offset, int length)
-        {
-            using (FileStream fs = new FileStream(savegamePath, FileMode.Open, FileAccess.Read))
-            using (BinaryReader br = new BinaryReader(fs))
-            {
-                fs.Seek(offset, SeekOrigin.Begin);
-                return br.ReadBytes(length);
-            }
-        }
-
         private void WriteInt32ToBuffer(byte[] buffer, int offset, int value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
