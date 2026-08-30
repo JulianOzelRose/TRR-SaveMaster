@@ -32,12 +32,9 @@ Once you are done making changes, click "Save" to apply them. Because the game c
 
 ## 🖥️ Editing Savegames from Other Platforms
 By default, this savegame editor assumes PC format of savegames. To change the savegame platform, click "Settings" -> "Platform", then select your savegame platform.
-
-Current supported platforms for Tomb Raider I-III Patch 5 are PC, PS4, iOS and Android. Nintendo Switch savegames are not yet supported for Tomb Raider I-III Patch 5 savegames.
-All platforms are supported for Tomb Raider IV-VI.
+Current supported platforms for Tomb Raider I-III Patch 5 are PC, PS4, Nintendo Switch, iOS and Android. All platforms are supported for Tomb Raider IV-VI.
 
 Console format (PS4/NS) savegames must be decrypted first. You can find more information on how to do that [here](https://github.com/JulianOzelRose/TombExtract/issues/1#issuecomment-1978837071).
-
 For mobile format (Android/iOS), accessing the savegame file requires a rooted device. Rooting your device may void your warranty and can introduce security risks, so it is generally not recommended.
 However, editing mobile savegames is still possible if your device is rooted.
 
@@ -58,7 +55,7 @@ It's essential that the Room/Zone number matches Lara's current coordinates. Oth
 position. Position cannot be edited while Lara is in a vehicle. If you try to teleport while Lara is interacting with a puzzle, it may result in the game crashing.
 
 ## 📊 Using the Statistics Editor
-<img width="391" height="502" alt="StatisticsForm-UI" src="https://github.com/user-attachments/assets/f8079c59-353f-46ec-b7f2-cbdc0ae1e48b" />
+<img width="391" height="502" alt="StatisticsForm-UI" src="https://github.com/user-attachments/assets/b66a0a51-5a28-4cf6-8bb4-75990f379649" />
 <br>
 
 This savegame editor also includes a Statistics Editor feature. To use it, click "Edit," then select "Statistics".<br>
@@ -99,8 +96,8 @@ slots per game. If you want to see a more detailed layout of the savegame format
 | Tomb Raider III                    | 0x1A2004 |
 
 Because each savegame has a constant size of `0x6800` bytes, that value can be used as an iterator when cycling through savegames.
-When a savegame slot is occupied, the value at offset `0x004` is set to 1. When a savegame slot is empty,
-the value is 0. See the code below.
+When a savegame slot is occupied, the first int on the slot is set to `1`. When a savegame slot is empty,
+the value is `0`. See the code below.
 
 ```
 for (int i = 0; i < Globals.MAX_SAVEGAMES; i++)
@@ -109,7 +106,7 @@ for (int i = 0; i < Globals.MAX_SAVEGAMES; i++)
 
     Int16 levelIndex = BitConverter.ToInt16(fileData, currentSavegameOffset + LEVEL_INDEX_OFFSET);
     Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
-    bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + Globals.SLOT_STATUS_OFFSET) != 0;
+    bool isSavegamePresent = BitConverter.ToInt32(fileData, currentSavegameOffset + SLOT_STATUS_OFFSET) != 0;
 
     if (isSavegamePresent && levelNames.TryGetValue(levelIndex, out string levelName) && saveNumber >= 0)
     {
@@ -187,6 +184,7 @@ So when calculating, you will have to add them to the base savegame offset.
 | 0x8BE     | Int8    | Pickups            |
 | 0x8BF     | Int8    | Medi Packs Used    |
 | 0x8D2     | Int16   | Level Index        |
+| 0x984     | UInt32  | World State        |
 | 0x988     | UInt32  | Savegame Version   |
 
 ## Tomb Raider I Deserializer
@@ -202,7 +200,7 @@ if (isChallengeMode && isNativePatch5)
 {
     byte enemyNumbers = GetChallengeModeEnemyNumbers(fileData);
     byte enemyType = GetChallengeModeEnemyType(fileData);
-    Int32 challengeModeRNGSeed = GetChallengeModeRNGSeed(fileData);
+    UInt32 challengeModeRNGSeed = GetChallengeModeRNGSeed(fileData);
     levelObjectIds = ApplyChallengeModeMutations(levelObjectIds, levelIndex, enemyNumbers, enemyType, challengeModeRNGSeed);
 
     sgBufferCursor += Globals.CHALLENGE_MODE_PARAM_BLOCK_SIZE;
@@ -223,7 +221,7 @@ if (isNativePatch5)
 ### Entity Loop
 Then, the entity deserializer loop begins. For native Patch 5 savegames, an additional DWORD is read for each entity.
 It then performs a series of bitmask checks for each entity type, and reads additional data accordingly.
-Health is located by identifying Lara's entity (ID 0) and recording the offset `0x24` within her entity block.
+Health is located by identifying Lara's entity (ID 0) and reading the ushort of her serialized health field.
 After the loop ends, additional Lara info is deserialized, which is where the secondary ammo data is stored.
 <br>
 
@@ -247,11 +245,6 @@ for (int itemIndex = 0; itemIndex < levelObjectIds.Count; itemIndex++)
         throw new Exception($"{Globals.ERROR_MSG_MISSING_OBJECT_DEFINITION} (object ID: 0x{objectId:X}).");
     }
 
-    if (tr1Object.ObjectId == Globals.LARA_ENTITY_ID)
-    {
-        HEALTH_OFFSET = sgBufferCursor + 0x24;
-    }
-
     if ((tr1Object.Flags00 & 0x08) != 0)
     {
         sgBufferCursor += 0x1A;
@@ -259,11 +252,16 @@ for (int itemIndex = 0; itemIndex < levelObjectIds.Count; itemIndex++)
 
     if ((tr1Object.Flags00 & 0x40) != 0)
     {
-        sgBufferCursor += 10;
+        sgBufferCursor += 0x0A;
     }
 
     if ((tr1Object.Flags00 & 0x10) != 0)
     {
+        if (tr1Object.ObjectId == Globals.LARA_ENTITY_ID)
+        {
+            HEALTH_OFFSET = sgBufferCursor;
+        }
+
         sgBufferCursor += 0x02;
     }
 
@@ -297,7 +295,7 @@ if (isChallengeMode && isNativePatch5 && !isPrepatch)
 {
     byte enemyNumbers = GetChallengeModeEnemyNumbers(fileData);
     byte enemyType = GetChallengeModeEnemyType(fileData);
-    Int32 challengeModeRNGSeed = GetChallengeModeRNGSeed(fileData);
+    UInt32 challengeModeRNGSeed = GetChallengeModeRNGSeed(fileData);
     levelObjectIds = ApplyChallengeModeMutations(levelObjectIds, levelIndex, enemyNumbers, enemyType, challengeModeRNGSeed);
 
     sgBufferCursor += Globals.CHALLENGE_MODE_PARAM_BLOCK_SIZE;
@@ -318,7 +316,7 @@ if (isNativePatch5 && !isPrepatch)
 ### Entity Loop
 Next is the entity deserializer loop. It is structurally similar to the Tomb Raider I entity loop, with some differences in deserializing actor data.
 For native Patch 5 savegames, an additional DWORD is read for each entity. It then performs a series of bitmask checks for each entity type, and reads additional data accordingly.
-Health is located by identifying Lara's entity (ID 0) and recording the offset `0x24` within her entity block.
+Health is located by identifying Lara's entity (ID 0) and reading the ushort of her serialized health field.
 
 The base size of the `0x20` actor block depends on the `0x02` flag. If the entity's AI-active bit is set, an additional AI block is present and the cursor is advanced by `0xC` bytes.
 Certain entities mutate the runtime object ID of another entity during deserialization. When this condition is detected, the target entity's object ID is updated to `0xD` for the rest of the deserializer.
@@ -347,11 +345,6 @@ for (int itemIndex = 0; itemIndex < levelObjectIds.Count; itemIndex++)
         throw new Exception($"{Globals.ERROR_MSG_MISSING_OBJECT_DEFINITION} (object ID: 0x{objectId:X}).");
     }
 
-    if (tr2Object.ObjectId == Globals.LARA_ENTITY_ID)
-    {
-        HEALTH_OFFSET = sgBufferCursor + 0x24;
-    }
-
     if ((tr2Object.Flags00 & 0x08) != 0)
     {
         sgBufferCursor += 0x1A;
@@ -364,6 +357,11 @@ for (int itemIndex = 0; itemIndex < levelObjectIds.Count; itemIndex++)
 
     if ((tr2Object.Flags00 & 0x10) != 0)
     {
+        if (tr2Object.ObjectId == Globals.LARA_ENTITY_ID)
+        {
+            HEALTH_OFFSET = sgBufferCursor;
+        }
+
         sgBufferCursor += 0x02;
     }
 
@@ -429,7 +427,7 @@ if (isChallengeMode && isNativePatch5 && !isPrepatch)
 {
     byte enemyNumbers = GetChallengeModeEnemyNumbers(fileData);
     byte enemyType = GetChallengeModeEnemyType(fileData);
-    Int32 challengeModeRNGSeed = GetChallengeModeRNGSeed(fileData);
+    UInt32 challengeModeRNGSeed = GetChallengeModeRNGSeed(fileData);
     levelObjectIds = ApplyChallengeModeMutations(levelObjectIds, levelIndex, enemyNumbers, enemyType, challengeModeRNGSeed);
 
     sgBufferCursor += Globals.CHALLENGE_MODE_PARAM_BLOCK_SIZE;
@@ -451,7 +449,7 @@ if (isNativePatch5 && !isPrepatch)
 ### Entity Loop
 Next is the entity deserializer loop. It is structurally similar to the Tomb Raider II entity loop.
 For native Patch 5 savegames, an additional DWORD is read for each entity. It then performs a series of bitmask checks for each entity type, and reads additional data accordingly.
-Health is located by identifying Lara's entity (ID 0) and recording the offset `0x24` within her entity block.
+Health is located by identifying Lara's entity (ID 0) and reading the ushort of her serialized health field.
 
 The base size of the `0x20` actor block depends on the `0x02` flag. If the entity's AI-active bit is set, an additional AI block is present and the cursor is advanced by `0xA` bytes.
 In Tomb Raider III's deserializer, more objects have special handling at the tail of the loop.
@@ -478,11 +476,6 @@ for (int itemIndex = 0; itemIndex < levelObjectIds.Count; itemIndex++)
         throw new Exception($"{Globals.ERROR_MSG_MISSING_OBJECT_DEFINITION} (object ID: 0x{objectId:X}).");
     }
 
-    if (tr3Object.ObjectId == Globals.LARA_ENTITY_ID)
-    {
-        HEALTH_OFFSET = sgBufferCursor + 0x24;
-    }
-
     if ((tr3Object.Flags00 & 0x08) != 0)
     {
         sgBufferCursor += 0x1A;
@@ -495,6 +488,11 @@ for (int itemIndex = 0; itemIndex < levelObjectIds.Count; itemIndex++)
 
     if ((tr3Object.Flags00 & 0x10) != 0)
     {
+        if (tr3Object.ObjectId == Globals.LARA_ENTITY_ID)
+        {
+            HEALTH_OFFSET = sgBufferCursor;
+        }
+
         sgBufferCursor += 0x02;
     }
 
@@ -650,10 +648,10 @@ Below are the offset tables for Tomb Raider IV-VI. With the exception of health,
 #### Tomb Raider VI
 | Offset    | Type    | Description                  |
 |:----------|:--------|:-----------------------------|
-| 0x000     | Int32   | Slot Status                  |
 | 0x004     | UInt32  | Savegame Version             |
 | 0x010     | UInt8   | Level Index                  |
 | 0x118     | UInt32  | Save Number                  |
+| 0x11C     | UInt32  | Slot Status                  |
 | 0x23C     | Int32   | Time Taken                   |
 | 0x240     | UInt32  | Distance Travelled           |
 | 0x244     | Int32   | Ammo Used                    |
@@ -664,7 +662,7 @@ Below are the offset tables for Tomb Raider IV-VI. With the exception of health,
 | 0x252     | UInt16  | Kills                        |
 | 0x254     | UInt8   | Health Restored              |
 | 0x358     | Int32   | New Game+                    |
-| 0x360     | UInt32  | Compressed Block Size        |
+| 0x360     | UInt64  | Compressed Block Size        |
 
 ## Tomb Raider IV Deserializer
 ### Pre-Entity Data
@@ -944,10 +942,9 @@ is notably more complex than those of the previous five games.
 
 ```
 UInt32 savegameVersion = GetSavegameVersion(fileData);
-UInt32 compressedBlockSize = GetCompressedBlockSize(fileData);
+UInt64 compressedBlockSize = GetCompressedBlockSize(fileData);
 byte[] compressedBlockData = ReadBytes(savegameOffset + COMPRESSED_BLOCK_START_OFFSET, (int)compressedBlockSize);
 
-decompressedBuffer = new byte[0];   // Clear buffer
 decompressedBuffer = Unpack(compressedBlockData);
 
 // Cursor start
@@ -978,7 +975,7 @@ using (BinaryReader reader = new BinaryReader(ms))
 }
 ```
 
-### Deserialized Blocks
+### Serialized Blocks
 
 | Block           | Size             |
 |:----------------|:-----------------|
