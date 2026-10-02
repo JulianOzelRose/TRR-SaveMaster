@@ -15,13 +15,10 @@ namespace TRR_SaveMaster
         private const int SAVE_NUMBER_OFFSET = 0x118;
         private const int SLOT_STATUS_OFFSET = 0x11C;
         private const int NEW_GAME_PLUS_OFFSET = 0x358;
+        private const int COMPRESSED_BLOCK_SIZE_OFFSET = 0x360;
+        private const int COMPRESSED_BLOCK_START_OFFSET = 0x368;
         private const int BASE_SAVEGAME_OFFSET_TR6 = 0x293C04;
         private const int MAX_SAVEGAME_OFFSET_TR6 = 0x484914;
-
-        // Compressed block offsets & constants
-        private const int COMPRESSED_BLOCK_START_OFFSET = 0x368;
-        private const int COMPRESSED_BLOCK_SIZE_OFFSET = 0x360;
-        private const int COMPRESSED_BLOCK_MAX_SIZE = 0xFFFFFF;
 
         // Entity Mocks
         private List<EntityMock> actors = new List<EntityMock>();
@@ -765,7 +762,7 @@ namespace TRR_SaveMaster
             byte[] offsetTable = new byte[8] { 0x00, 0x3C, 0x18, 0x54, 0x30, 0x0C, 0x48, 0x24 };
 
             // Constants
-            int MAX_BUFFER_SIZE = COMPRESSED_BLOCK_MAX_SIZE;
+            int MAX_BUFFER_SIZE = 0x100000;                     // 1 MB
             int LZW_BUFFER_SIZE = 0x1000;                       // 4096 entries
             int[] LZW_BUFFER = new int[LZW_BUFFER_SIZE];
             byte[] outputBuffer = new byte[MAX_BUFFER_SIZE];    // Decompressed output buffer
