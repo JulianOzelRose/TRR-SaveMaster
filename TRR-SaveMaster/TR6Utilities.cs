@@ -135,7 +135,7 @@ namespace TRR_SaveMaster
 
                 LoadCachedEntities();
 
-                InvLoad(reader);
+                InvLoad();
                 MapLoad(reader);
                 CamLoad();
                 CamLoad();
@@ -319,13 +319,13 @@ namespace TRR_SaveMaster
         private void AudioLoad(BinaryReader reader)
         {
             reader.BaseStream.Seek(sgBufferCursor + 0x14, SeekOrigin.Begin);
-            int loopCount = reader.ReadUInt16();
+            int audioSaveBufferLength = reader.ReadUInt16();
 
             sgBufferCursor += 0x6;
 
-            if ((uint)(loopCount - 1) < 0x2800)
+            if ((uint)(audioSaveBufferLength - 1) < 0x2800)
             {
-                sgBufferCursor += loopCount;
+                sgBufferCursor += audioSaveBufferLength;
             }
 
             sgBufferCursor += 0x12;
@@ -334,10 +334,10 @@ namespace TRR_SaveMaster
         private void FxLoad(BinaryReader reader)
         {
             reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-            byte condByte = reader.ReadByte();
+            byte zBufferFogMode = reader.ReadByte();
             sgBufferCursor += 0x1;
 
-            if (condByte != 0)
+            if (zBufferFogMode != 0)
             {
                 sgBufferCursor += 0x31E;
             }
@@ -345,7 +345,7 @@ namespace TRR_SaveMaster
             sgBufferCursor += 0x8;
         }
 
-        private void InvLoad(BinaryReader reader)
+        private void InvLoad()
         {
             sgBufferCursor += 0x4;
             sgBufferCursor += 0x12B;
@@ -353,7 +353,7 @@ namespace TRR_SaveMaster
 
         private void MapLoad(BinaryReader reader)
         {
-            MapLoadGlobals(reader);
+            MapLoadGlobals();
 
             // Load Actors
             for (int i = 0; i < actors.Count; i++)
@@ -370,22 +370,22 @@ namespace TRR_SaveMaster
             // Load Triggers
             for (int i = 0; i < NUM_TRIGGERS; i++)
             {
-                MapTrigLoad(reader);
+                MapTrigLoad();
             }
 
             // Load Emitters
             for (int i = 0; i < NUM_EMITTERS; i++)
             {
-                MapEmitterLoad(reader);
+                MapEmitterLoad();
             }
 
             // Condition for loading Water
             reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-            Int16 puVar11 = reader.ReadInt16();
+            Int16 waterCount = reader.ReadInt16();
             sgBufferCursor += 0x2;
 
             // Load Water
-            if (puVar11 != 0)
+            if (waterCount != 0)
             {
                 int index = 0;
 
@@ -398,7 +398,7 @@ namespace TRR_SaveMaster
                     sgBufferCursor += 0x2;
 
                     index = index + 1;
-                } while (index < puVar11);
+                } while (index < waterCount);
             }
 
             // Load Audio Locators
@@ -410,7 +410,7 @@ namespace TRR_SaveMaster
             // Flip rooms
             for (int i = 0; i < rooms.Count; i++)
             {
-                if (rooms[i].RoomMeta != 0)
+                if (rooms[i].FlipRoomCount != 0)
                 {
                     sgBufferCursor += 0x4;
                 }
@@ -429,7 +429,7 @@ namespace TRR_SaveMaster
             sgBufferCursor += 0x44;
         }
 
-        private void BossLoad(BinaryReader reader)
+        private void BossLoad()
         {
             sgBufferCursor += 0x23C0;
         }
@@ -474,7 +474,7 @@ namespace TRR_SaveMaster
 
             if (isPlayer)
             {
-                PlayLoad(reader);
+                PlayLoad();
 
                 PLAYER_HEALTH_OFFSET = sgBufferCursor;
 
@@ -485,33 +485,33 @@ namespace TRR_SaveMaster
                 if (!ShouldLoadBoss(actorIndex))
                 {
                     reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-                    int offset35CValue = reader.ReadInt16();
+                    int actorType = reader.ReadInt16();
                     sgBufferCursor += 0x2;
 
                     sgBufferCursor += 0xA;
 
                     // Conditional PathLoad execution
-                    if (((ushort)(offset35CValue - 300) < 200) || (sgCurrentLevel == 0x13))
+                    if (((ushort)(actorType - 300) < 200) || (sgCurrentLevel == 0x13))
                     {
                         PathLoad(reader);
                     }
 
                     // Call BoneControlLoad 4 times.
-                    BoneControlLoad(reader);
-                    BoneControlLoad(reader);
-                    BoneControlLoad(reader);
-                    BoneControlLoad(reader);
+                    BoneControlLoad();
+                    BoneControlLoad();
+                    BoneControlLoad();
+                    BoneControlLoad();
 
                     // Read NPC health
                     reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
                     float health = reader.ReadSingle();
                     sgBufferCursor += 0x4;
 
-                    sgBufferCursor += 0x1; // <--- Needed for the APB condition to load properly
+                    sgBufferCursor += 0x1; // <--- Needed for the APB condition to load properly (ActorGotShot)
                 }
                 else
                 {
-                    BossLoad(reader);
+                    BossLoad();
                 }
             }
 
@@ -519,11 +519,11 @@ namespace TRR_SaveMaster
 
             // Read one byte for APB_Load condition
             reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-            byte condByte = reader.ReadByte();
+            byte hasAPB = reader.ReadByte();
             sgBufferCursor += 0x1;
 
             // If condition byte is nonzero, call APB_Load
-            if (condByte != 0)
+            if (hasAPB != 0)
             {
                 APB_Load(reader, actor);
 
@@ -543,59 +543,59 @@ namespace TRR_SaveMaster
             sgBufferCursor += 0xA;
 
             reader.BaseStream.Seek(groupStart + 0xA, SeekOrigin.Begin);  // Adjust to correct offset.
-            byte condByte = reader.ReadByte();
+            byte hasAPB = reader.ReadByte();
             sgBufferCursor += 0x1;
 
             // If the condition byte is not zero, then execute the APB_Load branch.
-            if (condByte != 0)
+            if (hasAPB != 0)
             {
-                int apbLoopCounter = obj.APB_Loop_Counter;
-                APB_Load(reader, null, apbLoopCounter);
+                int boneCount = obj.BoneCount;
+                APB_Load(reader, null, boneCount);
             }
         }
 
-        private void MapTrigLoad(BinaryReader reader)
+        private void MapTrigLoad()
         {
             MapLoadBaseNode();
             sgBufferCursor += 0x4;
             return;
         }
 
-        private void MapEmitterLoad(BinaryReader reader)
+        private void MapEmitterLoad()
         {
             MapLoadBaseNode();
             return;
         }
 
-        private void APB_Load(BinaryReader reader, EntityMock entity, int objApbLoopCounter = 0)
+        private void APB_Load(BinaryReader reader, EntityMock entity, int objBoneCount = 0)
         {
             reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-            ushort bVar2 = reader.ReadByte();
+            ushort apbFlags = reader.ReadByte();
             sgBufferCursor += 0x1;
 
-            if ((bVar2 & 1) != 0)
+            if ((apbFlags & 1) != 0)
             {
-                Int32 param_1;
+                Int32 flags;
 
                 reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-                param_1 = reader.ReadInt32();
+                flags = reader.ReadInt32();
                 sgBufferCursor += 0x4;
 
                 sgBufferCursor += 0x4;
                 sgBufferCursor += 0x10;
 
-                int apbLoopCounter = 0;
+                int boneCount = 0;
 
                 if (entity != null)
                 {
-                    apbLoopCounter = entity.APB_Loop_Counter;
+                    boneCount = entity.BoneCount;
                 }
                 else
                 {
-                    apbLoopCounter = objApbLoopCounter;
+                    boneCount = objBoneCount;
                 }
 
-                if (apbLoopCounter > 0)
+                if (boneCount > 0)
                 {
                     int index = 0;
 
@@ -610,18 +610,18 @@ namespace TRR_SaveMaster
                         }
 
                         index++;
-                    } while (index < apbLoopCounter);
+                    } while (index < boneCount);
                 }
 
-                APB_LoadAnimationControl(reader, (bVar2 & 2));
+                APB_LoadAnimationControl(apbFlags & 2);
 
-                if ((bVar2 & 4) != 0)
+                if ((apbFlags & 4) != 0)
                 {
-                    APB_LoadAnimationControl(reader, (bVar2 & 4));
+                    APB_LoadAnimationControl(apbFlags & 4);
                 }
-                if ((bVar2 & 8) != 0)
+                if ((apbFlags & 8) != 0)
                 {
-                    APB_LoadAnimationControl(reader, (bVar2 & 8));
+                    APB_LoadAnimationControl(apbFlags & 8);
                 }
 
                 sgBufferCursor += 0x4;
@@ -631,21 +631,21 @@ namespace TRR_SaveMaster
                 sgBufferCursor += 0x4;
                 sgBufferCursor += 0x90;
 
-                if ((param_1 & 0x80000) == 0)
+                if ((flags & 0x80000) == 0)
                 {
-                    int secondApbValue = entity != null ? entity.Second_APB_Value : 0;
+                    int meshCount = entity != null ? entity.MeshCount : 0;
 
                     reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-                    reader.ReadBytes((secondApbValue * 0x20) / 0x8);
-                    sgBufferCursor += ((secondApbValue * 0x20) / 0x8);
+                    reader.ReadBytes((meshCount * 0x20) / 0x8);
+                    sgBufferCursor += ((meshCount * 0x20) / 0x8);
                 }
                 else
                 {
-                    if (apbLoopCounter > 0)
+                    if (boneCount > 0)
                     {
                         reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-                        reader.ReadBytes((apbLoopCounter * 0x20) / 0x8);
-                        sgBufferCursor += ((apbLoopCounter * 0x20) / 0x8);
+                        reader.ReadBytes((boneCount * 0x20) / 0x8);
+                        sgBufferCursor += ((boneCount * 0x20) / 0x8);
                     }
                 }
 
@@ -657,15 +657,15 @@ namespace TRR_SaveMaster
             return;
         }
 
-        private void APB_LoadAnimationControl(BinaryReader reader, int param_2)
+        private void APB_LoadAnimationControl(int hasDestination)
         {
             sgBufferCursor += 0x4;
 
-            APB_LoadAnimationInfo(reader);
+            APB_LoadAnimationInfo();
 
-            if (param_2 != 0)
+            if (hasDestination != 0)
             {
-                APB_LoadAnimationInfo(reader);
+                APB_LoadAnimationInfo();
             }
 
             sgBufferCursor += 0xC;
@@ -673,7 +673,7 @@ namespace TRR_SaveMaster
             return;
         }
 
-        private void APB_LoadAnimationInfo(BinaryReader reader)
+        private void APB_LoadAnimationInfo()
         {
             sgBufferCursor += 0x24;
 
@@ -682,58 +682,60 @@ namespace TRR_SaveMaster
 
         private void PathLoad(BinaryReader reader)
         {
+            // posStart, posEnd, posLast
             for (int i = 0; i < 3; i++)
             {
                 sgBufferCursor += 0x10;
             }
 
+            // start, end, bType
             sgBufferCursor += 0x2;
             sgBufferCursor += 0x2;
             sgBufferCursor += 0x2;
 
-            // Read the flag at offset 0x3E
+            // bSlerp
             reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-            short flag3E = reader.ReadInt16();
+            short bSlerp = reader.ReadInt16();
             sgBufferCursor += 0x2;
 
-            if (flag3E == 1)
+            if (bSlerp == 1)
             {
                 sgBufferCursor += 0x8;
             }
 
-            // Read next 8 bytes block (always)
+            // nLastStep, nCurStep, nNumStep, iState
             reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
             byte[] eightByteBlock = reader.ReadBytes(8);
             sgBufferCursor += 0x8;
 
-            short offset44Value = BitConverter.ToInt16(eightByteBlock, 0x4);
-            int varLength = (offset44Value * 0x2) + 0x4;
+            short numSteps = BitConverter.ToInt16(eightByteBlock, 0x4);
+            int stepDataLength = (numSteps * 0x2) + 0x4;
 
             reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-            byte[] variableData = reader.ReadBytes(varLength);
-            sgBufferCursor += varLength;
+            byte[] stepData = reader.ReadBytes(stepDataLength);
+            sgBufferCursor += stepDataLength;
         }
 
-        private void PlayLoad(BinaryReader reader)
+        private void PlayLoad()
         {
             sgBufferCursor += 0x8C;
             sgBufferCursor += (0x17E - 0x8C);
             sgBufferCursor += 0x10D;
 
             // Call BoneControlLoad 5 times
-            BoneControlLoad(reader);
-            BoneControlLoad(reader);
-            BoneControlLoad(reader);
-            BoneControlLoad(reader);
-            BoneControlLoad(reader);
+            BoneControlLoad();
+            BoneControlLoad();
+            BoneControlLoad();
+            BoneControlLoad();
+            BoneControlLoad();
         }
 
-        private void BoneControlLoad(BinaryReader reader)
+        private void BoneControlLoad()
         {
             sgBufferCursor += 0x4C;
         }
 
-        private void MapLoadGlobals(BinaryReader reader)
+        private void MapLoadGlobals()
         {
             sgBufferCursor += 0x6C;
         }
@@ -764,10 +766,10 @@ namespace TRR_SaveMaster
 
             // Constants
             int MAX_BUFFER_SIZE = COMPRESSED_BLOCK_MAX_SIZE;
-            int LZW_BUFFER_SIZE = 0x1000;  // 4096 entries
+            int LZW_BUFFER_SIZE = 0x1000;                       // 4096 entries
             int[] LZW_BUFFER = new int[LZW_BUFFER_SIZE];
-            byte[] output_buffer = new byte[MAX_BUFFER_SIZE];  // Decompressed output buffer
-            int output_pos = 0;
+            byte[] outputBuffer = new byte[MAX_BUFFER_SIZE];    // Decompressed output buffer
+            int outputPosition = 0;
 
             // Check for LZW header
             if (compressedData.Length >= 3 &&
@@ -776,124 +778,124 @@ namespace TRR_SaveMaster
                 compressedData[2] == 0x8C)
             {
                 // Setup
-                int uVar8 = 3 & 3;    // starting offset after header
-                int uVar9 = uVar8 * 8;
-                uint uVar7 = 0x100;   // next dictionary index
-                uint uVar10 = 0x1FF;  // dictionary mask for 9 bits
-                int local_2c = 9;     // starting bit length
-                int local_20 = uVar9; // remember offset at last CLEAR
+                int alignmentOffset = 3 & 3;                    // starting offset after header
+                int bitPosition = alignmentOffset * 8;
+                uint nextCode = 0x100;                          // next dictionary index
+                uint codeMask = 0x1FF;                          // dictionary mask for 9 bits
+                int codeWidth = 9;                              // starting bit length
+                int clearBitPosition = bitPosition;             // remember offset at last CLEAR
 
                 // Main loop
-                while (uVar9 <= ((compressedData.Length - 3 + uVar8) * 8 - 9))
+                while (bitPosition <= ((compressedData.Length - 3 + alignmentOffset) * 8 - 9))
                 {
                     // Increase code size if dictionary is about full
-                    if (uVar10 < uVar7 && local_2c < 12)
+                    if (codeMask < nextCode && codeWidth < 12)
                     {
-                        local_2c += 1;
-                        uVar10 = (uVar10 * 2) + 1;
+                        codeWidth += 1;
+                        codeMask = (codeMask * 2) + 1;
                     }
 
                     // Record new dictionary code's output offset
-                    if (uVar7 < 0x1000)
+                    if (nextCode < 0x1000)
                     {
-                        LZW_BUFFER[(int)(uVar7 - 256)] = output_pos;
+                        LZW_BUFFER[(int)(nextCode - 256)] = outputPosition;
                     }
 
-                    // Extract bits from compressedBlockData
-                    int shift_amt = uVar9 & 0x1F;
-                    int byte_offset = (uVar9 >> 5) * 4 + (3 - uVar8);
+                    // Extract bits from compressedData
+                    int bitOffset = bitPosition & 0x1F;
+                    int byteOffset = (bitPosition >> 5) * 4 + (3 - alignmentOffset);
 
-                    uint uVar3 = ReadUInt32ZeroPadded(compressedData, byte_offset);
+                    uint code = ReadUInt32ZeroPadded(compressedData, byteOffset);
 
-                    if (shift_amt != 0)
+                    if (bitOffset != 0)
                     {
-                        int sVar4 = shift_amt;
-                        int next_offset = byte_offset + 4;
+                        int bitShift = bitOffset;
+                        int nextOffset = byteOffset + 4;
 
-                        uint nextWord = ReadUInt32ZeroPadded(compressedData, next_offset);
+                        uint nextWord = ReadUInt32ZeroPadded(compressedData, nextOffset);
 
-                        uVar3 = (uVar3 >> sVar4) | (nextWord << ((32 - sVar4) & 0x1F));
+                        code = (code >> bitShift) | (nextWord << ((32 - bitShift) & 0x1F));
                     }
 
-                    uVar3 &= uVar10;
-                    uVar9 += local_2c;
+                    code &= codeMask;
+                    bitPosition += codeWidth;
 
                     // Handle LZW codes
-                    if (uVar3 == 0x100)
+                    if (code == 0x100)
                     {
                         // CLEAR code
-                        local_2c = 9;
+                        codeWidth = 9;
                         // Use the actual table skip:
-                        int bitsSinceLastClear = uVar9 - local_20;
-                        int index = (bitsSinceLastClear >> 2) & 7;     // (uVar11 - uVar13) >> 2 & 7
+                        int bitsSinceLastClear = bitPosition - clearBitPosition;
+                        int index = (bitsSinceLastClear >> 2) & 7;
                         byte skip = offsetTable[index];
-                        uVar9 += skip; // add the table-based offset
+                        bitPosition += skip;    // add the table-based offset
 
                         // Reset dictionary
-                        uVar7 = 0x100;
-                        uVar10 = 0x1FF;
-                        local_20 = uVar9;
+                        nextCode = 0x100;
+                        codeMask = 0x1FF;
+                        clearBitPosition = bitPosition;
                     }
-                    else if (uVar3 < 0x100)
+                    else if (code < 0x100)
                     {
                         // Direct literal byte
-                        if (output_pos >= output_buffer.Length)
+                        if (outputPosition >= outputBuffer.Length)
                         {
                             Debug.WriteLine("[UNPACK] Output position exceeds buffer size!");
                             break;
                         }
 
-                        output_buffer[output_pos++] = (byte)uVar3;
-                        uVar7++;
+                        outputBuffer[outputPosition++] = (byte)code;
+                        nextCode++;
                     }
                     else
                     {
                         // Dictionary-based copy
-                        int idx1 = (int)(uVar3 - 257);
-                        int idx2 = (int)(uVar3 - 256);
+                        int previousCodeIndex = (int)(code - 257);
+                        int currentCodeIndex = (int)(code - 256);
 
-                        if (idx1 >= LZW_BUFFER.Length || idx2 >= LZW_BUFFER.Length)
+                        if (previousCodeIndex >= LZW_BUFFER.Length || currentCodeIndex >= LZW_BUFFER.Length)
                         {
                             Debug.WriteLine("[UNPACK] LZW buffer index out of bounds!");
                             break;
                         }
 
-                        int puVar1 = LZW_BUFFER[idx1];
-                        int puVar2 = LZW_BUFFER[idx2];
+                        int copyStart = LZW_BUFFER[previousCodeIndex];
+                        int copyEnd = LZW_BUFFER[currentCodeIndex];
 
-                        if (puVar1 >= output_buffer.Length || puVar2 >= output_buffer.Length)
+                        if (copyStart >= outputBuffer.Length || copyEnd >= outputBuffer.Length)
                         {
-                            Debug.WriteLine($"[UNPACK] Invalid access to output buffer: puVar1={puVar1}, puVar2={puVar2}");
+                            Debug.WriteLine($"[UNPACK] Invalid access to output buffer: copyStart={copyStart}, copyEnd={copyEnd}");
                             break;
                         }
-                        if (output_pos >= output_buffer.Length)
+                        if (outputPosition >= outputBuffer.Length)
                         {
                             Debug.WriteLine("[UNPACK] Output position exceeds buffer size!");
                             break;
                         }
 
                         // Copy the first byte
-                        output_buffer[output_pos++] = output_buffer[puVar1++];
+                        outputBuffer[outputPosition++] = outputBuffer[copyStart++];
 
                         // Copy the rest
-                        while (puVar1 <= puVar2)
+                        while (copyStart <= copyEnd)
                         {
-                            if (output_pos >= output_buffer.Length)
+                            if (outputPosition >= outputBuffer.Length)
                             {
                                 Debug.WriteLine("[UNPACK] Output position exceeds buffer size!");
                                 break;
                             }
 
-                            output_buffer[output_pos++] = output_buffer[puVar1++];
+                            outputBuffer[outputPosition++] = outputBuffer[copyStart++];
                         }
 
-                        uVar7++;
+                        nextCode++;
                     }
                 }
 
                 // Return decompressed data
-                byte[] result = new byte[output_pos];
-                Array.Copy(output_buffer, result, output_pos);
+                byte[] result = new byte[outputPosition];
+                Array.Copy(outputBuffer, result, outputPosition);
                 return result;
             }
             else
@@ -912,7 +914,7 @@ namespace TRR_SaveMaster
             const int HASH_SIZE = 0x1400;
 
             // Write the 3-byte header.
-            List<byte> destBuffer = new List<byte> { 0x1F, 0x9D, 0x8C };
+            List<byte> outputBuffer = new List<byte> { 0x1F, 0x9D, 0x8C };
 
             // Bit-packing state.
             ulong bitBuffer = 0;
@@ -927,18 +929,18 @@ namespace TRR_SaveMaster
             uint nextCode = FIRST_CODE;
 
             // Keep track of the bit offset at the beginning of the current dictionary block.
-            int blockBase = bitTotal;
+            int clearBitPosition = bitTotal;
 
             if (rawData.Length == 0)
             {
-                return destBuffer.ToArray();
+                return outputBuffer.ToArray();
             }
 
             uint currentCode = rawData[0];
-            int inputPos = 1;
+            int inputPosition = 1;
 
-            // Clear code table
-            byte[] clearTable = new byte[8] { 0x00, 0x3C, 0x18, 0x54, 0x30, 0x0C, 0x48, 0x24 };
+            // Skip table
+            byte[] offsetTable = new byte[8] { 0x00, 0x3C, 0x18, 0x54, 0x30, 0x0C, 0x48, 0x24 };
 
             void WriteBits(uint code, int width)
             {
@@ -948,7 +950,7 @@ namespace TRR_SaveMaster
                 while (bitCount >= 8)
                 {
                     byte outByte = (byte)(bitBuffer & 0xFF);
-                    destBuffer.Add(outByte);
+                    outputBuffer.Add(outByte);
 
                     bitBuffer >>= 8;
                     bitCount -= 8;
@@ -960,7 +962,7 @@ namespace TRR_SaveMaster
                 if (bitCount > 0)
                 {
                     byte finalByte = (byte)(bitBuffer & 0xFF);
-                    destBuffer.Add(finalByte);
+                    outputBuffer.Add(finalByte);
 
                     bitBuffer = 0;
                     bitCount = 0;
@@ -968,9 +970,9 @@ namespace TRR_SaveMaster
             }
 
             // Main Compression Loop.
-            while (inputPos < rawData.Length)
+            while (inputPosition < rawData.Length)
             {
-                byte nextChar = rawData[inputPos++];
+                byte nextChar = rawData[inputPosition++];
                 uint combinedCode = (currentCode << 8) | nextChar;
                 uint hashIndex = ((uint)nextChar << 4) ^ currentCode;
                 hashIndex %= HASH_SIZE;
@@ -1036,20 +1038,20 @@ namespace TRR_SaveMaster
                     }
                     else
                     {
-                        // Dictionary full: emit CLEAR code and then flush extra bits based on the clear table.
+                        // Dictionary full: emit CLEAR code and then flush extra bits based on the skip table.
                         WriteBits(CLEAR_CODE, codeWidth);
                         // Compute how many bits have been output since the start of this dictionary block.
-                        int bitsSince = bitTotal - blockBase;
-                        int index = (bitsSince >> 2) & 7;
-                        int extraBits = clearTable[index]; // extra bits to flush
+                        int bitsSinceLastClear = bitTotal - clearBitPosition;
+                        int index = (bitsSinceLastClear >> 2) & 7;
+                        int extraBits = offsetTable[index]; // extra bits to flush
                         WriteBits(0, extraBits);
                         // Reset dictionary and LZW state.
                         dictionary = new uint[HASH_SIZE];
                         codeWidth = INIT_BITS;
                         maxCode = (1U << codeWidth) - 1;
                         nextCode = FIRST_CODE;
-                        // Reset blockBase to the current bit total.
-                        blockBase = bitTotal;
+                        // Reset clearBitPosition to the current bit total.
+                        clearBitPosition = bitTotal;
                     }
 
                     currentCode = nextChar;
@@ -1060,7 +1062,7 @@ namespace TRR_SaveMaster
             WriteBits(currentCode, codeWidth);
             FlushBits();
 
-            return destBuffer.ToArray();
+            return outputBuffer.ToArray();
         }
 
         public void UpdateInventoryFromUI(ComboBox cmbInventory, NumericUpDown nudChocolateBar, NumericUpDown nudHealthPills,
