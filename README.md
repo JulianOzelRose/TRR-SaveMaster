@@ -12,7 +12,7 @@ and reorder/delete savegames, check out [TombExtract](https://github.com/JulianO
 - 📊 Edit Statistics
 - 🔓 Unlock NG+ & Outfits
 - 🗑️ Savegame Deletion
-- 🖥️ Cross-Platform Compatibility (PC/PS4/Android/NS/iOS)
+- 🖥️ Cross-Platform Compatibility (PC/PS4/PS5/Android/NS/iOS)
 - 🔄 Patch 5 & Pre-Patch Compatible
 
 <br>
@@ -32,9 +32,9 @@ Once you are done making changes, click "Save" to apply them. Because the game c
 
 ## 🖥️ Editing Savegames from Other Platforms
 By default, this savegame editor assumes PC format of savegames. To change the savegame platform, click "Settings" -> "Platform", then select your savegame platform.
-Current supported platforms for Tomb Raider I-III Patch 5 are PC, PS4, Nintendo Switch, iOS and Android. All platforms are supported for Tomb Raider IV-VI.
+Current supported platforms for Tomb Raider I-III Patch 5 are PC, PS4, PS5, Nintendo Switch, iOS and Android. All platforms are supported for Tomb Raider IV-VI.
 
-Console format (PS4/NS) savegames must be decrypted first. You can find more information on how to do that [here](https://github.com/JulianOzelRose/TombExtract/issues/1#issuecomment-1978837071).
+PS4/PS5 savegames must be decrypted first, while Nintendo Switch savegames must be extracted from the console. You can find more information on how to do that [here](https://github.com/JulianOzelRose/TombExtract/issues/1#issuecomment-1978837071).
 For mobile format (Android/iOS), accessing the savegame file requires a rooted device. Rooting your device may void your warranty and can introduce security risks, so it is generally not recommended.
 However, editing mobile savegames is still possible if your device is rooted.
 
