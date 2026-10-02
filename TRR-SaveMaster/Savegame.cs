@@ -6,6 +6,7 @@ namespace TRR_SaveMaster
     {
         PC,
         PlayStation4,
+        PlayStation5,
         NintendoSwitch,
         Android,
         iOS
@@ -21,6 +22,8 @@ namespace TRR_SaveMaster
                     return "PC";
                 case Platform.PlayStation4:
                     return "PS4";
+                case Platform.PlayStation5:
+                    return "PS5";
                 case Platform.NintendoSwitch:
                     return "Nintendo Switch";
                 case Platform.Android:
@@ -40,6 +43,8 @@ namespace TRR_SaveMaster
                     return Platform.PC;
                 case "PS4":
                     return Platform.PlayStation4;
+                case "PS5":
+                    return Platform.PlayStation5;
                 case "Nintendo Switch":
                     return Platform.NintendoSwitch;
                 case "Android":
@@ -58,7 +63,7 @@ namespace TRR_SaveMaster
 
         public static bool IsConsole(this Platform platform)
         {
-            return platform == Platform.PlayStation4 || platform == Platform.NintendoSwitch;
+            return platform == Platform.PlayStation4 || platform == Platform.PlayStation5 || platform == Platform.NintendoSwitch;
         }
     }
 

@@ -641,18 +641,21 @@ namespace TRR_SaveMaster
         {
             tsmiPC.CheckedChanged -= tsmiPC_CheckedChanged;
             tsmiPlayStation4.CheckedChanged -= tsmiPlayStation4_CheckedChanged;
+            tsmiPlayStation5.CheckedChanged -= tsmiPlayStation5_CheckedChanged;
             tsmiNintendoSwitch.CheckedChanged -= tsmiNintendoSwitch_CheckedChanged;
             tsmiAndroid.CheckedChanged -= tsmiAndroid_CheckedChanged;
             tsmiIOS.CheckedChanged -= tsmiIOS_CheckedChanged;
 
             tsmiPC.Checked = (platform == Platform.PC);
             tsmiPlayStation4.Checked = (platform == Platform.PlayStation4);
+            tsmiPlayStation5.Checked = (platform == Platform.PlayStation5);
             tsmiNintendoSwitch.Checked = (platform == Platform.NintendoSwitch);
             tsmiAndroid.Checked = (platform == Platform.Android);
             tsmiIOS.Checked = (platform == Platform.iOS);
 
             tsmiPC.CheckedChanged += tsmiPC_CheckedChanged;
             tsmiPlayStation4.CheckedChanged += tsmiPlayStation4_CheckedChanged;
+            tsmiPlayStation5.CheckedChanged += tsmiPlayStation5_CheckedChanged;
             tsmiNintendoSwitch.CheckedChanged += tsmiNintendoSwitch_CheckedChanged;
             tsmiAndroid.CheckedChanged += tsmiAndroid_CheckedChanged;
             tsmiIOS.CheckedChanged += tsmiIOS_CheckedChanged;
@@ -703,20 +706,19 @@ namespace TRR_SaveMaster
                 byte[] fileData = File.ReadAllBytes(savegamePathTRX);
                 bool isPrepatch = IsPrepatchSavegameFileTRX(fileData);
 
-                // TRX (pre-patch) support: PC, PS4, NS
+                // TRX (pre-patch) support: PC/PS4/PS5/NS
                 if (isPrepatch && !platform.IsMobile())
                 {
                     return;
                 }
 
-                // TRX (Patch 5) support: PC, Android, PS4, NS, iOS
+                // TRX (Patch 5) support: PC/PS4/PS5/NS/Android/iOS
                 if (!isPrepatch)
                 {
                     return;
                 }
 
                 string gameString = "";
-                string patchString = isPrepatch ? "" : " Patch 5";
 
                 if (tabGame.SelectedIndex == Globals.TAB_TR1)
                 {
@@ -733,7 +735,7 @@ namespace TRR_SaveMaster
 
                 SystemSounds.Exclamation.Play();
 
-                string warningMessage = $"{platform.ToFriendlyString()} is not currently supported for {gameString}{patchString}.";
+                string warningMessage = $"{platform.ToFriendlyString()} requires a Patch 5 savegame file for {gameString}.";
 
                 ThemedMessageBox.Show(
                     this,
@@ -744,6 +746,7 @@ namespace TRR_SaveMaster
 
                 tsmiPC.Checked = true;
                 tsmiPlayStation4.Checked = false;
+                tsmiPlayStation5.Checked = false;
                 tsmiNintendoSwitch.Checked = false;
                 tsmiAndroid.Checked = false;
                 tsmiIOS.Checked = false;
@@ -753,8 +756,8 @@ namespace TRR_SaveMaster
             }
             else if (IsTRX2TabSelected())
             {
-                // TRX2 support: PC, PS4, NS
-                if (platform != Platform.Android && platform != Platform.iOS)
+                // TRX2 support: PC/PS4/PS5/NS
+                if (!platform.IsMobile())
                 {
                     return;
                 }
@@ -776,7 +779,7 @@ namespace TRR_SaveMaster
 
                 SystemSounds.Exclamation.Play();
 
-                string warningMessage = $"{platform.ToFriendlyString()} is not currently supported for {gameString}.";
+                string warningMessage = $"{gameString} is not available on {platform.ToFriendlyString()}.";
 
                 ThemedMessageBox.Show(
                     this,
@@ -787,8 +790,10 @@ namespace TRR_SaveMaster
 
                 tsmiPC.Checked = true;
                 tsmiPlayStation4.Checked = false;
+                tsmiPlayStation5.Checked = false;
                 tsmiNintendoSwitch.Checked = false;
                 tsmiAndroid.Checked = false;
+                tsmiIOS.Checked = false;
 
                 this.platform = Platform.PC;
                 this.Text = $"{Globals.WINDOW_TITLE} ({PlatformExtensions.ToFriendlyString(Platform.PC)})";
@@ -3310,6 +3315,11 @@ namespace TRR_SaveMaster
             SetPlatform(Platform.PlayStation4);
         }
 
+        private void tsmiPlayStation5_CheckedChanged(object sender, EventArgs e)
+        {
+            SetPlatform(Platform.PlayStation5);
+        }
+
         private void tsmiNintendoSwitch_CheckedChanged(object sender, EventArgs e)
         {
             SetPlatform(Platform.NintendoSwitch);
@@ -3625,6 +3635,7 @@ namespace TRR_SaveMaster
                 tsmiDeleteSavegame.Enabled = cmbSavegamesTR1.SelectedIndex != -1;
                 tsmiPC.Enabled = true;
                 tsmiPlayStation4.Enabled = true;
+                tsmiPlayStation5.Enabled = true;
                 tsmiNintendoSwitch.Enabled = true;
                 tsmiAndroid.Enabled = true;
                 tsmiIOS.Enabled = true;
@@ -3640,6 +3651,7 @@ namespace TRR_SaveMaster
                 tsmiDeleteSavegame.Enabled = cmbSavegamesTR2.SelectedIndex != -1;
                 tsmiPC.Enabled = true;
                 tsmiPlayStation4.Enabled = true;
+                tsmiPlayStation5.Enabled = true;
                 tsmiNintendoSwitch.Enabled = true;
                 tsmiAndroid.Enabled = true;
                 tsmiIOS.Enabled = true;
@@ -3655,6 +3667,7 @@ namespace TRR_SaveMaster
                 tsmiDeleteSavegame.Enabled = cmbSavegamesTR3.SelectedIndex != -1;
                 tsmiPC.Enabled = true;
                 tsmiPlayStation4.Enabled = true;
+                tsmiPlayStation5.Enabled = true;
                 tsmiNintendoSwitch.Enabled = true;
                 tsmiAndroid.Enabled = true;
                 tsmiIOS.Enabled = true;
@@ -3670,6 +3683,7 @@ namespace TRR_SaveMaster
                 tsmiDeleteSavegame.Enabled = cmbSavegamesTR4.SelectedIndex != -1;
                 tsmiPC.Enabled = true;
                 tsmiPlayStation4.Enabled = true;
+                tsmiPlayStation5.Enabled = true;
                 tsmiNintendoSwitch.Enabled = true;
                 tsmiAndroid.Enabled = false;
                 tsmiIOS.Enabled = false;
@@ -3685,6 +3699,7 @@ namespace TRR_SaveMaster
                 tsmiDeleteSavegame.Enabled = cmbSavegamesTR5.SelectedIndex != -1;
                 tsmiPC.Enabled = true;
                 tsmiPlayStation4.Enabled = true;
+                tsmiPlayStation5.Enabled = true;
                 tsmiNintendoSwitch.Enabled = true;
                 tsmiAndroid.Enabled = false;
                 tsmiIOS.Enabled = false;
@@ -3700,6 +3715,7 @@ namespace TRR_SaveMaster
                 tsmiDeleteSavegame.Enabled = cmbSavegamesTR6.SelectedIndex != -1;
                 tsmiPC.Enabled = true;
                 tsmiPlayStation4.Enabled = true;
+                tsmiPlayStation5.Enabled = true;
                 tsmiNintendoSwitch.Enabled = true;
                 tsmiAndroid.Enabled = false;
                 tsmiIOS.Enabled = false;

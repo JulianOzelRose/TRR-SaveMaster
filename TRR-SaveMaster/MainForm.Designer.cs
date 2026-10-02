@@ -323,6 +323,7 @@ namespace TRR_SaveMaster
             this.tsmiViewReadme = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiReportBug = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiPlayStation5 = new System.Windows.Forms.ToolStripMenuItem();
             this.tabGame.SuspendLayout();
             this.tpTR1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSaveNumberTR1)).BeginInit();
@@ -3740,6 +3741,7 @@ namespace TRR_SaveMaster
             this.tsmiPlatform.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiPC,
             this.tsmiPlayStation4,
+            this.tsmiPlayStation5,
             this.tsmiNintendoSwitch,
             this.tsmiAndroid,
             this.tsmiIOS});
@@ -3903,6 +3905,14 @@ namespace TRR_SaveMaster
             this.tsmiAbout.Size = new System.Drawing.Size(148, 22);
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
+            // 
+            // tsmiPlayStation5
+            // 
+            this.tsmiPlayStation5.CheckOnClick = true;
+            this.tsmiPlayStation5.Name = "tsmiPlayStation5";
+            this.tsmiPlayStation5.Size = new System.Drawing.Size(180, 22);
+            this.tsmiPlayStation5.Text = "PlayStation 5";
+            this.tsmiPlayStation5.CheckedChanged += new System.EventHandler(this.tsmiPlayStation5_CheckedChanged);
             // 
             // MainForm
             // 
@@ -4357,6 +4367,7 @@ namespace TRR_SaveMaster
         private System.Windows.Forms.ToolStripMenuItem tsmiUseFlatCheckBoxDarkMode;
         private System.Windows.Forms.ToolStripSeparator tsmiAdvancedSettingsSeparator;
         private System.Windows.Forms.ToolStripMenuItem tsmiIOS;
+        private System.Windows.Forms.ToolStripMenuItem tsmiPlayStation5;
     }
 }
 
