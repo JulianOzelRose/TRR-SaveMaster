@@ -1,7 +1,7 @@
 # Tomb Raider I-VI Remastered Savegame Editor
 An open source savegame editor for Tomb Raider I-VI Remastered. Main features are listed below. The next section contains
 basic use instructions as well as how to edit savegames from platforms other than PC. If you are interested in reverse engineering, there is a technical portion
-on the bottom section of this README. For a tool that allows you to import savegames, convert to PC/PS4/Android/NS/iOS format,
+on the bottom section of this README. For a tool that allows you to import savegames, convert to PC/PS4/PS5/Android/NS/iOS format,
 and reorder/delete savegames, check out [TombExtract](https://github.com/JulianOzelRose/TombExtract).
 
 ### ✨ Features
@@ -947,7 +947,6 @@ byte[] compressedBlockData = ReadBytes(savegameOffset + COMPRESSED_BLOCK_START_O
 
 decompressedBuffer = Unpack(compressedBlockData);
 
-// Cursor start
 sgBufferCursor = 0x4;
 
 using (MemoryStream ms = new MemoryStream(decompressedBuffer))
@@ -961,7 +960,7 @@ using (BinaryReader reader = new BinaryReader(ms))
 
     LoadCachedEntities();
 
-    InvLoad(reader);
+    InvLoad();
     MapLoad(reader);
     CamLoad();
     CamLoad();
@@ -1000,7 +999,7 @@ Water data is then deserialized, followed by audio locators and room data.
 ```
 private void MapLoad(BinaryReader reader)
 {
-    MapLoadGlobals(reader);
+    MapLoadGlobals();
 
     for (int i = 0; i < actors.Count; i++)
     {
@@ -1014,29 +1013,32 @@ private void MapLoad(BinaryReader reader)
 
     for (int i = 0; i < NUM_TRIGGERS; i++)
     {
-        MapTrigLoad(reader);
+        MapTrigLoad();
     }
 
     for (int i = 0; i < NUM_EMITTERS; i++)
     {
-        MapEmitterLoad(reader);
+        MapEmitterLoad();
     }
 
     reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-    Int16 puVar11 = reader.ReadInt16();
+    Int16 waterCount = reader.ReadInt16();
     sgBufferCursor += 0x2;
 
-    if (puVar11 != 0)
+    if (waterCount != 0)
     {
         int index = 0;
 
         do
         {
             sgBufferCursor += 0x4;
+
             MapLoadBaseNode();
+
             sgBufferCursor += 0x2;
+
             index = index + 1;
-        } while (index < puVar11);
+        } while (index < waterCount);
     }
 
     for (int i = 0; i < NUM_AUDIO_LOCATORS; i++)
@@ -1046,7 +1048,7 @@ private void MapLoad(BinaryReader reader)
 
     for (int i = 0; i < rooms.Count; i++)
     {
-        if (rooms[i].RoomMeta != 0)
+        if (rooms[i].FlipRoomCount != 0)
         {
             sgBufferCursor += 0x4;
         }
@@ -1082,8 +1084,10 @@ private void MapActorLoad(BinaryReader reader, EntityMock actor, int actorIndex)
 
     if (isPlayer)
     {
-        PlayLoad(reader);
+        PlayLoad();
+
         PLAYER_HEALTH_OFFSET = sgBufferCursor;
+
         sgBufferCursor += 0x4;
     }
     else
@@ -1091,20 +1095,20 @@ private void MapActorLoad(BinaryReader reader, EntityMock actor, int actorIndex)
         if (!ShouldLoadBoss(actorIndex))
         {
             reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-            int offset35CValue = reader.ReadInt16();
+            int actorType = reader.ReadInt16();
             sgBufferCursor += 0x2;
 
             sgBufferCursor += 0xA;
 
-            if (((ushort)(offset35CValue - 300) < 200) || (sgCurrentLevel == 0x13))
+            if (((ushort)(actorType - 300) < 200) || (sgCurrentLevel == 0x13))
             {
                 PathLoad(reader);
             }
 
-            BoneControlLoad(reader);
-            BoneControlLoad(reader);
-            BoneControlLoad(reader);
-            BoneControlLoad(reader);
+            BoneControlLoad();
+            BoneControlLoad();
+            BoneControlLoad();
+            BoneControlLoad();
 
             reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
             float health = reader.ReadSingle();
@@ -1114,17 +1118,17 @@ private void MapActorLoad(BinaryReader reader, EntityMock actor, int actorIndex)
         }
         else
         {
-            BossLoad(reader);
+            BossLoad();
         }
     }
 
     sgBufferCursor += 0x4;
 
     reader.BaseStream.Seek(sgBufferCursor, SeekOrigin.Begin);
-    byte condByte = reader.ReadByte();
+    byte hasAPB = reader.ReadByte();
     sgBufferCursor += 0x1;
 
-    if (condByte != 0)
+    if (hasAPB != 0)
     {
         APB_Load(reader, actor);
 
