@@ -763,11 +763,6 @@ namespace TRR_SaveMaster
             // Challenge Mode param block
             if (isChallengeMode && isNativePatch5)
             {
-                byte enemyNumbers = GetChallengeModeEnemyNumbers(fileData);
-                byte enemyType = GetChallengeModeEnemyType(fileData);
-                UInt32 challengeModeRNGSeed = GetChallengeModeRNGSeed(fileData);
-                levelObjectIds = ApplyChallengeModeMutations(levelObjectIds, levelIndex, enemyNumbers, enemyType, challengeModeRNGSeed);
-
                 sgBufferCursor += Globals.CHALLENGE_MODE_PARAM_BLOCK_SIZE;
             }
 
@@ -778,18 +773,26 @@ namespace TRR_SaveMaster
             int gLevelStateEntryCount = TR1EntityCache.LevelStateEntryCounts[levelIndex];
             sgBufferCursor += gLevelStateEntryCount * 2;
 
+            int numObjects = levelObjectIds.Count;
+
             if (isNativePatch5)
             {
+                numObjects = BitConverter.ToInt32(fileData, savegameOffset + sgBufferCursor);
                 sgBufferCursor += 4;
             }
 
-            for (int itemIndex = 0; itemIndex < levelObjectIds.Count; itemIndex++)
+            for (int itemIndex = 0; itemIndex < numObjects; itemIndex++)
             {
-                int objectId = levelObjectIds[itemIndex];
+                int objectId;
 
                 if (isNativePatch5)
                 {
+                    objectId = BitConverter.ToInt16(fileData, savegameOffset + sgBufferCursor);
                     sgBufferCursor += 4;
+                }
+                else
+                {
+                    objectId = levelObjectIds[itemIndex];
                 }
 
                 if (!TR1EntityCache.TR1ObjectsByLevel.TryGetValue(levelIndex, out var levelObjects))
