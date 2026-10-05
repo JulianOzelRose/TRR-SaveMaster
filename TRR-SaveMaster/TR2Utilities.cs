@@ -1110,7 +1110,8 @@ namespace TRR_SaveMaster
 
                     bool mutatesTargetEntity = (u2 & 0x06) == 0x04;
 
-                    if (mutatesTargetEntity &&
+                    if (!isNativePatch5 &&
+                        mutatesTargetEntity &&
                         TR2EntityCache.ControllerTargetEntitiesByLevel.TryGetValue(levelIndex, out var controllerTargets) &&
                         controllerTargets.TryGetValue(itemIndex, out int targetItemIndex))
                     {
