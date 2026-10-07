@@ -25,7 +25,7 @@ namespace TRR_SaveMaster
 
     public class TR2EntityCache
     {
-        public static readonly Dictionary<int, int> LevelStateEntryCounts = new Dictionary<int, int>()
+        public static readonly Dictionary<int, int> FixedCameraCounts = new Dictionary<int, int>()
         {
             {  1, 6  },     // The Great Wall
             {  2, 10 },     // Venice

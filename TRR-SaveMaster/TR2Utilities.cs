@@ -1035,15 +1035,19 @@ namespace TRR_SaveMaster
             sgBufferCursor += 4;
             sgBufferCursor += 0x118;
 
-            int gLevelStateEntryCount = TR2EntityCache.LevelStateEntryCounts[levelIndex];
-            sgBufferCursor += gLevelStateEntryCount * 2;
+            int fixedCameraCount = TR2EntityCache.FixedCameraCounts[levelIndex];
+            sgBufferCursor += fixedCameraCount * 2;
 
-            int numObjects = levelObjectIds.Count;
+            int numObjects;
 
             if (isNativePatch5 && !isPrepatch)
             {
                 numObjects = BitConverter.ToInt32(fileData, savegameOffset + sgBufferCursor);
                 sgBufferCursor += 4;
+            }
+            else
+            {
+                numObjects = levelObjectIds.Count;
             }
 
             for (int itemIndex = 0; itemIndex < numObjects; itemIndex++)
