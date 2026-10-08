@@ -16,8 +16,8 @@ namespace TRR_SaveMaster
 
         // Platform or patch-dependent offsets
         private int LEVEL_INDEX_OFFSET;
-        private int BASE_SAVEGAME_OFFSET_TR1;
-        private int MAX_SAVEGAME_OFFSET_TR1;
+        private int BASE_SAVEGAME_OFFSET;
+        private int MAX_SAVEGAME_OFFSET;
         private int SAVEGAME_SIZE;
         private int LARA_OUTFIT_OFFSET;
         private int SAVEGAME_VERSION_OFFSET;
@@ -62,10 +62,10 @@ namespace TRR_SaveMaster
         private const int CHALLENGE_MODE_USE_OUTFIT_BONUS_OFFSET_CONSOLE = 0x6F7;
 
         // Patch-dependent
-        private const int BASE_SAVEGAME_OFFSET_TR1_PREPATCH = 0x2004;
-        private const int BASE_SAVEGAME_OFFSET_TR1_PATCH5 = 0x2004;
-        private const int MAX_SAVEGAME_OFFSET_TR1_PREPATCH = 0x72004;
-        private const int MAX_SAVEGAME_OFFSET_TR1_PATCH5 = 0xCB804;
+        private const int BASE_SAVEGAME_OFFSET_PREPATCH = 0x2004;
+        private const int BASE_SAVEGAME_OFFSET_PATCH5 = 0x2004;
+        private const int MAX_SAVEGAME_OFFSET_PREPATCH = 0x72004;
+        private const int MAX_SAVEGAME_OFFSET_PATCH5 = 0xCB804;
 
         // Static weapon offsets
         private const int MAGNUM_AMMO_OFFSET = 0x4BE;
@@ -184,8 +184,8 @@ namespace TRR_SaveMaster
 
             if (isPrepatch)
             {
-                BASE_SAVEGAME_OFFSET_TR1 = BASE_SAVEGAME_OFFSET_TR1_PREPATCH;
-                MAX_SAVEGAME_OFFSET_TR1 = MAX_SAVEGAME_OFFSET_TR1_PREPATCH;
+                BASE_SAVEGAME_OFFSET = BASE_SAVEGAME_OFFSET_PREPATCH;
+                MAX_SAVEGAME_OFFSET = MAX_SAVEGAME_OFFSET_PREPATCH;
                 SAVEGAME_SIZE = Globals.SAVEGAME_SIZE_TRX_PREPATCH;
                 LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PREPATCH;
                 LARA_OUTFIT_OFFSET = LARA_OUTFIT_OFFSET_PREPATCH;
@@ -336,8 +336,8 @@ namespace TRR_SaveMaster
             }
             else
             {
-                BASE_SAVEGAME_OFFSET_TR1 = BASE_SAVEGAME_OFFSET_TR1_PATCH5;
-                MAX_SAVEGAME_OFFSET_TR1 = MAX_SAVEGAME_OFFSET_TR1_PATCH5;
+                BASE_SAVEGAME_OFFSET = BASE_SAVEGAME_OFFSET_PATCH5;
+                MAX_SAVEGAME_OFFSET = MAX_SAVEGAME_OFFSET_PATCH5;
                 SAVEGAME_SIZE = Globals.SAVEGAME_SIZE_TRX_PATCH5;
 
                 if (platform == Platform.PC)
@@ -870,9 +870,9 @@ namespace TRR_SaveMaster
 
             for (int i = 0; i < Globals.MAX_SAVEGAMES; i++)
             {
-                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR1 + (i * SAVEGAME_SIZE);
+                int currentSavegameOffset = BASE_SAVEGAME_OFFSET + (i * SAVEGAME_SIZE);
 
-                if (currentSavegameOffset < MAX_SAVEGAME_OFFSET_TR1)
+                if (currentSavegameOffset < MAX_SAVEGAME_OFFSET)
                 {
                     Int16 levelIndex = BitConverter.ToInt16(fileData, currentSavegameOffset + LEVEL_INDEX_OFFSET);
                     Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
@@ -880,7 +880,7 @@ namespace TRR_SaveMaster
 
                     if (isSavegamePresent && levelNames.TryGetValue(levelIndex, out string levelName) && saveNumber >= 0)
                     {
-                        int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR1) / SAVEGAME_SIZE;
+                        int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET) / SAVEGAME_SIZE;
                         bool savegameExists = false;
 
                         foreach (Savegame existingSavegame in cmbSavegames.Items)
@@ -922,15 +922,15 @@ namespace TRR_SaveMaster
 
             if (isPrepatch)
             {
-                BASE_SAVEGAME_OFFSET_TR1 = BASE_SAVEGAME_OFFSET_TR1_PREPATCH;
-                MAX_SAVEGAME_OFFSET_TR1 = MAX_SAVEGAME_OFFSET_TR1_PREPATCH;
+                BASE_SAVEGAME_OFFSET = BASE_SAVEGAME_OFFSET_PREPATCH;
+                MAX_SAVEGAME_OFFSET = MAX_SAVEGAME_OFFSET_PREPATCH;
                 SAVEGAME_SIZE = Globals.SAVEGAME_SIZE_TRX_PREPATCH;
                 LEVEL_INDEX_OFFSET = LEVEL_INDEX_OFFSET_PREPATCH;
             }
             else
             {
-                BASE_SAVEGAME_OFFSET_TR1 = BASE_SAVEGAME_OFFSET_TR1_PATCH5;
-                MAX_SAVEGAME_OFFSET_TR1 = MAX_SAVEGAME_OFFSET_TR1_PATCH5;
+                BASE_SAVEGAME_OFFSET = BASE_SAVEGAME_OFFSET_PATCH5;
+                MAX_SAVEGAME_OFFSET = MAX_SAVEGAME_OFFSET_PATCH5;
                 SAVEGAME_SIZE = Globals.SAVEGAME_SIZE_TRX_PATCH5;
 
                 if (platform == Platform.PC)
@@ -952,7 +952,7 @@ namespace TRR_SaveMaster
 
             for (int i = 0; i < Globals.MAX_SAVEGAMES; i++)
             {
-                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR1 + (i * SAVEGAME_SIZE);
+                int currentSavegameOffset = BASE_SAVEGAME_OFFSET + (i * SAVEGAME_SIZE);
 
                 Int16 levelIndex = BitConverter.ToInt16(fileData, currentSavegameOffset + LEVEL_INDEX_OFFSET);
                 Int32 saveNumber = BitConverter.ToInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
@@ -960,12 +960,13 @@ namespace TRR_SaveMaster
 
                 if (isSavegamePresent && levelNames.TryGetValue(levelIndex, out string levelName) && saveNumber >= 0)
                 {
-                    int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR1) / SAVEGAME_SIZE;
+                    int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET) / SAVEGAME_SIZE;
                     bool isNewGamePlus = BitConverter.ToInt32(fileData, currentSavegameOffset + NEW_GAME_PLUS_OFFSET) != 0;
                     bool isChallengeMode = fileData[currentSavegameOffset + CHALLENGE_MODE_OFFSET] == 1 && !isPrepatch;
 
                     Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, isNewGamePlus, false, isChallengeMode);
                     cmbSavegames.Items.Add(savegame);
+
                     numSavegames++;
                 }
             }

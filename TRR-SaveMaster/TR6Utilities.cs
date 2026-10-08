@@ -17,8 +17,8 @@ namespace TRR_SaveMaster
         private const int NEW_GAME_PLUS_OFFSET = 0x358;
         private const int COMPRESSED_BLOCK_SIZE_OFFSET = 0x360;
         private const int COMPRESSED_BLOCK_START_OFFSET = 0x368;
-        private const int BASE_SAVEGAME_OFFSET_TR6 = 0x293C04;
-        private const int MAX_SAVEGAME_OFFSET_TR6 = 0x484914;
+        private const int BASE_SAVEGAME_OFFSET = 0x293C04;
+        private const int MAX_SAVEGAME_OFFSET = 0x484914;
 
         // Entity Mocks
         private List<EntityMock> actors = new List<EntityMock>();
@@ -1615,9 +1615,9 @@ namespace TRR_SaveMaster
 
             for (int i = 0; i < Globals.MAX_SAVEGAMES; i++)
             {
-                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR6 + (i * Globals.SAVEGAME_SIZE_TRX2);
+                int currentSavegameOffset = BASE_SAVEGAME_OFFSET + (i * Globals.SAVEGAME_SIZE_TRX2);
 
-                if (currentSavegameOffset < MAX_SAVEGAME_OFFSET_TR6)
+                if (currentSavegameOffset < MAX_SAVEGAME_OFFSET)
                 {
                     byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
                     UInt32 saveNumber = BitConverter.ToUInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
@@ -1625,7 +1625,7 @@ namespace TRR_SaveMaster
 
                     if (isSavegamePresent && levelNames.TryGetValue(levelIndex, out string levelName))
                     {
-                        int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR6) / Globals.SAVEGAME_SIZE_TRX2;
+                        int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET) / Globals.SAVEGAME_SIZE_TRX2;
 
                         bool savegameExists = false;
 
@@ -1665,7 +1665,7 @@ namespace TRR_SaveMaster
 
             for (int i = 0; i < Globals.MAX_SAVEGAMES; i++)
             {
-                int currentSavegameOffset = BASE_SAVEGAME_OFFSET_TR6 + (i * Globals.SAVEGAME_SIZE_TRX2);
+                int currentSavegameOffset = BASE_SAVEGAME_OFFSET + (i * Globals.SAVEGAME_SIZE_TRX2);
 
                 byte levelIndex = fileData[currentSavegameOffset + LEVEL_INDEX_OFFSET];
                 UInt32 saveNumber = BitConverter.ToUInt32(fileData, currentSavegameOffset + SAVE_NUMBER_OFFSET);
@@ -1674,7 +1674,7 @@ namespace TRR_SaveMaster
 
                 if (isSavegamePresent && levelNames.TryGetValue(levelIndex, out string levelName))
                 {
-                    int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET_TR6) / Globals.SAVEGAME_SIZE_TRX2;
+                    int slot = (currentSavegameOffset - BASE_SAVEGAME_OFFSET) / Globals.SAVEGAME_SIZE_TRX2;
                     bool isNewGamePlus = BitConverter.ToInt32(fileData, currentSavegameOffset + NEW_GAME_PLUS_OFFSET) != 0;
 
                     Savegame savegame = new Savegame(currentSavegameOffset, slot, saveNumber, levelName, isNewGamePlus, true);
