@@ -637,7 +637,7 @@ namespace TRR_SaveMaster
             }
         }
 
-        private void SetPlatform(Platform platform)
+        private void SetPlatform(Platform platform, bool populateSavegames = true)
         {
             tsmiPC.CheckedChanged -= tsmiPC_CheckedChanged;
             tsmiPlayStation4.CheckedChanged -= tsmiPlayStation4_CheckedChanged;
@@ -675,20 +675,23 @@ namespace TRR_SaveMaster
             tr2Utilities.SetPlatform(platform);
             tr3Utilities.SetPlatform(platform);
 
-            if (tabGame.SelectedIndex == Globals.TAB_TR1)
+            if (populateSavegames)
             {
-                DisableButtonsTR1();
-                PopulateSavegamesTR1();
-            }
-            else if (tabGame.SelectedIndex == Globals.TAB_TR2)
-            {
-                DisableButtonsTR2();
-                PopulateSavegamesTR2();
-            }
-            else if (tabGame.SelectedIndex == Globals.TAB_TR3)
-            {
-                DisableButtonsTR3();
-                PopulateSavegamesTR3();
+                if (tabGame.SelectedIndex == Globals.TAB_TR1)
+                {
+                    DisableButtonsTR1();
+                    PopulateSavegamesTR1();
+                }
+                else if (tabGame.SelectedIndex == Globals.TAB_TR2)
+                {
+                    DisableButtonsTR2();
+                    PopulateSavegamesTR2();
+                }
+                else if (tabGame.SelectedIndex == Globals.TAB_TR3)
+                {
+                    DisableButtonsTR3();
+                    PopulateSavegamesTR3();
+                }
             }
 
             ValidatePlatformSelection();
@@ -917,7 +920,7 @@ namespace TRR_SaveMaster
                     else if (line.StartsWith(Globals.CONFIG_KEY_PLATFORM))
                     {
                         string platform = line.Substring(Globals.CONFIG_KEY_PLATFORM.Length);
-                        SetPlatform(PlatformExtensions.FromFriendlyString(platform));
+                        SetPlatform(PlatformExtensions.FromFriendlyString(platform), false);
                     }
                     else if (line.StartsWith(Globals.CONFIG_KEY_STATUS_BAR))
                     {
