@@ -2356,7 +2356,7 @@ namespace TRR_SaveMaster
 
         private readonly Dictionary<int, Int32[]> secret2CoordinatesTR5 = new Dictionary<int, Int32[]>
         {
-            {  1, new Int32[] { 23822, 0, 28862, 105, 217       } },    // Streets of Rome
+            {  1, new Int32[] { 23792, 0, 29466, 0, 217         } },    // Streets of Rome
             {  2, new Int32[] { 19233, 128, 21905, 22, 101      } },    // Trajan's Markets
             {  3, new Int32[] { 15629, 768, 17392, 10, 81       } },    // The Colosseum
             {  4, new Int32[] { 11313, -2688, 13654, 90, 146    } },    // The Base
